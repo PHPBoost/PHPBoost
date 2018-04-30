@@ -13,14 +13,14 @@
 		<thead>
 			<tr>
 				<th>
-					<a href="{LINK_BUG_ID_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_ID_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					{@labels.fields.id}
-					<a href="{LINK_BUG_ID_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_ID_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				<th class="title-column">
-					<a href="{LINK_BUG_TITLE_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_TITLE_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					${LangLoader::get_message('form.title', 'common')}
-					<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				# IF C_DISPLAY_TYPE_COLUMN #
 				<th>
@@ -43,14 +43,14 @@
 				</th>
 				# ENDIF #
 				<th>
-					<a href="{LINK_BUG_STATUS_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_STATUS_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					{@titles.informations}
-					<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				<th>
-					<a href="{LINK_BUG_DATE_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_DATE_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					{@labels.fields.fix_date}
-					<a href="{LINK_BUG_DATE_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_DATE_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 			</tr>
 		</thead>

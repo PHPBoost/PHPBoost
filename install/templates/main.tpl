@@ -106,12 +106,12 @@ ${resources('install/install')}
 							<ul>
 								<li>
 									<a class="cssmenu-title" href="{@documentation.link}" title="{@documentation}">
-										<i class="fa fa-book fa-fw"></i> <span>{@documentation}</span>
+										<i class="fas fa-book fa-fw"></i> <span>{@documentation}</span>
 									</a>
 								</li>
 								<li>
 									<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');" title="{@installation.restart}">
-										<i class="fa fa-refresh fa-fw"></i> <span>{@installation.restart}</span>
+										<i class="fas fa-sync fa-fw"></i> <span>{@installation.restart}</span>
 									</a>							
 								</li>
 							</ul>

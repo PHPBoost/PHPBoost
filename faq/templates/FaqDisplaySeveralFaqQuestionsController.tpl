@@ -66,7 +66,7 @@
 <section id="module-faq">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
@@ -106,7 +106,7 @@
 			# ENDIF #
 		# ELSE #
 			# IF C_DISPLAY_REORDER_LINK #
-			<div class="float-right"><a href="{U_REORDER_QUESTIONS}" title="{@faq.reorder_questions}"><i class="fa fa-exchange"></i>{@faq.reorder_questions}</a></div>
+			<div class="float-right"><a href="{U_REORDER_QUESTIONS}" title="{@faq.reorder_questions}"><i class="fas fa-exchange-alt"></i>{@faq.reorder_questions}</a></div>
 			<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
@@ -129,16 +129,16 @@
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fas fa-caret-right question-anchor"></i></a>
 						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span itemprop="name">{questions.QUESTION}</span></a>
 						# ELSE #
-						<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
+						<i id="question{questions.ID}" class="fas fa-caret-right question-anchor"></i>
 						<span itemprop="name">{questions.QUESTION}</span>
 						# ENDIF #
 					</h3>
 
 					<span class="actions">
-						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
+						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fas fa-flag"></i></a>
 						# IF questions.C_EDIT #
 						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 						# ENDIF #

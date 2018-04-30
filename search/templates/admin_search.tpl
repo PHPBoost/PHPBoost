@@ -20,7 +20,7 @@
 		</script>
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_SEARCH_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_SEARCH_MANAGEMENT}
+				<i class="fas fa-bars"></i> {L_SEARCH_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -104,7 +104,7 @@
 					<legend>{L_CLEAR_OUT_CACHE}</legend>
 					<div class="fieldset-inset fieldset-refresh">
 						<a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
-							<i class="fa fa-refresh fa-2x"></i>
+							<i class="fas fa-sync fa-2x"></i>
 							<span>{L_CLEAR_OUT_CACHE}</span>
 						</a>
 					</div>

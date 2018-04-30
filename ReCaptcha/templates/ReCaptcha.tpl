@@ -18,10 +18,10 @@ jQuery(document).ready(function() {
 			<input type="text" id="{HTML_ID}" name="{HTML_ID}" placeholder="{@type_the_answer_here}"/>
 		</div>
 		<div class="options">
-			<a href="javascript:Recaptcha.reload()" title="{@refresh_captcha}" class="fa fa-refresh"></a>
-			<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" title="{@audio_captcha}" class="fa fa-volume-up"></a></div>
-			<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" title="{@image_captcha}" class="fa fa-picture-o"></a></div>
-			<div><a href="javascript:Recaptcha.showhelp()" title="{@captcha_help}" class="fa fa-question-circle"></a></div>
+			<a href="javascript:Recaptcha.reload()" title="{@refresh_captcha}" class="fas fa-sync"></a>
+			<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" title="{@audio_captcha}" class="fas fa-volume-up"></a></div>
+			<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" title="{@image_captcha}" class="far fa-image"></a></div>
+			<div><a href="javascript:Recaptcha.showhelp()" title="{@captcha_help}" class="fa-pbt fa-question-circle"></a></div>
 		</div>
 	</div>
 

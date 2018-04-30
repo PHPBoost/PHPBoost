@@ -111,7 +111,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" title="${LangLoader::get_message('add', 'common')}"><i class="fas fa-plus"></i></a>
 
 # IF C_INCLUDE_API #
 <script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>

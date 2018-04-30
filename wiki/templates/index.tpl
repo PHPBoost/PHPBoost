@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa-pbt fa-syndication"></a>
 			{TITLE}
 		</h1>
 	</header>
@@ -41,7 +41,7 @@
 					<div class="wiki-list-top">
 						# IF last_articles.C_ARTICLES #
 							<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'common')}">
-								<i class="fa fa-syndication small"></i>
+								<i class="fa-pbt fa-syndication small"></i>
 							</a>
 						# ENDIF #
 						{last_articles.L_ARTICLES}

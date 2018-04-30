@@ -36,7 +36,7 @@
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}">
 						{L_VIEW_TOPIC}
-						<i class="fa fa-arrow-circle-right"></i>
+						<i class="fas fa-arrow-circle-right"></i>
 					</a>
 					</div>
 				# ENDIF #

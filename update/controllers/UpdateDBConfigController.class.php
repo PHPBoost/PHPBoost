@@ -102,11 +102,11 @@ class UpdateDBConfigController extends UpdateController
 		$fieldset_schema->add_field($tables_prefix);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'fa fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'fas fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'database');
+		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fas fa-sync', 'database');
 		$action_fieldset->add_element($check);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fas fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}

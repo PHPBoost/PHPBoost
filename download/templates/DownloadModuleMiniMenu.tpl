@@ -1,10 +1,10 @@
 <table id="table-mini-download">
 	<thead>
 		<tr>
-			<th><i class="fa # IF C_SORT_BY_DATE #fa-calendar# ELSE #fa-trophy# ENDIF #"></i></th>
+			<th><i class="fas # IF C_SORT_BY_DATE #fa-calendar# ELSE #fa-trophy# ENDIF #"></i></th>
 			<th>${LangLoader::get_message('form.name', 'common')}</th>
 			# IF NOT C_SORT_BY_DATE #
-			<th><i class="fa # IF C_SORT_BY_NUMBER_DOWNLOADS #fa-download# ELSE #fa-star-o# ENDIF #"></i></th>
+			<th><i class="# IF C_SORT_BY_NUMBER_DOWNLOADS #fas fa-download# ELSE #far fa-star-o# ENDIF #"></i></th>
 			# ENDIF #
 		</tr>
 	</thead>

@@ -6,14 +6,14 @@
 		<thead>
 			<tr>
 				<th>
-					<a href="{LINK_BUG_ID_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_ID_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					{@labels.fields.id}
-					<a href="{LINK_BUG_ID_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_ID_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				<th class="title-column">
-					<a href="{LINK_BUG_TITLE_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_TITLE_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					${LangLoader::get_message('form.title', 'common')}
-					<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				# IF C_DISPLAY_TYPE_COLUMN #
 				<th>
@@ -36,14 +36,14 @@
 				</th>
 				# ENDIF #
 				<th>
-					<a href="{LINK_BUG_STATUS_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_STATUS_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					{@titles.informations}
-					<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				<th>
-					<a href="{LINK_BUG_DATE_TOP}"><i class="fa fa-table-sort-up"></i></a>
+					<a href="{LINK_BUG_DATE_TOP}"><i class="fa-pbt fa-table-sort-up"></i></a>
 					# IF C_UNSOLVED #{@labels.detected}# ELSE #{@labels.fields.fix_date}# ENDIF #
-					<a href="{LINK_BUG_DATE_BOTTOM}"><i class="fa fa-table-sort-down"></i></a>
+					<a href="{LINK_BUG_DATE_BOTTOM}"><i class="fa-pbt fa-table-sort-down"></i></a>
 				</th>
 				# IF C_IS_ADMIN #
 				<th>
@@ -108,8 +108,8 @@
 				</td>
 				# IF C_IS_ADMIN #
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					<a href="{bug.U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fa fa-gears"></i></a>
-					<a href="{bug.U_HISTORY}" title="{@actions.history}"><i class="fa fa-history"></i></a>
+					<a href="{bug.U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fas fa-cogs"></i></a>
+					<a href="{bug.U_HISTORY}" title="{@actions.history}"><i class="fas fa-history"></i></a>
 					<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 					<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}"><i class="far fa-delete"></i></a>
 				</td>

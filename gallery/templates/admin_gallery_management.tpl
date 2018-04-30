@@ -43,7 +43,7 @@
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('img' + id_file).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function()
@@ -70,7 +70,7 @@
 		{
 			var regex = /\/|\\|\||\?|<|>|\"/;
 
-			document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+			document.getElementById('img' + id_file).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			data = "id_file=" + id_file;
 			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?aprob_pics=1&token={TOKEN}');
@@ -93,10 +93,10 @@
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).className == "fa fa-eye-slash"){
-							document.getElementById('img_aprob' + id_file).className = "fa fa-eye";
+						if(document.getElementById('img_aprob' + id_file).className == "fas fa-eye-slash"){
+							document.getElementById('img_aprob' + id_file).className = "fas fa-eye";
 						} else {
-							document.getElementById('img_aprob' + id_file).className = "fa fa-eye-slash";
+							document.getElementById('img_aprob' + id_file).className = "fas fa-eye-slash";
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
@@ -155,8 +155,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fas fa-arrow-left fa-2x"></i></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fas fa-arrow-right fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -169,8 +169,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fas fa-arrow-right fa-2x"></i></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fas fa-arrow-left fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -201,7 +201,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GALLERY_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_GALLERY_MANAGEMENT}
+				<i class="fas fa-bars"></i> {L_GALLERY_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -296,12 +296,12 @@
 								<tr>
 									# IF pics.pics_max.C_PREVIOUS #
 									<td class="left no-separator">
-										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max">{L_PREVIOUS}</a>
+										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max" class="fas fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max">{L_PREVIOUS}</a>
 									</td>
 									# ENDIF #
 									# IF pics.pics_max.C_NEXT #
 									<td class="right no-separator">
-										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max">{L_NEXT}</a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max" class="fa fa-arrow-right fa-2x"></a>
+										<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max">{L_NEXT}</a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max" class="fas fa-arrow-right fa-2x"></a>
 									</td>
 									# ENDIF #
 								</tr>
@@ -357,10 +357,10 @@
 												</select>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="fa-pbt fa-move" title="{L_MOVETO}"></a>
 
 
-										<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+										<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #title="{L_APROB}" class="fas fa-eye"# ELSE #title="{L_UNAPROB}" class="fas fa-eye-slash"# ENDIF #></a>
 										&nbsp;<span id="img{pics.pics_max.ID}"></span>
 									</td>
 								</tr>
@@ -382,7 +382,7 @@
 									<td style="width:50px;">
 										<span id="display_left">
 										# IF pics.pics_max.C_LEFT_THUMBNAILS #
-										<a href="javascript:display_thumbnails('left')" class="fa fa-arrow-left fa-2x"></a>
+										<a href="javascript:display_thumbnails('left')" class="fas fa-arrow-left fa-2x"></a>
 										# ENDIF #
 										</span>
 									</td>
@@ -395,7 +395,7 @@
 									<td style="width:50px;">
 										<span id="display_right">
 										# IF pics.pics_max.C_RIGHT_THUMBNAILS #
-										<a href="javascript:display_thumbnails('right')" class="fa fa-arrow-right fa-2x"></a>
+										<a href="javascript:display_thumbnails('right')" class="fas fa-arrow-right fa-2x"></a>
 										# ENDIF #
 										</span>
 									</td>
@@ -438,9 +438,9 @@
 													</select>
 												</div>
 											</div>
-											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa-pbt fa-move" title="{L_MOVETO}"></a>
 
-											<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+											<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fas fa-eye"# ELSE #title="{L_UNAPROB}" class="fas fa-eye-slash"# ENDIF #></a>
 											&nbsp;<span id="img{pics.list.ID}"></span>
 										</div>
 									</td>

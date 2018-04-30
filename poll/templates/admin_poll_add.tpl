@@ -22,14 +22,14 @@
 			if( document.getElementById('v'+i) )
 				document.getElementById('v'+i).innerHTML = '<label class="infos-options"><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>' : '';
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" title="${LangLoader::get_message('add', 'common')}"><i class="fas fa-plus"></i></a></span>' : '';
 		}
 		-->
 		</script>
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_POLL_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_POLL_MANAGEMENT}
+				<i class="fas fa-bars"></i> {L_POLL_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -122,7 +122,7 @@
 										</tr>
 										<tr>
 											<td colspan="2">
-												<span id="s3"><a href="javascript:add_field(3, 20)" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a></span>
+												<span id="s3"><a href="javascript:add_field(3, 20)" title="${LangLoader::get_message('add', 'common')}"><i class="fas fa-plus"></i></a></span>
 											</td>
 										</tr>
 									</tbody>

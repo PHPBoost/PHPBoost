@@ -195,7 +195,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				'USER_WARNING' => $row['warning_percentage'],
 				'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller">' . LangLoader::get_message('pm', 'main') . '</a>' : '',
 				'U_USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? UserUrlBuilder::personnal_message($row['user_id'])->rel() : '',
-				'USER_ONLINE' => '<i class="fa ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
+				'USER_ONLINE' => '<i class="fa-pbt ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
 				'USER_PSEUDO' => !empty($row['display_name']) ? TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />') : $LANG['guest'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,

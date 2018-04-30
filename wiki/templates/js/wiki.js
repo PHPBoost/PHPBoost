@@ -49,7 +49,7 @@
 				else
 				{
 					document.getElementById("cat-" + id_cat).style.display = 'none';
-					document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder';
+					document.getElementById("img-folder-" + id_cat).className = 'fas fa-folder';
 					if( document.getElementById("img-subfolder-" + id_cat) )
 						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-plus-square';
 					cat_status[id_cat] = 0;

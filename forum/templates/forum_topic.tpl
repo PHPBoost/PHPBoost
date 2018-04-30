@@ -28,7 +28,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('forum_change_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?msg_d=' + idtopic + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function()
@@ -36,7 +36,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-display"></i>' : '<i class="fa fa-msg-display"></i>';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa-forum fa-msg-not-display"></i>' : '<i class="fa-forum fa-msg-display"></i>';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -48,7 +48,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_img') )
-				document.getElementById('forum_track_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('forum_track_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track ? 'ut' : 't') + '=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -56,7 +56,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_track_img') )
-						document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-track"></i>' : '<i class="fa fa-msg-track"></i>';
+						document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa-forum fa-msg-not-track"></i>' : '<i class="fa-forum fa-msg-track"></i>';
 					if( document.getElementById('forum_track_msg') )
 						document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNTRACK}" : "{L_TRACK}";
 					is_track = xhr_object.responseText == '1' ? true : false;
@@ -69,7 +69,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_pm_img') )
-				document.getElementById('forum_track_pm_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('forum_track_pm_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -77,7 +77,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_track_pm_img') )
-						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-pm-not-track"></i>' : '<i class="fa fa-pm-track"></i>';
+						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa-forum fa-pm-not-track"></i>' : '<i class="fa-forum fa-pm-track"></i>';
 					if( document.getElementById('forum_track_pm_msg') )
 						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE_PM}" : "{L_SUSCRIBE_PM}";
 					is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -90,7 +90,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_mail_img') )
-				document.getElementById('forum_track_mail_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('forum_track_mail_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -98,7 +98,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_track_mail_img') )
-						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-not-track"></i>' : '<i class="fa fa-mail-track"></i>';
+						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa-forum fa-mail-not-track"></i>' : '<i class="fa-forum fa-mail-track"></i>';
 					if( document.getElementById('forum_track_mail_msg') )
 						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_track_mail = xhr_object.responseText == '1' ? true : false;
@@ -124,8 +124,8 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{ID}" class="forum-contents">
 			<header>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa-pbt fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+					{U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
 					<span class="float-right">
 						# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
@@ -133,16 +133,16 @@
 						# IF C_FORUM_MODERATOR #
 							# IF C_FORUM_LOCK_TOPIC #
 						<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}">
-							<i class="fa fa-ban"></i>
+							<i class="fa-pbt fa-ban"></i>
 						</a>
 							# ELSE #
 						<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}">
-							<i class="fa fa-unban"></i>
+							<i class="fa-pbt fa-unban"></i>
 						</a>
 							# ENDIF #
 
 						<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}">
-							<i class="fa fa-move"></i>
+							<i class="fa-pbt fa-move"></i>
 						</a>
 						# ENDIF #
 					</span>
@@ -215,7 +215,7 @@
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
 								# IF msg.C_FORUM_USER_LOGIN #
-									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+									<i class="fa-pbt # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 								# ELSE #
 									<em>{L_GUEST}</em>
 								# ENDIF #
@@ -247,10 +247,10 @@
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="far fa-hand-point-right"></i></a> {msg.FORUM_MSG_DATE}
 								</span>
 								<span class="float-right">
-									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a># ENDIF #
+									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" title="{L_QUOTE}"><i class="fas fa-quote-right"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #
 									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}"><i class="far fa-edit"></i></a>
 									# ENDIF #
@@ -270,9 +270,9 @@
 										# ENDIF #
 									# ENDIF #
 
-									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut"></i></a> # ENDIF #
+									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fas fa-cut"></i></a> # ENDIF #
 
-									<a title="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a title="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a>
+									<a title="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fas fa-arrow-up"></i></a> <a title="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fas fa-arrow-down"></i></a>
 								</span>
 							</div>
 							<div class="msg-contents">
@@ -306,8 +306,8 @@
 										&nbsp;
 										# IF msg.C_FORUM_MODERATOR #
 										{msg.USER_WARNING}%
-										<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
-										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHMENT_MANAGEMENT}" class="fa fa-lock"></a>
+										<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa-pbt fa-warning"></a>
+										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHMENT_MANAGEMENT}" class="fas fa-lock"></a>
 										# ENDIF #
 									</span>&nbsp;
 								</div>
@@ -320,7 +320,7 @@
 			</div>
 		# END msg #
 			<footer>
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa-pbt fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 				{U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
 				<span class="float-right">
@@ -328,12 +328,12 @@
 
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa-pbt fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa-pbt fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
 						# ENDIF #
 
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa-pbt fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>&nbsp;
 				<div class="spacer"></div>

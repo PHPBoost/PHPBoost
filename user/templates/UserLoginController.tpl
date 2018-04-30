@@ -3,13 +3,13 @@
 	# INCLUDE LOGIN_FORM #
 	<div class="center">
 		# IF C_REGISTRATION_ENABLED #
-			<a class="infos-options" href="{U_REGISTER}"><i class="fa fa-ticket"></i> {@registration}</a>
+			<a class="infos-options" href="{U_REGISTER}"><i class="fas fa-ticket-alt"></i> {@registration}</a>
 			# START external_auth #
 				<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}" title="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
 			# END external_auth #
 		# ENDIF #
 		<div class="spacer"></div>
-		<a href="{U_FORGET_PASSWORD}"><i class="fa fa-question-circle"></i> {L_FORGET_PASSWORD}</a>
+		<a href="{U_FORGET_PASSWORD}"><i class="fa-pbt fa-question-circle"></i> {L_FORGET_PASSWORD}</a>
 	</div>
 # ELSE #
 	<div id="global" class="global-maintain">

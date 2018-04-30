@@ -49,14 +49,14 @@
 			<thead>
 				<tr>
 					<th>
-						<a href="{TOP_TITLE}" class="fa fa-table-sort-up"></a>
+						<a href="{TOP_TITLE}" class="fa-pbt fa-table-sort-up"></a>
 						{L_TITLE}
-						<a href="{BOTTOM_TITLE}" class="fa fa-table-sort-down"></a>
+						<a href="{BOTTOM_TITLE}" class="fa-pbt fa-table-sort-down"></a>
 					</th>
 					<th>
-						<a href="{TOP_DATE}" class="fa fa-table-sort-up"></a>
+						<a href="{TOP_DATE}" class="fa-pbt fa-table-sort-up"></a>
 						{L_DATE}
-						<a href="{BOTTOM_DATE}" class="fa fa-table-sort-down"></a>
+						<a href="{BOTTOM_DATE}" class="fa-pbt fa-table-sort-down"></a>
 					</th>
 					<th>
 						{L_AUTHOR}

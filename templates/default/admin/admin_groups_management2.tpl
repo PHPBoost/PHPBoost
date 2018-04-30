@@ -31,7 +31,7 @@
 			var login = jQuery('#login').val();
 			if( login != "" )
 			{
-				jQuery('#search_img').append('<i class="fa fa-spinner fa-spin"></i>');
+				jQuery('#search_img').append('<i class="fas fa-spinner fa-spin"></i>');
 
 				jQuery.ajax({
 					url: '{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1',
@@ -54,7 +54,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GROUPS_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_GROUPS_MANAGEMENT}
+				<i class="fas fa-bars"></i> {L_GROUPS_MANAGEMENT}
 			</a>
 			<ul>
 				<li>

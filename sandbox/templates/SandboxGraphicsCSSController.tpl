@@ -6,7 +6,7 @@
 	</header>
 	<div class="sandbox-summary">
       <div class="close-summary">
-        <i class="fa fa-arrow-circle-left"></i>
+        <i class="fas fa-arrow-circle-left"></i>
       </div>
       <ul>
         <li>
@@ -48,7 +48,7 @@
       </ul>
     </div>
 	<div class="open-summary">
-        <i class="fa fa-arrow-circle-right"></i> {@sandbox.summary}
+        <i class="fas fa-arrow-circle-right"></i> {@sandbox.summary}
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
 
@@ -63,7 +63,7 @@
 					<span>{@css.page.title}</span>
 					<span class="actions">
 						<a href="#" class="far fa-edit" title="{@css.edit}"></a>
-						<a href="#" class="fa fa-trash" title="{@css.delete}"></a>
+						<a href="#" class="fa-pbt fa-delete" title="{@css.delete}"></a>
 					</span>
 				</h2>
 				<div class="more">{@css.more}</div>
@@ -144,10 +144,10 @@
 						</span>
 						<div class="spacer"></div>
 						<a href="#" class="basic-button">
-							<i class="fa fa-globe"></i> {@css.options.link}
+							<i class="fas fa-globe"></i> {@css.options.link}
 						</a>
 						<a href="#" class="basic-button alt" title="{@css.options.link}">
-							<i class="fa fa-unlink"></i>
+							<i class="fas fa-unlink"></i>
 						</a>
 					</div>
 					<h6>{@css.options.file.title}</h6>
@@ -158,11 +158,11 @@
 					<div class="center">
 						<div class="notation" id="notation-1">
 							<span class="stars">
-								<a href="" onclick="return false;" class="fa star star-hover fa-star-o" id="star-1-1"></a>
-								<a href="" onclick="return false;" class="fa star star-hover fa-star-o" id="star-1-2"></a>
-								<a href="" onclick="return false;" class="fa star star-hover fa-star-o" id="star-1-3"></a>
-								<a href="" onclick="return false;" class="fa star star-hover fa-star-o" id="star-1-4"></a>
-								<a href="" onclick="return false;" class="fa star star-hover fa-star-o" id="star-1-5"></a>
+								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1"></a>
+								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-2"></a>
+								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-3"></a>
+								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-4"></a>
+								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-5"></a>
 							</span>
 							<span class="notes">
 								<span class="number-notes">0</span>
@@ -283,7 +283,7 @@
 			</header>
 			<div class="content">
 				<ul>
-					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" title="{@css.rss_feed}"></a></li>
+					<li>{@css.rss_feed} : <a href="#" class="fa-pbt fa-syndication" title="{@css.rss_feed}"></a></li>
 					<li>{@css.edit} : <a href="#" class="far fa-edit" title="{@css.edit}"></a></li>
 					<li>{@css.delete} : <a href="#" class="far fa-delete" title="{@css.delete}"></a></li>
 					<li>{@css.delete.confirm} : <a href="#" class="far fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a></li>
@@ -311,9 +311,9 @@
 							<h2>{@css.explorer}</h2>
 						<div class="content">
 							<ul>
-								<li><a id="class_0" href="#" title="{@css.root}"><i class="fa fa-folder"></i>{@css.root}</a>
+								<li><a id="class_0" href="#" title="{@css.root}"><i class="fas fa-folder"></i>{@css.root}</a>
 									<ul>
-										<li class="sub"><a id="class_1" href="#" title="{@css.cat} 1"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
+										<li class="sub"><a id="class_1" href="#" title="{@css.cat} 1"><i class="fas fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
 										<li class="sub">
 											<a class="parent" href="javascript:show_cat_contents(2, 0);" title="{@css.cat} 2">
 												<span class="far fa-minus-square" id="img2_2"></span><span class="far fa-folder-open" id ="img_2"></span>
@@ -321,8 +321,8 @@
 											<a class="selected" id="class_2" href="#" title="{@css.cat} 2">{@css.cat} 2</a>
 											<span id="cat_2">
 												<ul>
-													<li class="sub"><a href="#"><i class="fa fa-folder" title="{@css.cat} 3"></i>{@css.cat} 3</a></li>
-													<li class="sub"><a href="#"><i class="fa fa-folder" title="{@css.cat} 4"></i>{@css.cat} 4</a></li>
+													<li class="sub"><a href="#"><i class="fas fa-folder" title="{@css.cat} 3"></i>{@css.cat} 3</a></li>
+													<li class="sub"><a href="#"><i class="fas fa-folder" title="{@css.cat} 4"></i>{@css.cat} 4</a></li>
 												</ul>
 											</span>
 										</li>
@@ -335,10 +335,10 @@
 							<h2>{@css.tree}</h2>
 						<div class="content" id="cat_contents">
 							<ul>
-								<li><a href="#" title="{@css.cat} 3"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
-								<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);" title="{@css.cat} 4"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
-								<li><a href="#" title="{@css.file} 1"><i class="fa fa-file"></i>{@css.file} 1</a></li>
-								<li><a href="#" title="{@css.file} 2"><i class="fa fa-file"></i>{@css.file} 2</a></li>
+								<li><a href="#" title="{@css.cat} 3"><i class="fas fa-folder"></i>{@css.cat} 3</a></li>
+								<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);" title="{@css.cat} 4"><i class="fas fa-folder"></i>{@css.cat} 4</a></li>
+								<li><a href="#" title="{@css.file} 1"><i class="fas fa-file"></i>{@css.file} 1</a></li>
+								<li><a href="#" title="{@css.file} 2"><i class="fas fa-file"></i>{@css.file} 2</a></li>
 							</ul>
 						</div>
 					</div>
@@ -411,11 +411,11 @@
 			</header>
 			<div class="content">
 				<div class="notation">
-					<a href="" onclick="return false;" class="fa star fa-star"></a>
-					<a href="" onclick="return false;" class="fa star fa-star"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-half-o"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-o"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-o"></a>
+					<a href="" onclick="return false;" class="fas star fa-star"></a>
+					<a href="" onclick="return false;" class="fas star fa-star"></a>
+					<a href="" onclick="return false;" class="far star fa-star-half"></a>
+					<a href="" onclick="return false;" class="far star fa-star"></a>
+					<a href="" onclick="return false;" class="far star fa-star"></a>
 				</div>
 			</div>
 		</article>
@@ -476,9 +476,9 @@
 					<thead>
 						<tr>
 							<th>
-								<a href="#" class="fa fa-table-sort-up" title="{@css.table.sort.up}"></a>
+								<a href="#" class="fa-pbt fa-table-sort-up" title="{@css.table.sort.up}"></a>
 								{@css.table.name}
-								<a href="#" class="fa fa-table-sort-down" title="{@css.table.sort.down}"></a>
+								<a href="#" class="fa-pbt fa-table-sort-down" title="{@css.table.sort.down}"></a>
 							</th>
 							<th>{@css.table.description}</th>
 							<th>{@css.table.author}</th>

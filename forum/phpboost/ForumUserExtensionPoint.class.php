@@ -51,7 +51,7 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	 */
 	public function get_messages_list_link_img()
 	{
-		return '<i class="fa fa-globe"></i>';
+		return '<i class="fas fa-globe"></i>';
 	}
 	
 	public function get_number_messages($user_id)

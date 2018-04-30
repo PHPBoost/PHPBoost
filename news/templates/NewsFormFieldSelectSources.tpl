@@ -48,4 +48,4 @@ var NewsFormFieldSelectSources = new NewsFormFieldSelectSources();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:NewsFormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="javascript:NewsFormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fas fa-plus"></i></a>

@@ -49,7 +49,7 @@
 					
 					<span id="add_filter{NBR_FILTER}"></span>
 					<p class="center">
-						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="fa fa-plus"></i></a>
+						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="fas fa-plus"></i></a>
 					</p>
 				</div>
 			</div>

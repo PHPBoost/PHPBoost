@@ -8,7 +8,7 @@
 	function XMLHttpRequest_unread_topics(divID)
 	{
 		if (document.getElementById('refresh_' + divID))
-			document.getElementById('refresh_' + divID).className = 'fa fa-spinner fa-spin';
+			document.getElementById('refresh_' + divID).className = 'fas fa-spinner fa-spin';
 
 		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 		xhr_object.onreadystatechange = function()
@@ -16,7 +16,7 @@
 			if (xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
 			{
 				if (document.getElementById('refresh_' + divID))
-					document.getElementById('refresh_' + divID).className = 'fa fa-refresh';
+					document.getElementById('refresh_' + divID).className = 'fas fa-sync';
 
 				var array_unread_topics = new Array('', '');
 				eval(xhr_object.responseText);
@@ -32,7 +32,7 @@
 			{
 				alert("{L_AUTH_ERROR}");
 				if (document.getElementById('refresh_' + divID))
-					document.getElementById('refresh_' + divID).className = 'fa fa-refresh';
+					document.getElementById('refresh_' + divID).className = 'fas fa-sync';
 			}
 		}
 		xmlhttprequest_sender(xhr_object, null);
@@ -85,42 +85,42 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<a href="index.php" title="{L_FORUM_INDEX}"><i class="fa fa-home"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
+							<a href="index.php" title="{L_FORUM_INDEX}"><i class="fas fa-home"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}"><i class="fa fa-showmymsg"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+							<a title="{L_SHOW_MY_MSG}" href="{U_SHOW_MY_MSG}"><i class="fa-forum fa-showmymsg"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-						<a href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
+						<a href="{U_TOPIC_TRACK}" title="{L_SHOW_TOPIC_TRACK}"><i class="fa-forum fa-msg-track"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
 						</span>
 					</li>
 					<li class="forum-index">
 						<span class="cssmenu-title">
-							<a href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}"><i class="fa fa-lastview"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
+							<a href="{U_LAST_MSG_READ}" title="{L_SHOW_LAST_READ}"><i class="fa-forum fa-lastview"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
+							<a href="{U_MSG_NOT_READ}" title="{L_SHOW_NOT_READS}"><i class="fa-forum fa-notread"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
 							<div class="forum-refresh">
 								<div id="forum_block_forum_unread_top" style="display: none;"></div>
 							</div>
-							<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-refresh" id="refresh_forum_unread_top"></i></a>
+							<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fas fa-sync" id="refresh_forum_unread_top"></i></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-eraser"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+							<a href="{U_MSG_SET_VIEW}" title="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fas fa-eraser"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
 						</span>
 					</li>
 					# IF C_FORUM_CONNEXION #
 					<li>
 						<span class="cssmenu-title">
-							<a title="{L_DISCONNECT}" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fa fa-sign-out"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
+							<a title="{L_DISCONNECT}" href="${relative_url(UserUrlBuilder::disconnect())}"><i class="fas fa-sign-out-alt"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -132,12 +132,12 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<a title="{L_CONNECT}" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+							<a title="{L_CONNECT}" href="${relative_url(UserUrlBuilder::connect())}"><i class="fas fa-sign-in-alt"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a title="{L_REGISTER}" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+							<a title="{L_REGISTER}" href="${relative_url(UserUrlBuilder::registration())}"><i class="fas fa-ticket-alt"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 						</span>
 					</li>
 				</ul>

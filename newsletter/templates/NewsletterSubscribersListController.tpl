@@ -3,9 +3,9 @@
 	<thead>
 		<tr>
 			<th>
-				<a href="{SORT_PSEUDO_TOP}" class="fa fa-table-sort-up"></a>
+				<a href="{SORT_PSEUDO_TOP}" class="fa-pbt fa-table-sort-up"></a>
 				{@subscribers.pseudo}
-				<a href="{SORT_PSEUDO_BOTTOM}" class="fa fa-table-sort-down"></a>
+				<a href="{SORT_PSEUDO_BOTTOM}" class="fa-pbt fa-table-sort-down"></a>
 			</th>
 			<th>
 				{@subscribers.mail}

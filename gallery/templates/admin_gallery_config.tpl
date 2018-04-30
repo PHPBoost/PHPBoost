@@ -45,7 +45,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GALLERY_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_GALLERY_MANAGEMENT}
+				<i class="fas fa-bars"></i> {L_GALLERY_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -321,7 +321,7 @@
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<div class="fieldset-inset">
-						<p class="center"><i class="fa fa-2x fa-refresh"></i></p>
+						<p class="center"><i class="fas fa-2x fa-refresh"></i></p>
 						{L_EXPLAIN_GALLERY_CACHE}
 					</div>
 				</fieldset>

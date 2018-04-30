@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication smaller"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa-pbt fa-syndication smaller"></a>
 			${LangLoader::get_message('category', 'main')} {ID_CAT}
 		</h1>
 	</header>
@@ -70,7 +70,7 @@
 						<div class="wiki-list-content">
 							# START cat.list_art #
 								<div class="wiki-list-item">
-									<i class="fa fa-file-o"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+									<i class="far fa-file"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 								</div>
 							# END cat.list_art #
 							# START cat.no_sub_article #

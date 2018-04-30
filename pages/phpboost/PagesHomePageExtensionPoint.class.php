@@ -75,7 +75,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 				//Vérification de l'autorisation d'éditer la page
 				if (($special_auth && AppContext::get_current_user()->check_auth($cat['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 				{
-					$root .= '<li><a href="javascript:open_cat(' . $key . '); show_pages_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
+					$root .= '<li><a href="javascript:open_cat(' . $key . '); show_pages_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fas fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
 				}
 			}
 		}
@@ -92,7 +92,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
+				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fas fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
 			}
 		}
 		$result->dispose();

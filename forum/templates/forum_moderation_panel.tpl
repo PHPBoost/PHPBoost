@@ -3,7 +3,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fas fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 				</h2>
 			</header>
 			<div class="content">
@@ -12,19 +12,19 @@
 						<tr>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">
-									<i class="fa fa-warning fa-2x"></i>
+									<i class="fa-pbt fa-warning fa-2x"></i>
 									<span class="forum-display-block">{L_USERS_WARNING}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">
-									<i class="fa fa-error fa-2x"></i>
+									<i class="fa-pbt fa-error fa-2x"></i>
 									<span class="forum-display-block">{L_USERS_PUNISHMENT}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">
-									<i class="fa fa-forbidden fa-2x"></i>
+									<i class="fa-pbt fa-forbidden fa-2x"></i>
 									<span class="forum-display-block">{L_ALERT_MANAGEMENT}</span>
 								</a>
 							</td>
@@ -255,7 +255,7 @@
 						if( login != '' )
 						{
 							if( document.getElementById('search_img') )
-								document.getElementById('search_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+								document.getElementById('search_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function()
@@ -421,7 +421,7 @@
 
 			</div>
 			<footer>
-				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fas fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</footer>
 		</article>
 

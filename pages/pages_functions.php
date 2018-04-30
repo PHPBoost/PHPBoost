@@ -85,9 +85,9 @@ function show_pages_cat_contents($id_cat, $cats, $id, $display_select_link)
 				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $key));
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
-					$line .= '<li class="sub"><a class="parent" href="javascript:show_pages_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="far fa-plus-square" id="img-subfolder-' . $key . '"></i><i class="fa fa-folder" id="img-folder-' . $key . '"></i></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class-' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat-' . $key . '"></span></li>';
+					$line .= '<li class="sub"><a class="parent" href="javascript:show_pages_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="far fa-plus-square" id="img-subfolder-' . $key . '"></i><i class="fas fa-folder" id="img-folder-' . $key . '"></i></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class-' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . stripslashes($cat['title']) . '</a><span id="cat-' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
-					$line .= '<li class="sub"><a id="class-' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
+					$line .= '<li class="sub"><a id="class-' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><i class="fas fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
 			}
 		}
 	}

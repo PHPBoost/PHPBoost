@@ -2856,19 +2856,82 @@ readers do not read off random characters that represent icons */
   src: url("../webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.woff") format("woff"), url("../webfonts/fa-solid-900.ttf") format("truetype"), url("../webfonts/fa-solid-900.svg#fontawesome") format("svg"); }
 
 .fa,
-.fas {
+.fas,
+.fa-pbt {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900; }
 
 /* Alias */
-.fa-delete:before { /* copie Trash */
+.fa-delete:before { /* copie trash-alt */
   content: "\f2ed";
 }
 
-.fa-profil:before { /* copie fa-tachometer */
+.fa-profil:before { /* copie tachometer-alt */
   content: "\f3fd";
 }
 
-.fa-legal:before { /* copie fa-gavel */
+.fa-legal:before { /* copie gavel */
   content: "\f0e3";
+}
+
+.fa-move:before { /* copie share */
+  content: "\f064";
+}
+
+.fa-success:before { /* copie check */
+  content: "\f00c";
+}
+
+.fa-error:before { /* copie times */
+  content: "\f00d";
+}
+
+.fa-warning:before { /* copie exclamation-triangle */
+  content: "\f071";
+}
+
+.fa-notice:before { /* copie exclamation */
+  content: "\f12a";
+}
+
+.fa-question:before { /* copie question */
+  content: "\f128";
+}
+
+.fa-syndication:before { /* copie rss */
+  content: "\f09e";
+}
+
+.fa-table-sort-up:before { /* copie arrow-up */
+  content: "\f062";
+}
+.fa-table-sort-down:before { /* copie arrow-down */
+  content: "\f063";
+}
+
+.fa-unban:before { /* copie ban */
+  content: "\f05e";
+}
+.fa-ban:before { /* copie ban */
+  content: "\f05e";
+}
+
+.fa-online:before,
+.fa-offline:before { /* copie user */
+  content: "\f007";
+}
+
+.fa-forbidden:before { /* copie minus-circle */
+  content: "\f056";
+}
+
+.fa-close:before { /* copie times */
+  content: "\f00d";
+}
+
+.fa-trend-up:before { /* copie caret-up */
+  content: "\f0d8";
+}
+.fa-trend-down:before { /* copie caret-down */
+  content: "\f0d7";
 }

@@ -47,7 +47,7 @@ var SocialNetwork = function(id, social_networks){
 
 SocialNetwork.prototype = {
 	change_display : function() {
-		jQuery("#change-display-" + this.id).html('<i class="fa fa-spin fa-spinner"></i>');
+		jQuery("#change-display-" + this.id).html('<i class="fas fa-spin fa-spinner"></i>');
 		jQuery.ajax({
 			url: '/SocialNetworks/index.php?url=/config/change_display',
 			type: "post",
@@ -56,9 +56,9 @@ SocialNetwork.prototype = {
 			success: function(returnData){
 				if (returnData.id != '') {
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@admin.display_share_link}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fas fa-eye" title="{@admin.display_share_link}"></i>');
 					} else {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@admin.hide_share_link}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fas fa-eye-slash" title="{@admin.hide_share_link}"></i>');
 					}
 				}
 			}
@@ -83,12 +83,12 @@ jQuery(document).ready(function() {
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
-						<span class="social-connect {social_networks_list.CSS_CLASS}"><i class="fa fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
+						<span class="social-connect {social_networks_list.CSS_CLASS}"><i class="fas fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
 						{social_networks_list.NAME}
 						<div class="sortable-actions">
-							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-							# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
+							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fas fa-arrow-up"></i></a>
+							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fas fa-arrow-down"></i></a>
+							# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fas fa-eye" title="{@admin.display_share_link}"# ELSE #class="fas fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa-pbt fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
 						</div>
 					</div>
 					<div class="spacer"></div>

@@ -9,10 +9,10 @@
 					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>
 							<h2>
-								<a href="{event.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+								<a href="{event.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 								<a href="{event.U_LINK}"><span itemprop="name">{event.TITLE}</span></a>
 								<span class="actions">
-									# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments-o"></i> {event.L_COMMENTS}</a># ENDIF #
+									# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fas fa-comments"></i> {event.L_COMMENTS}</a># ENDIF #
 									# IF event.C_EDIT #
 										<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
 									# ENDIF #

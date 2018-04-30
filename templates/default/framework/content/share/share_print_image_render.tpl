@@ -1,1 +1,1 @@
-<i class="fa fa-fw fa-print"></i>
+<i class="fas fa-fw fa-print"></i>

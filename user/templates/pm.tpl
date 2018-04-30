@@ -58,10 +58,10 @@
 					<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
-								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
+								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fas fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
 							</li>
 							<li>
-								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
+								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fas fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
 					</nav>
@@ -76,7 +76,7 @@
 						<thead>
 							<tr>
 								<th>
-									<i class="fa fa-envelope"></i>
+									<i class="fas fa-envelope"></i>
 								</th>
 								<th></th>
 								<th>
@@ -108,7 +108,7 @@
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 								</td>
 								<td class="convers-announce">
-									<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
+									<i class="fas fa-envelope {convers.list.ANNOUNCE}"></i>
 								</td>
 								<td class="convers-title no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
@@ -138,13 +138,13 @@
 					<table class="announce-legend">
 						<tr>
 							<td>
-								<i class="fa fa-envelope message-announce"></i> {L_READ}
+								<i class="fas fa-envelope message-announce"></i> {L_READ}
 							</td>
 							<td class="no-separator">
-								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
+								<i class="fas fa-envelope message-announce-track"></i> {L_TRACK}
 							</td>
 							<td class="no-separator">
-								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
+								<i class="fas fa-envelope message-announce-new"></i> {L_NOT_READ}
 							</td>
 						</tr>
 					</table>

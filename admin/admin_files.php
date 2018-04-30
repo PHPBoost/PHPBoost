@@ -449,7 +449,7 @@ else
 			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . LangLoader::get_message('edit', 'common') . '" class="far fa-edit"></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,
-			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-move" title="' . $LANG['moveto'] . '"></a>' : '',
+			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa-pbt fa-move" title="' . $LANG['moveto'] . '"></a>' : '',
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],
 			'U_FOLDER' => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),

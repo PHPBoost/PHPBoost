@@ -374,7 +374,7 @@ if (!empty($id_get))
 		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 
 		//Ancre ajoutée aux messages non lus.
-		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
+		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><i class="far fa-hand-point-right"></i></a>' : '';
 
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);

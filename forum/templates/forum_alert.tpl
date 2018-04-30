@@ -2,7 +2,7 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation" class="forum-contents">
 			<header>
-				<h2>{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span> <i class="fa fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></h2>
+				<h2>{U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span> <i class="fas fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></h2>
 			</header>
 
 			# START alert_form #
@@ -61,7 +61,7 @@
 					</div>
 				</fieldset>
 				# END alert_confirm #
-			<footer>{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span> <i class="fa fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></footer>
+			<footer>{U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span> <i class="fas fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></footer>
 		</article>
 
 		# INCLUDE forum_bottom #

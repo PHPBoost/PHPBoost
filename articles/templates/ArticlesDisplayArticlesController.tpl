@@ -1,7 +1,7 @@
 <section id="module-articles">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
@@ -18,27 +18,27 @@
 						# IF C_DELETE #
 							<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
 						# ENDIF #
-							<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
+							<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fas fa-print"></i></a>
 					</span>
 				</h2>
 
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<i class="fas fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
+					<i class="far fa-user" title="${LangLoader::get_message('author', 'common')}"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
 							# IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #|&nbsp;
 						# ENDIF #
 					# ENDIF #
-					<i class="fa fa-calendar" title="${LangLoader::get_message('date', 'date-common')}"></i>&nbsp;<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>&nbsp;|
-					&nbsp;<i class="fa fa-eye" title="{NUMBER_VIEW} {@articles.sort_field.views}"></i>&nbsp;<span title="{NUMBER_VIEW} {@articles.sort_field.views}">{NUMBER_VIEW}</span>
+					<i class="fas fa-calendar-alt" title="${LangLoader::get_message('date', 'date-common')}"></i>&nbsp;<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>&nbsp;|
+					&nbsp;<i class="fas fa-eye" title="{NUMBER_VIEW} {@articles.sort_field.views}"></i>&nbsp;<span title="{NUMBER_VIEW} {@articles.sort_field.views}">{NUMBER_VIEW}</span>
 					# IF C_COMMENTS_ENABLED #
-						&nbsp;|&nbsp;<i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+						&nbsp;|&nbsp;<i class="fas fa-comments" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 					# ENDIF #
 					&nbsp;|&nbsp;<i class="far fa-folder" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					# IF C_KEYWORDS #
-					&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i>
+					&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fas fa-tags"></i>
 						# START keywords #
 							<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 						# END keywords #
@@ -68,7 +68,7 @@
 				# IF C_PAGINATION #
 					<div class="pages-pagination right">
 						# IF C_NEXT_PAGE #
-						<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
+						<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fas fa-arrow-right"></i></a>
 						# ELSE #
 						&nbsp;
 						# ENDIF #
@@ -76,7 +76,7 @@
 					<div class="pages-pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
 					<div class="pages-pagination">
 						# IF C_PREVIOUS_PAGE #
-						<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
+						<a href="{U_PREVIOUS_PAGE}"><i class="fas fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
 						# ENDIF #
 					</div>
 				# ENDIF #

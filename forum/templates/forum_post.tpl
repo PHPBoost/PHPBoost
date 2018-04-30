@@ -51,7 +51,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+				document.getElementById('forum_change_img').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -59,7 +59,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-display"></i>' : '<i class="fa fa-msg-display"></i>';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa-forum fa-msg-not-display"></i>' : '<i class="fa-forum fa-msg-display"></i>';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -71,7 +71,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-post" class="forum-contents">
 			<header>
 				<h2>
-					{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
+					{U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 
@@ -151,7 +151,7 @@
 
 										<p class="center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a title="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus"></i></a>
+											<a title="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fas fa-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>
@@ -187,7 +187,7 @@
 				</form>
 			</div>
 			<footer>
-				{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
+				{U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
 			</footer>
 		</article>
 

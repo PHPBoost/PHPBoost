@@ -16,10 +16,10 @@
 				# START list #
 				<div class="msg-position">
 					<div class="msg-title">
-						{list.U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {list.U_TITLE_T}
+						{list.U_FORUM_CAT} <i class="fas fa-chevron-circle-right"></i> {list.U_TITLE_T}
 						<span class="float-right">
-							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a>
-							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
+							<a href="#go-top" title="go top"><i class="fas fa-arrow-up"></i></a>
+							<a href="#go-bottom" title="go bottom"><i class="fas fa-arrow-down"></i></a>
 						</span>
 					</div>
 					<div class="msg-container">
@@ -64,7 +64,7 @@
 						<div class="msg-contents-container">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="fa fa-hand-o-right"></i></a> {list.DATE}
+									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="far fa-hand-point-right"></i></a> {list.DATE}
 								</span>
 
 							</div>

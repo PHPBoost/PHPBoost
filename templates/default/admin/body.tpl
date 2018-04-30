@@ -4,22 +4,22 @@
 			<ul>
 				<li>
 					<a href="{PATH_TO_ROOT}/" title="{L_INDEX_SITE}">
-						<i class="fa fa-fw fa-home"></i> <span>{L_INDEX_SITE}</span>
+						<i class="fas fa-fw fa-home"></i> <span>{L_INDEX_SITE}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin/admin_index.php" title="{L_ADMINISTRATION}">
-						<i class="fa fa-fw fa-cogs"></i> <span>{L_ADMINISTRATION}</span>
+						<i class="fas fa-fw fa-cogs"></i> <span>{L_ADMINISTRATION}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" title="{L_EXTEND_MENU}">
-						<i class="fa fa-fw fa-th"></i> <span>{L_EXTEND_MENU}</span>
+						<i class="fas fa-fw fa-th"></i> <span>{L_EXTEND_MENU}</span>
 					</a>
 				</li>
 				<li>
 					<a href="${relative_url(UserUrlBuilder::disconnect())}" title="{L_DISCONNECT}">
-						<i class="fa fa-fw fa-sign-out"></i> <span>{L_DISCONNECT}</span>
+						<i class="fas fa-fw fa-sign-out"></i> <span>{L_DISCONNECT}</span>
 					</a>
 				</li>
 			</ul>
@@ -48,17 +48,17 @@
 						<ul>
 							<li>
 								<a href="http://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
-									<i class="fa fa-fw fa-globe"></i> {L_INDEX_SUPPORT}
+									<i class="fas fa-fw fa-globe"></i> {L_INDEX_SUPPORT}
 								</a>
 							</li>
 							<li>
 								<a href="http://www.phpboost.com/faq" title="{L_INDEX_FAQ}">
-									<i class="fa fa-fw fa-question-circle"></i> {L_INDEX_FAQ}
+									<i class="fas fa-fw fa-question-circle"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
 							<li>
 								<a href="http://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
-									<i class="fa fa-fw fa-book"></i> {L_INDEX_DOCUMENTATION}
+									<i class="fas fa-fw fa-book"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
 						</ul>

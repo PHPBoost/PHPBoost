@@ -69,7 +69,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<div/> ', {id : 'calendar' + id + '_container', class : 'calendar-container'}).appendTo('#td3_' + id + '_bt');
 
-			jQuery('<a/> ', {id : 'release_date' + id + '_link', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "', 1);return false;", style : 'cursor:pointer;'}).html('<i class="fa fa-calendar"></i>').appendTo('#calendar' + id + '_container');
+			jQuery('<a/> ', {id : 'release_date' + id + '_link', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "', 1);return false;", style : 'cursor:pointer;'}).html('<i class="fas fa-calendar-alt"></i>').appendTo('#calendar' + id + '_container');
 
 			jQuery('<div/> ', {id : 'calendar' + id, style : 'display:none;', class : 'calendar-block-container'}).appendTo('#calendar' + id + '_container');
 
@@ -146,7 +146,7 @@ function display_default_version_radio(version_id)
 	<tfoot>
 		<tr>
 			<td>
-				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" title="{@titles.add_version}" id="add-version"><i class="fa fa-plus"></i></a>
+				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" title="{@titles.add_version}" id="add-version"><i class="fas fa-plus"></i></a>
 			</td>
 			<td></td>
 			<td></td>
@@ -177,7 +177,7 @@ function display_default_version_radio(version_id)
 			<td>
 				<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 				<div class="calendar-container">
-					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;"><i class="fa fa-calendar"></i></a>
+					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;"><i class="fas fa-calendar-alt"></i></a>
 					<div id="calendar{versions.ID}" class="calendar-block-container" style="display: none;">
 						<div id="release_date{versions.ID}_date" class="calendar-block"></div>
 					</div>

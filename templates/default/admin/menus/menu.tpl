@@ -5,7 +5,7 @@
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus-block-title">{NAME}</h5>
 		
-		<a href="" class="menus-block-move-cursor" title="${LangLoader::get_message('move', 'admin')}" onclick="return false;"><i class="fa fa-arrows"></i></a>
+		<a href="" class="menus-block-move-cursor" title="${LangLoader::get_message('move', 'admin')}" onclick="return false;"><i class="fas fa-arrows-alt"></i></a>
 		# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}" class="far fa-edit"></a>
 		# ENDIF #
@@ -13,7 +13,7 @@
 			<a href="{U_DELETE}" title="{L_DEL}" class="far fa-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 		
-		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #"><i class="fa # IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
+		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #"><i class="fas # IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
 	</div>
 	
 	{CONTENTS}

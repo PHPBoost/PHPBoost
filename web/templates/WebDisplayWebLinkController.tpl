@@ -1,7 +1,7 @@
 <section id="module-web">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
@@ -50,11 +50,11 @@
 						# ENDIF #
 						# IF C_VISIBLE #
 							<a href="{U_VISIT}" rel="nofollow" class="basic-button">
-								<i class="fa fa-globe"></i> {@visit}
+								<i class="fas fa-globe"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
 							<a href="{U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-								<i class="fa fa-unlink"></i>
+								<i class="fas fa-unlink"></i>
 							</a>
 							# ENDIF #
 						# ENDIF #

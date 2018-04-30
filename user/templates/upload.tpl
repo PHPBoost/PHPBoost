@@ -76,13 +76,13 @@
 
 		if( !hide_folder )
 		{
-			document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
+			document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fas fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
 		{
 			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div>';
+			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fas fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div>';
 			document.getElementById('folder_name').focus();
 			this.divid--;
 			hide_folder = false;
@@ -101,7 +101,7 @@
 		var name = document.getElementById('finput' + id_folder).value;
 		var regex = /\/|\.|\\|\||\?|<|>|\"/;
 
-		document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+		document.getElementById('img' + id_folder).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
@@ -160,7 +160,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new-folder' + divid).innerHTML = '<a class="infos-options" href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fa fa-folder fa-2x"></i></a> &nbsp;<span class="infos-options" id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a></span>&nbsp;<span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="far fa-delete"></i></a></span>&nbsp;<span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" title="{L_MOVETO}" class="fa fa-move"></a></span><span id="img' + xhr_object.responseText + '"></span></div>';
+						document.getElementById('new-folder' + divid).innerHTML = '<a class="infos-options" href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fas fa-folder fa-2x"></i></a> &nbsp;<span class="infos-options" id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a></span>&nbsp;<span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="far fa-delete"></i></a></span>&nbsp;<span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" title="{L_MOVETO}" class="fa-pbt fa-move"></a></span><span id="img' + xhr_object.responseText + '"></span></div>';
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -202,7 +202,7 @@
 		var name = document.getElementById("fiinput" + id_file).value;
 		var regex = /\/|\\|\||\?|<|>|\"/;
 
-		document.getElementById('imgf' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+		document.getElementById('imgf' + id_file).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
@@ -331,18 +331,18 @@
 			</div>
 
 			<div class="upload-address-bar">
-				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
+				<a href="upload.php?root=1{POPUP}"><i class="fas fa-home"></i> {L_ROOT}</a>{URL}
 			</div>
 
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
-					<i class="fa fa-level-up"></i> {L_FOLDER_UP}
+					<i class="fas fa-level-up-alt"></i> {L_FOLDER_UP}
 				</a>
 				<a href="javascript:display_new_folder();">
-					<i class="fa fa-plus"></i> {L_FOLDER_NEW}
+					<i class="fas fa-plus"></i> {L_FOLDER_NEW}
 				</a>
 				<a href="javascript:document.getElementById('upload-file').click();">
-					<i class="fa fa-save"></i> {L_ADD_FILES}
+					<i class="fas fa-save"></i> {L_ADD_FILES}
 				</a>
 			</div>
 			<div class="spacer"></div>
@@ -358,7 +358,7 @@
 					# START folder #
 						<div class="upload-elements-repertory">
 							<a class="infos-options" href="upload.php?f={folder.ID}{POPUP}">
-								<i class="fa # IF folder.C_MEMBER_FOLDER #fa-users # ELSE #fa-folder # ENDIF #fa-2x"></i>
+								<i class="fas # IF folder.C_MEMBER_FOLDER #fa-users # ELSE #fa-folder # ENDIF #fa-2x"></i>
 							</a>
 							<span class="infos-options" id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></span>
 							<div class="upload-repertory-controls">
@@ -367,7 +367,7 @@
 									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}"  class="far fa-delete" data-confirmation="delete-element"></a>
 								</span>
 								<span>
-									<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+									<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="fa-pbt fa-move"></a>
 								</span>
 								<span id="img{folder.ID}"></span>
 							</div>
@@ -392,7 +392,7 @@
 						<div class="upload-file-controls">
 							{files.RENAME_FILE}
 							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
-							<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+							<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa-pbt fa-move"></a>
 							{files.INSERT}
 						</div>
 						<span class="infos-options text-strong">{files.FILETYPE}</span>

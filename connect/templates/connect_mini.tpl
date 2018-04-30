@@ -91,7 +91,7 @@
 			<ul class="connect-elements-container">
 				<li class="connect-element connect-profil">
 					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">
-						<i class="fas fa-profil"></i><span class="pbt-small-screen">{@dashboard}</span>
+						<i class="fa-pbt fa-profil"></i><span class="pbt-small-screen">{@dashboard}</span>
 					</a>
 				</li>
 				<li class="connect-element connect-pm# IF C_HAS_PM # connect-event# ENDIF #">

@@ -1004,7 +1004,7 @@ else //Liste des conversation, dans la boite du membre.
 		
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" title="" class="fa fa-hand-o-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" title="" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(

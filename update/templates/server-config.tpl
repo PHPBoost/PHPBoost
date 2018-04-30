@@ -15,9 +15,9 @@
 		<label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
 		<div class="form-field">
 		# IF PHP_VERSION_OK #
-			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+			<i class="fa-pbt fa-success fa-2x" title="{@yes}"></i>
 		# ELSE #
-			<i class="fa fa-error fa-2x" title="{@no}"></i>
+			<i class="fa-pbt fa-error fa-2x" title="{@no}"></i>
 		# ENDIF #
 		</div>
 	</div>
@@ -30,9 +30,9 @@
 		<label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
 		<div class="form-field">
 		# IF HAS_GD_LIBRARY #
-			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+			<i class="fa-pbt fa-success fa-2x" title="{@yes}"></i>
 		# ELSE #
-			<i class="fa fa-error fa-2x" title="{@no}"></i>
+			<i class="fa-pbt fa-error fa-2x" title="{@no}"></i>
 		# ENDIF #
 		</div>
 	</div>
@@ -40,9 +40,9 @@
 		<label>{@php.extensions.check.curlLibrary} <span class="field-description">{@php.extensions.check.curlLibrary.explanation}</span></label>
 		<div class="form-field">
 		# IF HAS_CURL_LIBRARY #
-			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+			<i class="fa-pbt fa-success fa-2x" title="{@yes}"></i>
 		# ELSE #
-			<i class="fa fa-error fa-2x" title="{@no}"></i>
+			<i class="fa-pbt fa-error fa-2x" title="{@no}"></i>
 		# ENDIF #
 		</div>
 	</div>
@@ -50,9 +50,9 @@
 		<label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.explanation}</span></label>
 		<div class="form-field">
 		# IF HAS_MBSTRING_LIBRARY #
-			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+			<i class="fa-pbt fa-success fa-2x" title="{@yes}"></i>
 		# ELSE #
-			<i class="fa fa-error fa-2x" title="{@no}"></i>
+			<i class="fa-pbt fa-error fa-2x" title="{@no}"></i>
 		# ENDIF #
 		</div>
 	</div>
@@ -61,12 +61,12 @@
 		<div class="form-field">
 		# IF URL_REWRITING_KNOWN #
 			# IF URL_REWRITING_AVAILABLE #
-			<i class="fa fa-success fa-2x" title="{@yes}"></i>
+			<i class="fa-pbt fa-success fa-2x" title="{@yes}"></i>
 			# ELSE #
-			<i class="fa fa-error fa-2x" title="{@no}"></i>
+			<i class="fa-pbt fa-error fa-2x" title="{@no}"></i>
 			# ENDIF #
 		# ELSE #
-		<i class="fa fa-question fa-2x" title="{@unknown}"></i>
+		<i class="fa-pbt fa-question fa-2x" title="{@unknown}"></i>
 		# ENDIF #
 		</div>
 	</div>

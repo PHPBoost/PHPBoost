@@ -1,7 +1,7 @@
 <section id="module-news">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 	</header>
@@ -28,17 +28,17 @@
 
 					<div class="more">
 						# IF news.C_AUTHOR_DISPLAYED #
-							<i class="fas fa-user-o"></i>
+							<i class="far fa-user"></i>
 							# IF news.C_AUTHOR_CUSTOM_NAME #
 								{news.AUTHOR_CUSTOM_NAME}
 							# ELSE #
 								# IF news.C_AUTHOR_EXIST #<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a> | # ELSE #{news.PSEUDO} | # ENDIF #
 							# ENDIF #
 						# ENDIF #
-						<i class="fa fa-calendar"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE} | # ELSE #{news.DIFFERED_START_DATE} | # ENDIF #</time>
+						<i class="fas fa-calendar-alt"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE} | # ELSE #{news.DIFFERED_START_DATE} | # ENDIF #</time>
 						<i class="far fa-folder"></i> <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
-						# IF C_COMMENTS_ENABLED #| # IF news.C_COMMENTS #<i class="fa fa-comments-o"></i> {news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}# ENDIF #
-						# IF news.C_NB_VIEW_ENABLED #| <span title="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye"></i> {news.NUMBER_VIEW}</span> # ENDIF #
+						# IF C_COMMENTS_ENABLED #| # IF news.C_COMMENTS #<i class="fas fa-comments"></i> {news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}# ENDIF #
+						# IF news.C_NB_VIEW_ENABLED #| <span title="{news.NUMBER_VIEW} {@news.view}"><i class="fas fa-eye"></i> {news.NUMBER_VIEW}</span> # ENDIF #
 					</div>
 
 					<meta itemprop="url" content="{news.U_LINK}">

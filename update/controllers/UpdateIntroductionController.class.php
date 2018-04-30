@@ -51,7 +51,7 @@ class UpdateIntroductionController extends UpdateController
 		$form = new HTMLForm('preambleForm', UpdateUrlBuilder::server_configuration()->rel(), false);
 		
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'introduction');
+		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fas fa-arrow-right', 'introduction');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
 		$view->put_all(array(

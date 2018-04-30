@@ -12,7 +12,7 @@
 			<li class="block">
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_PM}</span></i><i class="far fa-envelope fa-stack-2x"></i></span><!--
+					<span class="fa fa-stack"><i class="fas fa-circle blink fa-circle-alert"><span>{NUMBER_PM}</span></i><i class="far fa-envelope fa-stack-2x"></i></span><!--
 				 --># ELSE #<!--
 				 --><i class="far fa-envelope fa-2x"></i><!--
 				 --># END IF #<!--
@@ -22,7 +22,7 @@
 			# IF C_USER_AUTH_FILES #
 			<li class="block">
 				<a href="{U_UPLOAD}">
-					<i class="fa fa-cloud-upload fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
+					<i class="fas fa-cloud-upload-alt fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
 				</a>
 			</li>
 			# ENDIF #
@@ -41,14 +41,14 @@
 			# IF C_IS_MODERATOR #
 			<li class="block">
 				<a href="{U_MODERATION_PANEL}">
-					<i class="fas fa-gavel fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('moderation_panel', 'main')}</span>
+					<i class="fa-pbt fa-gavel fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('moderation_panel', 'main')}</span>
 				</a>
 			</li>
 			# ENDIF #
 			<li class="block">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="far fa-file-alt fa-stack-2x"></i></span><!--
+					<span class="fa fa-stack"><i class="fas fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="far fa-file-alt fa-stack-2x"></i></span><!--
 				 --># ELSE #<!--
 				 --><i class="far fa-file-alt fa-2x"></i><!--
 				 --># ENDIF #<!--

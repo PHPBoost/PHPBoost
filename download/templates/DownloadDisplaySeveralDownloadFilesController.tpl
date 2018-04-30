@@ -1,7 +1,7 @@
 <section id="module-download">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
@@ -125,15 +125,15 @@
 
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
 					<div class="more">
-						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>
+						<i class="fas fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}"></i>
 						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
-						# IF C_NB_VIEW_ENABLED # | <span title="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
+						# IF C_NB_VIEW_ENABLED # | <span title="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fas fa-eye"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							| <i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
+							| <i class="fas fa-comments" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
 						# ENDIF #
 						# IF downloadfiles.C_KEYWORDS #
-							| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
+							| <i class="fas fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
 							# START downloadfiles.keywords #
 								<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
 								# IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
@@ -163,11 +163,11 @@
 								# ENDIF #
 								# IF downloadfiles.C_VISIBLE #
 									<a href="{downloadfiles.U_DOWNLOAD}" class="basic-button">
-										<i class="fa fa-download"></i> {@download}
+										<i class="fas fa-download"></i> {@download}
 									</a>
 									# IF IS_USER_CONNECTED #
 									<a href="{downloadfiles.U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-										<i class="fa fa-unlink"></i>
+										<i class="fas fa-unlink"></i>
 									</a>
 									# ENDIF #
 								# ENDIF #

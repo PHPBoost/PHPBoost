@@ -112,9 +112,9 @@ class InstallWebsiteConfigController extends InstallController
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fas fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'website');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fas fa-arrow-right', 'website');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}

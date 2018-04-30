@@ -21,12 +21,12 @@
 			<header>
 				<h2>
 					<span class="forum-cat-title">
-						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa-pbt fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat" title="{forums_list.cats.NAME}">{forums_list.cats.NAME}</a>
 					</span>
 					# IF C_DISPLAY_UNREAD_DETAILS #
 					<span class="float-right">
-						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
+						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa-forum fa-notread"></i></a>
 					</span>
 					# ENDIF #
 				</h2>
@@ -35,11 +35,11 @@
 				<table id="table-{forums_list.cats.IDCAT}" class="forum-table">
 					<thead>
 						<tr>
-							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
-							<th class="forum-topic" title="{L_FORUM}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_FORUM}</span></th>
-							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-files-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" title="{L_MESSAGE}"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
-							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+							<th class="forum-announce-topic"><i class="fas fa-eye"></i></th>
+							<th class="forum-topic" title="{L_FORUM}"><i class="far fa-file hidden-small-screens"></i><span class="hidden-large-screens">{L_FORUM}</span></th>
+							<th class="forum-topic" title="{L_TOPIC}"><i class="far fa-files hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-message-nb"><i class="fas fa-comments fa-fw hidden-small-screens" title="{L_MESSAGE}"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
+							<th class="forum-last-topic"><i class="far fa-clock fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -54,7 +54,7 @@
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum-announce-topic">
-								<i class="fa fa-globe"></i>
+								<i class="fas fa-globe"></i>
 							</td>
 							<td class="forum-topic" colspan="4">
 								<a href="{forums_list.subcats.U_FORUM_URL}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
@@ -62,7 +62,7 @@
 							</td>
 							# ELSE #
 							<td class="forum-announce-topic">
-								<i class="fa # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.IMG_ANNOUNCE}"></i>
+								<i class="fa-forum # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.IMG_ANNOUNCE}"></i>
 							</td>
 							<td class="forum-topic">
 								<a href="{forums_list.subcats.U_FORUM_VARS}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
@@ -78,17 +78,17 @@
 							<td class="forum-last-topic">
 							# IF forums_list.subcats.C_LAST_TOPIC_MSG #
 								<span class="last-topic-title small">
-									<i class="fa fa-file-o fa-fw"></i> <a href="{forums_list.subcats.U_LAST_TOPIC}">
+									<i class="far fa-file fa-fw"></i> <a href="{forums_list.subcats.U_LAST_TOPIC}">
 										{forums_list.subcats.LAST_TOPIC_TITLE}
 									</a>
 								</span>
 								<span class="last-topic-date small">
-									<i class="fa fa-hand-o-right fa-fw"></i> <a href="{forums_list.subcats.U_LAST_MSG}" title="">
+									<i class="far fa-hand-point-right fa-fw"></i> <a href="{forums_list.subcats.U_LAST_MSG}" title="">
 										{forums_list.subcats.LAST_MSG_DATE_FULL}
 									</a>
 								</span>
 								<span class="last-topic-user small">
-									<i class="fas fa-user-o fa-fw"></i>
+									<i class="far fa-user fa-fw"></i>
 									# IF forums_list.subcats.C_LAST_MSG_GUEST #
 										<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class="{forums_list.subcats.LAST_MSG_USER_LEVEL}" {forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
 									# ELSE #

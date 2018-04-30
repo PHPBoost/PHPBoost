@@ -1,7 +1,7 @@
 <section id="module-articles">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
 			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
@@ -71,14 +71,14 @@
 
 						<div class="more">
 							# IF articles.C_AUTHOR_DISPLAYED #
-								<i class="fas fa-user-o"></i>
+								<i class="far fa-user"></i>
 								# IF articles.C_AUTHOR_CUSTOM_NAME #
 									{articles.AUTHOR_CUSTOM_NAME}
 								# ELSE #
 									# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a> | # ELSE #{articles.PSEUDO} | # ENDIF #
 								# ENDIF #
 							# ENDIF #
-							<i class="fa fa-calendar"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
+							<i class="fas fa-calendar-alt"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
 							<i class="far fa-folder"></i> <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 						</div>
 
