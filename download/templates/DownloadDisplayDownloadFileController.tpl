@@ -1,8 +1,8 @@
 <section id="module-download">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
-			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
 		</h1>
 	</header>
 	<div class="content">
@@ -15,10 +15,10 @@
 					<span id="name" itemprop="name">{NAME}</span>
 					<span class="actions">
 						# IF C_EDIT #
-							<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
+							<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 						# ENDIF #
 						# IF C_DELETE #
-							<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+							<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 						# ENDIF #
 					</span>
 				</h2>
@@ -41,12 +41,12 @@
 						# IF C_VISIBLE #
 							# IF C_DISPLAY_DOWNLOAD_LINK #
 								<a href="{U_DOWNLOAD}" class="basic-button">
-									<i class="fas fa-download"></i> {@download}
+									<i class="fa fa-download"></i> {@download}
 								</a>
 
 								# IF IS_USER_CONNECTED #
 								<a href="{U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-									<i class="fas fa-unlink"></i>
+									<i class="fa fa-unlink"></i>
 								</a>
 								# ENDIF #
 							# ELSE #

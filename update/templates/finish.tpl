@@ -11,13 +11,13 @@
 			<ul>
 				<li>
 					<a href="{PATH_TO_ROOT}/" title="">
-						<i class="fas fa-home fa-2x"></i>
+						<i class="fa fa-home fa-2x"></i>
 						<span>{@site.index}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin" title="">
-						<i class="fas fa-cogs fa-2x"></i>
+						<i class="fa fa-cogs fa-2x"></i>
 						<span>{@admin.index}</span>
 					</a>
 				</li>

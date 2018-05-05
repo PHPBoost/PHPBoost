@@ -30,12 +30,12 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	public static $brands_pictures_list = array(
 		'bitbucket' => array('title' => 'Bitbucket', 'picture' => 'fa-bitbucket'),
 		'deviantart' => array('title' => 'Deviantart', 'picture' => 'fa-deviantart'),
-		'facebook' => array('title' => 'Facebook', 'picture' => 'fa-facebook-official'),
+		'facebook' => array('title' => 'Facebook', 'picture' => 'fa-facebook'),
 		'github' => array('title' => 'Github', 'picture' => 'fa-github'),
-		'google' => array('title' => 'Google+', 'picture' => 'fa-google-plus'),
+		'google' => array('title' => 'Google+', 'picture' => 'fa-google-plus-g'),
 		'hotmail' => array('title' => 'Hotmail', 'picture' => 'fa-windows'),
 		'instagram' => array('title' => 'Instagram', 'picture' => 'fa-instagram'),
-		'linkedin' => array('title' => 'Linkedin', 'picture' => 'fa-linkedin-square'),
+		'linkedin' => array('title' => 'Linkedin', 'picture' => 'fa-linkedin'),
 		'live' => array('title' => 'MSN', 'picture' => 'fa-windows'),
 		'msn' => array('title' => 'MSN', 'picture' => 'fa-windows'),
 		'outlook' => array('title' => 'Outlook', 'picture' => 'fa-windows'),
@@ -44,7 +44,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		'twitch' => array('title' => 'Twitch', 'picture' => 'fa-twitch'),
 		'twitter' => array('title' => 'Twitter', 'picture' => 'fa-twitter'),
 		'yahoo' => array('title' => 'Yahoo', 'picture' => 'fa-yahoo'),
-		'youtube' => array('title' => 'Youtube', 'picture' => 'fa-youtube-square')
+		'youtube' => array('title' => 'Youtube', 'picture' => 'fa-youtube')
 	);
 	
 	public function __construct()
@@ -141,7 +141,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
 				if (TextHelper::strstr($value, $id))
-					$displayed_value = '<a href="mailto:' . $value . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+					$displayed_value = '<a href="mailto:' . $value . '" class="basic-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
 		else if ($member_extended_field->get_regex() == 5)
@@ -151,7 +151,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
 				if (TextHelper::strstr($value, $id))
-					$displayed_value = '<a href="' . $value . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+					$displayed_value = '<a href="' . $value . '" class="basic-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
 		else

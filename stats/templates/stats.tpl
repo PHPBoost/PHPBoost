@@ -6,22 +6,22 @@
 
 		<nav id="menustats">
 			<a href="" class="js-menu-button" onclick="open_stats_menu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
-				<i class="fas fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
+				<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
 			</a>
 			<ul>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats">
-						<i class="fas fa-home"></i> <span>{L_SITE}</span>
+						<i class="fa fa-home"></i> <span>{L_SITE}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats">
-						<i class="fas fa-users"></i> <span>{L_USERS}</span>
+						<i class="fa fa-users"></i> <span>{L_USERS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">
-						<i class="fas fa-eye"></i> <span>{L_VISITS}</span>
+						<i class="fa fa-eye"></i> <span>{L_VISITS}</span>
 					</a>
 				</li>
 				<li>
@@ -31,27 +31,27 @@
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">
-						<i class="fas fa-globe"></i> <span>{L_BROWSERS}</span>
+						<i class="fa fa-globe"></i> <span>{L_BROWSERS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">
-						<i class="fas fa-laptop"></i> <span>{L_OS}</span>
+						<i class="fa fa-laptop"></i> <span>{L_OS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">
-						<i class="fas fa-flag-o"></i> <span>{L_LANG}</span>
+						<i class="fa fa-flag"></i> <span>{L_LANG}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats">
-						<i class="fas fa-share-square"></i> <span>{L_REFERER}</span>
+						<i class="fa fa-share-square"></i> <span>{L_REFERER}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats">
-						<i class="fas fa-key"></i> <span>{L_KEYWORD}</span>
+						<i class="fa fa-key"></i> <span>{L_KEYWORD}</span>
 					</a>
 				</li>
 			</ul>
@@ -242,7 +242,7 @@
 						# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
 						<div class="date-selector-container">
 							<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-							<a class="fas fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
 							# IF C_STATS_DAY #
 							<select name="d">
 								{STATS_DAY}
@@ -260,7 +260,7 @@
 							# ENDIF #
 
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a class="fas fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
+							<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
 							<p>
 								<input type="hidden" name="{TYPE}" value="1">
 								<input type="hidden" name="token" value="{TOKEN}">
@@ -500,7 +500,7 @@
 				else // XMLHttpRequest non support? par le navigateur
 					return;
 
-				document.getElementById('load' + divid).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function()
@@ -603,7 +603,7 @@
 			}
 			else
 			{
-				document.getElementById('load' + divid).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function()
 				{

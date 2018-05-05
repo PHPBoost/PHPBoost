@@ -202,7 +202,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->enable_css_button = new FormButtonSubmit('
             <span class="icon-stack">
                 <i class="fab fa-css3 icon-main"></i>
-                <i class="fas fa-plus icon-sup"></i>
+                <i class="fa fa-plus icon-sup"></i>
             </span>
         ', 'enable_css_cache');
 		$enable_css_cache->add_button($this->enable_css_button);
@@ -225,7 +225,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->disable_css_button = new FormButtonSubmit('
             <span class="icon-stack">
                 <i class="fab fa-css3 icon-main"></i>
-                <i class="fas fa-minus icon-sup"></i>
+                <i class="fa fa-minus icon-sup"></i>
             </span>
         ', 'disable_css_cache');
 		$disable_css_cache->add_button($this->disable_css_button);
@@ -248,7 +248,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->clean_css_button = new FormButtonSubmit('
             <span class="icon-stack">
                 <i class="fab fa-css3 icon-main"></i>
-                <i class="fas fa-sync icon-sup"></i>
+                <i class="fa fa-refresh icon-sup"></i>
             </span>
         ', 'clean_css_cache');
 		$clean_css_cache->add_button($this->clean_css_button);
@@ -270,7 +270,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->clean_button = new FormButtonSubmit('
             <span class="icon-stack">
                 <i class="fab fa-html5 icon-main"></i>
-                <i class="fas fa-sync icon-sup"></i>
+                <i class="fa fa-refresh icon-sup"></i>
             </span>
         ', 'clean_cache');
 		$clean_cache->add_button($this->clean_button);
@@ -291,8 +291,8 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->clean_syndication_button = new FormButtonSubmit('
             <span class="icon-stack">
-                <i class="fas fa-rss icon-main"></i>
-                <i class="fas fa-sync icon-sup"></i>
+                <i class="fa fa-rss icon-main"></i>
+                <i class="fa fa-refresh icon-sup"></i>
             </span>
         ', 'clean_syndication_cache');
 		$clean_syndication_cache->add_button($this->clean_syndication_button);
@@ -312,8 +312,8 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->disable_left_button = new FormButtonSubmit('
             <span class="icon-stack">
-                <i class="fas fa-th-list icon-main"></i>
-                <i class="fas fa-minus icon-sup"></i>
+                <i class="fa fa-th-list icon-main"></i>
+                <i class="fa fa-minus icon-sup"></i>
             </span>
         ', 'disable_left_menu');
 		$disable_left_menu->add_button($this->disable_left_button);
@@ -335,8 +335,8 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->enable_left_button = new FormButtonSubmit('
             <span class="icon-stack">
-                <i class="fas fa-th-list icon-main"></i>
-                <i class="fas fa-plus icon-sup"></i>
+                <i class="fa fa-th-list icon-main"></i>
+                <i class="fa fa-plus icon-sup"></i>
             </span>
         ', 'enable_left_menu');
 		$enable_left_menu->add_button($this->enable_left_button);
@@ -358,8 +358,8 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->disable_right_button = new FormButtonSubmit('
             <span class="icon-stack">
-                <i class="fas fa-th-list fa-rotate-180 icon-main"></i>
-                <i class="fas fa-minus icon-sup"></i>
+                <i class="fa fa-th-list fa-rotate-180 icon-main"></i>
+                <i class="fa fa-minus icon-sup"></i>
             </span>
         ', 'disable_right_menu');
 		$disable_right_menu->add_button($this->disable_right_button);
@@ -383,8 +383,8 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->enable_right_button = new FormButtonSubmit('
             <span class="icon-stack">
-                <i class="fas fa-th-list fa-rotate-180 icon-main"></i>
-                <i class="fas fa-plus icon-sup"></i>
+                <i class="fa fa-th-list fa-rotate-180 icon-main"></i>
+                <i class="fa fa-plus icon-sup"></i>
             </span>
         ', 'enable_right_menu');
 		$enable_right_menu->add_button($this->enable_right_button);

@@ -325,7 +325,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		##Callbacks
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		##Remplacement des balises imbriquées
 
@@ -465,18 +465,26 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_fa($matches)
 	{
 		$fa_code = "";
-		if ( !empty($matches[2]) ) {
-			$options = explode(' ', $matches[2]);
+
+		if ( !empty($matches[1]) ) {
+			$fa_code = "=" . 'fa' . $matches[1];
+		}
+
+		if ( !empty($matches[3]) ) {
+			$options = explode(' ', $matches[3]);
 			foreach ($options as $index => $option) {
-				if ( $index == 0 ) {
-					$fa_code = "=" . $fa_code;
-				} else {
-					if ( $index > 1 ) { $fa_code = $fa_code . ","; }
-					$fa_code = $fa_code . $option;
+				if (!empty($option)) {
+					if ( $index == 0 && empty($fa_code) ) {
+						$fa_code = "=" . $fa_code;
+					} else {
+						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
+						$fa_code = $fa_code . $option;
+					}
 				}
 			}
 		}
-		return '[fa' . $fa_code . ']' . $matches[1] . '[/fa]';
+
+		return '[fa' . $fa_code . ']' . $matches[2] . '[/fa]';
 	}
 
 	/**

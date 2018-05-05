@@ -331,7 +331,7 @@ jQuery(document).ready(function(){
 			jQuery(this).removeClass('no-js');
 			jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
 			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
-			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "title="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa-pbt fa-close"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
+			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "title="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-times"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
 			IDCODE = IDCODE + 1;
 		}
 	} );
@@ -362,7 +362,7 @@ jQuery(document).ready(function(){
 	jQuery('.formatter-code').each( function(){
 		if ( !jQuery(this).children('.formatter-content').hasClass('copy-code-content') )
 		{
-			jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" title="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="fas fa-clipboard"><span class="copy-code-txt">' + L_COPYTOCLIPBOARD + '</span></i></span>');
+			jQuery(this).prepend('<span id="copy-code-' + IDCODE + '" class="copy-code" title="' + L_COPYTOCLIPBOARD + '" onclick="copy_code_clipboard(' + IDCODE + ')"><i class="fa fa-clipboard"><span class="copy-code-txt">' + L_COPYTOCLIPBOARD + '</span></i></span>');
 			jQuery(this).children('.formatter-content').attr("id", 'copy-code-' + IDCODE + '-content');
 			jQuery(this).children('.formatter-content').addClass('copy-code-content');
 			IDCODE = IDCODE + 1;	
@@ -495,7 +495,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	if( login != "" )
 	{
 		if (jQuery('#search_img' + searchid))
-			jQuery('#search_img' + searchid).append('<i class="fas fa-spinner fa-spin"></i>');
+			jQuery('#search_img' + searchid).append('<i class="fa fa-spinner fa-spin"></i>');
 
 		jQuery.ajax({
 			url: PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1',

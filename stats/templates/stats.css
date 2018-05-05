@@ -89,8 +89,8 @@
 #menustats i.fa-eye 					{ color: #2ECC71; }
 #menustats li:hover i.fa-eye 			{ color: #16A352; }
 
-#menustats i.fa-file-o 					{ color: #4372AA; }
-#menustats li:hover i.fa-file-o 		{ color: #2D4D73; }
+#menustats i.fa-file 					{ color: #4372AA; }
+#menustats li:hover i.fa-file    		{ color: #2D4D73; }
 
 #menustats i.fa-globe 					{ color: #1FA6D5; }
 #menustats li:hover i.fa-globe 			{ color: #1589B1; }
@@ -98,11 +98,11 @@
 #menustats i.fa-laptop 					{ color: #999999; }
 #menustats li:hover i.fa-laptop	 		{ color: #777777; }
 
-#menustats i.fa-flag-o 					{ color: #9B59B6; }
-#menustats li:hover i.fa-flag-o 		{ color: #8533A7; }
+#menustats i.fa-flag 					{ color: #9B59B6; }
+#menustats li:hover i.fa-flag           { color: #8533A7; }
 
-#menustats i.fa-share-square-o 			{ color: #f86227; }
-#menustats li:hover i.fa-share-square-o { color: #D6511C; }
+#menustats i.fa-share-square 			{ color: #f86227; }
+#menustats li:hover i.fa-share-square   { color: #D6511C; }
 
 #menustats i.fa-key 					{ color: #F1C40F; }
 #menustats li:hover i.fa-key 			{ color: #D8B00E; }

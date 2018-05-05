@@ -44,13 +44,13 @@
 					<div class="message-date">
 						<span class="actions">
 							# IF messages.C_EDIT #
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							# ENDIF #
 							# IF messages.C_DELETE #
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 							# ENDIF #
 						</span>
-						<a href="{messages.U_ANCHOR}"><i class="far fa-hand-point-right"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
 					</div>
 
 					<div class="message-message">

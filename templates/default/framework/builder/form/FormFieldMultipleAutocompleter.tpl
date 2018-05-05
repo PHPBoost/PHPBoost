@@ -17,7 +17,7 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 		
 		this.load_autocompleter('field_' + id);
 		
-		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="far fa-delete"></i>').appendTo('#' + id);
+		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
 		
 		this.integer++;
 	}
@@ -50,8 +50,8 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="form-autocompleter-container">
 		<input type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
-		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="form-autocompleter-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fas fa-plus"></i></a>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="form-autocompleter-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>

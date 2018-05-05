@@ -114,7 +114,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$tpl->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="far fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . LangLoader::get_message('delete', 'common') . '" class="far fa-delete" data-confirmation="delete-element"></a></span>',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}

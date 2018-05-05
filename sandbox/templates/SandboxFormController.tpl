@@ -7,7 +7,7 @@
 
 	<div class="sandbox-summary">
 	  <div class="close-summary">
-		<i class="fas fa-arrow-circle-left"></i>
+		<i class="fa fa-arrow-circle-left"></i>
 	  </div>
 	  <ul>
 		  <li>
@@ -46,7 +46,7 @@
 	  </ul>
 	</div>
 	<div class="open-summary">
-		<i class="fas fa-arrow-circle-right"></i> {@sandbox.summary}
+		<i class="fa fa-arrow-circle-right"></i> {@sandbox.summary}
 	</div>
 
 	<article class="content">

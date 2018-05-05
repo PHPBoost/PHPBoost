@@ -1,8 +1,8 @@
 <section id="module-web">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication"></i></a>
-			# IF C_PENDING #{@web.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF ## ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+			# IF C_PENDING #{@web.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 
 		# IF C_CATEGORY_DESCRIPTION #
@@ -85,10 +85,10 @@
 						# IF C_MODERATE #
 						<td>
 							# IF weblinks.C_EDIT #
-							<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
+							<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 							# ENDIF #
 							# IF weblinks.C_DELETE #
-							<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+							<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 							# ENDIF #
 						</td>
 						# ENDIF #
@@ -102,8 +102,8 @@
 			<header>
 				<h2>
 					<span class="actions">
-						# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a># ENDIF #
-						# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a># ENDIF #
+						# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
+						# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
 					</span>
 					<a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a>
 				</h2>
@@ -118,14 +118,14 @@
 
 			# IF C_CATEGORY_DISPLAYED_SUMMARY #
 			<div class="more">
-				<i class="fas fa-eye" title="{weblinks.L_VISITED_TIMES}"></i>
+				<i class="fa fa-eye" title="{weblinks.L_VISITED_TIMES}"></i>
 				<span title="{weblinks.L_VISITED_TIMES}">{weblinks.NUMBER_VIEWS}</span>
 				# IF C_COMMENTS_ENABLED #
-					| <i class="fas fa-comments" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
+					| <i class="fa fa-comments-o" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
 					# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
 				# ENDIF #
 				# IF weblinks.C_KEYWORDS #
-					| <i class="fas fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
+					| <i class="fa fa-tags" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
 					# START weblinks.keywords #
 						<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a>
 						# IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
@@ -166,11 +166,11 @@
 						# ENDIF #
 						# IF weblinks.C_VISIBLE #
 							<a href="{weblinks.U_VISIT}" rel="nofollow" class="basic-button">
-								<i class="fas fa-globe"></i> {@visit}
+								<i class="fa fa-globe"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
 							<a href="{weblinks.U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-								<i class="fas fa-unlink"></i>
+								<i class="fa fa-unlink"></i>
 							</a>
 							# ENDIF #
 						# ENDIF #

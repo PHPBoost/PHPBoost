@@ -27,9 +27,9 @@
 				<tbody>
 					# START social #
 					<tr>
-						<td><i class="fa fa-{social.FA} fa-lg"></i></td>
+						<td><i class="{social.PREFIX} fa-{social.FA} fa-lg"></i></td>
 						<td><span>{social.FA}</span></td>
-						<td>{social.BEFORE}</td>
+						<td>{social.CODE}</td>
 					</tr>
 					# END web #
 				</tbody>
@@ -47,9 +47,9 @@
 				<tbody>
 					# START responsive #
 					<tr>
-						<td><i class="fa fa-{responsive.FA} fa-lg"></i></td>
+						<td><i class="{responsive.PREFIX} fa-{responsive.FA} fa-lg"></i></td>
 						<td><span>{responsive.FA}</span></td>
-						<td>{responsive.BEFORE}</td>
+						<td>{responsive.CODE}</td>
 					</tr>
 					# END responsive #
 				</tbody>
@@ -70,13 +70,13 @@
 			<h3>{@iconfa.howto.html}</h3>
 			<p>{@iconfa.howto.html.class}</p>
 			<div class="code">
-				<pre><span><</span><span>i class="far fa-edit"><</span>/i> Edition</pre>
+				<pre><span><</span><span>i class="fa fa-edit"><</span>/i> Edition</pre>
 			</div>			
-			<p>{@iconfa.howto.html.class.result.i}<i class="far fa-edit"></i> Edition</p>
+			<p>{@iconfa.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
 			<div class="code">
-				<pre><span><</span>a class="fas fa-globe" href="http://www.phpboost.com">PHPBoost<<span>/a></span></pre>
+				<pre><span><</span>a class="fa fa-globe" href="http://www.phpboost.com">PHPBoost<<span>/a></span></pre>
 			</div>
-			<p>{@iconfa.howto.html.class.result.a}<a class="fas fa-globe" href="http://www.phpboost.com">PHPBoost</a></p>
+			<p>{@iconfa.howto.html.class.result.a}<a href="http://www.phpboost.com"><i class="fa fa-globe"></i>PHPBoost</a></p>
 			<p>{@iconfa.howto.html.class.result.all}</p>
 			
 			<br />
@@ -94,10 +94,10 @@
 			
 			<br />
 			<h3>{@iconfa.howto.bbcode}</h3>
-			<p>{@iconfa.howto.bbcode.some.icons} <i class="fas fa-flag-o"></i></p>
+			<p>{@iconfa.howto.bbcode.some.icons} <i class="fab fa-font-awesome-flag"></i></p>
 			<p>{@iconfa.howto.bbcode.tag}</p>
 			<p>{@iconfa.howto.bbcode.icon.name}</p>
-			<p>{@iconfa.howto.bbcode.icon.test} <i class="fas fa-cubes"></i></p>
+			<p>{@iconfa.howto.bbcode.icon.test} <i class="fa fa-cubes"></i></p>
 			<p>{@iconfa.howto.bbcode.icon.variants}</p>
 			
 			<br />
@@ -105,9 +105,9 @@
 			<p>{@iconfa.howto.variants.explain}</p>
 			<p>{@iconfa.howto.variants.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
 			<div class="code">
-				<pre><<span>i class="fas fa-spinner fa-spin fa-2x><</span>/i></pre>
+				<pre><<span>i class="fa fa-spinner fa-spin fa-2x><</span>/i></pre>
 			</div>
-			<p>{@iconfa.howto.variants.spinner}<i class="fas fa-spinner fa-spin fa-2x"></i></p>
+			<p>{@iconfa.howto.variants.spinner}<i class="fa fa-spinner fa-spin fa-2x"></i></p>
 		</div>
 	</article>
 	

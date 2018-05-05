@@ -387,7 +387,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
-						'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'fas fa-eye-slash' : 'fas fa-eye',
+						'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'fa fa-eye-slash' : 'fa fa-eye',
 						'ARRAY_JS' => $array_js,
 						'NBR_PICS' => ($i - 1),
 						'MAX_START' => ($i - 1) - $nbr_column_pics,

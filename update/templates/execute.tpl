@@ -15,7 +15,7 @@
 	<div id="update-in-progress-container">
 		<div class="update-in-progress-background"></div>
 		<div class="update-in-progress-spinner">
-			<i class="fas fa-spin fa-cog fa-2x"></i>
+			<i class="fa fa-spin fa-cog fa-2x"></i>
 			<span>{@step.execute.update_in_progress}</span>
 		</div>
 	</div>

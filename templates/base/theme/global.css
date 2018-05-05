@@ -336,20 +336,22 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 	position: relative;
 }
 
-.formatter-blockquote .formatter-content:before {
+.formatter-blockquote .formatter-content:before,
+.formatter-blockquote .formatter-content:after {
 	position: absolute;
-	font-family: fontawesome;
-	content: '\f10d';
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900; /* Solid icons*/
 	font-size: 1.618em;
+}
+
+.formatter-blockquote .formatter-content:before {
+	content: '\f10d';
 	top: -10px;
 	left: -15px;
 }
 
 .formatter-blockquote .formatter-content:after {
-	position: absolute;
-	font-family: fontawesome;
 	content: '\f10e';
-	font-size: 1.618em;
 	bottom: -10px;
 	right: -15px;
 }
@@ -501,9 +503,9 @@ li.small-block .fa-stack {
 	left: 6px;
 	top: 7px;
 	width: 28px;
-	font-family: FontAwesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900; /* Solid icons*/
 	font-style: normal;
-	font-weight: normal;
 	line-height: normal;
 	font-size: 1.5em;
 	text-align: center;
@@ -585,6 +587,10 @@ li.small-block .fa-stack {
 
 .upload-elements-file {
 	width: 180px;
+}
+
+.upload-elements-file a:hover {
+	text-decoration: none;
 }
 
 .upload-elements-file input {

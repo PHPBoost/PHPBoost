@@ -16,15 +16,15 @@
 				<h2>{TITLE}</h2>
 				<div class="content">
 					<ul>
-						<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fas fa-folder"></i>{L_ROOT}</a>
+						<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a>
 							<ul>
 								# START list #
 								<li class="sub">
 									# IF list.U_FOLDER #
-										<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);"><i class="far fa-plus-square" id="img-subfolder-{list.ID}"></i><i id ="img-folder-{list.ID}" class="fas fa-folder" ></i></a>
+										<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i><i id ="img-folder-{list.ID}" class="fa fa-folder" ></i></a>
 										<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 									# ELSE #
-										<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fas fa-folder"></i>{list.TITLE}</a>
+										<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
 									# ENDIF #
 
 									<span id="cat-{list.ID}"></span>
@@ -42,12 +42,12 @@
 					<ul>
 						# START list_cats #
 						<li>
-							<a class="explorer-list-cat-link" href="javascript:open_cat({list_cats.KEY}); show_pages_cat_contents({list_cats.ID_PARENT}, 0);"><i class="fas fa-folder"></i>{list_cats.TITLE}</a>
+							<a class="explorer-list-cat-link" href="javascript:open_cat({list_cats.KEY}); show_pages_cat_contents({list_cats.ID_PARENT}, 0);"><i class="fa fa-folder"></i>{list_cats.TITLE}</a>
 						</li>
 						# END list_cats #
 						# START list_files #
 						<li>
-							<a class="explorer-list-file-link" href="{list_files.URL_FILE}"><i class="fas fa-file"></i>{list_files.TITLE}</a>
+							<a class="explorer-list-file-link" href="{list_files.URL_FILE}"><i class="fa fa-file"></i>{list_files.TITLE}</a>
 						</li>
 						# END list_files #
 					</ul>

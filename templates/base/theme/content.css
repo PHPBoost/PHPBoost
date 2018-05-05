@@ -435,10 +435,11 @@ ul.pagination-block-bis li a.next-page:hover {
 
 	.sortable-selector:after {
 		position: absolute;
-		content: "\f047";
+		content: "\f0b2";
 		top: 34%;
 		left: 0.228em;
-		font-family: fontawesome;
+		font-family: 'Font Awesome 5 Free';
+		font-weight: 900; /* Solid icons*/
 	}
 }
 

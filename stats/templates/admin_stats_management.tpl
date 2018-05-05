@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_STATS}">
-				<i class="fas fa-bars"></i> {L_STATS}
+				<i class="fa fa-bars"></i> {L_STATS}
 				</a>
 				<ul>
 					<li>
@@ -14,22 +14,22 @@
 			<div class="fieldset-inset">
 				<nav id="menustats">
 					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
-						<i class="fas fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
+						<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
 					</a>
 					<ul>
 						<li>
 							<a href="admin_stats.php?site=1#stats">
-								<i class="fas fa-home"></i> <span>{L_SITE}</span>
+								<i class="fa fa-home"></i> <span>{L_SITE}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?members=1#stats">
-								<i class="fas fa-users"></i> <span>{L_USERS}</span>
+								<i class="fa fa-users"></i> <span>{L_USERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?visit=1#stats">
-								<i class="fas fa-eye"></i> <span>{L_VISITS}</span>
+								<i class="fa fa-eye"></i> <span>{L_VISITS}</span>
 							</a>
 						</li>
 						<li>
@@ -39,32 +39,32 @@
 						</li>
 						<li>
 							<a href="admin_stats.php?browser=1#stats">
-								<i class="fas fa-globe"></i> <span>{L_BROWSERS}</span>
+								<i class="fa fa-globe"></i> <span>{L_BROWSERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?os=1#stats">
-								<i class="fas fa-laptop"></i> <span>{L_OS}</span>
+								<i class="fa fa-laptop"></i> <span>{L_OS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?lang=1#stats">
-								<i class="fas fa-flag-o"></i> <span>{L_LANG}</span>
+								<i class="fa fa-flag"></i> <span>{L_LANG}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?referer=1#stats">
-								<i class="fas fa-share-square"></i> <span>{L_REFERER}</span>
+								<i class="fa fa-share-square"></i> <span>{L_REFERER}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?keyword=1#stats">
-								<i class="fas fa-key"></i> <span>{L_KEYWORD}</span>
+								<i class="fa fa-key"></i> <span>{L_KEYWORD}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?bot=1#stats">
-								<i class="fas fa-search"></i> <span>{L_ROBOTS}</span>
+								<i class="fa fa-search"></i> <span>{L_ROBOTS}</span>
 							</a>
 						</li>
 					</ul>
@@ -246,8 +246,8 @@
 					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
-							<a class="fas fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
-							<a class="fas fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
+							<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
+							<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
 						</p>
 						# IF C_STATS_DAY #
 						<select name="d" style="width: 80%; margin: 5px auto;">
@@ -495,7 +495,7 @@
 				else // XMLHttpRequest non support� par le navigateur
 					return;
 
-				document.getElementById('load' + divid).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function()
@@ -595,7 +595,7 @@
 			}
 			else
 			{
-				document.getElementById('load' + divid).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/stats/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function()
 				{

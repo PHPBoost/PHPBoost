@@ -1,14 +1,14 @@
 <li id="cat-{ID}" class="sortable-element" data-id="{ID}">
 	<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 	<div class="sortable-title"> 
-		<i class="fas fa-globe"></i>
+		<i class="fa fa-globe"></i>
 		<a href="{U_DISPLAY}" title="{NAME}">{NAME}</a>
 		# IF C_DESCRIPTION #<span class="cat-desc"> | {DESCRIPTION}</span># ENDIF #
 		<div class="sortable-actions">
-			<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fas fa-arrow-up"></i></a>
-			<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;"><i class="fas fa-arrow-down"></i></a>
-			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
-			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="far fa-delete"></i></a>
+			<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+			<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
+			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="fa fa-delete"></i></a>
 		</div>
 	</div>
 	<div class="spacer"></div>

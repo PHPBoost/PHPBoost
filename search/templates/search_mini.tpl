@@ -26,7 +26,7 @@
 		<div id="mini-search-form" class="input-element-button">
 			<input type="search" id="TxTMiniSearched" title="{L_SEARCH_TITLE}" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH}...">
 			<input type="hidden" id="search-token" name="token" value="{TOKEN}">
-			<button class="submit" type="submit" name="search_submit"><i class="fas fa-search"></i></button>
+			<button class="submit" type="submit" name="search_submit"><i class="fa fa-search"></i></button>
 		</div>
 		# IF C_VERTICAL #<a href="{U_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a># ENDIF #
 	</form>

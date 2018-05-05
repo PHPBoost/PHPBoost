@@ -66,7 +66,7 @@ Note.prototype = {
 			alert(NOTATION_LANG_AUTH);
 		} 
 		else {
-			jQuery('#notation-' + id + ' .stars').after('<i id="loading-'+ id +'" class="fas fa-spinner fa-spin"></i>');
+			jQuery('#notation-' + id + ' .stars').after('<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>');
 			
 			jQuery.ajax({
 				url: '',
@@ -96,7 +96,7 @@ Note.prototype = {
 			
 			decimal = i - note;
 			if(decimal >= 1)
-				star_class = 'far star star-hover fa-star';
+				star_class = 'fa star star-hover fa-star-o';
 			else if(decimal <= 0.50 && decimal > 0)
 				star_class = 'fa star star-hover fa-star-half-o';
 			else if(note >= i)

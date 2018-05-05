@@ -1005,13 +1005,21 @@ class TinyMCEParser extends ContentFormattingParser
 	protected function parse_fa($matches)
 	{
 		$fa_code = "";
+		$fa_prefix = "";
 		if ( !empty($matches[1]) ) {
 			$options = str_replace('=', '', explode(',', $matches[1]));
 			foreach ($options as $option) {
-				$fa_code = $fa_code . ' ' . ltrim($option);
+				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fab', 'fal')) ) {
+					$fa_prefix = ltrim($option);
+				} else {
+					$fa_code = $fa_code . ' ' . ltrim($option);
+				}
 			}
 		}
-		return '<i class="fa fa-' . $matches[2] . $fa_code . '"></i>';
+		if ( $fa_prefix <> "" )
+			return '<i class="' . $fa_prefix . ' fa-' . $matches[2] . $fa_code .'"></i>';
+		else
+			return '<i class="fa fa-' . $matches[2] . $fa_code .'"></i>';
 	}
 
 	/**

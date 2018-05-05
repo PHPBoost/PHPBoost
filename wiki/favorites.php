@@ -134,7 +134,7 @@ else
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => stripslashes($row['title']),
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" class="far fa-delete" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"></a>'
+			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" class="fa fa-delete" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"></a>'
 		));
 	}
 	$result->dispose();

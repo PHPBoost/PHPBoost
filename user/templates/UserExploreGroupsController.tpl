@@ -12,7 +12,7 @@
 			<caption>
 				{GROUP_NAME}
 				# IF C_ADMIN #
-					<a href="{U_ADMIN_GROUPS}" class="far fa-edit"></a>
+					<a href="{U_ADMIN_GROUPS}" class="fa fa-edit"></a>
 				# ENDIF #
 			</caption>
 			<thead>

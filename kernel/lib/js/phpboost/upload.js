@@ -28,7 +28,7 @@ function show_cat_contents(id_cat, display_select_link)
 				if( xhr_object.readyState == 4 ) 
 				{
 					document.getElementById("cat_" + id_cat).innerHTML = xhr_object.responseText;
-					document.getElementById("img_" + id_cat).className = 'far fa-folder-open';
+					document.getElementById("img_" + id_cat).className = 'fa fa-folder-open';
 					if( document.getElementById("img2_" + id_cat) )
 						document.getElementById("img2_" + id_cat).className = 'far fa-minus-square';
 					
@@ -42,7 +42,7 @@ function show_cat_contents(id_cat, display_select_link)
 		else if( cat_status[id_cat] == 0 )
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'block';
-			document.getElementById("img_" + id_cat).className = 'far fa-folder-open';
+			document.getElementById("img_" + id_cat).className = 'fa fa-folder-open';
 			if( document.getElementById("img2_" + id_cat) )
 				document.getElementById("img2_" + id_cat).className = 'far fa-minus-square';
 			cat_status[id_cat] = 1;
@@ -50,7 +50,7 @@ function show_cat_contents(id_cat, display_select_link)
 		else
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'none';
-			document.getElementById("img_" + id_cat).className = 'fas fa-folder fa-2x';
+			document.getElementById("img_" + id_cat).className = 'fa fa-folder fa-2x';
 			if( document.getElementById("img2_" + id_cat) )
 				document.getElementById("img2_" + id_cat).className = 'far fa-plus-square';
 			cat_status[id_cat] = 0;

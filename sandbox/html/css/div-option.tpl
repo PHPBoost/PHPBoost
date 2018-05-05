@@ -6,10 +6,10 @@
         <span><</span>/span>
         <span><</span>div class="spacer"><span><</span>/div>
         <span><</span>a href="#" class="basic-button">
-            <span><</span>i class="fas fa-globe"><span><</span>/i> link
+            <span><</span>i class="fa fa-globe"><span><</span>/i> link
         <span><</span>/a>
         <span><</span>a href="#" class="basic-button alt" title="{@css.options.link}">
-            <span><</span>i class="fas fa-unlink"><span><</span>/i>
+            <span><</span>i class="fa fa-unlink"><span><</span>/i>
         <span><</span>/a>
     <span><</span>/div>
     <span><</span>h6>File info<span><</span>/h6>

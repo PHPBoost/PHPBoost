@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{TITLE}">
-		<i class="fas fa-bars"></i> {TITLE}
+		<i class="fa fa-bars"></i> {TITLE}
 	</a>
 	<ul>
 		# START links #

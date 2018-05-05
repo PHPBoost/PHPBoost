@@ -317,7 +317,7 @@ class BBCodeParser extends ContentFormattingParser
 			//FA tag
 			if (!in_array('fa', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
+				$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?\]([a-z0-9- ]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
 			}
 
 			//Wikipedia tag
@@ -544,13 +544,21 @@ class BBCodeParser extends ContentFormattingParser
 	protected function parse_fa($matches)
 	{
 		$fa_code = "";
+		$fa_prefix = "";
 		if ( !empty($matches[1]) ) {
 			$options = str_replace('=', '', explode(',', $matches[1]));
 			foreach ($options as $option) {
-				$fa_code = $fa_code . ' ' . ltrim($option);
+				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fab', 'fal')) ) {
+					$fa_prefix = ltrim($option);
+				} else {
+					$fa_code = $fa_code . ' ' . ltrim($option);
+				}
 			}
 		}
-		return '<i class="fa fa-' . $matches[2] . $fa_code . '"></i>';
+		if ( $fa_prefix <> "" )
+			return '<i class="' . $fa_prefix . ' fa-' . $matches[2] . $fa_code .'"></i>';
+		else
+			return '<i class="fa fa-' . $matches[2] . $fa_code .'"></i>';
 	}
 
 

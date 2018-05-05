@@ -18,18 +18,18 @@
 				<h2>{L_EXPLORER}</h2>
 				<div class="content">
 					<ul>
-						<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fas fa-folder"></i>{L_ROOT}</a>
+						<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a>
 							<ul>
 								# START list #
 									<li class="sub">
 										# IF list.C_SUB_CAT #
 											<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);" title="${LangLoader::get_message('display', 'common')}">
-												<i class="far fa-plus-square" id="img-subfolder-{list.ID}"></i>
-												<i class="fas fa-folder" id ="img-folder-{list.ID}"></i>
+												<i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i>
+												<i class="fa fa-folder" id ="img-folder-{list.ID}"></i>
 											</a>
 											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 										# ELSE #
-											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fas fa-folder"></i>{list.TITLE}</a>
+											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
 										# ENDIF #
 										<span id="cat-{list.ID}"></span>
 									</li>

@@ -14,65 +14,65 @@
 						<tr>
 							<th>
 								# IF NOT C_ORDER_ENTITLED_ASC #
-									<a href="{U_ORDER_ENTITLED_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_ENTITLED}
 								# IF NOT C_ORDER_ENTITLED_DESC #
-									<a href="{U_ORDER_ENTITLED_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_MODULE_ASC #
-									<a href="{U_ORDER_MODULE_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_MODULE_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_MODULE}
 								# IF NOT C_ORDER_MODULE_DESC #
-									<a href="{U_ORDER_MODULE_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_MODULE_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_STATUS_ASC #
-									<a href="{U_ORDER_STATUS_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_STATUS}
 								# IF NOT C_ORDER_STATUS_DESC #
-									<a href="{U_ORDER_STATUS_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_CREATION_DATE_ASC #
-									<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_CREATION_DATE}
 								# IF NOT C_ORDER_CREATION_DATE_DESC #
-									<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_FIXING_DATE_ASC #
-									<a href="{U_ORDER_FIXING_DATE_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_FIXING_DATE_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_FIXING_DATE}
 								# IF NOT C_ORDER_FIXING_DATE_DESC #
-									<a href="{U_ORDER_FIXING_DATE_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_FIXING_DATE_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_POSTER_ASC #
-									<a href="{U_ORDER_POSTER_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_POSTER_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_POSTER}
 								# IF NOT C_ORDER_POSTER_DESC #
-									<a href="{U_ORDER_POSTER_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_POSTER_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 							<th>
 								# IF NOT C_ORDER_FIXER_ASC #
-									<a href="{U_ORDER_FIXER_ASC}" class="fa-pbt fa-table-sort-up"></a>
+									<a href="{U_ORDER_FIXER_ASC}" class="fa fa-table-sort-up"></a>
 								# ENDIF #
 								{L_FIXER}
 								# IF NOT C_ORDER_FIXER_DESC #
-									<a href="{U_ORDER_FIXER_DESC}" class="fa-pbt fa-table-sort-down"></a>
+									<a href="{U_ORDER_FIXER_DESC}" class="fa fa-table-sort-down"></a>
 								# ENDIF #
 							</th>
 						</tr>
@@ -169,8 +169,8 @@
 			{ENTITLED}
 			# IF C_WRITE_AUTH #
 			<span class="actions">
-				<a href="{U_UPDATE}" title="{L_UPDATE}" class="far fa-edit"></a>
-				<a href="{U_DELETE}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
+				<a href="{U_UPDATE}" title="{L_UPDATE}" class="fa fa-edit"></a>
+				<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</span>
 			# ENDIF #
 			</h1>
@@ -181,13 +181,13 @@
 				<div class="unprocessed-contribution">
 					<div>
 						<a class="infos-options" href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-							<i class="fas fa-wrench fa-2x"></i>
+							<i class="fa fa-wrench fa-2x"></i>
 						</a>
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
 					<div>
 						<a class="infos-options" href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">
-							<i class="fas fa-check fa-2x"></i>
+							<i class="fa fa-check fa-2x"></i>
 						</a>
 						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>
 					</div>

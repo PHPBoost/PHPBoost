@@ -13,8 +13,8 @@
         <span><</span>div class="message-date">
             <span><</span>span class="actions">
                 <span><</span>a itemprop="url" href="#com2" title="#2">#id<span><</span>/a>
-                <span><</span>a href="#comments_message" class="far fa-edit" title="{@css.edit}"><span><</span>/a>
-                <span><</span>a href="#comments_message" class="far fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"><span><</span>/a>
+                <span><</span>a href="#comments_message" class="fa fa-edit" title="{@css.edit}"><span><</span>/a>
+                <span><</span>a href="#comments_message" class="fa fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"><span><</span>/a>
             <span><</span>/span>
             <span><</span>span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">01/01/1970<span><</span>/span>
         <span><</span>/div>

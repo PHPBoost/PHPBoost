@@ -94,7 +94,7 @@
 						<span class="text-strong">{@modules.php_version} :</span> {modules_installed.PHP_VERSION}<br />
 						# IF modules_installed.C_DOCUMENTATION #<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a># ENDIF #
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_installed.ID}'); return false;" id="picture-desc-{modules_installed.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fas fa-plus"></i></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_installed.ID}'); return false;" id="picture-desc-{modules_installed.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a></div>
 				</td>
 				<td class="input-radio">
 					<div class="form-field-radio">

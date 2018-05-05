@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_WEBSITE_UPDATES}">
-		<i class="fas fa-bars"></i> {L_WEBSITE_UPDATES}
+		<i class="fa fa-bars"></i> {L_WEBSITE_UPDATES}
 	</a>
 	<ul>
 		<li>
@@ -66,7 +66,7 @@
 				<div class="message-helper success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 			# ENDIF #
 			<p class="center">
-				<a href="{U_CHECK}"><i class="fas fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
+				<a href="{U_CHECK}"><i class="fa fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
 			</p>
 		# ENDIF #
 		</div>

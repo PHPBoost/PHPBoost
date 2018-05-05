@@ -4,25 +4,25 @@
 		<tr>
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
-				<a href="{SORT_STREAM_TOP}" class="fa-pbt fa-table-sort-up"></a>
+				<a href="{SORT_STREAM_TOP}" class="fa fa-table-sort-up"></a>
 				{@archives.stream_name}
-				<a href="{SORT_STREAM_BOTTOM}" class="fa-pbt fa-table-sort-down"></a>
+				<a href="{SORT_STREAM_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			# ENDIF #
 			<th>
-				<a href="{SORT_SUBJECT_TOP}" class="fa-pbt fa-table-sort-up"></a>
+				<a href="{SORT_SUBJECT_TOP}" class="fa fa-table-sort-up"></a>
 				{@archives.name}
-				<a href="{SORT_SUBJECT_BOTTOM}" class="fa-pbt fa-table-sort-down"></a>
+				<a href="{SORT_SUBJECT_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{SORT_DATE_TOP}" class="fa-pbt fa-table-sort-up"></a>
+				<a href="{SORT_DATE_TOP}" class="fa fa-table-sort-up"></a>
 				{@archives.date}
-				<a href="{SORT_DATE_BOTTOM}" class="fa-pbt fa-table-sort-down"></a>
+				<a href="{SORT_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{SORT_SUBSCRIBERS_TOP}" class="fa-pbt fa-table-sort-up"></a>
+				<a href="{SORT_SUBSCRIBERS_TOP}" class="fa fa-table-sort-up"></a>
 				{@archives.nbr_subscribers}
-				<a href="{SORT_SUBSCRIBERS_BOTTOM}" class="fa-pbt fa-table-sort-down"></a>
+				<a href="{SORT_SUBSCRIBERS_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			# IF C_MODERATE #
 			<th></th>
@@ -57,7 +57,7 @@
 				</td>
 				# IF C_MODERATE #
 				<td>
-					<a href="{archives_list.U_DELETE_ARCHIVE}" title="${LangLoader::get_message('delete', 'common')}" class="far fa-delete" data-confirmation="delete-element"></a>
+					<a href="{archives_list.U_DELETE_ARCHIVE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</td>
 				# ENDIF #
 			</tr>

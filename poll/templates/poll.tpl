@@ -1,7 +1,7 @@
 	# IF C_POLL_MAIN #
 		<section id="module-poll-main">
 			<header>
-				<h1>{L_POLL}# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a></span># ENDIF #</h1>
+				<h1>{L_POLL}# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span># ENDIF #</h1>
 			</header>
 
 			<div class="content center">
@@ -37,8 +37,8 @@
 							{QUESTION}
 							# IF C_IS_ADMIN #
 							<span class="actions">
-								<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
-								<a href="{U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+								<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+								<a href="{U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 							</span>
 							# ENDIF #
 							</h2>
@@ -108,8 +108,8 @@
 							{list.QUESTION}
 							<span class="actions">
 								# IF C_IS_ADMIN #
-								<a href="{list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit"></i></a>
-								<a href="{list.U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+								<a href="{list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+								<a href="{list.U_DEL}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 								# ENDIF #
 							</span>
 						</h2>

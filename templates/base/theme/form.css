@@ -475,7 +475,8 @@ textarea {
 	display: inline-block;
 	position: absolute;
 	left: -16px;
-	font-family: FontAwesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900; /* Solid icons*/
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;

@@ -13,7 +13,7 @@ function shoutbox_add_message()
 			dataType: "json",
 			data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').html('<i class="fas fa-spin fa-spinner"></i>');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 			},
 			success: function(returnData){
 				if(returnData.code > 0) {
@@ -36,7 +36,7 @@ function shoutbox_add_message()
 						break;
 					}
 				}
-				jQuery('#shoutbox-refresh').html('<i class="fas fa-sync"></i>');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
 				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
@@ -58,7 +58,7 @@ function shoutbox_delete_message(id_message)
 			dataType: "json",
 			data: {'id' : id_message, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').html('<i class="fas fa-spin fa-spinner"></i>');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 			},
 			success: function(returnData){
 				var code = returnData.code;
@@ -68,7 +68,7 @@ function shoutbox_delete_message(id_message)
 				} else {
 					alert("{@error.message.delete}");
 				}
-				jQuery('#shoutbox-refresh').html('<i class="fas fa-sync"></i>');
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
 			error: function(e){
 				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
@@ -84,17 +84,17 @@ function shoutbox_refresh_messages_box() {
 		dataType: "json",
 		data: {'token' : '{TOKEN}'},
 		beforeSend: function(){
-			jQuery('#shoutbox-refresh').html('<i class="fas fa-spin fa-spinner"></i>');
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 		},
 		success: function(returnData){
 			jQuery('#shoutbox-messages-container').html(returnData);
 
-			jQuery('#shoutbox-refresh').html('<i class="fas fa-sync"></i>');
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		},
 		error: function(e){
 			jQuery('#shoutbox-messages-container').html(e.responseText);
 			
-			jQuery('#shoutbox-refresh').html('<i class="fas fa-sync"></i>');
+			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		}
 	});
 }
@@ -123,7 +123,7 @@ function shoutbox_refresh_messages_box() {
 		# IF C_DISPLAY_SHOUT_BBCODE #
 		<ul>
 			<li class="bbcode-elements">
-				<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa-bbcode fa-fw bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
+				<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa fa-fw bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
 				<div class="bbcode-block-container" style="display: none;" id="bb-block1shout-contents">
 					<ul class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
 						# START smileys #
@@ -135,16 +135,16 @@ function shoutbox_refresh_messages_box() {
 				</div>
 			</li>
 			<li class="bbcode-elements">
-				<a href="" class="fa-bbcode fa-fw bbcode-icon-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
+				<a href="" class="fa fa-fw bbcode-icon-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
 			</li>
 			<li class="bbcode-elements">
-				<a href="" class="fa-bbcode fa-fw bbcode-icon-italic# IF C_ITALIC_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
+				<a href="" class="fa fa-fw bbcode-icon-italic# IF C_ITALIC_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
 			</li>
 			<li class="bbcode-elements">
-				<a href="" class="fa-bbcode fa-fw bbcode-icon-underline# IF C_UNDERLINE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
+				<a href="" class="fa fa-fw bbcode-icon-underline# IF C_UNDERLINE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
 			</li>
 			<li class="bbcode-elements">
-				<a href="" class="fa-bbcode fa-fw bbcode-icon-strike# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
+				<a href="" class="fa fa-fw bbcode-icon-strike# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
 			</li>
 		</ul>
 		# ENDIF #
@@ -152,7 +152,7 @@ function shoutbox_refresh_messages_box() {
 	<p class="shout-spacing">
 		<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fas fa-sync"></i></a>
+		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
 	</p>
 </form>
 # ELSE #
@@ -160,7 +160,7 @@ function shoutbox_refresh_messages_box() {
 	<div class="spacer"></div>
 	<span class="message-helper warning">{@error.post.unauthorized}</span>
 	<p class="shout-spacing">
-		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fas fa-sync"></i></a>
+		<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-refresh"></i></a>
 	</p>
 	# ENDIF #
 # ENDIF #

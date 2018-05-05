@@ -75,7 +75,7 @@
 							<div class="content">
 								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 								<ul>
-									<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fas fa-folder"></i>{L_ROOT}</a></li>
+									<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a></li>
 									{CAT_LIST}
 								</ul>
 							</div>

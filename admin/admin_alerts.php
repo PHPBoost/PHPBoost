@@ -69,11 +69,11 @@ foreach ($alerts_list as $alert)
 			$color = 'F5D5C6';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$img_class = 'fa-pbt fa-warning';
+			$img_class = 'fa fa-warning';
 			$color = 'FFD5D1';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$img_class = 'fa-pbt fa-warning';
+			$img_class = 'fa fa-warning';
 			$color = 'F3A29B';
 			break;
 		default:

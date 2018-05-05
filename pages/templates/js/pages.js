@@ -28,7 +28,7 @@ function show_pages_cat_contents(id_cat, display_select_link)
 				if( xhr_object.readyState == 4 ) 
 				{
 					document.getElementById("cat-" + id_cat).innerHTML = xhr_object.responseText;
-					document.getElementById("img-folder-" + id_cat).className = 'far fa-folder-open';
+					document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
 					if( document.getElementById("img-subfolder-" + id_cat) )
 						document.getElementById("img-subfolder-" + id_cat).className = 'far fa-minus-square';
 					cat_status[id_cat] = 1;
@@ -41,7 +41,7 @@ function show_pages_cat_contents(id_cat, display_select_link)
 		else if( cat_status[id_cat] == 0 )
 		{
 			document.getElementById("cat-" + id_cat).style.display = 'block';
-			document.getElementById("img-folder-" + id_cat).className = 'far fa-folder-open';
+			document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder-open';
 			if( document.getElementById("img-subfolder-" + id_cat) )
 				document.getElementById("img-subfolder-" + id_cat).className = 'far fa-minus-square';
 			cat_status[id_cat] = 1;
@@ -49,7 +49,7 @@ function show_pages_cat_contents(id_cat, display_select_link)
 		else
 		{
 			document.getElementById("cat-" + id_cat).style.display = 'none';
-			document.getElementById("img-folder-" + id_cat).className = 'fas fa-folder';
+			document.getElementById("img-folder-" + id_cat).className = 'fa fa-folder';
 			if( document.getElementById("img-subfolder-" + id_cat) )
 				document.getElementById("img-subfolder-" + id_cat).className = 'far fa-plus-square';
 			cat_status[id_cat] = 0;

@@ -378,7 +378,11 @@ class Uploads
 			break;
 			//Sripts
 			case 'html':
+			case 'tpl':
 			$img = 'fa-upload-html fa-2x';
+			break;
+			case 'css':
+			$img = 'fa-upload-css fa-2x';
 			break;
 			case 'js':
 			case 'php':
@@ -427,7 +431,7 @@ class Uploads
 			break;
 			//Default
 			default:
-			$img = 'fa-upload-other fa-2x';
+			$img = 'fa fa-upload-other fa-2x';
 			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
 		}
 		

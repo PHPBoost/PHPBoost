@@ -55,9 +55,9 @@ if ($id_cat != 0)
 		$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
-			echo '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="far fa-plus-square" id="img-subfolder-' . $row['id'] . '"></i><i class="fas fa-folder" id ="img-folder-' . $row['id'] . '"></i></a><a id="class-' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat-' . $row['id'] . '"></span></li>';
+			echo '<li class="sub"><a class="parent" href="javascript:show_wiki_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="far fa-plus-square" id="img-subfolder-' . $row['id'] . '"></i><i class="fa fa-folder" id ="img-folder-' . $row['id'] . '"></i></a><a id="class-' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . stripslashes($row['title']) . '</a><span id="cat-' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
-			echo '<li class="sub"><a id="class-' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="fas fa-folder"></i></span>' . stripslashes($row['title']) . '</a></li>';
+			echo '<li class="sub"><a id="class-' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="fa fa-folder"></i></span>' . stripslashes($row['title']) . '</a></li>';
 	}
 	$result->dispose();
 	echo '</ul>';
@@ -92,7 +92,7 @@ elseif (!empty($open_cat) || $root == 1)
 	foreach ($categories as $key => $cat)
 	{
 		if ($cat['id_parent'] == $open_cat)
-			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_wiki_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fas fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
+			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_wiki_cat_contents(' . $cat['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . stripslashes($cat['title']) . '</a></li>';
 	}
 	$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
@@ -103,7 +103,7 @@ elseif (!empty($open_cat) || $root == 1)
 	));
 	while ($row = $result->fetch())
 	{
-		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fas fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
+		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . stripslashes($row['title']) . '</a></li>';
 	}
 	$result->dispose();
 	$return .= '</ul>';

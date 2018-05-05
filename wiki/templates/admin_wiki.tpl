@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_WIKI_MANAGEMENT}">
-		<i class="fas fa-bars"></i> {L_WIKI_MANAGEMENT}
+		<i class="fa fa-bars"></i> {L_WIKI_MANAGEMENT}
 	</a>
 	<ul>
 		<li>
@@ -66,7 +66,7 @@
 				<div class="form-element-textarea">
 					<label for="contents">{L_DESCRIPTION}</label>
 					<div id="loading-preview-contents"class="loading-preview-container" style="display: none;">
-						<div class="loading-preview"><i class="fas fa-spinner fa-2x fa-spin"></i></div>
+						<div class="loading-preview"><i class="fa fa-spinner fa-2x fa-spin"></i></div>
 					</div>
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					{KERNEL_EDITOR}

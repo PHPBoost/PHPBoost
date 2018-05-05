@@ -24,16 +24,16 @@
 					<table id="table" class="module-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
-								<th class="forum-announce-topic"><i class="fas fa-eye"></i></th>
-								<th class="forum-fixed-topic"><i class="fas fa-heart"></i></th>
-								<th class="forum-topic" title="{L_TOPIC}"><i class="far fa-file hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-								<th class="forum-author" title="{L_AUTHOR}"><i class="far fa-user hidden-small-screens"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-								<th class="forum-message-nb" title="{L_MESSAGE}"><i class="fas fa-comments hidden-small-screens"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
-								<th class="forum-view" title="{L_VIEW}"><i class="fas fa-eye hidden-small-screens"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-								<th class="forum-pm" title="{L_PM}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> <i class="far fa-envelope hidden-small-screens"></i><span class="hidden-large-screens">{L_PM}</span></th>
-								<th class="forum-mail" title="{L_MAIL}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> <i class="fas fa-at hidden-small-screens"></i><span class="hidden-large-screens">{L_MAIL}</span></th>
-								<th class="forum-delete" title="{L_DELETE}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> <i class="fa-pbt fa-delete hidden-small-screens"></i><span class="hidden-large-screens">{L_DELETE}</span></th>
-								<th class="forum-last-topic" title="{L_LAST_MESSAGE}"><i class="far fa-clock hidden-small-screens"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
+								<th class="forum-fixed-topic"><i class="fa fa-heart"></i></th>
+								<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+								<th class="forum-author" title="{L_AUTHOR}"><i class="fa fa-user-o hidden-small-screens"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+								<th class="forum-message-nb" title="{L_MESSAGE}"><i class="fa fa-comments-o hidden-small-screens"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
+								<th class="forum-view" title="{L_VIEW}"><i class="fa fa-eye hidden-small-screens"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
+								<th class="forum-pm" title="{L_PM}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> <i class="fa fa-envelope-o hidden-small-screens"></i><span class="hidden-large-screens">{L_PM}</span></th>
+								<th class="forum-mail" title="{L_MAIL}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> <i class="fa fa-at hidden-small-screens"></i><span class="hidden-large-screens">{L_MAIL}</span></th>
+								<th class="forum-delete" title="{L_DELETE}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> <i class="fa fa-delete hidden-small-screens"></i><span class="hidden-large-screens">{L_DELETE}</span></th>
+								<th class="forum-last-topic" title="{L_LAST_MESSAGE}"><i class="fa fa-clock-o hidden-small-screens"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,13 +49,13 @@
 							<tr>
 								<td class="forum-announce-topic">
 									# IF NOT topics.C_HOT_TOPIC #
-									<i class="fa-forum {topics.IMG_ANNOUNCE}"></i>
+									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #
-									<i class="fa-forum # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
+									<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 									# ENDIF #
 								</td>
 								<td class="forum-fixed-topic">
-									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fas fa-tasks"></i># ENDIF #
+									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 								</td>
 								<td class="forum-topic">
 									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
@@ -82,10 +82,10 @@
 								</td>
 								<td class="forum-last-topic">
 									<span class="last-topic-title">
-										<i class="far fa-hand-point-right"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a>
+										<i class="fa fa-hand-o-right"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a>
 									</span>
 									<span class="last-topic-user">
-										<i class="far fa-user"></i>
+										<i class="fa fa-user-o"></i>
 										# IF topics.C_LAST_MSG_GUEST #
 										<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR} >{topics.LAST_MSG_USER_LOGIN}</a>
 										# ELSE #

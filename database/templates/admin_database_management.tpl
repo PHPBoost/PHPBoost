@@ -1,6 +1,6 @@
 		<nav id="admin-quick-menu">
 				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_DATABASE_MANAGEMENT}">
-					<i class="fas fa-bars"></i> {L_DATABASE_MANAGEMENT}
+					<i class="fa fa-bars"></i> {L_DATABASE_MANAGEMENT}
 				</a>
 				<ul>
 					<li>
@@ -152,15 +152,15 @@
 										<input type="hidden" name="token" value="{TOKEN}">
 										<ul class="elements-container columns-3 center no-list no-style">
 											<li class="block">
-												<i class="fas fa-chart-bar fa-2x"></i>
+												<i class="fa fa-chart-bar fa-2x"></i>
 												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 											</li>
 											<li class="block">
-												<i class="fas fa-cogs fa-2x"></i>
+												<i class="fa fa-cogs fa-2x"></i>
 												<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 											</li>
 											<li class="block">
-												<i class="fas fa-save fa-2x"></i>
+												<i class="fa fa-save fa-2x"></i>
 												<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 											</li>
 										</ul>
@@ -192,37 +192,37 @@
 					<ul>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
-								<i class="fas fa-fw fa-code-fork"></i> {L_TABLE_STRUCTURE}
+								<i class="fa fa-fw fa-code-branch"></i> {L_TABLE_STRUCTURE}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-								<i class="fas fa-fw fa-laptop"></i> {L_TABLE_DISPLAY}
+								<i class="fa fa-fw fa-laptop"></i> {L_TABLE_DISPLAY}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
-								<i class="fas fa-fw fa-wrench"></i> SQL
+								<i class="fa fa-fw fa-wrench"></i> SQL
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
-								<i class="fas fa-fw fa-plus"></i> {L_INSERT}
+								<i class="fa fa-fw fa-plus"></i> {L_INSERT}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
-								<i class="fas fa-fw fa-save"></i> {L_BACKUP}
+								<i class="fa fa-fw fa-save"></i> {L_BACKUP}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}">
-								<i class="fas fa-fw fa-share-square-o"></i> {L_TRUNCATE}
+								<i class="fa fa-fw fa-share-square"></i> {L_TRUNCATE}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-								<i class="fa-pbt fa-fw fa-delete"></i> {L_DELETE}
+								<i class="fa fa-fw fa-delete"></i> {L_DELETE}
 							</a>
 						</li>
 					</ul>
@@ -276,7 +276,7 @@
 							</td>
 							<td>
 								<p>{L_EXPLAIN_BACKUP}</p>
-								<p class="center"><i class="fas fa-2x fa-save"></i></p>
+								<p class="center"><i class="fa fa-2x fa-save"></i></p>
 								<p>
 										<div class="form-field-radio">
 												<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
@@ -436,7 +436,7 @@
 						<tr>
 							<td>
 								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
-									<i class="fas fa-server"></i>
+									<i class="fa fa-server"></i>
 									{file.FILE_NAME}
 								</a>
 							</td>
@@ -447,7 +447,7 @@
 								{file.FILE_DATE}
 							</td>
 							<td>
-								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fas fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
+								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 						# END file #

@@ -112,11 +112,11 @@ class InstallDBConfigController extends InstallController
 		$this->overwrite_fieldset->disable();
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fas fa-arrow-left');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fas fa-sync', 'database');
+		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'database');
 		$action_fieldset->add_element($check);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fas fa-arrow-right', 'database');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}

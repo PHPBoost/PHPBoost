@@ -47,7 +47,7 @@
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+				document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&rename_pics=1');
@@ -62,7 +62,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="basic-button" title="{L_EDIT}"><i class="far fa-edit"></i></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="basic-button" title="{L_EDIT}"><i class="fa fa-edit"></i></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -73,7 +73,7 @@
 		}
 		function pics_aprob(id_file, aprob)
 		{
-			document.getElementById('img' + id_file).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+			document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 			data = 'id_file=' + id_file;
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&aprob_pics=1');
@@ -96,10 +96,10 @@
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).className == "fas fa-eye-slash"){
-							document.getElementById('img_aprob' + id_file).className = "fas fa-eye";
+						if(document.getElementById('img_aprob' + id_file).className == "fa fa-eye-slash"){
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye";
 						} else {
-							document.getElementById('img_aprob' + id_file).className = "fas fa-eye-slash";
+							document.getElementById('img_aprob' + id_file).className = "fa fa-eye-slash";
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
@@ -158,8 +158,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fas fa-arrow-left fa-2x"></i></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fas fa-arrow-right fa-2x"></i></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -172,8 +172,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fas fa-arrow-right fa-2x"></i></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fas fa-arrow-left fa-2x"></i></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -237,8 +237,8 @@
 		<section id="module-gallery">
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa-pbt fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit small"></i></a># ENDIF #
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
 				</h1>
 
 				# IF C_CATEGORY_DESCRIPTION #
@@ -251,28 +251,28 @@
 			<div class="gallery-tools-container">
 				<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 					<ul class="level-0 hidden">
-						<li><a class="cssmenu-title"><i class="fas fa-eye"></i> {L_DISPLAY}</a>
+						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 							<ul class="level-1">
-								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fas fa-eye"></i> {L_BEST_VIEWS}</a></li>
-								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star-half"></i> {L_BEST_NOTES}</a></li># ENDIF #
+								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
+								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li># ENDIF #
 							</ul>
 						</li>
-						<li><a class="cssmenu-title"><i class="fas fa-sort"></i> {L_ORDER_BY}</a>
+						<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
 							<ul class="level-1">
-								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fas fa-tag"></i> {L_NAME}</a></li>
-								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="far fa-clock"></i> {L_DATE}</a></li>
-								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fas fa-eye"></i> {L_VIEWS}</a></li>
+								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
+								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
+								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
 								# IF C_NOTATION_ENABLED #
-								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="far fa-star-half"></i> {L_NOTES}</a></li>
+								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
 								# ENDIF #
 								# IF C_COMMENTS_ENABLED #
-								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fas fa-comments"></i> {L_COM}</a></li># ENDIF #
+								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li># ENDIF #
 							</ul>
 						</li>
-						<li><a class="cssmenu-title"><i class="fas fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
+						<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul class="level-1">
-								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fas fa-sort-amount-asc"></i> {L_ASC}</a></li>
-								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fas fa-sort-amount-desc"></i> {L_DESC}</a></li>
+								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -345,7 +345,7 @@
 										<div class="text-strong">{KERNEL_NOTATION}</div>
 									# ENDIF #
 									# IF C_GALLERY_PICS_MODO #
-									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" title="{L_EDIT}"><i class="far fa-edit"></i></a></span>
+									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" title="{L_EDIT}"><i class="fa fa-edit"></i></a></span>
 
 									<div id="move{ID}" class="move-pics-container">
 										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
@@ -355,17 +355,17 @@
 											</select>
 										</div>
 									</div>
-									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" title="{L_MOVETO}"><i class="fa-pbt fa-move"></i></a>
+									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" title="{L_MOVETO}"><i class="fa fa-move"></i></a>
 
 									<a href="javascript:pics_aprob({ID});" class="basic-button" title="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}"></i></a>
 									<span id="img{ID}"></span>
-									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="far fa-delete"></i></a>
+									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 									# ENDIF #
 								</div>
 							</div>
 							<div class="link-to-other-pics-container">
-								<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" title =""><i class="fas fa-arrow-left fa-2x"></i> ${LangLoader::get_message('previous', 'main')}</a></span>
-								<span class="float-right"><a href="{U_NEXT}#pics_max" title="">${LangLoader::get_message('next', 'main')} <i class="fas fa-arrow-right fa-2x"></i></a>&nbsp;&nbsp;&nbsp;</span>
+								<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" title =""><i class="fa fa-arrow-left fa-2x"></i> ${LangLoader::get_message('previous', 'main')}</a></span>
+								<span class="float-right"><a href="{U_NEXT}#pics_max" title="">${LangLoader::get_message('next', 'main')} <i class="fa fa-arrow-right fa-2x"></i></a>&nbsp;&nbsp;&nbsp;</span>
 							</div>
 							<table class="pics-max-thumbnails">
 								<thead>
@@ -378,7 +378,7 @@
 								<tbody>
 									<tr>
 										<td>
-											<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')"><i class="fas fa-arrow-left fa-2x"></i></a># ENDIF #</span>
+											<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')"><i class="fa fa-arrow-left fa-2x"></i></a># ENDIF #</span>
 										</td>
 
 										# START list_preview_pics #
@@ -386,7 +386,7 @@
 										# END list_preview_pics #
 
 										<td>
-											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')"><i class="fas fa-arrow-right fa-2x"></i></a># ENDIF #</span>
+											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')"><i class="fa fa-arrow-right fa-2x"></i></a># ENDIF #</span>
 										</td>
 									</tr>
 								</tbody>
@@ -444,8 +444,8 @@
 
 									<div class="actions-container">
 										# IF C_GALLERY_MODO #
-										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="far fa-edit"></a></span>
-										<a href="{pics_list.U_DEL}" title="{L_DELETE}" class="far fa-delete" data-confirmation="delete-element"></a>
+										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
+										<a href="{pics_list.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										<div id="move{pics_list.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
 												<div>{L_MOVETO} :</div>
@@ -454,9 +454,9 @@
 												</select>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa-pbt fa-move" title="{L_MOVETO}"></a>
+										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 
-										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="# IF pics_list.C_IMG_APROB #fas fa-eye-slash# ELSE #fas fa-eye# ENDIF #" title="{pics_list.L_APROB_IMG}"></a>
+										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="# IF pics_list.C_IMG_APROB #fa fa-eye-slash# ELSE #fa fa-eye# ENDIF #" title="{pics_list.L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>
 										# ENDIF #
 										<span id="img{pics_list.ID}"></span>

@@ -94,7 +94,7 @@
 						<tr>
 							<td class="{files.COLOR}">
 								<a href="{files.U_FILE}">{files.NAME}</a>
-								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="far fa-edit"></a>
+								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 							</td>
 							<td class="{files.COLOR}">
 								<a href="{files.U_CAT}">{files.CAT}</a>

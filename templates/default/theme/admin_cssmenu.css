@@ -680,7 +680,8 @@ header .cssmenu ul ul li .cssmenu-title						{ background: #333333;		}
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1)  #B3B3B3 rgba(0, 0, 0, 0.25);
 	border-radius: 4px;
 	font-size: 0;
-	font-family: FontAwesome;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900; /* Solid icons*/
 	font-style: normal;
 	font-weight: normal;
 	color: #444444;

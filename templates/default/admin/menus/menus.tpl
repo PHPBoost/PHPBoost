@@ -83,7 +83,7 @@ function createSortableMenu()
 	for(var i = 0; i < containerListLength; i++)
 	{
 		jQuery('#' + menusContainerList[i]).sortable({
-			handle: '.fa-arrows',
+			handle: '.fa-arrows-alt',
 			group: 'menus',
 			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
 			containerSelector: '#mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
@@ -135,7 +135,7 @@ function createSortableMenu()
 									{L_HEADER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
-									<i class="fas fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -172,7 +172,7 @@ function createSortableMenu()
 									{L_SUB_HEADER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu2');" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
-									<i class="fas fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -209,7 +209,7 @@ function createSortableMenu()
 										</span>
 										{L_LEFT_MENU}
 									</p><p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
-										<i class="fas fa-plus"></i> {L_ADD_MENU}
+										<i class="fa fa-plus"></i> {L_ADD_MENU}
 									</p>
 								</div>
 							</div>
@@ -248,7 +248,7 @@ function createSortableMenu()
 											{L_TOP_CENTRAL_MENU}
 										</p>
 										<p class="menus-block-add" onclick="menu_display_block('addmenu4');" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
-											<i class="fas fa-plus"></i> {L_ADD_MENU}
+											<i class="fa fa-plus"></i> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -302,7 +302,7 @@ function createSortableMenu()
 											{L_BOTTOM_CENTRAL_MENU}
 										</p>
 										<p class="menus-block-add" onclick="menu_display_block('addmenu5');" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
-											<i class="fas fa-plus"></i> {L_ADD_MENU}
+											<i class="fa fa-plus"></i> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -340,7 +340,7 @@ function createSortableMenu()
 										{L_RIGHT_MENU}
 									</p>
 									<p class="menus-block-add" onclick="menu_display_block('addmenu6');" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
-										<i class="fas fa-plus"></i> {L_ADD_MENU}
+										<i class="fa fa-plus"></i> {L_ADD_MENU}
 									</p>
 								</div>
 							</div>
@@ -380,7 +380,7 @@ function createSortableMenu()
 									{L_TOP_FOOTER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu7');" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
-									<i class="fas fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -417,7 +417,7 @@ function createSortableMenu()
 									{L_FOOTER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu8');" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
-									<i class="fas fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>

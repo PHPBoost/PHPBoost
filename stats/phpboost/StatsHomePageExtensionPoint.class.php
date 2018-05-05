@@ -1055,7 +1055,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => $trend_parameters['average'],
 					'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-					'TREND' => ($trend_parameters['picture'] ? '<i class="fa-pbt fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
+					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
 			$result->dispose();
@@ -1109,7 +1109,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => $trend_parameters['average'],
 					'LAST_UPDATE' => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-					'TREND' => ($trend_parameters['picture'] ? '<i class="fa-pbt fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
+					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
 			$result->dispose();

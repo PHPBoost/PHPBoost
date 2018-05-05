@@ -162,7 +162,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Ancre ajoutée aux messages non lus.
-		$new_ancre = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="far fa-hand-point-right"></i></a>' : '';
+		$new_ancre = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
 		
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
@@ -186,8 +186,8 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'CHECKED_MAIL' => ($row['mail'] == 1) ? 'checked="checked"' : '',
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'TRACK' => '<i class="fa-forum fa-msg-track"></i>',
-			'DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']) ? '<i class="fa-forum fa-msg-display"></i>' : '',
+			'TRACK' => '<i class="fa fa-msg-track"></i>',
+			'DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']) ? '<i class="fa fa-msg-display"></i>' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => stripslashes($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',

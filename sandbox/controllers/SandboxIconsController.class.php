@@ -52,49 +52,37 @@ class SandboxIconsController extends ModuleController
 	{
 		//Social
 		$icons = array(
-			'facebook',
-			'google',
-			'twitter',
-			'hashtag'
+			array('fab', 'facebook-f', '\f39e'),
+			array('fab', 'google-plus-g', '\f0d5'),
+			array('fab', 'twitter', '\f099'),
+			array('fas', 'hashtag', '\f292')
 		);
 
-		$code = array(
-			'\f09a',
-			'\f1a0',
-			'\f099',
-			'\f292'
-
-		);
-
-		$icon = array_combine($icons, $code);
-
-		foreach ($icon as $fa=> $before)
+		foreach ($icons as $icon)
 		{
-			$this->view->assign_block_vars('social', array('FA' => $fa, 'BEFORE' => $before));
+			$this->view->assign_block_vars('social', array(
+					'PREFIX' => $icon[0],
+					'FA'     => $icon[1],
+					'CODE'   => $icon[2]
+			));
 		}
 
 		//Responsive
 		$icons = array(
-			'television',
-			'desktop',
-			'laptop',
-			'tablet',
-			'mobile'
+			array('fas', 'tv', '\f26c'),
+			array('fas', 'desktop', '\f108'),
+			array('fas', 'laptop', '\f109'),
+			array('fas', 'tablet-alt', '\f3fa'),
+			array('fas', 'mobile-alt', '\f3cd')
 		);
 
-		$code = array(
-			'\f26c',
-			'\f108',
-			'\f109',
-			'\f10a',
-			'\f10b'
-		);
-
-		$icon = array_combine($icons, $code);
-
-		foreach ($icon as $fa=> $before)
+		foreach ($icons as $icon)
 		{
-			$this->view->assign_block_vars('responsive', array('FA' => $fa, 'BEFORE' => $before));
+			$this->view->assign_block_vars('responsive', array(
+				'PREFIX' => $icon[0],
+				'FA'     => $icon[1],
+				'CODE'   => $icon[2]
+			));
 		}
 	}
 
