@@ -2,7 +2,7 @@
 	# IF C_NOTES #
 		<div class="static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 			# START star #
-				<a href="" onclick="return false;" class="fa star # IF star.STAR_EMPTY #fa-star-o# ENDIF ## IF star.STAR_HALF #fa-star-half-o# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #"></a>
+				<a href="" onclick="return false;" class="fa star # IF star.STAR_EMPTY #fa-star-empty# ENDIF ## IF star.STAR_HALF #fa-star-half-empty# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #"></a>
 			# END star #
 			<meta itemprop="ratingCount" content="{NUMBER_NOTES}">
 			<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
@@ -34,7 +34,7 @@
 	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
-				<a href="" onclick="return false;" class="fa star # IF star.STAR_EMPTY #fa-star-o# ENDIF ## IF star.STAR_HALF #fa-star-half-o# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #" id="star-{ID_IN_MODULE}-{star.I}"></a>
+				<a href="" onclick="return false;" class="fa star # IF star.STAR_EMPTY #fa-star-empty# ENDIF ## IF star.STAR_HALF #fa-star-half-empty# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #" id="star-{ID_IN_MODULE}-{star.I}"></a>
 			# END star #
 		</span>
 		<span class="notes">

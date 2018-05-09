@@ -455,6 +455,16 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 	text-decoration: none;
 }
 
+.notation .fa-star-half-empty,
+.notation.static .fa-star-half-empty {
+	position: relative;
+}
+
+.fa-star-half-empty:after {
+  	position: absolute;
+  	left: 0;
+  }
+
 
 /* -- Les Icones specifiques PHPBoost de FontAwesome -- */
 /* ---------------------------------------------------- */

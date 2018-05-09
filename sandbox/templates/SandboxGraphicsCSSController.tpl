@@ -413,9 +413,9 @@
 				<div class="notation">
 					<a href="" onclick="return false;" class="fa star fa-star"></a>
 					<a href="" onclick="return false;" class="fa star fa-star"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-half-o"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-o"></a>
-					<a href="" onclick="return false;" class="fa star fa-star-o"></a>
+					<a href="" onclick="return false;" class="fa star fa-star-half-empty"></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"></a>
 				</div>
 			</div>
 		</article>

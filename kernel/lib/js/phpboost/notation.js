@@ -96,9 +96,9 @@ Note.prototype = {
 			
 			decimal = i - note;
 			if(decimal >= 1)
-				star_class = 'fa star star-hover fa-star-o';
+				star_class = 'fa star star-hover fa-star-empty';
 			else if(decimal <= 0.50 && decimal > 0)
-				star_class = 'fa star star-hover fa-star-half-o';
+				star_class = 'fa star star-hover fa-star-half-empty';
 			else if(note >= i)
 				star_class = 'fa star star-hover fa-star';
 

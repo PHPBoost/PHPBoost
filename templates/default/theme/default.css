@@ -3,7 +3,7 @@
 Css par defaut commun * tout les themes, permet les ajouts necessaires au framework et retrocompatibilite
 --------------------------------------*/
 
-/* Reset */
+/* --- Uniformisation des classes génériques par rapport aux navigateurs --- */
 * {
 	margin: 0;
 	padding: 0;
@@ -37,7 +37,7 @@ input[type=checkbox] {
 	border: none;
 	background: none; }
 
-button::-moz-focus-inner, .button::-moz-focus-inner{
+button::-moz-focus-inner, .button::-moz-focus-inner {
 	border: 0;
 	padding: 0; }
 
@@ -91,6 +91,9 @@ abbr, acronym {
 	border-bottom-style: dotted;
 	border-bottom-color: transparent; }
 
+/* --- Classes spécifiques PHPBoost --- */
+
+/* Liens wikipedia */
 a.wikipedia-link {
 	position: relative;
 	border-bottom-width: 1px;
@@ -109,7 +112,7 @@ a.wikipedia-link:before {
 	font-weight: 900; /* Solid icons*/
 	font-size: 1em; }
 
-/* Alignements */
+/* Classes d'alignement */
 .inline 		{ display: inline !important; }
 .inline-block 	{ display: inline-block !important; }
 
@@ -129,13 +132,12 @@ img.float-right {
 @media (min-width: 769px) {
 	img.float-left, img.left   {
 		float: left !important;
-		padding: 0.618em 0.809em 0.618em 0;
-	}
+		padding: 0.618em 0.809em 0.618em 0;	}
 	img.float-right, img.right {
 		float: right !important;
-		padding: 0.618em 0 0.809em 0.618em;
-	} }
+		padding: 0.618em 0 0.809em 0.618em;	} }
 
+/* Classe hidden */
 .hidden { display: none !important; }
 
 @media (max-width: 768px) {
@@ -161,7 +163,7 @@ img.float-right {
 .img-link:hover {
 	text-decoration: none; }
 
-/* Affichage des smiley */
+/* Affichage des smileys */
 .smiley {
 	vertical-align: middle; }
 
@@ -199,8 +201,7 @@ img.float-right {
 
 @media (max-width: 768px) {
 	.fieldset-content {
-		margin-top: 0.618em;
-	} }
+		margin-top: 0.618em; } }
 
 .module-mini-contents .fieldset-content {
 	width: 100%; }
@@ -230,7 +231,7 @@ ul.pagination .current-page {
 	overflow: auto;
 	height: 16.18em; }
 
-/* --- Elements de previsualisation --- */
+/* Elements de previsualisation */
 .loading-preview-container {
 	position: relative; }
 
@@ -241,6 +242,7 @@ ul.pagination .current-page {
 	width: 100%;
 	text-align: center; }
 
+/* Impression */
 @media print {
 	* {
 		background-color: transparent;
@@ -249,8 +251,7 @@ ul.pagination .current-page {
 		color: #000000;
 	} }
 
-/* Tableaux
---------------------------------------*/
+/* Tableaux  */
 table.table-fixed {
 	table-layout: fixed;
 	width: 100%; }
@@ -261,8 +262,7 @@ table.table-fixed {
 .html-table-nbr-elements {
 	float: left; }
 
-/* Effet Blink
---------------------------------------*/
+/* Effet Blink */
 @keyframes blink {
 	0%   { opacity: 0; }
 	30%  { opacity: 1; }
@@ -280,6 +280,8 @@ table.table-fixed {
 	-moz-animation: blink 1.5s ease-in-out infinite;
 	-webkit-animation: blink 1.5s ease-in-out infinite; }
 
+
+/* --- Police de caractère de base --- */
 /* open-sans-300 - latin */
 @font-face {
 	font-family: 'Open Sans';
@@ -381,9 +383,7 @@ table.table-fixed {
 		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
 
 
-/* Config spécifique PHPBoost */
-
-/** PHPBoost fontawesome alias **/
+/* --- Classes FA spécifiques PHPBoost --- */
 
 /* Messages */
 .fa.fa-success:before { /* copy check */
@@ -418,92 +418,24 @@ table.table-fixed {
 .fa.fa-move:before { /* copy share */
   content: "\f064"; }
 
-/* alias for old v4*/
-.fa.fa-bar-chart-o:before {  /* copy chart-bar */
-  content: "\f080"; }
-
-.fa.fa-calendar:before {  /* copy calendar-alt */
-  content: "\f073"; }
-
-.fa.fa-clock-o:before {  /* copy clock */
-  content: "\f017"; }
-
-.fa.fa-cloud-upload:before {  /* copy cloud-upload-alt */
-  content: "\f382"; }
-
-.fa.fa-comment-0:before {  /* copy comment */
-  content: "\f075"; }
-.fa.fa-comments-o:before {  /* copy comments */
-  content: "\f086"; }
-
-.fa.fa-envelope-o:before {  /* copy envelope */
-  content: "\f0e0"; }
-
-.fa.fa-exchange:before {  /* copy exchange-alt */
-  content: "\f362"; }
-
-.fa.fa-file-o:before {  /* copy file */
-  content: "\f15b"; }
-.fa.fa-files-o:before {  /* copy copy */
-  content: "\f0c5"; }
-.fa.fa-file-text:before {  /* copy file-alt */
-  content: "\f15c"; }
-.fa.fa-file-text-o:before {  /* copy file-alt */
-  content: "\f15c"; }
-
-.fa.fa-folder-o:before {  /* copy folder */
-  content: "\f07b"; }
-
-.fa.fa-gears:before {  /* copy cogs */
-  content: "\f085"; }
-
-.fa.fa-hand-o-right:before {  /* copy hand-point-right */
-  content: "\f0a4"; }
-
-.fa.fa-legal:before {  /* copy gavel */
-  content: "\f0e3"; }
-
-.fa.fa-level-up:before {  /* copy level-up-alt */
-  content: "\f3bf"; }
-
-.fa.fa-lightbulb-o:before {  /* copy lightbulb */
-  content: "\f0eb"; }
-
-.fa.fa-minus-square-o:before {  /* copy minus-square */
-  content: "\f146"; }
-.fa.fa-plus-square-o:before {  /* copy plus-square */
-  content: "\f0fe"; }
-
 .fa.fa-refresh:before {  /* copy sync */
   content: "\f021"; }
 
 .fa.fa-remove:before {  /* copy times */
   content: "\f00d"; }
 
-.fa.fa-sign-in:before {  /* copy sign-in-alt */
-  content: "\f2f6"; }
-.fa.fa-sign-out:before {  /* copy sign-out-alt */
-  content: "\f2f5"; }
+.fa.fa-legal:before {  /* copy gavel */
+  content: "\f0e3"; }
 
-.fa.fa-sort-alpha-asc:before {  /* copy sort-alpha-down */
-  content: "\f15d"; }
-.fa.fa-sort-amount-asc:before {  /* copy sort-amount-down */
-  content: "\f160"; }
-.fa.fa-sort-amount-desc:before {  /* copy sort-amount-up */
-  content: "\f161"; }
-
-.fa.fa-star-half-empty:before {  /* copy star-half */
-  content: "\f089"; }
-.fa.fa-star-half-o:before {  /* copy star-half */
-  content: "\f089"; }
-.fa.fa-star-o:before {  /* copy star */
+/* Notation */
+.fa.fa-star-empty:before {  /* copy star */
   content: "\f005"; }
 
-.fa.fa-ticket:before {  /* copy ticket-alt */
-  content: "\f3ff"; }
-
-.fa.fa-user-o:before {  /* copy user */
-  content: "\f007"; }
+.fa.fa-star-half-empty:before {  /* copy star */
+  content: "\f005"; }
+.fa-star-half-empty:after { /* copy star-half */
+  content: "\f089";
+ }
 
 /* Filter */
 .fa-table-sort-up:before { /* copy arrow-up */
@@ -548,26 +480,12 @@ table.table-fixed {
   content: "\f1c2"; }
 
 
-/* Regular fonts forced */
+/* Icones forcee en format "Regular" */
 .fa.fa-edit,
 .fa.fa-delete,
 .fa.fa-eye,
-.fa.fa-clock-o,
-.fa.fa-comment-o,
-.fa.fa-comments-o,
-.fa.fa-envelope-o,
-.fa.fa-file-o,
-.fa.fa-files-o,
-.fa.fa-file-text-o,
-.fa.fa-folder-o,
-.fa.fa-hand-o-right,
-.fa.fa-lightbulb-o,
-.fa.fa-minus-square-o,
-.fa.fa-plus-square-o,
-.fa.fa-star-half-empty,
-.fa.fa-star-half-o,
-.fa.fa-star-o,
-.fa.fa-user-o { 
+.fa.fa-star-empty,
+.fa.fa-star-half-empty:before { 
   font-weight: 400; }
 
 
@@ -593,3 +511,92 @@ table.table-fixed {
 .fa-upload-img.fa-upload-css {
   font-family: 'Font Awesome 5 Brands';
 }
+
+
+/* --- Deprecated : alias V4.7 utilisés PHPBoost --- */
+.fa.fa-bar-chart-o:before {  /* copy chart-bar */
+  content: "\f080"; }
+
+.fa.fa-calendar:before {  /* copy calendar-alt */
+  content: "\f073"; }
+
+.fa.fa-clock-o:before {  /* copy clock */
+  content: "\f017"; }
+
+.fa.fa-cloud-upload:before {  /* copy cloud-upload-alt */
+  content: "\f382"; }
+
+.fa.fa-comment-0:before {  /* copy comment */
+  content: "\f075"; }
+.fa.fa-comments-o:before {  /* copy comments */
+  content: "\f086"; }
+
+.fa.fa-envelope-o:before {  /* copy envelope */
+  content: "\f0e0"; }
+
+.fa.fa-exchange:before {  /* copy exchange-alt */
+  content: "\f362"; }
+
+.fa.fa-file-o:before {  /* copy file */
+  content: "\f15b"; }
+.fa.fa-files-o:before {  /* copy copy */
+  content: "\f0c5"; }
+.fa.fa-file-text:before {  /* copy file-alt */
+  content: "\f15c"; }
+.fa.fa-file-text-o:before {  /* copy file-alt */
+  content: "\f15c"; }
+
+.fa.fa-folder-o:before {  /* copy folder */
+  content: "\f07b"; }
+
+.fa.fa-gears:before {  /* copy cogs */
+  content: "\f085"; }
+
+.fa.fa-hand-o-right:before {  /* copy hand-point-right */
+  content: "\f0a4"; }
+
+.fa.fa-level-up:before {  /* copy level-up-alt */
+  content: "\f3bf"; }
+
+.fa.fa-lightbulb-o:before {  /* copy lightbulb */
+  content: "\f0eb"; }
+
+.fa.fa-minus-square-o:before {  /* copy minus-square */
+  content: "\f146"; }
+.fa.fa-plus-square-o:before {  /* copy plus-square */
+  content: "\f0fe"; }
+
+.fa.fa-sign-in:before {  /* copy sign-in-alt */
+  content: "\f2f6"; }
+.fa.fa-sign-out:before {  /* copy sign-out-alt */
+  content: "\f2f5"; }
+
+.fa.fa-sort-alpha-asc:before {  /* copy sort-alpha-down */
+  content: "\f15d"; }
+.fa.fa-sort-amount-asc:before {  /* copy sort-amount-down */
+  content: "\f160"; }
+.fa.fa-sort-amount-desc:before {  /* copy sort-amount-up */
+  content: "\f161"; }
+
+.fa.fa-ticket:before {  /* copy ticket-alt */
+  content: "\f3ff"; }
+
+.fa.fa-user-o:before {  /* copy user */
+  content: "\f007"; }
+
+/* Icones forcee en format "Regular" */
+.fa.fa-clock-o,
+.fa.fa-comment-o,
+.fa.fa-comments-o,
+.fa.fa-envelope-o,
+.fa.fa-file-o,
+.fa.fa-files-o,
+.fa.fa-file-text-o,
+.fa.fa-folder-o,
+.fa.fa-hand-o-right,
+.fa.fa-lightbulb-o,
+.fa.fa-minus-square-o,
+.fa.fa-plus-square-o,
+.fa.fa-star-o,
+.fa.fa-user-o { 
+  font-weight: 400; }
