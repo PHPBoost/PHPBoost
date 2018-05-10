@@ -36,7 +36,7 @@ class GoogleSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_icon_name()
 	{
-		return self::SOCIAL_NETWORK_ID . '-plus';
+		return self::SOCIAL_NETWORK_ID . '-plus-g';
 	}
 	
 	public function get_css_class()

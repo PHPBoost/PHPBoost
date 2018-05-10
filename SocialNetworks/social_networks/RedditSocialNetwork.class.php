@@ -34,6 +34,11 @@ class RedditSocialNetwork extends AbstractSocialNetwork
 		return 'Reddit';
 	}
 	
+	public function get_icon_name()
+	{
+		return self::SOCIAL_NETWORK_ID . '-alien';
+	}
+	
 	public function get_content_sharing_url()
 	{
 		return 'https://reddit.com/submit?url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '');

@@ -34,6 +34,11 @@ class FacebookSocialNetwork extends AbstractSocialNetwork
 		return 'Facebook';
 	}
 	
+	public function get_icon_name()
+	{
+		return self::SOCIAL_NETWORK_ID . '-f';
+	}
+	
 	public function get_content_sharing_url()
 	{
 		return 'http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT;

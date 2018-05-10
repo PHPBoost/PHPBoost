@@ -34,6 +34,11 @@ class LinkedInSocialNetwork extends AbstractSocialNetwork
 		return 'LinkedIn';
 	}
 	
+	public function get_icon_name()
+	{
+		return self::SOCIAL_NETWORK_ID . '-in';
+	}
+	
 	public function get_content_sharing_url()
 	{
 		return 'https://www.linkedin.com/shareArticle?mini=true&url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '') . '&source='. HOST;

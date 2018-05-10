@@ -34,6 +34,11 @@ class PinterestSocialNetwork extends AbstractSocialNetwork
 		return 'Pinterest';
 	}
 	
+	public function get_icon_name()
+	{
+		return self::SOCIAL_NETWORK_ID . '-p';
+	}
+	
 	public function get_content_sharing_url()
 	{
 		return 'http://pinterest.com/pin/create/link/?url=' . HOST . REWRITED_SCRIPT;
