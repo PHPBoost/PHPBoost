@@ -89,21 +89,29 @@ Note.prototype = {
 	},
 	change_picture_status: function (note) {
 		var star_class;
+		var star_width;
 		var decimal;
 		for(var i = 1; i <= this.notation_scale; i++)
 		{
 			var id_star = 'star-' + this.id + '-' + i;
 			
 			decimal = i - note;
-			if(decimal >= 1)
-				star_class = 'fa star star-hover fa-star-empty';
-			else if(decimal <= 0.50 && decimal > 0)
-				star_class = 'fa star star-hover fa-star-half-empty';
-			else if(note >= i)
-				star_class = 'fa star star-hover fa-star';
+			if(decimal >= 1) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 6 + "%";
+			}
+			else if(decimal <= 0.50 && decimal > 0) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 77 * decimal + "%";
+			}
+			else if(note >= i) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 77 + "%";
+			}
 
 			if(jQuery('#' + id_star)) {
 				jQuery('#' + id_star)[0].className = star_class;
+				jQuery('#' + id_star).children('.star-width').css('width', star_width);
 			}
 		}
 	},

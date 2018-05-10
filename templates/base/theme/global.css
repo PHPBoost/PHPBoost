@@ -450,24 +450,29 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 
 .notation .star,
 .static-notation .star {
+	position: relative;
 	padding-right: 0.309em;
-	font-size: 0.809em;
+	font-size: 1.5rem;
 	text-decoration: none;
 }
 
-.notation .fa-star-half-empty,
-.notation.static .fa-star-half-empty {
-	position: relative;
+.notation .star-width {
+	position: absolute;
+	display: inline-block;
+	top:0;
+	left:0;
 }
 
-.fa-star-half-empty:after {
-  	position: absolute;
-  	left: 0;
-  }
-
-
-/* -- Les Icones specifiques PHPBoost de FontAwesome -- */
-/* ---------------------------------------------------- */
+.notation .star-width:before {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	color: #E3CF7A;
+	left: 0;
+	top:0;
+	content:"\f005";
+	display:block;
+	overflow:hidden;
+}
 
 /* --- Les alertes --- */
 li.small-block .fa-stack {
@@ -527,14 +532,14 @@ li.small-block .fa-stack {
 	width: 50%;
 }
 
-.message-helper.error:before       { content: "\f00d"; }
-.message-helper.notice:before      { content: "\f12a"; }
-.message-helper.warning:before     { content: "\f071"; }
-.message-helper.success:before     { content: "\f00c"; }
-.message-helper.question:before    { content: "\f128"; }
-.message-helper.member-only:before { content: "\f071"; }
-.message-helper.modo-only:before   { content: "\f071"; }
-.message-helper.admin-only:before  { content: "\f071"; }
+.message-helper.error:before       { content: "\f00d"; } /* copy times */
+.message-helper.notice:before      { content: "\f12a"; } /* copy exclamation */
+.message-helper.warning:before     { content: "\f071"; } /* copy exclamation-triangle */
+.message-helper.success:before     { content: "\f00c"; } /* copy check */
+.message-helper.question:before    { content: "\f128"; } /* copy question */
+.message-helper.member-only:before { content: "\f071"; } /* copy exclamation-triangle */
+.message-helper.modo-only:before   { content: "\f071"; } /* copy exclamation-triangle */
+.message-helper.admin-only:before  { content: "\f071"; } /* copy exclamation-triangle */
 
 /* -- Systeme d Upload -- */
 /* ---------------------- */

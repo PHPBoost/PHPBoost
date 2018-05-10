@@ -34,7 +34,9 @@
 	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
-				<a href="" onclick="return false;" class="fa star # IF star.STAR_EMPTY #fa-star-empty# ENDIF ## IF star.STAR_HALF #fa-star-half-empty# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #" id="star-{ID_IN_MODULE}-{star.I}"></a>
+				<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}">
+					<span class="star-width" style="width: {star.WIDTH}%;"></span>
+				</a>
 			# END star #
 		</span>
 		<span class="notes">

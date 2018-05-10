@@ -512,6 +512,17 @@ table.table-fixed {
   font-family: 'Font Awesome 5 Brands';
 }
 
+/* Icones manquantes */
+
+.fa-star-half-empty {
+	position: relative;
+}
+
+.fa-star-half-empty:after {
+	position: absolute;
+	left: 0;
+}
+
 
 /* --- Deprecated : alias V4.7 utilisés PHPBoost --- */
 .fa.fa-bar-chart-o:before {  /* copy chart-bar */

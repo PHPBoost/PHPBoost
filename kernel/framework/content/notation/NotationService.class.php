@@ -65,19 +65,27 @@ class NotationService
 				$star_full = false;
 				$star_half = false;
 				$star_empty = false;
+				$width = 0;
 				
-				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75))
+				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75)) {
 					$star_full = true;
-				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75)
+					$width = 77;				
+				}
+				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75) {
 					$star_half = true;
-				else
+					$width = 77 * $decimal;
+				}
+				else {
 					$star_empty = true;
+					$width = 6;
+				}
 				
 				$template->assign_block_vars('star', array(
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF' => $star_half,
-					'STAR_FULL' => $star_full
+					'STAR_FULL' => $star_full,
+					'WIDTH' => $width
 				));
 			}
 
@@ -127,19 +135,27 @@ class NotationService
 				$star_full = false;
 				$star_half = false;
 				$star_empty = false;
+				$width = 0;
 				
-				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75))
+				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75)) {
 					$star_full = true;
-				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75)
+					$width = 77;				
+				}
+				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75) {
 					$star_half = true;
-				else
+					$width = 77 * $decimal;
+				}
+				else {
 					$star_empty = true;
+					$width = 6;
+				}
 				
 				$template->assign_block_vars('star', array(
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF' => $star_half,
-					'STAR_FULL' => $star_full
+					'STAR_FULL' => $star_full,
+					'WIDTH' => $width
 				));
 			}
 
