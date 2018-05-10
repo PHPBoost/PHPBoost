@@ -116,7 +116,7 @@ class InstallDisplayResponse extends AbstractResponse
 	{
 		$steps = array(
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
-			array('name' => $this->lang['step.list.license'], 'img' => 'file-text-o'),
+			array('name' => $this->lang['step.list.license'], 'img' => 'file'),
 			array('name' => $this->lang['step.list.server'], 'img' => 'cog'),
 			array('name' => $this->lang['step.list.database'], 'img' => 'server'),
 			array('name' => $this->lang['step.list.website'], 'img' => 'cogs'),
