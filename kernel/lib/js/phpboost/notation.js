@@ -95,23 +95,40 @@ Note.prototype = {
 		{
 			var id_star = 'star-' + this.id + '-' + i;
 			
-			decimal = i - note;
+			decimal = 1 - (i - note); /* */
 			if(decimal >= 1) {
 				star_class = 'fa star star-hover fa-star-empty'
-				star_width = 6 + "%";
+				star_width = 'star-width star-width-100';
 			}
-			else if(decimal <= 0.50 && decimal > 0) {
+			else if(decimal >= 0.9 && decimal < 1) {
 				star_class = 'fa star star-hover fa-star-empty'
-				star_width = 77 * decimal + "%";
+				star_width = 'star-width star-width-90';
 			}
-			else if(note >= i) {
+			else if(decimal >= 0.75 && decimal < 0.9) {
 				star_class = 'fa star star-hover fa-star-empty'
-				star_width = 77 + "%";
+				star_width = 'star-width star-width-75';
+			}
+			else if(decimal >= 0.50 && decimal < 0.75) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 'star-width star-width-50';
+				alert(decimal);
+			}
+			else if(decimal >= 0.25 && decimal < 0.50) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 'star-width star-width-25';
+			}
+			else if(decimal >= 0.1 && decimal < 0.25) {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 'star-width star-width-10';
+			}
+			else {
+				star_class = 'fa star star-hover fa-star-empty'
+				star_width = 'star-width star-width-0';
 			}
 
 			if(jQuery('#' + id_star)) {
 				jQuery('#' + id_star)[0].className = star_class;
-				jQuery('#' + id_star).children('.star-width').css('width', star_width);
+				jQuery('#' + id_star).children('.star-width')[0].className = star_width;
 			}
 		}
 	},

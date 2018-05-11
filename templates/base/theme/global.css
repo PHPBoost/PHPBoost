@@ -451,7 +451,6 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 .notation .star,
 .static-notation .star {
 	position: relative;
-	padding-right: 0.309em;
 	font-size: 1.5rem;
 	text-decoration: none;
 }
@@ -473,6 +472,15 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 	display:block;
 	overflow:hidden;
 }
+
+.star-width-0   { width: 0%;   }
+.star-width-10  { width: 30%;  }
+.star-width-25  { width: 41%;  }
+.star-width-50  { width: 50%;  }
+.star-width-75  { width: 65%;  }
+.star-width-90  { width: 78%;  }
+.star-width-100 { width: 100%; }
+
 
 /* --- Les alertes --- */
 li.small-block .fa-stack {
