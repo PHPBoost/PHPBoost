@@ -58,7 +58,7 @@ class Countries
 		return self::$countries;
 	}
 	
-	public static function get_countrie($identifier)
+	public static function get_country($identifier)
 	{
 		if (self::is_available($identifier))
 		{
