@@ -84,5 +84,10 @@ interface SocialNetwork
 	 * @return string Identifiers creation url
 	 */
 	function get_identifiers_creation_url();
+
+	/**
+	 * @return bool true if the social network needs a callback url in its configuration
+	 */
+	function callback_url_needed();
 }
 ?>

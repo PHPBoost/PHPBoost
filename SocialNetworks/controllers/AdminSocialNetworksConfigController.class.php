@@ -127,7 +127,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 					if ($sn->authentication_identifiers_needed())
 					{
 						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-							array('description' => StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain'], array('identifiers_creation_url' => $sn->get_identifiers_creation_url(), 'callback_url' => UserUrlBuilder::connect($id)->absolute())), 'events' => array('click' => '
+							array('description' => StringVars::replace_vars(($sn->authentication_client_secret_needed() ? $this->lang['authentication.config.authentication-enabled-explain'] : $this->lang['authentication.config.authentication-enabled-explain.key-only']), array('identifiers_creation_url' => $sn->get_identifiers_creation_url())) . ($sn->callback_url_needed() ? StringVars::replace_vars($this->lang['authentication.config.authentication-enabled-explain.callback-url'], array('callback_url' => UserUrlBuilder::connect($id)->absolute())) : ''), 'events' => array('click' => '
 								if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) { 
 									HTMLForms.getField("' . $id . '_client_id").enable(); 
 									' . ($sn->authentication_client_secret_needed() ? 'HTMLForms.getField("' . $id . '_client_secret").enable(); 

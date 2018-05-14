@@ -36,7 +36,9 @@ $lang['module_config_title'] = 'Social networks configuration';
 $lang['authentication.config.curl_extension_disabled'] = '<b>php_curl</b> extension is disabled on this server. Enable it to use social networks authentication methods.';
 
 $lang['authentication.config.authentication-enabled'] = 'Enable :name authentication';
-$lang['authentication.config.authentication-enabled-explain'] = 'Go to <a href=":identifiers_creation_url">:identifiers_creation_url</a> to create your id.<br/>
+$lang['authentication.config.authentication-enabled-explain'] = 'Go to <a href=":identifiers_creation_url">:identifiers_creation_url</a> to create your identifiers.';
+$lang['authentication.config.authentication-enabled-explain.key-only'] = 'Go to <a href=":identifiers_creation_url">:identifiers_creation_url</a> to create your identifier.';
+$lang['authentication.config.authentication-enabled-explain.callback-url'] = '<br/>
 Specify the following callback URL during configuration:<br/>
 <b>:callback_url</b>';
 $lang['authentication.config.client-id'] = ':name Id or Key';

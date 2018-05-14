@@ -36,7 +36,9 @@ $lang['module_config_title'] = 'Configuration du module Réseaux sociaux';
 $lang['authentication.config.curl_extension_disabled'] = 'L\'extension <b>php_curl</b> est désactivée sur ce serveur. Veuillez l\'activez pour utiliser les authentifications des réseaux sociaux.';
 
 $lang['authentication.config.authentication-enabled'] = 'Activer l\'authentification via :name';
-$lang['authentication.config.authentication-enabled-explain'] = 'Rendez-vous sur <a href=":identifiers_creation_url">:identifiers_creation_url</a> pour créer vos identifiants.<br/>
+$lang['authentication.config.authentication-enabled-explain'] = 'Rendez-vous sur <a href=":identifiers_creation_url">:identifiers_creation_url</a> pour créer vos identifiants.';
+$lang['authentication.config.authentication-enabled-explain.key-only'] = 'Rendez-vous sur <a href=":identifiers_creation_url">:identifiers_creation_url</a> pour créer votre identifiant.';
+$lang['authentication.config.authentication-enabled-explain.callback-url'] = '<br/>
 Indiquez l\'URL de redirection suivante lors de la configuration :<br/>
 <b>:callback_url</b>';
 $lang['authentication.config.client-id'] = ':name Id ou Key';

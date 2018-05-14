@@ -118,5 +118,13 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	{
 		return '';
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function callback_url_needed()
+	{
+		return true;
+	}
 }
 ?>
