@@ -620,12 +620,12 @@ h3.formatter-title {
 .small-screen .menu-button.menu-opened:after,
 .small-screen .submenu-button.submenu-opened:after { background-color: rgba(54, 100, 147, 0.2); }
 
-/* -- Social Share -- */
+/* -- Sharing elements (Email, print...) -- */
 /* ------------------ */
-.social-element > a {
+.sharing-element > a {
 	color: #FFFFFF;
 }
 
-.social-element-comments > a { background-color: #CDCDCD; }
-.social-element-mail > a     { background-color: #366393; }
-.social-element-print > a    { background-color: #999999; }
+.sharing-element-comments > a { background-color: #CDCDCD; }
+.sharing-element-mail > a     { background-color: #366393; }
+.sharing-element-print > a    { background-color: #999999; }
