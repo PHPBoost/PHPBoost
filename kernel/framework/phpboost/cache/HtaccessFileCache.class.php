@@ -247,14 +247,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_section('PHP and HTTP protections');
 		$this->add_line('# Block out use of illegal or unsafe characters in the HTTP Request');
 		$this->add_line('RewriteCond %{THE_REQUEST} ^.*(\\r|\\n|%0A|%0D).* [NC,OR]');
-		$this->add_line('# Block out use of illegal or unsafe characters in the Referer Variable of the HTTP Request');
-		$this->add_line('RewriteCond %{HTTP_REFERER} ^(.*)(<|>|\'|%0A|%0D|%27|%3C|%3E|%00).* [NC]');
-		$this->add_line('RewriteRule .* - [F,L]');
 		$this->add_empty_line();
-		$this->add_line('# Block out any script trying to set a mosConfig value through the URL');
-		$this->add_line('RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]');
-		$this->add_line('# Block out any script trying to base64_encode/decode content via URL');
-		$this->add_line('RewriteCond %{QUERY_STRING} base64_(en|de)code[^(]*\([^)]*\) [OR]');
 		$this->add_line('# Block out any script that includes a <script> tag in URL');
 		$this->add_line('RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]');
 		$this->add_line('# Block out any script trying to set a PHP GLOBALS variable via URL');
@@ -269,10 +262,6 @@ class HtaccessFileCache implements CacheData
 		$this->add_section('File and SQL injections protections');
 		$this->add_line('RewriteCond %{REQUEST_METHOD} GET');
 		$this->add_line('RewriteCond %{QUERY_STRING} (;|<|>|\'|"|\)|%0A|%0D|%22|%27|%3C|%3E|%00).*(/\*|union|select|insert|cast|set|declare|drop|update|md5|benchmark) [NC,OR]');
-		$this->add_line('RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]');
-		$this->add_line('RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http%3A%2F%2F [OR]');
-		$this->add_line('RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]');
-		$this->add_line('RewriteCond %{QUERY_STRING} (localhost|loopback|127\.0\.0\.1) [NC,OR]');
 		$this->add_line('RewriteCond %{QUERY_STRING} (<|>|\'|%0A|%0D|%27|%3C|%3E|%00) [NC]');
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
