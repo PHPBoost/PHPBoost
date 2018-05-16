@@ -123,10 +123,8 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 						$user->set_email($data['email']);
 						
 						$auth_method = new static();
-						if (!empty($data['picture_url']))
-							$fields_data = array('user_avatar' => $data['picture_url']);
-						else
-							$fields_data = array();
+						$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
+						
 						return UserService::create($user, $auth_method, $fields_data, $data);
 					}
 				}
@@ -135,7 +133,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 			}
 		}
 		else
-			$this->error_msg = LangLoader::get_message('external-auth.email-not-found', 'user-common');
+			$this->error_msg = LangLoader::get_message('external-auth.user-data-not-found', 'user-common');
 		
 		$this->check_user_bannishment($user_id);
 		
