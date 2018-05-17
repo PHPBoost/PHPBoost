@@ -226,6 +226,7 @@ class FaqQuestion
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			array(
 			'C_APPROVED' => $this->is_approved(),
+			'C_ACTION_USER' => !$this->is_authorized_to_edit() && !$this->is_authorized_to_delete(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
@@ -253,6 +254,7 @@ class FaqQuestion
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('faq', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
+			'U_ABSOLUTE_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->absolute(),
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE' => FaqUrlBuilder::delete($this->id)->rel()

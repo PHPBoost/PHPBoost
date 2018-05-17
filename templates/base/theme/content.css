@@ -75,6 +75,68 @@ header h2 .actions a {
 	margin-left: 0.618em;
 }
 
+.actions-menu {
+	position: relative;
+}
+
+.actions-title { 
+	position: relative;
+	display: block;
+	padding: 0.309em 0.456em;
+}
+
+@media (max-width: 768px) {
+	.actions-title { 
+		position: relative;
+		display: block;
+		padding: 1em 1.309em;
+	}
+}
+
+.actions-menu.opened .fa-actions-menu:before {
+	content: "\f00d";
+}
+
+.actions-submenu {
+	position: absolute;
+	list-style: none;
+	padding: 0;
+	top: 25px;
+	left: -9999px;
+	width: 250px;
+	z-index: 1;
+}
+
+@media (max-width: 768px) {
+	.actions-submenu { 
+		top: 45px;
+	}
+}
+
+.opened .actions-submenu {
+	left: auto;
+	right: 0;
+}
+
+.actions-title { }
+
+.action {
+	font-size: 1.5rem;
+	padding: 0.309em 0.456em;
+}
+
+@media (max-width: 768px) {
+	.action { 
+		padding: 1em 0.618em;
+	}
+}
+
+.action i {
+	text-align: center;
+	width: 20px;
+}
+
+
 /* --- Contenu --- */
 .content {
 	text-align: justify;

@@ -2,6 +2,9 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+.faq-reorder-form {
+	width: 100%;
+}
 
 .faq-answer-container {
 	padding: 0.618em 0.309em 0.618em 0;
@@ -22,7 +25,7 @@
 }
 
 .question-title {
-	display: inline-block;
+	display: block;
 	overflow: initial;
 }
 

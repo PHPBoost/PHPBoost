@@ -89,35 +89,6 @@
 			FaqQuestions.change_reposition_pictures();
 		});
 	});
-
-	# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-	function show_answer(id_question)
-	{
-		if (jQuery("#question" + id_question)) {
-			if(jQuery("#answer" + id_question).css('display') == 'none')
-			{
-				jQuery("#answer" + id_question).fadeIn();
-				jQuery("#question" + id_question).removeClass('fa-caret-right');
-				jQuery("#question" + id_question).addClass('fa-caret-down');
-			}
-			else
-			{
-				jQuery("#answer" + id_question).fadeOut();
-				jQuery("#question" + id_question).removeClass('fa-caret-down');
-				jQuery("#question" + id_question).addClass('fa-caret-right');
-			}
-		}
-	}
-
-	jQuery(document).ready(function() {
-		var anchor = window.location.hash;
-		var id_question;
-
-		id_question = anchor.substring(9,anchor.length);
-		if (anchor.substring(0,9) == "#question" && id_question.match(/^[0-9]+$/))
-			show_answer(id_question);
-	});
-	# ENDIF #
 -->
 </script>
 # ENDIF #
@@ -150,33 +121,22 @@
 		# ENDIF #
 
 		<div class="content elements-container">
-			<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();">
+			<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();" class="faq-reorder-form">
 				<fieldset id="questions-management">
 					<ul id="questions-list" class="sortable-block">
 						# START questions #
 						<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
 							<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 							<div class="sortable-title">
-								<h3 class="question-title">
-									# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-									<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
-									<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}">{questions.QUESTION}</a>
-									# ELSE #
-									<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
-									<span>{questions.QUESTION}</span>
-									# ENDIF #
-								</h3>
-								<div class="sortable-actions">
-									# IF C_MORE_THAN_ONE_QUESTION #
-									<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-									<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-									# ENDIF #
-									<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-									<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete"></i></a>
-								</div>
-								<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
-									<div itemprop="text">{questions.ANSWER}</div>
-								</div>
+								<h3 class="question-title"><span>{questions.QUESTION}</span></h3>
+							</div>
+							<div class="sortable-actions">
+								# IF C_MORE_THAN_ONE_QUESTION #
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up fa-fw"></i></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down fa-fw"></i></a>
+								# ENDIF #
+								<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i></a>
+								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete fa-fw"></i></a>
 							</div>
 							<div class="spacer"></div>
 							<script>

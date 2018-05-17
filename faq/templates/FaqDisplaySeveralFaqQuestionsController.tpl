@@ -67,7 +67,7 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF ## ENDIF #
+			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i></a># ENDIF ## IF C_DISPLAY_REORDER_LINK #<a href="{U_REORDER_QUESTIONS}" title="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="cat-description">
@@ -104,11 +104,6 @@
 			# INCLUDE SORT_FORM #
 			<div class="spacer"></div>
 			# ENDIF #
-		# ELSE #
-			# IF C_DISPLAY_REORDER_LINK #
-			<div class="float-right"><a href="{U_REORDER_QUESTIONS}" title="{@faq.reorder_questions}"><i class="fa fa-exchange-alt"></i>{@faq.reorder_questions}</a></div>
-			<div class="spacer"></div>
-			# ENDIF #
 		# ENDIF #
 		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 		<div id="questions-titles-list">
@@ -128,25 +123,31 @@
 			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 				<header class="faq-question-element">
 					<h3 class="question-title">
+						# IF questions.C_ACTION_USER #
+						<span class="actions"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw"></i></a></span>
+						# ELSE #
+						<span class="actions actions-menu question-actions" id="question-{questions.ID}-actions">
+							<a href="" title="Menu d'action" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-actions-menu"></i></a>
+							<ul class="actions-submenu">
+								<li class="action"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');"><i class="fa fa-hand-point-right fa-fw"></i> {questions.L_LINK_QUESTION}</a></li>
+								# IF questions.C_EDIT #
+								<li class="action"><a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i> ${LangLoader::get_message('edit', 'common')}</a></li>
+								# ENDIF #
+								# IF questions.C_DELETE #
+								<li class="action"><a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i> ${LangLoader::get_message('delete', 'common')}</a></li>
+								# ENDIF #
+							</ul>
+						</span>
+						# ENDIF #
+
 						# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i></a>
+						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.L_SHOW_ANSWER}"><i id="question{questions.ID}" class="fa fa-caret-right fa-fw question-anchor"></i></a>
 						<a href="" onclick="show_answer({questions.ID});return false;" title="{questions.QUESTION}"><span itemprop="name">{questions.QUESTION}</span></a>
 						# ELSE #
-						<i id="question{questions.ID}" class="fa fa-caret-right question-anchor"></i>
+						<i id="question{questions.ID}" class="fa fa-caret-right fa-fw question-anchor"></i>
 						<span itemprop="name">{questions.QUESTION}</span>
 						# ENDIF #
 					</h3>
-
-					<span class="actions">
-						<a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-flag"></i></a>
-						# IF questions.C_EDIT #
-						<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-						# ENDIF #
-						# IF questions.C_DELETE #
-						<a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
-						# ENDIF #
-					</span>
-
 					<meta itemprop="url" content="{questions.U_LINK}">
 				</header>
 

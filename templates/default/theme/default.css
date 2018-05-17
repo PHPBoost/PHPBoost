@@ -427,6 +427,9 @@ table.table-fixed {
 .fa.fa-legal:before {  /* copy gavel */
   content: "\f0e3"; }
 
+ .fa.fa-actions-menu:before { /* copy ellipsis-h */
+   content: "\f141"; }
+
 /* Notation */
 .fa.fa-star-empty:before {  /* copy star */
   content: "\f005"; }
