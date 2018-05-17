@@ -426,23 +426,60 @@ function SelectElement(element) {
 	selection.addRange(range); 
 }
 
+//Function copy_to_clipboard
+//
+// Description : 
+// This function copy the content of parameter to clipboard.
+//
+// parameters : one
+// {tocopy} correspond to the content you want to copy.
+//
+// Return : -
+//
+// Comments : -
+//
+function copy_to_clipboard(tocopy)
+{
+	var dummy = $('<input>').val(tocopy).appendTo('body').select()
+
+	try { 
+		var successful = document.execCommand('copy');
+	} 
+	catch(err) {
+		alert('Your browser do not authorize this operation');
+	}	
+}
+
 //Function open_submenu
 //
 // Description : 
 // This function add CSS Class to the specified CSS ID
 //
-// parameters : two
+// parameters : three
 // {myid} correspond to the specific element you want to add your CSS class
 // {myclass} correspond to the name of CSS class you want to add to your specific element.
+// {closeother} correspond to the name of CSS class you want to add to your specific element.
 //
 // Return : -
 //
 // Comments : if {myclass} is missing, we use CSS class "opened"
+// Comments : if {closeother} is defined, we close every elements with {closeother} CSS class
 //
-function open_submenu(myid, myclass)
+function open_submenu(myid, myclass, closeother)
 {
 	var myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
-	jQuery('#' + myid).toggleClass(myclass);
+	var closeother = (typeof closeother !== 'undefined') ? closeother : false;
+
+	if (closeother == false)
+		jQuery('#' + myid).toggleClass(myclass); 
+	else {
+		if (jQuery('#' + myid).hasClass(myclass))
+			jQuery('.' + closeother).removeClass(myclass);
+		else {
+			jQuery('.' + closeother).removeClass(myclass);
+			jQuery('#' + myid).addClass(myclass);
+		}
+	}
 }
 
 
