@@ -45,7 +45,7 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+			AppContext::get_response()->redirect(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()), LangLoader::get_message('message.success.position.update', 'status-messages-common'));
 		}
 		
 		$this->build_view($request);
