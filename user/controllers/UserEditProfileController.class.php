@@ -133,7 +133,7 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),
-			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name(), 'events' => array('blur' => '
+			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_display_name() && $this->user->get_display_name(), 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
 				}')
@@ -142,7 +142,7 @@ class UserEditProfileController extends AbstractController
 		));
 
 		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], $this->user->get_email(),
-			array('required' => true, 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_email()),
+			array('required' => true, 'disabled' => !AppContext::get_current_user()->is_admin() && !$this->user_accounts_config->are_users_allowed_to_change_email() && $this->user->get_email()),
 			array(new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
