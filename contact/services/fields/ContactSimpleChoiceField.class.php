@@ -51,12 +51,6 @@ class ContactSimpleChoiceField extends AbstractContactField
 			$i++;
 		}
 		
-		if (empty($default))
-		{
-			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
-			$default = '';
-		}
-		
 		$fieldset->add_field(new FormFieldRadioChoice($field->get_field_name(), $field->get_name(), $default, $options, array('required' => (bool)$field->is_required(), 'description' => $field->get_description())));
 	}
 	
