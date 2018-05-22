@@ -462,7 +462,10 @@ ul.pagination-block-bis li a.next-page:hover {
 
 /* --- Systeme de drag&Drop --- */
 .sortable-block .sortable-element > .sortable-block {
-	margin-left: 2.618em;
+	flex: 1 0 calc(100% - 0.618em);
+	-ms-flex: 1 0 calc(100% - 0.618em);
+	-webkit-flex: 1 0 calc(100% - 0.618em);
+	margin: 0 0 0 0.618em;
 }
 
 .sortable-block {
@@ -474,7 +477,21 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-element {
-	display: table;
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: row;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+	align-items: center;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-content: center;
+	-webkit-align-content: center;
+	-ms-align-content: center;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: center;
+	-ms-flex-wrap: center;
 	margin-bottom: 0.309em;
 	padding: 0;
 	width: 100%;
@@ -485,21 +502,22 @@ ul.pagination-block-bis li a.next-page:hover {
 	transition: all 0.2s;
 }
 
+.sortable-block .sortable-selector {
+	padding: 0 0 0 0.309em;
+}
+
 @media (min-width:769px){
 	.sortable-block .sortable-element .sortable-selector {
-		display: table-cell;
-		position: relative;
-		width: 1.309em;
+		flex: 0 0 1.309em;
+		-ms-flex: 0 0 1.309em;
+		-webkit-flex: 0 0 1.309em;
 		opacity: 0.2;
 		transition: opacity 0.3s;
 		cursor: move;
 	}
 
 	.sortable-selector:after {
-		position: absolute;
 		content: "\f0b2";
-		top: 34%;
-		left: 0.228em;
 		font-family: 'Font Awesome 5 Free';
 		font-weight: 900; /* Solid icons*/
 	}
@@ -516,6 +534,9 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-title {
+	flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
 	padding: 0.618em;
 }
 
@@ -538,7 +559,9 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-actions {
-	float: right;
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
 	padding: 0.1618em;
 	opacity: 0.2;
 	transition: opacity 0.2s;

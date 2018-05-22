@@ -128,7 +128,7 @@
 						<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
 							<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 							<div class="sortable-title">
-								<h3 class="question-title"><span>{questions.QUESTION}</span></h3>
+								<span class="question-title">{questions.QUESTION}</span>
 							</div>
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
@@ -138,7 +138,7 @@
 								<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i></a>
 								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete fa-fw"></i></a>
 							</div>
-							<div class="spacer"></div>
+
 							<script>
 							<!--
 							jQuery(document).ready(function() {

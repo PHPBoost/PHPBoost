@@ -151,10 +151,8 @@
 					<meta itemprop="url" content="{questions.U_LINK}">
 				</header>
 
-				<div class="content">
-					<div id="answer{questions.ID}" class="faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
-						<div itemprop="text">{questions.ANSWER}</div>
-					</div>
+				<div id="answer{questions.ID}" class="content faq-answer-container"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
+					<div itemprop="text">{questions.ANSWER}</div>
 				</div>
 
 				<footer></footer>
