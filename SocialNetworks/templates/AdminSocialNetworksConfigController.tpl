@@ -8,7 +8,7 @@ var SocialNetworks = function(id){
 
 SocialNetworks.prototype = {
 	init_sortable : function() {
-		jQuery("ul#social_networks_list").sortable({
+		jQuery("ul#social-networks-list").sortable({
 			handle: '.sortable-selector',
 			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
 		});
@@ -17,7 +17,7 @@ SocialNetworks.prototype = {
 		jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 	},
 	get_sortable_sequence : function() {
-		var sequence = jQuery("ul#social_networks_list").sortable("serialize").get();
+		var sequence = jQuery("ul#social-networks-list").sortable("serialize").get();
 		return sequence[0];
 	},
 	change_reposition_pictures : function() {
@@ -66,7 +66,7 @@ SocialNetwork.prototype = {
 	}
 };
 
-var SocialNetworks = new SocialNetworks('social_networks_list');
+var SocialNetworks = new SocialNetworks('social-networks-list');
 jQuery(document).ready(function() {
 	SocialNetworks.init_sortable();
 	jQuery('li.sortable-element').on('mouseout',function(){
@@ -76,22 +76,21 @@ jQuery(document).ready(function() {
 -->
 </script>
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="SocialNetworks.serialize_sortable();">
-	<fieldset id="social_networks_management">
+	<fieldset id="social-networks-management">
 	<legend>{@admin.order.manage}</legend>
-		<ul id="social_networks_list" class="sortable-block">
+		<ul id="social-networks-list" class="sortable-block social-networks-list-container">
 			# START social_networks_list #
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
 					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
 						<span class="social-connect {social_networks_list.CSS_CLASS}"><i class="fab fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
 						{social_networks_list.NAME}
-						<div class="sortable-actions">
-							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-							# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
-						</div>
 					</div>
-					<div class="spacer"></div>
+					<div class="sortable-actions">
+						<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+						<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
+						# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
+						</div>
 					<script>
 					<!--
 					jQuery(document).ready(function() {

@@ -375,7 +375,11 @@ ul.pagination-block-bis li a.next-page:hover {
 
 /* --- Système de drag&Drop ================================================== */
 .sortable-block .sortable-element > .sortable-block {
-	margin-left: 30px;
+	flex: 1 0 calc(100% - 0.618em);
+	-ms-flex: 1 0 calc(100% - 0.618em);
+	-webkit-flex: 1 0 calc(100% - 0.618em);
+	margin: 0 0 0 0.618em;
+
 }
 
 .sortable-block {
@@ -387,11 +391,25 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-element {
-	display: table;
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: row;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+	align-items: center;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	align-content: center;
+	-webkit-align-content: center;
+	-ms-align-content: center;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: center;
+	-ms-flex-wrap: center;
 	margin-bottom: 6px;
 	padding: 0;
 	width: 100%;
-	background-color: #FFFFFF;
+	background-color: #FEFEFE;
 	border: 1px solid #D6DEE7;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 	transition: box-shadow 0.2s;
@@ -399,26 +417,27 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
-	box-shadow: 0 0 5px #EAEAEA;
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
 }
+
+.sortable-block .sortable-selector {
+	padding: 0 0 0 0.309em;
+}
+
 
 @media (min-width: 769px) {
 	.sortable-block .sortable-element .sortable-selector {
-		position: relative;
-		display: table-cell;
-		width: 20px;
-		background-color: #81A4C8;
+		flex: 0 0 1.309em;
+		-ms-flex: 0 0 1.309em;
+		-webkit-flex: 0 0 1.309em;	
 		opacity: 0.3;
 		transition: opacity 1s;
 		cursor: move;
 	}
 
 	.sortable-selector:after {
-		position: absolute;
-		top: 28%;
-		left: 2px;
 		content: '\f0b2';
-		color: #FFFFFF;
+		color: #81A4C8;
 		font-family: 'Font Awesome 5 Free';
 		font-weight: 900; /* Solid icons*/
 	}
@@ -445,12 +464,14 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-title {
+	flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
 	padding: 8px 5px 5px 10px;
-	background-image: linear-gradient(to bottom, #FFFFFF 50%, #FAFAFA 100%);
 }
 
-.sortable-block .sortable-title:hover {
-	background-image: linear-gradient(to bottom, #FFFFFF 25%, #F2F5F8 100%);
+.sortable-block .sortable-element:hover {
+	background-color: #F2F5F8;
 }
 
 .sortable-block .sortable-title > span {
@@ -469,7 +490,9 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-actions {
-	float: right;
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
 	padding: 3px 3px;
 	opacity: 0.5;
 	transition: opacity 0.2s;
