@@ -83,11 +83,22 @@ fieldset img {
 }
 
 .fieldset-submit {
-	width: 100%;
-	background: none;
-	border: none;
 	text-align: center;
 }
+
+/* @media (min-width: 769px) {
+	#main-content .fieldset-content:not([id*=comment]) .fieldset-submit {
+		position: fixed;
+		top: 0;
+		right: 0;
+		transform: translateX(-50%);
+		border-width: 1px;
+		border-color: transparent;
+		border-style: solid;
+		padding-right: 1px;
+	}
+} */
+
 
 .fieldset-submit legend {
 	display: none;
@@ -684,4 +695,28 @@ div[id*='keyword'] .form-autocompleter-container input {
 	padding: 0.0em 0.618em 0 0;
 	text-align: right;
 	white-space: nowrap;
+}
+
+.auth-setter {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 769px) {
+	.form-element-auth {
+		width: 50%;
+		margin: 0 0 2.618em;
+	}
+	.form-element-auth > label {
+		width: 100%;
+		display: block;
+		font-size: large;
+	}
 }

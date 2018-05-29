@@ -186,16 +186,23 @@ fieldset p {
 	padding: 15px 10px;
 }
 
-fieldset.fieldset-submit {
-	padding-bottom: 15px;
-	background: none;
-	border: none;
+.fieldset-submit {
 	text-align: center;
 }
 
-fieldset.fieldset-submit legend {
+@media (min-width: 769px) {
+	.fieldset-content > .fieldset-submit {
+		position: fixed;
+		margin: 0;
+		top: 3.618em;
+		right: 0;
+	}
+}
+
+.fieldset-submit legend {
 	display: none;
 }
+
 
 optgroup {
 	border: none;
@@ -766,6 +773,7 @@ textarea#writing_pad_content {
 .form-element-auth .form-field {
 	display: inline-block;
 	margin: 2px 0 0 0;
+	width: 100%;
 }
 
 .form-element-auth .field-description {
@@ -783,6 +791,7 @@ textarea#writing_pad_content {
 @media (min-width: 769px) {
 	.advanced-auth-group {
 		display: inline-block;
+		vertical-align: top;
 	}
 
 	.advanced-auth-group select {
@@ -791,6 +800,7 @@ textarea#writing_pad_content {
 
 	div[id*="advanced_auth"] {
 		display: inline-block;
+		vertical-align: top;
 		margin: 0 5px 5px 0;
 	}
 }
@@ -1117,4 +1127,27 @@ div[id*='keyword'] .form-autocompleter-container input {
 button.copy-to-clipboard {
 	display: block;
 	margin: 0 auto;
+}
+
+.auth-setter {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 769px) {
+	.form-element-auth {
+		width: 50%;
+	}
+	.form-element-auth > label {
+		width: 100%;
+		display: block;
+		font-size: large;
+	}
 }
