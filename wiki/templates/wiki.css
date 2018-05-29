@@ -160,12 +160,16 @@ body {
 .wiki-sticky {
 	padding: 0.382em 0.809em;
 	left: -9000px;
-  	bottom: 0;
+  	top: 1.618em;
   	position: fixed;
-  	width: auto;
   	overflow-y: auto;
 	background-color: #fcfcfc;
 	margin-bottom: 2.618em;
+	height: 100%;
+}
+
+.wiki-sticky ol {
+	margin-left: 0.618em;
 }
 
 @media (min-width: 769px) {
@@ -175,6 +179,10 @@ body {
 
 	.wiki-sticky > ol {
 		margin-left: 3.618em;
+	}
+
+	.wiki-sticky ol ol{
+		margin-left: 1.618em;
 	}
 }
 
