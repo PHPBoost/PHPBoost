@@ -25,6 +25,14 @@
 			<legend>{L_WHOLE_WIKI}</legend>
 			<div class="fieldset-inset">
 				<div class="form-element">
+					<label for="sticky_menu">{L_STICKY_MENU}</label>
+					<div class="form-field">
+						<div class="form-field-checkbox">
+							<input type="checkbox" name="sticky_menu" id="sticky_menu" {STICKY_MENU_SELECTED} />
+							<label for="sticky_menu"></label>
+					</div>
+				</div>
+				<div class="form-element">
 					<label for="wiki_name">{L_WIKI_NAME}</label>
 					<div class="form-field">
 						<input type="text" maxlength="255" id="wiki_name" name="wiki_name" value="{WIKI_NAME}" />

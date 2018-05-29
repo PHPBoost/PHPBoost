@@ -117,3 +117,71 @@ ul.no-list a i.fa {
 .col-max{
     max-width: 200px;
 }
+
+/* --- sticky needs --- */
+
+body {
+	overflow: hidden;
+	overflow-y: auto;
+	left: 0;
+}
+
+.wiki-sticky-title {
+	position: fixed;
+	top: 0.1em;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 0.1em 0.809em;
+	background-color: #366493;
+	color: #FFFFFF;
+	display: block;
+}
+
+@media (min-width: 769px) {
+	.wiki-sticky-title {
+		padding: 0.618em 0.809em;
+		top:8.618em;
+		left: -3.618em;
+		transform: translateX(0);
+		opacity: 0.3;
+		transform: rotate(-90deg);
+	}
+
+	.wiki-sticky-title:hover {
+		opacity: 1;
+	}
+}
+
+.wiki-sticky-title {
+	cursor: pointer;
+	z-index: 400;
+}
+
+.wiki-sticky {
+	padding: 0.382em 0.809em;
+	left: -9000px;
+  	bottom: 0;
+  	position: fixed;
+  	width: auto;
+  	overflow-y: auto;
+	background-color: #fcfcfc;
+	margin-bottom: 2.618em;
+}
+
+@media (min-width: 769px) {
+	.wiki-sticky {
+		top: 5em;
+	}
+
+	.wiki-sticky > ol {
+		margin-left: 3.618em;
+	}
+}
+
+.wiki-sticky a:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.wiki-sticky > ol > li > a {
+	text-transform: uppercase;
+}

@@ -63,10 +63,10 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$num_rows = 1;
 	$id_article = $article_infos['id'];
-	
+
 	if (!empty($article_infos['redirect']))//Si on est redirig¦
 	{
 		try {
@@ -75,7 +75,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		AppContext::get_response()->set_status_code(301);
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $encoded_title, $encoded_title));
 	}
@@ -96,7 +96,7 @@ elseif (!empty($id_contents))
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$id_article = $article_infos['id'];
 	$num_rows = 1;
 }
@@ -114,7 +114,7 @@ require_once('../kernel/header.php');
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
 	$tpl = new FileTemplate('wiki/wiki.tpl');
-	
+
 	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = " . $article_infos['id']);
 
@@ -136,7 +136,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
-			
+
 			if (((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 			{
 				$tpl->assign_block_vars('redirect.remove_redirection', array(
@@ -147,7 +147,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			}
 		}
 		*/
-		
+
 		//Cet article comporte un type
 		if ($article_infos['defined_status'] != 0)
 		{
@@ -161,7 +161,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			));
 		}
 	}
-	
+
 	if (!empty($article_infos['menu']))
 	$tpl->assign_block_vars('menu', array(
 		'MENU' => $article_infos['menu']
@@ -177,13 +177,14 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'TITLE' => stripslashes($article_infos['title']),
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
+		'C_STICKY_MENU' => $config->is_sticky_menu_enabled(),
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 		'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('wiki', $article_infos['timestamp'])
 		)
 	));
-	
+
 	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
 	{
 		//On liste les articles de la catégorie et ses sous catégories
@@ -197,7 +198,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		));
 
 		$num_articles = $result->get_rows_count();
-		
+
 		$tpl->assign_block_vars('cat', array(
 		));
 
@@ -209,12 +210,12 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			));
 		}
 		$result->dispose();
-		
+
 		if ($num_articles == 0)
 		$tpl->assign_block_vars('cat.no_sub_article', array(
 			'NO_SUB_ARTICLE' => $LANG['wiki_no_sub_article']
 		));
-		
+
 		$i = 0;
 		foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 		{
@@ -232,11 +233,11 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			'NO_SUB_CAT' => $LANG['wiki_no_sub_cat']
 		));
 	}
-	
+
 	$page_type = $article_infos['is_cat']  == 1 ? 'cat' : 'article';
 	include('../wiki/wiki_tools.php');
 	$tpl->put('wiki_tools', $tools_tpl);
-	
+
 	$tpl->display();
 }
 //Si l'article n'existe pas
@@ -257,7 +258,7 @@ else
 	}
 	elseif (!$no_alert_on_error)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
             'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);
 	}

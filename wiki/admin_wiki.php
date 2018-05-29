@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,6 +38,7 @@ $request = AppContext::get_request();
 $update = $request->get_postvalue('update', false);
 $display_categories_on_index = $request->get_postvalue('display_categories_on_index', false);
 $hits_counter = $request->get_postvalue('hits_counter', false);
+$sticky_menu = $request->get_postvalue('sticky_menu', false);
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 if ($update) //Mise à jour
@@ -52,10 +53,14 @@ if ($update) //Mise à jour
 		$config->enable_hits_counter();
 	else
 		$config->disable_hits_counter();
+	if ($sticky_menu)
+		$config->enable_sticky_menu();
+	else
+		$config->disable_sticky_menu();
 	$config->set_index_text(stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED))));
-	
+
 	WikiConfig::save();
-	
+
 	//Régénération du cache
 	WikiCategoriesCache::invalidate();
 }
@@ -70,6 +75,7 @@ $editor->set_identifier('contents');
 $tpl->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'HITS_SELECTED' => $config->is_hits_counter_enabled() ? 'checked="checked"' : '',
+	'STICKY_MENU_SELECTED' => $config->is_sticky_menu_enabled() ? 'checked="checked"' : '',
 	'WIKI_NAME' => $config->get_wiki_name(),
 	'HIDE_CATEGORIES_ON_INDEX' => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
 	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
@@ -83,7 +89,8 @@ $tpl->put_all(array(
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],
 	'L_WHOLE_WIKI' => $LANG['wiki_config_whole'],
 	'L_INDEX_WIKI' => $LANG['wiki_index'],
-	'L_HITS_COUNTER' => $LANG['wiki_count_hits'], 
+	'L_HITS_COUNTER' => $LANG['wiki_count_hits'],
+	'L_STICKY_MENU' => $LANG['wiki_sticky_menu'], 
 	'L_WIKI_NAME' => $LANG['wiki_name'],
 	'L_DISPLAY_CATEGORIES_ON_INDEX' => $LANG['wiki_display_cats'],
 	'L_NOT_DISPLAY' => $LANG['wiki_no_display'],

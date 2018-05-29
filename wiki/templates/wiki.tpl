@@ -11,39 +11,6 @@
 				{TITLE}
 			</h2>
 		</header>
-		# INCLUDE wiki_tools #
-		<article>
-			<div class="content">
-				# START warning #
-				<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
-				# END warning #
-
-				# START redirect #
-					<div style="width:30%;">
-					{redirect.REDIRECTED}
-						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
-						# END redirect.remove_redirection #
-					</div>
-					<div class="spacer"></div>
-				# END redirect #
-
-				# START status #
-					<div class="spacer"></div>
-					<div class="blockquote">{status.ARTICLE_STATUS}</div>
-					<div class="spacer"></div>
-				# END status #
-
-				# START menu #
-					<div class="wiki-summary">
-						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
-						{menu.MENU}
-					</div>
-				# END menu #
-
-				{CONTENTS}
-			</div>
-		</article>
 
 		<div class="elements-container columns-2">
 			# START cat #
@@ -84,6 +51,46 @@
 			# END cat #
 			<div class="spacer"></div>
 		</div>
+		# INCLUDE wiki_tools #
+		<article>
+			<div class="content">
+				# START warning #
+				<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
+				# END warning #
+
+				# START redirect #
+					<div style="width:30%;">
+					{redirect.REDIRECTED}
+						# START redirect.remove_redirection #
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
+						# END redirect.remove_redirection #
+					</div>
+					<div class="spacer"></div>
+				# END redirect #
+
+				# START status #
+					<div class="spacer"></div>
+					<div class="blockquote">{status.ARTICLE_STATUS}</div>
+					<div class="spacer"></div>
+				# END status #
+
+				# START menu #
+					# IF C_STICKY_MENU #
+						<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
+						<div class="wiki-sticky">
+							{menu.MENU}
+						</div>
+					# ELSE #
+						<div class="wiki-summary">
+							<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
+							{menu.MENU}
+						</div>
+					# ENDIF #
+				# END menu #
+
+				{CONTENTS}
+			</div>
+		</article>
 		<footer>
 			<div class="wiki-hits">{HITS}</div>
 		</footer>
@@ -91,8 +98,61 @@
 	<footer></footer>
 </section>
 
+# IF C_STICKY_MENU #
+<script>
+
+/* Push the body and the nav over by the menu div width over */
+	var summaryWidth = jQuery('.wiki-sticky').innerWidth();
+
+	jQuery('.wiki-sticky-title').click(function(f) {
+		jQuery('.wiki-sticky-title').removeClass('blink');
+		jQuery('.wiki-sticky').animate({
+			left: "0px"
+		}, 200);
+
+		jQuery('body').animate({
+			left: summaryWidth + 'px'
+		}, 200);
+		f.stopPropagation();
+	});
+
+	/* Then push them back by clicking outside the menu or on a inside link*/
+	jQuery(document).click(function(f) {
+		if (jQuery(f.target).is('.wiki-sticky-title') === false) {
+			jQuery('.wiki-sticky').animate({
+				left: -summaryWidth + 'px'
+			}, 200);
+
+			jQuery('body').animate({
+				left: "0px"
+			}, 200);
+		}
+	});
+	jQuery('.wiki-sticky a').click(function() {
+		jQuery('.wiki-sticky').animate({
+			left: -summaryWidth + 'px'
+		}, 200);
+
+		jQuery('body').animate({
+			left: "0px"
+		}, 200);
+	});
+
+	// smooth scroll when clicking on a inside link
+	jQuery('.wiki-sticky a').click(function(){
+		var the_id = jQuery(this).attr("href");
+
+		jQuery('html, body').animate({
+			scrollTop:jQuery(the_id).offset().top
+		}, 'slow');
+		return false;
+	});
+</script>
+# ELSE #
+
 <script>
 	<!--
+	// smooth scroll when clicking on a inside link
 	jQuery('a[href^="#paragraph"]').click(function() {
 		var the_id = $(this).attr("href");
 
@@ -103,3 +163,4 @@
 	})
 	-->
 </script>
+# ENDIF #

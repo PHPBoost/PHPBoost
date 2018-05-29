@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -225,6 +225,7 @@ $LANG['wiki_management'] = 'Gestion du wiki';
 $LANG['wiki_config_whole'] = 'Configuration générale';
 $LANG['wiki_index'] = 'Accueil du wiki';
 $LANG['wiki_count_hits'] = 'Compter le nombre de fois que sont vus les articles';
+$LANG['wiki_sticky_menu'] = 'Afficher le sommaire des articles en position fixe.';
 $LANG['wiki_name'] = 'Nom du wiki';
 $LANG['wiki_display_cats'] = 'Afficher la liste des catégories principales sur l\'accueil';
 $LANG['wiki_no_display'] = 'Ne pas afficher';
@@ -232,7 +233,7 @@ $LANG['wiki_display'] = 'Afficher';
 $LANG['wiki_last_articles'] = 'Nombre des derniers articles à afficher sur l\'accueil';
 $LANG['wiki_last_articles_explain'] = '0 pour désactiver';
 $LANG['wiki_desc'] = 'Texte de l\'accueil';
-	
+
 //explorateur du wiki
 $LANG['wiki_explorer'] = 'Explorateur du wiki';
 $LANG['wiki_root'] = 'Racine du wiki';
