@@ -1151,3 +1151,23 @@ button.copy-to-clipboard {
 		font-size: large;
 	}
 }
+
+@media (max-width: 768px) {
+	div[id*="_possible_values_"] .form-field-radio label {
+		margin-bottom: -0.309em;
+	}
+}
+
+@media (min-width: 769px) {
+
+	div[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
+	div[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
+	    top: 1.309em;
+	}
+
+	div[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::after,
+	div[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after {
+	    top: 1.456em;
+	}
+
+}
