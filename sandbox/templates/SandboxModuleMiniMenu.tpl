@@ -193,5 +193,7 @@
 		</div>
 	</div>
 	<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
+	<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/validator.js"></script>
+	<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/form.js"></script>
 
 # ENDIF #
