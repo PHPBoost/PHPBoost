@@ -1,11 +1,11 @@
 
 	# IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
-		<a href="" class="sbx-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #" onclick="openSandboxMenu('module-mini-sandbox');return false;">
+		<span class="sbx-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
 			<i class="fa fa-wrench"></i> {@module.title}
-		</a>
+		</span>
 		<div class="sbx-menu">
-			<a href="" class="close-btn" onclick="openSandboxMenu('module-mini-sandbox');return false;"><i class="far fa-window-close"></i> {@mini.close}</a>
+			<span class="close-btn"><i class="far fa-window-close"></i> {@mini.close}</span>
 			<div class="sbx-inset">
 				<div class="sbx-menu-item sbx-text">
 					<div class="item-2x small" title="{@mini.version.pbt}">

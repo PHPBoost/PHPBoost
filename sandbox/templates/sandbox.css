@@ -59,6 +59,7 @@ body {
   	position: fixed;
   	width: 285px;
   	overflow-y: auto;
+	background-color: #fcfcfc;
 }
 
 @media (min-width: 769px) {
