@@ -29,7 +29,7 @@ SocialNetworks.prototype = {
 				jQuery("#move-up-" + sequence[i].id).hide();
 			else
 				jQuery("#move-up-" + sequence[i].id).show();
-			
+
 			if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 				jQuery("#move-down-" + sequence[i].id).hide();
 			else
@@ -41,7 +41,7 @@ SocialNetworks.prototype = {
 var SocialNetwork = function(id, social_networks){
 	this.id = id;
 	this.SocialNetworks = social_networks;
-	
+
 	this.SocialNetworks.change_reposition_pictures();
 };
 
@@ -75,9 +75,9 @@ jQuery(document).ready(function() {
 });
 -->
 </script>
-<form action="{REWRITED_SCRIPT}" method="post" onsubmit="SocialNetworks.serialize_sortable();">
+<form action="{REWRITED_SCRIPT}" method="post" onsubmit="SocialNetworks.serialize_sortable();" class="fieldset-content">
 	<fieldset id="social-networks-management">
-	<legend>{@admin.order.manage}</legend>
+		<legend>{@admin.order.manage}</legend>
 		<ul id="social-networks-list" class="sortable-block social-networks-list-container">
 			# START social_networks_list #
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
@@ -95,17 +95,17 @@ jQuery(document).ready(function() {
 					<!--
 					jQuery(document).ready(function() {
 						var social_network = new SocialNetwork('{social_networks_list.ID}', SocialNetworks);
-						
+
 						jQuery("#change-display-{social_networks_list.ID}").on('click',function(){
 							social_network.change_display();
 						});
-						
+
 						jQuery("#move-up-{social_networks_list.ID}").on('click',function(){
 							var li = jQuery(this).closest('li');
 							li.insertBefore( li.prev() );
 							SocialNetworks.change_reposition_pictures();
 						});
-						
+
 						jQuery("#move-down-{social_networks_list.ID}").on('click',function(){
 							var li = jQuery(this).closest('li');
 							li.insertAfter( li.next() );
@@ -119,9 +119,11 @@ jQuery(document).ready(function() {
 		</ul>
 	</fieldset>
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="order_manage_submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
-		<input type="hidden" name="token" value="{TOKEN}">
-		<input type="hidden" name="tree" id="tree" value="">
+		<div class="fieldset-inset">
+			<button type="submit" name="order_manage_submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
+			<input type="hidden" name="token" value="{TOKEN}">
+			<input type="hidden" name="tree" id="tree" value="">
+		</div>
 	</fieldset>
 </form>
 # ENDIF #

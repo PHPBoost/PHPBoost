@@ -27,7 +27,7 @@ ExtendedFields.prototype = {
 				jQuery("#move-up-" + sequence[i].id).hide();
 			else
 				jQuery("#move-up-" + sequence[i].id).show();
-			
+
 			if (jQuery('#list-' + sequence[i].id).is(':last-child'))
 				jQuery("#move-down-" + sequence[i].id).hide();
 			else
@@ -40,7 +40,7 @@ var ExtendedField = function(id, display, extended_fields){
 	this.id = id;
 	this.more_is_opened = false;
 	this.ExtendedFields = extended_fields;
-	
+
 	# IF C_MORE_THAN_ONE_FIELD #
 	this.ExtendedFields.change_reposition_pictures();
 	# ENDIF #
@@ -104,7 +104,7 @@ jQuery(document).ready(function() {
 -->
 </script>
 # INCLUDE MSG #
-<form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();">
+<form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();" class="fieldset-content">
 	<fieldset id="management_extended_fields">
 		<legend>{@fields.management}</legend>
 		<div class="fieldset-inset">
@@ -114,44 +114,44 @@ jQuery(document).ready(function() {
 						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 						<div class="sortable-title">
 							{list_extended_fields.NAME}
-							<div class="sortable-actions">
-								{@field.required} : # IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
-								# IF C_MORE_THAN_ONE_FIELD #
-								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-								# ENDIF #
-								<a href="{list_extended_fields.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-								# IF NOT list_extended_fields.C_FREEZE #
-								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete"></i></a>
-								# ELSE #
-								&nbsp;
-								# ENDIF #
-								<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}"><i # IF list_extended_fields.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a>
-							</div>
+						</div>
+						<div class="sortable-actions">
+							{@field.required} : # IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
+							# IF C_MORE_THAN_ONE_FIELD #
+							<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
+							<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
+							# ENDIF #
+							<a href="{list_extended_fields.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# IF NOT list_extended_fields.C_FREEZE #
+							<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete"></i></a>
+							# ELSE #
+							&nbsp;
+							# ENDIF #
+							<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}"><i # IF list_extended_fields.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a>
 						</div>
 						<div class="spacer"></div>
 						<script>
 						<!--
 						jQuery(document).ready(function() {
 							var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
-							
+
 							# IF NOT list_extended_fields.C_FREEZE #
 							jQuery('#delete-{list_extended_fields.ID}').on('click',function(){
 								extended_field.delete();
 							});
 							# ENDIF #
-							
+
 							jQuery('#change-display-{list_extended_fields.ID}').on('click',function(){
 								extended_field.change_display();
 							});
-							
+
 							# IF C_MORE_THAN_ONE_FIELD #
 							jQuery('#move-up-{list_extended_fields.ID}').on('click',function(){
 								var li = jQuery(this).closest('li');
 								li.insertBefore( li.prev() );
 								ExtendedFields.change_reposition_pictures();
 							});
-							
+
 							jQuery('#move-down-{list_extended_fields.ID}').on('click',function(){
 								var li = jQuery(this).closest('li');
 								li.insertAfter( li.next() );
