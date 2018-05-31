@@ -35,13 +35,5 @@
 	<body>
 		# INCLUDE BODY #
 		# INCLUDE JS_BOTTOM #
-		<script>
-		<!--
-			function open_submenu(myid)
-			{
-				jQuery('#' + myid).toggleClass('active');
-			}
-		-->
-		</script>
 	</body>
 </html>

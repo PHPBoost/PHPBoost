@@ -408,7 +408,7 @@ nav#admin-quick-menu ul {
 	list-style-type: none;
 }
 
-nav#admin-quick-menu.active ul {
+nav#admin-quick-menu.opened ul {
 	opacity: 1;
 	visibility: visible;
 	background-color: #353535;
