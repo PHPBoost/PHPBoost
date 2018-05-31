@@ -134,6 +134,7 @@ abstract class AbstractFormField implements FormField
 		$this->set_label($label);
 		$this->set_value($value);
 		$this->compute_options($field_options);
+		$this->set_css_field_class($this->get_css_class());
 
 		foreach ($constraints as $constraint)
 		{
