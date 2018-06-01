@@ -214,6 +214,11 @@ $lang['form.search'] = 'Recherche';
 $lang['form.file.picker'] = 'Fichier';
 $lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
 $lang['form.file.upload'] = 'Lien vers un fichier';
+$lang['form.action.link.list'] = 'Liste de liens';
+$lang['form.action.link.1'] = 'Item de Liste 1';
+$lang['form.action.link.2'] = 'Item de Liste 2';
+$lang['form.action.link.3'] = 'Item de Liste 3';
+$lang['form.action.link.4'] = 'Item de Liste 4';
 
 $lang['form.googlemap'] = 'Champs du module GoogleMaps';
 $lang['form.googlemap.simple_address'] = 'Adresse simple';

@@ -3,6 +3,10 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+.maClass {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
 .color-box {
 	float: left;
 	width: 50px;

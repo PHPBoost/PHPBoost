@@ -212,6 +212,11 @@ $lang['form.search'] = 'Search';
 $lang['form.file.picker'] = 'File picker';
 $lang['form.multiple.file.picker'] = 'Multiple file picker';
 $lang['form.file.upload'] = 'Link to file';
+$lang['form.action.link.list'] = 'List of links';
+$lang['form.action.link.1'] = 'Link item 1';
+$lang['form.action.link.2'] = 'Link item 2';
+$lang['form.action.link.3'] = 'Link item 3';
+$lang['form.action.link.4'] = 'Link item 4';
 
 $lang['form.googlemap'] = 'GoogleMaps modue fields';
 $lang['form.googlemap.simple_address'] = 'Simple Address';
