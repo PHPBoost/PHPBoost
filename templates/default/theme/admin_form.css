@@ -13,8 +13,8 @@
 button,
 .button {
 	height: auto;
-	margin: 5px 5px 0 5px;
-	padding: 0.6em 2em;
+	margin: 0.309em 0.309em 0 0.309em;
+	padding: 0.618em 2em;
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
@@ -110,7 +110,7 @@ button[id*=menu_element] {
 }
 
 fieldset {
-	margin: 20px 5px 0;
+	margin: 20px 0.309em 0;
 	border: none;
 	background: none;
 }
@@ -131,12 +131,12 @@ fieldset .table-cat img {
 }
 
 fieldset[id*="_captcha_fieldset"] {
-	margin: 0 5px;
+	margin: 0 0.309em;
 }
 
 fieldset#AdminLoggedErrorsControllerList_fbuttons,
 fieldset#AdminErrorsController404List_fbuttons{
-	margin: 0 5px;
+	margin: 0 0.309em;
 }
 
 @media (min-width: 769px) {
@@ -156,12 +156,12 @@ fieldset#AdminErrorsController404List_fbuttons{
 
 .fieldset-inset {
 	overflow: hidden;
-	padding: 15px;
+	padding: 1em;
 }
 
 .fieldset-inset-user {
 	overflow: hidden;
-	padding: 15px 0;
+	padding: 1em 0;
 }
 
 .fieldset-inset-user table {
@@ -188,15 +188,6 @@ fieldset p {
 
 .fieldset-submit {
 	text-align: center;
-}
-
-@media (min-width: 769px) {
-	.fieldset-content > .fieldset-submit {
-		position: fixed;
-		margin: 0;
-		top: 3.618em;
-		right: 0;
-	}
 }
 
 .fieldset-submit legend {
@@ -260,15 +251,8 @@ select {
 	padding: 7px 10px 7px 25px;
 }
 
-input[class=input-date],
-input[type=number] {
-	width: 80%;
-	margin-bottom: 5px;
-}
-
 @media (min-width:769px) {
-	input[class=input-date],
-	input[type=number] {
+	input[class=input-date] {
 		width: 130px;
 	}
 }
@@ -339,12 +323,13 @@ input[type=color] {
 .form-field-checkbox-mini [type="checkbox"]:checked {
 	position: absolute;
 	margin: 0;
+	display: none;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label,
 .form-field-checkbox-mini [type="checkbox"]:checked + label {
 	position: relative;
-	padding-left: 20px;
+	padding-left: 0.618em;
 	cursor: pointer;
 }
 
@@ -360,53 +345,64 @@ input[type=color] {
 .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
 	left:-1px;
 	top: -2px;
-	width: 14px;
-	height: 14px;
+	width: 16px;
+	height: 16px;
 	background: #eeeeee;
-	box-shadow: 0 0 3px 2px rgba(0, 0, 0, .05);
-	border: 1px solid #333333;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, .15);
+	border: 1px solid #C1C1C1;
 	border-radius: 3px;
 	transition: background-color 0.2s;
 }
 
 .form-field-checkbox .text-status-constraint {
 	top: 25px;
-	left: -5px;
+	left: -0.309em;
 }
 
 /* on checked */
 .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
-	background: #366393;
+	background: #62B0FF;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0);
 }
 
 .form-field-checkbox-mini input[type="checkbox"]:checked + label:after {
 	position: absolute;
 	content: '\f00c';
-	top: -2px;
-	left: 0;
-	font-size: 14px;
 	font-family: 'Font Awesome 5 Free';
+	top: 0;
+	left: 2px;
+	font-size: 12px;
 	font-weight: 900; /* Solid icons*/
 	color: #ffffff;
 	transition: all .3s ease 0s;
 }
 
-/* --- checkbox --- */
-.form-field-checkbox {
-	display: inline-block;
-	margin: 10px 0 10px 5px;
+.form-field-multiple-checkbox .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label:before,
+.form-field-multiple-checkbox .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
+	top:-14px;
 }
 
+.form-field-multiple-checkbox .form-field-checkbox-mini input[type="checkbox"]:checked + label:after {
+	top:-12px;
+}
+
+.form-field-multiple-checkbox .spacer { margin-bottom: 0.309em;}
+
+/* --- checkbox --- */
+.form-field-checkbox{
+	height: 38px;
+	position: relative;
+}
 .form-field-checkbox [type="checkbox"]:not(:checked),
 .form-field-checkbox [type="checkbox"]:checked {
-	position: absolute;
+	display: none;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label,
 .form-field-checkbox [type="checkbox"]:checked + label {
-	position: relative;
-	padding-left: 45px;
 	cursor: pointer;
+	position: relative;
+	max-width: 60px;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
@@ -419,39 +415,38 @@ input[type=color] {
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
 .form-field-checkbox [type="checkbox"]:checked + label:before {
-	left:-8px;
-	top: -3px;
-	width: 45px;
+	left:0;
+	top: 0;
+	width: 100%;
 	height: 20px;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.05);
-	border-radius: 15px;
-	transition: background-color 0.2s;
+	transition: all 0.2s;
+	border-radius: 4px;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:after,
 .form-field-checkbox [type="checkbox"]:checked + label:after {
-	top: 0;
-	left: -3px;
-	width: 14px;
-	height: 14px;
-	background-color: #DDDDDD;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-	border-radius: 50%;
-	transition: all 0.2s;
-}
-
-.form-field-checkbox .text-status-constraint {
-	top: 25px;
-	left: -5px;
+	left: 0;
+	width: 50%;
+	height: 20px;
+	background-color: #C1C1C1;
+	background-image: linear-gradient(to right, #c1c1c1 20%, rgba(255, 255, 255, 0.1) 80%);
+	transition: all 0.3s;
+	border-radius: 4px 0 0 4px;
 }
 
 /* on checked */
 .form-field-checkbox [type="checkbox"]:checked + label:after {
-	top: 0;
-	left: 18px;
+	left: 50%;
 	background-color: #62B0FF;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 20%, #62B0FF 80%);
+	border-radius: 0 4px 4px 0;
+}
+
+.form-field-checkbox .text-status-constraint {
+	top: 25px;
+	left: -0.309em;
 }
 
 /* --- input form-field-values --- */
@@ -562,7 +557,7 @@ form textarea:focus:valid,
 form .constraint-status-right input,
 form .constraint-status-right textarea {
 	border-color: rgba(71, 137, 72, 0.3);
-	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+	box-shadow: 0 0 0.309em rgba(71, 137, 72, 0.1);
 }
 
 input.field-smaller { width: 29px;	}
@@ -580,18 +575,85 @@ input.input-minutes { width: 50px;  }
 }
 
 /* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
-.form-element,
-.form-element-textarea {
-	padding: 20px 10px;
+
+.fieldset-content .fieldset-inset,
+.form-element {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+	width: 100%;
 }
 
+.form-element {
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	padding: 0.618em;
+}
+
+.fieldset-submit .fieldset-inset {
+	justify-content: center;
+}
+
+.form-element-textarea {
+	width: 100%;
+	padding: 0.809em 0;
+}
+
+@media (min-width: 769px) {
+	.form-element { width: calc(100% / 2); }
+}
+
+@media (min-width: 1025px) {
+	.form-element { width: calc(100% / 3); }
+}
+
+@media (min-width: 1366px) {
+	.form-element { width: calc(100% / 4); }
+}
+
+@media (min-width: 769px) {
+	.form-element {
+		padding: 0.618em 1.618em 1.618em 0;
+		border-bottom: 1px solid #dddddd;
+	}
+}
+
+.full-field,
+.half-field,
+.third-field,
+.quarter-field { width: 100%; }
+
+@media (min-width: 769px) {
+	.half-field,
+	.third-field,
+	.quarter-field { width: calc(100% / 2); }
+}
+
+@media (min-width: 1025px) {
+	.half-field    { width: calc(100% / 2); }
+	.third-field   { width: calc(100% / 3); }
+	.quarter-field { width: calc(100% / 4); }
+}
+
+
+
 .form-element-preview {
-	margin: 10px;
+	margin: 0.618em;
 	text-align: center;
 }
 
 fieldset[id*=advises] .form-element {
-	padding: 10px 10px;
+	padding: 0.618em;
 }
 
 .form-element [id$="user_avatar"] img {
@@ -619,7 +681,7 @@ fieldset[id*=advises] .form-element {
 }
 
 .form-field-action-link ul {
-	margin: 5px;
+	margin: 0.309em;
 	list-style-type: none;
 }
 
@@ -632,46 +694,14 @@ fieldset[id*=advises] .form-element {
 	text-decoration: none;
 }
 
-@media (min-width: 769px) {
-	.form-field-select {
-		max-width: 59%;
-	}
-}
-
-.form-field-select select {
-	max-width: 100%;
-}
-
 /* --- Label pour les checkbox et radio --- */
 .form-field label {
 	display: block;
-	margin: 0 10px 0 0;
 }
 
 /* --- Label pour les inputs [for] et pour les elements sans associations--- */
 .form-element > label {
-	display: inline-block;
 	margin-bottom: 8px;
-	padding-right: 10px;
-	padding-top: 3px;
-	width: 100%;
-	text-align: left;
-	vertical-align: top;
-}
-
-@media (min-width: 769px) {
-	.form-element > label{
-		width: 40%;
-	}
-
-	.form-field {
-		display: inline-block;
-		width: 58%;
-	}
-
-	.form-field-free-large {
-		width: 100%;
-	}
 }
 
 .form-element input,
@@ -683,13 +713,12 @@ fieldset[id*=advises] .form-element {
 
 .field-description {
 	display: block;
-	line-height: 12px;
-	font-size: 0.8em;
+	font-size: 0.809em;
 }
 
 p[id*=filter] input,
 p[id*=filter] select {
-	margin: 5px 0;
+	margin: 0.309em 0;
 }
 
 div[id*=menu_element] input {
@@ -708,6 +737,10 @@ div[id*=menu_element] input {
 	div[id*=menu_element] input {
 		width: 25%;
 	}
+}
+
+div.advanced-auth-input input[id*=menu_element] {
+	width: 70%;
 }
 
 input[disabled=disabled],
@@ -742,7 +775,7 @@ select[readonly=readonly]:focus {
 /* --- Textarea --- */
 textarea {
 	display: block;
-	margin: 5px auto;
+	margin: 0.309em auto;
 	width: 94%;
 	overflow: auto;
 	resize: vertical;
@@ -765,7 +798,7 @@ textarea#writing_pad_content {
 }
 
 .form-element-preview, .form-element-reset {
-	margin: 5px auto 0 auto;
+	margin: 0.309em auto 0 auto;
 	text-align: center;
 	display: inline;
 }
@@ -782,8 +815,8 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-group select {
-	margin-bottom: 5px;
-	padding: 0 5px;
+	margin-bottom: 0.309em;
+	padding: 0 0.309em;
 	width: 100%;
 	overflow-x: auto;
 }
@@ -801,33 +834,33 @@ textarea#writing_pad_content {
 	div[id*="advanced_auth"] {
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 5px 5px 0;
+		margin: 0 0.309em 0.309em 0;
 	}
 }
 
 .advanced-auth-select select {
-	padding-right: 5px;
+	padding-right: 0.309em;
 	min-width: 170px;
 	overflow-x: auto;
 	word-wrap: normal;
 }
 
 .advanced-auth-select {
-	margin: 0 5px 5px 0;
+	margin: 0 0.309em 0.309em 0;
 }
 
 .advanced-auth-input {
-	margin-left: 5px;
+	margin-left: 0.309em;
 	width: 144px;
 }
 
 .advanced-auth-input input {
-	margin-bottom: 5px;
+	margin-bottom: 0.309em;
 	padding: 4px 24px 4px 6px;
 }
 
 .advanced-auth-input button {
-	padding: 5px 5px 6px 5px;
+	padding: 0.309em 0.309em 6px 0.309em;
 	border-width: 0 0 0 1px;
 	border-radius: 0 4px 4px 0;
 }
@@ -854,7 +887,7 @@ textarea#writing_pad_content {
 @media (max-width: 480px) {
 	.form-element-auth .form-field .advanced-auth-input {
 		float: none;
-		margin: 5px 0 0 0;
+		margin: 0.309em 0 0 0;
 	}
 }
 
@@ -879,7 +912,7 @@ textarea#writing_pad_content {
 	position:absolute;
 	display: block;
 	z-index: 1;
-	padding: 6px 5px;
+	padding: 6px 0.309em;
 	min-width: 20em;
 	background-color: #FEFEFE;
 	border: 1px solid #EAEAEA;
@@ -918,7 +951,7 @@ div.field-required:after,
 div.picture-status-constraint:after {
 	position: absolute;
 	display: inline-block;
-	left: 5px;
+	left: 0.309em;
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900; /* Solid icons*/
 	font-size: inherit;
@@ -993,7 +1026,7 @@ div.field-required:after {
 
 .constraint-status-right .form-field-multi-select select {
 	border-color: rgba(71, 137, 72, 0.3);
-	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+	box-shadow: 0 0 0.309em rgba(71, 137, 72, 0.1);
 }
 
 .form-field-radio-button.field-required:after,
@@ -1033,7 +1066,7 @@ div.field-required:after {
 }
 
 .autocomplete-suggestion {
-	padding: 8px 5px;
+	padding: 8px 0.309em;
 	overflow: hidden;
 	white-space: nowrap;
 	cursor: pointer;
@@ -1045,7 +1078,7 @@ div.field-required:after {
 
 .autocomplete-no-suggestion {
 	text-align: center;
-	padding: 8px 5px;
+	padding: 8px 0.309em;
 }
 
 .field-button {
@@ -1096,7 +1129,7 @@ div[id*='keyword'] .form-autocompleter-container input {
 
 .linedtextarea textarea {
 	margin: 0;
-	padding: 5px 0 0 0;
+	padding: 0.309em 0 0 0;
 	width: 100% !important;
 	height: 100%;
 	border: 0;
@@ -1106,7 +1139,7 @@ div[id*='keyword'] .form-autocompleter-container input {
 	display: inline-block;
 	overflow: hidden;
 	margin-top: 0;
-	padding: 5px 0 0 0;
+	padding: 0.309em 0 0 0;
 	width: 50px;
 	height: 100%;
 	background-color: #FFFFFF;

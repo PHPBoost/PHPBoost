@@ -40,10 +40,10 @@
 	<table id="table">
 		<caption>{@modules.installed_modules}</caption>
 		<thead>
-			<tr> 
+			<tr>
 				# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
 				<th>
-					<div class="form-field-checkbox">
+					<div class="form-field-checkbox-mini">
 						<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 						<label for="check-all-top"></label>
 					</div>
@@ -60,7 +60,7 @@
 			<tr>
 				<td colspan="5">
 					<div class="left">
-						<div class="form-field-checkbox">
+						<div class="form-field-checkbox-mini">
 							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 							<label for="check-all-bottom"></label>
 						</div>
@@ -75,7 +75,7 @@
 			<tr>
 				# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
 				<td>
-					<div class="form-field-checkbox">
+					<div class="form-field-checkbox-mini">
 						<input type="checkbox" id="delete-checkbox-{modules_installed.MODULE_NUMBER}" name="delete-checkbox-{modules_installed.MODULE_NUMBER}" />
 						<label for="delete-checkbox-{modules_installed.MODULE_NUMBER}"></label>
 					</div>
@@ -116,7 +116,7 @@
 			# END modules_installed #
 		</tbody>
 	</table>
-	
+
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<button type="submit" class="submit" name="update_modules_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>

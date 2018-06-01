@@ -37,9 +37,11 @@
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
-			<div class="form-element">
-				<label>{L_AUTHORIZATIONS}</label>
-				<div class="form-field">{AUTH_FORM}</div>
+			<div class="fieldset-inset">
+				<div class="form-element full-field">
+					<label>{L_AUTHORIZATIONS}</label>
+					<div class="form-field">{AUTH_FORM}</div>
+				</div>
 			</div>
 		</fieldset>
         <hr/>
@@ -79,10 +81,13 @@
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
 			<legend>{L_PROPERTIES}</legend>
-			<div class="form-element">
-				<label>{L_AUTHORIZATIONS}</label>
-				<div class="form-field">{AUTH_FORM}</div>
+			<div class="fieldset-inset">
+				<div class="form-element full-field">
+					<label>{L_AUTHORIZATIONS}</label>
+					<div class="form-field">{AUTH_FORM}</div>
+				</div>
 			</div>
+
 		</fieldset>
     </li>
 # ENDIF #
