@@ -47,7 +47,7 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
      * @param string[] $field_options Map containing the options
      * @param FormFieldConstraint[] $constraints The constraints checked during the validation
      */
-    public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -69,7 +69,8 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
-			'CLASS' => $this->get_css_class(),
+            'C_HAS_CSS_CLASS' => $this->get_css_class() != '',
+			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly()
         ));

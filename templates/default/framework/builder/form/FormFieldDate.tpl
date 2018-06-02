@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
 -->
 </script>
 # ENDIF #
-<div id="${escape(HTML_ID)}_field" class="form-element form-element-date# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF #"# IF C_HIDDEN # style="display: none;"# ENDIF #>
+<div id="${escape(HTML_ID)}_field" class="form-element form-element-date# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_CSS_CLASS # {CSS_CLASS}# ENDIF #"# IF C_HIDDEN # style="display: none;"# ENDIF #>
 	# IF C_HAS_LABEL #
 		<label for="${escape(HTML_ID)}">
 			{LABEL}

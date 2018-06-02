@@ -52,7 +52,7 @@ class FormFieldAjaxUserAutoComplete extends FormFieldAjaxCompleter
 	 * @param string[] $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token='. AppContext::get_session()->get_token();
 		parent::__construct($id, $label, $value, $field_options, $constraints);

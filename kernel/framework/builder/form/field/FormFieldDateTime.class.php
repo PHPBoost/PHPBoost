@@ -36,7 +36,7 @@ class FormFieldDateTime extends FormFieldDate
 	 */
 	private $five_minutes_step = false;
 	
-	public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, Date $value = null, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-datetime');

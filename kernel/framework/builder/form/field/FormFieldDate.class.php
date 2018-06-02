@@ -31,7 +31,7 @@
  */
 class FormFieldDate extends AbstractFormField
 {
-	public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, Date $value = null, array $field_options = array(), array $constraints = array())
 	{
 		$constraints[] = new FormFieldConstraintDate();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
