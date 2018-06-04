@@ -112,6 +112,10 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 	position: relative;
 }
 
+.calendar-container a .fa-calendar {
+	font-size: 1.6em;
+}
+
 .calendar-block {
 	position: absolute;
 	z-index: 10;

@@ -2,13 +2,13 @@
 /* --- ###################################################################### ---*/
 
 /*                            admin_menus.css
- *                            
+ *
  *            contient les css de tous les menus de l'administration
  *            - menu index
  *            - menu support
  *            - menu de liens rapides
  *            - menu etendu
- * 
+ *
  * --- ###################################################################### ---*/
 
 
@@ -27,17 +27,12 @@ nav.admin-index li {
 	width: calc(94.7% / 4);
 }
 
-nav.admin-index li:hover {
-	background: rgba(0, 0, 0, 0.1);
-}
-
 nav.admin-index a {
 	position: relative;
 	display: block;
 	padding: 0.3em;
 	text-align: center;
 	font-size: 1em;
-	color: #FFFFFF;
 }
 
 nav.admin-index li:first-child:after {
@@ -71,7 +66,7 @@ nav.admin-index li a span {
 		left: -50%;
 		text-align: center;
 	}
-	
+
 	nav.admin-index li:last-child a span {
 		right: 15px;
 		left: auto;
@@ -83,7 +78,6 @@ nav.admin-index li a:hover span {
 	opacity: 1;
 	visibility: visible;
 	top: 90%;
-	color: #FFFFFF;
 	transition: all 0.5s ease 0s;
 }
 
@@ -119,10 +113,6 @@ ul.submenu li {
 	}
 }
 
-.cssmenu-admin > ul > li:hover {
-	background-color: rgba(0, 0, 0, 0.2);
-}
-
 .admin-li > a > i {
 	padding: 5px 20px 5px 5px;
 }
@@ -130,15 +120,10 @@ ul.submenu li {
 .admin-li > a {
 	display: block;
 	padding: 8px;
-	color: #FFFFFF;
 	font-weight: 400;
 	font-size: 1em;
 	text-decoration: none;
 	text-transform: uppercase;
-}
-
-.admin-li > a:hover {
-	color: #DDDDDD;
 }
 
 .admin-li > a span {
@@ -150,7 +135,7 @@ ul.submenu li {
 	.admin-li > a {
 		padding: 8px 17px;
 	}
-	
+
 	.admin-li > a span {
 		display: inline-block;
 	}
@@ -166,7 +151,6 @@ ul.submenu li {
 	opacity:0;
 	pointer-events: none;
 	font-size: 1.2rem;
-	color: #F5F5F5;
 	overflow: hidden;
 }
 
@@ -180,7 +164,6 @@ ul.submenu li {
 	opacity: 1;
 	padding: 30px 20px;
     overflow-y: auto;
-	background-color: rgba(0, 0, 0, 0.6);
 	pointer-events: auto;
 }
 
@@ -194,7 +177,7 @@ ul.submenu li {
 .cssmenu-modal .next-menu,
 .cssmenu-modal a.close i{
 	opacity: 0;
-	transition: opacity .3s ease 0s;	
+	transition: opacity .3s ease 0s;
 }
 
 .cssmenu-modal:target .submenu,
@@ -207,7 +190,6 @@ ul.submenu li {
 .cssmenu-modal:target .submenu,
 .cssmenu-modal:target .next-menu {
 	width: 100%;
-	background-color: #F1F2F3;
 	flex: 0 0 auto;
 	-ms-flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
@@ -255,15 +237,11 @@ div[id*="openmodule-"] {
 a.close span {
 	padding: 1px 8px 5px;
 	border-radius: 30px;
-	border: 1px solid #CCCCCC;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	font-size: 1.5rem;
-	color: #CCCCCC;
 	cursor: pointer;
-}
-
-a:hover.close span {
-	border-color: #FFFFFF;
-	color: #FFFFFF;
 }
 
 .submenu {
@@ -314,7 +292,9 @@ a:hover.close span {
 	display: table;
 	padding: 10px;
 	text-decoration: none;
-	border-bottom: 1px solid #DDDDDD;    
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .submenu ul {
@@ -337,7 +317,6 @@ ul.level-2 ul {
 ul.level-2 a {
 	font-weight: 400;
 	font-size: 1em;
-	color: #333333;
 }
 
 .next-menu {
@@ -365,34 +344,27 @@ ul.level-2 a {
 	#support-pbt {
 		display: block;
 	}
-	
+
 	#support-pbt ul {
 		margin: 0;
 		list-style-type: none;
 	}
-		
+
 	#support-pbt i {
 		margin-right: 2px;
 	}
-		
+
 	#support-pbt ul li a {
 		display: block;
 		padding: 15px 17px;
-		color: #DDDDDD;
 		text-transform: uppercase;
 		text-decoration: none;
-	}
-		
-	#support-pbt ul li a:hover {
-		background-color: rgba(0, 0, 0, 0.2);
-		color: #FFFFFF;
 	}
 }
 
 
 /* -- Menu de liens rapides ============================================================= */
 nav#admin-quick-menu {
-	background-color: #353535;
 	min-height: 39px;
 }
 
@@ -414,7 +386,7 @@ nav#admin-quick-menu.opened ul {
 	background-color: #353535;
 	transition: all 0.5s ease 0s;
 }
-	
+
 nav#admin-quick-menu li {
 	display: block;
 }
@@ -423,7 +395,6 @@ nav#admin-quick-menu li a.quick-link {
 	display: block;
 	padding: 10px;
 	margin: 0;
-	color: #FFFFFF;
 	text-decoration: none;
 }
 
@@ -431,11 +402,9 @@ a.js-menu-button {
 	display: table;
 	margin: auto;
 	padding: 10px;
-	color: #EEEEEE;
 }
 
 a:hover.js-menu-button {
-	color: #FFFFFF;
 	text-decoration: none;
 }
 
@@ -443,34 +412,30 @@ a:hover.js-menu-button {
 	a.js-menu-button {
 		display: none;
 	}
-	
+
 	nav#admin-quick-menu {
 		overflow: hidden;
-		background: rgba(255, 255, 255, 0.5);
-		border-bottom: 1px solid #DDDDDD;
+		border-width: 0 0 1px 0;
+		border-style: solid;
+		border-color: transparent;
 	}
-	
+
 	nav#admin-quick-menu ul {
 		position: relative;
 		float: right;
 		opacity: 1;
-		visibility: visible;	
+		visibility: visible;
 		width: auto;
 		padding: 0 8px;
 	}
 
 	nav#admin-quick-menu li {
 		display: inline-block;
-	}		
-	
+	}
+
 	nav#admin-quick-menu li a.quick-link {
 		text-align: right;
 		padding: 14px 10px;
-		color: #4372AA;
-	}
-	
-	nav#admin-quick-menu li:hover a.quick-link {
-		color: #2D4D73;
 	}
 }
 
@@ -495,64 +460,6 @@ a:hover.js-menu-button {
 	padding: 10px 5px;
 	text-align: center;
 }
-
-.admin-extend-menu li:hover {
-	background-color: #EEEEEE;
-}
-
-.admin-extend-menu i.fa-cog 							{ color: #999999; }
-.admin-extend-menu li:hover i.fa-cog 					{ color: #777777; }
-
-.admin-extend-menu i.fa-download 						{ color: #F86227; }
-.admin-extend-menu li:hover i.fa-download 				{ color: #D6511C; }
-
-.admin-extend-menu i.fa-clock 							{ color: #FCC44C; }
-.admin-extend-menu li:hover i.fa-clock 					{ color: #E5AF39; }
-
-.admin-extend-menu i.fa-image    						{ color: #05BAB0; }
-.admin-extend-menu li:hover i.fa-image   				{ color: #058480; }
-
-.admin-extend-menu i.fa-language 						{ color: #2ECC71; }
-.admin-extend-menu li:hover i.fa-language 				{ color: #16A352; }
-
-.admin-extend-menu i.fa-bell 							{ color: #F1C40F; }
-.admin-extend-menu li:hover i.fa-bell 					{ color: #D8B00E; }
-
-.admin-extend-menu i.fa-refresh 						{ color: #DDDDDD; }
-.admin-extend-menu li:hover i.fa-refresh 				{ color: #BBBBBB; }
-
-.admin-extend-menu i.fa-exclamation-triangle 			{ color: #BA4B49; }
-.admin-extend-menu li:hover i.fa-exclamation-triangle 	{ color: #880000; }
-
-.admin-extend-menu i.fa-building 						{ color: #34495E; }
-.admin-extend-menu li:hover i.fa-building 				{ color: #1B344D; }
-
-.admin-extend-menu i.fa-user 							{ color: #1FA6D5; }
-.admin-extend-menu li:hover i.fa-user 					{ color: #1589B1; }
-
-.admin-extend-menu i.fa-users 							{ color: #3498DB; }
-.admin-extend-menu li:hover i.fa-users 					{ color: #1B7CBD; }
-
-.admin-extend-menu i.fa-bars 							{ color: #9B59B6; }
-.admin-extend-menu li:hover i.fa-bars 					{ color: #8533A7; }
-
-.admin-extend-menu i.fa-square 						    { color: #3A3A3A; }
-.admin-extend-menu li:hover i.fa-square				    { color: #212121; }
-
-.admin-extend-menu i.fa-list-ul 						{ color: #1FA6D5; }
-.admin-extend-menu li:hover i.fa-list-ul 				{ color: #1589B1; }
-
-.admin-extend-menu i.fa-file 							{ color: #E67E22; }
-.admin-extend-menu li:hover i.fa-file 				    { color: #CA6A14; }
-
-.admin-extend-menu i.fa-comment 						{ color: #FC4C7D; }
-.admin-extend-menu li:hover i.fa-comment 				{ color: #E03363; }
-
-.admin-extend-menu i.fa-smile 						    { color: #FCC44C; }
-.admin-extend-menu li:hover i.fa-smile 				    { color: #E5AF39; }
-
-.admin-extend-menu i.fa-cubes 							{ color: #05BAB0; }
-.admin-extend-menu li:hover i.fa-cubes 					{ color: #058480; }
 
 @media (min-width: 481px) {
 	.admin-extend-menu li {

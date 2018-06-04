@@ -78,8 +78,8 @@
 							<div class="form-field"><input type="text" maxlength="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
 						</div>
 						<div class="form-element">
-							<label for="cookie_lenght">* {L_COOKIE_LENGHT}</label>
-							<div class="form-field"><input type="text" maxlength="11" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> {L_DAYS}</div>
+							<label for="cookie_lenght">* {L_COOKIE_LENGHT} ({L_DAYS})</label>
+							<div class="form-field"><input type="text" maxlength="11" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> </div>
 						</div>
 						<div class="form-element">
 							<label for="display_results_before_polls_end">{L_DISPLAY_RESULTS_BEFORE_POLLS_END}</label>
@@ -94,22 +94,25 @@
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
-							<label>
-								{L_READ_AUTHORIZATION}
-							</label>
-							<div class="form-field">
-								{READ_AUTHORIZATION}
+						<div class="auth-setter">
+							<div class="form-element form-element-auth">
+								<label>
+									{L_READ_AUTHORIZATION}
+								</label>
+								<div class="form-field">
+									{READ_AUTHORIZATION}
+								</div>
+							</div>
+							<div class="form-element form-element-auth">
+								<label>
+									{L_WRITE_AUTHORIZATION}
+								</label>
+								<div class="form-field">
+									{WRITE_AUTHORIZATION}
+								</div>
 							</div>
 						</div>
-						<div class="form-element">
-							<label>
-								{L_WRITE_AUTHORIZATION}
-							</label>
-							<div class="form-field">
-								{WRITE_AUTHORIZATION}
-							</div>
-						</div>
+
 					</div>
 				</fieldset>
 

@@ -28,7 +28,7 @@
 class AdminExtendedFieldMemberEditController extends AdminController
 {
 	private $tpl;
-	
+
 	private $lang;
 	/**
 	 * @var HTMLForm
@@ -38,14 +38,14 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $extended_field;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id');
 		$this->init();
-		
+
 		$extended_field = new ExtendedField();
 		$extended_field->set_id($id);
 		$exist_field = ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
@@ -59,20 +59,20 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$this->tpl = new StringTemplate('# INCLUDE MSG #
 				# INCLUDE FORM #
 				<script>
 				jQuery(document).ready(function() {
 				'.$this->get_events_select_type().'});
 				</script>');
-				
+
 		$this->tpl->add_lang($this->lang);
-		
+
 		$this->tpl->put_all(array(
 			'FIELD_TYPE' => $this->extended_field['field_type']
 		));
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$extended_field = $this->save($id);
@@ -96,28 +96,40 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	{
 		$this->lang = LangLoader::get('admin-user-common');
 	}
-	
+
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$regex_type = is_numeric($this->extended_field['regex']) ? $this->extended_field['regex'] : 6;
 		$regex = is_string($this->extended_field['regex']) ? $this->extended_field['regex'] : '';
-		
+
 		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $this->extended_field['name'], array(
-			'required' => true)
+
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $this->extended_field['name'],
+			array('class' => 'top-field', 'required' => true)
 		));
-		
+
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $this->extended_field['description']));
+
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['field.display'], (int)$this->extended_field['display'],
+			array('class' => 'top-field')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], (int)$this->extended_field['required'],
+			array('class' => 'top-field', 'description' => $this->lang['field.required_explain'])
+		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $this->extended_field['field_type'],
 			$this->get_array_select_type(),
-			array('disabled' => $this->is_type_select_disabled(), 'events' => array('change' => $this->get_events_select_type()))
+			array('class' => 'top-field', 'disabled' => $this->is_type_select_disabled(), 'events' => array('change' => $this->get_events_select_type()))
 		));
-		
+
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'],
+			array('rows' => 4)
+		));
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['field.regex'], $regex_type,
 			array(
 				new FormFieldSelectChoiceOption('--', '0'),
@@ -131,28 +143,20 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['regex.personnal-regex'], '6'),
 			),
 			array('description' => $this->lang['field.regex-explain'], 'events' => array('change' => '
-				if (HTMLForms.getField("regex_type").getValue() == 6) { 
+				if (HTMLForms.getField("regex_type").getValue() == 6) {
 					HTMLForms.getField("regex").enable();
 					jQuery("#' . __CLASS__ . '_regex").focus();
-				} else { 
-					HTMLForms.getField("regex").disable(); 
+				} else {
+					HTMLForms.getField("regex").disable();
 				}'))
 		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex));
-		
-		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], (int)$this->extended_field['required'], array(
-			'description' => $this->lang['field.required_explain']
-		)));
-		
-		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $this->extended_field['possible_values']));
-		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'],
-			array('rows' => 4)
+
+		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex,
+			array('class' => 'top-field')
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['field.display'], (int)$this->extended_field['display']));
-		
+
+		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $this->extended_field['possible_values']));
+
 		$auth = $this->extended_field['auth'];
 
 		$auth_settings = new AuthorizationsSettings(array(
@@ -162,13 +166,13 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$auth_settings->build_from_auth_array($auth);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
-		
+
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
@@ -188,33 +192,33 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			$extended_field->set_field_name(TextHelper::htmlspecialchars($extended_field->get_field_name()));
 			$extended_field->set_field_type($extended_field->get_field_type());
 		}
-		
+
 		$extended_field->set_name(TextHelper::htmlspecialchars($this->form->get_value('name')));
 		$extended_field->set_position(PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'MAX(position) + 1', ''));
 		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description', $extended_field->get_description())));
-		
+
 		if (!$this->form->field_is_disabled('possible_values'))
 		{
 			$extended_field->set_possible_values($this->form->get_value('possible_values'));
 		}
-		
+
 		if (!$this->form->field_is_disabled('default_value'))
 			$extended_field->set_default_value($this->form->get_value('default_value'));
-		
+
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required'));
 		$extended_field->set_display((bool)$this->form->get_value('display'));
 		$regex = $regex_type = !$this->form->field_is_disabled('regex_type') ? $this->form->get_value('regex_type')->get_raw_value() : 0;
-		
+
 		if (!$this->form->field_is_disabled('regex'))
 		{
 			$regex = $regex_type != 6 ? $regex_type : $this->form->get_value('regex');
 		}
-		
+
 		$extended_field->set_regex($regex);
 		$extended_field->set_authorization($this->form->get_value('authorizations', $extended_field->get_authorization())->build_auth_array());
 
 		ExtendedFieldsService::update($extended_field);
-		
+
 		return $extended_field;
 	}
 
@@ -222,7 +226,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	{
 		$select = array();
 		$modules = $this->get_extended_fields_class_name();
-		
+
 		foreach ($modules as $module => $files)
 		{
 			if (count($modules) > 1)
@@ -272,7 +276,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		return $disabled;
 	}
-	
+
 	private function get_events_select_type()
 	{
 		$event = '';
@@ -287,7 +291,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				{
 					$event .= ' || HTMLForms.getField("field_type").getValue() == "'. $name .'"';
 				}
-				$event .= ') { 
+				$event .= ') {
 					HTMLForms.getField("' .$name_field_disable. '").disable();';
 					if ($name_field_disable == 'regex')
 					{
@@ -309,21 +313,21 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	private function get_disable_fields()
 	{
 		$disable_field = array(
-			'name' => array(), 
-			'description' => array(), 
-			'possible_values' => array(), 
-			'default_value' => array(), 
-			'field_required' => array(), 
-			'regex' => array(), 
+			'name' => array(),
+			'description' => array(),
+			'possible_values' => array(),
+			'default_value' => array(),
+			'field_required' => array(),
+			'regex' => array(),
 			'authorizations' => array()
 		);
-		
+
 		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
 			foreach ($files as $field_type)
 			{
 				$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
-				
+
 				foreach ($disable_fields_extended_field as $name_disable_field)
 				{
 					if (array_key_exists($name_disable_field, $disable_field))
@@ -335,24 +339,24 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		return $disable_field;
 	}
-	
+
 	private function get_extended_fields_class_name()
 	{
 		$providers = AppContext::get_extension_provider_service()->get_providers(ExtendedFieldExtensionPoint::EXTENSION_POINT);
-		
+
 		$extended_fields_class_name = array();
 		foreach ($providers as $name_provider => $properties)
 		{
 			$extended_fields_extension_point = $properties->get_extension_point(ExtendedFieldExtensionPoint::EXTENSION_POINT);
 			$extended_fields = $extended_fields_extension_point->get_extended_fields();
-			
+
 			$extended_fields_list = array();
 			foreach ($extended_fields as $extended_field)
 			{
 				if (!$extended_field->get_field_used_once() || get_class($extended_field) == $this->extended_field['field_type'])
 					$extended_fields_list[] = $extended_field;
 			}
-			
+
 			if (!empty($extended_fields_list))
 				$extended_fields_class_name[$name_provider] = $extended_fields_list;
 		}

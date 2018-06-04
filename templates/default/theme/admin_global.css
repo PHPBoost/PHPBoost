@@ -1,8 +1,8 @@
 
-/* --- ###################################################################### 
+/* --- ######################################################################
  *
  *                            admin_global.css
- *                            
+ *
  *            Contient les classes globales au site, peuvent être utilisees partout.
  *            - les liens
  *            - les titres
@@ -11,7 +11,7 @@
  *            - les barres de progression
  *            - Font-Awesome
  *            - les messages d'erreur
- * 
+ *
  * --- ###################################################################### ---*/
 
 
@@ -19,37 +19,13 @@
 
 /* --- Les liens du site --- */
 a {
-	color: #4372AA;
 	text-decoration: none;
 	outline: none;
 }
 
 a:hover {
-	color: #2D4D73;
 	text-decoration: underline;
 }
-
-/* --- Les liens des utilisateurs --- */
-a.admin 	{ color: #FFA34F; }
-a.modo 		{ color: #006699; }
-a.member 	{ color: #000000; }
-
-/* --- Couleur de texte --- */
-.color-alert 		{ color: #B22222; }
-.color-notavailable { color: #B22222; }
-.color-available 	{ color: #008000; }
-.color-unknown 		{ color: #004b80; }
-
-.bkgd-color-visible 	{ background-color: #CCFFCC; }
-.bkgd-color-unvisible 	{ background-color: #FFEE99; }
-.bkgd-color-unaprobed 	{ background-color: #FFCCCC; }
-
-.bkgd-color-fixed 			{ background-color: #7FFF9C; }
-tr td.bkgd-color-fixed 		{ background-color: #7FFF9C; }
-.bkgd-color-processing 		{ background-color: #FFD86F; }
-tr td.bkgd-color-processing { background-color: #FFD86F; }
-.bkgd-color-unknown 		{ background-color: #FF796F; }
-tr td.bkgd-color-unknown 	{ background-color: #FF796F; }
 
 /* --- Les differentes tailles de polices --- */
 .smaller 	{ font-size: 0.869em; }
@@ -83,7 +59,9 @@ h3.title1, h3.title2, h4.stitle1, h4.stitle2 {
 }
 
 h3.title1, h3.title2 {
-	border-bottom: 1px solid #366393;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
 	padding: 0 0 0 3px;
 	margin-bottom: 15px;
 	font-weight: bold;
@@ -105,7 +83,6 @@ h3.title2 {
 h4.stitle1 {
 	margin: 0 0 10px 40px;
 	font-size: 1.5em;
-	color: #366393;
 }
 
 /* --- Sous titre 2 --- */
@@ -134,14 +111,19 @@ ul, ol {
 	display: inline-block;
 }
 
+.calendar-container a .fa-calendar {
+	font-size: 1.6em;
+}
+
 .calendar-block {
 	position: absolute;
 	top: 100%;
 	left: 0;
 	right:0;
 	z-index: 10;
-	border: 1px solid #999999;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 3px;
 }
 
@@ -163,7 +145,6 @@ ul, ol {
 }
 
 .calendar-block .date-select-container {
-	background-color: #F5F5F5;
 	padding: 2px 0;
 	border-radius: 3px 3px 0 0;
 }
@@ -181,7 +162,6 @@ ul, ol {
 .calendar-block .date-select-previous i {
 	display: block;
 	padding: 0 10px;
-	color: #666666;
 }
 
 .calendar-block .date-select-content {
@@ -211,11 +191,11 @@ ul, ol {
 
 .calendar-block .date-picker thead tr th {
 	padding: 5px 0;
-	border-top: 1px solid #CCCCCC;
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 0;
-	background-color: #FFFFFF;
 	font-weight: bold;
-	color: #666666;
 }
 
 .calendar-block .date-picker tbody tr:last-child {
@@ -229,11 +209,6 @@ ul, ol {
 
 .calendar-block .date-picker tbody td:first-child { border-left: none; }
 .calendar-block .date-picker tbody td:last-child  { border-right: none; }
-
-.calendar-block .date-picker tbody td.calendar-none    { background-color: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background-color: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background-color: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background-color: #FFE3B6; }
 
 .calendar-block .date-picker tbody tr:last-child td {
 	border-bottom: none;
@@ -255,9 +230,9 @@ ul, ol {
 
 .bbcode-block {
 	margin: 0;
-	background-color: #F3F3F3;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	border: 1px solid #AAAAAA;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 3px;
 }
 
@@ -280,7 +255,9 @@ ul, ol {
 
 .color-picker td {
 	padding: 0;
-	border: 1px solid #F3F3F3;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .color-picker td a {
@@ -297,15 +274,16 @@ ul, ol {
 	padding: 2px 0;
 	font-weight: bold;
 }
+
 .blockquote, .code, .hide {
 	overflow: auto;
 	margin: 0 25px;
 	padding: 8px;
 	max-height: 500px;
-	background-color: #FAFAFA;
-	border: 1px solid #DDDDDD;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 3px;
-	color: #444444;
 }
 
 .hide {
@@ -333,7 +311,9 @@ ul, ol {
 	overflow: hidden;
 	margin: 5px 20px;
 	padding: 5px;
-	border: 1px solid #C4CED6;	
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .formatter-fieldset {
@@ -357,6 +337,10 @@ ul, ol {
 	min-height: 40px;
 	width: 100px;
 	background-color: #FFFFFF;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
@@ -367,9 +351,7 @@ ul, ol {
 	position: relative;
 	margin: 4px 0 10px;
 	padding: 2px;
-	background-color: #F5F5F5;
 	border-radius: 3px;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .progressbar-container .progressbar-infos {
@@ -384,7 +366,6 @@ ul, ol {
 
 .progressbar {
 	border-radius: 3px 0 0 3px;
-	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .progressbar[style*="width: 100"] {
@@ -393,7 +374,6 @@ ul, ol {
 
 .progressbar-container .progressbar {
 	height: 14px;
-	background-color: #8ECF67;
 	transition: width .6s ease;
 }
 
@@ -406,26 +386,12 @@ ul, ol {
 .notation .star,
 .static-notation .star {
 	padding-right: 5px;
-	color: #E3CF7A;
 	font-size: 1.1em;
 	text-decoration: none;
 }
 
 
 /* -- Les Icones specifiques PHPBoost de FontAwesome ==================================*/
-.fa-syndication:before 	{ color: #F57900; }
-.fa-success:before 		{ color: #478948; }
-.fa-forbidden:before 	{ color: #BA4B49; }
-.fa-error:before 		{ color: #BA4B49; }
-.fa-warning:before 		{ color: #C19954; }
-.fa-ban:before 			{ color: #BA4B49; }
-.fa-unban:before 		{ color: #478948; }
-.fa-male:before 		{ color: #8DC3E9; }
-.fa-female:before 		{ color: #F49CC4; }
-.fa-online:before 		{ color: #52D132; }
-.fa-offline:before 		{ color: #E05759; }
-.fa-trend-up:before 	{ color: #478948; }
-.fa-trend-down:before 	{ color: #BA4B49; }
 
 li.block .fa-stack {
 	height: 2.34em;
@@ -445,7 +411,6 @@ li.block .fa-stack {
 	top: 4px;
 	width: 100%;
 	margin: 0 auto;
-	color: white;
 	font-size: 0.7em;
 	text-align: center;
 }
@@ -513,7 +478,9 @@ div.message-helper-small {
 	height: auto;
 	padding: 10px 10px 10px 40px;
 	margin: 5px auto 15px auto;
-	border: 1px solid #FFFFFF;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 4px;
 	text-align: left;
 	line-height: 20px;
@@ -539,15 +506,3 @@ div.message-helper-small {
 .message-helper.warning:before  { content: "\f071"; }
 .message-helper.success:before  { content: "\f00c"; }
 .message-helper.question:before { content: "\f128"; }
-
-.error, .error:before 		{ color: #BA4B49; }
-.notice, .notice:before 	{ color: #888888; }
-.warning, .warning:before 	{ color: #C19954; }
-.success, .success:before 	{ color: #478948; }
-.question, .question:before { color: #3B88AE; }
-
-.question 	{ background-color: #DAEEF8; border-color: #BDE9F2; }
-.notice 	{ background-color: #F0F0F0; border-color: #E2E2E2; }
-.warning 	{ background-color: #FDF9E4; border-color: #FBECCD; }
-.error 		{ background-color: #F3DFDF; border-color: #ECCDD2; }
-.success 	{ background-color: #E0F1D9; border-color: #D7EAC7; }

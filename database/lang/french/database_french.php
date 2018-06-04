@@ -6,14 +6,14 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -79,8 +79,8 @@ $LANG['db_backup_all'] = 'Données et structure';
 $LANG['db_backup_struct'] = 'Structure seulement';
 $LANG['db_backup_data'] = 'Données seulement';
 $LANG['db_backup_success'] = 'Votre base de données a été correctement sauvegardée. Vous pouvez la télécharger en cliquant sur le lien suivant : <a href="admin_database.php?read_file=%s">%s</a>';
-$LANG['db_execute_query'] = 'Exécuter une requête dans la base de données';
-$LANG['db_tools'] = 'Outils de gestion de la base de données';
+$LANG['db_execute_query'] = 'Requête SQL';
+$LANG['db_tools'] = 'Gestion base de données';
 $LANG['db_query_explain'] = 'Vous pouvez dans ce panneau d\'administration exécuter des requêtes dans la base de données. Cette interface ne devrait servir que lorsque le support vous demande d\'exécuter une requête dans la base de données qui vous sera communiquée.<br />
 <strong>Attention :</strong> si cette requête n\'a pas été proposée par le support vous êtes responsable de son exécution et des pertes de données qu\'elle pourrait provoquer. Il est donc fortement déconseillé d\'utiliser ce module si vous ne maîtrisez pas complètement la structure des tables de PHPBoost.';
 $LANG['db_submit_query'] = 'Exécuter';

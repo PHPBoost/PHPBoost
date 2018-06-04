@@ -59,11 +59,11 @@
 				<fieldset>
 					<legend>{L_POLL_ADD}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="question">* {L_QUESTION}</label>
 							<div class="form-field"><input type="text" maxlength="100" id="question" name="question"></div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="type">* {L_ANSWERS_TYPE}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
@@ -78,7 +78,7 @@
 								<span class="form-field-radio-span">{L_MULTIPLE}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="archive">* ${LangLoader::get_message('hidden', 'common')}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
@@ -135,40 +135,41 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label for="release_date">{L_RELEASE_DATE}</label>
-							<div class="form-field">
+							<div class="form-field poll-form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<div class="form-field-radio">
 										<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
 										<label for"start_end_date"></label>
 									</div>
 									{CALENDAR_START}
-
-									{L_UNTIL}&nbsp;
-
-									{CALENDAR_END}
+									 {L_UNTIL}
+								     {CALENDAR_END}
 								</div>
+							</div>
+							<div class="form-field-radio">
+								<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
+								<label for="release_date"></label>
+								&nbsp; <span class="form-field-radio-span">{L_IMMEDIATE}</span>
+							</div>
 								<div class="spacer"></div>
-								<div class="form-field-radio">
-									<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
-									<label for="release_date"></label>
-								</div>
-								<span class="form-field-radio-span">{L_IMMEDIATE}</span>
-								<div class="spacer"></div>
-								<div class="form-field-radio">
-									<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
-									<label for="unaprob"></label>
-								</div>
-								<span class="form-field-radio-span">{L_UNAPROB}</span>
+							<div class="form-field-radio">
+								<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
+								<label for="unaprob"></label>
+								&nbsp; <span class="form-field-radio-span">{L_UNAPROB}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="current_date">* {L_POLL_DATE}</label>
-							<div class="form-field">
+							<div class="form-field form-field-datetime">
 								{CALENDAR_CURRENT_DATE}
-								{L_AT}
-								<input class="input-date" type="text" name="hour" value="{HOUR}" /> h <input class="input-date" type="text" maxlength="2" name="min" value="{MIN}" />
+								<label class="label-time" data-time="h">
+									<input class="input-hours" type="text" name="hour" value="{HOUR}" />
+								</label>
+								<label class="label-time" data-time="mn">
+									<input class="input-minutes" type="text" maxlength="2" name="min" value="{MIN}" />
+								</label>
 							</div>
 						</div>
 					</div>

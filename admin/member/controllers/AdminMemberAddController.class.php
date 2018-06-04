@@ -65,10 +65,10 @@ class AdminMemberAddController extends AdminController
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
 			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
@@ -77,12 +77,16 @@ class AdminMemberAddController extends AdminController
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));
-		
+
 		$fieldset->add_field($email = new FormFieldMailEditor('email', $this->lang['email'], '',
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
 		));
-		
+
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
+
+		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
 			array('events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
@@ -97,7 +101,9 @@ class AdminMemberAddController extends AdminController
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
-		
+
+		$fieldset->add_field(new FormFieldFree('2_separator', '', ''));
+
 		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['password.custom'], false,
 			array('description' => $this->lang['password.custom.explain'], 'events' => array('click' => '
 				if (HTMLForms.getField("custom_password").getValue()) {
@@ -114,29 +120,27 @@ class AdminMemberAddController extends AdminController
 			array('required' => true, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
-		
+
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '',
 			array('required' => true, 'hidden' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
-		
+
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
-		
+
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
 			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
 			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
 		}
-		
-		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
-		
+
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
@@ -146,13 +150,13 @@ class AdminMemberAddController extends AdminController
 		$user->set_display_name($this->form->get_value('display_name'));
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('email'));
-		
+
 		$login = $this->form->get_value('email');
 		if ($this->form->get_value('custom_login'))
 		{
 			$login = $this->form->get_value('login');
 		}
-		
+
 		if ($this->form->get_value('custom_password'))
 		{
 			$password = $this->form->get_value('password');
@@ -161,16 +165,16 @@ class AdminMemberAddController extends AdminController
 		{
 			$password = KeyGenerator::generate_key(8);
 		}
-		
+
 		$auth_method = new PHPBoostAuthenticationMethod($login, $password);
 		$user_id = UserService::create($user, $auth_method);
-		
+
 		if ($user_id)
 		{
 			$registration_pass = UserAccountsConfig::load()->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user->get_display_name(), $login, $password, $registration_pass, true);
 		}
-		
+
 		return $user->get_display_name();
 	}
 }

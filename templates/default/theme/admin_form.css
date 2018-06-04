@@ -15,57 +15,32 @@ button,
 	height: auto;
 	margin: 0.309em 0.309em 0 0.309em;
 	padding: 0.618em 2em;
-	background-color: #F9F9F9;
-	border: 1px solid #CCCCCC;
-	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
-	color: #333333;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	text-align: center;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
 	white-space: nowrap;
 }
 
 button:hover,
 .button-hover {
-	background-color: #FDFDFD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
 
 button:active,
 .button-active {
-	background-color: #F1F1F1;
-	border: 1px solid #DDDDDD;
-	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.05);
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 button.small,
 .button-small {
-	padding: 2px 6px;
+	padding: 2px 0.382em;
 	font-size: 0.95em;
 }
 
-button.submit {
-	background-color: #3B6B9F;
-	border-color: #366393;
-	color: #FEFEFE;
-}
-
-button.submit:hover {
-	background-color: #366393;
-	border-color: #315A86;
-}
-
 /* --- Bouton submit avec couleur alternative --- */
-button.submit.alt 		{
-	background-color: #E27B47;
-	border-color: #C95A21;
-}
-
-button.submit.alt:hover {
-	background-color: #FFA172;
-	border-color: #E27B47;
-}
 
 button[type=reset] {
 	font-weight: bold;
@@ -73,7 +48,7 @@ button[type=reset] {
 
 button[id*=menu_element] {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 0.618em;
 }
 
 @media (min-width: 769px) {
@@ -86,31 +61,24 @@ button[id*=menu_element] {
 .basic-button {
 	display: inline-block;
 	margin: 1px;
-	padding: 1px 6px;
-	background-color: #2F5B8A;
+	padding: 1px 0.382em;
 	border-radius: 2px;
 	font-weight: bold;
 	text-align: center;
-	color: #FFFFFF;
 }
 
 .basic-button:hover {
-	background-color: #3D6997;
-	color: #FFFFFF;
 	text-decoration: none;
 }
-
-.basic-button.alt 		{ background-color: #AAAAAA; }
-.basic-button.alt:hover { background-color: #BBBBBB; }
 
 /* --- Formulaires =========================================================*/
 .fieldset-mini {
 	width: 540px;
-	margin: 20px auto auto auto;
+	margin: 1.309em auto auto auto;
 }
 
 fieldset {
-	margin: 20px 0.309em 0;
+	margin: 1.309em 0.309em 0;
 	border: none;
 	background: none;
 }
@@ -127,7 +95,7 @@ fieldset img {
 
 fieldset .table-cat img {
 	max-width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 0.618em;
 }
 
 fieldset[id*="_captcha_fieldset"] {
@@ -141,16 +109,16 @@ fieldset#AdminErrorsController404List_fbuttons{
 
 @media (min-width: 769px) {
 	fieldset {
-		margin: 20px 20px 0;
+		margin: 1.309em 1.309em 0;
 	}
 
 	fieldset[id*="_captcha_fieldset"] {
-		margin: 0 20px;
+		margin: 0 1.309em;
 	}
 
 	fieldset#AdminErrorsController404List_fbuttons,
 	fieldset#AdminLoggedErrorsControllerList_fbuttons {
-		margin: 0 20px;
+		margin: 0 1.309em;
 	}
 }
 
@@ -183,7 +151,11 @@ fieldset#AdminErrorsController404List_fbuttons{
 
 fieldset p {
 	margin: 0;
-	padding: 15px 10px;
+	padding: 15px 0.618em;
+}
+
+.fieldset-inset p {
+	width: 100%;
 }
 
 .fieldset-submit {
@@ -194,111 +166,87 @@ fieldset p {
 	display: none;
 }
 
-
-optgroup {
-	border: none;
-	border-bottom: 1px solid #5B5A5A;
-	font-weight: bold;
-}
-
-option {
-	padding: 3px;
-}
-
-/* --- Prévisualition --- */
-.xmlhttprequest-preview {
-	padding: 0 2px;
-	background-color: #FFFFFF;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #99B1CB #CCCCCC #CCCCCC #99B1CB;
-	color: #2E3B5F;
-	font-size: 0.95em;
-}
-
 legend {
 	display: block;
 	margin: 0;
 	padding: 0 0 8px;
 	width: 100%;
-	border-bottom:2px solid #BBBBBB;
-	color: #474747;
+	border-width: 0 0 2px 0;
+	border-style: solid;
+	border-color: transparent;
 	font-size: 1.6em;
 	text-transform: none;
 }
 
+/* --- Prévisualition --- */
+.xmlhttprequest-preview {
+	margin-top: 0.309em;
+	padding: 2px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
 /* --- Elements de saisie --- */
-input[type=text],
-input[type=email],
-input[type=url],
-input[type=number],
-input[type=color],
-input[type=tel],
-input[type=search],
-input[type=password],
-input[type=file],
+[type=text],
+[type=email],
+[type=url],
+[type=number],
+[type=color],
+[type=tel],
+[type=search],
+[type=password],
+[type=file],
 textarea,
 select {
-	padding: 10px 10px 10px 25px;
+	padding: 0.618em 0.618em 0.618em 1.618em;
 	width: 100%;
-	background-color: #EEEEEE;
-	border: 1px solid #FFFFFF;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
-	color: #555555;
+	border-width: 1px;
+	border-style: solid ;
 }
 
 select {
-	padding: 7px 10px 7px 25px;
+	padding: 0.309em 0.618em 0.382em 1.618em;
 }
 
-@media (min-width:769px) {
-	input[class=input-date] {
-		width: 130px;
-	}
-}
-
-input[type=text]:hover,
-input[type=email]:hover,
-input[type=url]:hover,
-input[type=number]:hover,
-input[type=color]:hover,
-input[type=tel]:hover,
-input[type=search]:hover,
-input[type=password]:hover,
-input[type=file]:hover,
+[type=text]:hover,
+[type=email]:hover,
+[type=url]:hover,
+[type=number]:hover,
+[type=color]:hover,
+[type=tel]:hover,
+[type=search]:hover,
+[type=password]:hover,
+[type=file]:hover,
 textarea:hover,
 select:hover {
-	background-color: #FFFFFF;
-	border: 1px solid #BBBBBB;
-	color: #333333;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=url]:focus,
-input[type=number]:focus,
-input[type=color]:focus,
-input[type=tel]:focus,
-input[type=search]:focus,
-input[type=password]:focus,
-input[type=file]:focus,
+[type=text]:focus,
+[type=email]:focus,
+[type=url]:focus,
+[type=number]:focus,
+[type=color]:focus,
+[type=tel]:focus,
+[type=search]:focus,
+[type=password]:focus,
+[type=file]:focus,
 textarea:focus,
 select:focus {
-	background-color: #FFFFFF;
-	border-color: #BBBBBB;
 	outline: 0;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
-	color: #222222;
 }
 
-input[type=color] {
-	padding: 10px 2px;
+[type=color] {
+	padding: 0.618em 2px;
 	width: 100%;
 	height: 38px;
 }
 
 @media (min-width: 769px) {
-	input[type=color] {
+	[type=color] {
 		width: 150px;
 	}
 }
@@ -310,13 +258,24 @@ input[type=color] {
 	}
 }
 
+optgroup {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
+	font-weight: bold;
+}
+
+option {
+	padding: 3px;
+}
+
 /* --- checkbox mini --- */
 
 .form-field-checkbox-mini {
 	margin: 0;
 	position: relative;
 	display: inline-block;
-	margin-top: 3px;
+	margin: 0.228em 0.618em 0 0;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:not(:checked),
@@ -345,25 +304,21 @@ input[type=color] {
 .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
 	left:-1px;
 	top: -2px;
-	width: 16px;
-	height: 16px;
-	background: #eeeeee;
-	box-shadow: 0 0 2px 1px rgba(0, 0, 0, .15);
-	border: 1px solid #C1C1C1;
+	width: 1.309em;
+	height: 1.309em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 3px;
 	transition: background-color 0.2s;
 }
 
 .form-field-checkbox .text-status-constraint {
-	top: 25px;
+	top: 1.618em;
 	left: -0.309em;
 }
 
 /* on checked */
-.form-field-checkbox-mini [type="checkbox"]:checked + label:before {
-	background: #62B0FF;
-	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0);
-}
 
 .form-field-checkbox-mini input[type="checkbox"]:checked + label:after {
 	position: absolute;
@@ -371,9 +326,7 @@ input[type=color] {
 	font-family: 'Font Awesome 5 Free';
 	top: 0;
 	left: 2px;
-	font-size: 12px;
 	font-weight: 900; /* Solid icons*/
-	color: #ffffff;
 	transition: all .3s ease 0s;
 }
 
@@ -390,7 +343,7 @@ input[type=color] {
 
 /* --- checkbox --- */
 .form-field-checkbox{
-	height: 38px;
+	height: 2.618em;
 	position: relative;
 }
 .form-field-checkbox [type="checkbox"]:not(:checked),
@@ -418,63 +371,64 @@ input[type=color] {
 	left:0;
 	top: 0;
 	width: 100%;
-	height: 20px;
-	background-color: #ffffff;
-	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.05);
+	height: 1.309em;
 	transition: all 0.2s;
 	border-radius: 4px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:after,
 .form-field-checkbox [type="checkbox"]:checked + label:after {
+	top: 0;
+	content: 'O';
+	text-align: center;
+	padding: 0.1618em 0;
 	left: 0;
-	width: 50%;
-	height: 20px;
-	background-color: #C1C1C1;
-	background-image: linear-gradient(to right, #c1c1c1 20%, rgba(255, 255, 255, 0.1) 80%);
+	width: calc(50% + 1px);
 	transition: all 0.3s;
 	border-radius: 4px 0 0 4px;
 }
 
+.form-field-checkbox [type="checkbox"]:checked + label:after {
+	content: 'I';
+}
+
 /* on checked */
 .form-field-checkbox [type="checkbox"]:checked + label:after {
-	left: 50%;
-	background-color: #62B0FF;
-	background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 20%, #62B0FF 80%);
+	left: calc(50% + 1px);
 	border-radius: 0 4px 4px 0;
 }
 
 .form-field-checkbox .text-status-constraint {
-	top: 25px;
+	top: 1.618em;
 	left: -0.309em;
 }
 
-/* --- input form-field-values --- */
-.form-field-values input[type="text"] {
-	width: 80%;
-	margin: 10px 0;
-	padding: 10px;
+/* --- bouton radio --- */
+.form-field-radio-button {
+    min-height: 2.618em;
 }
 
-/* --- bouton radio --- */
 .form-field-radio-span {
-	padding-right: 15px;
+	padding: 0 0.618em;
 }
 
 .form-field-radio {
 	display: inline-block;
 	vertical-align: top;
-	margin: 3px 0 0 0;
+	margin: 0.309em 0 0 0;
 }
 
 @media (max-width: 768px) {
 	.form-field-radio .is-default-title{
-		margin: 0 0 0 20px;
+		margin: 0 0 0 1.309em;
 	}
 }
 
 .bt-content .form-field-radio {
-	margin: 3px 10px 0 0;
+	margin: 3px 0.618em 0 0;
 }
 
 .form-field-radio [type="radio"]:not(:checked),
@@ -504,8 +458,6 @@ input[type=color] {
 	left: -2px;
 	width: 16px;
 	height: 16px;
-	background-color: #FFFFFF;
-	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.05);
 	border-radius: 15px;
 	transition: background-color .2s;
 }
@@ -517,8 +469,6 @@ input[type=color] {
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
-	background-color: #DDDDDD;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 	transition: all 0.2s;
 }
 
@@ -532,51 +482,99 @@ input[type=color] {
 	}
 }
 
+/* --- possible values --- */
+[id*="_possible_values_"] > div > div > div {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: justify;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* --- input form-field-values --- */
+.form-field-values input[type="text"] {
+	width: 80%;
+	padding: 0.618em;
+}
+
+@media (min-width: 769px) {
+
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
+	    top: -0.809em;
+	}
+
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::after,
+	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after {
+	    top: -0.618em;
+	}
+
+}
+
 
 .form-field-more-values {
 	float: right;
 }
 
-/* on checked */
-.form-field-radio [type="radio"]:checked + label:after {
-	background-color: #62B0FF;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+/* --- sizes --- */
+
+.field-smaller { width: 29px;	}
+.field-small 	{ width: 77px; 	}
+.field-large 	{ width: 200px; }
+.field-xlarge 	{ width: 300px; }
+
+
+.form-field-date,
+.form-field-datetime {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 }
 
-/* --- form --- */
-form input:focus:invalid,
-form textarea:focus:invalid,
-form .constraint-status-right input,
-form .constraint-status-right textarea {
-	border-color: rgba(196, 60, 43, 0.3);
-	box-shadow: 0 0 3px rgba(196, 60, 43, 0.1);
+.form-field-date .input-date { width: 80%; }
+
+.form-field-datetime .input-date { width: 45%; }
+.form-field-datetime .label-time {
+	width: 18%;
+
+	position: relative;
+	display: inline-block;
 }
 
-form input:focus:valid,
-form textarea:focus:valid,
-form .constraint-status-right input,
-form .constraint-status-right textarea {
-	border-color: rgba(71, 137, 72, 0.3);
-	box-shadow: 0 0 0.309em rgba(71, 137, 72, 0.1);
+.form-field-datetime .label-time input {
+	padding: 0.618em;
 }
 
-input.field-smaller { width: 29px;	}
-input.field-small 	{ width: 77px; 	}
-input.field-large 	{ width: 200px; }
-input.field-xlarge 	{ width: 300px; }
+.label-time:after {
+	position: absolute;
+	top: -0.618em;
+	right: 0.228em;
+	content: attr(data-time)
+}
 
-input.input-date 	{ width: 100px; }
-input.input-hours 	{ width: 50px;  }
-input.input-minutes { width: 50px;  }
-
-/* --- Cache le generateur de mot de passe sur chrome --- */
+/* --- Hide Chrome password generator --- */
 .cip-icon-key-small {
 	display: none !important;
 }
 
-/* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
+/* --- Form element (label + input) --- */
 
 .fieldset-content .fieldset-inset,
+.fieldset-inset-user,
 .form-element {
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -587,9 +585,6 @@ input.input-minutes { width: 50px;  }
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
 	width: 100%;
 }
 
@@ -597,10 +592,24 @@ input.input-minutes { width: 50px;  }
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
 	flex-direction: column;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-content: space-between;
+    -ms-flex-line-pack: justify;
+    align-content: space-between;
 	padding: 0.618em;
 }
 
+.form-element.top-field {
+	-webkit-justify-content: flex-start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+}
+
 .fieldset-submit .fieldset-inset {
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
 	justify-content: center;
 }
 
@@ -613,39 +622,38 @@ input.input-minutes { width: 50px;  }
 	.form-element { width: calc(100% / 2); }
 }
 
-@media (min-width: 1025px) {
-	.form-element { width: calc(100% / 3); }
-}
-
-@media (min-width: 1366px) {
+@media (min-width: 1281px) {
 	.form-element { width: calc(100% / 4); }
 }
 
 @media (min-width: 769px) {
 	.form-element {
 		padding: 0.618em 1.618em 1.618em 0;
-		border-bottom: 1px solid #dddddd;
+		border-width: 0 0 1px 0;
+		border-style: solid;
+		border-color: transparent;
 	}
 }
 
-.full-field,
-.half-field,
-.third-field,
-.quarter-field { width: 100%; }
+.form-element.full-field,
+.form-element.half-field,
+.form-element.third-field { width: 100%; }
 
 @media (min-width: 769px) {
-	.half-field,
-	.third-field,
-	.quarter-field { width: calc(100% / 2); }
+	.form-element.half-field,
+	.form-element.third-field { width: calc(100% / 2); }
 }
 
 @media (min-width: 1025px) {
-	.half-field    { width: calc(100% / 2); }
-	.third-field   { width: calc(100% / 3); }
-	.quarter-field { width: calc(100% / 4); }
+	.form-element.half-field    { width: calc(100% / 2); }
+	.form-element.third-field   { width: calc(100% / 3); }
 }
 
-
+.form-element[id*=_separator_field] {
+	width: 100%;
+	padding: 0;
+	border-width: 0;
+}
 
 .form-element-preview {
 	margin: 0.618em;
@@ -654,6 +662,13 @@ input.input-minutes { width: 50px;  }
 
 fieldset[id*=advises] .form-element {
 	padding: 0.618em;
+	width: 100%;
+}
+
+@media (min-width: 1367px) {
+	fieldset[id*=advises] .form-element {
+		width: calc(100% / 2);
+	}
 }
 
 .form-element [id$="user_avatar"] img {
@@ -687,7 +702,7 @@ fieldset[id*=advises] .form-element {
 
 .form-field-action-link ul li {
 	display: inline-table;
-	margin: 2px 10px;
+	margin: 2px 0.618em;
 }
 
 .form-field-action-link ul li a {
@@ -701,14 +716,8 @@ fieldset[id*=advises] .form-element {
 
 /* --- Label pour les inputs [for] et pour les elements sans associations--- */
 .form-element > label {
-	margin-bottom: 8px;
-}
-
-.form-element input,
-.form-element textarea,
-.form-element select,
-.form-element-textarea textarea {
-	background-color: #FFFFFF;
+	margin-bottom: 0.618em;
+	display: block;
 }
 
 .field-description {
@@ -723,7 +732,7 @@ p[id*=filter] select {
 
 div[id*=menu_element] input {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 0.618em;
 }
 
 @media (min-width: 769px) {
@@ -752,9 +761,9 @@ textarea[disabled=disabled]:focus,
 select[disabled=disabled],
 select[disabled=disabled]:hover,
 select[disabled=disabled]:focus {
-	background-color: #F1F1F1;
-	border: 1px solid #CCCCCC;
-	color: #AAAAAA;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	cursor: not-allowed;
 }
 
@@ -767,9 +776,9 @@ textarea[readonly=readonly]:focus,
 select[readonly=readonly],
 select[readonly=readonly]:hover,
 select[readonly=readonly]:focus {
-	background-color: #FAFAFA;
-	border: 1px solid #CCCCCC;
-	color: #888888;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 /* --- Textarea --- */
@@ -856,11 +865,11 @@ textarea#writing_pad_content {
 
 .advanced-auth-input input {
 	margin-bottom: 0.309em;
-	padding: 4px 24px 4px 6px;
+	padding: 4px 24px 4px 0.382em;
 }
 
 .advanced-auth-input button {
-	padding: 0.309em 0.309em 6px 0.309em;
+	padding: 0.309em 0.309em 0.382em 0.309em;
 	border-width: 0 0 0 1px;
 	border-radius: 0 4px 4px 0;
 }
@@ -892,35 +901,18 @@ textarea#writing_pad_content {
 }
 
 /* --- Verification des contraintes de formulaire --- */
-.constraint-status-error input,
-.constraint-status-error textarea {
-	border-color: rgba(196, 60, 43, 0.3);
-	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
-	color: #C43C35;
-}
-
-.constraint-status-error input:hover,
-.constraint-status-error input:focus,
-.constraint-status-error textarea:hover,
-.constraint-status-error textarea:focus {
-	border-color: rgba(196, 60, 43, 0.5);
-	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
-	color: #C43C35;
-}
-
 .text-status-constraint {
 	position:absolute;
 	display: block;
 	z-index: 1;
-	padding: 6px 0.309em;
+	padding: 0.382em 0.309em;
 	min-width: 20em;
-	background-color: #FEFEFE;
-	border: 1px solid #EAEAEA;
-	box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.3);
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 	border-radius: 3px;
 	font-size: 0.8em;
 	font-weight: bold;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 input + .text-status-constraint {
@@ -931,6 +923,9 @@ input + .text-status-constraint {
 	position: absolute;
 	left: 8px;
 	top: -9px;
+	border-width: 0 0 9px 0;
+	border-style: solid;
+	border-color: transparent;
 	border-bottom: 9px solid rgba(230, 230, 230, 1);
 	border-left: 9px solid transparent;
 	border-right: 9px solid transparent;
@@ -941,9 +936,9 @@ input + .text-status-constraint {
 	position: absolute;
 	left: 9px;
 	top: -8px;
-	border-bottom: 8px solid rgba(250, 250, 250, 1);
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
+	border-width: 0 8px 8px 8px;
+	border-style: solid;
+	border-color: transparent;
 	content: " ";
 }
 
@@ -964,7 +959,6 @@ div.field-required:after {
 	top: 40%;
 	opacity: 0.6;
 	content: "\f069";
-	color: #C43C35;
 	font-size: 0.8rem;
 }
 
@@ -975,7 +969,7 @@ div.field-required:after {
 
 .form-field-upload-file.field-required:after {
 	left: 45px;
-	top: 10px;
+	top: 0.618em;
 }
 
 .form-field-number input,
@@ -986,7 +980,7 @@ div.field-required:after {
 
 .form-element-date .constraint-status-error div.field-required:after,
 .form-element-date .constraint-status-right div.field-required:after {
-	left: 10px;
+	left: 0.618em;
 }
 
 .form-field-textarea.field-required:after,
@@ -1012,21 +1006,14 @@ div.field-required:after {
 .constraint-status-right div.picture-status-constraint:after {
 	top: 30%;
 	content: "\f00c";
-	color: #57A957;
 }
 
 .constraint-status-error i.picture-status-constraint {
 	content: "\f056";
-	color: #C43C35;
 }
 
 .form-field-multi-select.field-required:after {
 	display: none;
-}
-
-.constraint-status-right .form-field-multi-select select {
-	border-color: rgba(71, 137, 72, 0.3);
-	box-shadow: 0 0 0.309em rgba(71, 137, 72, 0.1);
 }
 
 .form-field-radio-button.field-required:after,
@@ -1049,20 +1036,13 @@ div.field-required:after {
 .html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
 .html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
 
-.html-table-header-sortable .sort-active {
-	color: #AAAAAA;
-}
-
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
-	border: 1px solid #999999;
-	background-color: #FFFFFF;
 	overflow: auto;
 }
 
 .autocomplete-suggestions strong {
 	font-weight: normal;
-	color: #3399FF;
 }
 
 .autocomplete-suggestion {
@@ -1070,10 +1050,6 @@ div.field-required:after {
 	overflow: hidden;
 	white-space: nowrap;
 	cursor: pointer;
-}
-
-.autocomplete-selected {
-	background-color: #F0F0F0;
 }
 
 .autocomplete-no-suggestion {
@@ -1103,7 +1079,7 @@ div.field-required:after {
 }
 
 div[id*='keyword'] .form-autocompleter-container input {
-	max-width: calc(100% - 20px);
+	max-width: calc(100% - 1.309em);
 }
 
 /* --- Lined textarea --- */
@@ -1114,10 +1090,9 @@ div[id*='keyword'] .form-autocompleter-container input {
 .linedtextarea {
 	display: inline-block;
 	margin: 0;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 0.618em;
 	width: calc(100% - 60px);
 	height: 100%;
-	background-color: #FFFFFF;
 }
 
 .linedtextarea textarea,
@@ -1142,19 +1117,15 @@ div[id*='keyword'] .form-autocompleter-container input {
 	padding: 0.309em 0 0 0;
 	width: 50px;
 	height: 100%;
-	background-color: #FFFFFF;
-	border-right: 1px solid #C0C0C0;
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .linedwrap .codelines .lineno {
 	padding: 0.0em 0.5em 0 0;
 	text-align: right;
-	color: #AAAAAA;
 	white-space: nowrap;
-}
-
-.linedwrap .codelines .lineselect {
-	color: red;
 }
 
 button.copy-to-clipboard {
@@ -1172,6 +1143,11 @@ button.copy-to-clipboard {
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+	width: 100%;
+}
+
+.auth-setter[id=AdminFilesConfigController_authorizations] {
+	width: 50%;
 }
 
 @media (min-width: 769px) {
@@ -1183,24 +1159,11 @@ button.copy-to-clipboard {
 		display: block;
 		font-size: large;
 	}
-}
 
-@media (max-width: 768px) {
-	div[id*="_possible_values_"] .form-field-radio label {
-		margin-bottom: -0.309em;
+	.auth-setter[id=AdminFilesConfigController_authorizations] .form-element-auth {
+		width: 100%;
+	    -webkit-justify-content: flex-start;
+	    -ms-justify-content: start;
+		justify-content: flex-start;
 	}
-}
-
-@media (min-width: 769px) {
-
-	div[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
-	div[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
-	    top: 1.309em;
-	}
-
-	div[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::after,
-	div[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after {
-	    top: 1.456em;
-	}
-
 }

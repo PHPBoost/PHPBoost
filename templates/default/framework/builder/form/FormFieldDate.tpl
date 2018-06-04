@@ -29,14 +29,17 @@ jQuery(document).ready(function() {
 			# ENDIF #
 		</label>
 	# ENDIF #
-	
+
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
 		{CALENDAR}
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 		# IF C_HOUR #
-		{L_AT}
-		<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" class="input-hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/> {L_H}
-		<input type="number" min="0" max="59"# IF C_FIVE_MINUTES_STEP # step="5"# ENDIF # id="${escape(HTML_ID)}_minutes" class="input-minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+			<label for="${escape(HTML_ID)}_hours" class="label-time" data-time="{L_H}">
+				<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" class="input-hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+			</label>
+			<label for="${escape(HTML_ID)}_minutes" class="label-time" data-time="{L_MN}">
+				<input type="number" min="0" max="59"# IF C_FIVE_MINUTES_STEP # step="5"# ENDIF # id="${escape(HTML_ID)}_minutes" class="input-minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+			</label>
 		# ENDIF #
 	</div>
 </div>

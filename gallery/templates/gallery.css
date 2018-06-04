@@ -139,5 +139,5 @@
 
 .gallery-display {
 	display: inline-block;
-	margin: 0 10px 4px 0;
+	padding: 0 0.618em 0.618em 0.618em;
 }

@@ -73,28 +73,28 @@
 					<legend>{L_CONFIG_CONFIG}</legend>
 					<div class="fieldset-inset">
 						<div class="form-element">
-							<label for="max_width">* {L_MAX_WIDTH} <span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" id="max_width" name="max_width" value="{MAX_WIDTH}" /> {L_UNIT_PX}</div>
+							<label for="max_width">* {L_MAX_WIDTH} ({L_UNIT_PX})<span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" id="max_width" name="max_width" value="{MAX_WIDTH}" /> </div>
 						</div>
 						<div class="form-element">
-							<label for="max_height">* {L_MAX_HEIGHT} <span class="field-description">{L_MAX_HEIGHT_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" id="max_height" name="max_height" value="{MAX_HEIGHT}" /> {L_UNIT_PX}</div>
+							<label for="max_height">* {L_MAX_HEIGHT} ({L_UNIT_PX})<span class="field-description">{L_MAX_HEIGHT_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" id="max_height" name="max_height" value="{MAX_HEIGHT}" /> </div>
 						</div>
 						<div class="form-element">
-							<label for="mini_max_height">* {L_MINI_MAX_HEIGHT} <span class="field-description">{L_MINI_MAX_HEIGHT_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}" /> {L_UNIT_PX}</div>
+							<label for="mini_max_height">* {L_MINI_MAX_HEIGHT} ({L_UNIT_PX})<span class="field-description">{L_MINI_MAX_HEIGHT_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}" /> </div>
 						</div>
 						<div class="form-element">
-							<label for="mini_max_width">* {L_MINI_MAX_WIDTH} <span class="field-description">{L_MINI_MAX_WIDTH_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}" /> {L_UNIT_PX}</div>
+							<label for="mini_max_width">* {L_MINI_MAX_WIDTH} ({L_UNIT_PX})<span class="field-description">{L_MINI_MAX_WIDTH_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}" /> </div>
 						</div>
 						<div class="form-element">
-							<label for="max_weight">* {L_MAX_WEIGHT} <span class="field-description">{L_MAX_WEIGHT_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" id="max_weight" name="max_weight" value="{MAX_WEIGHT}" /> {L_UNIT_KO}</div>
+							<label for="max_weight">* {L_MAX_WEIGHT} ({L_UNIT_KO})<span class="field-description">{L_MAX_WEIGHT_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" id="max_weight" name="max_weight" value="{MAX_WEIGHT}" /> </div>
 						</div>
 						<div class="form-element">
-							<label for="quality">* {L_QUALITY_THUMB} <span class="field-description">{L_QUALITY_THUMB_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" max="100" id="quality" name="quality" value="{QUALITY}" /> %</div>
+							<label for="quality">* {L_QUALITY_THUMB} (%)<span class="field-description">{L_QUALITY_THUMB_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" max="100" id="quality" name="quality" value="{QUALITY}" /> </div>
 						</div>
 						<div class="form-element">
 							<label for="categories_number_per_page">* ${LangLoader::get_message('config.categories_number_per_page', 'admin-common')}</label>
@@ -102,7 +102,7 @@
 						</div>
 						<div class="form-element">
 							<label for="columns_number">* {L_COLUMNS_NUMBER} <span class="field-description">{L_COLUMNS_NUMBER_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" max="4" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" /> {L_COLUMN}</div>
+							<div class="form-field"><input type="number" min="1" max="4" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" /> </div>
 						</div>
 						<div class="form-element">
 							<label for="pics_number_per_page">* {L_PICS_NUMBER_PER_PAGE}</label>
@@ -116,7 +116,7 @@
 					<div class="fieldset-inset">
 						<div class="form-element">
 							<label for="pics_enlargement_mode">{L_DISPLAY_MODE}</label>
-							<div class="form-field">
+							<div class="form-field form-field-radio-button">
 								<div class="form-field-radio">
 									<input type="radio" # IF C_DISPLAY_PICS_NEW_PAGE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode" value="{NEW_PAGE}" />
 									<label for="pics_enlargement_mode"></label>
@@ -142,9 +142,9 @@
 								<span class="form-field-radio-span gallery-display">{L_POPUP_FULL}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="title_enabled">{L_TITLE_ENABLED} <span class="field-description">{L_TITLE_ENABLED_EXPLAIN}</span></label>
-							<div class="form-field">
+							<div class="form-field form-field-radio-button">
 								<div class="form-field-radio">
 									<input type="radio" # IF C_TITLE_ENABLED #checked="checked" # ENDIF #name="title_enabled" id="activ_title" value="1">
 									<label for="activ_title"></label>
@@ -157,9 +157,9 @@
 								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="author_displayed">{L_AUTHOR_DISPLAYED} <span class="field-description">{L_AUTHOR_DISPLAYED_EXPLAIN}</span></label>
-							<div class="form-field">
+							<div class="form-field form-field-radio-button">
 								<div class="form-field-radio">
 									<input type="radio" # IF C_AUTHOR_DISPLAYED #checked="checked" # ENDIF #name="author_displayed" id="author_displayed" value="1">
 									<label for="author_displayed"></label>
@@ -172,9 +172,9 @@
 								<span class="form-field-radio-span gallery-display">{L_DISABLED}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="views_counter_enabled">{L_VIEWS_COUNTER_ENABLED} <span class="field-description">{L_VIEWS_COUNTER_ENABLED_EXPLAIN}</span></label>
-							<div class="form-field">
+							<div class="form-field form-field-radio-button">
 								<div class="form-field-radio">
 									<input type="radio" # IF C_VIEWS_COUNTER_ENABLED #checked="checked" # ENDIF #name="views_counter_enabled" id="views_counter_enabled" value="1">
 									<label for="views_counter_enabled"></label>
@@ -189,7 +189,7 @@
 						</div>
 						<div class="form-element">
 							<label for="notes_number_displayed">{L_NOTES_NUMBER_DISPLAYED}</label>
-							<div class="form-field">
+							<div class="form-field form-field-radio-button">
 								<div class="form-field-radio">
 									<input type="radio" # IF C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed" value="1" />
 									<label for="notes_number_displayed"></label>
@@ -257,16 +257,16 @@
 							<div class="form-field"><input type="text" name="logo" id="logo" value="{LOGO}"></div>
 						</div>
 						<div class="form-element">
-							<label for="logo_transparency">{L_LOGO_TRANSPARENCY} <span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" max="100" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> %</div>
+							<label for="logo_transparency">{L_LOGO_TRANSPARENCY} (%)<span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" max="100" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> </div>
 						</div>
 						<div class="form-element">
-							<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT} <span class="field-description">{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> {L_UNIT_PX}</div>
+							<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT} ({L_UNIT_PX})<span class="field-description">{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> </div>
 						</div>
 						<div class="form-element">
-							<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} <span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</div>
+							<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} ({L_UNIT_PX})<span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> </div>
 						</div>
 					</div>
 				</fieldset>
@@ -288,20 +288,20 @@
 				<fieldset>
 					<legend>${LangLoader::get_message('authorizations', 'common')}</legend>
 					<div class="fieldset-inset">
-						<p class="fieldset-description">${LangLoader::get_message('config.authorizations.explain', 'admin-common')}</p>
-						<div class="form-element">
+						<p class="fieldset-description form-element full-field">${LangLoader::get_message('config.authorizations.explain', 'admin-common')}</p>
+						<div class="form-element half-field">
 							<label>{L_AUTH_READ}</label>
 							<div class="form-field">{AUTH_READ}</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label>{L_AUTH_WRITE}</label>
 							<div class="form-field">{AUTH_WRITE}</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label>{L_AUTH_MODERATION}</label>
 							<div class="form-field">{AUTH_MODERATION}</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label>${LangLoader::get_message('authorizations.categories_management', 'common')}</label>
 							<div class="form-field">{AUTH_MANAGE_CATEGORIES}</div>
 						</div>

@@ -38,24 +38,24 @@ class AdminNewsConfigController extends AdminModuleController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
-	
+
 	private $lang;
 	private $admin_common_lang;
-	
+
 	/**
 	 * @var NewsConfig
 	 */
 	private $config;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->build_form();
-		
+
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
@@ -63,75 +63,86 @@ class AdminNewsConfigController extends AdminModuleController
 			$this->form->get_field_by_id('number_character_to_cut')->set_hidden(!$this->config->get_display_condensed_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return new AdminNewsDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
 		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->config = NewsConfig::load();
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldNumberEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
-			array('min' => 1, 'max' => 50, 'required' => true),
+
+		$fieldset->add_field(new FormFieldNumberEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'third-field'),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_columns_display_news(), 
-			array('min' => 1, 'max' => 6, 'required' => true),
+
+		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_columns_display_news(),
+			array('min' => 1, 'max' => 6, 'required' => true, 'class' => 'third-field'),
 			array(new FormFieldConstraintIntegerRange(1, 6))
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(
-		'events' => array('click' => '
-			if (HTMLForms.getField("display_condensed").getValue()) {
-				HTMLForms.getField("display_descriptions_to_guests").enable();
-				HTMLForms.getField("number_character_to_cut").enable();
-			} else {
-				HTMLForms.getField("display_descriptions_to_guests").disable();
-				HTMLForms.getField("number_character_to_cut").disable();
-			}'
-		))));
-		
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['admin.config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
-			array('hidden' => !$this->config->get_display_condensed_enabled())
-		));
-		
-		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
-			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
-			array(new FormFieldConstraintIntegerRange(20, 1000)
-		)));
-		
-		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
-		
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed()));
-		
-		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.news_number_view_enabled'], $this->config->get_nb_view_enabled()));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.list'], NewsConfig::DISPLAY_LIST),
+			),
+			array('class' => 'third-field')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed(),
+			array('class' => 'third-field')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.news_number_view_enabled'], $this->config->get_nb_view_enabled(),
+			array('class' => 'third-field')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled(),
+			array('class' => 'third-field')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(),
+			array(
+				'class' => 'third-field',
+				'events' => array('click' => '
+					if (HTMLForms.getField("display_condensed").getValue()) {
+						HTMLForms.getField("display_descriptions_to_guests").enable();
+						HTMLForms.getField("number_character_to_cut").enable();
+					} else {
+						HTMLForms.getField("display_descriptions_to_guests").disable();
+						HTMLForms.getField("number_character_to_cut").disable();
+					}'
+				)
 			)
 		));
-		
+
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['admin.config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
+			array('hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field')
+		));
+
+		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(),
+			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field'),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
+
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
-		
+
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
@@ -142,20 +153,20 @@ class AdminNewsConfigController extends AdminModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function save()
 	{
 		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
 		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news'));
 		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
-		
+
 		if ($this->config->get_display_condensed_enabled())
 		{
 			if ($this->form->get_value('display_descriptions_to_guests'))
@@ -167,7 +178,7 @@ class AdminNewsConfigController extends AdminModuleController
 				$this->config->hide_descriptions_to_guests();
 			}
 		}
-		
+
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));

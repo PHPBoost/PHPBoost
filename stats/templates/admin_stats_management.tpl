@@ -748,10 +748,12 @@
 				<fieldset>
 					<legend>{L_AUTHORIZATIONS}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
-							<label>{L_READ_AUTHORIZATION}</label>
-							<div class="form-field">{READ_AUTHORIZATION}</div>
-						</div>
+						<div class="auth-setter">
+							<div class="form-element form-element-auth">
+								<label>{L_READ_AUTHORIZATION}</label>
+								<div class="form-field">{READ_AUTHORIZATION}</div>
+							</div>
+						</div>						
 					</div>
 				</fieldset>
 

@@ -45,7 +45,7 @@
 				<fieldset>
 					<legend>{L_SEARCH_CONFIG}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element top-field">
 							<label for="nb_results_p">* {L_NB_RESULTS_P}</label>
 							<div class="form-field"><input type="number" min="1" max="200" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></div>
 						</div>

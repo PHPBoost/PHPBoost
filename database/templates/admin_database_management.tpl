@@ -89,7 +89,7 @@
 						# START table_list #
 						<tr class="center">
 							<td>
-								<div class="form-field-checkbox" style="margin: auto;">
+								<div class="form-field-checkbox-mini" style="margin: auto;">
 										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
 										<label for="id{table_list.I}"></label>
 								</div>
@@ -116,7 +116,7 @@
 						# END table_list #
 						<tr class="center">
 							<td>
-								<div class="form-field-checkbox" style="display: inline-block">
+								<div class="form-field-checkbox-mini" style="display: inline-block">
 										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
 										<label for="check-all"></label>
 								</div>

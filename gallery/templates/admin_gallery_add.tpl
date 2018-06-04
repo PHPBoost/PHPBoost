@@ -9,7 +9,7 @@
 				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "select_all_pictures();return false;");
 				jQuery('#change_all_pictures_selection_bottom').text("{L_SELECT_ALL_PICTURES}");
 			};
-			
+
 			function select_all_pictures() {
 				# START list #
 				jQuery('#' + '{list.ID}activ').prop('checked', 'checked');
@@ -21,7 +21,7 @@
 			};
 		</script>
 		# ENDIF #
-		
+
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GALLERY_MANAGEMENT}">
 				<i class="fa fa-bars"></i> {L_GALLERY_MANAGEMENT}
@@ -44,40 +44,43 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
-			
+
 			# INCLUDE message_helper #
-			
+
 			<form action="admin_gallery_add.php" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_IMG}</legend>
 					<div class="fieldset-inset">
-						# START image_up #
-							<div class="center">
-								<strong>{image_up.L_SUCCESS_UPLOAD}</strong>
-								
-								<div class="spacer"></div>
-								
-								<strong>{image_up.NAME}</strong>
-								<div class="spacer"></div>
-								<a href="{image_up.U_IMG}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
-								<div class="spacer"></div>
-								<a href="{image_up.U_CAT}" title="{image_up.CATNAME}">{image_up.CATNAME}</a>
-							</div>
-						# END image_up #
-						<span>{L_AUTH_EXTENSION}: <strong>{AUTH_EXTENSION} </strong></span>
-						
-						<div class="spacer"></div>
-						
-						<span>{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}</span>
-						<div class="spacer"></div>
-						<span>{L_HEIGHT_MAX}: {HEIGHT_MAX} {L_UNIT_PX}</span>
-						<div class="spacer"></div>
-						<span>{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}</span>
-	
-						<div class="spacer"></div>
-						
+						<div class="form-element full-field">
+							# START image_up #
+								<div class="center">
+									<strong>{image_up.L_SUCCESS_UPLOAD}</strong> ${LangLoader::get_message('in', 'common')} <a href="{image_up.U_CAT}" title="{image_up.CATNAME}">{image_up.CATNAME}</a>
+									<div class="spacer"></div>
+									<strong>{image_up.NAME}</strong>
+									<div class="spacer"></div>
+									<a href="{image_up.U_IMG}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
+									<div class="spacer"></div>
+								</div>
+							# END image_up #
+						</div>
+
+						<div class="form-element">
+							<span>{L_AUTH_EXTENSION}: <strong>{AUTH_EXTENSION} </strong></span>
+
+							<div class="spacer"></div>
+
+							<span>{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}</span>
+							<div class="spacer"></div>
+							<span>{L_HEIGHT_MAX}: {HEIGHT_MAX} {L_UNIT_PX}</span>
+							<div class="spacer"></div>
+							<span>{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}</span>
+
+							<div class="spacer"></div>
+						</div>
+
+
 						<div class="form-element">
 							<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 							<div class="form-field">
@@ -96,7 +99,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD_IMG}</legend>
 					<div class="fieldset-inset">
@@ -106,7 +109,7 @@
 					</div>
 				</fieldset>
 			</form>
-			
+
 			<form action="admin_gallery_add.php" method="post">
 				# IF C_IMG #
 				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
@@ -149,18 +152,18 @@
 							</td>
 						# IF list.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END list #
-						
+
 						# START end_td_pics #
 							<td style="width:{end_td_pics.COLUMN_WIDTH_PICS}%;padding:0">&nbsp;</td>
-							
+
 						# IF end_td_pics.C_DISPLAY_TR_END #</tr># ENDIF #
 						# END end_td_pics #
 					</tbody>
 				</table>
 				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
-				
+
 				<div class="spacer"></div>
-				
+
 				<div class="form-element">
 					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <spa class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></span></label>
 					<div class="form-field">
@@ -177,7 +180,7 @@
 						</script>
 					</div>
 				</div>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<div class="fieldset-inset">

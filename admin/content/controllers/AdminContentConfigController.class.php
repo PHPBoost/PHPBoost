@@ -37,13 +37,13 @@ class AdminContentConfigController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $content_formatting_config;
 	private $content_management_config;
 	private $user_accounts_config;
-	
+
 	const HTML_USAGE_AUTHORIZATIONS = 1;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -82,55 +82,55 @@ class AdminContentConfigController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('language-config', $this->lang['content.config.language']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['content.config.default-formatting-language'], $this->content_formatting_config->get_default_editor(), array (
-			'description' => $this->lang['content.config.default-formatting-language-explain'])
+
+		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['content.config.default-formatting-language'], $this->content_formatting_config->get_default_editor(),
+			array ('class' => 'top-field', 'description' => $this->lang['content.config.default-formatting-language-explain'])
 		));
-		
+
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->content_formatting_config->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option(), array('size' => 10)
 		));
-		
+
 		$fieldset = new FormFieldsetHTML('html-language-config', $this->lang['content.config.html-language']);
 		$form->add_fieldset($fieldset);
-		
+
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['content.config.html-language-use-authorization'], self::HTML_USAGE_AUTHORIZATIONS, $this->lang['content.config.html-language-use-authorization-explain'])));
 		$auth_settings->build_from_auth_array($this->content_formatting_config->get_html_tag_auth());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
-		
+
 		$fieldset = new FormFieldsetHTML('post-management', $this->lang['content.config.post-management']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
 			array('required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
 			array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
 		));
-		
+
 		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
 			'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
-		
+
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['content.config.captcha-used'], $this->content_management_config->get_used_captcha_module(),
 			$this->generate_captcha_available_option(), array('description' => $this->lang['content.config.captcha-used-explain'])
 		));
-		
+
 		$fieldset = new FormFieldsetHTML('tagnew_config', $this->lang['content.config.new-content-config']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('new_content_enabled', $this->lang['content.config.new-content'], $this->content_management_config->is_new_content_enabled(),
-			array('description' => $this->lang['content.config.new-content-explain'], 'events' => array('click' => '
+			array('class' => 'top-field', 'description' => $this->lang['content.config.new-content-explain'], 'events' => array('click' => '
 				if (HTMLForms.getField("new_content_enabled").getValue()) {
 					HTMLForms.getField("new_content_duration").enable();
 					HTMLForms.getField("new_content_unauthorized_modules").enable();
@@ -142,7 +142,7 @@ class AdminContentConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['content.config.new-content-duration'], $this->content_management_config->get_new_content_duration(),
-			array('min' => 1, 'required' => true, 'description' => $this->lang['content.config.new-content-duration-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled()),
+			array('class' => 'top-field', 'min' => 1, 'required' => true, 'description' => $this->lang['content.config.new-content-duration-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
@@ -153,20 +153,23 @@ class AdminContentConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('notation_config', $this->lang['notation.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->content_management_config->is_notation_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("notation_enabled").getValue()) {
-					HTMLForms.getField("notation_scale").enable();
-					HTMLForms.getField("notation_unauthorized_modules").enable();
-				} else {
-					HTMLForms.getField("notation_scale").disable();
-					HTMLForms.getField("notation_unauthorized_modules").disable();
-				}'
+		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->content_management_config->is_notation_enabled(),
+			array(
+				'class' => 'top-field',
+				'events' => array('click' => '
+					if (HTMLForms.getField("notation_enabled").getValue()) {
+						HTMLForms.getField("notation_scale").enable();
+						HTMLForms.getField("notation_unauthorized_modules").enable();
+					} else {
+						HTMLForms.getField("notation_scale").disable();
+						HTMLForms.getField("notation_unauthorized_modules").disable();
+					}'
+				)
 			)
-		)));
-		
+		));
+
 		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->content_management_config->get_notation_scale(),
-			array('min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->content_management_config->is_notation_enabled()),
+			array('class' => 'top-field', 'min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->content_management_config->is_notation_enabled()),
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 
@@ -177,7 +180,7 @@ class AdminContentConfigController extends AdminController
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
@@ -192,12 +195,12 @@ class AdminContentConfigController extends AdminController
 		}
 	 	$this->content_formatting_config->set_forbidden_tags($forbidden_tags);
 		ContentFormattingConfig::save();
-		
+
 		if ($this->form->get_value('anti_flood_enabled'))
 			$this->content_management_config->set_anti_flood_enabled(true);
 		else
 			$this->content_management_config->set_anti_flood_enabled(false);
-		
+
 		$this->content_management_config->set_anti_flood_duration($this->form->get_value('delay_flood'));
 		$this->content_management_config->set_used_captcha_module($this->form->get_value('captcha_used')->get_raw_value());
 
@@ -238,13 +241,13 @@ class AdminContentConfigController extends AdminController
 		}
 		else
 			$this->content_management_config->set_notation_enabled(false);
-		
+
 		ContentManagementConfig::save();
-		
+
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));
 		UserAccountsConfig::save();
 	}
-	
+
 	private function generate_forbidden_tags_option()
 	{
 		$options = array();

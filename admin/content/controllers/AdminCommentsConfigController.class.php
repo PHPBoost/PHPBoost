@@ -37,7 +37,7 @@ class AdminCommentsConfigController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $configuration;
 
 	public function execute(HTTPRequestCustom $request)
@@ -58,7 +58,7 @@ class AdminCommentsConfigController extends AdminController
 			$this->form->get_field_by_id('order_display_comments')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('forbidden_tags')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('comments_unauthorized_modules')->set_hidden(!$this->configuration->are_comments_enabled());
-			$this->form->get_field_by_id('comments_unauthorized_modules')->set_selected_options($this->configuration->get_comments_unauthorized_modules());			
+			$this->form->get_field_by_id('comments_unauthorized_modules')->set_selected_options($this->configuration->get_comments_unauthorized_modules());
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -76,10 +76,10 @@ class AdminCommentsConfigController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comments.config.enabled'], $this->configuration->are_comments_enabled(), array('events' => array('click' => '
 				if (HTMLForms.getField("comments_enabled").getValue()) {
 					HTMLForms.getField("number_comments_display").enable();
@@ -100,12 +100,12 @@ class AdminCommentsConfigController extends AdminController
 			array('required' => true, 'hidden' => !$this->configuration->are_comments_enabled()),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
-		
+
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(),
 			array('required' => true, 'hidden' => !$this->configuration->are_comments_enabled()),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comments.config.order-display-comments'], $this->configuration->get_order_display_comments(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['comments.config.order-display-comments.asc'], CommentsConfig::ASC_ORDER),
@@ -113,10 +113,10 @@ class AdminCommentsConfigController extends AdminController
 			),
 			array('hidden' => !$this->configuration->are_comments_enabled())
 		));
-		
+
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),
-			$this->generate_forbidden_tags_option(), 
-			array('size' => 10, 'hidden' => !$this->configuration->are_comments_enabled())
+			$this->generate_forbidden_tags_option(),
+			array('size' => 12, 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_unauthorized_module_option('comments'),
@@ -125,7 +125,7 @@ class AdminCommentsConfigController extends AdminController
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['comments.config.authorization']);
 		$form->add_fieldset($fieldset);
-		
+
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['comments.config.authorization-read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['comments.config.authorization-post'], CommentsAuthorizations::POST_AUTHORIZATIONS),
@@ -133,11 +133,11 @@ class AdminCommentsConfigController extends AdminController
 		));
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
@@ -146,15 +146,15 @@ class AdminCommentsConfigController extends AdminController
 		if ($this->form->get_value('comments_enabled'))
 		{
 			$this->configuration->set_comments_enabled(true);
-			
+
 			$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
-			
+
 			$forbidden_tags = array();
 			foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 			{
 				$forbidden_tags[] = $option->get_raw_value();
 			}
-				
+
 	 		$this->configuration->set_forbidden_tags($forbidden_tags);
 			$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
 			$this->configuration->set_order_display_comments($this->form->get_value('order_display_comments')->get_raw_value());
@@ -172,7 +172,7 @@ class AdminCommentsConfigController extends AdminController
 		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CommentsConfig::save();
 	}
-	
+
 	private function generate_forbidden_tags_option()
 	{
 		$options = array();

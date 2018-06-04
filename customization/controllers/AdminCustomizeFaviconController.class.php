@@ -36,7 +36,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -51,7 +51,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$favicon = $this->form->get_value('favicon', null);
-			
+
 			if ($favicon !== null)
 			{
 				$file_type = new FileType(new File($favicon->get_name()));
@@ -79,7 +79,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	{
 		$this->lang = LangLoader::get('common', 'customization');
 	}
-	
+
 	private function load_config()
 	{
 		$this->config = CustomizationConfig::load();
@@ -88,13 +88,15 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('customize-favicon', $this->lang['customization.favicon']);
 		$form->add_fieldset($fieldset);
-		
+
 		if ($this->config->get_favicon_path() == null || $this->config->get_favicon_path() == '')
 		{
-			$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $this->lang['customization.favicon.current.null']));
+			$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $this->lang['customization.favicon.current.null'],
+				array('class' => 'third-field')
+			));
 		}
 		else
 		{
@@ -102,34 +104,40 @@ class AdminCustomizeFaviconController extends AdminModuleController
 			{
 				$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
 				$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" title="' . $this->lang['customization.favicon.current'] . '"/>';
-				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture));
+				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture,
+					array('class' => 'third-field')
+				));
 			}
 			else
 			{
-				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], '<span class="text-strong color-alert">' . $this->lang['customization.favicon.current.erased'] . '</span>'));
+				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], '<span class="text-strong color-alert">' . $this->lang['customization.favicon.current.erased'] . '</span>',
+					array('class' => 'third-field')
+				));
 			}
 		}
-		
-		$fieldset->add_field(new FormFieldFilePicker('favicon', $this->lang['customization.favicon.current.change']));
-		
+
+		$fieldset->add_field(new FormFieldFilePicker('favicon', $this->lang['customization.favicon.current.change'],
+			array('class' => 'third-field')
+		));
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function save($favicon)
 	{
 		$save_destination = new File(PATH_TO_ROOT . '/' . $favicon->get_name());
 		$favicon->save($save_destination);
-		
+
 		$this->delete_older();
 
 		$this->config->set_favicon_path($save_destination->get_path_from_root());
 		CustomizationConfig::save();
 	}
-	
+
 	private function delete_older()
 	{
 		$file = new File(PATH_TO_ROOT . '/' . $this->config->get_favicon_path());

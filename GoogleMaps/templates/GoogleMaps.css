@@ -12,9 +12,9 @@
 	padding-bottom: 56.25%;
 }
 
-.form-field-map {
+/* .form-field-map {
 	display: block;
-}
+} */
 
 .map-address-input,
 .marker-address-input,
@@ -27,9 +27,9 @@
 	width: calc(100% - 1.618em);
 }
 
-@media (min-width: 769px) {
+/* @media (min-width: 769px) {
 	.form-field-map {
 		width: 59%;
 		display: inline-block;
 	}
-}
+} */

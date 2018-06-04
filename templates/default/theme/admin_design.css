@@ -1,14 +1,14 @@
 
-/* --- ###################################################################### 
+/* --- ######################################################################
  *
  *                            admin_design.css
- *                            
+ *
  *            Contient les conteneur, fortement dependant du design.
  *            - html/body
  *            - Entete de page
  *            - Corps de page
  *            - Pied de page
- * 
+ *
  * --- ###################################################################### ---*/
 
 html {
@@ -20,8 +20,6 @@ body {
 	position: relative;
 	height: auto;
 	min-height: 100%;
-	background: #F1F2F3 ;
-	color: #555555;
 	font-size: 1.5em;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
@@ -33,9 +31,6 @@ body {
 }
 
 /* -- Entete de la page =============================================== */
-header#header-admin {
-	background: #404040;
-}
 
 div#site-name-container {
 	padding: 20px 10px;
@@ -43,11 +38,9 @@ div#site-name-container {
 }
 
 a#site-name {
-	color: #F9FCFF;
 	font-size: 1.2em;
 	font-weight: 400;
 	line-height: 1em;
-	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255),2px 0 1px rgba(0,0,0,0.1),2px 0 1px rgba(0,0,0,0.2),0 0 1px rgba(0,0,0,.1);
 	letter-spacing: 1.1pt;
 	text-decoration: none;
 }
@@ -70,39 +63,37 @@ h3.menu-title {
 		bottom: 0;
 		z-index: 3;
 		max-width: 230px;
-		max-height: none;  
+		max-height: none;
 		height: 100%;
 		width: 250px;
 	}
-	
+
 	div.header-admin-container{
 		position: absolute;
 		max-height: 100%;
 		left: 0;
 	}
-	
+
 	div#site-name-container {
 		padding: 30px 10px;
 		width: 230px
 	}
-	
+
 	h3.menu-title {
 		display: block;
 		margin: 20px 0 0;
 		padding: 5px 0 5px 30px;
-		background: rgba(0,0,0,.2);
 		overflow: hidden;
-		color: #EEEEEE;
 	}
 
 	div.pbt-logo,
 	div.site-logo {
-		display: inline-block;		
+		display: inline-block;
 		height: 25px;
 		width: 25px;
 		background-image: url(images/logo.png);
 		background-repeat: no-repeat;
-		background-position: center ; 
+		background-position: center ;
 		background-size: cover;
 		vertical-align: middle;
 	}
@@ -125,7 +116,7 @@ div#admin-main {
 	padding-bottom: 40px;
 }
 
-div#admin-contents {	
+div#admin-contents {
 	clear: both;
 	margin: auto;
 }
@@ -149,7 +140,6 @@ html > body div#admin-contents {
 
 /* --- Coloration des moteurs de recherche ====================================== */
 .robot {
-	color: #FF6600;
 	font-size: 0.9em;
 	font-weight: bold;
 }
@@ -159,13 +149,13 @@ html > body div#admin-contents {
 footer#footer {
 	min-height: 5vh;
 	padding: 5px 10px;
-	background: #404040;
-	border-top: #366393 5px solid;
+	border-width: 5px 0 0 0;
+	border-style: solid;
+	border-color: transparent;
 	text-align: right;
 }
 
 footer#footer span {
-	color: #FFFFFF;
 	font-size: 0.8em;
 }
 
@@ -188,7 +178,7 @@ footer#footer span {
 	}
 }
 
-/* --   Cookie Bar  -- */ 
+/* --   Cookie Bar  -- */
 /* ------------------- */
 .cookiebar-container {
 	z-index: 100;
@@ -196,8 +186,9 @@ footer#footer span {
 	right: 0;
 	top: 0;
 	padding: 7px 20px;
-	background-color: #F2F2F2;
-	border-bottom: 1px solid #E2E2E2;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
 	font-size: 0.9em;
 	text-align: center;
 }
@@ -236,7 +227,6 @@ footer#footer span {
 .cookiebar-button {
 	margin: 0 5px 0 5px;
 	border-radius: 4px;
-	color: #FEFEFE;
 }
 
 @media (max-width: 768px) {
@@ -244,15 +234,6 @@ footer#footer span {
 		margin: 0 10px 0 10px;
 	}
 }
-
-.cookiebar-button-understand 		{ background-color: #337AB7; border-color: #2E6DA4; }
-.cookiebar-button-understand:hover 	{ background-color: #2E6DA4; }
-
-.cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
-.cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
-
-.cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
-.cookiebar-button-declined:hover 	{ background-color: #CE271A; }
 
 @media (max-width: 468px) {
 	.cookiebar-more {
@@ -278,4 +259,4 @@ footer#cookiebar-change-choice {
 
 .cookiebar-change-choice-link {
 	text-align: center;
-} 
+}

@@ -20,7 +20,7 @@
 
 		<div id="admin-contents">
 
-			<form action="admin_pages.php?token={TOKEN}" method="post">
+			<form action="admin_pages.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_PAGES_CONGIG}</legend>
 					<div class="fieldset-inset">
@@ -74,22 +74,24 @@
 				<fieldset>
 					<legend>{L_AUTH}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
-							<label>{L_READ_PAGE}</label>
-							<div class="form-field">
-								{SELECT_READ_PAGE}
+						<div class="auth-setter">
+							<div class="form-element form-element-auth">
+								<label>{L_READ_PAGE}</label>
+								<div class="form-field">
+									{SELECT_READ_PAGE}
+								</div>
 							</div>
-						</div>
-						<div class="form-element">
-							<label>{L_EDIT_PAGE}</label>
-							<div class="form-field">
-								{SELECT_EDIT_PAGE}
+							<div class="form-element form-element-auth">
+								<label>{L_EDIT_PAGE}</label>
+								<div class="form-field">
+									{SELECT_EDIT_PAGE}
+								</div>
 							</div>
-						</div>
-						<div class="form-element">
-							<label>{L_READ_COM}</label>
-							<div class="form-field">
-								{SELECT_READ_COM}
+							<div class="form-element form-element-auth">
+								<label>{L_READ_COM}</label>
+								<div class="form-field">
+									{SELECT_READ_COM}
+								</div>
 							</div>
 						</div>
 					</div>

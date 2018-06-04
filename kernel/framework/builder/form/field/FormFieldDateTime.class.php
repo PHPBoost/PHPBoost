@@ -35,7 +35,7 @@ class FormFieldDateTime extends FormFieldDate
 	 * @var boolean
 	 */
 	private $five_minutes_step = false;
-	
+
 	public function __construct($id, $label, Date $value = null, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -55,7 +55,8 @@ class FormFieldDateTime extends FormFieldDate
 			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '0',
 			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '00',
 			'L_AT' => LangLoader::get_message('at', 'main'),
-			'L_H' => LangLoader::get_message('unit.hour', 'date-common')
+			'L_H' => LangLoader::get_message('unit.hour', 'date-common'),
+			'L_MN' => LangLoader::get_message('unit.minute', 'date-common')
 		));
 
 		return $template;
@@ -70,16 +71,16 @@ class FormFieldDateTime extends FormFieldDate
 
 		$request = AppContext::get_request();
 		$date = $this->get_value();
-		
+
 		if ($date !== null)
 		{
 			$date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
 			$date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
 		}
-		
+
 		$this->set_value($date);
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach ($field_options as $attribute => $value)

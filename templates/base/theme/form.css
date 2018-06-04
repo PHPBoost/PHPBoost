@@ -86,20 +86,6 @@ fieldset img {
 	text-align: center;
 }
 
-/* @media (min-width: 769px) {
-	#main-content .fieldset-content:not([id*=comment]) .fieldset-submit {
-		position: fixed;
-		top: 0;
-		right: 0;
-		transform: translateX(-50%);
-		border-width: 1px;
-		border-color: transparent;
-		border-style: solid;
-		padding-right: 1px;
-	}
-} */
-
-
 .fieldset-submit legend {
 	display: none;
 }
@@ -202,7 +188,7 @@ select:focus {
 .field-large   	{ width: 200px; }
 .field-xlarge 	{ width: 250px; }
 
-.input-date 	{ width: calc(100% - 1.618em); }
+/* .input-date 	{ width: calc(100% - 1.618em); }
 .input-hours,
 .input-minutes 	{ width: 3.618em;  }
 @media (min-width:769px) {
@@ -210,7 +196,40 @@ select:focus {
 }
 
 [name$="_hours"],
-[name$="_minutes"] { width: 3.618em; }
+[name$="_minutes"] { width: 3.618em; } */
+
+.form-field-date,
+.form-field-datetime {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.form-field-date .input-date { width: 80%; }
+
+.form-field-datetime .input-date { width: 45%; }
+.form-field-datetime .label-time {
+	width: 18%;
+	position: relative;
+	display: inline-block;
+}
+
+.form-field-datetime .label-time input {
+	padding: 0.309em;
+}
+
+.label-time:after {
+	position: absolute;
+	bottom: 90%;
+	right: 0.228em;
+	content: attr(data-time);
+}
 
 /* --- Cache le generateur de mot de passe sur chrome --- */
 .cip-icon-key-small {

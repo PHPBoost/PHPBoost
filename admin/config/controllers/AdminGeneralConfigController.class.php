@@ -95,34 +95,36 @@ class AdminGeneralConfigController extends AdminController
 		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['general-config.site_name'], $this->general_config->get_site_name(),
 			array('required' => true)
 		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['general-config.site_slogan'], $this->general_config->get_site_slogan()));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
-			array('rows' => 4, 'description' => $this->lang['general-config.site_description-explain'])
+		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['general-config.site_slogan'], $this->general_config->get_site_slogan(),
+			array('class' => 'half-field')
 		));
 
-		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['general-config.default_language'], 
-			$this->user_accounts_config->get_default_lang(), 
+		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['general-config.default_language'],
+			$this->user_accounts_config->get_default_lang(),
 			array('required' => true)
 		));
 
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
+			array('rows' => 4, 'class' => 'full-field', 'description' => $this->lang['general-config.site_description-explain'], 'class' => 'full-field')
+		));
+
 		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
-			array('required' => true, 'events' => array('change' => $this->construct_javascript_picture_theme() .
+			array('required' => true, 'class' => 'top-field', 'events' => array('change' => $this->construct_javascript_picture_theme() .
 			' var theme_id = HTMLForms.getField("default_theme").getValue();
 			jQuery(\'#img_theme\').attr(\'src\', theme[theme_id]);
 			jQuery(\'#preview_theme\').attr(\'href\', theme[theme_id]);'))
 		));
-		
+
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
 			'<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme" title="' . $this->lang['general-config.theme_picture'] . '">
 				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['general-config.theme_picture'] . '" class="admin-theme-img" /><br />
 				('. $this->lang['general-config.theme_preview_click'] .')
 			</a>'
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_module_home_page(), $this->list_modules_home_page(),
-			array('required' => false, 'events' => array('change' => 
+			array('required' => false, 'class' => 'top-field', 'events' => array('change' =>
 				'if (HTMLForms.getField("start_page").getValue() == "other") {
 					HTMLForms.getField("other_start_page").enable();
 				} else {
@@ -130,19 +132,21 @@ class AdminGeneralConfigController extends AdminController
 				}'
 			))
 		));
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
-			array('required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
+			array('class' => 'top-field', 'required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled(),
+			array('class' => 'third-field')
+		));
 
 		$fieldset->add_field(new FormFieldCheckbox('page_bench', $this->lang['general-config.page_bench'], $this->graphical_environment_config->is_page_bench_enabled(),
-			array('description' => $this->lang['general-config.page_bench-explain'])
+			array('class' => 'third-field', 'description' => $this->lang['general-config.page_bench-explain'])
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_theme_author', $this->lang['general-config.display_theme_author'], $this->graphical_environment_config->get_display_theme_author(),
-			array('description' => $this->lang['general-config.display_theme_author-explain'])
+			array('class' => 'third-field', 'description' => $this->lang['general-config.display_theme_author-explain'])
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -176,7 +180,7 @@ class AdminGeneralConfigController extends AdminController
 		$this->user_accounts_config->set_default_theme($this->form->get_value('default_theme')->get_raw_value());
 		UserAccountsConfig::save();
 	}
-	
+
 	private function construct_javascript_picture_theme()
 	{
 		$text = 'var theme = new Array;' . "\n";
@@ -187,7 +191,7 @@ class AdminGeneralConfigController extends AdminController
 		}
 		return $text;
 	}
-	
+
 	private function get_picture_theme($theme_id = null)
 	{
 		$theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
@@ -199,7 +203,7 @@ class AdminGeneralConfigController extends AdminController
 	{
 		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
 		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
-		
+
 		$installed_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($installed_modules as $id => $module)
 		{
@@ -208,7 +212,7 @@ class AdminGeneralConfigController extends AdminController
 				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
 		}
-		
+
 		if (empty($options))
 		{
 			$options[] = new FormFieldSelectChoiceOption($this->lang['no_module_starteable'], '');
@@ -216,7 +220,7 @@ class AdminGeneralConfigController extends AdminController
 
 		return $options;
 	}
-	
+
 	private function clear_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();

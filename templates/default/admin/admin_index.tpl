@@ -26,9 +26,9 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
-			
+
 			<div class="block welcome">
 				<div class="index-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
 				<div class="welcome-desc">
@@ -36,7 +36,7 @@
 					<p>{L_WELCOME_DESC}</p>
 				</div>
 			</div>
-			
+
 			<div class="quick-access">
 				<h2><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
 				<div class="fieldset-inset elements-container columns-3 no-style">
@@ -79,13 +79,11 @@
 					<div class="admin-index-alert">
 						<h2><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</h2>
 						<div class="fieldset-inset">
-							<div class="form-element">
-								# IF C_UNREAD_ALERTS #
-									<div class="message-helper warning">{L_UNREAD_ALERT}</div>
-								# ELSE #
-									<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
-								# ENDIF #
-							</div>
+							# IF C_UNREAD_ALERTS #
+								<div class="message-helper warning">{L_UNREAD_ALERT}</div>
+							# ELSE #
+								<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
+							# ENDIF #
 							# IF C_UNREAD_ALERTS #
 							<p class="smaller center">
 								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
@@ -96,80 +94,60 @@
 					<div class="admin-index-comments">
 						<h2><i class="fa fa-comment"></i> {L_LAST_COMMENTS}</h2>
 						<div class="fieldset-inset">
-							<div class="form-element">
-								# START comments_list #
-									<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-									<a href="{comments_list.U_LINK}">
-										<i class="far fa-hand-point-right"></i>
-									</a>
-									<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
-									<br /><br />
-								# END comments_list #
-								# IF C_NO_COM #
-								<p class="center"><em>{L_NO_COMMENT}</em></p>
-								# ENDIF #
-							</div>
+							# START comments_list #
+								<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="{comments_list.U_LINK}">
+									<i class="far fa-hand-point-right"></i>
+								</a>
+								<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
+								<br /><br />
+							# END comments_list #
+							# IF C_NO_COM #
+							<p class="center"><em>{L_NO_COMMENT}</em></p>
+							# ENDIF #
 							# IF NOT C_NO_COM #<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p># ENDIF #
 						</div>
 					</div>
-					
+
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-user-online">
 							<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
 							<div class="fieldset-inset-user">
-								<div class="form-element">
-									<table id="table">
-										<thead>
-											<tr> 
-												<th>
-													{L_USER_ONLINE}
-												</th>
-												<th>
-													{L_USER_IP}
-												</th>
-												<th>
-													{L_LOCALISATION}
-												</th>
-												<th>
-													{L_LAST_UPDATE}
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											# START user #
-											<tr> 
-												<td>
-													{user.USER}
-												</td>
-												<td>
-													{user.USER_IP}
-												</td>
-												<td>
-													{user.WHERE}
-												</td>
-												<td>
-													{user.TIME}
-												</td>
-											</tr>
-											# END user #
-										</tbody>
-									</table>
-								</div>
+								<table id="table">
+									<thead>
+										<tr>
+											<th>{L_USER_ONLINE}</th>
+											<th>{L_USER_IP}</th>
+											<th>{L_LOCALISATION}</th>
+											<th>{L_LAST_UPDATE}</th>
+										</tr>
+									</thead>
+									<tbody>
+										# START user #
+										<tr>
+											<td>{user.USER}</td>
+											<td>{user.USER_IP}</td>
+											<td>{user.WHERE}</td>
+											<td>{user.TIME}</td>
+										</tr>
+										# END user #
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</form>
 				</div>
-				
+
 				<div class="block">
-					
+
 					# INCLUDE ADVISES #
-					
+
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-writting-pad">
 							<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
 							<div class="fieldset-inset">
-								<div class="form-element">
-									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea> 
+								<div class="form-element full-field">
+									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
 								</div>
 								<p class="center">
 									<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
@@ -183,4 +161,3 @@
 			</div>
 			<div class="spacer"></div>
 		</div><!-- admin-contents -->
-			
