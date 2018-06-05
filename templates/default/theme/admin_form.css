@@ -402,7 +402,7 @@ option {
 }
 
 .form-field-checkbox .text-status-constraint {
-	top: 1.618em;
+	top: 70%;
 	left: -0.309em;
 }
 
@@ -718,11 +718,12 @@ fieldset[id*=advises] .form-element {
 .form-element > label {
 	margin-bottom: 0.618em;
 	display: block;
+	font-size: 1.228em;
 }
 
 .field-description {
 	display: block;
-	font-size: 0.809em;
+	font-size: 0.618em;
 }
 
 p[id*=filter] input,
@@ -923,12 +924,9 @@ input + .text-status-constraint {
 	position: absolute;
 	left: 8px;
 	top: -9px;
-	border-width: 0 0 9px 0;
+	border-width: 0 9px 9px 9px;
 	border-style: solid;
 	border-color: transparent;
-	border-bottom: 9px solid rgba(230, 230, 230, 1);
-	border-left: 9px solid transparent;
-	border-right: 9px solid transparent;
 	content: " ";
 }
 
@@ -963,7 +961,7 @@ div.field-required:after {
 }
 
 .form-field-checkbox.field-required:after {
-	left: 40px;
+	left: 65px;
 	top: 3px;
 }
 
@@ -1006,6 +1004,10 @@ div.field-required:after {
 .constraint-status-right div.picture-status-constraint:after {
 	top: 30%;
 	content: "\f00c";
+}
+
+.constraint-status-right div.form-field-checkbox.picture-status-constraint:after {
+	top: 0;
 }
 
 .constraint-status-error i.picture-status-constraint {

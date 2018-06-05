@@ -12,8 +12,8 @@ header#header-admin {
 		width: 250px;
 		max-width: 230px;
 		height: 100%;
-		max-height: none;	
-		overflow: hidden;	
+		max-height: none;
+		overflow: hidden;
 	}
 
 	div.header-admin-container {
@@ -31,6 +31,7 @@ header#header-admin {
 		padding: 10px;
 	}
 }
+
 div#install-site-logo {
 	display: inline-block;
 	margin-bottom: 10px;
@@ -38,13 +39,13 @@ div#install-site-logo {
 	height: 25px;
 	background-image: url(images/logo.png);
 	background-repeat: no-repeat;
-	background-position: center ; 
+	background-position: center ;
 	background-size: cover;
 	vertical-align: middle;
 }
 
 a#site-name {
-	font-size: 1.8em;	
+	font-size: 1.8em;
 }
 
 #site-slogan {
@@ -59,6 +60,17 @@ a#site-name {
 	}
 }
 
+#sub-header-admin select {
+	background-color: #FFFFFF;
+	border-color: #BBBBBB;
+	color: #222222;
+}
+
+#sub-header-admin .cssmenu > ul > li > .cssmenu-title {
+    display: block;
+	font-size: 1.228rem;
+}
+
 /*--- Menus ====================================================================== */
 h3.menu-title {
 	padding-left: 15px;
@@ -67,12 +79,6 @@ h3.menu-title {
 div.site-logo {
 	float: left;
 	margin-right: 5px;
-}
-
-select {
-	margin: 5px 0 5px ;
-	padding: 5px 10px;
-	width: 150px;
 }
 
 .cssmenu > ul > li {
@@ -84,7 +90,7 @@ select {
 	padding: 12px 17px;
 }
 
-.cssmenu > ul > li > .cssmenu-title i, 
+.cssmenu > ul > li > .cssmenu-title i,
 .cssmenu > ul > li > .cssmenu-title span{
 	display: table-cell;
 	color: #DDDDDD;
@@ -100,20 +106,22 @@ select {
 @media (min-width: 769px) {
 	.row-current {
 		border-left: 5px solid #FF9900;
+    	background-color: rgba(54, 100, 147, 0.5);
 	}
 }
 
 @media (max-width: 768px) {
 	.row-current {
 		border-bottom: 3px solid #FF9900;
+    	background-color: rgba(54, 100, 147, 0.5);
 	}
 }
 
 .cssmenu > ul > li.row-current > .cssmenu-title span {
 	color: #FFFFFF;
 }
-	
-.help-menu.cssmenu > ul > li > a:hover.cssmenu-title i, 
+
+.help-menu.cssmenu > ul > li > a:hover.cssmenu-title i,
 .help-menu.cssmenu > ul > li > a:hover.cssmenu-title span {
 	color: #8AC77F;
 }
@@ -131,36 +139,36 @@ select {
 	.cssmenu ul {
 		display: block;
 	}
-	
+
 	.cssmenu > ul > li {
 		display: block;
 		float: left;
 		width: calc(100% / 2);
 	}
-	
+
 	.step-menu.cssmenu > ul > li {
 		width: calc(100% / 7);
 	}
-	
+
 	.cssmenu > ul > li > .cssmenu-title {
 		padding: 5px;
 	}
-	
+
 	.step-menu.cssmenu > ul > li > .cssmenu-title {
 		display: block;
 		padding: 5px;
 		text-align: center;
 	}
-	
+
 	.help-menu.cssmenu > ul > li > .cssmenu-title i {
 		vertical-align: top;
 	}
-	
+
 	.step-menu.cssmenu > ul > li > .cssmenu-title i {
 		display: inline-block;
 		padding: 0;
 	}
-	
+
 	.step-menu.cssmenu > ul > li > .cssmenu-title span {
 		display: none;
 	}
@@ -215,7 +223,7 @@ article {
 		padding-left: 230px;
 		width: 100%;
 	}
-	
+
 	article {
 		padding: 20px;
 	}
@@ -299,7 +307,7 @@ nav.finish-menu ul li span {
 		width: 200px;
 		vertical-align: top;
 	}
-	
+
 	nav.finish-menu ul li i,
 	nav.finish-menu ul li span {
 		display: block;

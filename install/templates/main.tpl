@@ -16,8 +16,9 @@ ${resources('install/install')}
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors_light.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="templates/install.css" type="text/css" media="screen, print" />
-		
+
 		<script>
 		<!--
 		var PATH_TO_ROOT = "{PATH_TO_ROOT}";
@@ -67,7 +68,7 @@ ${resources('install/install')}
 						</form>
 					</div>
 					# END IF #
-					
+
 					<div>
 						<h3 class="menu-title">
 							<div class="site-logo"></div>
@@ -79,13 +80,13 @@ ${resources('install/install')}
 								<li class="{step.CSS_CLASS}">
 									<span class="cssmenu-title">
 										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
-									</span>								
+									</span>
 								</li>
 							# END step #
 							</ul>
 						</nav>
 					</div>
-					
+
 					<div>
 						<h3 class="menu-title">
 							<div class="site-logo"></div>
@@ -96,7 +97,7 @@ ${resources('install/install')}
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
 					</div>
-					
+
 					<div>
 						<h3 class="menu-title">
 							<div class="site-logo"></div>
@@ -112,7 +113,7 @@ ${resources('install/install')}
 								<li>
 									<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');" title="{@installation.restart}">
 										<i class="fa fa-refresh fa-fw"></i> <span>{@installation.restart}</span>
-									</a>							
+									</a>
 								</li>
 							</ul>
 						</nav>

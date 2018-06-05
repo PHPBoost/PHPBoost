@@ -52,9 +52,9 @@ class InstallCreateAdminController extends InstallController
 			{
 				$login = $this->form->get_value('login');
 			}
-			
+
 			$installation_services = new InstallationServices();
-			$installation_services->create_admin($this->form->get_value('display_name'), 
+			$installation_services->create_admin($this->form->get_value('display_name'),
 			$login, $this->form->get_value('password'),
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
 			$this->form->get_value('autoconnect'));
@@ -68,7 +68,7 @@ class InstallCreateAdminController extends InstallController
 	{
 		$security_config = SecurityConfig::load();
 		$this->form = new HTMLForm('adminForm', '', false);
-		
+
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
 		$this->form->add_fieldset($fieldset);
 
@@ -80,9 +80,9 @@ class InstallCreateAdminController extends InstallController
 			),
 			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['admin.login.length']))
 		));
-		
+
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false,
 			array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
@@ -97,21 +97,23 @@ class InstallCreateAdminController extends InstallController
 			array('required' => true, 'hidden' => true, 'maxlength' => 25),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
-		
+
+		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
 			array('description' => StringVars::replace_vars($this->lang['admin.password.explanation'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['admin.password.length'], array('number' => $security_config->get_internal_password_min_length()))), new FormFieldConstraintPasswordStrength())
 		));
-		
+
 		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['admin.password.repeat'], '',
 			array('required' => true),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
-		
+
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
 		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true));
 
 		$action_fieldset = new FormFieldsetSubmit('actions');

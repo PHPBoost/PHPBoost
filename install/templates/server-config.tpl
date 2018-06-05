@@ -1,14 +1,14 @@
     <header>
         <h2>{@step.server.title}</h2>
     </header>
-    
+
     <div class="content">
         <a href="http://www.php.net/" title="PHP">
             <img src="templates/images/php.png" alt="PHP" class="float-right" />
         </a>
         <span class="spacer">&nbsp;</span>
         {@H|step.server.explanation}
-        <fieldset>
+        <fieldset class="fieldset-content">
             <legend>{@php.version}</legend>
             <div class="fieldset-inset">
                 <p>${set(@H|php.version.check.explanation, ['min_php_version': MIN_PHP_VERSION])}</p>
@@ -24,8 +24,8 @@
                 </div>
             </div>
         </fieldset>
-        
-        <fieldset>
+
+        <fieldset class="fieldset-content">
             <legend>{@php.extensions}</legend>
             <div class="fieldset-inset">
                 <p>{@php.extensions.check}</p>
@@ -75,13 +75,12 @@
                 </div>
             </div>
         </fieldset>
-        
-        <fieldset>
+
+        <fieldset class="fieldset-content">
             <legend>{@folders.chmod}</legend>
             <div class="fieldset-inset">
                 <p>{@H|folders.chmod.check}</p>
-                <div id="chmod">
-                    # START folder #
+                # START folder #
                     <div class="form-element">
                         <label>{folder.NAME}</label>
                         <div class="form-field">
@@ -97,11 +96,10 @@
                             # ENDIF #
                         </div>
                     </div>
-                    # END chmod #
-                </div>
+                # END folder #
             </div>
         </fieldset>
-        
+
 		# IF C_MBSTRING_ERROR #
 		<fieldset id="mbstring-error"><div class="message-helper error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
 		# END #

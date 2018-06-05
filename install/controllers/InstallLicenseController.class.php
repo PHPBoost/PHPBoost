@@ -58,7 +58,7 @@ class InstallLicenseController extends InstallController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('licenseForm', '', false);
-		
+
 		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
 		$this->form->add_fieldset($fieldset);
 		$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
@@ -68,7 +68,7 @@ class InstallLicenseController extends InstallController
 		$license = new FormFieldHTML('licenseContent', $license_block);
 		$fieldset->add_field($license);
 		$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
-		array('required' => $this->lang['step.license.submit.alert']));
+		array('class' => 'half-field', 'required' => $this->lang['step.license.submit.alert']));
 		$fieldset->add_field($agree_checkbox);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
