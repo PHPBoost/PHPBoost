@@ -31,7 +31,7 @@
 					<tr>
 						# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						<th>
-							<div class="form-field-checkbox">
+							<div class="form-field-checkbox-mini">
 								<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 								<label for="check-all-top"></label>
 							</div>
@@ -49,7 +49,7 @@
 					<tr>
 						<td colspan="6">
 							<div class="left">
-								<div class="form-field-checkbox">
+								<div class="form-field-checkbox-mini">
 									<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 									<label for="check-all-bottom"></label>
 								</div>
@@ -64,7 +64,7 @@
 					<tr>
 						# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						<td>
-							<div class="form-field-checkbox">
+							<div class="form-field-checkbox-mini">
 								<input type="checkbox" id="add-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}" />
 								<label for="add-checkbox-{themes_not_installed.THEME_NUMBER}"></label>
 							</div>

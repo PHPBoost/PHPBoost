@@ -31,11 +31,11 @@ class AdminModuleUpdateController extends AdminController
 	private $view;
 	private $form;
 	private $submit_button;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$module_number = 1;
 		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 		{
@@ -43,47 +43,47 @@ class AdminModuleUpdateController extends AdminController
 			{
 				$this->upgrade_module($module->get_id());
 			}
-			
+
 			$module_number++;
 		}
-		
+
 		$this->upload_form();
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload_module();
 		}
-		
+
 		$this->build_view();
-		
+
 		$this->view->put('UPLOAD_FORM', $this->form->display());
-		
+
 		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.update_module']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
 		$this->view = new FileTemplate('admin/modules/AdminModuleUpdateController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function upload_form()
 	{
 		$form = new HTMLForm('upload_module', '', false);
-		
+
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.update_module']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install']));
-        $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
-		
+
+		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install'], array('class' => 'full-field')));
+        $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description'], array('class' => 'half-field')));
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function build_view()
 	{
 		$modules_upgradable = 0;
@@ -95,7 +95,7 @@ class AdminModuleUpdateController extends AdminController
 				$configuration = $module->get_configuration();
 				$author_email = $configuration->get_author_email();
 				$author_website = $configuration->get_author_website();
-				
+
 				$this->view->assign_block_vars('modules_upgradable', array(
 					'C_AUTHOR_EMAIL' => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
@@ -112,19 +112,19 @@ class AdminModuleUpdateController extends AdminController
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
 				));
-				
+
 				$modules_upgradable++;
 				$module_number++;
 			}
 		}
-		
+
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $modules_upgradable > 1,
 			'C_UPDATES' => $modules_upgradable > 0,
 			'MODULES_NUMBER' => $modules_upgradable
 		));
 	}
-	
+
 	private function upgrade_module($module_id)
 	{
 		switch (ModulesManager::upgrade_module($module_id))
@@ -146,7 +146,7 @@ class AdminModuleUpdateController extends AdminController
 				break;
 		}
 	}
-	
+
 	private function upload_module()
 	{
 		$modules_folder = PATH_TO_ROOT . '/';
@@ -158,7 +158,7 @@ class AdminModuleUpdateController extends AdminController
 		{
 			$is_writable = true;
 		}
-		
+
 		if ($is_writable)
 		{
 			$uploaded_file = $this->form->get_value('file');
@@ -180,7 +180,7 @@ class AdminModuleUpdateController extends AdminController
 						$zip = new PclZip($archive);
 						$archive_content = $zip->listContent();
 					}
-					
+
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
 					foreach ($archive_content as $element)
@@ -192,14 +192,14 @@ class AdminModuleUpdateController extends AdminController
 						if (isset($archive_root_content[0]))
 						{
 							$name_in_archive = str_replace($archive_root_content[0]['filename'] . '/', '/', $element['filename']);
-							
+
 							if (in_array($name_in_archive, $required_files))
 							{
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							}
 						}
 					}
-					
+
 					if (count($archive_root_content) == 1 && $archive_root_content[0]['folder'] && empty($required_files))
 					{
 						$module_id = $archive_root_content[0]['filename'];
@@ -209,7 +209,7 @@ class AdminModuleUpdateController extends AdminController
 								PclTarExtract($upload->get_filename(), $modules_folder);
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
-							
+
 							$this->upgrade_module(AppContext::get_request(), $module_id);
 						}
 						else
@@ -221,7 +221,7 @@ class AdminModuleUpdateController extends AdminController
 					{
 						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
 					}
-					
+
 					$uploaded_file = new File($archive);
 					$uploaded_file->delete();
 				}

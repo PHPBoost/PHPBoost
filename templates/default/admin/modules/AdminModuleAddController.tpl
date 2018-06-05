@@ -31,7 +31,7 @@
 					<tr>
 						# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 						<th>
-							<div class="form-field-checkbox">
+							<div class="form-field-checkbox-mini">
 								<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 								<label for="check-all-top"></label>
 							</div>
@@ -48,7 +48,7 @@
 					<tr>
 						<td colspan="5">
 							<div class="left">
-								<div class="form-field-checkbox">
+								<div class="form-field-checkbox-mini">
 									<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
 									<label for="check-all-bottom"></label>
 								</div>
@@ -63,7 +63,7 @@
 					<tr>
 						# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 						<td>
-							<div class="form-field-checkbox">
+							<div class="form-field-checkbox-mini">
 								<input type="checkbox" id="add-checkbox-{available.MODULE_NUMBER}" name="add-checkbox-{available.MODULE_NUMBER}" />
 								<label for="add-checkbox-{available.MODULE_NUMBER}"></label>
 							</div>
