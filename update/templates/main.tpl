@@ -16,8 +16,9 @@ ${resources('update/update')}
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors_light.css" type="text/css" media="screen, print" />
 		<link type="text/css" href="templates/update.css" title="phpboost" rel="stylesheet" />
-		
+
 		<script>
 		<!--
 		var PATH_TO_ROOT = "{PATH_TO_ROOT}";
@@ -67,7 +68,7 @@ ${resources('update/update')}
 						</form>
 					</div>
 					# END IF #
-					
+
 					<div>
 						<h3 class="menu-title">
 							<div class="site-logo"></div>
@@ -85,7 +86,7 @@ ${resources('update/update')}
 							</ul>
 						</nav>
 					</div>
-					
+
 					<div>
 						<h3 class="menu-title">
 							<div class="site-logo"></div>
@@ -96,11 +97,11 @@ ${resources('update/update')}
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</header>
-		
+
 		<section id="global">
 			<header>
 				<h1><div class="site-logo"></div> {STEP_TITLE}</h1>
