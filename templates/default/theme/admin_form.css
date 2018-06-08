@@ -270,7 +270,6 @@ option {
 }
 
 /* --- checkbox mini --- */
-
 .form-field-checkbox-mini {
 	margin: 0;
 	position: relative;
@@ -290,6 +289,12 @@ option {
 	position: relative;
 	padding-left: 0.618em;
 	cursor: pointer;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900; /* Solid icons*/
+}
+
+.form-field-checkbox-mini [type="checkbox"]:disabled + label {
+	cursor: not-allowed;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label:before,
@@ -323,10 +328,8 @@ option {
 .form-field-checkbox-mini input[type="checkbox"]:checked + label:after {
 	position: absolute;
 	content: '\f00c';
-	font-family: 'Font Awesome 5 Free';
 	top: 0;
 	left: 2px;
-	font-weight: 900; /* Solid icons*/
 	transition: all .3s ease 0s;
 }
 
@@ -480,6 +483,19 @@ option {
 	.form-field-radio [type="radio"] + label:after {
 		top: 3px;
 	}
+}
+
+/* --- Delete checkbox --- */ 
+.form-field.delete-checkbox {
+	display: inline-block;
+	width: 20px;
+	height: 16px;
+	margin: 0 0.309em 0 0;
+}
+
+.delete-checkbox + h2 {
+	display: inline-block;
+	margin-left: 0;
 }
 
 /* --- possible values --- */
@@ -826,7 +842,7 @@ textarea#writing_pad_content {
 
 .advanced-auth-group select {
 	margin-bottom: 0.309em;
-	padding: 0 0.309em;
+	padding: 0.456em 0.1618em 0.309em 0.309em;
 	width: 100%;
 	overflow-x: auto;
 }
@@ -838,19 +854,19 @@ textarea#writing_pad_content {
 	}
 
 	.advanced-auth-group select {
-		min-width: 170px;
+		min-width: 150px;
 	}
 
-	div[id*="advanced_auth"] {
+	.advanced-auth {
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 0.309em 0.309em 0;
+		margin: 0 0.1618em 0.1618em 0;
 	}
 }
 
 .advanced-auth-select select {
-	padding-right: 0.309em;
-	min-width: 170px;
+	padding: 0.456em 0.1618em 0.309em 0.309em;
+	min-width: 150px;
 	overflow-x: auto;
 	word-wrap: normal;
 }
@@ -865,12 +881,14 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-input input {
-	margin-bottom: 0.309em;
-	padding: 4px 24px 4px 0.382em;
+	margin: 0 0 0.309em 0;
+	padding: 4px 24px 4px 6px;
+	width: 77%;
 }
 
 .advanced-auth-input button {
-	padding: 0.309em 0.309em 0.382em 0.309em;
+	margin: 0 0 0.309em -1px;
+	padding: 0.309em 0.309em 0.309em 0.309em;
 	border-width: 0 0 0 1px;
 	border-radius: 0 4px 4px 0;
 }

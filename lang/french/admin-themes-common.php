@@ -35,6 +35,7 @@ $lang['themes.add_theme'] = 'Ajouter un thème';
 $lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un thème';
 $lang['themes.delete_theme_multiple'] = 'Suppression ou désactivation de thèmes';
 $lang['themes.installed_theme'] = 'Thèmes installés';
+$lang['themes.default_theme'] = 'Thème par défaut';
 
 //Theme
 $lang['themes.name'] = 'Nom';
@@ -55,6 +56,7 @@ $lang['themes.themes_available'] = 'Thèmes disponibles';
 //Themes management
 $lang['themes.install_all_selected_themes'] = 'Installer les thèmes sélectionnés';
 $lang['themes.uninstall_all_selected_themes'] = 'Désinstaller les thèmes sélectionnés';
+$lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';
 
 //Avertissements
 $lang['themes.warning_before_install'] = '<span class="message-helper warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';

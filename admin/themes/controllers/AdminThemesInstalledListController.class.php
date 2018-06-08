@@ -141,18 +141,31 @@ class AdminThemesInstalledListController extends AdminController
 				{
 					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
 				}
+				else if ($request->get_string('enable-' . $theme->get_id(), ''))
+				{
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					ThemesManager::change_informations($theme->get_id(), 1, $authorizations);
+
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
+				else if ($request->get_string('disable-' . $theme->get_id(), ''))
+				{
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					ThemesManager::change_informations($theme->get_id(), 0, $authorizations);
+
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
 			}
 		}
-		
+
 		if ($request->get_bool('update', false))
 		{
 			foreach ($installed_themes as $theme)
 			{
 				if ($theme->get_id() !== ThemesManager::get_default_theme())
 				{
-					$activated = $request->get_bool('activated-' . $theme->get_id(), false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
-					ThemesManager::change_informations($theme->get_id(), $activated, $authorizations);
+					ThemesManager::change_informations($theme->get_id(), $theme->is_activated(), $authorizations);
 				}
 			}
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));

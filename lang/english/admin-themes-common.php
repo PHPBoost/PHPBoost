@@ -35,6 +35,7 @@ $lang['themes.add_theme'] = 'Add theme';
 $lang['themes.delete_theme'] = 'Delete or deactivate a theme';
 $lang['themes.delete_theme_multiple'] = 'Delete or deactivate themes';
 $lang['themes.installed_theme'] = 'Installed themes';
+$lang['themes.default_theme'] = 'Default theme';
 
 //Theme
 $lang['themes.name'] = 'Name';
@@ -55,6 +56,7 @@ $lang['themes.themes_available'] = 'Available themes';
 //Themes management
 $lang['themes.install_all_selected_themes'] = 'Install all selected themes';
 $lang['themes.uninstall_all_selected_themes'] = 'Uninstall all selected themes';
+$lang['themes.select_all_themes'] = 'Select all themes';
 
 //Warnings
 $lang['themes.warning_before_install'] = '<span class="message-helper warning">A theme must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';

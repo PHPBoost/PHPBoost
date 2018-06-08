@@ -477,17 +477,16 @@ optgroup {
 .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label:before,
 .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
 	background: #EEEEEE;
-	box-shadow: 0 0 2px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, .1);
 	border-color: #C1C1C1;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:checked + label:before {
-	background: #62B0FF;
-	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0);
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0);
 }
 
-.form-field-checkbox-mini [type="checkbox"]:checked + label:after {
-	color: #ffffff;
+.form-field-checkbox-mini [type="checkbox"] + label:after {
+	color: #62B0FF;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,

@@ -131,7 +131,6 @@ class Authorizations
 		$tpl = new FileTemplate('framework/groups_auth.tpl');
 
 		$tpl->put_all(array(
-			'C_NO_ADVANCED_AUTH' => $disabled_advanced_auth,
 			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,
 			'IDSELECT' => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
@@ -218,7 +217,6 @@ class Authorizations
 		$advanced_auth = count($array_auth_members) > 0;
 
 		$tpl->put_all(array(
-			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;'),
 			'C_ADVANCED_AUTH_OPEN' => $advanced_auth,
 			'C_NO_GROUP' => count($groups_name) == 0
 		));

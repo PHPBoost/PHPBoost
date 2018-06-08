@@ -254,6 +254,136 @@ ul.pagination-block-bis li a.next-page:hover {
 	}
 }
 
+/* Gestion des blocks themes/modules/langues */
+.admin-elements-container .elements-container {
+	justify-content: flex-start;
+	-ms-flex-pack: start;
+	-webkit-justify-content: flex-start;
+	overflow: visible;
+}
+
+.admin-element {
+	position: relative;
+	margin: 0 0 5px 5px;
+	min-width: 500px;
+}
+
+.admin-element-picture {
+	float: left;
+	text-align: center;
+	margin: 0 5px 0 0;
+}
+
+.theme-element.default-theme {
+	border-top-color: #E2A447;
+}
+
+.admin-element-menu-container {
+	position: relative;
+	display: inline-block;
+	float: right;
+}
+
+.admin-element-menu-title {
+	display: block;
+	background-color: rgba(54, 100, 147, 0.3);
+	padding: 6px 10px 6px 10px;
+	border-radius: 5px;
+}
+
+.admin-element-menu-title:hover {
+	text-decoration: none;
+}
+
+.admin-element-menu-title i {
+	margin: 0 0 0 5px;
+}
+
+.admin-element-menu-title i.fa {
+	transition: 0.3s;
+	width: 5px;
+}
+
+.opened .admin-element-menu-title i.fa {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg); 
+	transition: 0.3s;
+}
+
+.admin-menu-elements-content {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: -9999px;
+	width: 150px;
+	margin: 0;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
+    list-style: none;
+}
+
+.opened .admin-menu-elements-content {
+	left: auto;
+
+}
+
+.admin-menu-element > button {
+	padding: 6px 10px 6px 10px;
+	background-color: transparent;
+	border: none;
+	width: 100%;
+	color: #103B67;
+	margin: 0;
+}
+
+.admin-menu-element > button.submit:hover {
+	background-color: rgba(54, 100, 147, 0.2);
+	border: none;
+}
+
+.deleted-all-selector a {
+	cursor: pointer;
+}
+
+#deleted-all-button {
+	opacity: 0;
+	visibility: hidden;
+}
+
+#deleted-all-button.ready {
+	opacity: 1;
+	visibility: visible;
+}
+
+.admin-element > footer {
+
+}
+
+.admin-element-auth {
+	display: block;
+	text-align: right;
+}
+
+.admin-element-auth-content {
+	position: absolute;
+	top: 2px;
+	left: -9999px;
+	background-color: white;
+	width: auto;
+	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
+	padding: 2px 4px;
+}
+
+.admin-element-auth-close {
+	position: absolute;
+	right: 7px;
+	bottom: 2px;
+}
+
+.opened .admin-element-auth-content {
+	left: 6px;
+}
 
 /* --- Exploreur des catégories ================================================= */
 .explorer .cats,
