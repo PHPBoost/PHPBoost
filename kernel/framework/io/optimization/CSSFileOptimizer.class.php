@@ -91,7 +91,7 @@ class CSSFileOptimizer
 			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
 			$content = str_replace(array("( ", " )", ", "), array("(", ")", ","), $content);
 			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'), array('{', '}', ':', ';'), $content);
-			$content = preg_replace("`url\(\"(.+)\"\)`u", 'url(\'$1\')', $content);
+			$content = preg_replace('`url\("([^"]+)"\)`u', 'url(\'$1\')', $content);
 		}
 
 		$this->content = trim($content);
