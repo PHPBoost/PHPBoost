@@ -89,6 +89,8 @@
 				# END menu #
 
 				{CONTENTS}
+				<div class="spacer"></div>
+				${ContentSharingActionsMenuService::display()}
 			</div>
 		</article>
 		<footer>

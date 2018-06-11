@@ -62,7 +62,9 @@
 					<h2 class="title page_name">{PAGE_NAME}</h2>
 				# ENDIF #
 					<div itemprop="text">{CONTENTS}</div>
-
+					<div class="spacer"></div>
+					${ContentSharingActionsMenuService::display()}
+				
 				<hr />
 
 				# IF C_PAGINATION #
