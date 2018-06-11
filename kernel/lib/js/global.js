@@ -482,6 +482,54 @@ function open_submenu(myid, myclass, closeother)
 	}
 }
 
+//Function opensubmenu
+//
+// Description : 
+// This function add CSS Class to the specified CSS ID to open a submenu
+//
+// options : four
+// {osmCloseExcept} correspond to the specific element you doesn't want to close on click.
+// {osmCloseButton} correspond to the specific button for closed submenu.
+// {osmTarget} correspond to the name of CSS class of you element you want to add a specific CSS class.
+// {osmClass} correspond to the name of CSS class you want to add to your specific element.
+//
+// Return : -
+//
+// Comments :
+//   - if {osmClass} is missing, we use CSS class "opened"
+//   - if {osmCloseButton} is missing, we use element "a.close-button"
+//   - use CSS selector "." or "#" for {osmCloseExcept} and {osmTarget}
+//   - for all elements used * in {osmCloseExcept} like '.myClass *'
+//
+(function($) {
+	$.fn.opensubmenu = function( options ) {
+		var defaults = $(this), params = $.extend({
+			osmCloseExcept: '',
+			osmCloseButton: 'a.close-button',
+			osmTarget: '',
+			osmClass: 'opened'
+		}, options);
+
+		return this.each(function() {
+			$(this).click(function(event) {
+				event.preventDefault();
+				console.log($(this).parent(params.osmTarget).hasClass(params.osmClass));
+				if ($(this).parent(params.osmTarget).hasClass(params.osmClass))
+					$(document).find(params.osmTarget).removeClass(params.osmClass);
+				else {
+					$(document).find(params.osmTarget).removeClass(params.osmClass);
+					$(this).parent(params.osmTarget).addClass(params.osmClass);
+				}
+				event.stopPropagation();
+			});
+			$(document).click(function(event) {
+				if (($(event.target).is(params.osmCloseExcept) === false || $(event.target).is(params.osmCloseButton) === true)) {
+					$(document).find(params.osmTarget).removeClass(params.osmClass);
+				}
+			});
+		});
+	};
+})(jQuery);
 
 //Barre de progression, 
 function change_progressbar(id_element, value, informations) {
