@@ -34,6 +34,7 @@ $lang['install'] = 'Install';
 $lang['uninstall'] = 'Uninstall';
 $lang['actions'] = 'Actions';
 $lang['set_to_default'] = 'Set to default';
+$lang['action_menu.open'] = 'Open action menu';
 
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.categories_number_per_page'] = 'Categories number per page';

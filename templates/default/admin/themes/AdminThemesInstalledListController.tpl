@@ -20,23 +20,24 @@
 	}
 -->
 </script>
+
 # ENDIF #
 
 ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common')}
 <form action="{REWRITED_SCRIPT}" method="post">
-<section id="installed-themes-container" class="admin-elements-container themes-elements-container installed-elements-container">
+	<section id="installed-themes-container" class="admin-elements-container themes-elements-container installed-elements-container">
 	<header>
 		{@themes.installed_theme}
 	</header>
 	<div class="content elements-container columns-3">
 		# START themes_installed #
-		<article id="installed-theme-element-{themes_installed.THEME_NUMBER}" class="block admin-element theme-element installed-element# IF themes_installed.C_IS_DEFAULT_THEME # default-theme# ENDIF #">
+		<article id="installed-theme-element-{themes_installed.THEME_NUMBER}" class="block admin-element theme-element installed-element# IF themes_installed.C_IS_DEFAULT_THEME # default-element# ENDIF ## IF themes_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF #">
 			<header>
 				<div id="installed-element-menu-container-{themes_installed.THEME_NUMBER}" class="admin-element-menu-container">
 					# IF themes_installed.C_IS_DEFAULT_THEME #
-					<a href="" class="admin-elements-menu-title">${LangLoader::get_message('themes.default_theme', 'admin-themes-common')}</a>
+					<a href="#" class="admin-element-menu-title">${LangLoader::get_message('themes.default', 'admin-themes-common')}</a>
 					# ELSE #
-					<a href="" onclick="open_submenu('installed-element-menu-container-{themes_installed.THEME_NUMBER}', 'opened', 'admin-element-menu-container');return false;" onblur="open_submenu('installed-element-menu-container-{themes_installed.THEME_NUMBER}');return false;" class="admin-element-menu-title"># IF themes_installed.C_IS_ACTIVATED #${LangLoader::get_message('install', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF #<i class="fa fa-caret-right"></i></a>
+					<a href="#" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF themes_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF #<i class="fa fa-caret-right"></i></a>
 					<ul class="admin-menu-elements-content">
 						<li class="admin-menu-element"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
 						# IF themes_installed.C_IS_ACTIVATED #
@@ -84,20 +85,20 @@ ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common'
 			</div>
 			<footer>
 				<div id="authorizations-explain-{themes_installed.ID}" class="admin-element-auth-container">
-					<a href="" onclick="open_submenu('authorizations-explain-{themes_installed.ID}', 'opened', 'admin-element-auth-container');return false;" class="admin-element-auth"><i class="fa fa-user-shield"></i></a>
-					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
+					# IF themes_installed.C_IS_DEFAULT_THEME #
+					<span class="admin-element-auth default-element" title="${LangLoader::get_message('themes.default_theme_visibility', 'admin-themes-common')}"><i class="fa fa-user-shield"></i></span>
+					# ELSE #
+					<a href="" class="admin-element-auth" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"></i></a>
 					<div class="admin-element-auth-content">
 						{themes_installed.AUTHORIZATIONS}
-						<a href="" onclick="open_submenu('authorizations-explain-{themes_installed.ID}', 'opened', 'admin-element-auth-container');return false;" class="admin-element-auth-close"><i class="fa fa-times"></i></a>
+						<a href="#" class="admin-element-auth-close" title="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times"></i></a>
 					</div>
-					# ELSE #
-					${LangLoader::get_message('visitor', 'user-common')}
 					# ENDIF #
 				</div>
 			</footer>
 		</article>
 		# END themes_installed #
-		</div>
+	</div>
 	<footer>
 		# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 		<div class="deleted-all-container">
@@ -109,6 +110,7 @@ ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common'
 			</div>
 		</div>
 		# ENDIF #
+
 		<fieldset class="fieldset-submit">
 			<legend>{L_SUBMIT}</legend>
 			<button type="submit" class="submit" name="update_themes_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>
@@ -117,5 +119,15 @@ ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common'
 			<button type="reset" value="true">${LangLoader::get_message('reset', 'main')}</button>
 		</fieldset>
 	</footer>
-</section>
+	</section>
 </form>
+<script>
+	jQuery('.admin-element-menu-title').opensubmenu({
+		osmTarget: '.admin-element-menu-container'
+	});
+	jQuery('.admin-element-auth').opensubmenu({
+		osmTarget: '.admin-element-auth-container',
+		osmCloseExcept: '.admin-element-auth-content *',
+		osmCloseButton: '.admin-element-auth-close i',
+	});
+</script>

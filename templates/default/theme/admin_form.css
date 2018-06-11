@@ -887,8 +887,8 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-input button {
-	margin: 0 0 0.309em -1px;
-	padding: 0.309em 0.309em 0.309em 0.309em;
+	margin: 0 0 0.309em -4px;
+	padding: 6px 6px 5px 6px;
 	border-width: 0 0 0 1px;
 	border-radius: 0 4px 4px 0;
 }
@@ -897,6 +897,10 @@ textarea#writing_pad_content {
 	margin: 2px 0 0 0;
 	width: 138px;
 	height: 100px;
+}
+
+.advanced-auth-text {
+	display: inline-block;
 }
 
 .bbcode ~ .form-field-textarea textarea {
