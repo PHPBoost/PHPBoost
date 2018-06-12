@@ -41,9 +41,9 @@ ${LangLoader::get_message('themes.warning_before_install', 'admin-themes-common'
 					<ul class="admin-menu-elements-content">
 						<li class="admin-menu-element"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
 						# IF themes_installed.C_IS_ACTIVATED #
-						<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disabled', 'common')}</button></li>
+						<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
 						# ELSE #
-						<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enabled', 'common')}</button></li></li>
+						<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
 						# ENDIF #
 
 						<li class="admin-menu-element"><button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
