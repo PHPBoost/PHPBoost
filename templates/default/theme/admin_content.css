@@ -260,12 +260,18 @@ ul.pagination-block-bis li a.next-page:hover {
 	-ms-flex-pack: start;
 	-webkit-justify-content: flex-start;
 	overflow: visible;
+	margin: 1em 0 0 0;
 }
 
 .admin-element {
 	position: relative;
 	margin: 0 0 5px 5px;
 	min-width: 500px;
+}
+
+.admin-element h2 {
+	display: inline-block;
+	margin-left: 0;
 }
 
 .admin-element-picture {
@@ -349,21 +355,11 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-top: 20px;
 }
 
-.deleted-all-selector a {
+.select-all-selector a {
 	cursor: pointer;
 }
 
-#deleted-all-button {
-	opacity: 0;
-	visibility: hidden;
-}
-
-#deleted-all-button.ready {
-	opacity: 1;
-	visibility: visible;
-}
-
-.deleted-all-button-container > button {
+.select-all-button-container > button {
 	margin: 0.618em 0 0 0;
 }
 

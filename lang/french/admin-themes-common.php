@@ -58,6 +58,7 @@ $lang['themes.themes_available'] = 'Thèmes disponibles';
 $lang['themes.install_all_selected_themes'] = 'Installer les thèmes sélectionnés';
 $lang['themes.uninstall_all_selected_themes'] = 'Désinstaller les thèmes sélectionnés';
 $lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';
+$lang['themes.activate_all_selected_themes'] = 'Activer les thèmes sélectionnés';
 
 //Avertissements
 $lang['themes.warning_before_install'] = '<span class="message-helper warning">Un thème doit être activé, désactivé, installé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';

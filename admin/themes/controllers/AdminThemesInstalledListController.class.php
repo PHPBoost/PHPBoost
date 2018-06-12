@@ -94,7 +94,7 @@ class AdminThemesInstalledListController extends AdminController
 			}
 			
 			if ($theme->get_id() == ThemesManager::get_default_theme())
-				$selected_theme_number = $theme_number;
+				$default_theme_number = $theme_number;
 			
 			$theme_number++;
 		}
@@ -103,7 +103,7 @@ class AdminThemesInstalledListController extends AdminController
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_THEME_INSTALLED' => $installed_themes_number > 1,
 			'THEMES_NUMBER' => $installed_themes_number,
-			'SELECTED_THEME_NUMBER' => $selected_theme_number
+			'DEFAULT_THEME_NUMBER' => $default_theme_number
 		));
 	}
 	

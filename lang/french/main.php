@@ -61,6 +61,7 @@ $LANG['reset'] = 'Défaut';
 $LANG['erase'] = 'Effacer';
 $LANG['preview'] = 'Prévisualiser';
 $LANG['search'] = 'Recherche';
+$LANG['save'] = 'Sauvegarder';
 
 $LANG['respond'] = 'Répondre';
 $LANG['go'] = 'Go';

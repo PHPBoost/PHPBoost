@@ -87,6 +87,14 @@ footer#footer span {
 	background-color: rgba(54, 100, 147, 0.05);
 }
 
+.default-element {
+	border-color: #E2A447 #F1F1F1 #F1F1F1 #F1F1F1;
+}
+
+.deactivate-element {
+	border-color: #AAAAAA #F1F1F1 #F1F1F1 #F1F1F1;
+}
+
 .pagination-block li a {
 	border-color: #E1E1E1;
 }
@@ -185,6 +193,67 @@ i.message-announce-new { color: #62CF5D; }
 	background-color: rgba(54, 100, 147, 0.2);
 }
 
+.admin-element-menu-title {
+	color: #FFFFFF;
+}
+
+.admin-element .admin-element-menu-title {
+	background-color: #366493;
+	border-color: #366493;
+}
+
+.default-element .admin-element-menu-title {
+	background-color: #E2A447;
+	border-color: #E2A447;
+}
+
+.deactivate-element .admin-element-menu-title {
+	background-color: #AAAAAA;
+	border-color: #AAAAAA;
+}
+
+.admin-element-menu-container:hover .admin-element-menu-title,
+.admin-element-menu-container.opened .admin-element-menu-title {
+	background-color: transparent;
+}
+
+.admin-element-menu-container:hover .admin-element-menu-title,
+.admin-element-menu-container.opened .admin-element-menu-title { color: #366493; }
+.deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
+.deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
+
+.default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #E2A447; }
+
+.admin-menu-elements-content {
+	background-color: #FFFFFF;
+	color: #FFFFFF;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.admin-menu-elements-content { border-color: #366493; }
+.deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
+
+.admin-menu-element > button.submit {
+	background-color: transparent;
+}
+
+.admin-menu-element > button.submit { background-color: #366493; }
+.deactivate-element .admin-menu-element > button.submit { background-color: #AAAAAA; }
+
+.admin-menu-element > button.submit:hover {
+	background-color: rgba(54, 100, 147, 0.2);
+	color: #366493;
+}
+.deactivate-element .admin-menu-element > button.submit:hover {
+	background-color: rgba(128, 128, 128, 0.2);
+	color: #AAAAAA;
+}
+
+.admin-element-auth i { #366493; }
+
+.advanced-auth-input button {
+	background-color: #DEDEDE;
+}
 
 /* -- Table
     #####   ###   ###    #      #####
@@ -295,7 +364,8 @@ optgroup {
 	border-color: #313131;
 }
 
-legend {
+legend,
+.legend {
 	border-color: #313131;
 	color: #999999;
 }

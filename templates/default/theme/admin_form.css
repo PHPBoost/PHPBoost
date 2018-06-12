@@ -166,7 +166,8 @@ fieldset p {
 	display: none;
 }
 
-legend {
+legend,
+.legend {
 	display: block;
 	margin: 0;
 	padding: 0 0 8px;
@@ -485,17 +486,12 @@ option {
 	}
 }
 
-/* --- Delete checkbox --- */ 
-.form-field.delete-checkbox {
+/* --- admin-element checkbox --- */ 
+.form-field.admin-element-checkbox {
 	display: inline-block;
 	width: 20px;
 	height: 16px;
 	margin: 0 0.309em 0 0;
-}
-
-.delete-checkbox + h2 {
-	display: inline-block;
-	margin-left: 0;
 }
 
 /* --- possible values --- */
@@ -900,7 +896,7 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-text {
-	display: inline-block;
+	display: block;
 }
 
 .bbcode ~ .form-field-textarea textarea {

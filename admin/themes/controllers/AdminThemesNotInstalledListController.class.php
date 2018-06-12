@@ -110,7 +110,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		$not_installed_themes_number = count($not_installed_themes);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_THEME_AVAILABLE' => $not_installed_themes_number > 1,
-			'C_THEME_INSTALL' => $not_installed_themes_number > 0,
+			'C_THEME_AVAILABLE' => $not_installed_themes_number > 0,
 			'THEMES_NUMBER' => $not_installed_themes_number
 		));
 	}

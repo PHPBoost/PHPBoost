@@ -258,7 +258,7 @@ div[class*="admin-index"] h2 {
 	color: #FFFFFF;
 }
 
-.activate-element .admin-element-menu-title {
+.admin-element .admin-element-menu-title {
 	background-color: #366493;
 	border-color: #366493;
 }
@@ -278,8 +278,8 @@ div[class*="admin-index"] h2 {
 	background-color: transparent;
 }
 
-.activate-element .admin-element-menu-container:hover .admin-element-menu-title,
-.activate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #366493; }
+.admin-element-menu-container:hover .admin-element-menu-title,
+.admin-element-menu-container.opened .admin-element-menu-title { color: #366493; }
 .deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
 .deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
 
@@ -291,17 +291,17 @@ div[class*="admin-index"] h2 {
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
 }
 
-.activate-element .admin-menu-elements-content { border-color: #366493; }
+.admin-menu-elements-content { border-color: #366493; }
 .deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
 
 .admin-menu-element > button.submit {
 	background-color: transparent;
 }
 
-.activate-element .admin-menu-element > button.submit { background-color: #366493; }
+.admin-menu-element > button.submit { background-color: #366493; }
 .deactivate-element .admin-menu-element > button.submit { background-color: #AAAAAA; }
 
-.activate-element .admin-menu-element > button.submit:hover {
+.admin-menu-element > button.submit:hover {
 	background-color: rgba(54, 100, 147, 0.2);
 	color: #366493;
 }
@@ -478,7 +478,8 @@ button.submit.alt:hover {
 
 /* --- Fieldset --- */
 
-legend {
+legend,
+.legend {
 	border-color: #BBBBBB;
 	color: #474747;
 }
