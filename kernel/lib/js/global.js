@@ -513,7 +513,6 @@ function open_submenu(myid, myclass, closeother)
 		return this.each(function() {
 			$(this).click(function(event) {
 				event.preventDefault();
-		
 				if ($(this).parent(params.osmTarget).hasClass(params.osmClass))
 					$(document).find(params.osmTarget).removeClass(params.osmClass);
 				else {
