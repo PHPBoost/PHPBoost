@@ -49,8 +49,8 @@ class CSSFileOptimizer
 
 	public function __construct()
 	{
-		$this->regex_search_files_path = "`url\([\'\"]?([^';}]+)[\'\"]?\)`u";
-		$this->replace_value_files_path = 'url(\':path/'. str_replace('\'', '', '$1') .'\')';
+		$this->regex_search_files_path = "`url\([\'\"]?([^';}\)\'\"]+)[\'\"]?\)`u";
+		$this->replace_value_files_path = 'url(":path/'. str_replace('"', '', '$1') .'")';
 	}
 
 	/**
@@ -91,7 +91,6 @@ class CSSFileOptimizer
 			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
 			$content = str_replace(array("( ", " )", ", "), array("(", ")", ","), $content);
 			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'), array('{', '}', ':', ';'), $content);
-			$content = preg_replace("`url\([\'\"]?([^\'\"]+)[\'\"]?\)`u", 'url(\'$1\')', $content);
 		}
 
 		$this->content = trim($content);
