@@ -102,14 +102,14 @@ class BBCodeParser extends ContentFormattingParser
 		//On remet le code HTML mis de côté
 		if (!empty($this->array_tags['html']))
 		{
-			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
+			$this->array_tags['html'] = array_map(function($string) {return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));}, $this->array_tags['html']);
 			$this->reimplant_tag('html');
 		}
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isuU\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(function($string) {return preg_replace('`^\[code(=.+)?\](.+)\[/code\]$`isuU', '[[CODE$1]]$2[[/CODE]]', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));}, $this->array_tags['code']);
 			$this->reimplant_tag('code');
 		}
 	}
@@ -468,7 +468,7 @@ class BBCodeParser extends ContentFormattingParser
 						{
 							$list_tag = 'ul';
 						}
-						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`uU', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"formatter-li\">", $var[0]));'), $content[$i]);
+						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`uU', function($var) {return str_replace("<br />", "", str_replace("[*]", "<li class=\"formatter-li\">", $var[0]));}, $content[$i]);
 						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="formatter-' . $list_tag . '">' . str_replace('[*]', '</li><li class="formatter-li">', $content[$i]) . '</li></' . $list_tag . '>';
 					}
 				}

@@ -413,7 +413,7 @@ class ImagesStats
 
 			//Légende des axes
 			$scale_legend = array_map("ucfirst", $scale_legend);
-			$scale_legend = array_map(create_function('$a', 'return "("  . $a . ")";'), $scale_legend);
+			$scale_legend = array_map(function($a) {return "("  . $a . ")";}, $scale_legend);
 			if (isset($scale_legend[0]))
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[0]);
