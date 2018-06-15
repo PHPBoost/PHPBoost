@@ -121,7 +121,7 @@ ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-pa
 }
 
 .default-element {
-	border-color: #E2A447 #F1F1F1 #F1F1F1 #F1F1F1;
+	border-color: #2F9674 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
 .deactivate-element {
@@ -254,18 +254,19 @@ div[class*="admin-index"] h2 {
 	border-color: #2C5169;
 }
 
-.admin-element-menu-title {
+article .admin-element-menu-title,
+.admin-element-menu-title a {
 	color: #FFFFFF;
 }
 
-.admin-element .admin-element-menu-title {
+.admin-element-menu-title {
 	background-color: #366493;
 	border-color: #366493;
 }
 
 .default-element .admin-element-menu-title {
-	background-color: #E2A447;
-	border-color: #E2A447;
+	background-color: #2F9674;
+	border-color: #2F9674;
 }
 
 .deactivate-element .admin-element-menu-title {
@@ -279,33 +280,38 @@ div[class*="admin-index"] h2 {
 }
 
 .admin-element-menu-container:hover .admin-element-menu-title,
-.admin-element-menu-container.opened .admin-element-menu-title { color: #366493; }
+.admin-element-menu-container:hover .admin-element-menu-title a,
+.admin-element-menu-container.opened .admin-element-menu-title,
+.admin-element-menu-container.opened .admin-element-menu-title a { color: #366493; }
+
 .deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
 .deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
 
-.default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #E2A447; }
+.default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #2F9674; }
 
 .admin-menu-elements-content {
 	background-color: #FFFFFF;
 	color: #FFFFFF;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .admin-menu-elements-content { border-color: #366493; }
 .deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
 
-.admin-menu-element > button.submit {
+.admin-menu-element > * {
 	background-color: transparent;
 }
 
-.admin-menu-element > button.submit { background-color: #366493; }
-.deactivate-element .admin-menu-element > button.submit { background-color: #AAAAAA; }
+.admin-menu-element > * { background-color: #366493; }
+.deactivate-element .admin-menu-element > * { background-color: #AAAAAA; }
 
+.admin-menu-element:hover > *,
 .admin-menu-element > button.submit:hover {
 	background-color: rgba(54, 100, 147, 0.2);
 	color: #366493;
 }
-.deactivate-element .admin-menu-element > button.submit:hover {
+
+.deactivate-element .admin-menu-element:hover > * {
 	background-color: rgba(128, 128, 128, 0.2);
 	color: #AAAAAA;
 }

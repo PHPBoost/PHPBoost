@@ -35,6 +35,12 @@ $lang['uninstall'] = 'Uninstall';
 $lang['actions'] = 'Actions';
 $lang['set_to_default'] = 'Set to default';
 $lang['action_menu.open'] = 'Open action menu';
+$lang['save.authorizations'] = 'Save authorizations';
+$lang['multiple.select'] = 'Multiple select';
+$lang['multiple.activate_selection'] = 'Activate selection';
+$lang['multiple.deactivate_selection'] = 'Deactivate selection';
+$lang['multiple.install_selection'] = 'Install selection';
+$lang['multiple.uninstall_selection'] = 'Uninstall selection';
 
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.categories_number_per_page'] = 'Categories number per page';

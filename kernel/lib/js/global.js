@@ -513,11 +513,11 @@ function open_submenu(myid, myclass, closeother)
 		return this.each(function() {
 			$(this).click(function(event) {
 				event.preventDefault();
-				if ($(this).parent(params.osmTarget).hasClass(params.osmClass))
+				if ($(this).closest(params.osmTarget).hasClass(params.osmClass))
 					$(document).find(params.osmTarget).removeClass(params.osmClass);
 				else {
 					$(document).find(params.osmTarget).removeClass(params.osmClass);
-					$(this).parent(params.osmTarget).addClass(params.osmClass);
+					$(this).closest(params.osmTarget).addClass(params.osmClass);
 				}
 				event.stopPropagation();
 			});
@@ -529,6 +529,33 @@ function open_submenu(myid, myclass, closeother)
 		});
 	};
 })(jQuery);
+
+//Function multiple_checkbox_check
+//
+// Description : 
+// This function check or uncheck all checkbox with specific id
+//
+// options : one
+// {status} correspond to the status we need (check or uncheck).
+//
+// Return : -
+//
+// Comments :
+//
+function multiple_checkbox_check(status, nbr_element, except_element)
+{
+	var i;
+	var except_element = (typeof except_element !== 'undefined') ? except_element : 0;
+	for(i = 1; i <= nbr_element; i++)
+	{
+		if($('#multiple-checkbox-' + i)[0] && i != except_element)
+			$('#multiple-checkbox-' + i)[0].checked = status;
+	}
+	try {
+		$('.check-all')[0].checked = status;
+	}
+	catch (err) {}
+}
 
 //Barre de progression, 
 function change_progressbar(id_element, value, informations) {

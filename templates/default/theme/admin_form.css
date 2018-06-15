@@ -319,6 +319,14 @@ option {
 	transition: background-color 0.2s;
 }
 
+.select-all-checkbox [type="checkbox"]:not(:checked) + label:before,
+.select-all-checkbox [type="checkbox"]:checked + label:before {
+	left: 0;
+	top: 0;
+	width: 1em;
+	height: 1em;
+}
+
 .form-field-checkbox .text-status-constraint {
 	top: 1.618em;
 	left: -0.309em;
@@ -487,7 +495,7 @@ option {
 }
 
 /* --- admin-element checkbox --- */ 
-.form-field.admin-element-checkbox {
+.form-field.multiple-checkbox-container {
 	display: inline-block;
 	width: 20px;
 	height: 16px;

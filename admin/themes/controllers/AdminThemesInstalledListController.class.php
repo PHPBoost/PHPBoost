@@ -125,12 +125,33 @@ class AdminThemesInstalledListController extends AdminController
 			}
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme(implode('---', $theme_ids)));
 		}
+		elseif ($request->get_string('activate-selected-themes', false) || $request->get_string('deactivate-selected-themes', false))
+		{
+			$activated = 0;
+			if ($request->get_string('activate-selected-themes', false))
+				$activated = 1;
+			
+			$theme_number = 1;
+			foreach ($installed_themes as $theme)
+			{
+				if ($theme->get_id() !== ThemesManager::get_default_theme() && ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on') )
+				{	
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					ThemesManager::change_informations($theme->get_id(), $activated, $authorizations);
+				}
+				$theme_number++;
+			}
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 		else
 		{
 			foreach ($installed_themes as $theme)
 			{
 				if ($request->get_string('default-' . $theme->get_id(), ''))
 				{
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
+					ThemesManager::change_informations($theme->get_id(), 1, $authorizations);
+					
 					$user_accounts_config = UserAccountsConfig::load();
 					$user_accounts_config->set_default_theme($theme->get_id());
 					UserAccountsConfig::save();

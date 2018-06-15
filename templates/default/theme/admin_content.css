@@ -289,10 +289,14 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .admin-element-menu-container:hover { transition: 0.3s; }
 
+header.legend .admin-element-menu-container {
+	font-size: 0.6em;
+	float: right;
+}
+
 .admin-element-menu-title {
 	display: block;
 	padding: 4px 8px 4px 8px;
-	border-radius: 5px;
 	border-style: solid;
 	border-width: 2px;
 	transition: 0.3s;
@@ -303,9 +307,6 @@ ul.pagination-block-bis li a.next-page:hover {
 	transition: 0.3s;
 }
 
-.admin-element-menu-container.opened .admin-element-menu-title {
-	border-radius: 5px 5px 0 0;
-}
 
 .admin-element-menu-title i {
 	margin: 0 0 0 5px;
@@ -316,17 +317,24 @@ ul.pagination-block-bis li a.next-page:hover {
 	width: 5px;
 }
 
-.opened .admin-element-menu-title i.fa {
+.opened > .admin-element-menu-title i.fa {
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
 	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg); 
 	transition: 0.3s;
 }
 
+.multiple-select-menu-container.opened > .admin-element-menu-title i.fa {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+	-webkit-transform: rotate(-90deg);
+	transform: rotate(-90deg); 
+	transition: 0.3s;
+}
+
 .admin-menu-elements-content {
 	position: absolute;
+	z-index: 2;
 	top: 26px;
-	right: 0;
 	left: -9999px;
 	width: 150px;
 	margin: 0;
@@ -335,18 +343,29 @@ ul.pagination-block-bis li a.next-page:hover {
 	border-width: 2px 0 2px 0;
 }
 
-.opened .admin-menu-elements-content {
-	left: auto;
+.multiple-select-menu-container .admin-menu-elements-content {
+	width: 170px;
 }
 
-.admin-menu-element > button {
+.opened > .admin-menu-elements-content {
+	left: auto;
+	right: 0;
+}
+
+.multiple-select-menu-container.opened > .admin-menu-elements-content {
+	top: auto;
+	bottom: 100%;
+}
+
+.admin-menu-element > * {
+	display: block;
 	padding: 6px 10px 6px 10px;
 	border: none;
 	width: 100%;
 	margin: 0;
 }
 
-.admin-menu-element > button.submit:hover {
+.admin-menu-element > *:hover {
 	border: none;
 }
 
@@ -355,12 +374,14 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-top: 20px;
 }
 
-.select-all-selector a {
-	cursor: pointer;
+.select-all-container {
+	float: right;
+	padding-top: 10px;
+	font-size: 0.6em;
 }
 
-.select-all-button-container > button {
-	margin: 0.618em 0 0 0;
+.select-all-container a {
+	cursor: pointer;
 }
 
 .admin-element-auth {
@@ -383,7 +404,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	border: 1px solid #CCCCCC;
 }
 
-.opened .admin-element-auth-content {
+.opened > .admin-element-auth-content {
 	left: 4px;
 	right: 4px;
 	bottom: 4px;
@@ -405,6 +426,22 @@ ul.pagination-block-bis li a.next-page:hover {
 	width: 15px;
 	height: 15px;
 	padding: 2px;
+}
+
+/* -- Gestion du menu multiple -- */
+.multiple-select-menu-container {
+	position: fixed;
+	display: block;
+	bottom: 60px;
+	right: 50px;
+}
+
+.multiple-select-menu {
+	padding: 0 0 0 25px;
+}
+
+.multiple-select-menu:hover {
+	text-decoration: none;
 }
 
 /* --- Exploreur des catégories ================================================= */
