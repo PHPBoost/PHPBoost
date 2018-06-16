@@ -3,8 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.maClass {
-	background-color: rgba(0, 0, 0, 0.1);
+.form-field-css-class {
 }
 
 .color-box {
@@ -63,7 +62,6 @@ body {
   	position: fixed;
   	width: 285px;
   	overflow-y: auto;
-	background-color: #fcfcfc;
 }
 
 @media (min-width: 769px) {

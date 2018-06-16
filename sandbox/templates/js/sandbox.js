@@ -49,7 +49,7 @@ jQuery('.sbx-toggle-btn').click(function(e){
 	e.stopPropagation();
 });
 jQuery(document).click(function(e) {
-    if (jQuery(e.target).is('.sbx-menu, .sbx-item-title, .item-2x, .item-2x a, .item-3x a, .submit, i') === false) {
+    if (jQuery(e.target).is('.sbx-menu, .sbx-item-title, .item-2x, .item-2x a, .item-3x a, .submit, i, .item-form select') === false) {
       jQuery('#module-mini-sandbox').removeClass('toggle');
     }
 });

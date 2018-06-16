@@ -83,6 +83,9 @@ $lang['mini.sandbox.bbcode'] = 'Framework BBCode';
 $lang['mini.sandbox.table'] = 'Tableaux';
 $lang['mini.sandbox.menu'] = 'CssMenu';
 
+$lang['mini.themes.switcher'] = 'Changer de thème';
+$lang['mini.default.theme'] = 'Thème par défaut';
+
 $lang['mini.config'] = 'Configuration';
 $lang['mini.manage'] = 'Gestion';
 $lang['mini.add'] = 'Ajouter';

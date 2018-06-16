@@ -67,7 +67,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$user = AppContext::get_current_user();
 		if($config->get_superadmin_enabled() == true)
-			$is_superadmin = $user->get_display_name() == $config->get_superadmin_id() && User::ADMIN_LEVEL;
+			$is_superadmin = $user->get_display_name() == $config->get_superadmin_name() && User::ADMIN_LEVEL;
 		else
 			$is_superadmin = $user->get_level() == User::ADMIN_LEVEL;
 
@@ -118,6 +118,33 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
             $nb_404 = $row['total'];
         }
 
+        // themeswitcher
+        $theme_id = AppContext::get_request()->get_string('switchtheme', '');
+		if (!empty($theme_id))
+		{
+			$theme = ThemesManager::get_theme($theme_id);
+			if ($theme !== null)
+			{
+				if ($theme->is_activated() && $theme->check_auth())
+				{
+					$user->update_theme($theme->get_id());
+				}
+			}
+			$query_string = preg_replace('`switchtheme=[^&]+`u', '', QUERY_STRING);
+			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+		}
+
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+
+		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $theme)
+		{
+			$tpl->assign_block_vars('themes', array(
+				'C_SELECTED' => $user->get_theme() == $theme->get_id(),
+				'NAME' => $theme->get_configuration()->get_name(),
+				'IDNAME' => $theme->get_id()
+			));
+		}
+
 		$tpl->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_LEFT_ENABLED' => !$menus_status->left_columns_is_disabled(),
@@ -144,6 +171,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
             'DISABLE_LEFT_COL' => $this->disable_left_menu->display(),
             'ENABLE_RIGHT_COL' => $this->enable_right_menu->display(),
             'DISABLE_RIGHT_COL' => $this->disable_right_menu->display(),
+            'DEFAULT_THEME'=> UserAccountsConfig::load()->get_default_theme()
 		));
 
 		return $tpl->render();

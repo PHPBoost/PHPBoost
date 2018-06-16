@@ -123,9 +123,12 @@
     text-align: center;
 }
 
+#module-mini-sandbox .item-x { width: 100%; }
 #module-mini-sandbox .item-2x { width: 50%; }
 #module-mini-sandbox .item-3x { width: calc(100% / 3); }
+#module-mini-sandbox .item-2x3 { width: calc(100% / 3 * 2); }
 #module-mini-sandbox .item-4x { width: calc(100% / 4); }
+#module-mini-sandbox .item-3x4 { width: calc(100% / 4 * 3); }
 
 
 #module-mini-sandbox .item-2x a,

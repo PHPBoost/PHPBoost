@@ -110,71 +110,71 @@ class SandboxFormController extends ModuleController
 
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'],
-			array('maxlength' => 25, 'description' => $this->lang['form.input.text.desc'], 'class' => 'maClass'),
+			array('maxlength' => 25, 'description' => $this->lang['form.input.text.desc'], 'class' => 'form-field-css-class'),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`iu'))
 		));
 		$fieldset->add_field(new FormFieldTextEditor('textdisabled', $this->lang['form.input.text.disabled'], '',
-			array('maxlength' => 25, 'description' => $this->lang['form.input.text.disabled.desc'], 'disabled' => true, 'class' => 'maClass')
+			array('maxlength' => 25, 'description' => $this->lang['form.input.text.disabled.desc'], 'disabled' => true, 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldUrlEditor('siteweb', $this->lang['form.input.url'], $this->lang['form.input.url.placeholder'],
-			array('description' => $this->lang['form.input.url.desc'], 'class' => 'maClass')
+			array('description' => $this->lang['form.input.url.desc'], 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['form.input.email'], $this->lang['form.input.email.placeholder'],
-			array('description' => $this->lang['form.input.email.desc'], 'class' => 'maClass')
+			array('description' => $this->lang['form.input.email.desc'], 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldMailEditor('mail_multiple', $this->lang['form.input.email.multiple'], $this->lang['form.input.email.multiple.placeholder'],
-			array('description' => $this->lang['form.input.email.multiple.desc'], 'multiple' => true, 'class' => 'maClass')
+			array('description' => $this->lang['form.input.email.multiple.desc'], 'multiple' => true, 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldTelEditor('tel', $this->lang['form.input.phone'], $this->lang['form.input.phone.placeholder'],
-			array('description' => $this->lang['form.input.phone.desc'], 'class' => 'maClass')
+			array('description' => $this->lang['form.input.phone.desc'], 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', $this->lang['form.input.text.required'], $this->lang['form.input.text.lorem'],
-			array('maxlength' => 25, 'description' => $this->lang['form.input.text.required.filled'], 'required' => true, 'class' => 'maClass')
+			array('maxlength' => 25, 'description' => $this->lang['form.input.text.required.filled'], 'required' => true, 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text3', $this->lang['form.input.text.required'], '',
-			array('maxlength' => 25, 'description' => $this->lang['form.input.text.required.empty'], 'required' => true, 'class' => 'maClass')
+			array('maxlength' => 25, 'description' => $this->lang['form.input.text.required.empty'], 'required' => true, 'class' => 'form-field-css-class')
 		));
 		$fieldset->add_field(new FormFieldNumberEditor('age', $this->lang['form.input.number'], $this->lang['form.input.number.placeholder'],
-			array('min' => 10, 'max' => 100, 'description' => $this->lang['form.input.number.desc'], 'class' => 'maClass'),
+			array('min' => 10, 'max' => 100, 'description' => $this->lang['form.input.number.desc'], 'class' => 'form-field-css-class'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('decimal', $this->lang['form.input.number.decimal'], $this->lang['form.input.number.decimal.placeholder'],
-			array('min' => 0, 'step' => 0.1, 'description' => $this->lang['form.input.number.decimal.desc'], 'class' => 'maClass')
+			array('min' => 0, 'step' => 0.1, 'description' => $this->lang['form.input.number.decimal.desc'], 'class' => 'form-field-css-class')
 		));
 
 		// RANGE
 		$fieldset->add_field($password = new FormFieldRangeEditor('range', $this->lang['form.input.length'], $this->lang['form.input.length.placeholder'],
-			array('min' => 1, 'max' => 10, 'description' => $this->lang['form.input.length.desc'], 'class' => 'maClass')
+			array('min' => 1, 'max' => 10, 'description' => $this->lang['form.input.length.desc'], 'class' => 'form-field-css-class')
 		));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['form.input.password'], $this->lang['form.input.password.placeholder'],
-			array('description' => $security_config->get_internal_password_min_length() . $this->lang['form.input.password.desc'], 'class' => 'maClass'),
+			array('description' => $security_config->get_internal_password_min_length() . $this->lang['form.input.password.desc'], 'class' => 'form-field-css-class'),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['form.input.password.confirm'], $this->lang['form.input.password.placeholder'],
-			array('description' => $security_config->get_internal_password_min_length() . $this->lang['form.input.password.desc'], 'class' => 'maClass'),
+			array('description' => $security_config->get_internal_password_min_length() . $this->lang['form.input.password.desc'], 'class' => 'form-field-css-class'),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 		));
 
 		// SHORT MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', $this->lang['form.input.multiline.medium'], $this->lang['form.input.multiline.lorem'],
-			array('rows' => 3, 'required' => true, 'class' => 'maClass')
+			array('rows' => 3, 'required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', $this->lang['form.input.multiline'], $this->lang['form.input.multiline.lorem'],
-			array('rows' => 6, 'cols' => 47, 'description' => $this->lang['form.input.multiline.desc'], 'required' => true, 'class' => 'maClass')
+			array('rows' => 6, 'cols' => 47, 'description' => $this->lang['form.input.multiline.desc'], 'required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// RICH TEXT
 		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', $this->lang['form.input.rich.text'], $this->lang['form.input.rich.text.placeholder'],
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// CHECKBOX
 		$fieldset->add_field(new FormFieldCheckbox('checkbox', $this->lang['form.input.checkbox'], FormFieldCheckbox::CHECKED,
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// MULTIPLE CHECKBOXES
@@ -184,7 +184,7 @@ class SandboxFormController extends ModuleController
 				new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice.1']),
 				new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice.2'])
 			),
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// RADIO
@@ -194,7 +194,7 @@ class SandboxFormController extends ModuleController
 				$default_option,
 				new FormFieldRadioChoiceOption($this->lang['form.input.choice.2'], '2')
 			),
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// SELECT
@@ -217,7 +217,7 @@ class SandboxFormController extends ModuleController
 					)
 				)
 			),
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// SELECT MULTIPLE
@@ -228,15 +228,15 @@ class SandboxFormController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['form.input.choice.2'], '2'),
 				new FormFieldSelectChoiceOption($this->lang['form.input.choice.3'], '3')
 			),
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['form.input.timezone'], 'UTC+0',
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['form.input.user.completion'], '',
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button']));
@@ -252,42 +252,42 @@ class SandboxFormController extends ModuleController
 
 		// FREE FIELD
 		$fieldset2->add_field(new FormFieldFree('free', $this->lang['form.free.html'], $this->lang['form.input.text.lorem'],
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// DATE
 		$fieldset2->add_field(new FormFieldDate('date', $this->lang['form.date'], null,
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// DATE TIME
 		$fieldset2->add_field(new FormFieldDateTime('date_time', $this->lang['form.date.hm'], null,
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// COLOR PICKER
 		$fieldset2->add_field(new FormFieldColorPicker('color', $this->lang['form.color'], '#366393',
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// SEARCH
 		$fieldset2->add_field(new FormFieldSearch('search', $this->lang['form.search'], '',
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', $this->lang['form.file.picker'],
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// MULTIPLE FILE PICKER
 		$fieldset2->add_field(new FormFieldMultipleFilePicker('multiple_files', $this->lang['form.multiple.file.picker'],
-			array('class' => 'maClass')
+			array('class' => 'form-field-css-class')
 		));
 
 		// UPLOAD FILE
 		$fieldset2->add_field(new FormFieldUploadFile('upload_file', $this->lang['form.file.upload'], '',
-			array('required' => true, 'class' => 'maClass')
+			array('required' => true, 'class' => 'form-field-css-class')
 		));
 
 		// List actionLinks
@@ -298,7 +298,7 @@ class SandboxFormController extends ModuleController
 				new FormFieldActionLinkElement($this->lang['form.action.link.3'], '#', ''),
 				new FormFieldActionLinkElement($this->lang['form.action.link.4'], '#', '')
 			),
-			array('description'=> $this->lang['form.action.link.list'], 'class' => 'maClass')
+			array('description'=> $this->lang['form.action.link.list'], 'class' => 'form-field-css-class')
 		));
 
 		// GOOGLE MAPS
@@ -308,16 +308,16 @@ class SandboxFormController extends ModuleController
 			$form->add_fieldset($fieldset_maps);
 
 			// SIMPLE ADDRESS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], '', array('class' => 'maClass')));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], '', array('class' => 'form-field-css-class')));
 
 			// MAP ADDRESS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('class' => 'maClass', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
 
 			// SIMPLE MARKER
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('class' => 'maClass', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
 
 			// MULTIPLE MARKERS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('class' => 'maClass', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
 		}
 
 		// AUTH
@@ -332,15 +332,15 @@ class SandboxFormController extends ModuleController
 		$vertical_fieldset = new FormFieldsetVertical('fieldset4');
 		$vertical_fieldset->set_description($this->lang['form.vertical.desc']);
 		$form->add_fieldset($vertical_fieldset);
-		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array('class' => 'maClass')));
-		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['form.input.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'maClass')));
+		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array('class' => 'form-field-css-class')));
+		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['form.input.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'form-field-css-class')));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
 		$horizontal_fieldset->set_description($this->lang['form.horizontal.desc']);
 		$form->add_fieldset($horizontal_fieldset);
-		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array('required' => true, 'class' => 'maClass')));
-		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['form.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'maClass')));
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['form.input.text'], $this->lang['form.input.text.lorem'], array('required' => true, 'class' => 'form-field-css-class')));
+		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['form.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'form-field-css-class')));
 
 		// BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('buttons');

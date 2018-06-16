@@ -189,6 +189,23 @@
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/table" title="{@mini.sandbox.table}"><i class="fa fa-table fa-2x"></i></a></div>
 					<div class="item-3x"><a href="${relative_url(SandboxUrlBuilder::config())}" title="{@mini.config}"><i class="fa fa-cogs fa-2x"></i></a></div>
 				</div>
+				<div class="sbx-menu-item">
+					<div class="sbx-item-title">{@mini.themes.switcher}</div>
+					<div class="item-form item-2x3">
+						<form action="{REWRITED_SCRIPT}" method="get">
+							<label for="switchtheme">
+								<select id="switchtheme" name="switchtheme" onchange="document.location = '?switchtheme=' + this.options[this.selectedIndex].value;">
+								# START themes #
+									<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
+								# END themes #
+								</select>
+							</label>
+						</form>
+					</div>
+					<div class="item-3x">
+						<a href="?switchtheme={DEFAULT_THEME}">{@mini.default.theme}</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
