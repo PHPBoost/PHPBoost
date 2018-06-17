@@ -311,7 +311,7 @@ class CalendarFormController extends ModuleController
 			else
 				$event_content->unapprove();
 		}
-		else if (CalendarAuthorizationsService::check_authorizations($event_content->get_id_category())->contribution() && !CalendarAuthorizationsService::check_authorizations($event_content->get_id_category())->write())
+		else if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->contribution() && !CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->write())
 			$event_content->unapprove();
 		
 		if ($this->form->get_value('registration_authorized'))
