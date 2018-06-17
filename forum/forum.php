@@ -184,11 +184,10 @@ if (!empty($id_get))
 						if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 						{
 							$is_sub_forum[] = $child->get_id();
-							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small">';
+							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small forum-subforum-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small forum-subforum-element">';
 							$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 						}
 					}
-					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 				}
 
 				//Vérifications des topics Lu/non Lus.
@@ -214,6 +213,8 @@ if (!empty($id_get))
 					'NAME' => stripslashes($row['name']),
 					'DESC' => stripslashes($row['subname']),
 					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
+					'C_SUBFORUMS' => !empty($subforums),
+					'L_SUBFORUMS' => $LANG['subforum_s'],
 					'NBR_TOPIC' => $row['nbr_topic'],
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
@@ -374,7 +375,7 @@ if (!empty($id_get))
 		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 
 		//Ancre ajoutée aux messages non lus.
-		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
+		$new_ancre = ($new_msg === true && !$is_guest) ? 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id : '';
 
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
@@ -398,10 +399,16 @@ if (!empty($id_get))
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
 			'C_BLINK' => $blink,
 			'IMG_ANNOUNCE' => $img_announce,
-			'ANCRE' => $new_ancre,
+			'U_ANCRE' => $new_ancre,
+			'C_ANCRE' => !empty($new_ancre),
 			'TYPE' => $type[$row['type']],
 			'TITLE' => stripslashes($row['title']),
-			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
+			'C_AUTHOR' => !empty($row['login']),
+			'U_AUTHOR' => UserUrlBuilder::profile($row['user_id'])->rel(),
+			'AUTHOR_LEVEL' => UserService::get_level_class($row['user_level']),
+			'AUTHOR' => $row['login'],
+			'GROUP_COLOR' => (!empty($group_color) ? ' style="color:' . $group_color . '"' : '')
+			'L_GUEST' => $LANG['guest'],
 			'DESC' => stripslashes($row['subtitle']),
 			'PAGINATION' => $topic_pagination->display(),
 			'MSG' => ($row['nbr_msg'] - 1),

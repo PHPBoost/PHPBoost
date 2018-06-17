@@ -67,7 +67,7 @@
 							<td class="forum-topic">
 								<a href="{forums_list.subcats.U_FORUM_VARS}" title="{forums_list.subcats.NAME}">{forums_list.subcats.NAME}</a>
 								<span class="smaller hidden-small-screens">{forums_list.subcats.DESC}</span>
-								<span class="small">{forums_list.subcats.SUBFORUMS}</span>
+								# IF forums_list.subcats.C_SUBFORUMS #<span class="small"><span class="strong">{forums_list.subcats.L_SUBFORUMS} : </span>{forums_list.subcats.SUBFORUMS}</span># ENDIF #
 							</td>
 							<td class="forum-subject-nb">
 								{forums_list.subcats.NBR_TOPIC}

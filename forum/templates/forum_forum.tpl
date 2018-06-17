@@ -50,7 +50,7 @@
 								<td class="forum-topic">
 									<a href="forum{subcats.U_FORUM_VARS}" title="{subcats.NAME}">{subcats.NAME}</a>
 									<span class="smaller">{subcats.DESC}</span>
-									<span class="smaller">{subcats.SUBFORUMS}</span>
+									# IF subcats.C_SUBFORUMS #<span class="smaller"><span class="strong">{subcats.L_SUBFORUMS} : </span>{subcats.SUBFORUMS}</span># ENDIF #
 								</td>
 								<td class="forum-subject-nb">
 									{subcats.NBR_TOPIC}
@@ -151,11 +151,15 @@
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-							{topics.ANCRE} # IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF # <a href="topic{topics.U_TOPIC_VARS}" title="{topics.TITLE}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}" title=""><i class="fa fa-hand-o-right"></i></a># ENDIF # # IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF # <a href="topic{topics.U_TOPIC_VARS}" title="{topics.TITLE}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<span class="smaller">{topics.DESC}</span>
 						</td>
 						<td class="forum-author">
-							{topics.AUTHOR}
+							# IF C_AUTHOR #
+							<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"{topics.GROUP_COLOR}>{topics.AUTHOR}</a>
+							# ELSE #
+							<em>{topics.L_GUEST}</em>
+							# ENDIF #
 						</td>
 						<td class="forum-message-nb">
 							{topics.MSG}
