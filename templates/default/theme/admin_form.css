@@ -494,7 +494,7 @@ option {
 	}
 }
 
-/* --- admin-element checkbox --- */ 
+/* --- admin-element checkbox --- */
 .form-field.multiple-checkbox-container {
 	display: inline-block;
 	width: 20px;
@@ -1112,7 +1112,7 @@ div[id*='keyword'] .form-autocompleter-container input {
 
 /* --- Lined textarea --- */
 .linedwrap {
-	max-width: 100%;
+	width: 100%;
 }
 
 .linedtextarea {
@@ -1121,6 +1121,7 @@ div[id*='keyword'] .form-autocompleter-container input {
 	padding: 0 0 0 0.618em;
 	width: calc(100% - 60px);
 	height: 100%;
+	vertical-align: top;
 }
 
 .linedtextarea textarea,
