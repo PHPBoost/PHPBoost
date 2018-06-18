@@ -606,6 +606,33 @@ class UpdateServices
 		if ($folder->exists())
 			$folder->delete();
 		
+		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.phpmailer.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.pop3.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.smtp.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/PHPMailerAutoload.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/share/AbstractShare.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/share/FacebookLikeShare.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/share/GooglePlusOneShare.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/share/ShareInterface.class.php'));
+		$file->delete();
+		
+		$file = new File(Url::to_rel('/kernel/framework/content/share/TwitterTweeterShare.class'));
+		$file->delete();
+		
 		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php'));
 		$file->delete();
 		
