@@ -204,25 +204,6 @@ select {
 	width: 100%;
 	border-width: 1px;
 	border-style: solid ;
-}
-
-select {
-	padding: 0.309em 0.618em 0.382em 1.618em;
-}
-
-[type=text]:hover,
-[type=email]:hover,
-[type=url]:hover,
-[type=number]:hover,
-[type=color]:hover,
-[type=tel]:hover,
-[type=search]:hover,
-[type=password]:hover,
-[type=file]:hover,
-textarea:hover,
-select:hover {
-	border-width: 1px;
-	border-style: solid;
 	border-color: transparent;
 }
 
@@ -264,10 +245,6 @@ optgroup {
 	border-style: solid;
 	border-color: transparent;
 	font-weight: bold;
-}
-
-option {
-	padding: 3px;
 }
 
 /* --- checkbox mini --- */
@@ -385,7 +362,6 @@ option {
 	width: 100%;
 	height: 1.309em;
 	transition: all 0.2s;
-	border-radius: 4px;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
@@ -400,7 +376,6 @@ option {
 	left: 0;
 	width: calc(50% + 1px);
 	transition: all 0.3s;
-	border-radius: 4px 0 0 4px;
 }
 
 .form-field-checkbox [type="checkbox"]:checked + label:after {
@@ -410,7 +385,6 @@ option {
 /* on checked */
 .form-field-checkbox [type="checkbox"]:checked + label:after {
 	left: calc(50% + 1px);
-	border-radius: 0 4px 4px 0;
 }
 
 .form-field-checkbox .text-status-constraint {
@@ -803,21 +777,20 @@ select[readonly=readonly]:focus {
 }
 
 /* --- Textarea --- */
+.bbcode { width: 100% !important; }
+
 textarea {
 	display: block;
 	margin: 0.309em auto;
-	width: 94%;
 	overflow: auto;
 	resize: vertical;
 }
 
 textarea#writing_pad_content {
 	height: 264px;
-	width: 100%;
 }
 
 .form-element-textarea-small 	{ width: 49%; }
-.form-element-textarea textarea { width: 99%; }
 
 .form-element-textarea .form-field-textarea {
 	display: block;
