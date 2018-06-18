@@ -3,7 +3,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> &raquo; <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a>
 				</h2>
 			</header>
 			<div class="content">
@@ -421,7 +421,7 @@
 
 			</div>
 			<footer>
-				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-chevron-circle-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> &raquo; <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a>
 			</footer>
 		</article>
 

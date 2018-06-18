@@ -158,11 +158,10 @@ class ForumHomeController extends ModuleController
 							if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 							{
 								$is_sub_forum[] = $child->get_id();
-								$link = $child->get_url() ? '<a href="' . $child->get_url() . '">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '">';
+								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subform-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subform-element">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 							}
 						}
-						$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 					}
 
 					if (!empty($row['last_topic_id']))
@@ -217,6 +216,8 @@ class ForumHomeController extends ModuleController
 						'NAME' => $row['name'],
 						'DESC' => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS' => $subforums,
+						'C_SUBFORUMS' => !empty($subforums),
+						'L_SUBFORMS' => $LANG['subforum_s'],
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],

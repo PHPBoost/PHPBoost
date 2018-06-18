@@ -55,15 +55,19 @@
 									# ENDIF #
 								</td>
 								<td class="forum-fixed-topic">
-									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
+									# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF # <i class="fa fa-msg-track"></i> # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 								</td>
 								<td class="forum-topic">
 									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a title="{topics.TITLE}" href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+									<a href="{topics.U_ANCRE}" title=""><i class="fa fa-hand-o-right"></i></a> <strong>{topics.TYPE}</strong> <a title="{topics.TITLE}" href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<span class="smaller">{topics.DESC}</span>
 								</td>
 								<td class="forum-author">
-									{topics.AUTHOR}
+									# IF C_AUTHOR #
+									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"{topics.GROUP_COLOR}>{topics.AUTHOR}</a>
+									# ELSE #
+									<em>{topics.L_GUEST}</em>
+									# ENDIF #
 								</td>
 								<td class="forum-message-nb">
 									{topics.MSG}

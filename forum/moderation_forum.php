@@ -126,7 +126,7 @@ if ($action == 'alert') //Gestion des alertes
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_ALERT' => $LANG['alert_management'],
-		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()) . '">' . $LANG['alert_management'] . '</a>',
+		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()),
 		'U_ACTION_ALERT' => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token())
 	));
 

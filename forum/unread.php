@@ -140,7 +140,7 @@ while ($row = $result->fetch())
 	$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite .  $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'">' . $row['last_login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 
 	//Ancre ajoutée aux messages non lus.	
-	$new_ancre = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>';
+	$new_ancre = 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id ;
 	
 	//On crée une pagination (si activé) si le nombre de topics est trop important.
 	$page = AppContext::get_request()->get_getint('pt', 1);
@@ -162,10 +162,15 @@ while ($row = $result->fetch())
 		'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
 		'C_BLINK' => true,
 		'IMG_ANNOUNCE' => $img_announce,
-		'ANCRE' => $new_ancre,
+		'U_ANCRE' => $new_ancre,
 		'TYPE' => $type[$row['type']],
 		'TITLE' => stripslashes($row['title']),
-		'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
+		'C_AUTHOR' => !empty($row['login']),
+		'U_AUTHOR' => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'AUTHOR_LEVEL' => UserService::get_level_class($row['user_level']),
+		'AUTHOR' => $row['login'],
+		'GROUP_COLOR' => (!empty($group_color) ? ' style="color:' . $group_color . '"' : '')
+		'L_GUEST' => $LANG['guest'],
 		'DESC' => stripslashes($row['subtitle']),
 		'PAGINATION' => $topic_pagination->display(),
 		'MSG' => ($row['nbr_msg'] - 1),

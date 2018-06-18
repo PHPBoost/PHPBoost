@@ -1,30 +1,38 @@
+#Kernel
 cache/*
+stats/cache/*
 robots.txt
 sitemap.xml
 kernel/db/config.php
 *.swp
 *.orig
 *.htaccess
+update/update_followed.txt
+
+#Images & fichiers
 images/avatars/*
 images/maths/*
 images/customization/*
 images/smileys/*
 gallery/pics/*
-stats/cache/*
 upload/*
-update/update_followed.txt
+
+#Modules non officiel
 HomeCustom
 CMSMigrant
+PHPBoostOfficial
+smallads
 
+#Themes non officiels
 !templates
 # Ignore le répertoire des thèmes:
 templates/*.*
 templates/*
-
 # Sauf les thèmes suivants :
 !templates/base
 !templates/default
 !templates/phpboost
 
+#Fichiers projets
 *.sublime-project
 *.sublime-workspace
