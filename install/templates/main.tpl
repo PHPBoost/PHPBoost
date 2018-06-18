@@ -16,7 +16,7 @@ ${resources('install/install')}
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors_light.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="templates/install.css" type="text/css" media="screen, print" />
 
 		<script>
