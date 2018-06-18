@@ -630,7 +630,7 @@ class UpdateServices
 		$file = new File(Url::to_rel('/kernel/framework/content/share/ShareInterface.class.php'));
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/TwitterTweeterShare.class'));
+		$file = new File(Url::to_rel('/kernel/framework/content/share/TwitterTweeterShare.class.php'));
 		$file->delete();
 		
 		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php'));
