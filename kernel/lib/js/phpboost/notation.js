@@ -100,11 +100,7 @@ Note.prototype = {
 				star_class = 'fa star star-hover fa-star-empty'
 				star_width = 'star-width star-width-100';
 			}
-			else if(decimal >= 0.9 && decimal < 1) {
-				star_class = 'fa star star-hover fa-star-empty'
-				star_width = 'star-width star-width-90';
-			}
-			else if(decimal >= 0.75 && decimal < 0.9) {
+			else if(decimal >= 0.75 && decimal < 1) {
 				star_class = 'fa star star-hover fa-star-empty'
 				star_width = 'star-width star-width-75';
 			}
@@ -113,13 +109,9 @@ Note.prototype = {
 				star_width = 'star-width star-width-50';
 				alert(decimal);
 			}
-			else if(decimal >= 0.25 && decimal < 0.50) {
+			else if(decimal >= 0.05 && decimal < 0.50) {
 				star_class = 'fa star star-hover fa-star-empty'
 				star_width = 'star-width star-width-25';
-			}
-			else if(decimal >= 0.1 && decimal < 0.25) {
-				star_class = 'fa star star-hover fa-star-empty'
-				star_width = 'star-width star-width-10';
 			}
 			else {
 				star_class = 'fa star star-hover fa-star-empty'

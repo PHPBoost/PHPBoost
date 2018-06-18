@@ -412,11 +412,9 @@
 			<div class="content">Valeurs possibles
 				<div class="notation">
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-1"><span class="star-width star-width-100"></span></a> <!-- 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-2"><span class="star-width star-width-90"></span></a>  <!-- 0.90 à 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-2"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 0.90 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-2"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-3"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-25"></span></a>  <!-- 0.25 à 0.5 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-4"><span class="star-width star-width-10"></span></a>  <!-- 0.1 à 0.25 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
 				</div>
 			</div>

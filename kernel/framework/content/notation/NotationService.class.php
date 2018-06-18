@@ -71,11 +71,7 @@ class NotationService
 					$star_full = true;
 					$star_width = 'star-width-100';
 				}
-				else if ($int+1 == $i && $decimal >= 0.90) {
-					$star_full = true;
-					$star_width = 'star-width-90';
-				}
-				else if ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9) {
+				else if ($int+1 == $i && $decimal >= 0.75) {
 					$star_full = true;
 					$star_width = 'star-width-75';
 				}
@@ -83,13 +79,9 @@ class NotationService
 					$star_half = true;
 					$star_width = 'star-width-50';
 				}
-				else if ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5) {
+				else if ($int+1 == $i && $decimal >= 0.05 && $decimal < 0.5) {
 					$star_half = true;
 					$star_width = 'star-width-25';
-				}
-				else if ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25) {
-					$star_empty = true;
-					$star_width = 'star-width-10';
 				}
 				else {
 					$star_empty = true;
