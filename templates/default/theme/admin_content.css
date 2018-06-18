@@ -437,12 +437,28 @@ header.legend .admin-element-menu-container {
 }
 
 .multiple-select-menu {
-	padding: 0 0 0 25px;
+	padding: 0 0 0 0;
 }
 
 .multiple-select-menu:hover {
 	text-decoration: none;
 }
+
+.form-field.select-all-checkbox {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	margin: 0.228em 0 0 0;
+}
+
+.multiple-select-menu-container button.select-all-button {
+	display: inline-block;
+	margin: 0;
+	padding: 0.456em 1em 0.618em 0.618em;
+}
+
+
 
 /* --- Exploreur des catégories ================================================= */
 .explorer .cats,

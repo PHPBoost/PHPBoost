@@ -322,6 +322,21 @@ article .admin-element-menu-title,
 	background-color: #DEDEDE;
 }
 
+.multiple-select-menu-container:hover {
+	background-color: transparent;
+}
+
+.multiple-select-menu-container button.select-all-button {
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+.multiple-select-menu-container:hover button.select-all-button {
+	background-color: transparent;
+	color: #366493;
+}
+
 /* -- Table
     #####   ###   ###    #      #####
       #    #   #  #  #   #      #

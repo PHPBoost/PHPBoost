@@ -3,16 +3,7 @@
 	<input type="hidden" name="token" value="{TOKEN}">
 	# INCLUDE MSG #
 	<section id="not-installed-themes-container" class="admin-elements-container themes-elements-container not-installed-elements-container">
-		<header class="legend">
-			# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
-			<div class="select-all-container">
-				<a onclick="multiple_checkbox_check(1, {THEMES_NUMBER}); return false;">{@themes.select_all_themes}</a>
-				<span> / </span>
-				<a onclick="multiple_checkbox_check(0, {THEMES_NUMBER}); return false;">${LangLoader::get_message('none', 'common')}</a>
-			</div>
-			# ENDIF #
-			{@themes.themes_available}
-		</header>
+		<header class="legend">{@themes.themes_available}</header>
 		# IF C_THEME_AVAILABLE #
 		<div class="content elements-container columns-3">
 			# START themes_not_installed #
@@ -74,8 +65,12 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
-	<div class="multiple-select-menu-container">
-		<button type="submit" name="add-selected-themes" value="true" class="submit admin-element-menu-title">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
+	<div class="multiple-select-menu-container admin-element-menu-title">
+		<div class="form-field form-field-checkbox-mini select-all-checkbox">
+			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER});" aria-label="{@themes.select_all_themes}" />
+			<label for="add-all-checkbox"></label>
+		</div>
+		<button type="submit" name="add-selected-themes" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 	</div>
 	# ENDIF #
 </form>
