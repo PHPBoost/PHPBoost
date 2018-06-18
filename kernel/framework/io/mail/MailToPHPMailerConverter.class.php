@@ -50,6 +50,7 @@ class MailToPHPMailerConverter
 	{
 		$this->mail_to_send = $mail;
 		$this->mailer = new PHPMailer(true);
+		$this->mailer->CharSet = 'utf-8';
 		$this->convert_mail();
 		return $this->mailer;
 	}

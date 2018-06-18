@@ -583,7 +583,6 @@ optgroup {
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
 .form-field-checkbox [type="checkbox"]:checked + label:before {
 	background-color: #ffffff;
-	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.05);
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:after,
