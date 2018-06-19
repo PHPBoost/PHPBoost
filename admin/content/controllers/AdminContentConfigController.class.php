@@ -177,6 +177,9 @@ class AdminContentConfigController extends AdminController
 			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
+		$fieldset = new FormFieldsetHTML('content_config', $this->lang['content']);
+		$form->add_fieldset($fieldset);
+		
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled()));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
