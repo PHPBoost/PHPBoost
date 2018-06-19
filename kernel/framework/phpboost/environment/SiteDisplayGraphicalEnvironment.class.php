@@ -141,13 +141,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_FAVICON'           => $customization_config->favicon_exists(),
-			'C_OPENGRAPH'         => $seo_meta_data->opengraph_actived(),
+			'C_OPENGRAPH'         => ContentManagementConfig::load()->is_opengraph_enabled(),
 			'C_CANONICAL_URL'     => $seo_meta_data->canonical_link_exists(),
 			'C_PICTURE_URL'       => $seo_meta_data->picture_url_exists(),
 			'C_DESCRIPTION'       => !empty($description),
 			'FAVICON'             => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE'        => $customization_config->favicon_type(),
-			'SITE_NAME' 		  => GeneralConfig::load()->get_site_name(),
+			'SITE_NAME'           => GeneralConfig::load()->get_site_name(),
 			'TITLE'               => $seo_meta_data->get_full_title(),
 			'PAGE_TITLE'          => $seo_meta_data->get_title(),
 			'SITE_DESCRIPTION'    => $description,
@@ -161,6 +161,27 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'JS_BOTTOM'           => $js_bottom_tpl,
 			'BODY'                => $body_template
 		));
+		
+		foreach ($seo_meta_data->get_additionnal_properties() as $og_id => $og_value)
+		{
+			if (is_array($og_value))
+			{
+				foreach ($og_value as $og_sub_value)
+				{
+					$template->assign_block_vars('og_additionnal_properties', array(
+						'ID' => $og_id,
+						'VALUE' => $og_sub_value
+					));
+				}
+			}
+			else
+			{
+				$template->assign_block_vars('og_additionnal_properties', array(
+					'ID' => $og_id,
+					'VALUE' => $og_value
+				));
+			}
+		}
 		
 		$template->display(true);
 	}

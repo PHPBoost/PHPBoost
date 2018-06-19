@@ -144,6 +144,9 @@ class CalendarDisplayEventController extends ModuleController
 		$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		
+		if ($event->get_content()->has_picture())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($event->get_content()->get_picture());
+		
 		return $response;
 	}
 }

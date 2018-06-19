@@ -189,6 +189,9 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
 		
+		if ($downloadfile->has_picture())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($downloadfile->get_picture());
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'],DownloadUrlBuilder::home());
 		

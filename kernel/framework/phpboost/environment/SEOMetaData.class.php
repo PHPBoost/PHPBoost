@@ -38,13 +38,8 @@ class SEOMetaData
 	private $canonical_url;
 	private $picture_url;
 	private $page_type = 'website';
+	private $additionnal_properties = array();
 	
-
-	public function opengraph_actived()
-	{
-		return true;
-	}
-
 	public function set_title($title, $section = '')
 	{
 		$this->title = $title;
@@ -95,7 +90,7 @@ class SEOMetaData
 	
 	public function set_canonical_url(Url $canonical_url)
 	{
-		$this->canonical_url = $canonical_url;	
+		$this->canonical_url = $canonical_url;
 	}
 	
 	public function canonical_link_exists()
@@ -106,37 +101,46 @@ class SEOMetaData
 	public function get_canonical_link()
 	{
 		if ($this->canonical_url !== null)
-		{
 			return $this->canonical_url->absolute();
-		}
 	}
 
 	public function set_picture_url(Url $picture_url)
 	{
-		$this->picture_url = $picture_url;	
+		$this->picture_url = $picture_url;
 	}
 	
 	public function picture_url_exists()
 	{
-		return $this->picture_url !== null;
+		return $this->picture_url !== null || ContentManagementConfig::load()->get_site_default_picture_url()->absolute();
 	}
 	
 	public function get_picture_url()
 	{
+		$site_default_picture_url = ContentManagementConfig::load()->get_site_default_picture_url();
 		if ($this->picture_url !== null)
-		{
 			return $this->picture_url->absolute();
-		}
+		else if ($site_default_picture_url->absolute())
+			return $site_default_picture_url->absolute();
 	}
 
 	public function set_page_type($page_type)
 	{
-		$this->page_type = $page_type;	
+		$this->page_type = $page_type;
 	}
 	
 	public function get_page_type()
 	{
 		return $this->page_type;
+	}
+
+	public function set_additionnal_properties(array $additionnal_properties)
+	{
+		$this->additionnal_properties = $additionnal_properties;
+	}
+	
+	public function get_additionnal_properties()
+	{
+		return $this->additionnal_properties;
 	}
 }
 ?>

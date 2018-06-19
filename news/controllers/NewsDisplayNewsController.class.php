@@ -262,6 +262,9 @@ class NewsDisplayNewsController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_news()->get_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
+		if ($this->get_news()->has_picture())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_news()->get_picture());
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		

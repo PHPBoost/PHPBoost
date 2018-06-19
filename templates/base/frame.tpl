@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}">
+<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # xmlns:og="http://ogp.me/ns#"# ENDIF #>
 	<head>
 		<title>{TITLE}</title>
 		<meta charset="UTF-8" />
@@ -15,6 +15,9 @@
 			<meta property="og:type" content="{PAGE_TYPE}" />
 			# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
 			# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
+			# START og_additionnal_properties #
+			<meta property="{og_additionnal_properties.ID}" content="{og_additionnal_properties.VALUE}" />
+			# END og_additionnal_properties #
 		# ENDIF #
 
 		<!-- Theme CSS -->

@@ -40,6 +40,8 @@ class ContentManagementConfig extends AbstractConfigData
 	const NOTATION_SCALE                   = 'notation_scale';
 	const NOTATION_UNAUTHORIZED_MODULES    = 'notation_unauthorized_modules';
 	const CONTENT_SHARING_ENABLED          = 'content_sharing_enabled';
+	const OPENGRAPH_ENABLED                = 'opengraph_enabled';
+	const SITE_DEFAULT_PICTURE_URL         = 'site_default_picture_url';
 	
 	public function is_anti_flood_enabled()
 	{
@@ -141,6 +143,26 @@ class ContentManagementConfig extends AbstractConfigData
 		$this->set_property(self::CONTENT_SHARING_ENABLED, $enabled);
 	}
 
+	public function is_opengraph_enabled()
+	{
+		return $this->get_property(self::OPENGRAPH_ENABLED);
+	}
+	
+	public function set_opengraph_enabled($enabled)
+	{
+		$this->set_property(self::OPENGRAPH_ENABLED, $enabled);
+	}
+
+	public function get_site_default_picture_url()
+	{
+		return new Url($this->get_property(self::SITE_DEFAULT_PICTURE_URL));
+	}
+
+	public function set_site_default_picture_url($url)
+	{
+		$this->set_property(self::SITE_DEFAULT_PICTURE_URL, $url);
+	}
+
 	public function module_new_content_is_enabled($module_id)
 	{
 		return $this->is_new_content_enabled() && !in_array($module_id, $this->get_new_content_unauthorized_modules());
@@ -173,7 +195,9 @@ class ContentManagementConfig extends AbstractConfigData
 			self::NOTATION_ENABLED                 => true,
 			self::NOTATION_SCALE                   => 5,
 			self::NOTATION_UNAUTHORIZED_MODULES    => array(),
-			self::CONTENT_SHARING_ENABLED          => true
+			self::CONTENT_SHARING_ENABLED          => true,
+			self::OPENGRAPH_ENABLED                => true,
+			self::SITE_DEFAULT_PICTURE_URL         => ''
 		);
 	}
 

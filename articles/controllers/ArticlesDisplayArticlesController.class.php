@@ -308,7 +308,28 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$graphical_environment->set_page_title($this->article->get_title(), $this->lang['articles']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
-	
+		
+		if ($this->article->has_picture())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($this->article->get_picture());
+		
+		$graphical_environment->get_seo_meta_data()->set_page_type('article');
+		
+		$additionnal_properties = array(
+			'article:section' => $this->category->get_name(),
+			'article:published_time' => $this->article->get_date_created()->format(Date::FORMAT_ISO8601)
+		);
+		
+		if ($this->article->get_keywords())
+			$additionnal_properties['article:tag'] = $this->article->get_keywords();
+		
+		if ($this->article->get_date_updated() !== null)
+			$additionnal_properties['article:modified_time'] = $this->article->get_date_updated()->format(Date::FORMAT_ISO8601);
+		
+		if ($this->article->get_publishing_end_date() !== null)
+			$additionnal_properties['article:expiration_time'] = $this->article->get_publishing_end_date()->format(Date::FORMAT_ISO8601);
+		
+		$graphical_environment->get_seo_meta_data()->set_additionnal_properties($additionnal_properties);
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
 		

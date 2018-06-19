@@ -167,6 +167,9 @@ class WebDisplayWebLinkController extends ModuleController
 		$graphical_environment->set_page_title($weblink->get_name(), $this->lang['module_title']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
 		
+		if ($weblink->has_picture())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($weblink->get_picture());
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'],WebUrlBuilder::home());
 		

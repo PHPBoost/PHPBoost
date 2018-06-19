@@ -62,6 +62,7 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->content_management_config->is_notation_enabled());
 			$this->form->get_field_by_id('notation_unauthorized_modules')->set_hidden(!$this->content_management_config->is_notation_enabled());
 			$this->form->get_field_by_id('notation_unauthorized_modules')->set_selected_options($this->content_management_config->get_notation_unauthorized_modules());
+			$this->form->get_field_by_id('site_default_picture_url')->set_hidden(!$this->content_management_config->is_opengraph_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -181,6 +182,21 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled()));
+		
+		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
+			array(
+				'description' => $this->lang['content.config.opengraph-enabled.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("opengraph_enabled").getValue()) {
+						HTMLForms.getField("site_default_picture_url").enable();
+					} else {
+						HTMLForms.getField("site_default_picture_url").disable();
+					}'
+				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative()));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -251,6 +267,14 @@ class AdminContentConfigController extends AdminController
 			$this->content_management_config->set_content_sharing_enabled(true);
 		else
 			$this->content_management_config->set_content_sharing_enabled(false);
+		
+		if ($this->form->get_value('opengraph_enabled'))
+		{
+			$this->content_management_config->set_opengraph_enabled(true);
+			$this->content_management_config->set_site_default_picture_url($this->form->get_value('site_default_picture_url'));
+		}
+		else
+			$this->content_management_config->set_opengraph_enabled(false);
 		
 		ContentManagementConfig::save();
 

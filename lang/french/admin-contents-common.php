@@ -45,6 +45,9 @@ $lang['content.config.anti-flood-enabled-explain'] = 'Empêche les messages trop
 $lang['content.config.delay-flood'] = 'Interval minimum de temps entre les messages';
 $lang['content.config.delay-flood-explain'] = 'En secondes. 7 secondes par défaut.';
 $lang['content.config.content-sharing-enabled'] = 'Afficher les liens de partage sur les pages de contenu';
+$lang['content.config.opengraph-enabled'] = 'Améliorer le référencement avec les balises OpenGraph';
+$lang['content.config.opengraph-enabled.explain'] = 'Permet de donner des informations précises sur les pages aux moteurs de recherche et réseaux sociaux';
+$lang['content.config.site-default-picture-url'] = 'Image par défaut du site pour le référencement';
 
 $lang['content.config.captcha'] = 'Captcha';
 $lang['content.config.captcha-used'] = 'Code de vérification utilisé sur le site';
