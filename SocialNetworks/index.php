@@ -30,7 +30,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminSocialNetworksConfigController', '`^(?:/config)?/?$`'),
+	new UrlControllerMapper('AdminSocialNetworksConfigController', '`^(?:/admin)?(?:/config)?/?$`'),
 	new UrlControllerMapper('SocialNetworksAjaxChangeSharingContentDisplayController', '`^/config/change_display/?$`'),
 );
 

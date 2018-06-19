@@ -90,7 +90,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 
 		$response = new AdminMenuDisplayResponse($this->view);
 		$response->set_title($this->lang['module_name']);
-		$response->add_link(LangLoader::get_message('configuration', 'admin-common'), DispatchManager::get_url('/SocialNetworks', '/config/'));
+		$response->add_link(LangLoader::get_message('configuration', 'admin-common'), DispatchManager::get_url('/SocialNetworks', '/admin/'));
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['module_config_title'], $this->lang['module_name']);
 
