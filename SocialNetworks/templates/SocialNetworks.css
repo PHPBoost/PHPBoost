@@ -155,8 +155,25 @@ a.social-connect span {
 /* -- Configuration -- */
 /* -------------------------- */
 .social-networks-list-container .sortable-title { padding: 8px 5px 12px 10px; }
-.social-networks-list-container .sortable-title > span { font-size: .6em; }
+.social-networks-list-container .sortable-title > span {
+	font-size: .6em;
+}
 
+.social-networks-menu {
+	font-size: 1.228em;
+	margin-bottom: 1.618em;
+	vertical-align: top;
+}
+
+@media (min-width: 769px) {
+	.social-networks-menu {
+		width: calc(99%/2);
+		display: inline-block;
+		padding-right: 2.618em;
+	}
+}
+
+.social-networks-menu:first-child {  }
 /* --- Mini Module
 --------------------------------- */
 #module-mini-social-networks {}

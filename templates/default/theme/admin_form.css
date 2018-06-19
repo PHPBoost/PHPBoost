@@ -77,7 +77,8 @@ button[id*=menu_element] {
 	margin: 1.309em auto auto auto;
 }
 
-fieldset {
+fieldset,
+.fieldset {
 	margin: 1.309em 0.309em 0;
 	border: none;
 	background: none;
@@ -108,7 +109,8 @@ fieldset#AdminErrorsController404List_fbuttons{
 }
 
 @media (min-width: 769px) {
-	fieldset {
+	fieldset,
+	.fieldset {
 		margin: 1.309em 1.309em 0;
 	}
 

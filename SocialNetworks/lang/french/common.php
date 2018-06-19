@@ -50,6 +50,12 @@ $lang['admin.order.manage'] = 'Ordre d\'affichage des réseaux sociaux';
 $lang['admin.display_share_link'] = 'Afficher le lien de partage';
 $lang['admin.hide_share_link'] = 'Cacher le lien de partage';
 $lang['admin.no_sharing_content_url'] = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';
+$lang['admin.menu.position'] = 'Positionnement du menu';
+$lang['admin.menu.mini_module'] = 'Pour afficher les liens de partage dans un mini-module, <br />activer le mini-module dédié dans la ';
+$lang['admin.menu.menus_configuration'] = 'gestion des Menus';
+$lang['admin.menu.content'] = 'Pour afficher les liens de partage sur les pages de contenu, <br />activer l\'option dans la ';
+$lang['admin.menu.content_configuration'] = 'gestion du contenu';
+
 
 //Sign in label
 $lang['sign-in-label'] = 'Connexion :name';

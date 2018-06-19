@@ -127,4 +127,13 @@ jQuery(document).ready(function() {
 	</fieldset>
 </form>
 # ENDIF #
+
+<div class="fieldset social-networks-menu-container">
+	<div class="legend">{@admin.menu.position}</div>
+	<div class="fieldset-inset">
+		<div class="social-networks-menu">{@H|admin.menu.mini_module}<a href="{PATH_TO_ROOT}/admin/menus/menus.php">{@admin.menu.menus_configuration}</a>.</div>
+		<div class="social-networks-menu">{@H|admin.menu.content}<a href="{PATH_TO_ROOT}/admin/content/config/">{@admin.menu.content_configuration}</a>.</div>
+	</div>
+</div>
+
 # INCLUDE FORM #

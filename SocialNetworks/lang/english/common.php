@@ -50,6 +50,11 @@ $lang['admin.order.manage'] = 'Social networks display order';
 $lang['admin.display_share_link'] = 'Display share link';
 $lang['admin.hide_share_link'] = 'Hide share link';
 $lang['admin.no_sharing_content_url'] = 'This social network does not have share content link, it will not be displayed in content sharing list but only in authentication methods list if it is enabled.';
+$lang['admin.menu.position'] = 'Menu positionning';
+$lang['admin.menu.mini_module'] = 'To show share media links in mini-module, <br />enable the dedicated mini-module in ';
+$lang['admin.menu.menus_configuration'] = 'Menus configuration';
+$lang['admin.menu.content'] = 'To show share media links in the content page, <br />enable this option in ';
+$lang['admin.menu.content_configuration'] = 'Content configuration';
 
 //Sign in label
 $lang['sign-in-label'] = 'Sign in with :name';
