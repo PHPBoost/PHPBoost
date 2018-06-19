@@ -145,7 +145,7 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			'U_AUTHOR' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'AUTHOR_LEVEL' => UserService::get_level_class($row['user_level']),
 			'AUTHOR' => $row['login'],
-			'GROUP_COLOR' => !empty($group_color) ? ' style="color:' . $group_color . '"' : '';
+			'GROUP_COLOR' => !empty($group_color) ? ' style="color:' . $group_color . '"' : '',
 			'L_GUEST' => $LANG['guest'],
 			'DESC' => stripslashes($row['subtitle']),
 			'PAGINATION' => $topic_pagination->display(),
