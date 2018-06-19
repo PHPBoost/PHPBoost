@@ -25,9 +25,11 @@
  *
  ###################################################*/
 
+include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
+
 class DefaultMailService extends AbstractPHPMailerMailService
 {
-	protected function set_send_settings(PHPMailer $mailer)
+	protected function set_send_settings(PHPMailer\PHPMailer\PHPMailer $mailer)
 	{
 		$mailer->IsMail();
 	}

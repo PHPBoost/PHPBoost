@@ -25,9 +25,7 @@
  *
  ###################################################*/
 
-include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/Exception.php';
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
-include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/SMTP.php';
 
 abstract class AbstractPHPMailerMailService implements MailService
 {
@@ -84,7 +82,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		return $this->try_to_send($mail);
 	}
 
-	abstract protected function set_send_settings(PHPMailer $mailer);
+	abstract protected function set_send_settings(PHPMailer\PHPMailer\PHPMailer $mailer);
 
 	public function is_mail_valid($mail_address)
 	{

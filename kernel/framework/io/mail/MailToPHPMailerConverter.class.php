@@ -25,9 +25,10 @@
  *
  ###################################################*/
 
-include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/Exception.php';
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/SMTP.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 class MailToPHPMailerConverter
 {
