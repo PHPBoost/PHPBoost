@@ -145,7 +145,7 @@ class ContactController extends ModuleController
 		if ($subject_field->get_field_type() == 'ContactShortTextField')
 			$subject = $this->form->get_value('f_subject');
 		else
-			$subject = $this->form->get_value('f_subject')->get_raw_value();
+			$subject = $this->form->get_value('f_subject') && $this->form->get_value('f_subject')->get_raw_value() ? $this->form->get_value('f_subject')->get_raw_value() : '';
 
 		$display_message_title = false;
 		if ($this->config->is_tracking_number_enabled())
@@ -222,8 +222,14 @@ class ContactController extends ModuleController
 		}
 		else if ($subject_field->get_field_type() != 'ContactShortTextField')
 		{
-			$recipient = $this->form->get_value('f_subject')->get_raw_value() ? $subjects[$this->form->get_value('f_subject')->get_raw_value()]['recipient'] : MailServiceConfig::load()->get_default_mail_sender() . ';' . Mail::SENDER_ADMIN;
-			$recipients_mails = explode(';', $recipients[$recipient]['email']);
+			if ($this->form->get_value('f_subject') && $this->form->get_value('f_subject')->get_raw_value())
+			{
+				$recipient = $subjects[$this->form->get_value('f_subject')->get_raw_value()]['recipient'];
+				$recipients_mails = explode(';', $recipients[$recipient]['email']);
+			}
+			else
+				$recipients_mails = MailServiceConfig::load()->get_administrators_mails();
+			
 			foreach ($recipients_mails as $mail_address)
 			{
 				$mail->add_recipient($mail_address);
