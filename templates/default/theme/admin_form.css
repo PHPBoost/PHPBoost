@@ -296,6 +296,11 @@ optgroup {
 	transition: background-color 0.2s;
 }
 
+.form-field-checkbox-mini.possible-values [type="checkbox"]:not(:checked) + label:before,
+.form-field-checkbox-mini.possible-values [type="checkbox"]:checked + label:before {
+	top: -12px;
+}
+
 .select-all-checkbox [type="checkbox"]:not(:checked) + label:before,
 .select-all-checkbox [type="checkbox"]:checked + label:before {
 	left: 0;
@@ -317,6 +322,10 @@ optgroup {
 	top: 0;
 	left: 2px;
 	transition: all .3s ease 0s;
+}
+
+.form-field-checkbox-mini.possible-values input[type="checkbox"]:checked + label:after {;
+	top: -10px;
 }
 
 .form-field-multiple-checkbox .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label:before,
