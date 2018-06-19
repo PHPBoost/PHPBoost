@@ -177,6 +177,8 @@ class AdminContentConfigController extends AdminController
 			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled()));
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -242,6 +244,11 @@ class AdminContentConfigController extends AdminController
 		else
 			$this->content_management_config->set_notation_enabled(false);
 
+		if ($this->form->get_value('content_sharing_enabled'))
+			$this->content_management_config->set_content_sharing_enabled(true);
+		else
+			$this->content_management_config->set_content_sharing_enabled(false);
+		
 		ContentManagementConfig::save();
 
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));

@@ -47,7 +47,7 @@ class ContentSharingActionsMenuService
 		return $content_sharing_actions_menu_links;
 	}
 
-	public static function display($tpl = null)
+	public static function display_sharing_elements($tpl = null)
 	{
 		if ($tpl instanceof Template)
 		{
@@ -71,6 +71,11 @@ class ContentSharingActionsMenuService
 		}
 
 		return self::$tpl->render();
+	}
+
+	public static function display($tpl = null)
+	{
+		return ContentManagementConfig::load()->is_content_sharing_enabled() ? self::display_sharing_elements($tpl) : '';
 	}
 }
 ?>

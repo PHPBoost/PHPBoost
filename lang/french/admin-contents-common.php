@@ -29,8 +29,6 @@
 #                     French                       #
  ####################################################
  
-$lang = array();
-
 $lang['content'] = 'Contenu';
 $lang['content.config'] = 'Configuration du contenu';
 $lang['content.config.language'] = 'Langage de formatage';
@@ -46,6 +44,7 @@ $lang['content.config.anti-flood-enabled'] = 'Anti-flood';
 $lang['content.config.anti-flood-enabled-explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
 $lang['content.config.delay-flood'] = 'Interval minimum de temps entre les messages';
 $lang['content.config.delay-flood-explain'] = 'En secondes. 7 secondes par défaut.';
+$lang['content.config.content-sharing-enabled'] = 'Afficher les liens de partage sur les pages de contenu';
 
 $lang['content.config.captcha'] = 'Captcha';
 $lang['content.config.captcha-used'] = 'Code de vérification utilisé sur le site';

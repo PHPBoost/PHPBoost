@@ -48,7 +48,7 @@ class SocialNetworksModuleMiniMenu extends ModuleMiniMenu
 	
 	public function get_menu_content()
 	{
-		return ContentSharingActionsMenuService::display();
+		return ContentSharingActionsMenuService::display_sharing_elements();
 	}
 }
 ?>

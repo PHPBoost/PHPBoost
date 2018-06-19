@@ -39,7 +39,7 @@ class ContentManagementConfig extends AbstractConfigData
 	const NOTATION_ENABLED                 = 'new_notation';
 	const NOTATION_SCALE                   = 'notation_scale';
 	const NOTATION_UNAUTHORIZED_MODULES    = 'notation_unauthorized_modules';
-
+	const CONTENT_SHARING_ENABLED          = 'content_sharing_enabled';
 	
 	public function is_anti_flood_enabled()
 	{
@@ -131,6 +131,16 @@ class ContentManagementConfig extends AbstractConfigData
 		$this->set_property(self::NOTATION_UNAUTHORIZED_MODULES, $modules);
 	}
 
+	public function is_content_sharing_enabled()
+	{
+		return $this->get_property(self::CONTENT_SHARING_ENABLED);
+	}
+	
+	public function set_content_sharing_enabled($enabled)
+	{
+		$this->set_property(self::CONTENT_SHARING_ENABLED, $enabled);
+	}
+
 	public function module_new_content_is_enabled($module_id)
 	{
 		return $this->is_new_content_enabled() && !in_array($module_id, $this->get_new_content_unauthorized_modules());
@@ -162,7 +172,8 @@ class ContentManagementConfig extends AbstractConfigData
 			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array(),
 			self::NOTATION_ENABLED                 => true,
 			self::NOTATION_SCALE                   => 5,
-			self::NOTATION_UNAUTHORIZED_MODULES    => array()
+			self::NOTATION_UNAUTHORIZED_MODULES    => array(),
+			self::CONTENT_SHARING_ENABLED          => true
 		);
 	}
 
