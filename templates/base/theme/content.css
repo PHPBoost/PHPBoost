@@ -79,14 +79,14 @@ header h2 .actions a {
 	position: relative;
 }
 
-.actions-title { 
+.actions-title {
 	position: relative;
 	display: block;
 	padding: 0.309em 0.456em;
 }
 
 @media (max-width: 768px) {
-	.actions-title { 
+	.actions-title {
 		position: relative;
 		display: block;
 		padding: 1em 1.309em;
@@ -108,7 +108,7 @@ header h2 .actions a {
 }
 
 @media (max-width: 768px) {
-	.actions-submenu { 
+	.actions-submenu {
 		top: 45px;
 	}
 }
@@ -126,7 +126,7 @@ header h2 .actions a {
 }
 
 @media (max-width: 768px) {
-	.action { 
+	.action {
 		padding: 1em 0.618em;
 	}
 }
@@ -234,7 +234,8 @@ header h2 .actions a {
 .media-content object,
 .media-content embed,
 .media-content video,
-.media-content iframe {
+.media-content iframe,
+.media-content .video-player {
 	position: absolute;
 	top: 0;
 	left: 0;

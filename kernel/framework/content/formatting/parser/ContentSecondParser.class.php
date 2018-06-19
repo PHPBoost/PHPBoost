@@ -55,25 +55,25 @@ class ContentSecondParser extends AbstractParser
 	{
 		//Relative url parsing
 		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`suU', array($this, 'callbackrelative_url'), $this->content);
-		
+
 		//Balise code
 		if (TextHelper::strpos($this->content, '[[CODE') !== false)
 		{
 			$this->content = preg_replace_callback('`\[\[CODE(?:=([^,\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`suU', array($this, 'callbackhighlight_code'), $this->content);
 		}
-		
+
 		//Balise member
 		if (stripos($this->content, '[[MEMBER]]') !== false)
 		{
 			$this->content = preg_replace_callback('`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU', array($this, 'callback_member_tag'), $this->content);
 		}
-		
+
 		//Balise moderator
 		if (stripos($this->content, '[[MODERATOR]]') !== false)
 		{
 			$this->content = preg_replace_callback('`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU', array($this, 'callback_moderator_tag'), $this->content);
 		}
-		
+
 		//Media
 		if (TextHelper::strpos($this->content, '[[MEDIA]]') !== false)
 		{
@@ -90,7 +90,7 @@ class ContentSecondParser extends AbstractParser
 				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU', array($this, 'math_code'), $this->content);
 			}
 		}
-		
+
 		$this->parse_feed_tag();
 	}
 
@@ -132,7 +132,7 @@ class ContentSecondParser extends AbstractParser
 	private static function highlight_code($contents, $language, $line_number, $inline_code)
 	{
 		$contents = TextHelper::htmlspecialchars_decode($contents);
-		
+
 		//BBCode PHPBoost
 		if (TextHelper::strtolower($language) == 'bbcode')
 		{
@@ -220,12 +220,12 @@ class ContentSecondParser extends AbstractParser
 			$info = new SplFileInfo($matches[1]);
 			$extension = $info->getExtension();
 			$extension = TextHelper::strtolower($extension);
-			
+
 			if ($extension == 'js' || $extension == 'jquery')
 			{
 				$extension = "javascript";
 			}
-			else if ($extension && TextHelper::strtolower($extension)!='tpl') 
+			else if ($extension && TextHelper::strtolower($extension)!='tpl')
 			{
 				require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 				$Geshi = new GeSHi();
@@ -258,10 +258,10 @@ class ContentSecondParser extends AbstractParser
 		{
 			$contents = '<div class="formatter-container formatter-code"><span class="formatter-title">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="formatter-content">' . $contents . '</div></div>';
 		}
-		
+
 		return $contents;
 	}
-	
+
 	/**
 	 * @static
 	 * @desc Display the content only if it's a connected user.
@@ -276,7 +276,7 @@ class ContentSecondParser extends AbstractParser
 		}
 		return MessageHelper::display(LangLoader::get_message('bbcode_member', 'status-messages-common'), MessageHelper::MEMBER_ONLY)->render();
 	}
-	
+
 	/**
 	 * @static
 	 * @desc Display the content only if it's a moderator user.
@@ -291,7 +291,7 @@ class ContentSecondParser extends AbstractParser
 		}
 		return MessageHelper::display(LangLoader::get_message('bbcode_moderator', 'status-messages-common'), MessageHelper::MODERATOR_ONLY)->render();
 	}
-	
+
 	/**
 	 * @static
 	 * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
@@ -332,14 +332,14 @@ class ContentSecondParser extends AbstractParser
 		if (pathinfo($matches[1], PATHINFO_EXTENSION) == 'flv')
 		{
 			$id = 'movie_' . AppContext::get_uid();
-			return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+			return '<div class="media-content"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a></div><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
 		}
 		else
 		{
-			return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
+			return "<div class=\"media-content\"><object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
 			"<param name=\"allowScriptAccess\" value=\"never\" />" .
 			"<param name=\"play\" value=\"true\" />" .
 			"<param name=\"movie\" value=\"" . Url::to_rel($matches[1]) . "\" />" .
@@ -348,7 +348,7 @@ class ContentSecondParser extends AbstractParser
 			"<param name=\"scalemode\" value=\"noborder\" />" .
 			"<param name=\"wmode\" value=\"transparent\" />" .
 			"<param name=\"bgcolor\" value=\"#000000\" />" .
-			"</object>";
+			"</object></div>";
 		}
 	}
 
@@ -361,11 +361,11 @@ class ContentSecondParser extends AbstractParser
 	{
 		$sources = '';
 		$video_files = explode(',', $matches[1]);
-		
+
 		if (pathinfo($video_files[0], PATHINFO_EXTENSION) == 'flv')
 		{
 			$id = 'movie_' . AppContext::get_uid();
-			return '<a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+			return '<div class="media-content"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a></div><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
@@ -378,7 +378,7 @@ class ContentSecondParser extends AbstractParser
 				$poster_type = new FileType(new File($matches[4]));
 				$poster = $poster_type->is_picture() ? ' poster="' . $matches[4] . '"' : '';
 			}
-			
+
 			foreach ($video_files as $video)
 			{
 				$video_file = new File($video);
@@ -386,8 +386,8 @@ class ContentSecondParser extends AbstractParser
 				if ($type->is_video())
 					$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
 			}
-			
-			return '<video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '"' . $poster . ' controls>' . $sources . '</video>';
+
+			return '<div class="media-content"><video class="video-player" width="' . $matches[2] . '" height="' . $matches[3] . '"' . $poster . ' controls>' . $sources . '</video></div>';
 		}
 	}
 
@@ -400,19 +400,19 @@ class ContentSecondParser extends AbstractParser
 	{
 		return '<audio class="audio-player" controls><source src="' . Url::to_rel($matches[1]) . '" /></audio>';
 	}
-	
+
 	private static function process_youtube_tag($matches)
 	{
 		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=embed/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe>' : '';
+		return $video_id ? '<div class="media-content"><iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
-	
+
 	private function parse_feed_tag()
 	{
 		$this->content = preg_replace_callback('`\[\[FEED((?: [a-z]+="[^"]+")*)\]\]([a-z]+)\[\[/FEED\]\]`uU', array(__CLASS__, 'inject_feed'), $this->content);
 	}
-	
+
 	private static function inject_feed(array $matches)
 	{
 		$module = $matches[2];
@@ -421,9 +421,9 @@ class ContentSecondParser extends AbstractParser
 		$cat = !empty($args['cat']) ? $args['cat'] : 0;
 		$tpl = false;
 		$number = !empty($args['number']) ? $args['number'] : 10;
-		
+
 		$result = '';
-		
+
 		try
 		{
 			$result = Feed::get_parsed($module, $name, $cat, $tpl, $number);
@@ -431,7 +431,7 @@ class ContentSecondParser extends AbstractParser
 		catch (Exception $e)
 		{
 		}
-		
+
 		if (!empty($result))
 		{
 			return $result;
@@ -442,30 +442,30 @@ class ContentSecondParser extends AbstractParser
 			return '<div class="message-helper error">' . $error . '</div>';
 		}
 	}
-	
+
 	private static function parse_feed_tag_args($matches)
 	{
 		$args = explode(' ', trim($matches));
 		$result = array();
-		
+
 		foreach ($args as $arg)
 		{
 			$param = array();
-			
+
 			if (!preg_match('`([a-z]+)="([^"]+)"`uU', $arg, $param))
 			{
 				break;
 			}
-			
+
 			$name = $param[1];
 			$value = $param[2];
-			
+
 			if (in_array($name, array('name', 'cat', 'number')))
 			{
 				$result[$name] = $value;
 			}
 		}
-		
+
 		return $result;
 	}
 }
