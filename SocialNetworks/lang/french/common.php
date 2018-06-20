@@ -51,8 +51,8 @@ $lang['admin.display_share_link'] = 'Afficher le lien de partage';
 $lang['admin.hide_share_link'] = 'Cacher le lien de partage';
 $lang['admin.no_sharing_content_url'] = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';
 $lang['admin.menu.position'] = 'Positionnement du menu';
-$lang['admin.menu.mini_module_message'] = 'Pour afficher les liens de partage dans un mini-module, <br />activer le mini-module dédié dans la <a href="' . PATH_TO_ROOT . '/admin/menus/menus.php">gestion des Menus</a>.';
-$lang['admin.menu.content_message'] = 'Pour afficher les liens de partage sur les pages de contenu, <br />activer l\'option dans la <a href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">gestion du Contenu</a>.';
+$lang['admin.menu.mini_module_message'] = 'Pour afficher les liens de partage dans un mini-module sur toutes les pages, activer le mini-module dédié dans la <a href="' . PATH_TO_ROOT . '/admin/menus/menus.php">gestion des Menus</a>.';
+$lang['admin.menu.content_message'] = 'Pour afficher les liens de partage sur les pages de contenu uniquement, activer l\'option <b>Afficher les liens de partage sur les pages de contenu</b> dans la <a href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">gestion du Contenu</a>.';
 
 
 //Sign in label
