@@ -72,6 +72,10 @@ button[id*=menu_element] {
 }
 
 /* --- Formulaires =========================================================*/
+.required-fields-text {
+	text-align: center;
+}
+
 .fieldset-mini {
 	width: 540px;
 	margin: 1.309em auto auto auto;
@@ -495,13 +499,21 @@ optgroup {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     -webkit-justify-content: space-between;
     -ms-justify-content: justify;
 	justify-content: space-between;
 	align-items: center;
+}
+
+@media (min-width: 769px) {
+	[id*="_possible_values_"] > div > div > div {
+	    -webkit-flex-wrap: nowrap;
+	    -ms-flex-wrap: nowrap;
+	    flex-wrap: nowrap;
+	}
 }
 
 /* --- input form-field-values --- */
