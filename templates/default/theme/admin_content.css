@@ -265,7 +265,7 @@ ul.pagination-block-bis li a.next-page:hover {
 
 .admin-element {
 	position: relative;
-	margin: 0 0 5px 5px;
+	margin: 0 0 0.309em 0.309em;
 	min-width: 500px;
 }
 
@@ -277,7 +277,7 @@ ul.pagination-block-bis li a.next-page:hover {
 .admin-element-picture {
 	float: left;
 	text-align: center;
-	margin: 0 5px 0 0;
+	margin: 0 0.309em 0 0;
 }
 
 .admin-element-menu-container {
@@ -290,15 +290,15 @@ ul.pagination-block-bis li a.next-page:hover {
 .admin-element-menu-container:hover { transition: 0.3s; }
 
 header.legend .admin-element-menu-container {
-	font-size: 0.6em;
+	font-size: 0.618em;
 	float: right;
 }
 
 .admin-element-menu-title {
 	display: block;
-	padding: 4px 8px 4px 8px;
+	padding: 0.382em 0.618em 0.382em 0.618em;
 	border-style: solid;
-	border-width: 2px;
+	border-width: 0.1618em;
 	transition: 0.3s;
 }
 
@@ -309,7 +309,7 @@ header.legend .admin-element-menu-container {
 
 
 .admin-element-menu-title i {
-	margin: 0 0 0 5px;
+	margin: 0 0 0 0.456em;
 }
 
 .admin-element-menu-title i.fa {
@@ -359,7 +359,7 @@ header.legend .admin-element-menu-container {
 
 .admin-menu-element > * {
 	display: block;
-	padding: 6px 10px 6px 10px;
+	padding: 0.382em 0.809em 0.382em 0.809em;
 	border: none;
 	width: 100%;
 	margin: 0;
@@ -371,13 +371,13 @@ header.legend .admin-element-menu-container {
 
 .block .admin-element-content {
 	clear: both;
-	margin-top: 20px;
+	margin-top: 1.482em;
 }
 
 .select-all-container {
 	float: right;
-	padding-top: 10px;
-	font-size: 0.6em;
+	padding-top: 0.809em;
+	font-size: 0.618em;
 }
 
 .select-all-container a {
@@ -400,14 +400,14 @@ header.legend .admin-element-menu-container {
 	background-color: white;
 	width: auto;
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
-	padding: 2px 4px;
+	padding: 0.456em 0.456em;
 	border: 1px solid #CCCCCC;
 }
 
 .opened > .admin-element-auth-content {
-	left: 4px;
-	right: 4px;
-	bottom: 4px;
+	left: 0.309em;
+	right: 0.309em;
+	bottom: 0.309em;
 }
 
 .admin-element-auth-content select {
@@ -417,27 +417,28 @@ header.legend .admin-element-menu-container {
 .admin-element-auth-close {
 	display: block;
 	position: absolute;
-	bottom : 0.5em;
+	bottom : 0.456em;
 	right: 1em;
 }
 
 .admin-element-auth-close i {
-	font-size: 1.5em;
-	width: 15px;
-	height: 15px;
-	padding: 2px;
+	font-size: 1.482em;
+	width: 1em;
+	height: 1em;
+	padding: 1em;
 }
 
 /* -- Gestion du menu multiple -- */
 .multiple-select-menu-container {
 	position: fixed;
 	display: block;
-	bottom: 60px;
-	right: 50px;
+	bottom: 4.236em;
+	right: 2.618em;
 }
 
 .multiple-select-menu {
-	padding: 0 0 0 0;
+	display: inline-block;
+	padding: 0.456em 1em 0.618em 0.618em;
 }
 
 .multiple-select-menu:hover {
@@ -446,10 +447,10 @@ header.legend .admin-element-menu-container {
 
 .form-field.select-all-checkbox {
 	display: inline-block;
-	width: 20px;
-	height: 20px;
+	width: 1.309em;
+	height: 1.309em;
 	vertical-align: middle;
-	margin: 0.228em 0 0 0;
+	margin: 0;
 }
 
 .multiple-select-menu-container button.select-all-button {

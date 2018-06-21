@@ -32,10 +32,13 @@
 // Title 
 $lang['themes.theme_management'] = 'Gestion des thèmes';
 $lang['themes.add_theme'] = 'Ajouter un thème';
-$lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un thème';
-$lang['themes.delete_theme_multiple'] = 'Suppression ou désactivation de thèmes';
+$lang['themes.delete_theme'] = 'Suppression d\'un thème';
+$lang['themes.delete_theme_multiple'] = 'Suppression des thèmes selectionnés';
 $lang['themes.installed_theme'] = 'Thèmes installés';
+$lang['themes.themes_available'] = 'Thèmes disponibles';
 $lang['themes.default'] = 'Thème par défaut';
+$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
+$lang['themes.default_theme_visibility'] = 'Le thème par défaut est visible par tout le monde';
 
 //Theme
 $lang['themes.name'] = 'Nom';
@@ -50,9 +53,6 @@ $lang['themes.variable-width'] = 'Extensible';
 $lang['themes.width'] = 'Largeur';
 $lang['themes.bot_informed'] = 'Non renseigné';
 $lang['themes.view_real_preview'] = 'Voir en taille réelle';
-$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
-$lang['themes.default_theme_visibility'] = 'Le thème par défaut est visible par tout le monde';
-$lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Themes management
 $lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';

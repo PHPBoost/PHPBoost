@@ -486,8 +486,8 @@ optgroup {
 /* --- admin-element checkbox --- */
 .form-field.multiple-checkbox-container {
 	display: inline-block;
-	width: 20px;
-	height: 16px;
+	width: 1.309em;
+	height: 1em;
 	margin: 0 0.309em 0 0;
 }
 

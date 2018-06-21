@@ -32,10 +32,13 @@
 // Title 
 $lang['themes.theme_management'] = 'Themes management';
 $lang['themes.add_theme'] = 'Add theme';
-$lang['themes.delete_theme'] = 'Delete or deactivate a theme';
-$lang['themes.delete_theme_multiple'] = 'Delete or deactivate themes';
+$lang['themes.delete_theme'] = 'Delete a theme';
+$lang['themes.delete_theme_multiple'] = 'Delete selected themes';
 $lang['themes.installed_theme'] = 'Installed themes';
+$lang['themes.themes_available'] = 'Available themes';
 $lang['themes.default'] = 'Theme by default';
+$lang['themes.default_theme_explain'] = 'The default theme can not be uninstalled, disabled or reserved';
+$lang['themes.default_theme_visibility'] = 'The default theme is usable for everyone';
 
 //Theme
 $lang['themes.name'] = 'Name';
@@ -50,9 +53,6 @@ $lang['themes.variable-width'] = 'Variable width';
 $lang['themes.width'] = 'Width';
 $lang['themes.bot_informed'] = 'Not specified';
 $lang['themes.view_real_preview'] = 'View full size';
-$lang['themes.default_theme_explain'] = 'The default theme can not be uninstalled, disabled or reserved';
-$lang['themes.default_theme_visibility'] = 'The default theme is usable for everyone';
-$lang['themes.themes_available'] = 'Available themes';
 
 //Themes management
 $lang['themes.select_all_themes'] = 'Select all themes';

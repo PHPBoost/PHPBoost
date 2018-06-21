@@ -33,22 +33,14 @@
 $lang['langs'] = 'Languages';
 $lang['langs.langs_management'] = 'Languages management';
 $lang['langs.add_lang'] = 'Add language';
-$lang['langs.delete_lang'] = 'Delete or deactivate a language';
-$lang['langs.delete_lang_multiple'] = 'Delete or deactivate languages';
+$lang['langs.delete_lang'] = 'Delete a language';
+$lang['langs.delete_lang_multiple'] = 'Delete selected languages';
 $lang['langs.installed_langs'] = 'Installed languages';
+$lang['langs.available_langs'] = 'Available languages';
+$lang['langs.default'] = 'Default language';
+$lang['langs.default_lang_visibility'] = 'The default language is usable for everyone';
 
-//Langs management
-$lang['langs.install_all_selected_langs'] = 'Install all selected languages';
-$lang['langs.uninstall_all_selected_langs'] = 'Uninstall all selected languages';
-
-//Uninstall
-$lang['langs.drop_files'] = 'Delete all the language\'s files';
-$lang['langs.drop_files_multiple'] = 'Delete all languages\'s files';
-$lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
-
-$lang['langs.upload_lang'] = 'Upload a language';
-$lang['langs.upload_description'] = 'The archive should be uploaded as zip or gzip';
-
+//Langs
 $lang['langs.not_installed'] = 'Languages not installed';
 $lang['langs.name'] = 'Name';
 $lang['langs.authorizations'] = 'Authorizations';
@@ -57,6 +49,19 @@ $lang['langs.compatibility'] = 'Compatibility';
 $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
 
+//Langs management
+$lang['langs.select_all_langs'] = 'Select all languages';
+
 //Warnings
-$lang['langs.warning_before_install'] = '<span class="message-helper warning">A language must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['langs.warning_before_install'] = '<span class="message-helper warning">A language must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['langs.add.warning_before_install'] = '<span class="message-helper warning">A language must be installed only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
+
+//Upload
+$lang['langs.upload_lang'] = 'Upload a language';
+$lang['langs.upload_description'] = 'The archive should be uploaded as zip or gzip';
+
+//Delete langs
+$lang['langs.drop_files'] = 'Delete all the language\'s files';
+$lang['langs.drop_files_multiple'] = 'Delete all languages\'s files';
+$lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
 ?>

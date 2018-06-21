@@ -85,7 +85,7 @@ class AdminLangsInstalledListController extends AdminController
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_LANG_INSTALLED' => $installed_langs_number > 1,
 			'LANGS_NUMBER' => $installed_langs_number,
-			'SELECTED_LANG_NUMBER' => $selected_lang_number
+			'DEFAULT_LANG_NUMBER' => $selected_lang_number
 		));
 	}
 	
@@ -107,12 +107,33 @@ class AdminLangsInstalledListController extends AdminController
 			}
 			AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall(implode('---', $lang_ids)));
 		}
+		elseif ($request->get_string('activate-selected-langs', false) || $request->get_string('deactivate-selected-langs', false))
+		{
+			$activated = 0;
+			if ($request->get_string('activate-selected-langs', false))
+				$activated = 1;
+			
+			$lang_number = 1;
+			foreach ($installed_langs as $lang)
+			{
+				if ($lang->get_id() !== LangsManager::get_default_lang() && ($request->get_value('delete-checkbox-' . $Lang_number, 'off') == 'on') )
+				{	
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::change_informations($lang->get_id(), $activated, $authorizations);
+				}
+				$lang_number++;
+			}
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 		else
 		{
 			foreach($installed_langs as $lang)
 			{
 				if ($request->get_string('default-' . $lang->get_id(), ''))
 				{
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::change_informations($lang->get_id(), 1, $authorizations);
+
 					$user_accounts_config = UserAccountsConfig::load();
 					$user_accounts_config->set_default_lang($lang->get_id());
 					UserAccountsConfig::save();
@@ -123,6 +144,20 @@ class AdminLangsInstalledListController extends AdminController
 				{
 					AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($lang->get_id()));
 				}
+				else if ($request->get_string('enable-' . $lang->get_id(), ''))
+				{
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::change_informations($lang->get_id(), 1, $authorizations);
+
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
+				else if ($request->get_string('disable-' . $lang->get_id(), ''))
+				{
+					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
+					LangsManager::change_informations($lang->get_id(), 0, $authorizations);
+
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
+				}
 			}
 		}
 		
@@ -132,9 +167,9 @@ class AdminLangsInstalledListController extends AdminController
 			{
 				if ($lang->get_id() !== LangsManager::get_default_lang())
 				{
-					$activated = $request->get_bool('activated-' . $lang->get_id(), false);
+					
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
-					LangsManager::change_informations($lang->get_id(), $activated, $authorizations);
+					LangsManager::change_informations($lang->get_id(), $lang->is_activated(), $authorizations);
 				}
 			}
 			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));

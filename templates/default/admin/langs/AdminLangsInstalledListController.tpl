@@ -1,130 +1,105 @@
-# IF C_MORE_THAN_ONE_LANG_INSTALLED #
-<script>
-<!--
-	function select_all(status)
-	{
-		var i;
-		for(i = 1; i <= {LANGS_NUMBER}; i++)
-		{
-			if(document.getElementById('delete-checkbox-' + i) && i != {SELECTED_LANG_NUMBER})
-				document.getElementById('delete-checkbox-' + i).checked = status;
-		}
-		document.getElementById('check-all-top').checked = status;
-		document.getElementById('check-all-bottom').checked = status;
-	}
--->
-</script>
-# ENDIF #
-
+{@H|langs.warning_before_install}
 <form action="{REWRITED_SCRIPT}" method="post">
-	${LangLoader::get_message('langs.warning_before_install', 'admin-langs-common')}
-	<table id="table">
-		<caption>{@langs.installed_langs}</caption>
-		<thead>
-			<tr>
-				# IF C_MORE_THAN_ONE_LANG_INSTALLED #
-				<th>
-					<div class="form-field-checkbox">
-						<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
-						<label for="check-all-top"></label>
-					</div>
-				</th>
-				# ENDIF #
-				<th>{@langs.name}</th>
-				<th>{@langs.description}</th>
-				<th>{@langs.authorizations}</th>
-				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				# IF C_MORE_THAN_ONE_LANG_INSTALLED #<th>${LangLoader::get_message('actions', 'admin-common')}</th># ENDIF #
-			</tr>
-		</thead>
-		# IF C_MORE_THAN_ONE_LANG_INSTALLED #
-		<tfoot>
-			<tr>
-				<td colspan="6">
-					<div class="left">
-						<div class="form-field-checkbox">
-							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
-							<label for="check-all-bottom"></label>
-						</div>
-						<button type="submit" name="delete-selected-langs" value="true" class="submit">{@langs.uninstall_all_selected_langs}</button>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
-		# ENDIF #
-		<tbody>
-			<tr>
-				<td colspan="# IF C_MORE_THAN_ONE_LANG_INSTALLED #6# ELSE #4# ENDIF #">
-					# INCLUDE MSG #
-					<span class="text-strong">{@langs.default_lang_explain}</span>
-				</td>
-			</tr>
+	<section id="installed-langs-container" class="admin-elements-container langs-elements-container installed-elements-container">
+		<header class="legend">{@langs.installed_langs}</header>
+		<div class="content elements-container columns-3">
 			# START langs_installed #
-				<tr>
+			<article class="block admin-element lang-element installed-element# IF langs_installed.C_IS_DEFAULT_LANG # default-element# ENDIF ## IF langs_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF #">
+				<header>
+					<div class="admin-element-menu-container">
+						# IF langs_installed.C_IS_DEFAULT_LANG #
+						<a href="#" class="admin-element-menu-title">{@langs.default}</a>
+						# ELSE #
+						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF #<i class="fa fa-caret-right"></i></a>
+						<ul class="admin-menu-elements-content">
+							<li class="admin-menu-element"><button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
+							# IF langs_installed.C_IS_ACTIVATED #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{langs_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+							# ELSE #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{langs_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+							# ENDIF #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+						</ul>
+						# ENDIF #
+					</div>
+
 					# IF C_MORE_THAN_ONE_LANG_INSTALLED #
-					<td>
-						<div class="form-field-checkbox">
-							<input type="checkbox" id="delete-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
-							<label for="delete-checkbox-{langs_installed.LANG_NUMBER}"></label>
-						</div>
-					</td>
+					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+						<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
+						<label for="multiple-checkbox-{langs_installed.LANG_NUMBER}"></label>
+					</div>
 					# ENDIF #
-					<td>
-						<span id="lang-{langs_installed.ID}"></span>
+
+					<h2 class="installed-theme-name">
 						# IF langs_installed.C_HAS_PICTURE #
 						<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="valign-middle" />
 						# ENDIF #
-						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
-					</td>
-					<td class="left">
-						<div id="desc_explain{langs_installed.ID}">
-							<span class="text-strong">{@langs.author} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-							<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
-						</div>
-					</td>
-					<td>
-						# IF NOT langs_installed.C_IS_DEFAULT_LANG #
-							<div id="authorizations_explain-{langs_installed.ID}">{langs_installed.AUTHORIZATIONS}</div>
+						{langs_installed.NAME}<em>({langs_installed.VERSION})</em></h2>
+				</header>
+				<div class="content admin-element-content">
+					<div class="admin-element-desc">
+						<span class="text-strong">{@langs.author} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
+					</div>
+				</div>
+				<footer>
+					<div class="admin-element-auth-container">
+						# IF langs_installed.C_IS_DEFAULT_LANG #
+						<span class="admin-element-auth default-element" title="{@langs.default_lang_visibility}"><i class="fa fa-user-shield"></i></span>
 						# ELSE #
-							${LangLoader::get_message('visitor', 'user-common')}
+						<a href="" class="admin-element-auth" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"></i></a>
+						<div class="admin-element-auth-content">
+							{langs_installed.AUTHORIZATIONS}
+							<a href="#" class="admin-element-auth-close" title="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times"></i></a>
+						</div>
 						# ENDIF #
-					</td>
-					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
-					<td class="input-radio">
-						<div class="form-field-radio">
-							<input id="activated-{langs_installed.ID}" type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
-							<label for="activated-{langs_installed.ID}"></label>
-						</div>
-						<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
-						<br />
-						<div class="form-field-radio">
-							<input id="activated-{langs_installed.ID}2" type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # />
-							<label for="activated-{langs_installed.ID}2"></label>
-						</div>
-						<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
-					</td>
-					<td>
-						<button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button>
-						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button>
-					</td>
-					# ELSE #
-					<td>
-						${LangLoader::get_message('yes', 'common')}
-					</td>
-					# IF C_MORE_THAN_ONE_LANG_INSTALLED #<td></td># ENDIF #
-					# ENDIF #
-				</tr>
+					</div>
+				</footer>
+			</article>
+			<script>
+				jQuery('#admin-element-menu-title-{langs_installed.LANG_NUMBER}').opensubmenu({
+					osmTarget: '.admin-element-menu-container'
+				});
+			</script>
 			# END langs_installed #
-		</tbody>
-	</table>
-
-	<fieldset class="fieldset-submit">
-		<legend>{L_SUBMIT}</legend>
-		<div class="fieldset-inset">
-			<button type="submit" class="submit" name="update_langs_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>
-			<input type="hidden" name="token" value="{TOKEN}">
-			<input type="hidden" name="update" value="true">
-			<button type="reset" value="true">${LangLoader::get_message('reset', 'main')}</button>
 		</div>
-	</fieldset>
+		<footer>
+			<fieldset class="fieldset-submit">
+				<legend>{L_SUBMIT}</legend>
+				<button type="submit" class="submit" name="update_langs_configuration" value="true">${LangLoader::get_message('save.authorizations', 'admin-common')}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
+				<input type="hidden" name="update" value="true">
+			</fieldset>
+		</footer>
+	</section>
+
+	# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+	<div class="admin-element-menu-container multiple-select-menu-container">
+		<div class="admin-element-menu-title"> 
+			<div class="form-field form-field-checkbox-mini select-all-checkbox">
+				<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
+				<label for="delete-all-checkbox"></label>
+			</div>
+			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right"></i></a>
+		</div>
+		<ul class="admin-menu-elements-content">
+			<li class="admin-menu-element"><button type="submit" name="delete-selected-langs" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+			<li class="admin-menu-element"><button type="submit" name="deactivate-selected-langs" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
+			<li class="admin-menu-element"><button type="submit" name="activate-selected-langs" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>			
+		</ul>
+	</div>
+	# ENDIF #
 </form>
+
+<script>
+	jQuery('.multiple-select-menu').opensubmenu({
+		osmTarget: '.multiple-select-menu-container',
+		osmCloseExcept : '.select-all-checkbox *'
+	});
+
+	jQuery('.admin-element-auth').opensubmenu({
+		osmTarget: '.admin-element-auth-container',
+		osmCloseExcept: '.admin-element-auth-content *',
+		osmCloseButton: '.admin-element-auth-close i',
+	});
+</script>

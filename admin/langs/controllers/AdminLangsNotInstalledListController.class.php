@@ -81,7 +81,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		$not_installed_langs_number = count($not_installed_langs);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_LANG_AVAILABLE' => $not_installed_langs_number > 1,
-			'C_LANG_INSTALL' => $not_installed_langs_number > 0,
+			'C_LANG_AVAILABLE' => $not_installed_langs_number > 0,
 			'LANGS_NUMBER' => $not_installed_langs_number
 		));
 	}
@@ -132,7 +132,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		$lang_number = 1;
 		foreach ($this->get_not_installed_langs() as $lang)
 		{
-			if ($request->get_string('add-' . $lang->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $lang_number, 'off') == 'on'))
+			if ($request->get_string('add-' . $lang->get_id(), false) || ($request->get_string('add-selected-langs', false) && $request->get_value('add-checkbox-' . $lang_number, 'off') == 'on'))
 			{
 				$activated = $request->get_bool('activated-' . $lang->get_id(), false);
 				$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
