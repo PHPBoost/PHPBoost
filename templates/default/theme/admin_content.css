@@ -320,14 +320,14 @@ header.legend .admin-element-menu-container {
 .opened > .admin-element-menu-title i.fa {
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
 	-webkit-transform: rotate(90deg);
-	transform: rotate(90deg); 
+	transform: rotate(90deg);
 	transition: 0.3s;
 }
 
 .multiple-select-menu-container.opened > .admin-element-menu-title i.fa {
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
 	-webkit-transform: rotate(-90deg);
-	transform: rotate(-90deg); 
+	transform: rotate(-90deg);
 	transition: 0.3s;
 }
 
@@ -576,6 +576,7 @@ header.legend .admin-element-menu-container {
 	min-height: 24px;
 	list-style-type: none;
 	list-style-position: outside;
+	width: 100%;
 }
 
 .sortable-block .sortable-element {

@@ -316,7 +316,7 @@ article .admin-element-menu-title,
 	color: #AAAAAA;
 }
 
-.admin-element-auth i { #366493; }
+.admin-element-auth i { color: #366493; }
 
 .advanced-auth-input button {
 	background-color: #DEDEDE;
