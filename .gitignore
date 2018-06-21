@@ -31,7 +31,15 @@ templates/*
 # Sauf les thèmes suivants :
 !templates/base
 !templates/default
-!templates/phpboost
+
+#Langues non officiels
+!lang
+# Ignore le répertoire des thèmes:
+lang/*.*
+lang/*
+# Sauf les thèmes suivants :
+!lang/french
+!lang/english
 
 #Fichiers projets
 *.sublime-project
