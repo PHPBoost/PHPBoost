@@ -1,11 +1,11 @@
 
 	# IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
-		<span class="sbx-toggle-btn# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
+		<span class="sbx-toggle-btn submit# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
 			<i class="fa fa-wrench"></i> {@module.title}
 		</span>
-		<div class="sbx-menu">
-			<span class="close-btn"><i class="far fa-window-close"></i> {@mini.close}</span>
+		<div class="sbx-menu bkgd-main">
+			<span class="close-btn bkgd-color-unvisible"><i class="far fa-window-close"></i> {@mini.close}</span>
 			<div class="sbx-inset">
 				<div class="sbx-menu-item sbx-text">
 					<div class="item-2x small" title="{@mini.version.pbt}">
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title">{@mini.tools}</div>
+					<div class="sbx-item-title bkgd-title">{@mini.tools}</div>
 					# IF C_CSS_CACHE_ENABLED #
 						<div class="item-form item-2x" title="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
 					# ELSE #
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title">{@mini.personalization}</div>
+					<div class="sbx-item-title bkgd-title">{@mini.personalization}</div>
 					<div class="item-3x" title="{@mini.menus}/{@mini.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
@@ -181,7 +181,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title">{@mini.sandbox.mod}</div>
+					<div class="sbx-item-title bkgd-title">{@mini.sandbox.mod}</div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/form" title="{@mini.sandbox.form}"><i class="far fa-square fa-2x"></i></a></div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/css" title="{@mini.sandbox.css}"><i class="fab fa-css3 fa-2x"></i></a></div>
 					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/bbcode" title="{@mini.sandbox.bbcode}"><i class="fa fa-code fa-2x"></i></a></div>
@@ -190,7 +190,7 @@
 					<div class="item-3x"><a href="${relative_url(SandboxUrlBuilder::config())}" title="{@mini.config}"><i class="fa fa-cogs fa-2x"></i></a></div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title">{@mini.themes.switcher}</div>
+					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>
 					<div class="item-form item-2x3">
 						<form action="{REWRITED_SCRIPT}" method="get">
 							<label for="switchtheme">

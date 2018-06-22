@@ -148,8 +148,8 @@
 #module-mini-sandbox .icon-sup {
     font-size: 0.8em;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -1em;
+    right: -1em;
 }
 
 #module-mini-sandbox .item-number { margin-left: 0.618em; }
@@ -167,8 +167,6 @@
 #module-mini-sandbox .item-form .submit,
 #module-mini-sandbox .item-form .submit:hover {
 	padding: 0.618em;
-	background: none;
-	border: none;
 	width: 100%;
 	margin: 0;
 }
@@ -185,32 +183,3 @@
     left: 50%;
     transform: translateX(-50%);
 }
-
-/* --- Colors
------------------------------------------------------------------------------ */
-.sbx-menu {
-    background-color: #FFFFFF;
-    box-shadow: 0 0 10px rgba(54, 100, 147, 0.5);
-}
-.sbx-toggle-btn { background-color: #366493; color: #81A4C8; }
-.sbx-toggle-btn:hover { color: #FFFFFF; }
-#module-mini-sandbox .close-btn { color: #81A4C8;}
-#module-mini-sandbox .close-btn:hover { background-color: #afceed; color: #366493; }
-
-.sbx-text { color: #81A4C8}
-
-#module-mini-sandbox .item-form .submit,
-#module-mini-sandbox .item-2x a,
-#module-mini-sandbox .item-3x a,
-#module-mini-sandbox .item-4x a {color: #81A4C8;}
-
-#module-mini-sandbox .sbx-item-title,
-#module-mini-sandbox .item-form .submit:hover,
-#module-mini-sandbox .sbx-menu-item a:hover {
-    color: #366493;
-    background-color: #afceed;
- }
-
-#module-mini-sandbox .icon-sup { color: #1E5083; text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);}
-#module-mini-sandbox .item-form .submit:hover .icon-sup,
-#module-mini-sandbox .sbx-menu-item a:hover .icon-sup { color: #FFFFFF;}
