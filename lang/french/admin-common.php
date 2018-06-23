@@ -38,9 +38,9 @@ $lang['action_menu.open'] = 'Ouvrir le menu d\'action';
 $lang['save.authorizations'] = 'Sauvegarder les autorisations';
 $lang['multiple.select'] = 'Gestion multiple';
 $lang['multiple.activate_selection'] = 'Activer la selection';
-$lang['multiple.deactivate_selection'] = 'Désactiver la selection';
-$lang['multiple.install_selection'] = 'Installer la selection';
-$lang['multiple.uninstall_selection'] = 'Désinstaller la selection';
+$lang['multiple.deactivate_selection'] = 'Désactiver la sélection';
+$lang['multiple.install_selection'] = 'Installer la sélection';
+$lang['multiple.uninstall_selection'] = 'Désinstaller la sélection';
 
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
 $lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';
