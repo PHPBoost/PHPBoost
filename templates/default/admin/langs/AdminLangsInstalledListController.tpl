@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-langs-container" class="admin-elements-container langs-elements-container installed-elements-container">
 		<header class="legend">{@langs.installed_langs}</header>
-		<div class="content elements-container columns-3">
+		<div class="content elements-container">
 			# START langs_installed #
 			<article class="block admin-element lang-element installed-element# IF langs_installed.C_IS_DEFAULT_LANG # default-element# ENDIF ## IF langs_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF #">
 				<header>
@@ -76,13 +76,15 @@
 	# IF C_MORE_THAN_ONE_LANG_INSTALLED #
 	<div class="admin-element-menu-container multiple-select-menu-container">
 		<div class="admin-element-menu-title"> 
-			<div class="form-field form-field-checkbox-mini select-all-checkbox">
-				<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
-				<label for="delete-all-checkbox"></label>
-			</div>
 			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
+			<li class="admin-menu-checkbox">
+				<div class="form-field form-field-checkbox-mini select-all-checkbox">
+					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@langs.select_all_langs}" />
+					<label for="delete-all-checkbox"></label>
+				</div>
+			</li>
 			<li class="admin-menu-element"><button type="submit" name="delete-selected-langs" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
 			<li class="admin-menu-element"><button type="submit" name="deactivate-selected-langs" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
 			<li class="admin-menu-element"><button type="submit" name="activate-selected-langs" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>			
@@ -92,9 +94,9 @@
 </form>
 
 <script>
-	jQuery('.multiple-select-menu').opensubmenu({
-		osmTarget: '.multiple-select-menu-container',
-		osmCloseExcept : '.select-all-checkbox *'
+	jQuery('.admin-element-menu-title').opensubmenu({
+		osmTarget: '.admin-element-menu-title',
+		osmCloseExcept : '.admin-menu-checkbox, .admin-menu-checkbox *'
 	});
 
 	jQuery('.admin-element-auth').opensubmenu({

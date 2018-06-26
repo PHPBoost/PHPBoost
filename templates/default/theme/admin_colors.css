@@ -275,14 +275,17 @@ article .admin-element-menu-title,
 }
 
 .admin-element-menu-container:hover .admin-element-menu-title,
-.admin-element-menu-container.opened .admin-element-menu-title {
-	background-color: transparent;
+.admin-element-menu-container.opened .admin-element-menu-title,
+.admin-element-menu-title.opened {
+	background-color: #FFFFFF;
 }
 
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container:hover .admin-element-menu-title a,
 .admin-element-menu-container.opened .admin-element-menu-title,
-.admin-element-menu-container.opened .admin-element-menu-title a { color: #366493; }
+.admin-element-menu-container.opened .admin-element-menu-title a,
+.admin-element-menu-title.opened,
+.admin-element-menu-title.opened a { color: #366493; }
 
 .deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
 .deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
@@ -293,6 +296,10 @@ article .admin-element-menu-title,
 	background-color: #FFFFFF;
 	color: #FFFFFF;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.multiple-select-menu-container .admin-menu-elements-content {
+	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .admin-menu-elements-content { border-color: #366493; }
@@ -323,7 +330,7 @@ article .admin-element-menu-title,
 }
 
 .multiple-select-menu-container:hover {
-	background-color: transparent;
+	background-color:  #FFFFFF;
 }
 
 .multiple-select-menu-container button.select-all-button {
@@ -333,8 +340,14 @@ article .admin-element-menu-title,
 }
 
 .multiple-select-menu-container:hover button.select-all-button {
-	background-color: transparent;
+	background-color: #FFFFFF;
 	color: #366493;
+}
+
+.admin-menu-checkbox {
+	border-color: #366493;
+	background-color: #FFFFFF;
+	z-index: 1;
 }
 
 /* -- Table

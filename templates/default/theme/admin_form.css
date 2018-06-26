@@ -872,7 +872,13 @@ textarea#writing_pad_content {
 }
 
 .advanced-auth-select {
-	margin: 0 0.309em 0.309em 0;
+	margin: 0 0 0.1618em 0;
+}
+
+@media (min-width: 769px) {
+	.advanced-auth-select {
+		margin-right: 0.1618em;
+	}
 }
 
 .advanced-auth-input {

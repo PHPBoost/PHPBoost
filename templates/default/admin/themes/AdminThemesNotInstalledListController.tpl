@@ -5,7 +5,7 @@
 	<section id="not-installed-themes-container" class="admin-elements-container themes-elements-container not-installed-elements-container">
 		<header class="legend">{@themes.themes_available}</header>
 		# IF C_THEME_AVAILABLE #
-		<div class="content elements-container columns-3">
+		<div class="content elements-container">
 			# START themes_not_installed #
 			<article class="block admin-element theme-element not-installed-element">
 				<header>
