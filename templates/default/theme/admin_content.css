@@ -277,7 +277,6 @@ ul.pagination-block-bis li a.next-page:hover {
      -webkit-justify-content: space-between;
     -ms-flex-pack: justify;
     justify-content: space-between;
-
 }
 
 @media (min-width: 769px) {
@@ -354,7 +353,6 @@ header.legend .admin-element-menu-container {
 	transition: color 0.1s, background-color 0.1s;
 }
 
-
 .admin-element-menu-title i {
 	margin: 0 0 0 0.456em;
 }
@@ -375,7 +373,6 @@ header.legend .admin-element-menu-container {
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
 	-webkit-transform: rotate(-90deg);
 	transform: rotate(-90deg);
-	transition: 0.1s;
 }
 
 .admin-menu-elements-content {
@@ -402,6 +399,10 @@ header.legend .admin-element-menu-container {
 	transition: 0.1s;
 }
 
+.multiple-select-menu-container .opened + .admin-menu-elements-content {
+	right: 0;
+}
+
 @media (max-width: 768px) {
 	.admin-menu-elements-content {
 		top: 44px;
@@ -414,10 +415,6 @@ header.legend .admin-element-menu-container {
 	.multiple-select-menu-container .admin-menu-elements-content {
 		top: -117px;
 	}
-}
-
-.multiple-select-menu-container .opened + .admin-menu-elements-content {
-	right: 0;
 }
 
 .admin-menu-element > * {
@@ -439,6 +436,7 @@ header.legend .admin-element-menu-container {
 
 .admin-menu-checkbox {
 	position: absolute;
+	z-index: 1;
 	bottom: -44px;
 	left: 0;
 	border-style: solid;
@@ -451,16 +449,6 @@ header.legend .admin-element-menu-container {
 		bottom: -52px;
 		padding: 12px 3px 13px 10px;
 	}
-}
-
-.select-all-container {
-	float: right;
-	padding-top: 0.809em;
-	font-size: 0.618em;
-}
-
-.select-all-container a {
-	cursor: pointer;
 }
 
 .admin-element-auth {
@@ -480,9 +468,9 @@ header.legend .admin-element-menu-container {
 	left: -9999px;
 	background-color: white;
 	width: auto;
-	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
 	padding: 0.456em 0.456em;
-	border: 1px solid #CCCCCC;
+	border-width: 1px;
+	border-style: solid;
 }
 
 .opened > .admin-element-auth-content {

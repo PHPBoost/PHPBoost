@@ -38,9 +38,11 @@ $lang['modules.update_module'] = 'Update a module';
 $lang['modules.delete_module'] = 'Delete or deactivate a module';
 $lang['modules.delete_module_multiple'] = 'Delete or deactivate modules';
 $lang['modules.installed_modules'] = 'Installed modules';
+$lang['modules.available_modules'] = 'Avalable Modules disponibles';
 
 //Warnings
-$lang['modules.warning_before_install'] = '<span class="message-helper warning">A module must be enabled, disabled, installed, or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span>';
+$lang['modules.warning_before_install'] = '<span class="message-helper warning">A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['modules.add.warning_before_install'] = '<span class="message-helper warning">A module must be installed only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Install a module';
@@ -58,9 +60,7 @@ $lang['modules.modules_available'] = 'Available modules';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
-$lang['modules.install_all_selected_modules'] = 'Install selected modules';
-$lang['modules.uninstall_all_selected_modules'] = 'Uninstall all selected modules';
-$lang['modules.authorization'] = 'Authorizations';
+$lang['modules.select_all_modules'] = 'Select all modules';
 
 //Messages
 $lang['modules.already_installed'] = 'The module is already installed';

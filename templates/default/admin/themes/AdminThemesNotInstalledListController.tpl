@@ -3,7 +3,7 @@
 	<input type="hidden" name="token" value="{TOKEN}">
 	# INCLUDE MSG #
 	<section id="not-installed-themes-container" class="admin-elements-container themes-elements-container not-installed-elements-container">
-		<header class="legend">{@themes.themes_available}</header>
+		<header class="legend">{@themes.available_themes}</header>
 		# IF C_THEME_AVAILABLE #
 		<div class="content elements-container">
 			# START themes_not_installed #

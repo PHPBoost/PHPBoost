@@ -38,9 +38,11 @@ $lang['modules.update_module'] = 'Mettre à jour un module';
 $lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
 $lang['modules.delete_module_multiple'] = 'Suppression ou désactivation de modules';
 $lang['modules.installed_modules'] = 'Modules installés';
+$lang['modules.available_modules'] = 'Modules disponibles';
 
 //Warnings
-$lang['modules.warning_before_install'] = '<span class="message-helper warning">Un module doit être activé, désactivé, installé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span>';
+$lang['modules.warning_before_install'] = '<span class="message-helper warning">Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
+$lang['modules.add.warning_before_install'] = '<span class="message-helper warning">Un module doit être installé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';
@@ -58,9 +60,7 @@ $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['module.documentation'] = 'Documentation';
 
 //Module management
-$lang['modules.install_all_selected_modules'] = 'Installer les modules sélectionnés';
-$lang['modules.uninstall_all_selected_modules'] = 'Désinstaller les modules sélectionnés';
-$lang['modules.authorization'] = 'Autorisation d\'accès';
+$lang['modules.select_all_modules'] = 'Sélectionner tous les modules';
 
 //Messages
 $lang['modules.already_installed'] = 'Ce module est déjà installé';
