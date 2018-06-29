@@ -104,6 +104,24 @@ class AdminModulesManagementController extends AdminController
 			}
 			AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module(implode('---', $module_ids)));
 		}
+		elseif ($request->get_string('activate-selected-modules', false) || $request->get_string('deactivate-selected-modules', false))
+		{
+			$activated = 0;
+			if ($request->get_string('activate-selected-modules', false))
+				$activated = 1;
+			
+			$module_number = 1;
+			foreach ($installed_modules as $module)
+			{
+				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
+				{	
+					$error = ModulesManager::update_module($module->get_id(), $activated);
+				}
+				$module_number++;
+				if (!empty($error))
+					$errors[$module->get_configuration()->get_name()] = $error;
+			}
+		}
 		else
 		{
 			foreach($installed_modules as $module)
@@ -112,6 +130,17 @@ class AdminModulesManagementController extends AdminController
 				{
 					AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id()));
 				}
+				else if ($request->get_string('enable-' . $module->get_id(), ''))
+				{
+					$error = ModulesManager::update_module($module->get_id(), 1);
+				}
+				else if ($request->get_string('disable-' . $module->get_id(), ''))
+				{
+					$error = ModulesManager::update_module($module->get_id(), 0);
+				}
+
+				if (!empty($error))
+					$errors[$module->get_configuration()->get_name()] = $error;
 			}
 		}
 		
@@ -126,7 +155,7 @@ class AdminModulesManagementController extends AdminController
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
 			}
-			
+		
 			if (empty($errors))
 			{
 				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));

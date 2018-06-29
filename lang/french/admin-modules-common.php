@@ -35,8 +35,8 @@ $lang['module'] = 'Module';
 $lang['modules.module_management'] = 'Gestion des modules';
 $lang['modules.add_module'] = 'Ajouter un module';
 $lang['modules.update_module'] = 'Mettre à jour un module';
-$lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
-$lang['modules.delete_module_multiple'] = 'Suppression ou désactivation de modules';
+$lang['modules.delete_module'] = 'Suppression d\'un module';
+$lang['modules.delete_module_multiple'] = 'Suppression de modules';
 $lang['modules.installed_modules'] = 'Modules installés';
 $lang['modules.available_modules'] = 'Modules disponibles';
 
@@ -58,6 +58,7 @@ $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['module.documentation'] = 'Documentation';
+$lang['module.documentation_of'] = 'Documentation of';
 
 //Module management
 $lang['modules.select_all_modules'] = 'Sélectionner tous les modules';

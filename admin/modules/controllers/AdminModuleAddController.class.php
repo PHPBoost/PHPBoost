@@ -95,7 +95,7 @@ class AdminModuleAddController extends AdminController
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 
-			$this->view->assign_block_vars('available', array(
+			$this->view->assign_block_vars('modules_not_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
 				'MODULE_NUMBER' => $module_number,
@@ -117,7 +117,7 @@ class AdminModuleAddController extends AdminController
 		$not_installed_modules_number = count($modules_not_installed);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_MODULE_AVAILABLE' => $not_installed_modules_number > 1,
-			'C_MODULES_AVAILABLE' => $not_installed_modules_number > 0,
+			'C_MODULE_AVAILABLE' => $not_installed_modules_number > 0,
 			'MODULES_NUMBER' => $not_installed_modules_number
 		));
 	}

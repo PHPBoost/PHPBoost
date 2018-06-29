@@ -323,6 +323,18 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-left: calc(180px + 0.618em);
 }
 
+.admin-element-icon {
+	float: left;
+	text-align: center;
+	margin: 0 0.618em 0 0;
+	width: 32px;
+}
+
+.admin-element-icon + .admin-element-desc {
+	margin-left: calc(32px + 0.809em);
+	margin-right: 0.456em;
+}
+
 .admin-element-menu-container {
 	display: inline-block;
 	float: right;
@@ -432,6 +444,13 @@ header.legend .admin-element-menu-container {
 .block .admin-element-content {
 	clear: both;
 	margin-top: 1.482em;
+}
+
+
+.admin-element-documentation-module {
+	text-align: center;
+	with: 100%;
+	margin: auto;
 }
 
 .admin-menu-checkbox {

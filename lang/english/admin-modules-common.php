@@ -58,6 +58,7 @@ $lang['modules.url_rewrite_rules'] = 'URL rewrite rules';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Available modules';
 $lang['module.documentation'] = 'Documentation';
+$lang['module.documentation_of'] = 'Documentation du module ';
 
 //Module management
 $lang['modules.select_all_modules'] = 'Select all modules';

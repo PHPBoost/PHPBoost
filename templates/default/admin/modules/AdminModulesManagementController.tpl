@@ -1,127 +1,100 @@
-<script>
-<!--
-	function display_description(id){
-		var SHOW = ${escapejs(LangLoader::get_message('display', 'common'))};
-		var HIDE = ${escapejs(LangLoader::get_message('hide', 'common'))};
-
-		jQuery('#desc-explain-' + id).toggle(300, function(){
-			if (jQuery(this).css('display') == 'block'){
-				jQuery('#picture-desc-' + id).attr('title', HIDE);
-			}
-			else{
-				jQuery('#picture-desc-' + id).attr('title', SHOW);
-			}
-			jQuery('#picture-desc-' + id).children().toggleClass('fa-minus');
-			jQuery('#picture-desc-' + id).children().toggleClass('fa-plus');
-		});
-	}
-	# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
-	function select_all(status)
-	{
-		var i;
-		for(i = 1; i <= {MODULES_NUMBER}; i++)
-		{
-			if(document.getElementById('delete-checkbox-' + i))
-				document.getElementById('delete-checkbox-' + i).checked = status;
-		}
-		document.getElementById('check-all-top').checked = status;
-		document.getElementById('check-all-bottom').checked = status;
-	}
-	# ENDIF #
--->
-</script>
-
 # START errors #
 	# INCLUDE errors.MSG #
 # END errors #
 
+{@H|modules.warning_before_install}
 <form action="{REWRITED_SCRIPT}" method="post">
-	${LangLoader::get_message('modules.warning_before_install', 'admin-modules-common')}
-	<table id="table">
-		<caption>{@modules.installed_modules}</caption>
-		<thead>
-			<tr>
-				# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
-				<th>
-					<div class="form-field-checkbox-mini">
-						<input type="checkbox" id="check-all-top" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
-						<label for="check-all-top"></label>
-					</div>
-				</th>
-				# ENDIF #
-				<th>{@modules.name}</th>
-				<th>{@modules.description}</th>
-				<th>${LangLoader::get_message('enabled', 'common')}</th>
-				<th>${LangLoader::get_message('uninstall', 'admin-common')}</th>
-			</tr>
-		</thead>
-		# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
-		<tfoot>
-			<tr>
-				<td colspan="5">
-					<div class="left">
-						<div class="form-field-checkbox-mini">
-							<input type="checkbox" id="check-all-bottom" onclick="select_all(this.checked);" title="${LangLoader::get_message('select_all', 'main')}" />
-							<label for="check-all-bottom"></label>
-						</div>
-						<button type="submit" name="delete-selected-modules" value="true" class="submit">{@modules.uninstall_all_selected_modules}</button>
-					</div>
-				</td>
-			</tr>
-		</tfoot>
-		# ENDIF #
-		<tbody>
+	<section id="installed-modules-container" class="admin-elements-container modules-elements-container installed-elements-container">
+		<header class="legend">{@modules.installed_modules}</header>
+		<div class="content elements-container columns-3">
 			# START modules_installed #
-			<tr>
-				# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
-				<td>
-					<div class="form-field-checkbox-mini">
-						<input type="checkbox" id="delete-checkbox-{modules_installed.MODULE_NUMBER}" name="delete-checkbox-{modules_installed.MODULE_NUMBER}" />
-						<label for="delete-checkbox-{modules_installed.MODULE_NUMBER}"></label>
+			<article class="block admin-element module-element installed-element# IF modules_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF #">
+				<header>
+					<div class="admin-element-menu-container">
+						<a href="#" id="admin-element-menu-title-{modules_installed.MODULE_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF modules_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF #<i class="fa fa-caret-right"></i></a>
+						<ul class="admin-menu-elements-content">
+							# IF modules_installed.C_IS_ACTIVATED #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{modules_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+							# ELSE #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{modules_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+							# ENDIF #
+							<li class="admin-menu-element"><button type="submit" class="submit" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+						</ul>
 					</div>
-				</td>
-				# ENDIF #
-				<td>
-					<span id="module-{modules_installed.ID}"></span>
-					<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" /><br />
-					<span class="text-strong">{modules_installed.NAME}</span> <em>({modules_installed.VERSION})</em>
-				</td>
-				<td>
-					<div id="desc-explain-{modules_installed.ID}" class="left" style="display: none;">
-						<span class="text-strong">{@modules.name} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+
+					# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
+					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+						<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{modules_installed.MODULE_NUMBER}" name="delete-checkbox-{modules_installed.MODULE_NUMBER}"/>
+						<label for="multiple-checkbox-{modules_installed.MODULE_NUMBER}"></label>
+					</div>
+					# ENDIF #
+
+					<h2 class="installed-module-name">{modules_installed.NAME}<em> ({modules_installed.VERSION})</em></h2>
+				</header>
+				<div class="content admin-element-content">
+					<div class="admin-element-icon">
+						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" />
+					</div>
+					<div class="admin-element-desc">
+						<span class="text-strong">{@modules.author} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_installed.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_installed.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_installed.PHP_VERSION}<br />
-						# IF modules_installed.C_DOCUMENTATION #<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a># ENDIF #
 					</div>
-					<div class="center"><a href="" onclick="javascript:display_description('{modules_installed.ID}'); return false;" id="picture-desc-{modules_installed.ID}" class="description-displayed" title="${LangLoader::get_message('display', 'common')}"><i class="fa fa-plus"></i></a></div>
-				</td>
-				<td class="input-radio">
-					<div class="form-field-radio">
-						<input id="activated-{modules_installed.ID}" type="radio" name="activated-{modules_installed.ID}" value="1" # IF modules_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #>
-						<label for="activated-{modules_installed.ID}"></label>
+				</div>
+				<footer>
+					# IF modules_installed.C_DOCUMENTATION #
+					<div class="admin-element-documentation-module">
+						<a class="basic-button smaller"href="{modules_installed.L_DOCUMENTATION}" title="{@module.documentation_of}{modules_installed.NAME}">{@module.documentation}</a>
 					</div>
-					<span class="form-field-radio-span">${LangLoader::get_message('yes', 'common')}</span>
-					<br />
-					<div class="form-field-radio">
-						<input id="activated-{modules_installed.ID}2" type="radio" name="activated-{modules_installed.ID}" value="0" # IF NOT modules_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #>
-						<label for="activated-{modules_installed.ID}2"></label>
-					</div>
-					<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
-				</td>
-				<td>
-					<button type="submit" class="submit" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button>
-				</td>
-			</tr>
+					# ENDIF #
+				</footer>
+			</article>
+			<script>
+				jQuery('#admin-element-menu-title-{modules_installed.MODULE_NUMBER}').opensubmenu({
+					osmTarget: '.admin-element-menu-container'
+				});
+			</script>
 			# END modules_installed #
-		</tbody>
-	</table>
+		</div>
+		<footer>
+			<fieldset class="fieldset-submit">
+				<legend>{L_SUBMIT}</legend>
+				<input type="hidden" name="token" value="{TOKEN}">
+				<input type="hidden" name="update" value="true">
+			</fieldset>
+		</footer>
+	</section>
 
-	<fieldset class="fieldset-submit">
-		<legend>{L_SUBMIT}</legend>
-		<button type="submit" class="submit" name="update_modules_configuration" value="true">${LangLoader::get_message('update', 'main')}</button>
-		<input type="hidden" name="token" value="{TOKEN}">
-		<input type="hidden" name="update" value="true">
-		<button type="reset" value="true">${LangLoader::get_message('reset', 'main')}</button>
-	</fieldset>
+	# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
+	<div class="admin-element-menu-container multiple-select-menu-container">
+		<div class="admin-element-menu-title"> 
+			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right"></i></a>
+		</div>
+		<ul class="admin-menu-elements-content">
+			<li class="admin-menu-checkbox">
+				<div class="form-field form-field-checkbox-mini select-all-checkbox">
+					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+					<label for="delete-all-checkbox"></label>
+				</div>
+			</li>
+			<li class="admin-menu-element"><button type="submit" name="delete-selected-modules" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+			<li class="admin-menu-element"><button type="submit" name="deactivate-selected-modules" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
+			<li class="admin-menu-element"><button type="submit" name="activate-selected-modules" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>			
+		</ul>
+	</div>
+	# ENDIF #
 </form>
+
+<script>
+	jQuery('.admin-element-menu-title').opensubmenu({
+		osmTarget: '.admin-element-menu-title',
+		osmCloseExcept : '.admin-menu-checkbox, .admin-menu-checkbox *'
+	});
+
+	jQuery('.admin-element-auth').opensubmenu({
+		osmTarget: '.admin-element-auth-container',
+		osmCloseExcept: '.admin-element-auth-content *',
+		osmCloseButton: '.admin-element-auth-close i',
+	});
+</script>
