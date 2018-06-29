@@ -41,6 +41,10 @@ $lang['multiple.activate_selection'] = 'Activer la selection';
 $lang['multiple.deactivate_selection'] = 'Désactiver la sélection';
 $lang['multiple.install_selection'] = 'Installer la sélection';
 $lang['multiple.uninstall_selection'] = 'Désinstaller la sélection';
+$lang['multiple.upgrade_selection'] = 'Mettre à jour la sélection';
+
+$lang['author'] = 'Auteur';
+$lang['compatibility'] = 'Compatibilité';
 
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
 $lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';

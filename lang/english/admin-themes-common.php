@@ -41,11 +41,6 @@ $lang['themes.default_theme_explain'] = 'The default theme can not be uninstalle
 $lang['themes.default_theme_visibility'] = 'The default theme is usable for everyone';
 
 //Theme
-$lang['themes.name'] = 'Name';
-$lang['themes.description'] = 'Description';
-$lang['themes.author'] = 'Author';
-$lang['themes.compatibility'] = 'Compatibility';
-$lang['themes.authorization'] = 'Autorizations';
 $lang['themes.html_version'] = 'HTML version';
 $lang['themes.css_version'] = 'CSS version';
 $lang['themes.main_color'] = 'Main colors';

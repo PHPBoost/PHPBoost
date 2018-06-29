@@ -19,7 +19,7 @@
 					</div>
 					# ENDIF #
 
-					<h2 class="not-installed-theme-name">{themes_not_installed.NAME}<em>({themes_not_installed.VERSION})</em></h2>
+					<h2 class="not-installed-theme-name">{themes_not_installed.NAME}<em> ({themes_not_installed.VERSION})</em></h2>
 				</header>
 				
 				<div class="content admin-element-content">
@@ -35,9 +35,9 @@
 						# ENDIF #
 					</div>
 					<div class="admin-element-desc">
-						<span class="text-strong">{@themes.author} :</span> # IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">{@themes.description} :</span> {themes_not_installed.DESCRIPTION}<br />
-						<span class="text-strong">{@themes.compatibility} :</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {themes_not_installed.DESCRIPTION}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
 						<span class="text-strong">{@themes.html_version} :</span> {themes_not_installed.HTML_VERSION}<br />
 						<span class="text-strong">{@themes.css_version} :</span> {themes_not_installed.CSS_VERSION}<br />
 						<span class="text-strong">{@themes.main_color} :</span> {themes_not_installed.MAIN_COLOR}<br />

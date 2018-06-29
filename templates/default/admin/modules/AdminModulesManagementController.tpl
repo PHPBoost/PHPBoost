@@ -36,9 +36,9 @@
 						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" />
 					</div>
 					<div class="admin-element-desc">
-						<span class="text-strong">{@modules.author} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">{@modules.description} :</span> {modules_installed.DESCRIPTION}<br />
-						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_installed.DESCRIPTION}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {modules_installed.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_installed.PHP_VERSION}<br />
 					</div>
 				</div>

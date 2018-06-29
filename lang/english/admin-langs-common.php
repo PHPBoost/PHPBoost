@@ -40,15 +40,6 @@ $lang['langs.available_langs'] = 'Available languages';
 $lang['langs.default'] = 'Default language';
 $lang['langs.default_lang_visibility'] = 'The default language is usable for everyone';
 
-//Langs
-$lang['langs.not_installed'] = 'Languages not installed';
-$lang['langs.name'] = 'Name';
-$lang['langs.authorizations'] = 'Authorizations';
-$lang['langs.activated'] = 'Activated';
-$lang['langs.compatibility'] = 'Compatibility';
-$lang['langs.author'] = 'Author';
-$lang['langs.description'] = 'Description';
-
 //Langs management
 $lang['langs.select_all_langs'] = 'Select all languages';
 

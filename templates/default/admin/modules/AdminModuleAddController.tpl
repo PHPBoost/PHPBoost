@@ -19,7 +19,7 @@
 					</div>
 					# ENDIF #
 
-					<h2 class="not-installed-module-name">{modules_not_installed.NAME}<em>({modules_not_installed.VERSION})</em></h2>
+					<h2 class="not-installed-module-name">{modules_not_installed.NAME}<em> ({modules_not_installed.VERSION})</em></h2>
 				</header>
 				
 				<div class="content admin-element-content">
@@ -27,9 +27,9 @@
 						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" />
 					</div>
 					<div class="admin-element-desc">
-						<span class="text-strong">{@modules.author} :</span> # IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">{@modules.description} :</span> {modules_not_installed.DESCRIPTION}<br />
-						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_not_installed.DESCRIPTION}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {modules_not_installed.COMPATIBILITY}<br />
 					</div>
 				</div>
 

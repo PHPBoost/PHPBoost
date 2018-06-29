@@ -41,11 +41,6 @@ $lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être
 $lang['themes.default_theme_visibility'] = 'Le thème par défaut est visible par tout le monde';
 
 //Theme
-$lang['themes.name'] = 'Nom';
-$lang['themes.description'] = 'Description';
-$lang['themes.author'] = 'Auteur';
-$lang['themes.compatibility'] = 'Compatibilité';
-$lang['themes.authorization'] = 'Autorisations';
 $lang['themes.html_version'] = 'Version HTML';
 $lang['themes.css_version'] = 'Version CSS';
 $lang['themes.main_color'] = 'Couleurs dominantes';

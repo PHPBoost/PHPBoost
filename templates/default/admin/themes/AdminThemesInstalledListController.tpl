@@ -30,7 +30,7 @@
 					</div>
 					# ENDIF #
 
-					<h2 class="installed-theme-name">{themes_installed.NAME}<em>({themes_installed.VERSION})</em></h2>
+					<h2 class="installed-theme-name">{themes_installed.NAME}<em> ({themes_installed.VERSION})</em></h2>
 				</header>
 				<div class="content admin-element-content">
 					<div class="admin-element-picture" >
@@ -45,9 +45,9 @@
 						# ENDIF #
 					</div>
 					<div class="admin-element-desc">
-						<span class="text-strong">{@themes.author} :</span> # IF themes_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a># ELSE #{themes_installed.AUTHOR}# ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE #<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">{@themes.description} :</span> {themes_installed.DESCRIPTION}<br />
-						<span class="text-strong">{@themes.compatibility} :</span> PHPBoost {themes_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF themes_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a># ELSE #{themes_installed.AUTHOR}# ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE #<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {themes_installed.DESCRIPTION}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {themes_installed.COMPATIBILITY}<br />
 						<span class="text-strong">{@themes.html_version} :</span> {themes_installed.HTML_VERSION}<br />
 						<span class="text-strong">{@themes.css_version} :</span> {themes_installed.CSS_VERSION}<br />
 						<span class="text-strong">{@themes.main_color} :</span> {themes_installed.MAIN_COLOR}<br />

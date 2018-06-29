@@ -23,13 +23,13 @@
 						# IF langs_not_installed.C_HAS_PICTURE #
 							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
 						# ENDIF #
-						{langs_not_installed.NAME}<em>({langs_not_installed.VERSION})</em></h2>
+						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
 				</header>
 				
 				<div class="content admin-element-content">
 					<div class="admin-element-desc">
-						<span class="text-strong">{@langs.author} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">{@langs.compatibility} :</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
 					</div>
 				</div>
 

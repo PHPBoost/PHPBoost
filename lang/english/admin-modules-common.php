@@ -49,14 +49,7 @@ $lang['modules.upload_module'] = 'Install a module';
 $lang['modules.upload_description'] = 'The file must be uploaded as a zip or gzip archive';
 
 //Module
-$lang['modules.name'] = 'Name';
-$lang['modules.description'] = 'Description';
-$lang['modules.author'] = 'Author';
-$lang['modules.compatibility'] = 'Compatibility';
 $lang['modules.php_version'] = 'PHP version';
-$lang['modules.url_rewrite_rules'] = 'URL rewrite rules';
-$lang['modules.page_admin'] = 'Administration';
-$lang['modules.modules_available'] = 'Available modules';
 $lang['module.documentation'] = 'Documentation';
 $lang['module.documentation_of'] = 'Documentation du module ';
 
