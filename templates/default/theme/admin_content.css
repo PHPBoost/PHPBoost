@@ -339,6 +339,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	display: inline-block;
 	float: right;
 	transition: 0.1s;
+	position: relative;
 }
 
 .admin-element-menu-container:hover { transition: 0.1s; }
@@ -390,7 +391,7 @@ header.legend .admin-element-menu-container {
 .admin-menu-elements-content {
 	position: absolute;
 	z-index: 2;
-	top: 38px;
+	top: 100%;
 	left: -9999px;
 	width: 150px;
 	margin: 0;
@@ -401,13 +402,14 @@ header.legend .admin-element-menu-container {
 }
 
 .multiple-select-menu-container .admin-menu-elements-content {
-	top: -98px;
+	top: auto;
+	bottom: 100%;
 	width: 180px;
 }
 
 .opened + .admin-menu-elements-content {
 	left: auto;
-	right: 10px;
+	right: 0;
 	transition: 0.1s;
 }
 
@@ -456,7 +458,7 @@ header.legend .admin-element-menu-container {
 .admin-menu-checkbox {
 	position: absolute;
 	z-index: 1;
-	bottom: -44px;
+	top: calc(100% + 2px);
 	left: 0;
 	border-style: solid;
 	border-width: 2px 0 2px 2px;
