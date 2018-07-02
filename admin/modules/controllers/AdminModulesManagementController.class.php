@@ -111,15 +111,35 @@ class AdminModulesManagementController extends AdminController
 				$activated = 1;
 			
 			$module_number = 1;
+			$modified_modules = 0;
+			$errors = array();
+			
 			foreach ($installed_modules as $module)
 			{
 				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
-				{	
+				{
 					$error = ModulesManager::update_module($module->get_id(), $activated);
+					$modified_modules++;
 				}
 				$module_number++;
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
+			}
+			
+			if ($modified_modules && empty($errors))
+			{
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
+			}
+			else
+			{
+				$this->init();
+				$this->build_view();
+				foreach ($errors as $module_name => $error)
+				{
+					$this->view->assign_block_vars('errors', array(
+						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING)
+					));
+				}
 			}
 		}
 		else
@@ -133,40 +153,20 @@ class AdminModulesManagementController extends AdminController
 				else if ($request->get_string('enable-' . $module->get_id(), ''))
 				{
 					$error = ModulesManager::update_module($module->get_id(), 1);
+					
+					if (!empty($error))
+						$errors[$module->get_configuration()->get_name()] = $error;
+					else
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 				}
 				else if ($request->get_string('disable-' . $module->get_id(), ''))
 				{
 					$error = ModulesManager::update_module($module->get_id(), 0);
-				}
-
-				if (!empty($error))
-					$errors[$module->get_configuration()->get_name()] = $error;
-			}
-		}
-		
-		if ($request->get_bool('update', false))
-		{
-			$errors = array();
-			foreach ($installed_modules as $module)
-			{
-				$activated = $request->get_bool('activated-' . $module->get_id(), false);
-				$error = ModulesManager::update_module($module->get_id(), $activated);
-				
-				if (!empty($error))
-					$errors[$module->get_configuration()->get_name()] = $error;
-			}
-		
-			if (empty($errors))
-			{
-				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
-			}
-			else
-			{
-				foreach ($errors as $module_name => $error)
-				{
-					$this->view->assign_block_vars('errors', array(
-						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING)
-					));
+					
+					if (!empty($error))
+						$errors[$module->get_configuration()->get_name()] = $error;
+					else
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 				}
 			}
 		}

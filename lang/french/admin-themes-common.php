@@ -33,7 +33,7 @@
 $lang['themes.theme_management'] = 'Gestion des thèmes';
 $lang['themes.add_theme'] = 'Ajouter un thème';
 $lang['themes.delete_theme'] = 'Suppression d\'un thème';
-$lang['themes.delete_theme_multiple'] = 'Suppression des thèmes selectionnés';
+$lang['themes.delete_theme_multiple'] = 'Suppression des thèmes sélectionnés';
 $lang['themes.installed_theme'] = 'Thèmes installés';
 $lang['themes.available_themes'] = 'Thèmes disponibles';
 $lang['themes.default'] = 'Thème par défaut';

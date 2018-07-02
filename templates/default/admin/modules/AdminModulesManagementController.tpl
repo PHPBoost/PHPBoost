@@ -58,11 +58,7 @@
 			# END modules_installed #
 		</div>
 		<footer>
-			<fieldset class="fieldset-submit">
-				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<input type="hidden" name="update" value="true">
-			</fieldset>
+			<input type="hidden" name="token" value="{TOKEN}">
 		</footer>
 	</section>
 
@@ -78,9 +74,9 @@
 					<label for="delete-all-checkbox"></label>
 				</div>
 			</li>
-			<li class="admin-menu-element"><button type="submit" name="delete-selected-modules" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+			<li class="admin-menu-element"><button type="submit" name="activate-selected-modules" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
 			<li class="admin-menu-element"><button type="submit" name="deactivate-selected-modules" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
-			<li class="admin-menu-element"><button type="submit" name="activate-selected-modules" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>			
+			<li class="admin-menu-element"><button type="submit" name="delete-selected-modules" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
 		</ul>
 	</div>
 	# ENDIF #
