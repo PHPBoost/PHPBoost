@@ -152,3 +152,153 @@ table.announce-legend td {
 #module-user-error-404 .type-error {
 	padding: 0.618em 0;
 }
+
+
+	#module-user-group-list header h1 {
+		margin-top: 1.309em;
+		text-align: left;
+	}
+
+	#module-user-group-list > .content {
+		margin: 2em 0;
+	}
+
+/* --   groupe   -- */
+/* ---------------- */
+.group-container {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: column;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+}
+
+.list-members-container {
+	flex: 0 0 auto;
+	-ms-flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
+}
+
+.list-members-container > .content {
+	display: none;
+}
+
+.list-members-container.selected > .content {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+}
+
+.list-admins-container {
+	order : 2;
+	-ms-flex-order: 2;
+	-webkit-flex-order: 2;
+}
+
+.list-modos-container {
+	order : 3;
+	-ms-flex-order: 3;
+	-webkit-flex-order: 3;
+}
+
+.list-members-container {
+	order : 4;
+	-ms-flex-order: 4;
+	-webkit-flex-order: 4;
+}
+
+.list-group-container.reorder-top {
+	order : 1;
+	-ms-flex-order: 1;
+	-webkit-flex-order: 1;
+}
+
+.list-members-container-action {
+	float: right;
+	font-size: 0.619em;
+}
+
+.group-img {
+	opacity: 0.5;
+}
+
+.group-img.selected {
+	opacity: 1;
+}
+
+.user-card,
+.user-card header,
+.user-card .content {
+	margin: 0;
+	padding: 0;
+}
+
+.user-card {
+	border-width: 2px;
+}
+
+@media (min-width: 1370px) {
+	.elements-container > .user-card { width: calc(100% / 3.1); }
+}
+
+@media (min-width: 590px) and (max-width: 1369px) {
+	#module-user-group-list .elements-container,
+	#module-user-groups-list .elements-container {
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+	}
+	.elements-container > .user-card { width: calc(100% / 2.3); }
+}
+
+@media (max-width: 591px)  {
+	.elements-container > .user-card { width: calc(100%); }
+}
+
+.user-card {
+	background-color: #EFEFEF;
+	border-color: #DDDDDD;
+}
+
+.user-card .content {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+}
+
+.user-card .avatar-container {
+	margin: 0.809em 0.456em 0.809em 0.456em;
+	flex: 0 0 90px;
+	-ms-flex: 0 0 90px;
+	-webkit-flex: 0 0 90px;
+}
+
+.user-level {
+	margin-top: 1em;
+	padding-left: 0.456em;
+	text-transform: capitalize;
+}
+
+.user-pseudo,
+.user-extended-field {
+	padding-left: 0.456em;
+}
+
+.infos-container {
+	border-width: 0 0 0 8px;
+	border-style: solid;
+	flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	margin: -1px -1px -1px 0;
+}
+
+.infos-container {
+	border-color: #366493;
+}
+
+.user-level {
+	background-color: #366493;
+	color: #FFFFFF;
+}

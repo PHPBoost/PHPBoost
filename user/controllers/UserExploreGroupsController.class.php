@@ -30,12 +30,14 @@ class UserExploreGroupsController extends AbstractController
 	private $lang;
 	private $groups_cache;
 	private $view;
+	private $extended_fields_number;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$group_id = $request->get_getint('id', 0);
+
 		$this->init();
-		
+
 		if ($group_id !== 0 && !$this->groups_cache->group_exists($group_id))
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
@@ -48,62 +50,168 @@ class UserExploreGroupsController extends AbstractController
 	
 	private function build_view($group_id)
 	{
-		if (!empty($group_id))
-		{
-			$group = $this->groups_cache->get_group($group_id);
-			$this->view->put_all(array(
-				'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
-				'GROUP_NAME' => $group['name']
-			));
-		}
-		else
-		{
-			$this->view->put_all(array(
-				'GROUP_NAME' => $this->lang['groups']
-			));
-		}
 		
-		$user_accounts_config = UserAccountsConfig::load();
-		$number_member = 0;
-		foreach ($this->get_members_group($group_id) as $user_id)
+		if (!empty($group_id)) 
 		{
-			if (!empty($user_id))
-			{
-				$user = PersistenceContext::get_querier()->select('SELECT 
-					member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
-					FROM ' . DB_TABLE_MEMBER . ' member
-					LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
-					WHERE member.user_id = :user_id
-				', array('user_id' => $user_id))->fetch();
+			//Affichage d'un seul groupe sur la page
+			$group = $this->groups_cache->get_group($group_id);
 
-				if (!empty($user))
-				{
-					//Avatar
-					$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-					
-					$group_color = User::get_group_color($user['groups'], $user['level']);
-					$this->view->assign_block_vars('members_list', array(
-						'C_AVATAR' => $user['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
-						'C_GROUP_COLOR' => !empty($group_color),
-						'PSEUDO' => $user['display_name'],
-						'LEVEL' => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
-						'LEVEL_CLASS' => UserService::get_level_class($user['level']),
-						'GROUP_COLOR' => $group_color,
-						'U_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
-						'U_AVATAR' => $user_avatar
-					));
+			$users_data = "";
+			$number_member = 0;
+			$group_users_id = "";
+
+			foreach ($this->get_members_group($group_id) as $user_id)
+			{
+				if (!empty($user_id))
+				{	
+					if ($number_member != 0)
+						$group_users_id .=  ',' . $user_id;
+					else
+						$group_users_id .= $user_id;
 					$number_member++;
 				}
 			}
+
+			if (!empty($group_users_id))
+				$this->display_group_user($group_users_id, 'members_list');
+
+			$this->view->put_all(array(
+				'C_ONE_GROUP'    => true,
+				'C_NO_MEMBERS'   => $number_member == 0,
+				'U_GROUP_LIST'   => UserUrlBuilder::groups()->rel(),
+				'C_ADMIN'        => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
+				'GROUP_NAME'     => $group['name']
+			));
+
+		}
+		else 
+		{
+			//Affichage de tous les groupes + admin + modos sur la même page
+			//Affichages des administrateurs et des modérateurs
+			$users_data = PersistenceContext::get_querier()->select('SELECT 
+				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				FROM ' . DB_TABLE_MEMBER . ' member
+				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
+				WHERE member.level IN (1,2)
+			');
+
+			foreach ($users_data as $key => $user)
+			{
+				if (!empty($user))
+				{
+					if ($user['level'] == 1)
+						$this->display_data($user, 'modos_list');
+					if ($user['level'] == 2)
+						$this->display_data($user, 'admins_list');
+				}
+			}
+
+			//Affichages de tous les groupes
+			foreach ($this->groups_cache->get_groups() as $key => $group)
+			{
+				//Récupération du nombre de membre dans le groupe
+				$users_data = "";
+				$number_member = 0;
+				$group_users_id = "";
+				
+				foreach ($this->get_members_group($key) as $user_id)
+				{
+					if (!empty($user_id))
+					{	
+						if ($number_member != 0)
+							$group_users_id .=  ',' . $user_id;
+						else
+							$group_users_id .= $user_id;
+						$number_member++;
+					}
+				}
+				
+				// Affichage des groupes pour selection
+				$group_color = User::get_group_color($key);
+				$this->view->assign_block_vars('group', array(
+					'GROUP_ID'        => $key,
+					'GROUP_NAME'      => $group['name'],
+					'U_GROUP'         => UserUrlBuilder::groups()->rel() . $key,			
+					'C_GROUP_COLOR'   => !empty($group_color),
+					'GROUP_COLOR'     => $group_color,
+					'C_GROUP_HAS_IMG' => !empty($group['img']),
+					'U_GROUP_IMG'     => Url::to_rel('/images/group/' . $group['img']),
+					'C_HAS_MEMBERS'   => $number_member > 0,
+					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
+				));
+	
+				// Affichage des membres des groupes	
+				if (!empty($group_users_id))
+					$this->display_group_user($group_users_id, 'group.group_members_list');
+			}
+
+			$this->view->put_all(array(
+				'C_ONE_GROUP' => false
+			));
+		}
+	}
+
+	private function display_group_user($group_users_id, $list)
+	{
+		if (!empty($group_users_id))
+		{
+			$users_data = PersistenceContext::get_querier()->select('SELECT 
+				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
+				FROM ' . DB_TABLE_MEMBER . ' member
+				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
+				WHERE member.user_id IN (' . $group_users_id . ')
+			');
+
+			if (!empty($users_data))
+			{
+				foreach ($users_data as $key => $user)
+				{
+					if (!empty($user))
+						$this->display_data($user, $list);
+				}
+			}
+		}
+	}
+
+	private function display_data($user, $list_name)
+	{
+		$user_accounts_config = UserAccountsConfig::load();
+
+		//Avatar
+		$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
+					
+		$group_color = User::get_group_color($user['groups'], $user['level']);
+		$this->view->assign_block_vars($list_name, array(
+			'C_AVATAR'          => $user['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
+			'C_GROUP_COLOR'     => !empty($group_color),
+			'PSEUDO'            => $user['display_name'],
+			'LEVEL'             => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
+			'LEVEL_CLASS'       => UserService::get_level_class($user['level']),
+			'GROUP_COLOR'       => $group_color,
+			'U_PROFILE'         => UserUrlBuilder::profile($user['user_id'])->rel(),
+			'U_AVATAR'          => $user_avatar
+		));
+
+		foreach (MemberExtendedFieldsService::display_profile_fields($user['user_id']) as $field)
+		{
+			if ($field['name'] != 'Avatar')
+			{
+				$this->view->assign_block_vars($list_name . '.extended_fields', array(
+					'NAME' => $field['name'],
+					'REWRITED_NAME' => Url::encode_rewrite($field['name']),
+					'VALUE' => $field['value']
+				));
+			}
+			$this->extended_fields_number++;
 		}
 
 		$this->view->put_all(array(
-			'C_NOT_MEMBERS' => $number_member == 0,
-			'SELECT_GROUP' => $this->build_form($group_id)->display(),
+			'C_EXTENDED_FIELDS' => $this->extended_fields_number
 		));
 	}
-	
+
 	private function get_members_group($group_id_selected)
 	{
 		if (empty($group_id_selected))
@@ -113,33 +221,7 @@ class UserExploreGroupsController extends AbstractController
 		$group = $this->groups_cache->get_group($group_id_selected);
 		return $group['members'];
 	}
-	
-	private function build_form($group_id_selected)
-	{
-		$form = new HTMLForm('groups', '', false);
-
-		$fieldset = new FormFieldsetHTML('show_group');
-		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', $group_id_selected, $this->build_select_groups(), 
-			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
-		)));
-
-		return $form;
-	}
-
-	private function build_select_groups()
-	{
-		$groups = array();
-		$list_lang = LangLoader::get_message('list', 'main');
-		$groups[] = new FormFieldSelectChoiceOption('-- '. $list_lang .' --', '');
-		foreach ($this->groups_cache->get_groups() as $id => $row)
-		{
-			$groups[] = new FormFieldSelectChoiceOption($row['name'], $id);
-		}
-		return $groups;
-	}
-	
 	private function get_all_members()
 	{
 		$members = array();
@@ -148,9 +230,7 @@ class UserExploreGroupsController extends AbstractController
 			foreach ($groups['members'] as $user_id)
 			{
 				if (!in_array($user_id, $members))
-				{
 					$members[] = $user_id;
-				}
 			}
 		}
 		return $members;

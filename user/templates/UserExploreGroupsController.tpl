@@ -1,58 +1,216 @@
-<section id="module-user-groups-list">
+# IF C_ONE_GROUP #
+<section id="module-user-group-list">
 	<header>
-		<h1>{@groups}</h1>
+		<h1>
+			{@members_list} {@group.of_group} {GROUP_NAME}
+			# IF C_ADMIN #
+				<a href="{U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+			# ENDIF #
+			</h1>
 	</header>
-	<div class="content">
-		
-		<div class="options user-group-select">
-			# INCLUDE SELECT_GROUP #
-		</div>
+	<div class="content elements-container">
+		# IF C_NO_MEMBERS #
+		<span class="text-strong">{@no_member}</span>
+		# ELSE #
+			# START members_list #
+			<article class="block user-card">
+				<header></header>
+				<div class="content">
+					<div class="avatar-container">
+					# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}"/># ENDIF #
+					</div>
+					<div class="infos-container">
+						<div class="user-level">{members_list.LEVEL}</div>
+						<div class="user-pseudo">
+							<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>{members_list.PSEUDO}</a>
+						</div>
+						
+					# IF C_EXTENDED_FIELDS #
+					# START members_list.extended_fields #
+						<div class="user-extended-field">{members_list.extended_fields.NAME} : {members_list.extended_fields.VALUE}</div>
 
-		<table id="table">
-			<caption>
-				{GROUP_NAME}
-				# IF C_ADMIN #
-					<a href="{U_ADMIN_GROUPS}" class="fa fa-edit"></a>
+					# END members_list.extended_fields #
+					# ENDIF #
+					</div>
+				</div>
+				<footer></footer>
+			</article>
+			# END members_list #
+		# ENDIF #
+	</div>
+	<footer>
+		<div class="center">
+			<a href="{U_GROUP_LIST}" class="button">{@groups.list}</a>
+		</div>
+	</footer>
+</section>
+
+# ELSE #
+
+<section id="module-user-groups-list" class="groups-list-container">
+	<header>
+		<h2>{@groups.select}</h2>
+		# START group #
+			# IF group.C_GROUP_HAS_IMG #
+			<a href="#" id="group-img-{group.GROUP_ID}" class="group-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}"/></a>
+			# ENDIF #
+		# END group #
+	</header>
+	<div class="content group-container">
+		<section id="list-members-container-admin" class="list-admins-container list-members-container selected">
+			<header>
+				<h2>
+					<span class="list-members-container-action">
+						<a href="" onclick="open_group('admin', 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group('admin', 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+					</span>
+					{@admins.list}
+				</h2>
+			</header>
+			<div class="content elements-container">
+				# START admins_list #
+				<article class="block user-card">
+					<header></header>
+					<div class="content">
+						<div class="avatar-container">
+							# IF admins_list.C_AVATAR #
+							<img class="valign-middle" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}"/>
+							# ENDIF #
+						</div>
+						<div class="infos-container">
+							<div class="user-level">{admins_list.LEVEL}</div>
+							<div class="user-pseudo">
+								<a href="{admins_list.U_PROFILE}" class="{admins_list.LEVEL_CLASS}" # IF admins_list.C_GROUP_COLOR # style="color:{admins_list.GROUP_COLOR}" # ENDIF #>{admins_list.PSEUDO}</a>
+							</div>
+						
+							# IF C_EXTENDED_FIELDS #
+							# START admins_list.extended_fields #
+							<div class="user-extended-field">{admins_list.extended_fields.NAME} : {admins_list.extended_fields.VALUE}</div>
+							# END admins_list.extended_fields #
+							# ENDIF #
+						</div>
+					</div>
+					<footer></footer>
+				</article>
+				# END admins_list #
+			</div>
+			<footer></footer>
+		</section>
+	
+		<section id="list-members-container-modo" class="list-modos-container list-members-container selected">
+			<header>
+				<h2>
+					<span class="list-members-container-action">
+						<a href="" onclick="open_group('modo', 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group('modo', 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+					</span>
+					{@modos.list}
+				</h2>
+			</header>
+			<div class="content elements-container">
+				# START modos_list #
+				<article class="block user-card">
+					<header></header>
+					<div class="content">
+						<div class="avatar-container">
+							# IF modos_list.C_AVATAR #
+							<img class="valign-middle" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}"/>
+							# ENDIF #
+						</div>
+						<div class="infos-container">
+							<div class="user-level">{modos_list.LEVEL}</div>
+							<div class="user-pseudo">
+								<a href="{modos_list.U_PROFILE}" class="{modos_list.LEVEL_CLASS}" # IF modos_list.C_GROUP_COLOR # style="color:{modos_list.GROUP_COLOR}" # ENDIF #>{modos_list.PSEUDO}</a>
+							</div>
+						
+							# IF C_EXTENDED_FIELDS #
+							# START modos_list.extended_fields #
+							<div class="user-extended-field">{modos_list.extended_fields.NAME} : {modos_list.extended_fields.VALUE}</div>
+							# END modos_list.extended_fields #
+							# ENDIF #
+						</div>
+					</div>
+					<footer></footer>
+				</article>
+				# END modos_list #
+			</div>
+			<footer></footer>
+		</section>
+		
+		# START group #
+		<section id="list-members-container-{group.GROUP_ID}" class="list-group-container list-members-container">
+			<header>
+				<h3>
+					<span class="list-members-container-action">
+						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+					</span>
+					<a href="{group.U_GROUP}" class="group-name" title="{@members_list} {@group.of_group} {group.GROUP_NAME}">{group.GROUP_NAME}</a>
+					# IF C_ADMIN #
+						<a href="{group.U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+					# ENDIF #
+				</h3>
+			</header>
+			<div class="content elements-container">
+				# IF group.C_HAS_MEMBERS #
+					# START group.group_members_list #
+						<article class="block user-card">
+							<header></header>
+							<div class="content">
+								<div class="avatar-container">
+									# IF group.group_members_list.C_AVATAR #
+									<img class="valign-middle" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}"/>
+									# ENDIF #
+								</div>
+								<div class="infos-container">
+									<div class="user-level">{group.group_members_list.LEVEL}</div>
+									<div class="user-pseudo">
+										<a href="{group.group_members_list.U_PROFILE}" class="{group.group_members_list.LEVEL_CLASS}" # IF group.group_members_list.C_GROUP_COLOR # style="color:{group.group_members_list.GROUP_COLOR}" # ENDIF #>{group.group_members_list.PSEUDO}</a>
+									</div>
+								
+									# IF C_EXTENDED_FIELDS #
+									# START group.group_members_list.extended_fields #
+									<div class="user-extended-field">{group.group_members_list.extended_fields.NAME} : {group.group_members_list.extended_fields.VALUE}</div>
+									# END group.group_members_list.extended_fields #
+									# ENDIF #
+								</div>
+							</div>
+							<footer></footer>
+						</article>
+					# END group.group_members_list #
+				# ELSE #
+					{@no_member}
 				# ENDIF #
-			</caption>
-			<thead>
-				<tr>
-					<th>
-						{@avatar}
-					</th>
-					<th>
-						{@display_name}
-					</th>
-					<th>
-						{@level}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				# START members_list #
-				<tr>
-					<td>
-						# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}"/># ENDIF #
-					</td>
-					<td>
-						<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>
-							{members_list.PSEUDO}
-						</a>
-					</td>
-					<td>
-						{members_list.LEVEL}
-					</td>
-				</tr>
-				# END members_list #
-				# IF C_NOT_MEMBERS #
-				<tr>
-					<td colspan="4">
-						<span class="text-strong">{@no_member}</span>
-					</td>
-				</tr>
-				# ENDIF #
-			</tbody>
-		</table>
+			</div>
+			<footer></footer>
+		</section>
+		# END group #
 	</div>
 	<footer></footer>
 </section>
+	
+<script>
+function open_group(myid, mytype)
+{
+	var myclass = 'selected';
+	var mytype = (typeof mytype !== 'undefined') ? mytype : 2;
+
+	if ((jQuery('#list-members-container-' + myid).hasClass(myclass) && mytype == 2 ) || mytype == 0)  
+	{ 
+		if (typeof myid == 'number')
+			jQuery('#group-img-' + myid).removeClass(myclass);
+		jQuery('#list-members-container-' + myid).removeClass('reorder-top');
+		jQuery('#list-members-container-' + myid).removeClass(myclass);
+
+	}
+	else {
+		if (typeof myid == 'number')
+			jQuery('#group-img-' + myid).addClass(myclass);
+		if (mytype == 2)
+			jQuery('#list-members-container-' + myid).addClass('reorder-top');
+		jQuery('#list-members-container-' + myid).addClass(myclass);
+	}
+}
+</script>
+
+# ENDIF #

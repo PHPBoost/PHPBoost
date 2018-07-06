@@ -216,7 +216,7 @@ class Sitemap
 		{
 			if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 			{
-				$kernel_map->add(new SitemapLink(LangLoader::get_message('members-list', 'user-common'), UserUrlBuilder::home()));
+				$kernel_map->add(new SitemapLink(LangLoader::get_message('members_list', 'user-common'), UserUrlBuilder::home()));
 			}
 			
 			//Member space

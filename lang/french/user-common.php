@@ -39,7 +39,7 @@ $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
 $lang['welcome'] = 'Bienvenue';
 
-$lang['members-list'] = 'Liste des membres';
+$lang['members_list'] = 'Liste des membres';
 $lang['member-management'] = 'Gestion du membre';
 $lang['punishment-management'] = 'Gestion des sanctions';
 
@@ -102,7 +102,13 @@ $lang['avatar'] = 'Avatar';
 
 //Groups
 $lang['groups'] = 'Groupes';
+$lang['groups.list'] = 'Liste des groupes';
 $lang['groups.select'] = 'Sélectionner un groupe';
+$lang['group.of_group'] = 'du groupe : ';
+$lang['group.view_list_members'] = 'Voir la liste des membres du groupe';
+$lang['group.hide_list_members'] = 'Masquer la liste des membres du groupe';
+$lang['admins.list'] = 'Liste des administrateurs';
+$lang['modos.list'] = 'Liste des modérateurs';
 $lang['no_member'] = 'Aucun membre dans ce groupe';
 
 //Other
