@@ -10,6 +10,7 @@ kernel/db/config.php
 update/update_followed.txt
 
 #Images & fichiers
+images/group/*
 images/avatars/*
 images/maths/*
 images/customization/*
