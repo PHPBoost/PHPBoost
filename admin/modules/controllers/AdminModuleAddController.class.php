@@ -41,8 +41,7 @@ class AdminModuleAddController extends AdminController
 		{
 			if ($request->get_string('add-' . $module->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $module_number, 'off') == 'on'))
 			{
-				$activate = $request->get_bool('activated-' . $module->get_id(), false);
-				$this->install_module($module->get_id(), $activate);
+				$this->install_module($module->get_id(), true);
 			}
 
 			$module_number++;
