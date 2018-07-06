@@ -553,6 +553,28 @@ li.small-block .fa-stack {
 .message-helper.modo-only:before   { content: "\f071"; } /* copy exclamation-triangle */
 .message-helper.admin-only:before  { content: "\f071"; } /* copy exclamation-triangle */
 
+.message-ephemeral-container {
+	position: fixed;
+	z-index: 1000;
+	width: 100%;
+	margin: 0;
+	bottom: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+@media (min-width: 769px) {
+	.message-ephemeral-container {
+		margin-left: -250px;
+	}
+}
+
+.message-ephemeral-container .message-helper {
+	display: inline-block;
+	margin: 0;
+	border: none;
+}
+
 /* -- Systeme d Upload -- */
 /* ---------------------- */
 #module-user-upload {

@@ -28,11 +28,11 @@ a:hover {
 }
 
 /* --- Les differentes tailles de polices --- */
-.smaller 	{ font-size: 0.869em; }
-.small 		{ font-size: 0.923em; }
-.big 		{ font-size: 1.231em; }
-.bigger 	{ font-size: 1.385em; }
-.biggest 	{ font-size: 1.538em; }
+.smaller { font-size : 0.869em; }
+.small   { font-size : 0.923em; }
+.big     { font-size : 1.231em; }
+.bigger  { font-size : 1.385em; }
+.biggest { font-size : 1.538em; }
 
 /* --- Les titres (balise h) --- */
 h1 { font-size: 1.615em; }
@@ -48,9 +48,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h5 {
 	-webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0;
+	-webkit-margin-end: 0;
 }
 
 /* --- Les sous titres --- */
@@ -155,8 +155,8 @@ ul, ol {
 	}
 }
 
-.calendar-block .date-select-previous 	{ float: left;  }
-.calendar-block .date-select-next 		{ float: right; }
+.calendar-block .date-select-previous { float: left;  }
+.calendar-block .date-select-next     { float: right; }
 
 .calendar-block .date-select-next i,
 .calendar-block .date-select-previous i {
@@ -506,3 +506,25 @@ div.message-helper-small {
 .message-helper.warning:before  { content: "\f071"; }
 .message-helper.success:before  { content: "\f00c"; }
 .message-helper.question:before { content: "\f128"; }
+
+.message-ephemeral-container {
+	position: fixed;
+	z-index: 1000;
+	width: 100%;
+	margin: 0;
+	bottom: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+@media (min-width: 769px) {
+	.message-ephemeral-container {
+		margin-left: -250px;
+	}
+}
+
+.message-ephemeral-container .message-helper {
+	display: inline-block;
+	margin: 0;
+	border: none;
+}
