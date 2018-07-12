@@ -174,10 +174,23 @@ table.announce-legend td {
 	-webkit-flex-direction: column;
 }
 
+.groups-list-container > header {
+	text-align: center;
+}
+
 .list-members-container {
 	flex: 0 0 auto;
 	-ms-flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
+}
+
+.list-members-container > header {
+	margin: 0;
+	padding: 0;
+}
+
+.list-members-container > header h2 {
+	font-size: 1.618em;
 }
 
 .list-members-container > .content {
@@ -216,7 +229,19 @@ table.announce-legend td {
 
 .list-members-container-action {
 	float: right;
-	font-size: 0.619em;
+	font-size: 0.618em;
+}
+
+.list-members-container-action a {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	font-size: 0.809em;
+}
+
+.list-members-container-action i {
+	vertical-align: middle;
 }
 
 .group-img {
@@ -256,15 +281,16 @@ table.announce-legend td {
 	.elements-container > .user-card { width: calc(100%); }
 }
 
-.user-card {
-	background-color: #EFEFEF;
-	border-color: #DDDDDD;
-}
-
 .user-card .content {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
+	height: 100%;
+}
+
+.user-card .content:after,
+.user-card .content:before {
+	display: none;
 }
 
 .user-card .avatar-container {
@@ -285,6 +311,11 @@ table.announce-legend td {
 	padding-left: 0.456em;
 }
 
+.user-extended-field {
+	font-size: 0.809em;
+	text-align: left;
+}
+
 .infos-container {
 	border-width: 0 0 0 8px;
 	border-style: solid;
@@ -292,13 +323,4 @@ table.announce-legend td {
 	-ms-flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
 	margin: -1px -1px -1px 0;
-}
-
-.infos-container {
-	border-color: #366493;
-}
-
-.user-level {
-	background-color: #366493;
-	color: #FFFFFF;
 }

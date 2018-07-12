@@ -49,12 +49,14 @@
 
 <section id="module-user-groups-list" class="groups-list-container">
 	<header>
-		<h2>{@groups.select}</h2>
+		<span class="groups-list-title">{@groups.select}</span>
+		<div class="groups-list-select">
 		# START group #
 			# IF group.C_GROUP_HAS_IMG #
 			<a href="#" id="group-img-{group.GROUP_ID}" class="group-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}"/></a>
 			# ENDIF #
 		# END group #
+		</div>
 	</header>
 	<div class="content group-container">
 		<section id="list-members-container-admin" class="list-admins-container list-members-container selected">
@@ -140,7 +142,7 @@
 		# START group #
 		<section id="list-members-container-{group.GROUP_ID}" class="list-group-container list-members-container">
 			<header>
-				<h3>
+				<h2>
 					<span class="list-members-container-action">
 						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
 						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
@@ -149,7 +151,7 @@
 					# IF C_ADMIN #
 						<a href="{group.U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 					# ENDIF #
-				</h3>
+				</h2>
 			</header>
 			<div class="content elements-container">
 				# IF group.C_HAS_MEMBERS #

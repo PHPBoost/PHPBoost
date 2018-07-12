@@ -655,3 +655,20 @@ h3.formatter-title {
 .sharing-element-comments > a { background-color: #CDCDCD; }
 .sharing-element-mail > a     { background-color: #366393; }
 .sharing-element-print > a    { background-color: #999999; }
+
+
+/* -- Elements groups -- */
+/* --------------------- */
+.user-card {
+	background-color: #EFEFEF;
+	border-color: #DDDDDD;
+}
+
+.infos-container {
+	border-color: #366493;
+}
+
+.user-level {
+	background-color: #366493;
+	color: #FFFFFF;
+}

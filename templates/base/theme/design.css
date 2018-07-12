@@ -244,7 +244,7 @@ body {
 #scroll-to-top {
 	right: 0;
 	bottom: 0.618em;
-	padding: 0.618em;
+	padding: 0.618em 0.809em;
 }
 
 #scroll-to-top,
