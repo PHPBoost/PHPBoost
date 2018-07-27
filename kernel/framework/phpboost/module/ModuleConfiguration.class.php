@@ -149,11 +149,11 @@ class ModuleConfiguration
 
 	public function feature_is_enabled($feature_id)
 	{
-		if (in_array($feature_id, $this->enabled_features))
-		{
+		if (in_array($feature_id, array_map('trim', $this->enabled_features), true))
 			return true;
+		else
+			return false;
 		}
-		return false;
 	}
 
 	private function load_configuration($config_ini_file)
