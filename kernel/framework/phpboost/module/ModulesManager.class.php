@@ -521,5 +521,22 @@ class ModulesManager
 	{
 		ClassLoader::generate_classlist();
 	}
+
+	/**
+	 * @return string[] the names list of the modules for unauthorized FormFieldSelectChoiceOption
+	 */
+	public static function generate_unauthorized_module_option($type)
+	{
+		$options = array();
+
+		$modules = self::get_activated_feature_modules($type);
+		foreach ($modules as $id => $module)
+		{
+
+			$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
+		}
+		return $options;
+	}
+
 }
 ?>

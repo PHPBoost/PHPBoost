@@ -119,7 +119,7 @@ class AdminCommentsConfigController extends AdminController
 			array('size' => 12, 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), $this->generate_unauthorized_module_option('comments'),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('comments'),
 			array('size' => 12, 'description' => $this->admin_common_lang['config.comments.forbidden-module-explain'], 'hidden' => !$this->configuration->are_comments_enabled())
 		));
 
@@ -180,18 +180,6 @@ class AdminCommentsConfigController extends AdminController
 		foreach ($available_tags as $identifier => $name)
 		{
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
-		}
-		return $options;
-	}
-
-	private function generate_unauthorized_module_option($type)
-	{
-		$options = array();
-
-		$modules = ModulesManager::get_activated_feature_modules($type);
-		foreach ($modules as $id => $module)
-		{
-			$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 		}
 		return $options;
 	}
