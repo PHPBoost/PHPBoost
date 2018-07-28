@@ -153,7 +153,6 @@ class ModuleConfiguration
 			return true;
 		else
 			return false;
-		}
 	}
 
 	private function load_configuration($config_ini_file)
