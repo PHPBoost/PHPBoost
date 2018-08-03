@@ -157,7 +157,7 @@ class AdminModuleAddController extends AdminController
 
 	private function install_module($module_id, $activate)
 	{
-		switch(ModulesManager::install_module($module_id, $activate))
+		switch(ModulesManager::install_module($module_id, $activate, true))
 		{
 			case ModulesManager::CONFIG_CONFLICT:
 				$this->view->put('MSG', MessageHelper::display($this->lang['modules.config_conflict'], MessageHelper::WARNING, 10));
