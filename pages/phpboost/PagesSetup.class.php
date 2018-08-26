@@ -74,7 +74,7 @@ class PagesSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'encoded_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 16777216),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'is_cat' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'id_cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
