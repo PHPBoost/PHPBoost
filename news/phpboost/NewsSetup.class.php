@@ -76,7 +76,7 @@ class NewsSetup extends DefaultModuleSetup
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 16777216),
 			'short_contents' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

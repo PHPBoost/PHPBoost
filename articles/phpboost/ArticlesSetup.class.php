@@ -78,7 +78,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
 			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'contents' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 16777216),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
