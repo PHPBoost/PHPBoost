@@ -667,10 +667,6 @@ abstract class AbstractPlatform
 	 *          Integer value that determines the maximum length of the text
 	 *          field. If this argument is missing the field should be
 	 *          declared to have the longest length allowed by the DBMS.
-	 *          TINYTEXT   <=           255 ( 2^8 − 1) bytes
-	 *          TEXT       <=        65.535 (2^16 − 1) bytes = 64 KiB
-	 *          MEDIUMTEXT <=    16.777.215 (2^24 − 1) bytes = 16 MiB
-	 *          LONGTEXT   <= 4.294.967.295 (2^32 −1 ) bytes =  4 GiB
 	 *
 	 *      default
 	 *          Text value to be used as default for this field.
@@ -710,10 +706,6 @@ abstract class AbstractPlatform
 	 *          Integer value that determines the maximum length of the text
 	 *          field. If this argument is missing the field should be
 	 *          declared to have the longest length allowed by the DBMS.
-	 *          TINYTEXT   <=           255 ( 2^8 − 1) bytes
-	 *          TEXT       <=        65.535 (2^16 − 1) bytes = 64 KiB
-	 *          MEDIUMTEXT <=    16.777.215 (2^24 − 1) bytes = 16 MiB
-	 *          LONGTEXT   <= 4.294.967.295 (2^32 −1 ) bytes =  4 GiB
 	 *
 	 *      default
 	 *          Text value to be used as default for this field.
