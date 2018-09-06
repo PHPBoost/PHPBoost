@@ -19,97 +19,97 @@
 </nav>
 
 <div id="admin-contents">
-	<form action="admin_wiki_groups.php" method="post">
+	<form action="admin_wiki_groups.php" method="post" class="fieldset-content">
 		<fieldset>
 			<legend>{L_WIKI_GROUPS}</legend>
 			<div class="fieldset-inset">
 				{EXPLAIN_WIKI_GROUPS}
 
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_READ}</label>
 
 					<div class="form-field">
 						{SELECT_READ}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_CREATE_ARTICLE}</label>
 
 					<div class="form-field">
 						{SELECT_CREATE_ARTICLE}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_CREATE_CAT}</label>
 
 					<div class="form-field">
 						{SELECT_CREATE_CAT}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_RESTORE_ARCHIVE}</label>
 
 					<div class="form-field">
 						{SELECT_RESTORE_ARCHIVE}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_DELETE_ARCHIVE}</label>
 
 					<div class="form-field">
 						{SELECT_DELETE_ARCHIVE}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_EDIT}</label>
 
 					<div class="form-field">
 						{SELECT_EDIT}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_DELETE}</label>
 
 					<div class="form-field">
 						{SELECT_DELETE}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_RENAME}</label>
 
 					<div class="form-field">
 						{SELECT_RENAME}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_REDIRECT}</label>
 
 					<div class="form-field">
 						{SELECT_REDIRECT}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_MOVE}</label>
 
 					<div class="form-field">
 						{SELECT_MOVE}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_STATUS}</label>
 
 					<div class="form-field">
 						{SELECT_STATUS}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_COM}</label>
 
 					<div class="form-field">
 						{SELECT_COM}
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label>{L_RESTRICTION}</label>
 
 					<div class="form-field">

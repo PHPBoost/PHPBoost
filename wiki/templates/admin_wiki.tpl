@@ -30,6 +30,7 @@
 						<div class="form-field-checkbox">
 							<input type="checkbox" name="sticky_menu" id="sticky_menu" {STICKY_MENU_SELECTED} />
 							<label for="sticky_menu"></label>
+						</div>
 					</div>
 				</div>
 				<div class="form-element">
