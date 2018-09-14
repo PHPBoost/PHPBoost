@@ -59,15 +59,15 @@ class DefaultTemplateData implements TemplateData
 		$session = AppContext::get_session();
 		$user = AppContext::get_current_user();
 		$this->put_all(array(
-			'THEME' => $user->get_theme(),
-			'LANG' => $user->get_locale(),
+			'THEME'             => $user->get_theme(),
+			'LANG'              => $user->get_locale(),
 			'IS_USER_CONNECTED' => $user->check_level(User::MEMBER_LEVEL),
-			'IS_ADMIN' => $user->check_level(User::ADMIN_LEVEL),
-    		'IS_MODERATOR' => $user->check_level(User::MODERATOR_LEVEL),
-			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
-			'TOKEN' => !empty($session) ? $session->get_token() : '',
-			'REWRITED_SCRIPT' => REWRITED_SCRIPT
+			'IS_ADMIN'          => $user->check_level(User::ADMIN_LEVEL),
+			'IS_MODERATOR'      => $user->check_level(User::MODERATOR_LEVEL),
+			'PATH_TO_ROOT'      => TPL_PATH_TO_ROOT,
+			'PHP_PATH_TO_ROOT'  => PATH_TO_ROOT,
+			'TOKEN'             => !empty($session) ? $session->get_token() : '',
+			'REWRITED_SCRIPT'   => REWRITED_SCRIPT
 		));
 	}
 
