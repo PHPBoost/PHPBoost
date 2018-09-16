@@ -81,7 +81,8 @@ class UserExploreGroupsController extends AbstractController
 				'U_GROUP_LIST'   => UserUrlBuilder::groups()->rel(),
 				'C_ADMIN'        => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
-				'GROUP_NAME'     => $group['name']
+				'GROUP_NAME'     => $group['name'],
+				'NUMBER_MEMBERS' => $number_member,
 			));
 
 		}
@@ -95,15 +96,22 @@ class UserExploreGroupsController extends AbstractController
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.level IN (1,2)
 			');
+			$number_modos  = 0;
+			$number_admins = 0;
 
 			foreach ($users_data as $key => $user)
 			{
 				if (!empty($user))
 				{
 					if ($user['level'] == 1)
+					{
 						$this->display_data($user, 'modos_list');
-					if ($user['level'] == 2)
+						$number_modos++;
+					}
+					if ($user['level'] == 2){
 						$this->display_data($user, 'admins_list');
+						$number_admins++;
+					}
 				}
 			}
 
@@ -138,6 +146,7 @@ class UserExploreGroupsController extends AbstractController
 					'C_GROUP_HAS_IMG' => !empty($group['img']),
 					'U_GROUP_IMG'     => Url::to_rel('/images/group/' . $group['img']),
 					'C_HAS_MEMBERS'   => $number_member > 0,
+					'NUMBER_MEMBERS'  => $number_member,
 					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				));
@@ -148,7 +157,10 @@ class UserExploreGroupsController extends AbstractController
 			}
 
 			$this->view->put_all(array(
-				'C_ONE_GROUP' => false
+				'C_ONE_GROUP'   => false,
+				'NUMBER_MODOS'  => $number_modos,
+				'NUMBER_ADMINS' => $number_admins,
+				'C_HAS_GROUP'   => !empty($this->groups_cache->get_groups())
 			));
 		}
 	}

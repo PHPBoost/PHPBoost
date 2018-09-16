@@ -2,7 +2,7 @@
 <section id="module-user-group-list">
 	<header>
 		<h1>
-			{@members_list} {@group.of_group} {GROUP_NAME}
+			{@members_list} {@group.of_group} {GROUP_NAME} ({NUMBER_MEMBERS})
 			# IF C_ADMIN #
 				<a href="{U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 			# ENDIF #
@@ -49,24 +49,28 @@
 
 <section id="module-user-groups-list" class="groups-list-container">
 	<header>
+		# IF C_HAS_GROUP #
 		<span class="groups-list-title">{@groups.select}</span>
 		<div class="groups-list-select">
 		# START group #
 			# IF group.C_GROUP_HAS_IMG #
-			<a href="#" id="group-img-{group.GROUP_ID}" class="group-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}"/></a>
+			<a href="#" id="group-button-{group.GROUP_ID}" class="group-button group-has-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}"/></a>
+			# ELSE #
+			<a href="#" id="group-button-{group.GROUP_ID}" class="button group-button group-without-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;">{group.GROUP_NAME}</a>
 			# ENDIF #
 		# END group #
 		</div>
+		# ENDIF #
 	</header>
 	<div class="content group-container">
 		<section id="list-members-container-admin" class="list-admins-container list-members-container selected">
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('admin', 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group('admin', 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group('admin', 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group('admin', 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
 					</span>
-					{@admins.list}
+					{@admins.list} <span class="small">({NUMBER_ADMINS})</span>
 				</h2>
 			</header>
 			<div class="content elements-container">
@@ -103,10 +107,10 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('modo', 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group('modo', 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group('modo', 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group('modo', 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
 					</span>
-					{@modos.list}
+					{@modos.list} <span class="small">({NUMBER_MODOS})</span>
 				</h2>
 			</header>
 			<div class="content elements-container">
@@ -144,10 +148,10 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" title="{@group.hide_list_members}"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" title="{@group.view_list_members}"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
+						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
 					</span>
-					<a href="{group.U_GROUP}" class="group-name" title="{@members_list} {@group.of_group} {group.GROUP_NAME}">{group.GROUP_NAME}</a>
+					<a href="{group.U_GROUP}" class="group-name" title="{@members_list} {@group.of_group} {group.GROUP_NAME}">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 					# IF C_ADMIN #
 						<a href="{group.U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 					# ENDIF #
@@ -200,14 +204,14 @@ function open_group(myid, mytype)
 	if ((jQuery('#list-members-container-' + myid).hasClass(myclass) && mytype == 2 ) || mytype == 0)  
 	{ 
 		if (typeof myid == 'number')
-			jQuery('#group-img-' + myid).removeClass(myclass);
+			jQuery('#group-button-' + myid).removeClass(myclass);
 		jQuery('#list-members-container-' + myid).removeClass('reorder-top');
 		jQuery('#list-members-container-' + myid).removeClass(myclass);
 
 	}
 	else {
 		if (typeof myid == 'number')
-			jQuery('#group-img-' + myid).addClass(myclass);
+			jQuery('#group-button-' + myid).addClass(myclass);
 		if (mytype == 2)
 			jQuery('#list-members-container-' + myid).addClass('reorder-top');
 		jQuery('#list-members-container-' + myid).addClass(myclass);

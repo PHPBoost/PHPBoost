@@ -194,13 +194,18 @@ table.announce-legend td {
 }
 
 .list-members-container > .content {
-	display: none;
-}
-
-.list-members-container.selected > .content {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
+	overflow: hidden;
+	padding: 0;
+	max-height: 0;
+	transition: 0.3s ease;
+}
+
+.list-members-container.selected > .content {
+	max-height: 9999px;
+	padding: 0.456em;
 }
 
 .list-admins-container {
@@ -233,7 +238,6 @@ table.announce-legend td {
 }
 
 .list-members-container-action a {
-	display: inline-block;
 	width: 25px;
 	height: 25px;
 	text-align: center;
@@ -244,11 +248,18 @@ table.announce-legend td {
 	vertical-align: middle;
 }
 
-.group-img {
+
+.action-less { display: none; }
+.selected .action-less { display: inline-block; }
+
+.action-more { display: inline-block; }
+.selected .action-more { display: none; }
+
+.group-button {
 	opacity: 0.5;
 }
 
-.group-img.selected {
+.group-button.selected {
 	opacity: 1;
 }
 
