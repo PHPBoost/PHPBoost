@@ -218,6 +218,8 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
 			'C_MUSIC' => in_array($media['mime_type'], $mime_type['audio'])
 		));
+		
+		$location_id = 'media-edit-'. $edit;
 	}
 	// Ajout.
 	elseif (($write = MediaAuthorizationsService::check_authorizations()->write()) || MediaAuthorizationsService::check_authorizations()->contribution())

@@ -33,6 +33,9 @@ if (defined('PHPBOOST') !== true)
 $env = new SiteDisplayGraphicalEnvironment();
 $env->set_breadcrumb($Bread_crumb);
 
+if (isset($location_id) && !empty($location_id) && !AppContext::get_session()->location_id_already_exists($location_id))
+	$env->set_location_id($location_id);
+
 Environment::set_graphical_environment($env);
 
 if (!defined('TITLE'))
@@ -50,4 +53,18 @@ if (!Environment::home_page_running() && ModulesManager::is_module_installed($mo
 $env->set_page_title(TITLE, $section);
 
 ob_start();
+
+if (isset($location_id) && !empty($location_id) && AppContext::get_session()->location_id_already_exists($location_id))
+{
+	$user_display_name = UserService::display_user_profile_link(AppContext::get_session()->get_user_on_location_id($location_id));
+	
+	$tpl = new StringTemplate('# INCLUDE MESSAGE #');
+	
+	$tpl->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('content.is_locked.description', 'status-messages-common'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('content.is_locked.another_user'))), MessageHelper::NOTICE));
+	
+	$tpl->display();
+
+	require_once('../kernel/footer.php');
+	die();
+}
 ?>

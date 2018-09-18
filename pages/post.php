@@ -87,6 +87,8 @@ if ($id_edit > 0)
 else
 	$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	
+$location_id = $id_edit ? 'pages-edit-'. $id_edit : '';
+
 require_once('../kernel/header.php');
 
 //On crée ou on édite une page

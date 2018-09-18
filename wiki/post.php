@@ -57,6 +57,8 @@ $preview = (bool)retrieve(POST, 'preview', false);
 $id_edit_get = (int)retrieve(GET, 'id', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
+$location_id = $id_edit ? 'wiki-edit-'. $id_edit : '';
+
 require_once('../kernel/header.php'); 
 
 $categories = WikiCategoriesCache::load()->get_categories();
