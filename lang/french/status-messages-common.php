@@ -116,7 +116,7 @@ $lang['bbcode_member'] = 'Message destiné aux membres';
 $lang['bbcode_moderator'] = 'Message destiné aux modérateurs';
 
 //Locked content
-$lang['content.is_locked.description'] = 'L\'élement est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
+$lang['content.is_locked.description'] = 'L\'élément est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
 $lang['content.is_locked.another_user'] = 'un autre utilisateur';
 
 //Upload
