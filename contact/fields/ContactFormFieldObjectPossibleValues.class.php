@@ -31,7 +31,7 @@
 
 class ContactFormFieldObjectPossibleValues extends AbstractFormField
 {
-	private $max_input = 30;
+	private $max_input = 50;
 	
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
