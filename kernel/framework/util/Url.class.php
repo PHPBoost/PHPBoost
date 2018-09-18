@@ -48,8 +48,7 @@ class Url
 	const DOMAIN_REGEX = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
 	const FOLDERS_REGEX = '/*(?:[A-Za-z0-9~_\.+@,-]+/+)*';
 	const FILE_REGEX = '[A-Za-z0-9-+_,~:/\.\%!=]+';
-	const ARGS_REGEX = '(?:\?(?!&)(?:(?:&amp;|&)?[A-Za-z0-9-+=,_~:;/\.\?\'\%\*!|]+(?:=[A-Za-z0-9-+=_~:;/\.\?\'\%\*!|]+)?)*)?';
-	const ANCHOR_REGEX = '\#[A-Za-z0-9-+=,_~:;/\.\?\'\%\*!&|]*';
+	const ARGS_REGEX = '(/([\w/_\.#-]*(\?)?(\S+)?[^\.\s])?)?';
 	
 	const STATUS_OK = 200;
 	const STATUS_FOUND = 302;
@@ -463,7 +462,7 @@ class Url
 	public static function get_wellformness_regex($protocol = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
 	$user = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $domain = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
 	$folders = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $file = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
-	$args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $anchor = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
+	$args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
 		if ($forbid_js)
 		{
@@ -479,12 +478,7 @@ class Url
 		RegexHelper::set_subregex_multiplicity(self::DOMAIN_REGEX, $domain) .
 		RegexHelper::set_subregex_multiplicity(self::FOLDERS_REGEX, $folders) .
 		RegexHelper::set_subregex_multiplicity(self::FILE_REGEX, $file);
-		if ($anchor == RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL)
-		{
-			$regex .= RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL);
-		}
-		$regex .= RegexHelper::set_subregex_multiplicity(self::ARGS_REGEX, $args) .
-		RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, $anchor);
+		$regex .= RegexHelper::set_subregex_multiplicity(self::ARGS_REGEX, $args);
 
 		return $regex;
 	}

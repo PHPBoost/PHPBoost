@@ -409,16 +409,16 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('url', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a title="$1" href="$2">$3</a>');
+			array_push($array_preg_replace, '<a title="$1" href="$2">$7</a>');
 			array_push($array_preg, '`&lt;a title="" href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a title="" href="$1">$2</a>');
+			array_push($array_preg_replace, '<a title="" href="$1">$6</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
 			array_push($array_preg, '`&lt;a(?: title="([^"]+)")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
-			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$3</a>');
+			array_push($array_preg_replace, '<a title="$1" href="$2" target="_blank">$7</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
@@ -651,10 +651,10 @@ class TinyMCEParser extends ContentFormattingParser
 			'movie2' => '`\[movie=([0-9]{1,3}),([0-9]{1,3}),([a-z0-9_+.:?/=#%@&;,-]*)\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iuU',
 			'math' => '`\[math\](.+)\[/math\]`iuU',
-			'url' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`suU',
-			'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`suU',
+			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isuU',
+			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/url\]`isuU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`iu',
-			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isuU',
+			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);
@@ -677,10 +677,10 @@ class TinyMCEParser extends ContentFormattingParser
 			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, $3);[[/MEDIA]]',
 			'sound' => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
 			'math' => '[[MATH]]$1[[/MATH]]',
-			'url' => "$1<a href=\"$2\">$2</a>$3",
-			'url2' => "$1<a href=\"http://$2\">$2</a>$3",
+			'url1' => '<a href="$1">$1</a>',
+			'url2' => '<a href="$1">$6</a>',
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
-			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$2</a>',
+			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
