@@ -32,9 +32,9 @@
  */
 class SiteDisplayResponse extends AbstractResponse
 {
-	public function __construct($view)
+	public function __construct($view, $location_id = '')
 	{
-		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view);
+		parent::__construct(new SiteDisplayGraphicalEnvironment(), $view, $location_id);
 	}
 }
 ?>

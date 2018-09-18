@@ -116,9 +116,8 @@ $lang['bbcode_member'] = 'Message for members';
 $lang['bbcode_moderator'] = 'Message for moderators';
 
 //Locked content
-$lang['content.is_locked'] = 'Content is locked';
-$lang['content.is_locked.description'] = 'The item is currently open by another user, you can not access it.';
-$lang['content.lock.open.description'] = 'The item is currently open by another user.';
+$lang['content.is_locked.description'] = 'The item is currently open by :user_display_name, you can not access it, try again later.';
+$lang['content.is_locked.another_user'] = 'another user';
 
 //Upload
 $lang['upload.success'] = 'The archive has successfully been uploaded';

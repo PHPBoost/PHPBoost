@@ -255,8 +255,13 @@ class SessionData
 		$condition = 'WHERE location_id=:location_id AND user_id!=:user_id';
 		$parameters = array('location_id' => $location_id, 'user_id' => $this->user_id);
 		$value = PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS, $condition, $parameters);
-				
+		
 		return $value > 0;
+	}
+
+	public function get_user_on_location_id($location_id)
+	{
+		return PersistenceContext::get_querier()->get_column_value(DB_TABLE_SESSIONS, 'user_id', 'WHERE location_id=:location_id', array('location_id' => $location_id));
 	}
 
 	public static function admin_session()

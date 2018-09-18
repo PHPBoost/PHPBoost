@@ -44,9 +44,19 @@ abstract class AbstractResponse implements Response
 	 */
 	private $graphical_environment;
 
-	protected function __construct(GraphicalEnvironment $graphical_environment, View $view)
+	protected function __construct(GraphicalEnvironment $graphical_environment, View $view, $location_id = '')
 	{
 		$this->graphical_environment = $graphical_environment;
+		
+		if (!empty($location_id) && AppContext::get_session()->location_id_already_exists($location_id))
+		{
+			$user_display_name = UserService::display_user_profile_link(AppContext::get_session()->get_user_on_location_id($location_id));
+			
+			$view = new StringTemplate('# INCLUDE MESSAGE #');
+			
+			$view->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('content.is_locked.description', 'status-messages-common'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('content.is_locked.another_user')), MessageHelper::NOTICE)));
+		}
+		
 		$this->view = $view;
 	}
 

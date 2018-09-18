@@ -202,7 +202,9 @@ class GuestbookFormController extends ModuleController
 		$message = $this->get_message();
 		$page = AppContext::get_request()->get_getint('page', 1);
 		
-		$response = new SiteDisplayResponse($tpl);
+		$location_id = $message->get_id() ? 'guestbook-edit-'. $message->get_id() : '';
+		
+		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -216,6 +218,9 @@ class GuestbookFormController extends ModuleController
 		}
 		else
 		{
+			if (!AppContext::get_session()->location_id_already_exists($location_id))
+				$graphical_environment->set_location_id($location_id);
+			
 			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));

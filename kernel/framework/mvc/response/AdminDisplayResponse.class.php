@@ -34,9 +34,9 @@
  */
 class AdminDisplayResponse extends AbstractResponse
 {
-	public function __construct($view)
+	public function __construct($view, $location_id = '')
 	{
-		parent::__construct(new AdminDisplayGraphicalEnvironment(), $view);
+		parent::__construct(new AdminDisplayGraphicalEnvironment(), $view, $location_id);
 	}
 }
 ?>

@@ -579,8 +579,14 @@ class BugtrackerFormController extends ModuleController
 		{
 			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id(), $this->bug->get_type());
 			
-			$response = new SiteDisplayResponse($body_view);
+			$location_id = 'bugtracker-edit-'. $bug->get_id();
+			
+			$response = new SiteDisplayResponse($body_view, $location_id);
 			$graphical_environment = $response->get_graphical_environment();
+			
+			if (!AppContext::get_session()->location_id_already_exists($location_id))
+				$graphical_environment->set_location_id($location_id);
+			
 			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id(), $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id()));
 			

@@ -256,6 +256,31 @@ class UserService
 		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMIN_LEVEL));
 	}
 	
+	public static function display_user_profile_link($user_id)
+	{
+		if ($user_id != User::VISITOR_LEVEL)
+		{
+			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			if ($user)
+			{
+				$tpl = new FileTemplate('user/UserProfileLink.tpl');
+				
+				$group_color = User::get_group_color($user['groups'], $user['level'], true);
+				
+				$tpl->put_all(array(
+					'C_GROUP_COLOR' => !empty($group_color),
+					'DISPLAY_NAME'  => $user['display_name'],
+					'LEVEL_CLASS'   => self::get_level_class($user['level']),
+					'GROUP_COLOR'   => $group_color,
+					'U_PROFILE'     => UserUrlBuilder::profile($user_id)->rel()
+				));
+				
+				return $tpl->render();
+			}
+		}
+		return '';
+	}
+	
 	public static function regenerate_cache()
 	{
 		GroupsCache::invalidate();

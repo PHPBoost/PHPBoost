@@ -546,7 +546,9 @@ class CalendarFormController extends ModuleController
 	{
 		$event = $this->get_event();
 		
-		$response = new SiteDisplayResponse($tpl);
+		$location_id = $event->get_id() ? 'calendar-edit-'. $event->get_id() : '';
+		
+		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -560,6 +562,9 @@ class CalendarFormController extends ModuleController
 		}
 		else
 		{
+			if (!AppContext::get_session()->location_id_already_exists($location_id))
+				$graphical_environment->set_location_id($location_id);
+			
 			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition'], $this->lang['module_title']);
 			
 			$category = $event->get_content()->get_category();

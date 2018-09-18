@@ -288,7 +288,9 @@ class FaqFormController extends ModuleController
 	{
 		$faq_question = $this->get_faq_question();
 		
-		$response = new SiteDisplayResponse($tpl);
+		$location_id = $faq_question->get_id() ? 'faq-edit-'. $faq_question->get_id() : '';
+		
+		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -303,6 +305,9 @@ class FaqFormController extends ModuleController
 		}
 		else
 		{
+			if (!AppContext::get_session()->location_id_already_exists($location_id))
+				$graphical_environment->set_location_id($location_id);
+			
 			$graphical_environment->set_page_title($this->lang['faq.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id()));

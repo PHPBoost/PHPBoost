@@ -511,7 +511,9 @@ class ArticlesFormController extends ModuleController
 	{
 		$article = $this->get_article();
 		
-		$response = new SiteDisplayResponse($tpl);
+		$location_id = $article->get_id() ? 'article-edit-'. $article->get_id() : '';
+		
+		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
@@ -535,6 +537,10 @@ class ArticlesFormController extends ModuleController
 			$breadcrumb->add($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
 			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
+			
+			if (!AppContext::get_session()->location_id_already_exists($location_id))
+				$graphical_environment->set_location_id($location_id);
+			
 			$graphical_environment->set_page_title($this->lang['articles.edit'], $this->lang['articles']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id()));
