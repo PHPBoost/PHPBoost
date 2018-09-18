@@ -261,11 +261,12 @@ class UserService
 		if ($user_id != User::VISITOR_LEVEL)
 		{
 			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			
 			if ($user)
 			{
 				$tpl = new FileTemplate('user/UserProfileLink.tpl');
 				
-				$group_color = User::get_group_color($user['groups'], $user['level'], true);
+				$group_color = User::get_group_color($user['groups'], $user['level']);
 				
 				$tpl->put_all(array(
 					'C_GROUP_COLOR' => !empty($group_color),

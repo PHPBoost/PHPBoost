@@ -191,8 +191,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//If the counter is to be displayed, we display it
 		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
-			$visit_counter = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = 1');
-
+			try {
+				$visit_counter = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = 1');
+			} catch (RowNotFoundException $e) {
+				$visit_counter = array('nbr_ip' => 1, 'total' => 1);
+			}
+			
 			$template->put_all(array(
 				'L_VISIT'             => self::$main_lang['guest_s'],
 				'L_TODAY'             => LangLoader::get_message('today', 'date-common'),

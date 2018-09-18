@@ -261,7 +261,13 @@ class SessionData
 
 	public function get_user_on_location_id($location_id)
 	{
-		return PersistenceContext::get_querier()->get_column_value(DB_TABLE_SESSIONS, 'user_id', 'WHERE location_id=:location_id', array('location_id' => $location_id));
+		try {
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_SESSIONS, 'user_id', 'WHERE location_id=:location_id', array('location_id' => $location_id));
+		} catch (RowNotFoundException $e) {
+			$user_id = User::VISITOR_LEVEL;
+		}
+		
+		return $user_id;
 	}
 
 	public static function admin_session()

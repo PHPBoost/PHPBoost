@@ -54,7 +54,7 @@ abstract class AbstractResponse implements Response
 			
 			$view = new StringTemplate('# INCLUDE MESSAGE #');
 			
-			$view->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('content.is_locked.description', 'status-messages-common'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('content.is_locked.another_user')), MessageHelper::NOTICE)));
+			$view->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('content.is_locked.description', 'status-messages-common'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('content.is_locked.another_user'))), MessageHelper::NOTICE));
 		}
 		
 		$this->view = $view;
