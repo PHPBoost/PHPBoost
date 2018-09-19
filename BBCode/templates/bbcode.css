@@ -21,7 +21,6 @@
 }
 
 .bbcode-container {
-	position: relative;
 	display: inline-block;
 	margin: 0;
 	padding: 0.1618em;
@@ -37,7 +36,12 @@
 	height: 100%;
 	width: 1px;
 	content: "";
-	background: rgba(54, 100, 147, 0.4);
+	background-color: transparent;
+}
+
+@media (min-width: 769px) {
+	.bbcode-container { position: relative; }
+	.bbcode-container:after { background-color: rgba(54, 100, 147, 0.4); }
 }
 
 .bbcode-elements {
