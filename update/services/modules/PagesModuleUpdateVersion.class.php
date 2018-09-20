@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                       NewsModuleUpdateVersion.class.php
+ *                       PagesModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : April 05, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : May 22, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
+ *   email                : j1.seth@phpboost.com
  *
  *
  ###################################################
@@ -25,40 +25,34 @@
  *
  ###################################################*/
 
-class NewsModuleUpdateVersion extends ModuleUpdateVersion
+class PagesModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
 	private $db_utils;
 	
 	public function __construct()
 	{
-		parent::__construct('news');
+		parent::__construct('pages');
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('news'))
+		if (ModulesManager::is_module_installed('pages'))
 		{
 			$tables = $this->db_utils->list_tables(true);
 			
-			if (in_array(PREFIX . 'news', $tables))
-				$this->update_news_table();
+			if (in_array(PREFIX . 'pages', $tables))
+				$this->update_pages_table();
 		}
+	}
+	
+	private function update_pages_table()
+	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'pages');
 		
-		$this->delete_old_files();
-	}
-	
-	private function update_news_table()
-	{
-		$this->querier->inject('ALTER TABLE ' . PREFIX . 'news CHANGE contents contents MEDIUMTEXT');
-	}
-	
-	private function delete_old_files()
-	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/NewsNewContent.class.php'));
-		$file->delete();
+		$this->querier->inject('ALTER TABLE ' . PREFIX . 'pages CHANGE contents contents MEDIUMTEXT');
 	}
 }
 ?>

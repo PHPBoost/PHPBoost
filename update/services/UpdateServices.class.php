@@ -284,6 +284,7 @@ class UpdateServices
 		if (!isset($columns['location_id']))
 			self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', array('type' => 'string', 'length' => 64, 'default' => "''"));
 		
+		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');
 	}
 	
@@ -418,7 +419,6 @@ class UpdateServices
 		
 		if (empty($active_langs_number) || $default_lang_changed)
 		{
-			
 			$folder = new Folder(PATH_TO_ROOT . '/lang/' . LangLoader::get_locale());
 			if ($folder->exists())
 				LangsManager::install(LangLoader::get_locale());

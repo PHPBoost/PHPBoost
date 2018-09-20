@@ -54,6 +54,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'wiki_contents');
 		
+		$this->querier->inject('ALTER TABLE ' . PREFIX . 'wiki_contents CHANGE content content MEDIUMTEXT');
+		
 		if (!isset($columns['change_reason']))
 			$this->db_utils->add_column(PREFIX . 'wiki_contents', 'change_reason', array('type' => 'text', 'length' => 100, 'notnull' => 0));
 	}
