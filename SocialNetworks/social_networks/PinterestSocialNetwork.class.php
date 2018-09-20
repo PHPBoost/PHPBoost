@@ -41,7 +41,7 @@ class PinterestSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'http://pinterest.com/pin/create/link/?url=' . HOST . REWRITED_SCRIPT;
+		return 'http://pinterest.com/pin/create/link/?url=' . (rawurlencode(HOST . REWRITED_SCRIPT));
 	}
 }
 ?>

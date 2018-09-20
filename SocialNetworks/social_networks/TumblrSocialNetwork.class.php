@@ -36,7 +36,7 @@ class TumblrSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://www.tumblr.com/widgets/share/tool?canonicalUrl=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '');
+		return 'https://www.tumblr.com/widgets/share/tool?canonicalUrl=' . (rawurlencode(HOST . REWRITED_SCRIPT)) . (defined('TITLE') ? '&title=' . rawurlencode(TITLE) : '');
 	}
 }
 ?>

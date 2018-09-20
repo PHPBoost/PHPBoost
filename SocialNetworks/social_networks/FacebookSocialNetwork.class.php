@@ -41,7 +41,7 @@ class FacebookSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'http://www.facebook.com/share.php?u=' . HOST . REWRITED_SCRIPT;
+		return 'http://www.facebook.com/share.php?u=' . (rawurlencode(HOST . REWRITED_SCRIPT));
 	}
 	
 	public function get_external_authentication()

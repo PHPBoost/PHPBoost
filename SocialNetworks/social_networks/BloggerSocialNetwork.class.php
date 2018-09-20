@@ -41,7 +41,7 @@ class BloggerSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://www.blogger.com/blog-this.g?u=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&n='. TITLE : '');
+		return 'https://www.blogger.com/blog-this.g?u=' . (rawurlencode(HOST . REWRITED_SCRIPT)) . (defined('TITLE') ? '&n=' . rawurlencode(TITLE) : '');
 	}
 }
 ?>

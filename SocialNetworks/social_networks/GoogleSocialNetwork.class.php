@@ -46,7 +46,7 @@ class GoogleSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://plus.google.com/share?url=' . HOST . REWRITED_SCRIPT;
+		return 'https://plus.google.com/share?url=' . (rawurlencode(HOST . REWRITED_SCRIPT));
 	}
 	
 	public function get_external_authentication()

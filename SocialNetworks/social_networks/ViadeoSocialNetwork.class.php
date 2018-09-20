@@ -36,7 +36,7 @@ class ViadeoSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://partners.viadeo.com/share?url=' . HOST . REWRITED_SCRIPT;
+		return 'https://partners.viadeo.com/share?url=' . (rawurlencode(HOST . REWRITED_SCRIPT));
 	}
 }
 ?>

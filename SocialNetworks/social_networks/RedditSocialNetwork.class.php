@@ -41,7 +41,7 @@ class RedditSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://reddit.com/submit?url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&title='. TITLE : '');
+		return 'https://reddit.com/submit?url=' . (rawurlencode(HOST . REWRITED_SCRIPT)) . (defined('TITLE') ? '&title=' . rawurlencode(TITLE) : '');
 	}
 }
 ?>

@@ -36,7 +36,7 @@ class TwitterSocialNetwork extends AbstractSocialNetwork
 	
 	public function get_content_sharing_url()
 	{
-		return 'https://twitter.com/share?url=' . HOST . REWRITED_SCRIPT . (defined('TITLE') ? '&text='. TITLE : '');
+		return 'https://twitter.com/share?url=' . (rawurlencode(HOST . REWRITED_SCRIPT)) . (defined('TITLE') ? '&text=' . rawurlencode(TITLE) : '');
 	}
 	
 	public function get_external_authentication()
