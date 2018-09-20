@@ -131,6 +131,7 @@ $lang['share'] = 'Partager';
 $lang['share_on'] = 'Partager sur';
 $lang['share_by'] = 'Partager par';
 $lang['share.menu'] = 'Menu réseaux sociaux';
+$lang['share.sms'] = 'SMS';
 
 // Ranks
 $lang['rank'] = 'Rang';
