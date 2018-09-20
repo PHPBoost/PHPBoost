@@ -72,6 +72,38 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	/**
 	 * {@inheritdoc}
 	 */
+	public function has_mobile_content_sharing_url()
+	{
+		return $this->get_mobile_content_sharing_url() != '';
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_mobile_content_sharing_url()
+	{
+		return '';
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_mobile_only()
+	{
+		return false;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_desktop_only()
+	{
+		return false;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_share_image_renderer_html()
 	{
 		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');

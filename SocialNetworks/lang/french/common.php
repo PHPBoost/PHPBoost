@@ -47,6 +47,8 @@ $lang['authentication.config.no-identifier-needed'] = 'Aucun identifiant n\'est 
 
 //Configuration
 $lang['admin.order.manage'] = 'Ordre d\'affichage des réseaux sociaux';
+$lang['admin.visible_on_mobile_only'] = 'Visible sur périphérique mobile uniquement';
+$lang['admin.visible_on_desktop_only'] = 'Visible sur ordinateur uniquement';
 $lang['admin.display_share_link'] = 'Afficher le lien de partage';
 $lang['admin.hide_share_link'] = 'Cacher le lien de partage';
 $lang['admin.no_sharing_content_url'] = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';

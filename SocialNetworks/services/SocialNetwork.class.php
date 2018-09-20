@@ -56,6 +56,26 @@ interface SocialNetwork
 	function get_content_sharing_url();
 
 	/**
+	 * @return bool true if the social network has a content sharing url for mobile devices
+	 */
+	function has_mobile_content_sharing_url();
+
+	/**
+	 * @return string Content sharing url for mobile devices
+	 */
+	function get_mobile_content_sharing_url();
+
+	/**
+	 * @return bool true if the social network must only be displayed on mobile devices
+	 */
+	function is_mobile_only();
+
+	/**
+	 * @return bool true if the social network must only be displayed on desktop devices
+	 */
+	function is_desktop_only();
+
+	/**
 	 * @return string contains HTML share tag image rendering
 	 */
 	function get_share_image_renderer_html();

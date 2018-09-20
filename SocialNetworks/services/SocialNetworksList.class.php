@@ -123,6 +123,7 @@ class SocialNetworksList
 	 */
 	function get_sharing_links_list()
 	{
+		$request = AppContext::get_request();
 		$enabled_content_sharing = SocialNetworksConfig::load()->get_enabled_content_sharing();
 		$sharing_links = array();
 		
@@ -131,7 +132,30 @@ class SocialNetworksList
 			if (in_array($id, $enabled_content_sharing))
 			{
 				$sn = new $social_network();
-				$sharing_links[] = new ContentSharingActionsMenuLink($sn->get_css_class(), $sn->get_name(), new Url($sn->get_content_sharing_url()), $sn->get_share_image_renderer_html());
+				
+				$display = false;
+				if ($sn->is_desktop_only() && !$request->is_mobile_device())
+				{
+					$content_sharing_url = $sn->get_content_sharing_url();
+					$display = true;
+				}
+				else if ($sn->is_mobile_only() && $request->is_mobile_device())
+				{
+					$content_sharing_url = $sn->has_mobile_content_sharing_url() ? $sn->get_mobile_content_sharing_url() : $sn->get_content_sharing_url();
+					$display = true;
+				}
+				else if (!$sn->is_desktop_only() && !$sn->is_mobile_only())
+				{
+					if ($request->is_mobile_device() && $sn->has_mobile_content_sharing_url())
+						$content_sharing_url = $sn->get_mobile_content_sharing_url();
+					else
+						$content_sharing_url = $sn->get_content_sharing_url();
+					
+					$display = true;
+				}
+				
+				if ($display && $content_sharing_url)
+					$sharing_links[] = new ContentSharingActionsMenuLink($sn->get_css_class(), $sn->get_name(), new Url($content_sharing_url), $sn->get_share_image_renderer_html());
 			}
 		}
 		

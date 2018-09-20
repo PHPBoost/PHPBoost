@@ -72,7 +72,9 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 				$sn = new $this->social_networks[$id]();
 
 				$this->view->assign_block_vars('social_networks_list', array(
-					'C_SHARING_CONTENT' => $sn->has_content_sharing_url(),
+					'C_MOBILE_ONLY' => $sn->is_mobile_only(),
+					'C_DESKTOP_ONLY' => $sn->is_desktop_only(),
+					'C_SHARING_CONTENT' => $sn->has_content_sharing_url() || $sn->has_mobile_content_sharing_url(),
 					'C_DISPLAY' => $this->config->is_content_sharing_enabled($id),
 					'ID' => $id,
 					'NAME' => $sn->get_name(),

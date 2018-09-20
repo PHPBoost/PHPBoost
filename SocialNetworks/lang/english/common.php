@@ -47,6 +47,8 @@ $lang['authentication.config.no-identifier-needed'] = 'No identifier needed for 
 
 //Configuration
 $lang['admin.order.manage'] = 'Social networks display order';
+$lang['admin.visible_on_mobile_only'] = 'Visible on mobile device only';
+$lang['admin.visible_on_desktop_only'] = 'Visible on computer only';
 $lang['admin.display_share_link'] = 'Display share link';
 $lang['admin.hide_share_link'] = 'Hide share link';
 $lang['admin.no_sharing_content_url'] = 'This social network does not have share content link, it will not be displayed in content sharing list but only in authentication methods list if it is enabled.';

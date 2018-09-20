@@ -87,6 +87,8 @@ jQuery(document).ready(function() {
 						{social_networks_list.NAME}
 					</div>
 					<div class="sortable-actions">
+						# IF social_networks_list.C_MOBILE_ONLY #<a href="" title="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt"></i></a># ENDIF #
+						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" title="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop"></i></a># ENDIF #
 						<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
 						<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
 						# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
