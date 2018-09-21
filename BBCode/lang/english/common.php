@@ -42,6 +42,7 @@ $lang['bb_font'] = 'Text font : [font=X]text in font X[/font]';
 $lang['bb_color'] = 'Text color: [color=X]text on X color[/color]';
 $lang['bb_bgcolor'] = 'Background color: [bgcolor=X]text on X color[/bgcolor]';
 $lang['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
+$lang['bb_quote_prompt'] = 'Quote author (Optional)';
 $lang['bb_align'] = 'Align';
 $lang['bb_left'] = 'Align left';
 $lang['bb_left_title'] = 'Align left: [align=left]object on left[/align]';

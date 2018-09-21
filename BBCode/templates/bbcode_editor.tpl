@@ -212,7 +212,7 @@ function XMLHttpRequest_preview(field)
 			</li>
 
 			<li class="bbcode-elements">
-				<a href="" onclick="{DISABLED_QUOTE}insertbbcode('[quote]', '[/quote]', '{FIELD}');return false;" title="{@bb_quote}">
+				<a href="" onclick="{DISABLED_QUOTE}bbcode_quote('{FIELD}', ${escapejs(@bb_quote_prompt)});return false;" title="{@bb_quote}">
 					<i class="fa fa-fw bbcode-icon-quote{AUTH_QUOTE}"></i>
 				</a>
 			</li>

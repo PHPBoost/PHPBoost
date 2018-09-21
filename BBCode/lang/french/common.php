@@ -42,6 +42,7 @@ $lang['bb_font'] = 'Police : [font=X]texte en police X[/font]';
 $lang['bb_color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
 $lang['bb_bgcolor'] = 'Couleur du fond : [bgcolor=X]texte de couleur X[/bgcolor]';
 $lang['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
+$lang['bb_quote_prompt'] = 'Auteur de la citation (Optionnel)';
 $lang['bb_align'] = 'Alignement';
 $lang['bb_left'] = 'Aligner à gauche';
 $lang['bb_left_title'] = 'Aligner à gauche : [align=left]objet à gauche[/align]';
