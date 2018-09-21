@@ -70,4 +70,6 @@ $lang['config.notation.forbidden-module-explain'] = 'Sélectionnez les modules d
 $lang['config.new-content.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer les tags de nouveau contenu';
 $lang['config.hide_left_column'] = 'Masquer les blocs de gauche du site sur le module :module';
 $lang['config.hide_right_column'] = 'Masquer les blocs de droite du site sur le module :module';
+
+$lang['message.close_ephemeral_message'] = 'Fermer le message';
 ?>
