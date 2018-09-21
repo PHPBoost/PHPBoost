@@ -40,6 +40,9 @@ class ContentManagementConfig extends AbstractConfigData
 	const NOTATION_SCALE                   = 'notation_scale';
 	const NOTATION_UNAUTHORIZED_MODULES    = 'notation_unauthorized_modules';
 	const CONTENT_SHARING_ENABLED          = 'content_sharing_enabled';
+	const CONTENT_SHARING_EMAIL_ENABLED    = 'content_sharing_email_enabled';
+	const CONTENT_SHARING_PRINT_ENABLED    = 'content_sharing_print_enabled';
+	const CONTENT_SHARING_SMS_ENABLED      = 'content_sharing_sms_enabled';
 	const OPENGRAPH_ENABLED                = 'opengraph_enabled';
 	const SITE_DEFAULT_PICTURE_URL         = 'site_default_picture_url';
 	
@@ -143,6 +146,36 @@ class ContentManagementConfig extends AbstractConfigData
 		$this->set_property(self::CONTENT_SHARING_ENABLED, $enabled);
 	}
 
+	public function is_content_sharing_email_enabled()
+	{
+		return $this->get_property(self::CONTENT_SHARING_EMAIL_ENABLED);
+	}
+	
+	public function set_content_sharing_email_enabled($enabled)
+	{
+		$this->set_property(self::CONTENT_SHARING_EMAIL_ENABLED, $enabled);
+	}
+
+	public function is_content_sharing_print_enabled()
+	{
+		return $this->get_property(self::CONTENT_SHARING_PRINT_ENABLED);
+	}
+	
+	public function set_content_sharing_print_enabled($enabled)
+	{
+		$this->set_property(self::CONTENT_SHARING_PRINT_ENABLED, $enabled);
+	}
+
+	public function is_content_sharing_sms_enabled()
+	{
+		return $this->get_property(self::CONTENT_SHARING_SMS_ENABLED);
+	}
+	
+	public function set_content_sharing_sms_enabled($enabled)
+	{
+		$this->set_property(self::CONTENT_SHARING_SMS_ENABLED, $enabled);
+	}
+
 	public function is_opengraph_enabled()
 	{
 		return $this->get_property(self::OPENGRAPH_ENABLED);
@@ -196,6 +229,9 @@ class ContentManagementConfig extends AbstractConfigData
 			self::NOTATION_SCALE                   => 5,
 			self::NOTATION_UNAUTHORIZED_MODULES    => array(),
 			self::CONTENT_SHARING_ENABLED          => true,
+			self::CONTENT_SHARING_EMAIL_ENABLED    => true,
+			self::CONTENT_SHARING_PRINT_ENABLED    => true,
+			self::CONTENT_SHARING_SMS_ENABLED      => true,
 			self::OPENGRAPH_ENABLED                => true,
 			self::SITE_DEFAULT_PICTURE_URL         => ''
 		);

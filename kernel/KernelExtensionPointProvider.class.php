@@ -76,11 +76,15 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 
 	public function content_sharing_actions_menu_links()
 	{
-		$links = array(new ContentSharingActionsMenuLink('mail', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('email', 'user-common'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true));
+		$config = ContentManagementConfig::load();
+		$links = array();
 		
-		if (AppContext::get_request()->is_mobile_device())
+		if (AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_sms_enabled())
+			$links[] = new ContentSharingActionsMenuLink('mail', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('email', 'user-common'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true);
+		
+		if (AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_sms_enabled())
 			$links[] = new ContentSharingActionsMenuLink('sms', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('share.sms', 'user-common'), new Url('sms:?body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_sms_image_render.tpl'))->render(), null, '', true);
-		else
+		else if (!AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_print_enabled())
 			$links[] = new ContentSharingActionsMenuLink('print', LangLoader::get_message('printable_version', 'main'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()', true);
 		
 		return $links;

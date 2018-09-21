@@ -62,6 +62,9 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('notation_scale')->set_hidden(!$this->content_management_config->is_notation_enabled());
 			$this->form->get_field_by_id('notation_unauthorized_modules')->set_hidden(!$this->content_management_config->is_notation_enabled());
 			$this->form->get_field_by_id('notation_unauthorized_modules')->set_selected_options($this->content_management_config->get_notation_unauthorized_modules());
+			$this->form->get_field_by_id('content_sharing_email_enabled')->set_hidden(!$this->content_management_config->is_content_sharing_enabled());
+			$this->form->get_field_by_id('content_sharing_print_enabled')->set_hidden(!$this->content_management_config->is_content_sharing_enabled());
+			$this->form->get_field_by_id('content_sharing_sms_enabled')->set_hidden(!$this->content_management_config->is_content_sharing_enabled());
 			$this->form->get_field_by_id('site_default_picture_url')->set_hidden(!$this->content_management_config->is_opengraph_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
@@ -181,7 +184,28 @@ class AdminContentConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('content_config', $this->lang['content']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled(),
+			array(
+				'class' => 'top-field',
+				'events' => array('click' => '
+					if (HTMLForms.getField("content_sharing_enabled").getValue()) {
+						HTMLForms.getField("content_sharing_email_enabled").enable();
+						HTMLForms.getField("content_sharing_print_enabled").enable();
+						HTMLForms.getField("content_sharing_sms_enabled").enable();
+					} else {
+						HTMLForms.getField("content_sharing_email_enabled").disable();
+						HTMLForms.getField("content_sharing_print_enabled").disable();
+						HTMLForms.getField("content_sharing_sms_enabled").disable();
+					}'
+				)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['content.config.content-sharing-email-enabled'], $this->content_management_config->is_content_sharing_email_enabled(), array('hidden' => !$this->content_management_config->is_content_sharing_enabled())));
+		
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(), array('description' => $this->lang['content.config.content-sharing-print-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
+		
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['content.config.content-sharing-sms-enabled'], $this->content_management_config->is_content_sharing_sms_enabled(), array('description' => $this->lang['content.config.content-sharing-sms-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
 		
 		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
 			array(
@@ -189,14 +213,16 @@ class AdminContentConfigController extends AdminController
 				'events' => array('click' => '
 					if (HTMLForms.getField("opengraph_enabled").getValue()) {
 						HTMLForms.getField("site_default_picture_url").enable();
+						jQuery("#' . __CLASS__ . '_site_default_picture_url_preview").show();
 					} else {
 						HTMLForms.getField("site_default_picture_url").disable();
+						jQuery("#' . __CLASS__ . '_site_default_picture_url_preview").hide();
 					}'
 				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative()));
+		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(), array('hidden' => !$this->content_management_config->is_opengraph_enabled())));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -264,7 +290,24 @@ class AdminContentConfigController extends AdminController
 			$this->content_management_config->set_notation_enabled(false);
 
 		if ($this->form->get_value('content_sharing_enabled'))
+		{
 			$this->content_management_config->set_content_sharing_enabled(true);
+			
+			if ($this->form->get_value('content_sharing_email_enabled'))
+				$this->content_management_config->set_content_sharing_email_enabled(true);
+			else
+				$this->content_management_config->set_content_sharing_email_enabled(false);
+			
+			if ($this->form->get_value('content_sharing_print_enabled'))
+				$this->content_management_config->set_content_sharing_print_enabled(true);
+			else
+				$this->content_management_config->set_content_sharing_print_enabled(false);
+			
+			if ($this->form->get_value('content_sharing_sms_enabled'))
+				$this->content_management_config->set_content_sharing_sms_enabled(true);
+			else
+				$this->content_management_config->set_content_sharing_sms_enabled(false);
+		}
 		else
 			$this->content_management_config->set_content_sharing_enabled(false);
 		
