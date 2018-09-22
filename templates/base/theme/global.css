@@ -555,24 +555,44 @@ li.small-block .fa-stack {
 
 .message-ephemeral-container {
 	position: fixed;
+	opacity: 0;
 	z-index: 1000;
+	top: 0.456em;
 	width: 100%;
 	margin: 0;
-	bottom: 0;
-	border-radius: 0;
 	text-align: center;
-}
-
-@media (min-width: 769px) {
-	.message-ephemeral-container {
-		margin-left: -250px;
-	}
 }
 
 .message-ephemeral-container .message-helper {
 	display: inline-block;
-	margin: 0;
-	border: none;
+	max-width: 90%;
+    padding: 1em 1em 1em 3em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	border-width: 2px;
+	overflow: visible;
+}
+
+@media (min-width: 769px) {
+	.message-ephemeral-container {
+		top: 1em;
+	}
+}
+
+.message-ephemeral-container .fa-close-message {
+	position: absolute;
+	z-index: 1;
+	top: -6px;
+	right: -6px;
+	font-size: 1.5em;
+}
+
+.message-ephemeral-container .fa-close-message:before {
+	content: "\f057";
+}
+
+.message-ephemeral-container .message-helper > a {
+	color: inherit;
+	cursor: pointer;
 }
 
 /* -- Systeme d Upload -- */

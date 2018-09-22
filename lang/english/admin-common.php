@@ -70,6 +70,4 @@ $lang['config.notation.forbidden-module-explain'] = 'Select modules in which you
 $lang['config.new-content.forbidden-module-explain'] = 'Select modules in which you do not want to enable new-content tag';
 $lang['config.hide_left_column'] = 'Hide left column in module :module';
 $lang['config.hide_right_column'] = 'Hide right column in module :module';
-
-$lang['message.close_ephemeral_message'] = 'Close the message';
 ?>

@@ -34,6 +34,8 @@ $lang['error.warning'] = 'Avertissement';
 $lang['error.question'] = 'Question';
 $lang['error.unknow'] = 'Inconnue';
 
+$lang['message.close_ephemeral_message'] = 'Fermer le message';
+
 //PHPBoost errors
 $lang['error.auth'] = 'Vous n\'avez pas le niveau requis !';
 $lang['error.auth.guest'] = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';

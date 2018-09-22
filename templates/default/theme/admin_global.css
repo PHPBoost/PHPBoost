@@ -520,8 +520,8 @@ div.message-helper-small {
 .message-ephemeral-container .message-helper {
 	display: inline-block;
 	max-width: 90%;
-    padding: 1em 1em 1em 3em;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	padding: 1em 1em 1em 3em;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 	border-width: 2px;
 	overflow: visible;
 }
