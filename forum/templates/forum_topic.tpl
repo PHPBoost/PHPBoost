@@ -346,7 +346,7 @@
 		# ENDIF #
 			
 		# IF C_ERROR_AUTH_WRITE #
-			<div calss="error-auth-write-response">{L_RESPOND}</div>	
+			<div class="error-auth-write-response">{L_RESPOND}</div>	
 			<div class="forum-text-column error-auth-write">
 				{L_ERROR_AUTH_WRITE}
 			</div>
