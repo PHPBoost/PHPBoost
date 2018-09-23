@@ -198,6 +198,7 @@ class AdminModuleAddController extends AdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($modules_folder);
+				$upload->disableContentCheck();
 				if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gz|zip)+$`iu'))
 				{
 					$archive = $modules_folder . $upload->get_filename();
