@@ -104,6 +104,19 @@
 	box-shadow: 0 0 0.618em rgba(0, 0, 0, 0.2);
 }
 
+.bbcode-block .form-element{
+	width: 100%;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	-webkit-align-content: space-between;
+	-ms-flex-line-pack: justify;
+	align-content: space-between;
+}
+
 .bbcode-block a {
 	text-decoration: none;
 }
