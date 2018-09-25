@@ -14,8 +14,7 @@ Contient les elements associes aux menus
 
 .cssmenu,
 .cssmenu ul,
-.cssmenu li,
-.cssmenu .cssmenu-title {
+.cssmenu li {
 	position: relative;
 	margin: 0;
 	list-style: none;
@@ -61,10 +60,7 @@ Contient les elements associes aux menus
 	white-space: nowrap;
 	font-weight: 400;
 	text-align: left;
-}
-
-.level-0 > li > .cssmenu-title {
-	white-space: normal;
+	display: block;
 }
 
 .cssmenu-title img {
@@ -298,7 +294,7 @@ Contient les elements associes aux menus
 	position: absolute;
 	z-index: 10;
 	top: 2.309rem;
-	width: 200px;
+	min-width: 200px;
 	left: -9999px;
 }
 
@@ -313,7 +309,6 @@ Contient les elements associes aux menus
 		font-size: 0;
 		z-index: 9;
 	}
-
 }
 
 /* --- Cssmenu-actionslinks small-screen variant --- */

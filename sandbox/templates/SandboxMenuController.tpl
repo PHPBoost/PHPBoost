@@ -20,11 +20,11 @@
 							<ul class="level-1">
 								<li>
 									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
-										<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
+										<img src="{PATH_TO_ROOT}/templates/base/theme/images/logo.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 									</a>
 								</li>
 								<li class="has-sub">
-									<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+									<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}"><img src="{PATH_TO_ROOT}/sandbox/sandbox.png" alt="{@cssmenu.element}" />{@cssmenu.sub.element}</span>
 									<ul class="level-2">
 										<li>
 											<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
@@ -317,6 +317,12 @@
 							<ul class="level-1">
 								<li>
 									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox" title="{@cssmenu.actionslinks.index}">{@cssmenu.actionslinks.index}</a>
+								</li>
+								<li>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/admin/config" title="{@mini.config}">{@mini.config}</a>
+								</li>
+								<li>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/form" title="{@cssmenu.actionslinks.css}">{@cssmenu.actionslinks.form}</a>
 								</li>
 								<li>
 									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/css" title="{@cssmenu.actionslinks.css}">{@cssmenu.actionslinks.css}</a>
