@@ -102,7 +102,7 @@ class AdminModulesManagementController extends AdminController
 				}
 				$module_number++;
 			}
-			AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module(implode('---', $module_ids)));
+			AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module(implode('--', $module_ids)));
 		}
 		elseif ($request->get_string('activate-selected-modules', false) || $request->get_string('deactivate-selected-modules', false))
 		{

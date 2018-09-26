@@ -38,7 +38,7 @@ class AdminThemeDeleteController extends AdminController
 	{
 		$this->init();
 		
-		$ids = explode('---', $request->get_value('id', null));
+		$ids = explode('--', $request->get_value('id', null));
 		
 		if (count($ids) > 1)
 		{

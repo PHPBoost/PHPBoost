@@ -140,7 +140,7 @@ class AdminLangsNotInstalledListController extends AdminController
 				$error = LangsManager::get_error();
 				if ($error !== null)
 				{
-					$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+					$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
 				}
 				else
 				{
@@ -157,7 +157,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		$error = LangsManager::get_error();
 		if ($error !== null)
 		{
-			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
 		}
 		else
 		{
@@ -184,7 +184,7 @@ class AdminLangsNotInstalledListController extends AdminController
 	private function upload()
 	{
 		$folder_phpboost_langs = PATH_TO_ROOT . '/lang/';
-        if (!is_writable($folder_phpboost_langs))
+		if (!is_writable($folder_phpboost_langs))
 		{
 			$is_writable = @chmod($dir, 0777);
 		}

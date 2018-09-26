@@ -123,7 +123,7 @@ class AdminThemesInstalledListController extends AdminController
 				}
 				$theme_number++;
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme(implode('---', $theme_ids)));
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme(implode('--', $theme_ids)));
 		}
 		elseif ($request->get_string('activate-selected-themes', false) || $request->get_string('deactivate-selected-themes', false))
 		{
@@ -135,7 +135,7 @@ class AdminThemesInstalledListController extends AdminController
 			foreach ($installed_themes as $theme)
 			{
 				if ($theme->get_id() !== ThemesManager::get_default_theme() && ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on') )
-				{	
+				{
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
 					ThemesManager::change_informations($theme->get_id(), $activated, $authorizations);
 				}

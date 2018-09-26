@@ -105,7 +105,7 @@ class AdminLangsInstalledListController extends AdminController
 				}
 				$lang_number++;
 			}
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall(implode('---', $lang_ids)));
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall(implode('--', $lang_ids)));
 		}
 		elseif ($request->get_string('activate-selected-langs', false) || $request->get_string('deactivate-selected-langs', false))
 		{
