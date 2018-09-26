@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminLangsInstalledListController', '`^/(?:installed/?)?$`'),
 	new UrlControllerMapper('AdminLangsNotInstalledListController', '`^/install/?$`'),
-	new UrlControllerMapper('AdminUninstallLangController', '`^/([a-z]+)/uninstall/?$`', array('id')),
+	new UrlControllerMapper('AdminUninstallLangController', '`^/([A-Za-z0-9-_]+)/uninstall/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
