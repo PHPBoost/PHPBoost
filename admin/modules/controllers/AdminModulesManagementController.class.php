@@ -99,7 +99,7 @@ class AdminModulesManagementController extends AdminController
 			{
 				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
 				{
-					$module_ids[] = $module->get_id();
+					$module_ids[] = $module_number;
 				}
 				$module_number++;
 			}

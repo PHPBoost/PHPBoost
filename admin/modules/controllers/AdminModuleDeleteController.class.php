@@ -43,7 +43,17 @@ class AdminModuleDeleteController extends AdminController
 		
 		if (count($ids) > 1)
 		{
-			$this->module_id = $ids;
+			$module_ids = array();
+			$module_number = 1;
+			foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+			{
+				if (in_array($module_number, $ids))
+				{
+					$module_ids[] = $module->get_id();
+				}
+				$module_number++;
+			}
+			$this->module_id = $module_ids;
 			$this->multiple = true;
 		}
 		else
