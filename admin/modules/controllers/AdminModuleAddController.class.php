@@ -36,15 +36,37 @@ class AdminModuleAddController extends AdminController
 	{
 		$this->init();
 
+		$message_success = $message_warning = '';
+		$modules_selected = $modules_success = 0;
 		$module_number = 1;
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{
 			if ($request->get_string('add-' . $module->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $module_number, 'off') == 'on'))
 			{
-				$this->install_module($module->get_id(), true);
+				$modules_selected++;
+				
+				$result = $this->install_module($module->get_id(), true);
+				
+				if ($result['type'] == MessageHelper::SUCCESS)
+				{
+					$modules_success++;
+					$message_success .= '<b>' . $module->get_configuration()->get_name() . '</b> : ' . $result['msg'] . '<br />';
+				}
+				else
+					$message_warning .= '<b>' . $module->get_configuration()->get_name() . '</b> : ' . $result['msg'] . '<br />';
 			}
 
 			$module_number++;
+		}
+		
+		if ($modules_selected > 0 && $modules_selected == $modules_success)
+			$this->view->put('MSG_SUCCESS', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+		else
+		{
+			if ($message_warning)
+				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING));
+			if ($message_success)
+				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
 
 		$this->upload_form();
@@ -76,7 +98,7 @@ class AdminModuleAddController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install'], array('class' => 'full-field')));
-        $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description'], array('class' => 'half-field')));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description'], array('class' => 'half-field')));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -160,23 +182,23 @@ class AdminModuleAddController extends AdminController
 		switch(ModulesManager::install_module($module_id, $activate, true))
 		{
 			case ModulesManager::CONFIG_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.config_conflict'], MessageHelper::WARNING, 10));
+				return array('msg' => $this->lang['modules.config_conflict'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
+				return array('msg' => LangLoader::get_message('element.unexist', 'status-messages-common'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_ALREADY_INSTALLED:
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::WARNING, 10));
+				return array('msg' => $this->lang['modules.already_installed'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::PHP_VERSION_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('misfit.php', 'status-messages-common'), MessageHelper::WARNING, 10));
+				return array('msg' => LangLoader::get_message('misfit.php', 'status-messages-common'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::PHPBOOST_VERSION_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('misfit.phpboost', 'status-messages-common'), MessageHelper::WARNING, 10));
+				return array('msg' => LangLoader::get_message('misfit.phpboost', 'status-messages-common'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_INSTALLED:
 			default:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+				return array('msg' => LangLoader::get_message('process.success', 'status-messages-common'), 'type' => MessageHelper::SUCCESS);
 		}
 	}
 
@@ -251,7 +273,12 @@ class AdminModuleAddController extends AdminController
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 
-							$this->install_module($module_id, true);
+							$result = $this->install_module($module_id, true);
+							
+							if ($result['type'] == MessageHelper::SUCCESS)
+								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
+							else
+								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING, 10));
 						}
 						else
 						{

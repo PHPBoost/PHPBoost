@@ -89,6 +89,7 @@ class AdminModulesManagementController extends AdminController
 	private function save(HTTPRequestCustom $request)
 	{
 		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		$errors = array();
 		
 		if ($request->get_string('delete-selected-modules', false))
 		{
@@ -112,7 +113,6 @@ class AdminModulesManagementController extends AdminController
 			
 			$module_number = 1;
 			$modified_modules = 0;
-			$errors = array();
 			
 			foreach ($installed_modules as $module)
 			{
@@ -155,7 +155,7 @@ class AdminModulesManagementController extends AdminController
 					$error = ModulesManager::update_module($module->get_id(), 1);
 					
 					if (!empty($error))
-						$errors[$module->get_configuration()->get_name()] = $error;
+						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
 						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 				}
@@ -164,7 +164,7 @@ class AdminModulesManagementController extends AdminController
 					$error = ModulesManager::update_module($module->get_id(), 0);
 					
 					if (!empty($error))
-						$errors[$module->get_configuration()->get_name()] = $error;
+						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
 						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 				}

@@ -1,7 +1,8 @@
+# INCLUDE MSG_WARNING #
+# INCLUDE MSG_SUCCESS #
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
-	# INCLUDE MSG #
 	<section id="not-installed-modules-container" class="admin-elements-container modules-elements-container not-installed-elements-container">
 		<header class="legend">{@modules.available_modules}</header>
 		# IF C_MODULE_AVAILABLE #
@@ -61,6 +62,3 @@
 		osmCloseButton: '.admin-element-auth-close i',
 	});
 </script>
-
-
-
