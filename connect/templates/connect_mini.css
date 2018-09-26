@@ -42,8 +42,10 @@
 }
 
 /* -- not-connected --*/
-.connect-register-container form {
-	display: inline-block;
+@media (min-width: 469px) {
+	.connect-register-container form {
+		display: inline-block;
+	}
 }
 
 @media (max-width: 768px) {
