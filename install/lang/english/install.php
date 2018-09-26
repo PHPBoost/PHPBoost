@@ -220,7 +220,7 @@ The PHPBoost Team.',
 							<div class="fielset-inset">
 								<h2>Members</h2>
 								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
-								<p>Thanks to the members of our teams and particulary to <strong>benflovideo</strong> for communication team, <strong>PaperToss</strong>, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>benflovideo</strong> and <strong>mipel</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
+								<p>Thanks to the members of our teams and particulary to <strong>benflovideo</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>benflovideo</strong> and <strong>mipel</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
 								<h2>Other projects</h2>
 								<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 								<ul>
@@ -246,7 +246,7 @@ The PHPBoost Team.',
 									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
 									<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
 									<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
+									<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
 									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
 								</ul>
 							</div>
