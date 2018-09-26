@@ -80,10 +80,15 @@ a.social-connect {
 	font-size: 0.618em;
 }
 
-a.social-connect.login-page {
-	display: block;
-	margin: 0.809em 0;
+@media (max-width: 468px) {
+	a.social-connect.login-page {
+		display: block;
+	}	
 }
+
+a.social-connect.login-page {
+	margin: 0.809em 0;
+}	
 
 .horizontal-fieldset a.social-connect {
 	margin: 0;
