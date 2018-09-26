@@ -126,7 +126,7 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_DESCRIPTION => '',
 			self::MODULE_HOME_PAGE => '',
 			self::OTHER_HOME_PAGE => '',
-			self::PHPBOOST_VERSION => '5.1',
+			self::PHPBOOST_VERSION => '5.2',
 			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
 			self::SITE_TIMEZONE => 'Europe/Paris',
 		);

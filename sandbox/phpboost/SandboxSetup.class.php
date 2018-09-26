@@ -31,10 +31,5 @@ class SandboxSetup extends DefaultModuleSetup
 	{
 		ConfigManager::delete('sandbox', 'config');
 	}
-
-	public function upgrade($installed_version)
-	{
-		return '5.1';
-	}
 }
 ?>

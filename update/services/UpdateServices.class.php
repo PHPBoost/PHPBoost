@@ -33,7 +33,7 @@ class UpdateServices
 	const UNKNOWN_ERROR = 3;
 	
 	// New version number
-	const NEW_KERNEL_VERSION = '5.1';
+	const NEW_KERNEL_VERSION = '5.2';
 	
 	private static $token_file_content = '1';
 	
