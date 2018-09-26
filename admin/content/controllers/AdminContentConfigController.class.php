@@ -222,7 +222,12 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(), array('hidden' => !$this->content_management_config->is_opengraph_enabled())));
+		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(), 
+			array(
+				'class' => 'top-field',
+				'hidden' => !$this->content_management_config->is_opengraph_enabled()
+				)
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
