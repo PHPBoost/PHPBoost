@@ -1,7 +1,8 @@
+# INCLUDE MSG_WARNING #
+# INCLUDE MSG_SUCCESS #
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
-	# INCLUDE MSG #
 	<section id="upgrade-modules-container" class="admin-elements-container modules-elements-container upgrade-elements-container">
 		<header class="legend">{@modules.updates_available}</header>
 		# IF C_UPDATES #

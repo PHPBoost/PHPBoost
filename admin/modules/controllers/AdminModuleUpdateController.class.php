@@ -36,15 +36,37 @@ class AdminModuleUpdateController extends AdminController
 	{
 		$this->init();
 
+		$message_success = $message_warning = '';
+		$modules_selected = $modules_success = 0;
 		$module_number = 1;
 		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 		{
 			if ($request->get_string('upgrade-' . $module->get_id(), false) || ($request->get_string('upgrade-selected-modules', false) && $request->get_value('upgrade-checkbox-' . $module_number, 'off') == 'on'))
 			{
-				$this->upgrade_module($module->get_id());
+				$modules_selected++;
+				
+				$result = $this->upgrade_module($module->get_id());
+				
+				if ($result['type'] == MessageHelper::SUCCESS)
+				{
+					$modules_success++;
+					$message_success .= '<b>' . $module->get_configuration()->get_name() . '</b> : ' . $result['msg'] . '<br />';
+				}
+				else
+					$message_warning .= '<b>' . $module->get_configuration()->get_name() . '</b> : ' . $result['msg'] . '<br />';
 			}
 
 			$module_number++;
+		}
+		
+		if ($modules_selected > 0 && $modules_selected == $modules_success)
+			$this->view->put('MSG_SUCCESS', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+		else
+		{
+			if ($message_warning)
+				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING));
+			if ($message_success)
+				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
 
 		$this->upload_form();
@@ -130,20 +152,20 @@ class AdminModuleUpdateController extends AdminController
 		switch (ModulesManager::upgrade_module($module_id))
 		{
 			case ModulesManager::UPGRADE_FAILED:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10));
+				return array('msg' => LangLoader::get_message('process.error', 'status-messages-common'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_NOT_UPGRADABLE:
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
+				return array('msg' => $this->lang['modules.module_not_upgradable'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::NOT_INSTALLED_MODULE:
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
+				return array('msg' => $this->lang['modules.not_installed_module'], 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
+				return array('msg' => LangLoader::get_message('element.unexist', 'status-messages-common'), 'type' => MessageHelper::WARNING);
 				break;
 			case ModulesManager::MODULE_UPDATED:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
-				break;
+			default:
+				return array('msg' => LangLoader::get_message('process.success', 'status-messages-common'), 'type' => MessageHelper::SUCCESS);
 		}
 	}
 
@@ -210,7 +232,12 @@ class AdminModuleUpdateController extends AdminController
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 
-							$this->upgrade_module(AppContext::get_request(), $module_id);
+							$result = $this->upgrade_module($module_id);
+							
+							if ($result['type'] == MessageHelper::SUCCESS)
+								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
+							else
+								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
 						}
 						else
 						{

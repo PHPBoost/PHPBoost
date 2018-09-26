@@ -278,7 +278,7 @@ class AdminModuleAddController extends AdminController
 							if ($result['type'] == MessageHelper::SUCCESS)
 								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
 							else
-								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING, 10));
+								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
 						}
 						else
 						{
