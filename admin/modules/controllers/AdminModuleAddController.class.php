@@ -64,7 +64,7 @@ class AdminModuleAddController extends AdminController
 		else
 		{
 			if ($message_warning)
-				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING));
+				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, 1000));
 			if ($message_success)
 				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
@@ -117,19 +117,19 @@ class AdminModuleAddController extends AdminController
 			$author_website = $configuration->get_author_website();
 
 			$this->view->assign_block_vars('modules_not_installed', array(
-				'C_AUTHOR_EMAIL' => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'MODULE_NUMBER' => $module_number,
-				'ID' => $module->get_id(),
-				'NAME' => TextHelper::ucfirst($configuration->get_name()),
-				'ICON' => $module->get_id(),
-				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => $configuration->get_author(),
-				'AUTHOR_EMAIL' => $author_email,
-				'AUTHOR_WEBSITE' => $author_website,
-				'DESCRIPTION' => $configuration->get_description(),
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'PHP_VERSION' => $configuration->get_php_version(),
+				'C_AUTHOR_EMAIL'    => !empty($author_email),
+				'C_AUTHOR_WEBSITE'  => !empty($author_website),
+				'MODULE_NUMBER'     => $module_number,
+				'ID'                => $module->get_id(),
+				'NAME'              => TextHelper::ucfirst($configuration->get_name()),
+				'ICON'              => $module->get_id(),
+				'VERSION'           => $configuration->get_version(),
+				'AUTHOR'            => $configuration->get_author(),
+				'AUTHOR_EMAIL'      => $author_email,
+				'AUTHOR_WEBSITE'    => $author_website,
+				'DESCRIPTION'       => $configuration->get_description(),
+				'COMPATIBILITY'     => $configuration->get_compatibility(),
+				'PHP_VERSION'       => $configuration->get_php_version(),
 				'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
 			));
 			$module_number++;
@@ -278,16 +278,16 @@ class AdminModuleAddController extends AdminController
 							if ($result['type'] == MessageHelper::SUCCESS)
 								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
 							else
-								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
+								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING, 100));
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 100));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 100));
 					}
 
 					$uploaded_file = new File($archive);
@@ -295,12 +295,12 @@ class AdminModuleAddController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE, 100));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE, 100));
 			}
 		}
 	}
