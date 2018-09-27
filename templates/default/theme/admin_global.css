@@ -507,32 +507,33 @@ div.message-helper-small {
 .message-helper.success:before  { content: "\f00c"; }
 .message-helper.question:before { content: "\f128"; }
 
-.message-ephemeral-container {
+.floating-message-container {
 	position: fixed;
 	left: 50%;
-    transform: translateX(-50%);
+	transform: translateX(-50%);
 	z-index: 3;
-	opacity: 0;
 	top: 0.456em;
 }
 
-.message-ephemeral-container .message-helper {
+.floating-message-container .message-helper {
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 	overflow: visible;
+	opacity: 0;
 }
 
 @media (max-width: 768px) {
-	.message-ephemeral-container {
+	.floating-message-container {
 		width: 100%;
 		top: 1em;
 	}
 
-	.message-ephemeral-container .message-helper {
+	.floating-message-container .message-helper {
 		max-width: 90%;
+		padding: 10px 10px 10px 50px;
 	}
 }
 
-.message-ephemeral-container .fa-close-message {
+.floating-message-container .fa-close-message {
 	position: absolute;
 	z-index: 1;
 	top: -6px;
@@ -540,11 +541,11 @@ div.message-helper-small {
 	font-size: 1.5em;
 }
 
-.message-ephemeral-container .fa-close-message:before {
+.floating-message-container .fa-close-message:before {
 	content: "\f057";
 }
 
-.message-ephemeral-container .message-helper > a {
+.floating-message-container .message-helper > a {
 	color: inherit;
 	cursor: pointer;
 }

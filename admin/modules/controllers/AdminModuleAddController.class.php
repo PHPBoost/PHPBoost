@@ -64,7 +64,7 @@ class AdminModuleAddController extends AdminController
 		else
 		{
 			if ($message_warning)
-				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, 1000));
+				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, -1));
 			if ($message_success)
 				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
@@ -278,16 +278,16 @@ class AdminModuleAddController extends AdminController
 							if ($result['type'] == MessageHelper::SUCCESS)
 								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
 							else
-								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING, 100));
+								$this->view->put('MSG_WARNING', MessageHelper::display($result['msg'], MessageHelper::WARNING));
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 100));
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 						}
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE, 100));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('error.invalid_archive_content', 'status-messages-common'), MessageHelper::NOTICE));
 					}
 
 					$uploaded_file = new File($archive);
@@ -295,12 +295,12 @@ class AdminModuleAddController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE, 100));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.invalid_format', 'status-messages-common'), MessageHelper::NOTICE));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE, 100));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
 			}
 		}
 	}

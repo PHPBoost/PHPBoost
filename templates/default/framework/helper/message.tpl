@@ -1,26 +1,29 @@
-# IF C_TIMEOUT #
-<div id="msg-helper-{ID}" class="message-ephemeral-container">
-	<div class="message-helper {MESSAGE_CSS_CLASS}">
-		<a id="msg-helper-button-{ID}" class="{MESSAGE_CSS_CLASS}" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message"></i></a>
-		{MESSAGE_CONTENT}
-	</div>
+# IF C_FLOATING #
+<div id="message-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}" style="display: none;">
+	<a id="message-helper-button-{ID}" class="{MESSAGE_CSS_CLASS}" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message"></i></a>
+	{MESSAGE_CONTENT}
 </div>
 <script>
 <!--
 	jQuery(document).ready(function(){
-		//Show the message with animation
-		jQuery("#msg-helper-{ID}").fadeTo("slow", 1);
-		
-		//Timeout to hide the message
-		setTimeout('jQuery("#msg-helper-{ID}").fadeOut("slow");', {TIMEOUT});
+		var container = document.getElementsByClassName("floating-message-container");
+		if (container.lenght == null)
+			jQuery('<div class="floating-message-container"></div>').appendTo('body');
 
-		//Hide the message if you click on the close button
-		$('#msg-helper-button-{ID}').click(function() {
-		   jQuery('#msg-helper-{ID}').fadeTo('slow', 0);
+		jQuery( jQuery('#message-helper-{ID}') ).appendTo( jQuery('.floating-message-container') );
+
+		jQuery("#message-helper-{ID}").fadeTo("fast", 1);
+		
+		# IF C_TIMEOUT #
+		setTimeout('jQuery("#message-helper-{ID}").fadeOut("slow");', {TIMEOUT});
+		# ENDIF #
+
+		$('#message-helper-button-{ID}').click(function() {
+			jQuery('#message-helper-{ID}').fadeTo('slow', 0);
 		});
 	});
 -->
 </script>
 # ELSE #
-<div id="msg-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}">{MESSAGE_CONTENT}</div>
+<div id="message-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}">{MESSAGE_CONTENT}</div>
 # ENDIF #
