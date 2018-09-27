@@ -162,6 +162,7 @@ a.social-connect span {
 .social-networks-list-container .sortable-title { padding: 8px 5px 12px 10px; }
 .social-networks-list-container .sortable-title > span {
 	font-size: .6em;
+	font-weight: normal;
 }
 
 .social-networks-menu {

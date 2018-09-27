@@ -248,7 +248,6 @@ table.announce-legend td {
 	vertical-align: middle;
 }
 
-
 .action-less { display: none; }
 .selected .action-less { display: inline-block; }
 
@@ -257,10 +256,15 @@ table.announce-legend td {
 
 .group-button {
 	opacity: 0.5;
+	display: inline-block;
 }
 
 .group-button.selected {
 	opacity: 1;
+}
+
+.group-has-img {
+	max-width: 150px;
 }
 
 .user-card,
