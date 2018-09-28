@@ -49,6 +49,11 @@ abstract class Captcha implements ExtensionPoint
 		return;
 	}
 	
+	public function is_visible()
+	{
+		return true;
+	}
+	
 	public function set_html_id($html_id) {	$this->html_id = $html_id; }
 	public function get_html_id() { return $this->html_id; }
 	public function set_options(CaptchaOptions $options) { $this->options = $options; }
