@@ -64,7 +64,7 @@ class AdminModuleUpdateController extends AdminController
 		else
 		{
 			if ($message_warning)
-				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING));
+				$this->view->put('MSG_WARNING', MessageHelper::display($message_warning, MessageHelper::WARNING, -1));
 			if ($message_success)
 				$this->view->put('MSG_SUCCESS', MessageHelper::display($message_success, MessageHelper::SUCCESS, 10));
 		}
