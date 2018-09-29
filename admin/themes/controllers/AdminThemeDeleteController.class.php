@@ -42,7 +42,17 @@ class AdminThemeDeleteController extends AdminController
 		
 		if (count($ids) > 1)
 		{
-			$this->theme_id = $ids;
+			$theme_ids = array();
+			$theme_number = 1;
+			foreach (ThemesManager::get_installed_themes_map_sorted_by_localized_name() as $theme)
+			{
+				if (in_array($theme_number, $ids))
+				{
+					$theme_ids[] = $theme->get_id();
+				}
+				$theme_number++;
+			}
+			$this->theme_id = $theme_ids;
 			$this->multiple = true;
 		}
 		else

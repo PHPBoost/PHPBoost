@@ -41,7 +41,17 @@ class AdminUninstallLangController extends AdminController
 		
 		if (count($ids) > 1)
 		{
-			$this->lang_id = $ids;
+			$lang_ids = array();
+			$lang_number = 1;
+			foreach (LangsManager::get_installed_langs_map_sorted_by_localized_name() as $lang)
+			{
+				if (in_array($lang_number, $ids))
+				{
+					$lang_ids[] = $lang->get_id();
+				}
+				$lang_number++;
+			}
+			$this->lang_id = $lang_ids;
 			$this->multiple = true;
 		}
 		else

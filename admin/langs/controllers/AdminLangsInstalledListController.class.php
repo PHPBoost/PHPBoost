@@ -101,7 +101,7 @@ class AdminLangsInstalledListController extends AdminController
 			{
 				if ($request->get_value('delete-checkbox-' . $lang_number, 'off') == 'on')
 				{
-					$lang_ids[] = $lang->get_id();
+					$lang_ids[] = $lang_number;
 				}
 				$lang_number++;
 			}

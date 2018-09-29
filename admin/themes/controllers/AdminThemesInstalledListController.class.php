@@ -119,7 +119,7 @@ class AdminThemesInstalledListController extends AdminController
 			{
 				if ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on')
 				{
-					$theme_ids[] = $theme->get_id();
+					$theme_ids[] = $theme_number;
 				}
 				$theme_number++;
 			}
