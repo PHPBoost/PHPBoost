@@ -108,23 +108,23 @@ else //Sinon on rempli le formulaire
 	}
 	
 	$template->put_all(array(
-		'RANK_OPTIONS' => $rank_options,
-		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
-		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
-		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
+		'RANK_OPTIONS'             => $rank_options,
+		'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+		'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
+		'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
+		'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
 		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
-		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
-		'L_UPLOAD_RANKS' => $LANG['upload_rank'],
-		'L_UPLOAD_FORMAT' => $LANG['explain_upload_img'],
-		'L_UPLOAD' => $LANG['upload'],
-		'L_RANK_NAME' => $LANG['rank_name'],
-		'L_NBR_MSG' => $LANG['nbr_msg'],
-		'L_IMG_ASSOC' => $LANG['img_assoc'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],
-		'L_ADD' => LangLoader::get_message('add', 'common')
+		'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
+		'L_UPLOAD_RANKS'           => $LANG['upload_rank'],
+		'L_UPLOAD_FORMAT'          => $LANG['explain_upload_img'],
+		'L_UPLOAD'                 => $LANG['upload'],
+		'L_RANK_NAME'              => $LANG['rank_name'],
+		'L_NBR_MSG'                => $LANG['nbr_msg'],
+		'L_IMG_ASSOC'              => $LANG['img_assoc'],
+		'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
+		'L_UPDATE'                 => $LANG['update'],
+		'L_RESET'                  => $LANG['reset'],
+		'L_ADD'                    => LangLoader::get_message('add', 'common')
 	));
 
 	$template->display();

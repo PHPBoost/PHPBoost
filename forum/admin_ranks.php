@@ -75,19 +75,19 @@ else //Sinon on rempli le formulaire
 	$template = new FileTemplate('forum/admin_ranks.tpl');
 
 	$template->put_all(array(
-		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
-		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
-		'L_CONFIRM_DEL_RANK' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
+		'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
+		'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
+		'L_CONFIRM_DEL_RANK'       => LangLoader::get_message('confirm.delete', 'status-messages-common'),
+		'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
 		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
-		'L_FORUM_ADD_RANKS' => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
-		'L_RANK_NAME' => $LANG['rank_name'],
-		'L_NBR_MSG' => $LANG['nbr_msg'],
-		'L_IMG_ASSOC' => $LANG['img_assoc'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],
-		'L_ADD' => LangLoader::get_message('add', 'common')
+		'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
+		'L_RANK_NAME'              => $LANG['rank_name'],
+		'L_NBR_MSG'                => $LANG['nbr_msg'],
+		'L_IMG_ASSOC'              => $LANG['img_assoc'],
+		'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
+		'L_UPDATE'                 => $LANG['update'],
+		'L_RESET'                  => $LANG['reset'],
+		'L_ADD'                    => LangLoader::get_message('add', 'common')
 	));
 
 	//On recupère les images des groupes
@@ -104,11 +104,6 @@ else //Sinon on rempli le formulaire
 	
 	foreach($ranks_cache as $msg => $row)
 	{
-		if ($row['special'] == 0)
-			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
-		else
-			$del = $LANG['special_rank'];
-
 		$rank_options = '<option value="">--</option>';
 		foreach ($rank_options_array as $icon)
 		{
@@ -117,12 +112,14 @@ else //Sinon on rempli le formulaire
 		}
 		
 		$template->assign_block_vars('rank', array(
-			'ID' => $row['id'],
-			'RANK' => $row['name'],
-			'MSG' => ($row['special'] == 0) ? '<input type="number" min="0" name="' . $row['id'] . 'msg" value="' . $msg . '">' : $LANG['special_rank'],
-			'RANK_OPTIONS' => $rank_options,
-			'IMG_RANK' => $row['icon'],
-			'DELETE' => $del
+			'ID'             => $row['id'],
+			'RANK'           => $row['name'],
+			'MSG'            => $msg,
+			'RANK_OPTIONS'   => $rank_options,
+			'IMG_RANK'       => $row['icon'],
+			'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
+			'C_SPECIAL_RANK' => $row['special'] == 0,
+			'L_SPECIAL_RANK' => $LANG['special_rank']
 		));
 	}
 	

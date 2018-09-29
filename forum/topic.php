@@ -106,18 +106,18 @@ $check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic
 if ($check_group_edit_auth)
 {
 	$tpl->put_all(array(
-		'C_FORUM_MODERATOR' => true,
-		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1'),
-		'U_TOPIC_LOCK' => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . AppContext::get_session()->get_token()),
-		'U_TOPIC_UNLOCK' => url('.php?id=' . $id_get . '&amp;lock=false&amp;token=' . AppContext::get_session()->get_token()),
-		'U_TOPIC_MOVE' => url('.php?id=' . $id_get),
-		'L_TOPIC_LOCK' => ($topic['status'] == '1') ? $LANG['forum_lock'] : $LANG['forum_unlock'],
-		'L_TOPIC_MOVE' => $LANG['forum_move'],	
+		'C_FORUM_MODERATOR'    => true,
+		'C_FORUM_LOCK_TOPIC'   => ($topic['status'] == '1'),
+		'U_TOPIC_LOCK'         => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . AppContext::get_session()->get_token()),
+		'U_TOPIC_UNLOCK'       => url('.php?id=' . $id_get . '&amp;lock=false&amp;token=' . AppContext::get_session()->get_token()),
+		'U_TOPIC_MOVE'         => url('.php?id=' . $id_get),
+		'L_TOPIC_LOCK'         => ($topic['status'] == '1') ? $LANG['forum_lock'] : $LANG['forum_unlock'],
+		'L_TOPIC_MOVE'         => $LANG['forum_move'],	
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
-		'L_ALERT_LOCK_TOPIC' => $LANG['alert_lock_topic'],
+		'L_ALERT_LOCK_TOPIC'   => $LANG['alert_lock_topic'],
 		'L_ALERT_UNLOCK_TOPIC' => $LANG['alert_unlock_topic'],
-		'L_ALERT_MOVE_TOPIC' => $LANG['alert_move_topic'],
-		'L_ALERT_CUT_TOPIC' => $LANG['alert_cut_topic']
+		'L_ALERT_MOVE_TOPIC'   => $LANG['alert_move_topic'],
+		'L_ALERT_CUT_TOPIC'    => $LANG['alert_cut_topic']
 	));
 }
 else
@@ -173,40 +173,40 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 }
 
 $vars_tpl = array(
-	'C_PAGINATION' => $pagination->has_several_pages(),
-	'C_FOCUS_CONTENT' => !empty($quote_get),
-	'FORUM_NAME' => $config->get_forum_name(),
-	'MODULE_DATA_PATH' => $module_data_path,
-	'DESC' => !empty($topic['subtitle']) ? stripslashes($topic['subtitle']) : '',
-	'PAGINATION' => $pagination->display(),
-	'USER_ID' => $topic['user_id'],
-	'ID' => $topic['idcat'],
-	'IDTOPIC' => $id_get,
-	'PAGE' => $page,
-	'TITLE_T' => stripslashes($topic['title']),
-	'DISPLAY_MSG' => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
-	'U_MSG_SET_VIEW' => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '')),
-	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
-	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
-	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
-	'U_TITLE_T' => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
-	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-	'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-	'L_GUEST' => $LANG['guest'],
-	'L_DELETE' => LangLoader::get_message('delete', 'common'),
-	'L_EDIT' => LangLoader::get_message('edit', 'common'),
-	'L_CUT_TOPIC' => $LANG['cut_topic'],
-	'L_EDIT_BY' => $LANG['edit_by'],
+	'C_PAGINATION'            => $pagination->has_several_pages(),
+	'C_FOCUS_CONTENT'         => !empty($quote_get),
+	'FORUM_NAME'              => $config->get_forum_name(),
+	'MODULE_DATA_PATH'        => $module_data_path,
+	'DESC'                    => !empty($topic['subtitle']) ? stripslashes($topic['subtitle']) : '',
+	'PAGINATION'              => $pagination->display(),
+	'USER_ID'                 => $topic['user_id'],
+	'ID'                      => $topic['idcat'],
+	'IDTOPIC'                 => $id_get,
+	'PAGE'                    => $page,
+	'TITLE_T'                 => stripslashes($topic['title']),
+	'DISPLAY_MSG'             => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
+	'U_MSG_SET_VIEW'          => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '')),
+	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
+	'U_ONCHANGE'              => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
+	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+	'U_FORUM_CAT'             => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
+	'U_TITLE_T'               => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
+	'L_REQUIRE_MESSAGE'       => $LANG['require_text'],
+	'L_DELETE_MESSAGE'        => $LANG['alert_delete_msg'],
+	'L_GUEST'                 => $LANG['guest'],
+	'L_DELETE'                => LangLoader::get_message('delete', 'common'),
+	'L_EDIT'                  => LangLoader::get_message('edit', 'common'),
+	'L_CUT_TOPIC'             => $LANG['cut_topic'],
+	'L_EDIT_BY'               => $LANG['edit_by'],
 	'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
-	'L_WARNING_MANAGEMENT' => $LANG['warning_management'],
-	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_QUOTE' => $LANG['quote'],
-	'L_ON' => $LANG['on'],
-	'L_RESPOND' => $LANG['respond'],
-	'L_SUBMIT' => $LANG['submit'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_RESET' => $LANG['reset']
+	'L_WARNING_MANAGEMENT'    => $LANG['warning_management'],
+	'L_FORUM_INDEX'           => $LANG['forum_index'],
+	'L_QUOTE'                 => $LANG['quote'],
+	'L_ON'                    => $LANG['on'],
+	'L_RESPOND'               => $LANG['respond'],
+	'L_SUBMIT'                => $LANG['submit'],
+	'L_PREVIEW'               => $LANG['preview'],
+	'L_RESET'                 => $LANG['reset']
 );
 
 //Création du tableau des rangs.
@@ -266,13 +266,13 @@ while ( $row = $result->fetch() )
 	if (!empty($row['question']) && $poll_done === false)
 	{
 		$tpl->put_all(array(
-			'C_POLL_EXIST' => true,
-			'QUESTION' => stripslashes($row['question']),
+			'C_POLL_EXIST'  => true,
+			'QUESTION'      => stripslashes($row['question']),
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
 			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
-			'L_POLL' => $LANG['poll'], 
-			'L_VOTE' => $LANG['poll_vote'],
-			'L_RESULT' => $LANG['poll_result']
+			'L_POLL'        => $LANG['poll'], 
+			'L_VOTE'        => $LANG['poll_vote'],
+			'L_RESULT'      => $LANG['poll_result']
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);
@@ -289,7 +289,7 @@ while ( $row = $result->fetch() )
 				$tpl->assign_block_vars('poll_result', array(
 					'ANSWERS' => stripslashes($answer), 
 					'NBRVOTE' => $array_vote[$key],
-					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
+					'WIDTH'   => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
 				));
 			}
@@ -307,8 +307,8 @@ while ( $row = $result->fetch() )
 				foreach ($array_answer as $answer)
 				{
 					$tpl->assign_block_vars('poll_radio', array(
-						'NAME' => $z,
-						'TYPE' => 'radio',
+						'NAME'    => $z,
+						'TYPE'    => 'radio',
 						'ANSWERS' => stripslashes($answer)
 					));
 					$z++;
@@ -319,8 +319,8 @@ while ( $row = $result->fetch() )
 				foreach ($array_answer as $answer)
 				{
 					$tpl->assign_block_vars('poll_checkbox', array(
-						'NAME' => 'forumpoll' . $z,
-						'TYPE' => 'checkbox',
+						'NAME'    => 'forumpoll' . $z,
+						'TYPE'    => 'checkbox',
 						'ANSWERS' => stripslashes($answer)
 					));
 					$z++;
@@ -368,22 +368,9 @@ while ( $row = $result->fetch() )
 	{
 		$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 	}
-	$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="' . $user_rank_icon . '" />' : '';
 	
 	$user_accounts_config = UserAccountsConfig::load();
-	
-	//Avatar
-	if (empty($row['user_avatar'])) 
-		$user_avatar = ($user_accounts_config->is_default_avatar_enabled() == '1') ? '<img src="../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : '';
-	else
-		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '"/>';
 		
-	//Affichage du nombre de message.
-	if ($row['posted_msg'] >= 1)
-		$posted_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['posted_msg'];
-	else
-		$posted_msg = (!$is_guest) ? '<a href="' . PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
-	
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 	
 	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
@@ -391,51 +378,53 @@ while ( $row = $result->fetch() )
 	$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
 
 	$tpl->assign_block_vars('msg', array_merge(
-		Date::get_array_tpl_vars($topic_date,'topic_date'),
-		Date::get_array_tpl_vars($topic_edit_date,'topic_edit_date'),
-		Date::get_array_tpl_vars($user_registered_date,'user_registered_date'),
-		array(
-		'ID' => $row['id'],
-		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
-		'FORUM_USER_LOGIN' => $row['login'],
-		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse(stripslashes($row['contents'])),
-		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
-		'FORUM_USER_EDITOR_DATE' => Date::to_format($row['timestamp_edit'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-		'USER_RANK' => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? $user_rank : LangLoader::get_message('banned', 'user-common'),
-		'USER_IMG_ASSOC' => $user_assoc_img,
-		'USER_AVATAR' => $user_avatar,
-		'C_USER_GROUPS' => $row['groups'],
-		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . Date::to_format($row['registered'], Date::FORMAT_DAY_MONTH_YEAR) : '',
-		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
-		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller user-mail" title="' . LangLoader::get_message('mail', 'main') . '">' . LangLoader::get_message('mail', 'main') . '</a>' : '',
-		'U_USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? $row['email'] : '',
-		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '<hr /><br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-		'USER_WARNING' => $row['warning_percentage'],
-		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
-		'C_USER_ONLINE' => !empty($row['connect']),
-		'C_FORUM_USER_LOGIN' => !empty($row['login']),
-		'C_FORUM_MSG_EDIT' => $edit,
-		'C_FORUM_MSG_DEL' => $del,
-		'C_FORUM_MSG_DEL_MSG' => (!$first_message),
-		'C_FORUM_MSG_CUT' => $cut,
-		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()), //Ajout du marqueur d'édition si activé.
-		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']),
-		'C_FORUM_MODERATOR' => $moderator,
-		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
+		Date::get_array_tpl_vars($topic_date,'TOPIC_DATE'),
+		Date::get_array_tpl_vars($topic_edit_date,'TOPIC_EDIT_DATE'),
+		Date::get_array_tpl_vars($user_registered_date,'USER_REGISTERED_DATE'), array(
+		'ID'                          => $row['id'],
+		'CLASS_COLOR'                 => ($j%2 == 0) ? '' : 2,
+		'FORUM_USER_LOGIN'            => $row['login'],
+		'FORUM_MSG_CONTENTS'          => FormatingHelper::second_parse(stripslashes($row['contents'])),
+		'FORUM_USER_EDITOR_LOGIN'     => $row['login_edit'],
+		'C_USER_RANK'                 => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
+		'USER_RANK'                   => $user_rank,
+		'USER_IMG_ASSOC'              => $rank_img,
+		'C_USER_AVATAR'               => !empty($row['user_avatar']),
+		'U_USER_AVATAR'               => Url::to_rel($row['user_avatar']),
+		'U_DEFAULT_AVATAR'            => '../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name(),
+		'C_USER_GROUPS'               => $row['groups'],
+		'C_IS_USER'                   => !$is_guest,
+		'C_USER_MSG'                  => $row['posted_msg'] >= 1,
+		'U_USER_MSG'                  => UserUrlBuilder::messages($row['user_id'])->rel(),
+		'U_USER_MEMBERMSG'            => PATH_TO_ROOT . '/forum/membermsg' . url('.php?id=' . $row['user_id'], ''),
+		'USER_MSG'                    => $row['posted_msg'],
+		'C_USER_MAIL'                 => (!empty($row['email']) && ($row['show_email'] == '1' ) ),
+		'U_USER_MAIL'                 => 'mailto:' . $row['email'],
+		'C_USER_SIGN'                 => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']),
+		'USER_SIGN'                   => FormatingHelper::second_parse($row['user_sign']),
+		'USER_WARNING'                => $row['warning_percentage'],
+		'L_FORUM_QUOTE_LAST_MSG'      => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
+		'C_USER_ONLINE'               => !empty($row['connect']),
+		'C_FORUM_USER_LOGIN'          => !empty($row['login']),
+		'C_FORUM_MSG_EDIT'            => $edit,
+		'C_FORUM_MSG_DEL'             => $del,
+		'C_FORUM_MSG_DEL_MSG'         => (!$first_message),
+		'C_FORUM_MSG_CUT'             => $cut,
+		'C_FORUM_USER_EDITOR'         => ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()), //Ajout du marqueur d'édition si activé.
+		'C_FORUM_USER_EDITOR_LOGIN'   => !empty($row['login_edit']),
+		'C_FORUM_MODERATOR'           => $moderator,
+		'U_FORUM_USER_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'U_FORUM_MSG_EDIT'            => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
 		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->rel(),
-		'U_FORUM_MSG_DEL' => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-		'U_FORUM_WARNING' => url('.php?action=warning&amp;id=' . $row['user_id']),
-		'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),
-		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
-		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
-		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="basic-button smaller user-pm" title="' . LangLoader::get_message('pm', 'main') . '">' . LangLoader::get_message('pm', 'main') . '</a>' : '',
-		'U_USER_PM' => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? UserUrlBuilder::personnal_message($row['user_id'])->rel() : ''
-		)
-	));
+		'U_FORUM_MSG_DEL'             => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id=' . $row['user_id']),
+		'U_FORUM_PUNISHEMENT'         => url('.php?action=punish&amp;id=' . $row['user_id']),
+		'U_FORUM_MSG_CUT'             => url('.php?idm=' . $row['id']),
+		'U_VARS_ANCRE'                => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
+		'U_VARS_QUOTE'                => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
+			'C_USER_PM'                   => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+	)));
 
 	//Affichage des groupes du membre.
 	if (!empty($row['groups'])) 
@@ -449,14 +438,14 @@ while ( $row = $result->fetch() )
 			if (is_numeric(array_search($idgroup, $array_user_groups)))
 			{
 				$tpl->assign_block_vars('msg.usergroups', array(
-					'C_IMG_USERGROUP' => !empty($array_group_info['img']),
-					'U_IMG_USERGROUP' => $array_group_info['img'],
-					'U_USERGROUP' => UserUrlBuilder::group($idgroup)->rel(),
+					'C_IMG_USERGROUP'   => !empty($array_group_info['img']),
+					'U_IMG_USERGROUP'   => $array_group_info['img'],
+					'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel(),
 					'C_USERGROUP_COLOR' => !empty($group_color),
-					'L_USER_GROUP' => $LANG['group'],
-					'USERGROUP_COLOR' => $group_color,
-					'USERGROUP_NAME' => $array_group_info['name'],
-					'USERGROUP_ID' => $idgroup
+					'L_USER_GROUP'      => $LANG['group'],
+					'USERGROUP_COLOR'   => $group_color,
+					'USERGROUP_NAME'    => $array_group_info['name'],
+					'USERGROUP_ID'      => $idgroup
 				));
 			}
 		}
@@ -513,14 +502,14 @@ while ( $row = $result->fetch() )
 			}
 			
 			$tpl->assign_block_vars('msg.ext_fields', array(
-				'BUTTON' => $button,
-				'U_URL' => $row[$field_type],
-				'NAME' => $field['name'],
-				'ID' => str_replace('_', '-', $field['field_name']),
-				'IS_MAIL' => ($field['regex'] == 4) ? true : false,
+				'BUTTON'     => $button,
+				'U_URL'      => $row[$field_type],
+				'NAME'       => $field['name'],
+				'ID'         => str_replace('_', '-', $field['field_name']),
+				'IS_MAIL'    => ($field['regex'] == 4) ? true : false,
 				'IS_UNKNOWN' => $unknown_field,
-				'TITLE' => $title,
-				'ICON_FA' => $icon_fa
+				'TITLE'      => $title,
+				'ICON_FA'    => $icon_fa
 			));
 		}
 	}
@@ -559,36 +548,37 @@ foreach ($categories_tree_options as $option)
 }
 
 $vars_tpl = array_merge($vars_tpl, array(
-	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TOTAL_ONLINE' => $total_online,
-	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
-	'ADMIN' => $total_admin,
-	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
-	'GUEST' => $total_visit,
-	'SELECT_CAT' => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-	'IS_TRACK' => $track ? 'true' : 'false',
-	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',
-	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
-	'IS_CHANGE' => $topic['display_msg'] ? 'true' : 'false',
-	'U_ALERT' => url('.php?id=' . $id_get),
-	'L_TRACK_DEFAULT' => ($track) ? $LANG['untrack_topic'] : $LANG['track_topic'],
-	'L_SUSCRIBE_DEFAULT' => ($track_mail) ? $LANG['untrack_topic_mail'] : $LANG['track_topic_mail'],
-	'L_SUSCRIBE_PM_DEFAULT' => ($track_pm) ? $LANG['untrack_topic_pm'] : $LANG['track_topic_pm'],
-	'L_TRACK' => $LANG['track_topic'],
-	'L_UNTRACK' => $LANG['untrack_topic'],
-	'L_SUSCRIBE_PM' => $LANG['track_topic_pm'],
-	'L_UNSUSCRIBE_PM' => $LANG['untrack_topic_pm'],
-	'L_SUSCRIBE' => $LANG['track_topic_mail'],
-	'L_UNSUSCRIBE' => $LANG['untrack_topic_mail'],
-	'L_ALERT' => $LANG['alert_topic'],
-	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-	'L_AND' => $LANG['and'],
-	'L_ONLINE' => TextHelper::strtolower($LANG['online']),
+	'C_USER_CONNECTED'       => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+	'TOTAL_ONLINE'           => $total_online,
+	'C_NO_USER_ONLINE'       => (($total_online - $total_visit) == 0),
+	'USERS_ONLINE'           => $users_list,
+	'ADMIN'                  => $total_admin,
+	'MODO'                   => $total_modo,
+	'MEMBER'                 => $total_member,
+	'GUEST'                  => $total_visit,
+	'SELECT_CAT'             => $cat_list, //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'IS_TRACK'               => $track ? 'true' : 'false',
+	'IS_TRACK_PM'            => $track_pm ? 'true' : 'false',
+	'IS_TRACK_MAIL'          => $track_mail ? 'true' : 'false',
+	'IS_CHANGE'              => $topic['display_msg'] ? 'true' : 'false',
+	'U_ALERT'                => url('.php?id=' . $id_get),
+	'L_TRACK_DEFAULT'        => ($track) ? $LANG['untrack_topic'] : $LANG['track_topic'],
+	'L_SUBSCRIBE_DEFAULT'    => ($track_mail) ? $LANG['untrack_topic_mail'] : $LANG['track_topic_mail'],
+	'L_SUBSCRIBE_PM_DEFAULT' => ($track_pm) ? $LANG['untrack_topic_pm'] : $LANG['track_topic_pm'],
+	'L_TRACK'                => $LANG['track_topic'],
+	'L_UNTRACK'              => $LANG['untrack_topic'],
+	'L_SUBSCRIBE_PM'         => $LANG['track_topic_pm'],
+	'L_UNSUBSCRIBE_PM'       => $LANG['untrack_topic_pm'],
+	'L_SUBSCRIBE'            => $LANG['track_topic_mail'],
+	'L_UNSUBSCRIBE'          => $LANG['untrack_topic_mail'],
+	'L_ALERT'                => $LANG['alert_topic'],
+	'L_USER'                 => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+	'L_ADMIN'                => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+	'L_MODO'                 => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+	'L_MEMBER'               => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'                => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+	'L_AND'                  => $LANG['and'],
+	'L_ONLINE'               => TextHelper::strtolower($LANG['online']),
 ));
 
 //Récupération du message quoté.
@@ -627,42 +617,44 @@ elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->writ
 }
 else
 {
-	$img_track_display = $track ? 'fa-msg-not-track' : 'fa-msg-track';
-	$img_track_pm_display = $track_pm ? 'fa-pm-not-track' : 'fa-pm-track';
-	$img_track_mail_display = $track_mail ? 'fa-mail-not-track' : 'fa-mail-track';
+	$img_track_display = $track ? 'msg-not-track' : 'msg-track';
+	$img_track_pm_display = $track_pm ? 'pm-not-track' : 'pm-track';
+	$img_track_mail_display = $track_mail ? 'mail-not-track' : 'mail-track';
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
 	$vars_tpl = array_merge($vars_tpl, array(
-		'C_AUTH_POST' => true,
-		'CONTENTS' => $contents,
-		'KERNEL_EDITOR' => $editor->display(),
-		'ICON_TRACK' => '<i class="fa ' . $img_track_display . '"></i>',
-		'ICON_SUSCRIBE_PM' => '<i class="fa ' . $img_track_pm_display . '"></i>',
-		'ICON_SUSCRIBE' => '<i class="fa ' . $img_track_mail_display . '"></i>',
+		'C_AUTH_POST'         => true,
+		'CONTENTS'            => $contents,
+		'KERNEL_EDITOR'       => $editor->display(),
+		'ICON_TRACK'          => $img_track_display,
+		'ICON_SUBSCRIBE_PM'   => $img_track_pm_display,
+		'ICON_SUBSCRIBE'      => $img_track_mail_display,
 		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token()),
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if ($config->is_message_before_topic_title_displayed() && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
-		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
+		$img_msg_display = $topic['display_msg'] ? 'msg-not-display' : 'msg-display';
 		$tpl_bottom->put_all(array(
-			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
-			'L_DISPLAY_MSG' => $config->get_message_before_topic_title(),
+			'C_DISPLAY_MSG'                 => true,
+			'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),
+			'ICON_DISPLAY_MSG'              => $img_msg_display,
+			'L_DISPLAY_MSG'                 => $config->get_message_before_topic_title(),
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-			'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
-			'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
+			'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved(),
 		));
 		$tpl->put_all(array(
-			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
-			'L_DISPLAY_MSG' => $config->get_message_before_topic_title(),
+			'C_DISPLAY_MSG'                 => true,
+			'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),
+			'ICON_DISPLAY_MSG'              => $img_msg_display,
+			'L_DISPLAY_MSG'                 => $config->get_message_before_topic_title(),
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-			'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
-			'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
+			'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved(),
 		));
 	}
 }

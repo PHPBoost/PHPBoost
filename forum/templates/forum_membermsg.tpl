@@ -16,7 +16,7 @@
 				# START list #
 				<div class="msg-position">
 					<div class="msg-title">
-						{list.U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {list.U_TITLE_T}
+						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
 						<span class="float-right">
 							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a>
 							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
@@ -26,15 +26,15 @@
 						<div class="msg-top">
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
-									{list.USER_ONLINE} # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE # {list.USER_PSEUDO} # ENDIF #
+									# IF list.C_USER_ONLINE #<i class="fa fa-online"></i># ELSE #<i class="fa fa-offline"></i># ENDIF ## IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 								</div>
 
-								<p class="center">{list.USER_RANK}</p>
-								<p class="center">{list.USER_IMG_ASSOC}</p>
+								# IF list.C_USER_RANK #<p class="center">{list.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
+								# IF list.C_USER_IMG_ASSOC #<p class="center"><img src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}"/></p> # ENDIF #
 							</div>
 
 							<div class="msg-avatar-mbr center">
-								{list.USER_AVATAR}
+								<img src="# IF list.C_USER_AVATAR #{list.U_USER_AVATAR}# ELSE #{list.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 							</div>
 
 							<div class="msg-info-mbr">
@@ -55,8 +55,13 @@
 									# END list.usergroups #
 								</p>
 								# ENDIF #
-								<p class="left">{list.USER_DATE}</p>
-								<p class="left">{list.USER_MSG}</p>
+								# IF list.C_IS_USER #<p class="left">${LangLoader::get_message('registered_on', 'main')}: {list.USER_REGISTERED_DATE_SHORT}</p># ENDIF #
+								# IF list.C_USER_MSG #
+								<p class="left"><a href="{list.U_USER_MSG}" class="small">${LangLoader::get_message('message_s', 'main')}</a>: {list.USER_MSG}</p>
+								# ELSE #
+								<p class="left"># IF list.C_IS_USER # <a href="{list.U_USER_MEMBERMG}" class="small">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
+								# ENDIF #
+								
 							</div>
 
 						</div>
@@ -64,7 +69,7 @@
 						<div class="msg-contents-container">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="fa fa-hand-o-right"></i></a> {list.DATE}
+									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="fa fa-hand-o-right"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
 								</span>
 
 							</div>
@@ -75,11 +80,11 @@
 							</div>
 							<div class="msg-sign{list.CLASS_COLOR}">
 								<div class="msg-sign-overflow">
-									{list.USER_SIGN}
+									# IF list.C_USER_SIGN #<hr /><br />{list.USER_SIGN}# ENDIF #
 								</div>
 								<hr />
 								<span class="float-left">
-									{list.USER_PM} {list.USER_MAIL}
+									# IF list.C_USER_PM #<a href="{list.U_USER_PM}" class="basic-button smaller user-pm">${LangLoader::get_message('pm', 'main')}</a># ENDIF # # IF list.C_USER_MAIL #<a href="{list.U_USER_MAIL}" class="basic-button smaller  user-mail">${LangLoader::get_message('mail', 'main')}</a># ENDIF #
 									# START list.ext_fields #
 										{list.ext_fields.BUTTON}
 									# END list.ext_fields #

@@ -57,7 +57,7 @@
 										<input type="text" maxlength="30" name="{rank.ID}name" value="{rank.RANK}">
 									</td>
 									<td>
-										{rank.MSG}
+										# IF rank.C_SPECIAL_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MSG}"># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
 									</td>
 									<td>
 										<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
@@ -70,7 +70,7 @@
 										# ENDIF #
 									</td>
 									<td>
-										{rank.DELETE}
+										# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
 									</td>
 								</tr>
 								# END rank #

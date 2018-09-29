@@ -80,16 +80,25 @@
 						# START action_list #
 						<tr>
 							<td class="forum-last-topic">
-								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF # title="{action_list.LOGIN}">{action_list.LOGIN}</a>
+								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF # title="{action_list.LOGIN}">{action_list.LOGIN}</a>
 							</td>
 							<td>
-								{action_list.U_ACTION}
+								# IF action_list.C_ACTION #
+								<a href="{action_list.U_ACTION}">{action_list.L_ACTION}</a>
+								# ELSE #
+								{action_list.L_ACTION}
+								# ENDIF #
 							</td>
 							<td class="forum-last-topic">
 								{action_list.U_USER_CONCERN}
+								# IF action_list.C_USER_CONCERN #
+								<a href="{action_list.U_USER_CONCERN" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
+								# ELSE #
+								-
+								# ENDIF #
 							</td>
 							<td class="forum-last-topic">
-								{action_list.DATE}
+								{action_list.DATE_FULL}
 							</td>
 						</tr>
 						# END action_list #
@@ -144,19 +153,23 @@
 									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
 								<td class="td20P">
-									{alert_list.TITLE} {alert_list.EDIT}
+									<a href="{alert_list.U_TITLE}">{alert_list.TITLE}</a> <a href="{alert_list.U_TITLE}"><i class="fa fa-edit"></i></a>
 								</td>
 								<td class="td20P">
-									{alert_list.TOPIC}
+									<a href="{alert_list.U_TOPIC}">{alert_list.TOPIC}</a>
 								</td>
-								<td class="td100" style="{alert_list.BACKGROUND_COLOR}">
-									{alert_list.STATUS}
+								<td class="td100 {alert_list.BACKGROUND_COLOR}">
+									# IF alert_list.C_STATUS #
+									{alert_list.L_ALERT_SOLVED}<a href="{alert_list.U_IDMODO_REL}" class="{alert_list.MODO_CSSCLASS}" # IF alert_list.C_MODO_GROUP_COLOR # style="color: {alert_list.MODO_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_MODO}</a>
+									# ELSE #
+									{alert_list.L_ALERT_UNSOLVED}
+									# ENDIF #
 								</td>
 								<td class="td70">
-									{alert_list.LOGIN}
+									<a href="{alert_list.USER_ID}" class="{alert_list.USER_CSSCLASS}"# IF alert_list.C_USER_GROUP_COLOR # style="color:{alert_list.USER_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_USER}</a>
 								</td>
 								<td class="td70">
-									{alert_list.TIME}
+									{alert_list.TIME_FULL}
 								</td>
 							</tr>
 							# END alert_list #
@@ -191,11 +204,11 @@
 						</tr>
 						<tr>
 							<td>{L_TOPIC}</td>
-							<td>{TOPIC}</td>
+							<td><a href="{U_TOPIC}">{TOPIC}</a></td>
 						</tr>
 						<tr>
 							<td>{L_CAT}</td>
-							<td>{CAT}</td>
+							<td><a href="{U_CAT}">{CAT_NAME}</a></td>
 						</tr>
 						<tr>
 							<td>{L_CONTENTS}</td>
@@ -203,15 +216,23 @@
 						</tr>
 						<tr>
 							<td>{L_STATUS}</td>
-							<td>{STATUS}</td>
+							<td>
+								# IF C_STATUS #
+								{L_ALERT_SOLVED}<a href="{U_IDMODO_REL}" class="{MODO_CSSCLASS}" # IF C_MODO_GROUP_COLOR # style="color: {MODO_GROUP_COLOR};"# ENDIF #>{LOGIN_MODO}</a>
+								# ELSE #
+								{L_ALERT_UNSOLVED}
+								# ENDIF #
+							</td>
 						</tr>
 						<tr>
 							<td>{L_LOGIN}</td>
-							<td>{LOGIN}</td>
+							<td>
+								<a href="{USER_ID}" class="{USER_CSSCLASS}"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
+							</td>
 						</tr>
 						<tr>
 							<td>{L_TIME}</td>
-							<td>{TIME}</td>
+							<td>{TIME_FULL}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -322,13 +343,13 @@
 							# START user_list #
 							<tr>
 								<td class="td25P">
-									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF # title="{user_list.LOGIN}">{user_list.LOGIN}</a>
+									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF # title="{user_list.LOGIN}">{user_list.LOGIN}</a>
 								</td>
 								<td class="td25P">
-									{user_list.INFO}
+									{user_list.INFO_FULL}
 								</td>
 								<td class="td25P">
-									{user_list.U_ACTION_USER}
+									<a href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
 								</td>
 								<td class="td25P">
 									<a href="{user_list.U_PM}" class="basic-button smaller" title="MP">MP</a>
@@ -381,7 +402,7 @@
 									{L_LOGIN}
 								</td>
 								<td>
-									{LOGIN}
+									<a href="{USER_ID}" class="{USER_CSSCLASS}"# IF C_USER_GROUP_COLOR # style="color: {USER_GROUP_COLOR};"# ENDIF #>{LOGIN_USER}</a>
 								</td>
 							</tr>
 							<tr>

@@ -74,37 +74,37 @@ if (!$is_guest) {
 if ($config->is_connexion_form_displayed()) {
 	$display_connexion = array(
 		'C_USER_NOTCONNECTED' => !$is_connected,
-		'C_FORUM_CONNEXION' => true,
-		'L_CONNECT' => LangLoader::get_message('connection', 'user-common'),
-		'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
-		'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
-		'L_REGISTER' => LangLoader::get_message('register', 'user-common')
+		'C_FORUM_CONNEXION'   => true,
+		'L_CONNECT'           => LangLoader::get_message('connection', 'user-common'),
+		'L_DISCONNECT'        => LangLoader::get_message('disconnect', 'user-common'),
+		'L_AUTOCONNECT'       => LangLoader::get_message('autoconnect', 'user-common'),
+		'L_REGISTER'          => LangLoader::get_message('register', 'user-common')
 	);
 	$tpl_top->put_all($display_connexion);
 	$tpl_bottom->put_all($display_connexion);
 }
 
 $vars_tpl = array(
-	'C_USER_CONNECTED' => $is_connected,
+	'C_USER_CONNECTED'         => $is_connected,
 	'C_DISPLAY_UNREAD_DETAILS' => !$is_guest,
-	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1),
-	'FORUM_NAME' => $config->get_forum_name(),
-	'U_TOPIC_TRACK' => Url::to_rel('/forum/track.php'),
-	'U_LAST_MSG_READ' => Url::to_rel('/forum/lastread.php'),
-	'U_MSG_NOT_READ' => Url::to_rel('/forum/unread.php'),
-	'U_MSG_SET_VIEW' => Url::to_rel('/forum/action' . url('.php?read=1', '')),
-	'L_SHOW_TOPIC_TRACK' => $LANG['show_topic_track'],
-	'L_SHOW_LAST_READ' => $LANG['show_last_read'],
-	'L_SHOW_NOT_READS' => $LANG['show_not_reads'],
-	'L_MARK_AS_READ' => $LANG['mark_as_read'],
-	'C_IS_GUEST' => !$is_guest,
-	'NBR_MSG_NOT_READ' => $nbr_msg_not_read,
-	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
-	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-	'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
-	'L_SHOW_MY_MSG' => $LANG['show_my_msg'],
-	'U_SHOW_MY_MSG' => Url::to_rel('/forum/membermsg.php?id=' . AppContext::get_current_user()->get_id())
+	'C_MODERATION_PANEL'       => AppContext::get_current_user()->check_level(1),
+	'FORUM_NAME'               => $config->get_forum_name(),
+	'U_TOPIC_TRACK'            => Url::to_rel('/forum/track.php'),
+	'U_LAST_MSG_READ'          => Url::to_rel('/forum/lastread.php'),
+	'U_MSG_NOT_READ'           => Url::to_rel('/forum/unread.php'),
+	'U_MSG_SET_VIEW'           => Url::to_rel('/forum/action' . url('.php?read=1', '')),
+	'L_SHOW_TOPIC_TRACK'       => $LANG['show_topic_track'],
+	'L_SHOW_LAST_READ'         => $LANG['show_last_read'],
+	'L_SHOW_NOT_READS'         => $LANG['show_not_reads'],
+	'L_MARK_AS_READ'           => $LANG['mark_as_read'],
+	'C_IS_GUEST'               => !$is_guest,
+	'NBR_MSG_NOT_READ'         => $nbr_msg_not_read,
+	'L_FORUM_INDEX'            => $LANG['forum_index'],
+	'L_MODERATION_PANEL'       => $LANG['moderation_panel'],
+	'L_CONFIRM_READ_TOPICS'    => $LANG['confirm_mark_as_read'],
+	'L_AUTH_ERROR'             => LangLoader::get_message('error.auth', 'status-messages-common'),
+	'L_SHOW_MY_MSG'            => $LANG['show_my_msg'],
+	'U_SHOW_MY_MSG'            => Url::to_rel('/forum/membermsg.php?id=' . AppContext::get_current_user()->get_id())
 );
 
 $tpl_top->put_all($vars_tpl);

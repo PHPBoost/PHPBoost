@@ -185,11 +185,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
-					'CHECKED_NORMAL' => 'checked="ckecked"',
-					'L_TYPE' => '* ' . $LANG['type'],
-					'L_DEFAULT' => $LANG['default'],
-					'L_POST_IT' => $LANG['forum_postit'],
-					'L_ANOUNCE' => $LANG['forum_announce']
+					'CHECKED_NORMAL'    => 'checked="ckecked"',
+					'L_TYPE'            => '* ' . $LANG['type'],
+					'L_DEFAULT'         => $LANG['default'],
+					'L_POST_IT'         => $LANG['forum_postit'],
+					'L_ANOUNCE'         => $LANG['forum_announce']
 				));
 			}
 
@@ -198,44 +198,46 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			for ($i = 0; $i < 5; $i++)
 			{
 				$tpl->assign_block_vars('answers_poll', array(
-					'ID' => $i,
+					'ID'     => $i,
 					'ANSWER' => ''
 				));
 				$nbr_poll_field++;
 			}
 
 			$vars_tpl = array(
-				'FORUM_NAME' => $config->get_forum_name(),
-				'TITLE' => '',
-				'DESC' => '',
-				'SELECTED_SIMPLE' => 'checked="ckecked"',
-				'IDTOPIC' => 0,
-				'KERNEL_EDITOR' => $editor->display(),
-				'NO_DISPLAY_POLL' => 'true',
-				'NBR_POLL_FIELD' => $nbr_poll_field,
-				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => $forum_cats,
-				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '" class="basic-button">' . $LANG['post_new_subject'] . '</a>',
-				'L_ACTION' => $LANG['forum_new_subject'],
-				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-				'L_REQUIRE_TEXT' => $LANG['require_text'],
-				'L_REQUIRE_TITLE' => $LANG['require_title'],
+				'FORUM_NAME'           => $config->get_forum_name(),
+				'TITLE'                => '',
+				'DESC'                 => '',
+				'SELECTED_SIMPLE'      => 'checked="ckecked"',
+				'IDTOPIC'              => 0,
+				'KERNEL_EDITOR'        => $editor->display(),
+				'NO_DISPLAY_POLL'      => 'true',
+				'NBR_POLL_FIELD'       => $nbr_poll_field,
+				'C_ADD_POLL_FIELD'     => true,
+				'U_ACTION'             => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_FORUM_CAT'          => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+				'FORUM_CAT'            => $category->get_name(),
+				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
+				'L_ACTION'             => $LANG['forum_new_subject'],
+				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'L_REQUIRE_TEXT'       => $LANG['require_text'],
+				'L_REQUIRE_TITLE'      => $LANG['require_title'],
 				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-				'L_FORUM_INDEX' => $LANG['forum_index'],
-				'L_TITLE' => $LANG['title'],
-				'L_DESC' => $LANG['description'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_SUBMIT' => $LANG['submit'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset'],
-				'L_POLL' => $LANG['poll'],
-				'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-				'L_QUESTION' => $LANG['question'],
-				'L_POLL_TYPE' => $LANG['poll_type'],
-				'L_ANSWERS' => $LANG['answers'],
-				'L_SINGLE' => $LANG['simple_answer'],
-				'L_MULTIPLE' => $LANG['multiple_answer']
+				'L_FORUM_INDEX'        => $LANG['forum_index'],
+				'L_TITLE'              => $LANG['title'],
+				'L_DESC'               => $LANG['description'],
+				'L_MESSAGE'            => $LANG['message'],
+				'L_SUBMIT'             => $LANG['submit'],
+				'L_PREVIEW'            => $LANG['preview'],
+				'L_RESET'              => $LANG['reset'],
+				'L_POLL'               => $LANG['poll'],
+				'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
+				'L_QUESTION'           => $LANG['question'],
+				'L_POLL_TYPE'          => $LANG['poll_type'],
+				'L_ANSWERS'            => $LANG['answers'],
+				'L_SINGLE'             => $LANG['simple_answer'],
+				'L_MULTIPLE'           => $LANG['multiple_answer']
 			);
 
 			$tpl->put_all($vars_tpl);
@@ -461,13 +463,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				{
 					$tpl->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
-						'CHECKED_NORMAL' => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
-						'CHECKED_POSTIT' => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
-						'CHECKED_ANNONCE' => (($topic['type'] == '2') ? 'checked="ckecked"' : ''),
-						'L_TYPE' => '* ' . $LANG['type'],
-						'L_DEFAULT' => $LANG['default'],
-						'L_POST_IT' => $LANG['forum_postit'],
-						'L_ANOUNCE' => $LANG['forum_announce']
+						'CHECKED_NORMAL'    => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
+						'CHECKED_POSTIT'    => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
+						'CHECKED_ANNONCE'   => (($topic['type'] == '2') ? 'checked="ckecked"' : ''),
+						'L_TYPE'            => '* ' . $LANG['type'],
+						'L_DEFAULT'         => $LANG['default'],
+						'L_POST_IT'         => $LANG['forum_postit'],
+						'L_ANOUNCE'         => $LANG['forum_announce']
 					));
 				}
 
@@ -488,18 +490,20 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$tpl_bottom->put_all(array(
-						'C_DISPLAY_MSG' => true,
-						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
+						'C_DISPLAY_MSG'                 => true,
+						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed()
+						'ICON_DISPLAY_MSG'              => $img_display,
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved()
+						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved()
 					));
 					$tpl->put_all(array(
-						'C_DISPLAY_MSG' => true,
-						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
+						'C_DISPLAY_MSG'                 => true,
+						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed()
+						'ICON_DISPLAY_MSG'              => $img_display,
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
-						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved()
+						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG_BIS'     => $config->get_message_when_topic_is_solved()
 					));
 				}
 
@@ -511,10 +515,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					{
 						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
 						$tpl->assign_block_vars('answers_poll', array(
-							'ID' => $nbr_poll_field,
-							'ANSWER' => stripslashes($answer),
+							'ID'        => $nbr_poll_field,
+							'ANSWER'    => stripslashes($answer),
 							'NBR_VOTES' => $nbr_votes,
-							'L_VOTES' => ($nbr_votes > 1) ? $LANG['votes'] : $LANG['vote']
+							'L_VOTES'   => ($nbr_votes > 1) ? $LANG['votes'] : $LANG['vote']
 						));
 						$nbr_poll_field++;
 					}
@@ -522,49 +526,51 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{
 					$tpl->assign_block_vars('answers_poll', array(
-						'ID' => $i,
+						'ID'     => $i,
 						'ANSWER' => ''
 					));
 					$nbr_poll_field++;
 				}
 				
 				$vars_tpl = array(
-					'FORUM_NAME' => $config->get_forum_name(),
-					'TITLE' => stripslashes($topic['title']),
-					'DESC' => stripslashes($topic['subtitle']),
-					'CONTENTS' => FormatingHelper::unparse($contents),
-					'POLL_QUESTION' => !empty($poll['question']) ? stripslashes($poll['question']) : '',
-					'SELECTED_SIMPLE' => 'checked="ckecked"',
-					'MODULE_DATA_PATH' => $module_data_path,
-					'IDTOPIC' => $idt_get,
-					'KERNEL_EDITOR' => $editor->display(),
-					'NBR_POLL_FIELD' => $nbr_poll_field,
-					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
-					'C_DELETE_POLL' => $is_modo, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19),
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
-					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($topic['title']) . '</a>',
-					'L_ACTION' => $LANG['forum_edit_subject'],
-					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-					'L_REQUIRE_TEXT' => $LANG['require_text'],
-					'L_REQUIRE_TITLE' => $LANG['require_title'],
+					'FORUM_NAME'           => $config->get_forum_name(),
+					'TITLE'                => stripslashes($topic['title']),
+					'DESC'                 => stripslashes($topic['subtitle']),
+					'CONTENTS'             => FormatingHelper::unparse($contents),
+					'POLL_QUESTION'        => !empty($poll['question']) ? stripslashes($poll['question']) : '',
+					'SELECTED_SIMPLE'      => 'checked="ckecked"',
+					'MODULE_DATA_PATH'     => $module_data_path,
+					'IDTOPIC'              => $idt_get,
+					'KERNEL_EDITOR'        => $editor->display(),
+					'NBR_POLL_FIELD'       => $nbr_poll_field,
+					'NO_DISPLAY_POLL'      => !empty($poll['question']) ? 'false' : 'true',
+					'C_DELETE_POLL'        => $is_modo, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD'     => ($nbr_poll_field <= 19),
+					'U_ACTION'             => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
+					'U_FORUM_CAT'          => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+					'FORUM_CAT'            => $category->get_name(),
+					'U_TITLE_T'            => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
+					'TITLE_T'              => stripslashes($topic['title']),
+					'L_ACTION'             => $LANG['forum_edit_subject'],
+					'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+					'L_REQUIRE_TEXT'       => $LANG['require_text'],
+					'L_REQUIRE_TITLE'      => $LANG['require_title'],
 					'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-					'L_FORUM_INDEX' => $LANG['forum_index'],
-					'L_TITLE' => $LANG['title'],
-					'L_DESC' => $LANG['description'],
-					'L_MESSAGE' => $LANG['message'],
-					'L_SUBMIT' => $LANG['update'],
-					'L_PREVIEW' => $LANG['preview'],
-					'L_RESET' => $LANG['reset'],
-					'L_POLL' => $LANG['poll'],
-					'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-					'L_QUESTION' => $LANG['question'],
-					'L_POLL_TYPE' => $LANG['poll_type'],
-					'L_ANSWERS' => $LANG['answers'],
-					'L_SINGLE' => $LANG['simple_answer'],
-					'L_MULTIPLE' => $LANG['multiple_answer'],
-					'L_DELETE_POLL' => $LANG['delete_poll']
+					'L_FORUM_INDEX'        => $LANG['forum_index'],
+					'L_TITLE'              => $LANG['title'],
+					'L_DESC'               => $LANG['description'],
+					'L_MESSAGE'            => $LANG['message'],
+					'L_SUBMIT'             => $LANG['update'],
+					'L_PREVIEW'            => $LANG['preview'],
+					'L_RESET'              => $LANG['reset'],
+					'L_POLL'               => $LANG['poll'],
+					'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
+					'L_QUESTION'           => $LANG['question'],
+					'L_POLL_TYPE'          => $LANG['poll_type'],
+					'L_ANSWERS'            => $LANG['answers'],
+					'L_SINGLE'             => $LANG['simple_answer'],
+					'L_MULTIPLE'           => $LANG['multiple_answer'],
+					'L_DELETE_POLL'        => $LANG['delete_poll']
 				);
 
 				//Type de réponses du sondage.
@@ -642,22 +648,24 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 				$vars_tpl = array(
-					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
-					'FORUM_NAME' => $config->get_forum_name(),
-					'DESC' => stripslashes($topic['subtitle']),
-					'CONTENTS' => FormatingHelper::unparse($contents),
-					'KERNEL_EDITOR' => $editor->display(),
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
-					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($topic['title']) . '</a>',
-					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+					'P_UPDATE'       => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
+					'FORUM_NAME'     => $config->get_forum_name(),
+					'DESC'           => stripslashes($topic['subtitle']),
+					'CONTENTS'       => FormatingHelper::unparse($contents),
+					'KERNEL_EDITOR'  => $editor->display(),
+					'U_ACTION'       => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
+					'U_FORUM_CAT'    => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+					'FORUM_CAT'      => $category->get_name(),
+					'U_TITLE_T'      => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
+					'TITLE_T'        => stripslashes($topic['title']),
+					'L_REQUIRE'      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
-					'L_FORUM_INDEX' => $LANG['forum_index'],
+					'L_FORUM_INDEX'  => $LANG['forum_index'],
 					'L_EDIT_MESSAGE' => $LANG['edit_message'],
-					'L_MESSAGE' => $LANG['message'],
-					'L_SUBMIT' => $LANG['update'],
-					'L_PREVIEW' => $LANG['preview'],
-					'L_RESET' => $LANG['reset'],
+					'L_MESSAGE'      => $LANG['message'],
+					'L_SUBMIT'       => $LANG['update'],
+					'L_PREVIEW'      => $LANG['preview'],
+					'L_RESET'        => $LANG['reset'],
 				);
 
 				$tpl->put_all($vars_tpl);
@@ -710,22 +718,24 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 
 			$vars_tpl = array(
-				'P_UPDATE' => '',
-				'FORUM_NAME' => $config->get_forum_name(),
-				'DESC' => stripslashes($topic['subtitle']),
-				'KERNEL_EDITOR' => $editor->display(),
-				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
-				'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . stripslashes($topic['title']) . '</a>',
-				'L_ACTION' => $LANG['respond'],
-				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'P_UPDATE'       => '',
+				'FORUM_NAME'     => $config->get_forum_name(),
+				'DESC'           => stripslashes($topic['subtitle']),
+				'KERNEL_EDITOR'  => $editor->display(),
+				'U_ACTION'       => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_FORUM_CAT'    => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+				'FORUM_CAT'      => $category->get_name(),
+				'U_TITLE_T'      => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
+				'TITLE_T'        => stripslashes($topic['title']),
+				'L_ACTION'       => $LANG['respond'],
+				'L_REQUIRE'      => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
-				'L_FORUM_INDEX' => $LANG['forum_index'],
+				'L_FORUM_INDEX'  => $LANG['forum_index'],
 				'L_EDIT_MESSAGE' => $LANG['respond'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_SUBMIT' => $LANG['submit'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset']
+				'L_MESSAGE'      => $LANG['message'],
+				'L_SUBMIT'       => $LANG['submit'],
+				'L_PREVIEW'      => $LANG['preview'],
+				'L_RESET'        => $LANG['reset']
 			);
 		}
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
@@ -737,11 +747,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
-					'CHECKED_NORMAL' => 'checked="ckecked"',
-					'L_TYPE' => '* ' . $LANG['type'],
-					'L_DEFAULT' => $LANG['default'],
-					'L_POST_IT' => $LANG['forum_postit'],
-					'L_ANOUNCE' => $LANG['forum_announce']
+					'CHECKED_NORMAL'    => 'checked="ckecked"',
+					'L_TYPE'            => '* ' . $LANG['type'],
+					'L_DEFAULT'         => $LANG['default'],
+					'L_POST_IT'         => $LANG['forum_postit'],
+					'L_ANOUNCE'         => $LANG['forum_announce']
 				));
 			}
 
@@ -775,43 +785,45 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			for ($i = 0; $i < 5; $i++)
 			{
 				$tpl->assign_block_vars('answers_poll', array(
-					'ID' => $i,
+					'ID'     => $i,
 					'ANSWER' => ''
 				));
 				$nbr_poll_field++;
 			}
 
 			$vars_tpl = array(
-				'FORUM_NAME' => $config->get_forum_name(),
-				'TITLE' => '',
-				'SELECTED_SIMPLE' => 'checked="checked"',
-				'IDTOPIC' => 0,
-				'KERNEL_EDITOR' => $editor->display(),
-				'NO_DISPLAY_POLL' => 'true',
-				'NBR_POLL_FIELD' => $nbr_poll_field,
-				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $category->get_name() . '</a>',
-				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '" class="basic-button">' . $LANG['post_new_subject'] . '</a>',
-				'L_ACTION' => $LANG['forum_new_subject'],
-				'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-				'L_REQUIRE_TEXT' => $LANG['require_text'],
-				'L_REQUIRE_TITLE' => $LANG['require_title'],
+				'FORUM_NAME'           => $config->get_forum_name(),
+				'TITLE'                => '',
+				'SELECTED_SIMPLE'      => 'checked="checked"',
+				'IDTOPIC'              => 0,
+				'KERNEL_EDITOR'        => $editor->display(),
+				'NO_DISPLAY_POLL'      => 'true',
+				'NBR_POLL_FIELD'       => $nbr_poll_field,
+				'C_ADD_POLL_FIELD'     => true,
+				'U_ACTION'             => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_FORUM_CAT'          => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+				'FORUM_CAT'            => $category->get_name(),
+				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+				'L_NEW_SUBJECT'        => $LANG['post_new_subject'],
+				'L_ACTION'             => $LANG['forum_new_subject'],
+				'L_REQUIRE'            => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+				'L_REQUIRE_TEXT'       => $LANG['require_text'],
+				'L_REQUIRE_TITLE'      => $LANG['require_title'],
 				'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
-				'L_FORUM_INDEX' => $LANG['forum_index'],
-				'L_TITLE' => $LANG['title'],
-				'L_DESC' => $LANG['description'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_SUBMIT' => $LANG['submit'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset'],
-				'L_POLL' => $LANG['poll'],
-				'L_OPEN_MENU_POLL' => $LANG['open_menu_poll'],
-				'L_QUESTION' => $LANG['question'],
-				'L_POLL_TYPE' => $LANG['poll_type'],
-				'L_ANSWERS' => $LANG['answers'],
-				'L_SINGLE' => $LANG['simple_answer'],
-				'L_MULTIPLE' => $LANG['multiple_answer']
+				'L_FORUM_INDEX'        => $LANG['forum_index'],
+				'L_TITLE'              => $LANG['title'],
+				'L_DESC'               => $LANG['description'],
+				'L_MESSAGE'            => $LANG['message'],
+				'L_SUBMIT'             => $LANG['submit'],
+				'L_PREVIEW'            => $LANG['preview'],
+				'L_RESET'              => $LANG['reset'],
+				'L_POLL'               => $LANG['poll'],
+				'L_OPEN_MENU_POLL'     => $LANG['open_menu_poll'],
+				'L_QUESTION'           => $LANG['question'],
+				'L_POLL_TYPE'          => $LANG['poll_type'],
+				'L_ANSWERS'            => $LANG['answers'],
+				'L_SINGLE'             => $LANG['simple_answer'],
+				'L_MULTIPLE'           => $LANG['multiple_answer']
 			);
 		}
 		else

@@ -71,7 +71,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-post" class="forum-contents">
 			<header>
 				<h2>
-					{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
+					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 
@@ -178,7 +178,7 @@
 							# IF C_DISPLAY_MSG #
 								<p>
 									<span id="forum_change_statut">
-										<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+										<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 									</span>
 								</p>
 							# ENDIF #
@@ -187,7 +187,7 @@
 				</form>
 			</div>
 			<footer>
-				{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span>
+				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 			</footer>
 		</article>
 

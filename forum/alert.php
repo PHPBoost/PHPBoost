@@ -75,28 +75,28 @@ if (!empty($alert) && empty($alert_post))
 		$editor->set_identifier('contents');
 	
 		$tpl->put_all(array(
-			'KERNEL_EDITOR' => $editor->display(),
-			'L_ALERT' => $LANG['alert_topic'],
-			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
-			'L_ALERT_TITLE' => $LANG['alert_title'],
+			'KERNEL_EDITOR'    => $editor->display(),
+			'L_ALERT'          => $LANG['alert_topic'],
+			'L_ALERT_EXPLAIN'  => $LANG['alert_modo_explain'],
+			'L_ALERT_TITLE'    => $LANG['alert_title'],
 			'L_ALERT_CONTENTS' => $LANG['alert_contents'],
-			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-			'L_REQUIRE_TEXT' => $LANG['require_text'],
-			'L_REQUIRE_TITLE' => $LANG['require_title']
+			'L_REQUIRE'        => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+			'L_REQUIRE_TEXT'   => $LANG['require_text'],
+			'L_REQUIRE_TITLE'  => $LANG['require_title']
 		));
 
 		$tpl->assign_block_vars('alert_form', array(
-			'TITLE' => $topic_name,
-			'U_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
+			'TITLE'    => $topic_name,
+			'U_TOPIC'  => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
 			'ID_ALERT' => $alert,
 		));
 	}
 	else //Une alerte a déjà été postée
 	{
 		$tpl->put_all(array(
-			'L_ALERT' => $LANG['alert_topic'],
+			'L_ALERT'      => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
-			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php')
+			'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php')
 		));
 
 		$tpl->assign_block_vars('alert_confirm', array(
@@ -109,9 +109,9 @@ if (!empty($alert) && empty($alert_post))
 if (!empty($alert_post))
 {
 	$tpl->put_all(array(
-		'L_ALERT' => $LANG['alert_topic'],
+		'L_ALERT'      => $LANG['alert_topic'],
 		'L_BACK_TOPIC' => $LANG['alert_back'],
-		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
+		'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
@@ -143,28 +143,31 @@ if (!empty($alert_post))
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '/forum/%'");
 
 $vars_tpl = array(
-	'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
-	'DESC' => stripslashes($topic['subtitle']),
+	'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['alert_topic'],
+	'DESC'             => stripslashes($topic['subtitle']),
 	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TOTAL_ONLINE' => $total_online,
-	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
-	'ADMIN' => $total_admin,
-	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
-	'GUEST' => $total_visit,
-	'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php') . '">' . $category->get_name() . '</a>',
-	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . stripslashes($topic['title']) . '</a>',
-	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_SUBMIT' => $LANG['submit'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_RESET' => $LANG['reset'],
-	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-	'L_AND' => $LANG['and'],
-	'L_ONLINE' => TextHelper::strtolower($LANG['online'])
+	'TOTAL_ONLINE'     => $total_online,
+	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+	'USERS_ONLINE'     => $users_list,
+	'ADMIN'            => $total_admin,
+	'MODO'             => $total_modo,
+	'MEMBER'           => $total_member,
+	'GUEST'            => $total_visit,
+	'U_FORUM_CAT'      => 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php'),
+	'FORUM_CAT'        => $category->get_name(),
+	'U_TITLE_T'        => 'topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php'),
+	'TITLE_T'          => stripslashes($topic['title']),
+	'L_FORUM_INDEX'    => $LANG['forum_index'],
+	'L_SUBMIT'         => $LANG['submit'],
+	'L_PREVIEW'        => $LANG['preview'],
+	'L_RESET'          => $LANG['reset'],
+	'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+	'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+	'L_MODO'           => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+	'L_MEMBER'         => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'          => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+	'L_AND'            => $LANG['and'],
+	'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
 );
 
 $tpl->put_all($vars_tpl);

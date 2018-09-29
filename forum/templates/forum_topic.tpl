@@ -79,7 +79,7 @@
 					if( document.getElementById('forum_track_pm_img') )
 						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-pm-not-track"></i>' : '<i class="fa fa-pm-track"></i>';
 					if( document.getElementById('forum_track_pm_msg') )
-						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE_PM}" : "{L_SUSCRIBE_PM}";
+						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE_PM}" : "{L_SUBSCRIBE_PM}";
 					is_track_pm = xhr_object.responseText == '1' ? true : false;
 				}
 			}
@@ -100,7 +100,7 @@
 					if( document.getElementById('forum_track_mail_img') )
 						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-not-track"></i>' : '<i class="fa fa-mail-track"></i>';
 					if( document.getElementById('forum_track_mail_msg') )
-						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
+						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE}" : "{L_SUBSCRIBE}";
 					is_track_mail = xhr_object.responseText == '1' ? true : false;
 				}
 			}
@@ -220,12 +220,12 @@
 									<em>{L_GUEST}</em>
 								# ENDIF #
 								</div>
-								<p class="center">{msg.USER_RANK}</p>
-								<p class="center">{msg.USER_IMG_ASSOC}</p>
+								# IF msg.C_USER_RANK #<p class="center">{msg.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
+								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}"/></p> # ENDIF #
 							</div>
 
 							<div class="msg-avatar-mbr center">
-								{msg.USER_AVATAR}
+								<img src="# IF msg.C_USER_AVATAR #{msg.U_USER_AVATAR}# ELSE #{msg.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 							</div>
 
 							<div class="msg-info-mbr">
@@ -240,14 +240,18 @@
 									# END msg.usergroups #
 								</p>
 								# ENDIF #
-								<p class="left">{msg.USER_DATE}</p>
-								<p class="left">{msg.USER_MSG}</p>
+								<p class="left"># IF msg.C_IS_USER #${LangLoader::get_message('registered_on', 'main')} : {msg.USER_REGISTERED_DATE_FULL}# ENDIF #</p>
+								# IF msg.C_USER_MSG #
+								<p class="left"><a href="{msg.U_USER_MSG}" class="small">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}</p>
+								# ELSE #
+								<p class="left"># IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}" class="small">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
+								# ENDIF #
 							</div>
 						</div>
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.FORUM_MSG_DATE}"><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
 								</span>
 								<span class="float-right">
 									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a># ENDIF #
@@ -288,16 +292,16 @@
 									# ELSE #
 								<em>{L_GUEST}</em>
 									# ENDIF #
-								{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
+								{L_ON} {msg.TOPIC_EDIT_DATE_FULL}</span>
 								# ENDIF #
 							</div>
 							<div class="msg-sign{msg.CLASS_COLOR}">
 								<div class="msg-sign-mbr">
-									{msg.USER_SIGN}
+									# IF msg.C_USER_SIGN #<hr /><br />{msg.USER_SIGN}# ENDIF #
 								</div>
 								<div class="msg-sign-info">
 									<span class="float-left">
-										{msg.USER_PM} {msg.USER_MAIL}
+										# IF msg.C_USER_PM #<a href="{msg.U_USER_PM}" class="basic-button smaller user-pm">${LangLoader::get_message('pm', 'main')}</a># ENDIF # # IF msg.C_USER_MAIL #<a href="{msg.U_USER_MAIL}" class="basic-button smaller user-mail">${LangLoader::get_message('mail', 'main')}</a># ENDIF #
 										# START msg.ext_fields #
 											{msg.ext_fields.BUTTON}
 										# END msg.ext_fields #

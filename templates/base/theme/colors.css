@@ -445,6 +445,9 @@ a:hover,
 .color-available 	{ color: #008000; }
 .color-unknown 		{ color: #004b80; }
 
+.bkgd-color-solved   { background-color: #82C2A7; }
+.bkgd-color-unsolved { background-color: #E59F09; }
+
 .bkgd-color-visible 		{ background-color: #CCFFCC; }
 .bkgd-color-unvisible 		{ background-color: #FFEE99; }
 .bkgd-color-unaprobed 		{ background-color: #FFCCCC; }

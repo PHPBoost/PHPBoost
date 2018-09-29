@@ -76,11 +76,10 @@
 	</script>
 
 	<div class="forum-online">
-		# IF USERS_ONLINE #
 		<span class="float-left">
 			{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
 			<span class="spacer"></span>
-			{L_USER} {L_ONLINE} : {USERS_ONLINE}
+			{L_USER} {L_ONLINE} : # IF C_NO_USER_ONLINE #<em>${LangLoader::get_message('no_member_online', 'main')}</em># ELSE #{USERS_ONLINE}# ENDIF #
 		</span>
 
 		<div class="forum-online-select-cat">
@@ -114,7 +113,6 @@
 			# ENDIF #
 		</div>
 		<div class="spacer"></div>
-		# ENDIF #
 
 		# IF C_TOTAL_POST #
 		<div>
@@ -135,7 +133,7 @@
 					# IF C_DISPLAY_MSG #
 					<li>
 						<span class="cssmenu-title" id="forum_change_statut">
-							<a href="" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -146,17 +144,17 @@
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track">
-							<a href="" onclick="XMLHttpRequest_track(); return false;" id="forum_track_img">{ICON_TRACK}</a> <a href="" onclick="XMLHttpRequest_track(); return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_track(); return false;" id="forum_track_img"><i class="fa fa-{ICON_TRACK}"></i></a> <a href="" onclick="XMLHttpRequest_track(); return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_pm">
-							<a href="" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img"><i class="fa fa-{ICON_SUBCRIBE_PM}"></i></a> <a href="" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUBSCRIBE_PM_DEFAULT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_mail">
-							<a href="" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img"><i class="fa fa-{ICON_SUBCRIBE}"></i></a> <a href="" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUBSCRIBE_DEFAULT}</span></a>
 						</span>
 					</li>
 				</ul>

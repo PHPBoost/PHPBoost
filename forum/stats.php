@@ -61,25 +61,25 @@ try {
 $nbr_msg_today = PersistenceContext::get_querier()->count(ForumSetup::$forum_message_table, 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
-	'FORUM_NAME' => $config->get_forum_name(),
-	'NBR_TOPICS' => $total_topics,
-	'NBR_MSG' => $total_messages,
-	'NBR_TOPICS_DAY' => $nbr_topics_day,
-	'NBR_MSG_DAY' => $nbr_msg_day,
-	'NBR_TOPICS_TODAY' => $nbr_topics_today,
-	'NBR_MSG_TODAY' => $nbr_msg_today,
-	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_FORUM' => $LANG['forum'],
-	'L_STATS' => $LANG['stats'],
-	'L_NBR_TOPICS' => ($total_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
-	'L_NBR_MSG' => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
-	'L_NBR_TOPICS_DAY' => $LANG['nbr_topics_day'],
-	'L_NBR_MSG_DAY' => $LANG['nbr_msg_day'],
+	'FORUM_NAME'         => $config->get_forum_name(),
+	'NBR_TOPICS'         => $total_topics,
+	'NBR_MSG'            => $total_messages,
+	'NBR_TOPICS_DAY'     => $nbr_topics_day,
+	'NBR_MSG_DAY'        => $nbr_msg_day,
+	'NBR_TOPICS_TODAY'   => $nbr_topics_today,
+	'NBR_MSG_TODAY'      => $nbr_msg_today,
+	'L_FORUM_INDEX'      => $LANG['forum_index'],
+	'L_FORUM'            => $LANG['forum'],
+	'L_STATS'            => $LANG['stats'],
+	'L_NBR_TOPICS'       => ($total_topics > 1) ? $LANG['topic_s'] : $LANG['topic'],
+	'L_NBR_MSG'          => ($total_messages > 1) ? $LANG['message_s'] : $LANG['message'],
+	'L_NBR_TOPICS_DAY'   => $LANG['nbr_topics_day'],
+	'L_NBR_MSG_DAY'      => $LANG['nbr_msg_day'],
 	'L_NBR_TOPICS_TODAY' => $LANG['nbr_topics_today'],
-	'L_NBR_MSG_TODAY' => $LANG['nbr_msg_today'],
-	'L_LAST_MSG' => $LANG['forum_last_msg'],
-	'L_POPULAR' => $LANG['forum_popular'],
-	'L_ANSWERS' => $LANG['forum_nbr_answers'],
+	'L_NBR_MSG_TODAY'    => $LANG['nbr_msg_today'],
+	'L_LAST_MSG'         => $LANG['forum_last_msg'],
+	'L_POPULAR'          => $LANG['forum_popular'],
+	'L_ANSWERS'          => $LANG['forum_nbr_answers'],
 );
 
 //Vérification des autorisations.
@@ -144,19 +144,20 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 
 $vars_tpl = array_merge($vars_tpl, array(
 	'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-	'TOTAL_ONLINE' => $total_online,
-	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
-	'ADMIN' => $total_admin,
-	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
-	'GUEST' => $total_visit,
-	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
-	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
-	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
-	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-	'L_AND' => $LANG['and'],
-	'L_ONLINE' => TextHelper::strtolower($LANG['online'])
+	'TOTAL_ONLINE'     => $total_online,
+	'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
+	'USERS_ONLINE'     => $users_list,
+	'ADMIN'            => $total_admin,
+	'MODO'             => $total_modo,
+	'MEMBER'           => $total_member,
+	'GUEST'            => $total_visit,
+	'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
+	'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+	'L_MODO'           => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+	'L_MEMBER'         => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_GUEST'          => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+	'L_AND'            => $LANG['and'],
+	'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
 ));
 
 $tpl->put_all($vars_tpl);

@@ -3,10 +3,10 @@
 	
 		<div class="message-user-infos">
 			<div class="message-pseudo">
-				{USER_ONLINE} <a href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
+				<i class="fa fa-# IF C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> # IF C_USER_PSEUDO #<a href="{U_USER_PROFILE}">{USER_PSEUDO}</a># ELSE #<span>${LangLoader::get_message('guest', 'main')}</span># ENDIF #
 			</div>
 			<div class="message-level"></div>
-			{USER_AVATAR}
+			<img src="# IF C_USER_AVATAR #{U_USER_AVATAR}# ELSE #{U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar"/>
 		</div>
 
 		<div class="message-date">

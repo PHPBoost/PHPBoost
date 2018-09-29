@@ -73,29 +73,29 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		
 		$date_lang = LangLoader::get('date-common');
 		$tpl->put_all(Array(
-			'L_DATE' => $date_lang['date'],
-			'L_DAY' => $date_lang['day'],
-			'L_DAYS' => $date_lang['days'],
-			'L_MONTH' => $date_lang['month'],
-			'L_MONTHS' => $date_lang['month'],
-			'L_YEAR' => $date_lang['year'],
-			'IS_SELECTED_30000' => $time == 30000 ? ' selected="selected"' : '',
-			'IS_SELECTED_1' => $time == 1 ? ' selected="selected"' : '',
-			'IS_SELECTED_7' => $time == 7 ? ' selected="selected"' : '',
-			'IS_SELECTED_15' => $time == 15 ? ' selected="selected"' : '',
-			'IS_SELECTED_30' => $time == 30 ? ' selected="selected"' : '',
-			'IS_SELECTED_180' => $time == 180 ? ' selected="selected"' : '',
-			'IS_SELECTED_360' => $time == 360 ? ' selected="selected"' : '',
-			'L_OPTIONS' => $LANG['options'],
-			'L_TITLE' => $LANG['title'],
-			'L_CONTENTS' => $LANG['content'],
-			'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
-			'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
-			'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,
-			'L_CATEGORY' => $LANG['category'],
-			'L_ALL_CATS' => $LANG['all'],
+			'L_DATE'               => $date_lang['date'],
+			'L_DAY'                => $date_lang['day'],
+			'L_DAYS'               => $date_lang['days'],
+			'L_MONTH'              => $date_lang['month'],
+			'L_MONTHS'             => $date_lang['month'],
+			'L_YEAR'               => $date_lang['year'],
+			'IS_SELECTED_30000'    => $time == 30000 ? ' selected="selected"' : '',
+			'IS_SELECTED_1'        => $time == 1 ? ' selected="selected"' : '',
+			'IS_SELECTED_7'        => $time == 7 ? ' selected="selected"' : '',
+			'IS_SELECTED_15'       => $time == 15 ? ' selected="selected"' : '',
+			'IS_SELECTED_30'       => $time == 30 ? ' selected="selected"' : '',
+			'IS_SELECTED_180'      => $time == 180 ? ' selected="selected"' : '',
+			'IS_SELECTED_360'      => $time == 360 ? ' selected="selected"' : '',
+			'L_OPTIONS'            => $LANG['options'],
+			'L_TITLE'              => $LANG['title'],
+			'L_CONTENTS'           => $LANG['content'],
+			'IS_TITLE_CHECKED'     => $where == 'title' ? ' checked="checked"' : '' ,
+			'IS_CONTENTS_CHECKED'  => $where == 'contents' ? ' checked="checked"' : '' ,
+			'IS_ALL_CHECKED'       => $where == 'all' ? ' checked="checked"' : '' ,
+			'L_CATEGORY'           => $LANG['category'],
+			'L_ALL_CATS'           => $LANG['all'],
 			'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
-			'CATS' => $cat_list,
+			'CATS'                 => $cat_list,
 		));
 		return $tpl->render();
 	}
@@ -233,22 +233,29 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$tpl = new FileTemplate('forum/forum_generic_results.tpl');
 
 		$tpl->put_all(Array(
-			'L_ON' => $LANG['on'],
+			'L_ON'    => $LANG['on'],
 			'L_TOPIC' => $LANG['topic']
 		));
-		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
-		$tpl->put_all(array(
-			'USER_ONLINE' => '<i class="fa ' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
-			'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
-			'USER_PSEUDO' => !empty($result_data['display_name']) ? $result_data['display_name'] : $LANG['guest'],
-			'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
-			'TITLE' => stripslashes($result_data['title']),
-			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
-			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? Url::to_rel($result_data['avatar']) : PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="' . LangLoader::get_message('avatar', 'user-common') . '" class="message-avatar"/>'
-		));
 
-			return $tpl->render();
+		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
+
+		$result_date = new Date($result_data['date'], Timezone::SERVER_TIMEZONE);
+
+		$tpl->put_all(array_merge(
+			Date::get_array_tpl_vars($result_date, 'DATE'), array(
+			'C_USER_ONLINE'    => !empty($result_data['connect']) && $result_data['user_id'] !== -1,
+			'U_USER_PROFILE'   => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
+			'C_USER_PSEUDO'    => !empty($result_data['display_name']),
+			'USER_PSEUDO'      => $result_data['display_name'],
+			'U_TOPIC'          => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
+			'TITLE'            => stripslashes($result_data['title']),
+			'CONTENTS'         => FormatingHelper::second_parse(stripslashes($result_data['contents'])),
+			'C_USER_AVATAR'    => UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']),
+			'U_USER_AVATAR'    => Url::to_rel($result_data['avatar']),
+			'U_DEFAULT_AVATAR' => PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()
+		)));
+
+		return $tpl->render();
 	}
 }
 ?>
