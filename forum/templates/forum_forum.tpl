@@ -84,7 +84,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> {U_FORUM_CAT}
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> <a href="{U_FORUM_CAT}">{FORUM_CAT}</a>
 					# IF C_POST_NEW_SUBJECT #
 						<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
@@ -113,7 +113,7 @@
 						<tr>
 							<th colspan="7">
 								<div class="float-left">
-									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> {U_FORUM_CAT}
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> <a href="{U_FORUM_CAT}">{FORUM_CAT}</a>
 									# IF C_POST_NEW_SUBJECT #
 										<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #
