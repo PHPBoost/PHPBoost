@@ -10,7 +10,12 @@ SocialNetworks.prototype = {
 	init_sortable : function() {
 		jQuery("ul#social-networks-list").sortable({
 			handle: '.sortable-selector',
-			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+			onDrop: function ($item, container, _super, event) { 
+				SocialNetworks.change_reposition_pictures();
+				$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+				$("body").removeClass(container.group.options.bodyClass);
+			}
 		});
 	},
 	serialize_sortable : function() {
@@ -69,9 +74,6 @@ SocialNetwork.prototype = {
 var SocialNetworks = new SocialNetworks('social-networks-list');
 jQuery(document).ready(function() {
 	SocialNetworks.init_sortable();
-	jQuery('li.sortable-element').on('mouseout',function(){
-		SocialNetworks.change_reposition_pictures();
-	});
 });
 -->
 </script>

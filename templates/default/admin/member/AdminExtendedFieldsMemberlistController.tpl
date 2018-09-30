@@ -8,7 +8,12 @@ ExtendedFields.prototype = {
 	init_sortable : function() {
 		jQuery("ul#lists").sortable({
 			handle: '.sortable-selector',
-			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+			onDrop: function ($item, container, _super, event) { 
+				ExtendedFields.change_reposition_pictures();
+				$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+				$("body").removeClass(container.group.options.bodyClass);
+			}
 		});
 	},
 	serialize_sortable : function() {
@@ -97,9 +102,6 @@ ExtendedField.prototype = {
 var ExtendedFields = new ExtendedFields('lists');
 jQuery(document).ready(function() {
 	ExtendedFields.init_sortable();
-	jQuery('li.sortable-element').on('mouseout',function(){
-		ExtendedFields.change_reposition_pictures();
-	});
 });
 -->
 </script>

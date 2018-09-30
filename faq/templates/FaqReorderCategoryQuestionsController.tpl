@@ -10,7 +10,12 @@
 		init_sortable : function() {
 			jQuery("ul#questions-list").sortable({
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+				onDrop: function ($item, container, _super, event) { 
+					FaqQuestions.change_reposition_pictures();
+					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+					$("body").removeClass(container.group.options.bodyClass);
+				}
 			});
 		},
 		serialize_sortable : function() {
@@ -85,9 +90,6 @@
 	var FaqQuestions = new FaqQuestions('questions-list');
 	jQuery(document).ready(function() {
 		FaqQuestions.init_sortable();
-		jQuery('li.sortable-element').on('mouseout',function(){
-			FaqQuestions.change_reposition_pictures();
-		});
 	});
 -->
 </script>

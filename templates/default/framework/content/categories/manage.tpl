@@ -3,12 +3,14 @@
 jQuery(document).ready(function() {
 	jQuery('ul#categories').sortable({
 		handle: '.sortable-selector',
-		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+		onDrop: function ($item, container, _super, event) { 
+			change_reposition_pictures();
+			$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+			$("body").removeClass(container.group.options.bodyClass);
+		}
 	});
 	change_reposition_pictures();
-	jQuery('li.sortable-element').on('mouseout',function(){
-		change_reposition_pictures();
-	});
 });
 
 function serialize_sortable()
