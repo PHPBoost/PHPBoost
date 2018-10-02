@@ -53,7 +53,7 @@ class FormFieldCaptcha extends AbstractFormField
 	public function retrieve_value()
 	{
 		$this->captcha->set_html_id($this->get_html_id());
-		if ($this->is_enabled() && $this->captcha->is_visible())
+		if ($this->is_enabled())
 		{
 			$this->set_value($this->captcha->is_valid());
 		}
@@ -69,6 +69,7 @@ class FormFieldCaptcha extends AbstractFormField
 	public function display()
 	{
 		$this->captcha->set_html_id($this->get_html_id());
+		$this->captcha->set_form_id($this->get_form_id());
 
 		$template = $this->get_template_to_use();
 

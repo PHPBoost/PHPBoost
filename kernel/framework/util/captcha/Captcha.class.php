@@ -34,10 +34,11 @@ abstract class Captcha implements ExtensionPoint
 	const EXTENSION_POINT = 'captcha';
 	
 	private $html_id = 'captcha';
+	private $form_id = '';
 	private $options;
 
 	abstract public function get_name();
-		
+	
 	abstract public function is_available();
 	
 	abstract public function is_valid();
@@ -56,6 +57,8 @@ abstract class Captcha implements ExtensionPoint
 	
 	public function set_html_id($html_id) {	$this->html_id = $html_id; }
 	public function get_html_id() { return $this->html_id; }
+	public function set_form_id($form_id) {	$this->form_id = $form_id; }
+	public function get_form_id() { return $this->form_id; }
 	public function set_options(CaptchaOptions $options) { $this->options = $options; }
 	public function get_options() { return $this->options; }
 }
