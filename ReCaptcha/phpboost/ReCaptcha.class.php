@@ -27,9 +27,6 @@
 
 class ReCaptcha extends Captcha
 {
-	const DEFAULT_SITE_KEY = '6LdrD9YSAAAAAAfoC2bRYQ-xT0PT7AAjWb6kc8cd';
-	const DEFAULT_SECRET_KEY = '6LdrD9YSAAAAAJloXTYNKbaMgBaLPvfMoWncKWkc';
-	
 	public static $_signupUrl = "https://www.google.com/recaptcha/admin";
 	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 	
@@ -37,13 +34,11 @@ class ReCaptcha extends Captcha
 	private $recaptcha_error;
 	private $lang;
 	private $config;
-	private $is_recaptcha_v2;
 	
 	public function __construct()
 	{
 		require_once(PATH_TO_ROOT . '/ReCaptcha/lib/recaptchalib.php');
 		$this->config = ReCaptchaConfig::load();
-		$this->is_recaptcha_v2 = $this->config->get_site_key() && $this->config->get_secret_key();
 	}
 	
 	public function get_name()
@@ -53,47 +48,39 @@ class ReCaptcha extends Captcha
 	
 	public function is_available()
 	{
-		return Url::check_url_validity('www.google.com');
+		$config = ReCaptchaConfig::load();
+		return Url::check_url_validity('www.google.com') && $config->get_site_key() && $config->get_secret_key();
 	}
 	
 	public function is_valid()
 	{
-		if ($this->is_recaptcha_v2)
+		$request = AppContext::get_request();
+		
+		if ($request->has_postparameter('g-recaptcha-response'))
 		{
-			$request = AppContext::get_request();
+			$validation_url = self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '');
 			
-			if ($request->has_postparameter('g-recaptcha-response'))
+			$server_configuration = new ServerConfiguration();
+			if ($server_configuration->has_curl_library())
 			{
-				$validation_url = self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '');
-				
-				$server_configuration = new ServerConfiguration();
-				if ($server_configuration->has_curl_library())
-				{
-					$curl = curl_init();
-					curl_setopt($curl, CURLOPT_URL, $validation_url);
-					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($curl, CURLOPT_TIMEOUT, 15);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-					$response = curl_exec($curl);
-				}
-				else
-				{
-					$response = @file_get_contents($validation_url);
-				}
-				
-				$response = json_decode($response, true);
-				
-				if ($response['success'] == true)
-					return true;
-				else
-					$this->recaptcha_error = isset($response['error-codes'][0]) ? $response['error-codes'][0] : null;
+				$curl = curl_init();
+				curl_setopt($curl, CURLOPT_URL, $validation_url);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+				$response = curl_exec($curl);
 			}
-		}
-		else
-		{
-			$this->recaptcha_response = recaptcha_check_answer(self::DEFAULT_SECRET_KEY, $_SERVER["REMOTE_ADDR"], AppContext::get_request()->get_postvalue('recaptcha_challenge_field', ''), AppContext::get_request()->get_postvalue($this->get_html_id(), ''));
+			else
+			{
+				$response = @file_get_contents($validation_url);
+			}
 			
-			return $this->recaptcha_response->is_valid;
+			$response = json_decode($response, true);
+			
+			if (is_array($response) && $response['success'] == true)
+				return true;
+			else
+				$this->recaptcha_error = isset($response['error-codes'][0]) ? $response['error-codes'][0] : null;
 		}
 		return false;
 	}
@@ -104,11 +91,17 @@ class ReCaptcha extends Captcha
 		$this->lang = LangLoader::get('common', 'ReCaptcha');
 		$tpl->add_lang($this->lang);
 		$tpl->put_all(array(
-			'C_RECAPTCHA_V2' => $this->is_recaptcha_v2,
-			'SITE_KEY' => $this->is_recaptcha_v2 ? $this->config->get_site_key() : self::DEFAULT_SITE_KEY,
+			'C_INVISIBLE' => $this->config->is_invisible_mode_enabled(),
+			'SITE_KEY' => $this->config->get_site_key(),
+			'FORM_ID' => $this->get_form_id(),
 			'HTML_ID' => $this->get_html_id()
 		));
 		return $tpl->render();
+	}
+	
+	public function is_visible()
+	{
+		return !$this->config->is_invisible_mode_enabled();
 	}
 	
 	public function get_error()

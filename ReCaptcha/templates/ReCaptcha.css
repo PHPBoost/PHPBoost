@@ -3,67 +3,16 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#recaptcha-widget {
-	display: inline-block;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #CCCCCC;
-	border-collapse: collapse;
-}
-
-#recaptcha-widget .options {
-	display: table-cell;
-	float: none;
-	margin: 0;
-	padding: 0.309em;
-	height: 100%;
-	vertical-align: middle;
-	border: none;
-}
-
-#recaptcha-widget .options > a,
-#recaptcha-widget .options > div {
-	display: block;
-	padding: 0.456em 0;
-}
-
-#recaptcha-container {
-	display: table-cell;
-	border-width: 0 1px 0 0;
-	border-style: solid;
-	border-color: #CCCCCC;
-	vertical-align: top;
-}
-
-#recaptcha-container span,
-#recaptcha-container div {
-	margin: 0.309em;
-}
-
-#recaptcha-container input {
-	width: 100%;
-	border: none;
-	border-width: 1px 0 0;
-	border-style: solid;
-	border-color: #CCCCCC;
-}
-
-#recaptcha_image {
-	width: 96% !important;
-	height: auto !important;
-	max-width: 100%;
-}
-
-#recaptcha_image img {
-	width: 100%;
-}
-
 @media (max-width: 768px) {
-	.g-recaptcha div {
-		width: 100% !important;
+	.grecaptcha-badge {
+		z-index: 300 !important;
 	}
-
+	
+	.g-recaptcha div {
+		width: 101% !important;
+	}
+	
 	.g-recaptcha iframe {
-		max-width: 100%;
+		max-width: 101%;
 	}
 }

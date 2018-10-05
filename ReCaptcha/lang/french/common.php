@@ -37,8 +37,9 @@ $lang['audio_captcha'] = 'Obtenir un test audio';
 $lang['captcha_help'] = 'Aide';
 
 $lang['config.title'] = 'Configuration de ReCaptcha';
-$lang['config.recaptcha-explain'] = 'Si vous souhaitez utiliser ReCaptcha v2, rendez-vous sur <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> pour créer vos identifiants.';
-$lang['config.recaptchav2_enabled'] = 'Activer ReCaptcha v2';
+$lang['config.recaptcha-explain'] = 'Si vous souhaitez utiliser ReCaptcha, rendez-vous sur <a href="' . ReCaptcha::$_signupUrl . '">' . ReCaptcha::$_signupUrl . '</a> pour créer vos identifiants.';
 $lang['config.site_key'] = 'Clé du site';
 $lang['config.secret_key'] = 'Clé secrète';
+$lang['config.invisible_mode_enabled'] = 'Activer le mode invisible';
+$lang['config.invisible_mode_enabled.explain'] = 'Aucune action n\'est nécessaire de la part de l\'utilisateur pour valider les formulaires. Option à activer lors de la création des identifiants Google ReCaptcha.';
 ?>
