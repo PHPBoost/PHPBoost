@@ -61,7 +61,8 @@
 								<td class="forum-last-topic">
 									# IF subcats.C_LAST_TOPIC_MSG #
 										<span class="last-topic-title"><a href="{subcats.U_LAST_TOPIC}" class="last-topic-title">{subcats.LAST_TOPIC_TITLE}</a></span>
-										<span class="last-topic-user"><i class="fa fa-hand-o-right"></i><a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"></a> ${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}</span>
+										<span class="last-topic-user"><i class="fa fa-hand-o-right"></i><a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"></a>
+										<br />${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}</span>
 										${LangLoader::get_message('by', 'main')}
 										# IF subcats.C_LAST_MSG_GUEST #
 										<a href="{subcats.U_LAST_MSG_USER_PROFIL}" class="last-topic-user small {subcats.LAST_MSG_USER_LEVEL}" {subcats.LAST_MSG_USER_GROUP_COLOR}>{subcats.LAST_MSG_USER_LOGIN}</a>

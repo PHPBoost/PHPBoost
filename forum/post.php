@@ -491,7 +491,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$tpl_bottom->put_all(array(
 						'C_DISPLAY_MSG'                 => true,
-						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed()
+						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),
 						'ICON_DISPLAY_MSG'              => $img_display,
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
 						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),
@@ -499,7 +499,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					));
 					$tpl->put_all(array(
 						'C_DISPLAY_MSG'                 => true,
-						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed()
+						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),
 						'ICON_DISPLAY_MSG'              => $img_display,
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
 						'L_EXPLAIN_DISPLAY_MSG'         => $config->get_message_when_topic_is_unsolved(),

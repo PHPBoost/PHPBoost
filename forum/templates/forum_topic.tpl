@@ -220,7 +220,7 @@
 									<em>{L_GUEST}</em>
 								# ENDIF #
 								</div>
-								# IF msg.C_USER_RANK #<p class="center">{msg.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
+								# IF msg.C_USER_RANK #<p class="center">{msg.USER_RANK}</p># ELSE #<p class="center">${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
 								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}"/></p> # ENDIF #
 							</div>
 

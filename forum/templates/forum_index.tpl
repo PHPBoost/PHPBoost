@@ -81,12 +81,12 @@
 									<i class="fa fa-file-o fa-fw"></i> <a href="{forums_list.subcats.U_LAST_TOPIC}">
 										{forums_list.subcats.LAST_TOPIC_TITLE}
 									</a>
-								</span>
+								</span><br />
 								<span class="last-topic-date small">
 									<i class="fa fa-hand-o-right fa-fw"></i> <a href="{forums_list.subcats.U_LAST_MSG}" title="">
 										{forums_list.subcats.LAST_MSG_DATE_FULL}
 									</a>
-								</span>
+								</span><br />
 								<span class="last-topic-user small">
 									<i class="fa fa-user-o fa-fw"></i>
 									# IF forums_list.subcats.C_LAST_MSG_GUEST #
