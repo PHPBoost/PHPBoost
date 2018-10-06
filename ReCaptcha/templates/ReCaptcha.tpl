@@ -2,6 +2,11 @@
 	<div id="{HTML_ID}" class="g-recaptcha" data-sitekey="{SITE_KEY}"# IF C_INVISIBLE # data-callback="captchaSubmitCallback" data-size="invisible"# ENDIF #></div>
 	# IF C_INVISIBLE #
 	<script>
+		jQuery(document).ready(function(){
+			jQuery("\#{HTML_ID}_field").css('height', 0);
+			jQuery("\#{HTML_ID}_field").parent().css('height', 0);
+		});
+		
 		var captchaOnloadCallback = function() {
 			grecaptcha.render('{HTML_ID}', {
 				'sitekey' : '{SITE_KEY}',
