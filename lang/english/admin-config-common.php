@@ -147,7 +147,7 @@ $lang = array(
 	'advanced-config.cookiebar-tracking.notrack' => 'Using only technicals cookies',
 	'advanced-config.cookiebar-content' => 'Message displayed in the warning bar',
 	'advanced-config.cookiebar-content.explain' => 'You can customize the message, but you must specify if you are using tracking cookies',
-	'advanced-config.cookiebar-aboutcookie-title' => 'Title of the page "<a href="' . UserUrlBuilder::aboutcookie()->absolute() . '">Learn more</a>"',
+	'advanced-config.cookiebar-aboutcookie-title' => 'Title of the page "<a href="' . UserUrlBuilder::aboutcookie()->rel() . '">Learn more</a>"',
 	'advanced-config.cookiebar-aboutcookie' => 'Message displayed in the page "Learn more"',
 	'advanced-config.cookiebar-aboutcookie.explain' => 'You can customize the message, but you must describe tracking cookies you use',
 );
