@@ -10,7 +10,7 @@
 			});
 		};
 		
-		jQuery('.submit').on('click', function (e) {
+		jQuery("button[name='{FORM_ID}_submit']").on('click', function (e) {
 			e.preventDefault();
 			grecaptcha.execute();
 		});
