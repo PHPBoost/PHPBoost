@@ -84,7 +84,7 @@
 			<p>{@iconfa.howto.css.class}</p>
 			<span class="formatter-code">{@iconfa.howto.css.css.code}</span>
 			<div class="code">
-				<pre>.success { ... }<br /><br />.success::before {<br /> content: "\f00c";<br /> font-family: FontAwesome; <br />}</pre>
+				<pre>.success { ... }<br /><br />.success::before {<br /> content: "\f00c";<br /> font-family: 'Font Awesome 5 Free'; <br />}</pre>
 			</div>
 			<span class="formatter-code">{@iconfa.howto.css.html.code}</span>
 			<div class="code">
