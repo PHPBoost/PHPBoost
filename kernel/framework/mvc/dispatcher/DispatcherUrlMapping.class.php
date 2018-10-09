@@ -27,16 +27,54 @@
  */
 
 class DispatcherUrlMapping extends UrlMapping
-{	
-    /**
+{
+	private $high_priority = false;
+	private $low_priority = false;
+	
+	/**
 	 * @param UrlMapping[] $mappings
 	 */
-	public function __construct($dispatcher_name, $match = '([\w/_-]*)$')
+	public function __construct($dispatcher_name, $match = '([\w/_-]*)$', $from_path = '')
 	{
-		$dispatcher_path = '^' . ltrim(TextHelper::substr($dispatcher_name, 0, TextHelper::strrpos($dispatcher_name, '/') + 1), '/');
-		$from = $dispatcher_path . $match;
-		$to = $dispatcher_name . '?url=/$1'; 
+		if (!empty($from_path))
+		{
+			if ($from_path == 'root')
+			{
+				$from = '^' . $match;
+				$to = $dispatcher_name . '?url=/$1';
+				$this->low_priority = true;
+			}
+			else
+			{
+				$dispatcher_path = ltrim(TextHelper::substr($from_path, 0, TextHelper::strrpos($from_path, '/') + 1), '/');
+				$from = '^' . $dispatcher_path . $match;
+				$to = $dispatcher_name . '?url=/' . $dispatcher_path . '$1';
+				$this->high_priority = true;
+			}
+		}
+		else
+		{
+			$dispatcher_path = ltrim(TextHelper::substr($dispatcher_name, 0, TextHelper::strrpos($dispatcher_name, '/') + 1), '/');
+			$from = '^' . $dispatcher_path . $match;
+			$to = $dispatcher_name . '?url=/$1';
+		}
 		parent::__construct($from, $to);
+	}
+	
+	/**
+	 * @desc Check if the Url must be placed in high priority in the .htaccess file
+	 */
+	public function is_high_priority()
+	{
+		return $this->high_priority;
+	}
+	
+	/**
+	 * @desc Check if the Url must be placed in low priority in the .htaccess file
+	 */
+	public function is_low_priority()
+	{
+		return $this->low_priority;
 	}
 }
 ?>

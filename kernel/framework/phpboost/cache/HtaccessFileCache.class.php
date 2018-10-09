@@ -202,10 +202,36 @@ class HtaccessFileCache implements CacheData
 
 	private function add_modules_rules()
 	{
-		$this->add_section('Modules rules');
-
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
+		
+		// Generate high priority rewriting rules
+		$first_high_priority_mapping = true;
+		foreach ($modules as $module)
+		{
+			$id = $module->get_id();
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			{
+				$provider = $eps->get_provider($id);
+				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+				{
+					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_high_priority())
+					{
+						if ($first_high_priority_mapping)
+						{
+							$this->add_section('High Priority Modules rules');
+							$first_high_priority_mapping = false;
+						}
+						
+						$this->add_section($id);
+						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+					}
+				}
+			}
+		}
+		
+		$this->add_section('Modules rules');
+		
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
@@ -223,8 +249,44 @@ class HtaccessFileCache implements CacheData
 			{
 				$this->add_section($id);
 				$provider = $eps->get_provider($id);
-				$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
-				$this->add_url_mapping($url_mappings);
+				
+				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+				{
+					if ($mapping instanceof DispatcherUrlMapping)
+					{
+						if (!$mapping->is_high_priority() && !$mapping->is_low_priority())
+						{
+							$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+						}
+					}
+					else
+						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+				}
+			}
+		}
+		
+		// Generate low priority rewriting rules
+		$first_low_priority_mapping = true;
+		foreach ($modules as $module)
+		{
+			$id = $module->get_id();
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			{
+				$provider = $eps->get_provider($id);
+				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+				{
+					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_low_priority())
+					{
+						if ($first_low_priority_mapping)
+						{
+							$this->add_section('Low Priority Modules rules');
+							$first_low_priority_mapping = false;
+						}
+						
+						$this->add_section($id);
+						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+					}
+				}
 			}
 		}
 	}
