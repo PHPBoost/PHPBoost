@@ -156,9 +156,10 @@ class InstallationServices
 	public function configure_website($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
 		$this->get_installation_token();
-		$modules_to_install = $this->distribution_config['modules'];
 		$this->generate_website_configuration($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
-		$this->install_modules($modules_to_install);
+		$this->install_modules($this->get_modules_not_installed());
+		$this->install_themes($this->get_themes_not_installed());
+		$this->install_langs($this->get_langs_not_installed());
 		$this->add_menus();
 		$this->add_extended_fields();
 		return true;
@@ -188,8 +189,6 @@ class InstallationServices
 		$this->init_graphical_config();
 		$this->init_debug_mode();
 		$this->init_user_accounts_config($locale);
-		$this->install_locale($locale);
-		$this->configure_theme($this->distribution_config['theme']);
 	}
 
 	private function save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_description, $site_timezone)
@@ -259,30 +258,138 @@ class InstallationServices
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$user_accounts_config->set_default_lang($locale);
-		$user_accounts_config->set_default_theme($this->distribution_config['theme']);
+		$user_accounts_config->set_default_theme($this->distribution_config['default_theme']);
 		UserAccountsConfig::save();
 	}
 
-	private function install_locale($locale)
+	private function get_modules_not_installed()
 	{
-		LangsManager::install($locale);
+		$modules_not_installed = array();
+		$modules_folder = new Folder(PATH_TO_ROOT);
+		foreach ($modules_folder->get_folders() as $folder)
+		{
+			$folder_name = $folder->get_name();
+			if (!in_array($folder_name, array('admin', 'cache', 'images', 'install', 'kernel', 'lang', 'syndication', 'templates', 'update', 'upload', 'user')) && !ModulesManager::is_module_installed($folder_name))
+			{
+				try
+				{
+					$modules_not_installed[$folder_name] = new Module($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
+			}
+		}
+
+		usort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
+
+		return $modules_not_installed;
 	}
 
-	private function configure_theme($theme)
+	private static function callback_sort_modules_by_name(Module $module1, Module $module2)
 	{
-		ThemesManager::install($theme);
+		if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
+		{
+			return 1;
+		}
+		return -1;
 	}
 
 	private function install_modules(array $modules_to_install)
 	{
-		foreach ($modules_to_install as $module_name)
+		foreach ($modules_to_install as $module)
 		{
-			ModulesManager::install_module($module_name, true, false);
+			ModulesManager::install_module($module->get_id(), true, false);
 		}
 		
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			HtaccessFileCache::regenerate();
+		}
+	}
+
+	private function get_themes_not_installed()
+	{
+		$themes_not_installed = array();
+		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
+		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
+		{
+			$folder_name = $folder->get_name();
+			if ($folder_name != 'default' && !ThemesManager::get_theme_existed($folder_name))
+			{
+				try
+				{
+					$themes_not_installed[$folder_name] = new Theme($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
+			}
+		}
+
+		usort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
+
+		return $themes_not_installed;
+	}
+
+	private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2)
+	{
+		if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
+		{
+			return 1;
+		}
+		return -1;
+	}
+
+	private function install_themes(array $themes_to_install)
+	{
+		foreach ($themes_to_install as $theme)
+		{
+			ThemesManager::install($theme->get_id());
+		}
+	}
+	
+	private function get_langs_not_installed()
+	{
+		$langs_not_installed = array();
+		$folder_containing_phpboost_langs = new Folder(PATH_TO_ROOT .'/lang/');
+		foreach($folder_containing_phpboost_langs->get_folders() as $folder)
+		{
+			$folder_name = $folder->get_name();
+			if (!LangsManager::get_lang_existed($folder_name))
+			{
+				try
+				{
+					$langs_not_installed[$folder_name] = new Lang($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
+			}
+		}
+
+		usort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
+
+		return $langs_not_installed;
+	}
+
+	private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2)
+	{
+		if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name()))
+		{
+			return 1;
+		}
+		return -1;
+	}
+
+	private function install_langs(array $langs_to_install)
+	{
+		foreach ($langs_to_install as $lang)
+		{
+			LangsManager::install($lang->get_id());
 		}
 	}
 
@@ -406,7 +513,7 @@ class InstallationServices
 
 	private function create_first_admin($display_name, $login, $password, $email, $create_session, $auto_connect)
 	{
-		$user_id = $this->create_first_admin_account($display_name, $login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$user_id = $this->create_first_admin_account($display_name, $login, $password, $email, LangLoader::get_locale(), $this->distribution_config['default_theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($display_name, $password, $email);

@@ -37,7 +37,7 @@ $lang['langs.delete_lang'] = 'Suppression d\'une langue';
 $lang['langs.delete_lang_multiple'] = 'Suppression des langues sélectionnées';
 $lang['langs.installed_langs'] = 'Langues installées';
 $lang['langs.available_langs'] = 'Langues disponibles';
-$lang['langs.default'] = 'Langues par défaut';
+$lang['langs.default'] = 'Langue par défaut';
 $lang['langs.default_lang_visibility'] = 'La langue par défaut est visible par tout le monde';
 
 //Langs management

@@ -171,7 +171,7 @@ class CLIInstallCommand implements CLICommand
 	private function check_env()
 	{
 		CLIOutput::writeln('environment check...');
-		return $this->chech_php_version() && $this->check_folders_permissions();
+		return $this->check_php_version() && $this->check_folders_permissions();
 	}
 
 	private function install()
@@ -199,7 +199,7 @@ class CLIInstallCommand implements CLICommand
 		return true;
 	}
 
-	private function chech_php_version()
+	private function check_php_version()
 	{
 		CLIOutput::writeln("\t" . 'php version');
 		if (!$this->server_configuration->is_php_compatible())

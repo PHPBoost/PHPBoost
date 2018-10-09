@@ -70,57 +70,7 @@ class InstallEnvironment extends Environment
 		AppContext::set_session(new AdminSessionData());
 		AppContext::set_current_user(new AdminUser());
 	}
-
-	public static function load_distribution_properties($prefered_lang)
-	{
-		global $DISTRIBUTION_MODULES;
-
-		//If the distribution properties exist in the prefered language
-		if (is_file('distribution/' . $prefered_lang . '.php'))
-		{
-			//We load them
-			include('distribution/' . $prefered_lang . '.php');
-		}
-		else
-		{
-			//We try to load another lang
-
-			$distribution_folder = new Folder('distribution');
-			$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`iu');
-			if (count($distribution_files) > 0)
-			{
-				include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
-			}
-			else
-			{
-				//We couldn't load anything, we just have to define them to default values
-				//Name of the distribution (localized)
-				define('DISTRIBUTION_NAME', 'Default distribution');
-
-				//Description of the distribution (localized)
-				define('DISTRIBUTION_DESCRIPTION', 'This distribution is the default distribution. You will manage to install PHPBoost with the default configuration but it will install only the kernel without any module.');
-
-				//Distribution default theme
-				define('DISTRIBUTION_THEME', 'base');
-
-				//Home page
-				define('DISTRIBUTION_START_PAGE', UserUrlBuilder::home()->rel());
-
-				//Can people register?
-				define('DISTRIBUTION_ENABLE_USER', false);
-
-				//Debug mode?
-				define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
-
-				//Enable bench?
-				define('DISTRIBUTION_ENABLE_BENCH', false);
-
-				//Modules list
-				$DISTRIBUTION_MODULES = array();
-			}
-		}
-	}
-
+	
 	public static function destroy()
 	{
 		ob_end_flush();
