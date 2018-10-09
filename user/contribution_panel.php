@@ -131,6 +131,7 @@ elseif ($id_to_delete > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
+	CommentsService::delete_comments_topic_module('user', $id_to_delete);
 	ContributionService::delete_contribution($contribution);
 	
 	AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
