@@ -29,7 +29,7 @@ class TinyMCESetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
-		return AppContext::get_content_formatting_service()->uninstall_editor('tinymce');
+		return AppContext::get_content_formatting_service()->uninstall_editor('TinyMCE');
 	}
 }
 ?>

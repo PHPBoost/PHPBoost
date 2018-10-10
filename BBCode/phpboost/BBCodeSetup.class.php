@@ -29,7 +29,7 @@ class BBCodeSetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
-		return AppContext::get_content_formatting_service()->uninstall_editor('bbcode');
+		return AppContext::get_content_formatting_service()->uninstall_editor('BBCode');
 	}
 }
 ?>

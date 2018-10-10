@@ -416,7 +416,7 @@ class ModulesManager
 					if ($default_editor !== $module_id)
 					{
 						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor), 
-							'WHERE editor=:old_editor', array('old_editor' => 'bbcode'
+							'WHERE editor=:old_editor', array('old_editor' => $module_id
 						));
 					}
 					else

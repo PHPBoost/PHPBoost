@@ -68,57 +68,51 @@ class CaptchaService
 		return $this->get_default_factory()->display();
 	}
 
-    private function get_existing_captcha($captcha)
-    {
-        if (in_array($captcha, self::get_captchas_identifier()))
-        {
-            return $captcha;
-        }
-        else
-        {
-            return $this->get_default_captcha();
-        }
-    }
-    
-    public function get_captchas_identifier()
-    {
-    	return array_keys(CaptchaProvidersService::get_captchas());
-    }
-    
-    public function get_available_captchas()
-    {
-    	$available_captchas = array();
-    	foreach (CaptchaProvidersService::get_captchas() as $id => $provider)
-    	{
+	private function get_existing_captcha($captcha)
+	{
+		if (in_array($captcha, self::get_captchas_identifier()))
+		{
+			return $captcha;
+		}
+		else
+		{
+			return $this->get_default_captcha();
+		}
+	}
+	
+	public function get_captchas_identifier()
+	{
+		return array_keys(CaptchaProvidersService::get_captchas());
+	}
+	
+	public function get_available_captchas()
+	{
+		$available_captchas = array();
+		foreach (CaptchaProvidersService::get_captchas() as $id => $provider)
+		{
 			if ($provider->is_available())
 				$available_captchas[$id] = $provider->get_name();
-    	}
-    	return $available_captchas;
-    }
-    
-	/**
-     * @param string $id_module
-     */
-    public function uninstall_captcha($id_module)
-    {
-    	$captchas = $this->get_available_captchas();
-		
-		if (count($captchas) > 1)
-		{
-			$default_captcha = $this->get_default_captcha();
-			if ($default_captcha !== $id_module)
-			{
-				$config = ContentManagementConfig::load();
-				$config->set_used_captcha_module($default_captcha);
-				ContentManagementConfig::save();
-				return null;
-			}
-			else
-			{
-				return LangLoader::get_message('captcha.is_default', 'status-messages-common');
-			}
 		}
-		return LangLoader::get_message('captcha.last_installed', 'status-messages-common');
-    }
+		return $available_captchas;
+	}
+	
+	/**
+	 * @param string $id_module
+	 */
+	public function uninstall_captcha($id_module)
+	{
+		$captchas = $this->get_available_captchas();
+		
+		if (in_array($id_module, $captchas))
+		{
+			if (count($captchas) > 1)
+			{
+				$default_captcha = $this->get_default_captcha();
+				if ($default_captcha === $module_id)
+					return LangLoader::get_message('captcha.is_default', 'status-messages-common');
+			}
+			return LangLoader::get_message('captcha.last_installed', 'status-messages-common');
+		}
+	}
 }
 ?>
