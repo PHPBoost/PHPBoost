@@ -1,36 +1,10 @@
-#################################################################################
-##                                   KEVIN                                     ##
-#################################################################################
+﻿######################################DOSSIERS##################################
 
-------------------------------------- NOYAU ------------------------------------
-
-
------------------------------------- MODULES -----------------------------------
-
-#################################################################################
-
-
-
-#################################################################################
-##                                   JULIEN                                    ##
-#################################################################################
-
------------------------------------- MODULES -----------------------------------
-
-#################################################################################
-
-
-
-######################################DOSSIERS##################################
-
-###################################### PHPBoost 5.1 ##################################
+###################################### PHPBoost 5.x ##################################
 
 [b]Structure et fonctionnement:[/b]
 + Nettoyage des variables de langues
 - Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
-- passage de l'encodage du site et de la base de données en utf-8
-- Gestion des catégorie dans la partie front (#1185)
-- Vidéos en HTML5 (#886)
 
 [b]Administration[/b]
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
@@ -43,9 +17,6 @@
 [b]Installateur[/b]
 - Possibilité de choisir les modules, thèmes et langues à installer
 
-[b]Sécurité[/b]
-- possibilité de générer un mot de passe automatiquement lors de l'ajout d'un utilisateur via l'administration (+ envoi par mail)
-
 [b]Calendrier[/b]
 - Améliorer l'inscription aux événements (#1230)
 
@@ -54,20 +25,13 @@
 - Préfixe de sujet (#1080)
 - Sujets sans réponse (#1225)
 
-[b]News[/b]
-- Génération Méta (#1254)
-
 [b]Sondages[b]
 - Mise à jour du module (passage en MVC)
-
-[b]Wiki[/b]
-- Droits de lecture sur le Wiki (#1231)
 
 ###################################### PHPBoost ##################################
 
 [b]Structure et fonctionnement:[/b]
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
-- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
 - [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
 - [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
 - [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
