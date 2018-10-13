@@ -85,7 +85,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> <a href="{U_FORUM_CAT}">{FORUM_CAT}</a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>{FORUM_CAT}
 					# IF C_POST_NEW_SUBJECT #
 						<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
@@ -156,7 +156,7 @@
 							<span class="smaller">{topics.DESC}</span>
 						</td>
 						<td class="forum-author">
-							# IF C_AUTHOR #
+							# IF topics.C_AUTHOR #
 							<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"{topics.GROUP_COLOR}>{topics.AUTHOR}</a>
 							# ELSE #
 							<em>{topics.L_GUEST}</em>
@@ -169,13 +169,16 @@
 							{topics.VUS}
 						</td>
 						<td class="forum-last-topic">
-							<span class="last-topic-title"><i class="fa fa-hand-o-right fa-fw"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a></span>
-							<span class="last-topic-user"> <i class="fa fa-user-o fa-fw"></i>
-							# IF topics.C_LAST_MSG_GUEST #
-							<a href="{topics.LAST_MSG_USER_PROFIL}" class="{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
-							# ELSE #
+							<span class="last-topic-title">
+								<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right fa-fw"></i> {topics.LAST_MSG_DATE_FULL}</a>
+							</span><br />
+							<span class="last-topic-user">
+								<i class="fa fa-user-o fa-fw"></i>
+								# IF topics.C_LAST_MSG_GUEST #
+								<a href="{topics.LAST_MSG_USER_PROFIL}" class="{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
+								# ELSE #
 								<em>${LangLoader::get_message('guest', 'main')}</em>
-							# ENDIF #
+								# ENDIF #
 							</span>
 						</td>
 					</tr>

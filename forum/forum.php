@@ -292,7 +292,7 @@ if (!empty($id_get))
 		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 		'U_ONCHANGE'                 => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'             => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT'                => $forum_cats,
+		'FORUM_CAT'                  => $forum_cats,
 		'U_POST_NEW_SUBJECT'         => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX'              => $LANG['forum_index'],
 		'L_SUBFORUMS'                => $LANG['sub_forums'],
