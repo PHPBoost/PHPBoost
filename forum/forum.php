@@ -267,13 +267,16 @@ if (!empty($id_get))
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
-	$forum_cats = '';
 	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
-		if ($i == 2)
-			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
-		elseif ($i > 2)
-			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
+		if ($i >= 2)
+		{
+			$tpl->assign_block_vars('syndication_cats', array(
+				'C_DISPLAY_RAQUO' => $i > 2,
+				'LINK' =>  $array[1],
+				'LABEL' =>  $array[0]
+			));
+		}
 		$i++;
 	}
 
@@ -292,7 +295,10 @@ if (!empty($id_get))
 		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 		'U_ONCHANGE'                 => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'             => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+<<<<<<< HEAD
 		'FORUM_CAT'                  => $forum_cats,
+=======
+>>>>>>> 8bd84e9f17435eaf9b571bd0cf8b03c7c0ca4d5b
 		'U_POST_NEW_SUBJECT'         => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX'              => $LANG['forum_index'],
 		'L_SUBFORUMS'                => $LANG['sub_forums'],
