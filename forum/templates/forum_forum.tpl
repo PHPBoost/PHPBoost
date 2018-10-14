@@ -85,14 +85,11 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
 				<h2>
-<<<<<<< HEAD
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>{FORUM_CAT}
-=======
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> 
 					# START syndication_cats #
 						<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 					# END syndication_cats #
->>>>>>> 8bd84e9f17435eaf9b571bd0cf8b03c7c0ca4d5b
+
 					# IF C_POST_NEW_SUBJECT #
 						<i class="fa fa-chevron-circle-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #

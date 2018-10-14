@@ -133,7 +133,7 @@
 					# IF C_DISPLAY_MSG #
 					<li>
 						<span class="cssmenu-title" id="forum_change_statut">
-							<a href="" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="fa fa-{ICON_DISPLAY_MSG}"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -149,12 +149,12 @@
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_pm">
-							<a href="" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img"><i class="fa fa-{ICON_SUBCRIBE_PM}"></i></a> <a href="" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUBSCRIBE_PM_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img"><i class="fa fa-{ICON_SUBSCRIBE_PM}"></i></a> <a href="" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUBSCRIBE_PM_DEFAULT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_mail">
-							<a href="" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img"><i class="fa fa-{ICON_SUBCRIBE}"></i></a> <a href="" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUBSCRIBE_DEFAULT}</span></a>
+							<a href="" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img"><i class="fa fa-{ICON_SUBSCRIBE}"></i></a> <a href="" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUBSCRIBE_DEFAULT}</span></a>
 						</span>
 					</li>
 				</ul>

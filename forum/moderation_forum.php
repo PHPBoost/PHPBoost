@@ -159,10 +159,7 @@ if ($action == 'alert') //Gestion des alertes
 		));
 		while ($row = $result->fetch())
 		{
-			
-			if ($row['status'] != 0)
-				$modo_group_color = User::get_group_color($row['modo_groups'], $row['modo_level']);
-
+			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -232,9 +229,7 @@ if ($action == 'alert') //Gestion des alertes
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=alert', '', '&'));
 			}
 
-			if ($row['status'] != 0)
-				$modo_group_color = User::get_group_color($row['modo_groups'], $row['modo_level']);
-			
+			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 			
