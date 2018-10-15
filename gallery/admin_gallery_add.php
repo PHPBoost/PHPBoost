@@ -43,7 +43,7 @@ $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 
 $valid = $request->get_postvalue('valid', false);
 
-if (isset($_FILES['gallery']) && $idcat_post) //Upload
+if (isset($_FILES['gallery'])) //Upload
 {
 	$dir = 'pics/';
 	$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
