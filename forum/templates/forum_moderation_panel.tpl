@@ -160,9 +160,9 @@
 								</td>
 								<td class="td100 {alert_list.BACKGROUND_COLOR}">
 									# IF alert_list.C_STATUS #
-									{alert_list.L_ALERT_SOLVED}<a href="{alert_list.U_IDMODO_REL}" class="{alert_list.MODO_CSSCLASS}" # IF alert_list.C_MODO_GROUP_COLOR # style="color: {alert_list.MODO_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_MODO}</a>
+									{L_ALERT_SOLVED}<a href="{alert_list.U_IDMODO_REL}" class="{alert_list.MODO_CSSCLASS}" # IF alert_list.C_MODO_GROUP_COLOR # style="color: {alert_list.MODO_GROUP_COLOR};"# ENDIF #>{alert_list.LOGIN_MODO}</a>
 									# ELSE #
-									{alert_list.L_ALERT_UNSOLVED}
+									{L_ALERT_NOTSOLVED}
 									# ENDIF #
 								</td>
 								<td class="td70">
@@ -220,7 +220,7 @@
 								# IF C_STATUS #
 								{L_ALERT_SOLVED}<a href="{U_IDMODO_REL}" class="{MODO_CSSCLASS}" # IF C_MODO_GROUP_COLOR # style="color: {MODO_GROUP_COLOR};"# ENDIF #>{LOGIN_MODO}</a>
 								# ELSE #
-								{L_ALERT_UNSOLVED}
+								{L_ALERT_NOTSOLVED}
 								# ENDIF #
 							</td>
 						</tr>

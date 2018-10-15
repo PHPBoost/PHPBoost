@@ -61,7 +61,7 @@
 					</div>
 				</fieldset>
 				# END alert_confirm #
-			<footer>{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> {U_TITLE_T} <span><em>{DESC}</em></span> <i class="fa fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></footer>
+			<footer><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-chevron-circle-right"></i> <a href="">{L_ALERT}</a></footer>
 		</article>
 
 		# INCLUDE forum_bottom #

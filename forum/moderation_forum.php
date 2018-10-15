@@ -133,14 +133,16 @@ if ($action == 'alert') //Gestion des alertes
 	if (empty($id_get)) //On liste les alertes
 	{
 		$tpl->put_all(array(
-			'C_FORUM_ALERTS'   => true,
-			'L_TITLE'          => $LANG['alert_title'],
-			'L_TOPIC'          => $LANG['alert_concerned_topic'],
-			'L_LOGIN'          => $LANG['alert_login'],
-			'L_TIME'           => LangLoader::get_message('date', 'date-common'),
-			'L_STATUS'         => $LANG['status'],
-			'L_DELETE'         => LangLoader::get_message('delete', 'common'),
-			'L_DELETE_MESSAGE' => $LANG['delete_several_alerts']
+			'C_FORUM_ALERTS'    => true,
+			'L_TITLE'           => $LANG['alert_title'],
+			'L_TOPIC'           => $LANG['alert_concerned_topic'],
+			'L_LOGIN'           => $LANG['alert_login'],
+			'L_TIME'            => LangLoader::get_message('date', 'date-common'),
+			'L_STATUS'          => $LANG['status'],
+			'L_ALERT_SOLVED'    => $LANG['alert_solved'],
+			'L_ALERT_NOTSOLVED' => $LANG['alert_not_solved'],
+			'L_DELETE'          => LangLoader::get_message('delete', 'common'),
+			'L_DELETE_MESSAGE'  => $LANG['delete_several_alerts']
 		));
 
 		//Vérification des autorisations.
@@ -168,7 +170,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TITLE'              => stripslashes($row['title']),
 				'U_TITLE'            => 'moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']),
 				'TOPIC'              => $row['topic_title'],
-				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'] . '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),			
+				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'USER_ID'            => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'USER_CSSCLASS'      => UserService::get_level_class($row['user_level']),
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -177,8 +179,6 @@ if ($action == 'alert') //Gestion des alertes
 				'BACKGROUND_COLOR'   => $row['status'] == 1 ? 'bkgd-color-solved' : 'bkgd-color-unsolved',
 				'ID'                 => $row['id'],
 				'C_STATUS'           => $row['status'] != 0,
-				'L_ALERT_SOLVED'     => $LANG['alert_solved'],
-				'L_ALERT_NOTSOLVED'  => $LANG['alert_not_solved'],
 				'U_IDMODO_REL'       => UserUrlBuilder::profile($row['idmodo'])->rel(),
 				'MODO_CSSCLASS'      => UserService::get_level_class($row['modo_level']),
 				'C_MODO_GROUP_COLOR' => !empty($modo_group_color),
@@ -238,7 +238,7 @@ if ($action == 'alert') //Gestion des alertes
 				'ID'                 => $id_get,
 				'TITLE'              => stripslashes($row['title']),
 				'TOPIC'              => $row['topic_title'],
-				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'] . '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),	
+				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'CONTENTS'           => FormatingHelper::second_parse($row['contents']),
 				'C_STATUS'           => $row['status'] != 0,
 				'L_ALERT_SOLVED'     => $LANG['alert_solved'],
