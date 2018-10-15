@@ -18,7 +18,7 @@
 							# ELSE #
 							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
 							# ENDIF #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+							<li class="admin-menu-element"><button type="submit" class="submit alt" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 						</ul>
 						# ENDIF #
 					</div>
