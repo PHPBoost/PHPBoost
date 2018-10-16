@@ -583,66 +583,66 @@ class UpdateServices
 	{
 		// Exemple : 
 		// Supprimer un fichier :
-		// $file = new File(Url::to_rel('/admin/AbstractAdminFormPageController.class.php'));
+		// $file = new File(PATH_TO_ROOT . '/admin/AbstractAdminFormPageController.class.php');
 		// $file->delete();
 		// 
 		// Supprimer un dossier :
-		// $folder = new Folder(Url::to_rel('/kernel/framework/phpboost/deprecated'));
+		// $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/phpboost/deprecated');
 		// if ($folder->exists())
 		// 	$folder->delete();
 	}
 	
 	private function delete_old_files_kernel()
 	{
-		$folder = new Folder(Url::to_rel('/kernel/framework/content/newcontent'));
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/framework/content/newcontent');
 		if ($folder->exists())
 			$folder->delete();
 		
-		$folder = new Folder(Url::to_rel('/kernel/lib/php/facebook'));
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/facebook');
 		if ($folder->exists())
 			$folder->delete();
 		
-		$folder = new Folder(Url::to_rel('/kernel/lib/php/google'));
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/google');
 		if ($folder->exists())
 			$folder->delete();
 		
-		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.phpmailer.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.pop3.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.pop3.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/class.smtp.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.smtp.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/lib/php/phpmailer/PHPMailerAutoload.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/PHPMailerAutoload.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/AbstractShare.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/AbstractShare.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/FacebookLikeShare.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/FacebookLikeShare.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/GooglePlusOneShare.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/GooglePlusOneShare.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/ShareInterface.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/ShareInterface.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/share/TwitterTweeterShare.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/TwitterTweeterShare.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php'));
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php');
 		$file->delete();
 	}
 	

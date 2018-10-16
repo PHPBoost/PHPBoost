@@ -39,7 +39,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/CalendarNewContent.class.php'));
+		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/CalendarNewContent.class.php');
 		$file->delete();
 	}
 }

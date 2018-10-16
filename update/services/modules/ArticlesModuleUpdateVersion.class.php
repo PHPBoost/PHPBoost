@@ -57,10 +57,10 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
-		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/ArticlesNewContent.class.php'));
+		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/ArticlesNewContent.class.php');
 		$file->delete();
 		
-		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/ArticlesNotation.class.php'));
+		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/ArticlesNotation.class.php');
 		$file->delete();
 	}
 }
