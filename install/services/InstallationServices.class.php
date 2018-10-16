@@ -52,17 +52,15 @@ class InstallationServices
 	public function __construct($locale = '')
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
-		if (!empty($locale))
-		{
-			LangLoader::set_locale($locale);
-		}
-		$this->messages = LangLoader::get('install', 'install');
 		$this->load_distribution_configuration();
+		$this->set_default_locale($locale);
+		LangLoader::set_locale($this->distribution_config['default_lang']);
+		$this->messages = LangLoader::get('install', 'install');
 	}
 
 	public static function get_available_langs()
 	{
-		$langs_folder = new Folder(PATH_TO_ROOT . '/install/lang');
+		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
 		$langs_list = $langs_folder->get_folders();
 		
 		$available_langs = array();
@@ -72,6 +70,22 @@ class InstallationServices
 		}
 		
 		return $available_langs;
+	}
+	
+	private function set_default_locale($locale)
+	{
+		$langs = $this->get_langs_not_installed();
+		if (!empty($locale) && in_array($locale, $langs))
+			$this->distribution_config['default_lang'] = $locale;
+	}
+
+	public static function get_default_lang()
+	{
+		$distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
+		$langs = self::get_available_langs();
+		if (!in_array($distribution_config['default_lang'], $langs))
+			$distribution_config['default_lang'] = $langs[0];
+		return $distribution_config['default_lang'];
 	}
 	
 	public function is_already_installed()
@@ -176,6 +190,15 @@ class InstallationServices
 	private function load_distribution_configuration()
 	{
 		$this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
+		$modules = $this->get_modules_not_installed();
+		if (!in_array($this->distribution_config['module_home_page'], $modules))
+			$this->distribution_config['module_home_page'] = $modules[0]->get_id();
+		$themes = $this->get_themes_not_installed();
+		if (!in_array($this->distribution_config['default_theme'], $themes))
+			$this->distribution_config['default_theme'] = $themes[0]->get_id();
+		$langs = $this->get_langs_not_installed();
+		if (!in_array($this->distribution_config['default_lang'], $langs))
+			$this->distribution_config['default_lang'] = $langs[0]->get_id();
 	}
 
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')

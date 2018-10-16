@@ -33,7 +33,7 @@ class InstallUrlBuilder
 {
     private static $dispatcher = '/install/index.php';
 
-    private static $locale = InstallController::DEFAULT_LOCALE;
+    private static $locale = '';
 
     public static function set_locale($locale)
     {
@@ -102,7 +102,7 @@ class InstallUrlBuilder
      */
     private static function url($path)
     {
-    	if (self::$locale  != InstallController::DEFAULT_LOCALE)
+    	if (self::$locale  != InstallationServices::get_default_lang())
     	{
     		$path .= '?lang=' . self::$locale;
     	}

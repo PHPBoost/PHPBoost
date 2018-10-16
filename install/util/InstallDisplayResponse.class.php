@@ -85,8 +85,8 @@ class InstallDisplayResponse extends AbstractResponse
 
 	private function add_language_bar()
 	{
-		$lang = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('lang', InstallController::DEFAULT_LOCALE));
-		$lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallController::DEFAULT_LOCALE;
+		$lang = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('lang', ''));
+		$lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallationServices::get_default_lang();
 		
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
 		$langs = array();

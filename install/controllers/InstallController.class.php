@@ -27,14 +27,12 @@
 
 abstract class InstallController extends AbstractController
 {
-	const DEFAULT_LOCALE = 'french';
-
 	protected $lang = array();
 
 	protected function load_lang(HTTPRequestCustom $request)
 	{
-		$locale = TextHelper::htmlspecialchars($request->get_string('lang', self::DEFAULT_LOCALE));
-		$locale = in_array($locale, InstallationServices::get_available_langs()) ? $locale : self::DEFAULT_LOCALE;
+		$locale = TextHelper::htmlspecialchars($request->get_string('lang', ''));
+		$locale = in_array($locale, InstallationServices::get_available_langs()) ? $locale : InstallationServices::get_default_lang();
 		LangLoader::set_locale($locale);
 		InstallUrlBuilder::set_locale($locale);
 		$this->lang = LangLoader::get('install', 'install');
