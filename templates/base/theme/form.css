@@ -222,6 +222,7 @@ select:focus {
 
 .form-field-datetime .label-time input {
 	padding: 0.309em;
+	width: 100%;
 }
 
 .label-time:after {
