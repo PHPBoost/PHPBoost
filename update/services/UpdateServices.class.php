@@ -321,17 +321,20 @@ class UpdateServices
 		
 		foreach ($update_module_class as $class)
 		{
-			try {
-				$object = new $class['name']();
-				$object->execute();
-				$success = true;
-				$message = '';
-			} catch (Exception $e) {
-				$success = false;
-				$message = $e->getMessage();
+			$object = new $class['name']();
+			if (ModulesManager::module_is_upgradable($object->get_module_id()))
+			{
+				try {
+					$object->execute();
+					$success = true;
+					$message = '';
+				} catch (Exception $e) {
+					$success = false;
+					$message = $e->getMessage();
+				}
+				$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+				$updated_modules[] = $object->get_module_id();
 			}
-			$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
-			$updated_modules[] = $object->get_module_id();
 		}
 		
 		$modules_config = ModulesConfig::load();
