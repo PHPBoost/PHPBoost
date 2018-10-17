@@ -316,25 +316,12 @@ class UpdateServices
 	
 	private function update_modules()
 	{
-		$updated_modules = array();
-		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module');
+		$update_modules_class = array();
 		
-		foreach ($update_module_class as $class)
+		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module') as $class)
 		{
 			$object = new $class['name']();
-			if (ModulesManager::module_is_upgradable($object->get_module_id()))
-			{
-				try {
-					$object->execute();
-					$success = true;
-					$message = '';
-				} catch (Exception $e) {
-					$success = false;
-					$message = $e->getMessage();
-				}
-				$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
-				$updated_modules[] = $object->get_module_id();
-			}
+			$update_modules_class[$object->get_module_id()] = $class['name'];
 		}
 		
 		$modules_config = ModulesConfig::load();
@@ -344,8 +331,24 @@ class UpdateServices
 			{
 				if (ModulesManager::module_is_upgradable($id))
 				{
-					ModulesManager::upgrade_module($id, false);
-					$module->set_installed_version($module->get_configuration()->get_version());
+					if (in_array($id, array_keys($update_modules_class)))
+					{
+						$object = new $update_modules_class[$id]();
+						try {
+							$object->execute();
+							$success = true;
+							$message = '';
+						} catch (Exception $e) {
+							$success = false;
+							$message = $e->getMessage();
+						}
+						$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+					}
+					else
+					{
+						ModulesManager::upgrade_module($id, false);
+						$module->set_installed_version($module->get_configuration()->get_version());
+					}
 				}
 				else
 				{
