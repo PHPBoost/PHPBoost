@@ -67,7 +67,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 	private function insert_smallads_cats_data()
 	{
 		$messages = LangLoader::get('install', 'smallads');
-		PersistenceContext::get_querier()->insert(PREFIX . 'smallads_cats', array(
+		$this->querier->insert(PREFIX . 'smallads_cats', array(
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -150,10 +150,20 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['carousel']))
 			$this->db_utils->add_column(PREFIX . 'smallads', 'carousel', array('type' => 'text', 'length' => 65000));
 		
+		$columns = $this->db_utils->desc_table(PREFIX . 'smallads');
+		if (!isset($columns['title']['key']) || !$columns['title']['key'])
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `title` (`title`)');
+		if (!isset($columns['contents']['key']) || !$columns['contents']['key'])
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `contents` (`contents`)');
+		if (!isset($columns['description']['key']) || !$columns['description']['key'])
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `description` (`description`)');
+		if (!isset($columns['id_category']['key']) || !$columns['id_category']['key'])
+			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `id_category` (`id_category`)');
+		
 		$messages = LangLoader::get('install', 'smallads');
-		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'smallads', array('id', 'title'));
+		$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'title'));
 		while ($row = $result->fetch()) {
-			PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
+			$this->querier->update(PREFIX . 'smallads', array(
 				'rewrited_title' => Url::encode_rewrite($row['title']),
 				'smallad_type' => Url::encode_rewrite($messages['default.smallad.type']),
 				'id_category' => 1,
@@ -166,7 +176,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$menu_id = 0;
 		try {
-			$menu_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'id', 'WHERE title = "smallads/SmalladsModuleMiniMenu"');
+			$menu_id = $this->querier->get_column_value(DB_TABLE_MENUS, 'id', 'WHERE title = "smallads/SmalladsModuleMiniMenu"');
 		} catch (RowNotFoundException $e) {}
 
 		if ($menu_id)
@@ -192,17 +202,19 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 				closedir($dh);
 			}
 		}
-		rmdir($source);
+		$folder = new Folder($source);
+		if ($folder->exists())
+			$folder->delete();
 
 		// update thumbnail_url files to /upload/files
-		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'smallads', array('id', 'thumbnail_url'));
+		$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'thumbnail_url'));
 		while ($row = $result->fetch()) {
 			if ($row['thumbnail_url'] != "") {
-				PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
+				$this->querier->update(PREFIX . 'smallads', array(
 					'thumbnail_url' => '/upload/' . $row['thumbnail_url'],
 				), 'WHERE id = :id', array('id' => $row['id']));
 			} else {
-				PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
+				$this->querier->update(PREFIX . 'smallads', array(
 					'thumbnail_url' => '/smallads/templates/images/no-thumb.png',
 				), 'WHERE id = :id', array('id' => $row['id']));
 			}

@@ -316,27 +316,7 @@ class UpdateServices
 	
 	private function update_modules()
 	{
-		$modules_config = ModulesConfig::load();
-		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
-		{
-			if (ModulesManager::module_is_upgradable($id))
-			{
-				ModulesManager::upgrade_module($id, false);
-				$module->set_installed_version($module->get_configuration()->get_version());
-			}
-			else
-			{
-				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
-				{
-					ModulesManager::update_module($id, false, false);
-					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
-				}
-			}
-			
-			$modules_config->update($module);
-		}
-		ModulesConfig::save();
-		
+		$updated_modules = array();
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module');
 		
 		foreach ($update_module_class as $class)
@@ -351,7 +331,32 @@ class UpdateServices
 				$message = $e->getMessage();
 			}
 			$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+			$updated_modules[] = $object->get_module_id();
 		}
+		
+		$modules_config = ModulesConfig::load();
+		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
+		{
+			if (!in_array($id, $updated_modules))
+			{
+				if (ModulesManager::module_is_upgradable($id))
+				{
+					ModulesManager::upgrade_module($id, false);
+					$module->set_installed_version($module->get_configuration()->get_version());
+				}
+				else
+				{
+					if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
+					{
+						ModulesManager::update_module($id, false, false);
+						$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+					}
+				}
+				
+				$modules_config->update($module);
+			}
+		}
+		ModulesConfig::save();
 	}
 	
 	private function update_themes()
