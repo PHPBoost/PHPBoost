@@ -227,8 +227,8 @@ select:focus {
 
 .label-time:after {
 	position: absolute;
-	bottom: 87%;
-	right: 0.228em;
+	bottom: 18%;
+	left: 103%;
 	content: attr(data-time);
 }
 
