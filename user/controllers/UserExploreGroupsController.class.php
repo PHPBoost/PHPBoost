@@ -158,8 +158,10 @@ class UserExploreGroupsController extends AbstractController
 
 			$this->view->put_all(array(
 				'C_ONE_GROUP'   => false,
-				'NUMBER_MODOS'  => $number_modos,
+				'C_HAS_ADMINS'  => $number_admins > 0,
 				'NUMBER_ADMINS' => $number_admins,
+				'C_HAS_MODOS'   => $number_modos > 0,
+				'NUMBER_MODOS'  => $number_modos,
 				'C_HAS_GROUP'   => !empty($this->groups_cache->get_groups())
 			));
 		}

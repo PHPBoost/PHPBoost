@@ -63,6 +63,7 @@
 		# ENDIF #
 	</header>
 	<div class="content group-container">
+		# IF C_HAS_ADMINS #
 		<section id="list-members-container-admin" class="list-admins-container list-members-container selected">
 			<header>
 				<h2>
@@ -102,7 +103,8 @@
 			</div>
 			<footer></footer>
 		</section>
-	
+		# ENDIF #
+		# IF C_HAS_MODOS #
 		<section id="list-members-container-modo" class="list-modos-container list-members-container selected">
 			<header>
 				<h2>
@@ -142,6 +144,7 @@
 			</div>
 			<footer></footer>
 		</section>
+		# ENDIF #
 		
 		# START group #
 		<section id="list-members-container-{group.GROUP_ID}" class="list-group-container list-members-container">
