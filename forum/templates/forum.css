@@ -106,7 +106,6 @@ article footer ul.pagination {
 
 .del-msg {
 	cursor:pointer;
-	display:none;
 }
 
 .edit-pseudo {
@@ -133,6 +132,16 @@ article footer ul.pagination {
 	width: 99%;
 	border-top: none;
 }
+
+.moderation-type-block {
+	display: block;
+	text-align: center;
+}
+
+.moderation-type-block > span {
+	display: block;
+}
+
 
 /* --- creation de topic --- */
 #add_poll_field_link {

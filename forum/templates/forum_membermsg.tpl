@@ -16,7 +16,7 @@
 				# START list #
 				<div class="msg-position">
 					<div class="msg-title">
-						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
+						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
 						<span class="float-right">
 							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a>
 							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>

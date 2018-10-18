@@ -71,7 +71,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-post" class="forum-contents">
 			<header>
 				<h2>
-					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
+					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 
@@ -187,7 +187,7 @@
 				</form>
 			</div>
 			<footer>
-				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-chevron-circle-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
+				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 			</footer>
 		</article>
 

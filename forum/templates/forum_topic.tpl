@@ -125,7 +125,7 @@
 			<header>
 				<h2>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{U_FORUM_CAT} <i class="fa fa-chevron-circle-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+					{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
 					<span class="float-right">
 						# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
@@ -242,9 +242,9 @@
 								# ENDIF #
 								<p class="left"># IF msg.C_IS_USER #${LangLoader::get_message('registered_on', 'main')} : {msg.USER_REGISTERED_DATE_FULL}# ENDIF #</p>
 								# IF msg.C_USER_MSG #
-								<p class="left"><a href="{msg.U_USER_MSG}" class="small">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}</p>
+								<p class="left"><a href="{msg.U_USER_MSG}">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}</p>
 								# ELSE #
-								<p class="left"># IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}" class="small">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
+								<p class="left"># IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
 								# ENDIF #
 							</div>
 						</div>
@@ -325,7 +325,7 @@
 		# END msg #
 			<footer>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-				{U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+				{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
 				<span class="float-right">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #

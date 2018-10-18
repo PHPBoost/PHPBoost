@@ -189,7 +189,7 @@ $vars_tpl = array(
 	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 	'U_ONCHANGE'              => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-	'U_FORUM_CAT'             => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
+	'U_FORUM_CAT'             => !empty($forum_cats) ? $forum_cats : '',
 	'U_TITLE_T'               => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE'       => $LANG['require_text'],
 	'L_DELETE_MESSAGE'        => $LANG['alert_delete_msg'],
