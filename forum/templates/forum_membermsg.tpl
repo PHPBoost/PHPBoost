@@ -26,7 +26,7 @@
 						<div class="msg-top">
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
-									# IF list.C_USER_ONLINE #<i class="fa fa-online"></i># ELSE #<i class="fa fa-offline"></i># ENDIF ## IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 								</div>
 
 								# IF list.C_USER_RANK #<p class="center">{list.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
