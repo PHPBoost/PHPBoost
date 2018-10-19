@@ -192,13 +192,13 @@ class InstallationServices
 		$this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
 		$modules = $this->get_modules_not_installed();
 		if (!in_array($this->distribution_config['module_home_page'], $modules))
-			$this->distribution_config['module_home_page'] = $modules[0]->get_id();
+			$this->distribution_config['module_home_page'] = $modules[key($modules)]->get_id();
 		$themes = $this->get_themes_not_installed();
 		if (!in_array($this->distribution_config['default_theme'], $themes))
-			$this->distribution_config['default_theme'] = $themes[0]->get_id();
+			$this->distribution_config['default_theme'] = $themes[key($themes)]->get_id();
 		$langs = $this->get_langs_not_installed();
 		if (!in_array($this->distribution_config['default_lang'], $langs))
-			$this->distribution_config['default_lang'] = $langs[0]->get_id();
+			$this->distribution_config['default_lang'] = $langs[key($langs)]->get_id();
 	}
 
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
