@@ -327,9 +327,8 @@ class UpdateServices
 		$modules_config = ModulesConfig::load();
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
-			if (!in_array($id, $updated_modules))
-			{
-				if (ModulesManager::module_is_upgradable($id))
+			if (ModulesManager::module_is_upgradable($id))
+
 				{
 					if (in_array($id, array_keys($update_modules_class)))
 					{
@@ -360,7 +359,7 @@ class UpdateServices
 				}
 				
 				$modules_config->update($module);
-			}
+			
 		}
 		ModulesConfig::save();
 	}
