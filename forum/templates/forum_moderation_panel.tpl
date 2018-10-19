@@ -3,7 +3,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_ACCUEIL # <i class="fa fa-angle-double-right"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 				</h2>
 			</header>
 			<div class="content">

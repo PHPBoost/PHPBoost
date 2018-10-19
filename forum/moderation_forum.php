@@ -125,7 +125,7 @@ if ($action == 'alert') //Gestion des alertes
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
 		'L_FORUM'                   => $LANG['forum'],
 		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common'),
-		'C_ACCUEIL'                 => false,
+		'C_HOME'                    => false,
 		'L_ALERT'                   => $LANG['alert_management'],
 		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()),
 		'U_ACTION_ALERT'            => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token())
@@ -320,7 +320,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common'),
 		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
-		'C_ACCUEIL'                 => false,
+		'C_HOME'                    => false,
 		'L_ALERT'                   => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST'          => 'punish_moderation_panel',
 		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php' . url('?action=punish&amp;token=' . AppContext::get_session()->get_token()),
@@ -533,7 +533,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'L_LOGIN'                   => LangLoader::get_message('display_name', 'user-common'),
 		'L_MODERATION_PANEL'        => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM'        => $LANG['moderation_forum'],
-		'C_ACCUEIL'                 => false,
+		'C_HOME'                    => false,
 		'L_ALERT'                   => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST'          => 'warning_moderation_panel',
 		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php' . url('?action=warning&amp;token=' . AppContext::get_session()->get_token()),
@@ -659,7 +659,7 @@ else //Panneau de modération
 
 	$tpl->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,
-		'C_ACCUEIL'         => true,
+		'C_HOME'            => true,
 		'U_ACTION_HISTORY'  => url('.php?del_h=1&amp;token=' . AppContext::get_session()->get_token()),
 		'U_MORE_ACTION'     => !empty($get_more) ? url('.php?more=' . ($get_more + 100)) : url('.php?more=100')
 	));
