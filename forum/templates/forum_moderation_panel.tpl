@@ -90,7 +90,6 @@
 								# ENDIF #
 							</td>
 							<td class="forum-last-topic">
-								{action_list.U_USER_CONCERN}
 								# IF action_list.C_USER_CONCERN #
 								<a href="{action_list.U_USER_CONCERN" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
 								# ELSE #
@@ -442,7 +441,7 @@
 
 			</div>
 			<footer>
-				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a> &raquo; <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a>
+				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 			</footer>
 		</article>
 
