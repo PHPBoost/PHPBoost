@@ -26,7 +26,7 @@ smallads
 
 #Themes non officiels
 !templates
-# Ignore le répertoire des thèmes:
+# Ignore le répertoire des thèmes :
 templates/*.*
 templates/*
 # Sauf les thèmes suivants :
@@ -35,10 +35,10 @@ templates/*
 
 #Langues non officiels
 !lang
-# Ignore le répertoire des thèmes:
+# Ignore le répertoire des langues :
 lang/*.*
 lang/*
-# Sauf les thèmes suivants :
+# Sauf les langues suivantes :
 !lang/french
 !lang/english
 
