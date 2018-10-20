@@ -257,16 +257,16 @@
 							<div class="form-field"><input type="text" name="logo" id="logo" value="{LOGO}"></div>
 						</div>
 						<div class="form-element">
-							<label for="logo_transparency">{L_LOGO_TRANSPARENCY} (%)<span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
-							<div class="form-field"><input type="number" min="1" max="100" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> </div>
-						</div>
-						<div class="form-element">
 							<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT} ({L_UNIT_PX})<span class="field-description">{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></label>
 							<div class="form-field"><input type="number" min="1" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> </div>
 						</div>
 						<div class="form-element">
 							<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} ({L_UNIT_PX})<span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
 							<div class="form-field"><input type="number" min="1" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> </div>
+						</div>
+						<div class="form-element">
+							<label for="logo_transparency">{L_LOGO_TRANSPARENCY} (%)<span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
+							<div class="form-field"><input type="number" min="1" max="100" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> </div>
 						</div>
 					</div>
 				</fieldset>

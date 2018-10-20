@@ -204,39 +204,55 @@ class Gallery
 						default: 
 							$this->error = 'e_unsupported_format';
 					}
-					
-					if (function_exists('imagecopymerge'))
+
+					// On veut placer le logo en bas à droite, on calcule les coordonnées où on doit placer le logo sur la photo
+					$destination_x = $width - $width_s - $config->get_logo_horizontal_distance();
+					$destination_y =  $height - $height_s - $config->get_logo_vertical_distance();
+
+					// Création d'une nouvelle image
+       				$image_with_logo = imagecreatetruecolor($width, $height);
+
+					//Sauvegarde des informations de transparences
+					imagesavealpha($image_with_logo, true);
+
+					//Création d'un background transparent
+					$trans_background = imagecolorallocatealpha($image_with_logo, 0, 0, 0, 127);
+
+					//On ajoute le background sur l'image final
+					imagefill($image_with_logo, 0, 0, $trans_background);
+
+					//On ajoute l'image souhaité sur l'image final
+					imagecopy($image_with_logo, $destination, 0, 0, 0, 0, $width, $height);
+
+					//On ajoute le logo sur l'image final
+					//Si le logo est au format png ou gif, la gestion de transparence est faite dans le logo lui meme. Sinon elle est fait selon la configuration du module.
+					if ($ext_s == 'png' || $ext_s == 'gif') 
 					{
-						// On veut placer le logo en bas à droite, on calcule les coordonnées où on doit placer le logo sur la photo
-						$destination_x = $width - $width_s - $config->get_logo_horizontal_distance();
-						$destination_y =  $height - $height_s - $config->get_logo_vertical_distance();
-						
-						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $config->get_logo_transparency())) === false)
+						if (@imagecopy($image_with_logo, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s) === false)
 							$this->error = 'e_unabled_incrust_logo';
-						
-						// Make the background transparent
-						imagecolortransparent($destination, imagecolorallocate($destination, 0, 0, 0));
-						imagealphablending($destination, false); // turn off the alpha blending to keep the alpha channel
-						imagesavealpha($destination, true);
-						
-						switch ($ext) //Création de l'image suivant l'extension.
-						{
-							case 'jpg':
-							case 'jpeg':
-								imagejpeg($destination);
-								break;
-							case 'gif':
-								imagegif ($destination);
-								break;
-							case 'png':
-								imagepng($destination);
-								break;
-							default: 
-								$this->error = 'e_unabled_create_pics';
-						}
 					}
 					else
-						$this->error = 'e_unabled_incrust_logo';
+					{
+						if (@imagecopymerge($image_with_logo, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $config->get_logo_transparency())) === false)
+							$this->error = 'e_unabled_incrust_logo';
+					}
+
+					switch ($ext) //Création de l'image suivant l'extension.
+					{
+						case 'jpg':
+						case 'jpeg':
+							imagejpeg($image_with_logo);
+							break;
+						case 'gif':
+							imagegif ($image_with_logo);
+							break;
+						case 'png':
+							imagepng($image_with_logo);
+							break;
+						default: 
+							$this->error = 'e_unabled_create_pics';
+					}
+
 				}
 			}
 			else
