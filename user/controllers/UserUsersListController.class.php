@@ -50,14 +50,21 @@ class UserUsersListController extends AbstractController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
+		$number_admins = UserService::count_admin_members();
+		
+		$sql_html_table_model = array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['email']),
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['messages'], 'posted_msg'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['private_message'])
-		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
+		);
+		
+		if (AppContext::get_current_user()->is_admin())
+			$sql_html_table_model[] = new HTMLTableColumn('');
+		
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
 
@@ -69,15 +76,31 @@ class UserUsersListController extends AbstractController
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('style' => 'color: ' . $group_color) : array()), UserService::get_level_class($row['level']));
-
-			$results[] = new HTMLTableRow(array(
+			
+			$html_table_row = array(
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'basic-button smaller') : ''),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($posted_msg),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'basic-button smaller')),
-			));
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'basic-button smaller'))
+			);
+			
+			if (AppContext::get_current_user()->is_admin())
+			{
+				$user = new User();
+				$user->set_properties($row);
+				$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+
+				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
+					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+				else
+					$delete_link = new LinkHTMLElement('', '', array('title' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
+				
+				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
+			}
+			
+			$results[] = new HTMLTableRow($html_table_row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
