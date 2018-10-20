@@ -187,7 +187,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		}
 	}
 
-	public static function pics_to_upload()
+	public function pics_to_upload()
 	{
 		// Move pics content to upload and delete pics
 		$source = PATH_TO_ROOT . '/smallads/pics/';
