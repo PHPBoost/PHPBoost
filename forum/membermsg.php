@@ -183,7 +183,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				'USER_WARNING'     => $row['warning_percentage'],
 				'C_USER_PM'        => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 				'U_USER_PM'        => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
-				'USER_ONLINE'      => !empty($row['connect']),
+				'C_USER_ONLINE'    => !empty($row['connect']),
 				'C_GUEST'          => empty($row['display_name']),
 				'USER_PSEUDO'      => TextHelper::utf8_wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />'),
 				'LEVEL_CLASS'      => UserService::get_level_class($row['level']),

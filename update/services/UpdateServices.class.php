@@ -328,38 +328,36 @@ class UpdateServices
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
 			if (ModulesManager::module_is_upgradable($id))
-
+			{
+				if (in_array($id, array_keys($update_modules_class)))
 				{
-					if (in_array($id, array_keys($update_modules_class)))
-					{
-						$object = new $update_modules_class[$id]();
-						try {
-							$object->execute();
-							$success = true;
-							$message = '';
-						} catch (Exception $e) {
-							$success = false;
-							$message = $e->getMessage();
-						}
-						$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
+					$object = new $update_modules_class[$id]();
+					try {
+						$object->execute();
+						$success = true;
+						$message = '';
+					} catch (Exception $e) {
+						$success = false;
+						$message = $e->getMessage();
 					}
-					else
-					{
-						ModulesManager::upgrade_module($id, false);
-						$module->set_installed_version($module->get_configuration()->get_version());
-					}
+					$this->add_error_to_file($class['type'] . ' ' . $object->get_module_id(), $success, $message);
 				}
 				else
 				{
-					if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
-					{
-						ModulesManager::update_module($id, false, false);
-						$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
-					}
+					ModulesManager::upgrade_module($id, false);
+					$module->set_installed_version($module->get_configuration()->get_version());
 				}
-				
-				$modules_config->update($module);
+			}
+			else
+			{
+				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
+				{
+					ModulesManager::update_module($id, false, false);
+					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+				}
+			}
 			
+			$modules_config->update($module);
 		}
 		ModulesConfig::save();
 	}
