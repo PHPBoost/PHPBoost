@@ -37,22 +37,26 @@ class ModuleTreeLinksService
 		if ($tree_links !== null)
 		{
 			$actions_tree_links = $tree_links->get_actions_tree_links();
+			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
+			
 			$module = ModulesManager::get_module($module_name);
 			
-			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
 			$tpl->put_all(array(
 				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
 				'ID' => $module_name,
-				'MODULE_NAME' => $module->get_configuration()->get_name(),
+				'MODULE_NAME' => $module_name != 'user' ? $module->get_configuration()->get_name() : LangLoader::get_message('users', 'user-common'),
 			));
 			
-			$home_page = $module->get_configuration()->get_home_page();
-			if (!empty($home_page))
+			if ($module_name != 'user')
 			{
-				$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $module->get_id() . '/' . $home_page));
-				$tpl->assign_block_vars('element', array(), array(
-					'ELEMENT' => $module_home->export()
-				));
+				$home_page = $module->get_configuration()->get_home_page();
+				if (!empty($home_page))
+				{
+					$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $module->get_id() . '/' . $home_page));
+					$tpl->assign_block_vars('element', array(), array(
+						'ELEMENT' => $module_home->export()
+					));
+				}
 			}
 			
 			return self::display($actions_tree_links, $tpl);
@@ -115,7 +119,7 @@ class ModuleTreeLinksService
 				}
 			}
 		}
-				
+		
 		return $view;
 	}
 	

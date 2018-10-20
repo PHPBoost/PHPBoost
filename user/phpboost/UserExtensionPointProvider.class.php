@@ -28,9 +28,9 @@
 class UserExtensionPointProvider extends ExtensionPointProvider
 {
    public function __construct()
-    {
-        parent::__construct('user');
-    }
+	{
+		parent::__construct('user');
+	}
 
 	public function css_files()
 	{
@@ -40,13 +40,18 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	}
 
 	public function commands()
-    {
-    	return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
-    }
-    
+	{
+		return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
+	}
+	
 	public function user()
 	{
 		return new UserUserExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new UserTreeLinks();
 	}
 	
 	public function url_mappings()
