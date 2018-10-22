@@ -76,7 +76,8 @@ class CacheService
 		$files_to_delete = $folder->get_files($regex, true);
 		foreach ($files_to_delete as $file)
 		{
-			$file->delete();
+			if ($file->exists())
+				$file->delete();
 		}
 		
 		if ($delete_sub_folders)

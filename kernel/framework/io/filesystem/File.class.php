@@ -255,7 +255,7 @@ class File extends FileSystemElement
 	 */
 	public function get_last_modification_date()
 	{
-		return filemtime($this->get_path());
+		return @filemtime($this->get_path());
 	}
 
 	/**
@@ -264,7 +264,7 @@ class File extends FileSystemElement
 	 */
 	public function get_last_access_date()
 	{
-		return filectime($this->get_path());
+		return @filectime($this->get_path());
 	}
 
 	/**

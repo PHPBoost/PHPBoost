@@ -39,7 +39,7 @@ class AjaxCommentsDisplayController extends AbstractCommentsController
 	
 	private function get_number_comments_display()
 	{
-		return $this->provider->get_number_comments_display();
+		return !empty($this->provider) ? $this->provider->get_number_comments_display() : 0;
 	}
 }
 ?>

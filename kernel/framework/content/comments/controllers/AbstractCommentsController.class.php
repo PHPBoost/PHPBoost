@@ -38,7 +38,9 @@ class AbstractCommentsController extends AbstractController
 		$this->id_in_module = $request->get_poststring('id_in_module', '');
 		$this->topic_identifier = $request->get_poststring('topic_identifier', '');
 		$this->provider = CommentsProvidersService::get_provider($this->module_id, $this->topic_identifier);
-		$this->provider->set_id_in_module($this->id_in_module);
+		
+		if (!empty($this->provider))
+			$this->provider->set_id_in_module($this->id_in_module);
 	}
 	
 	public function is_authorized_read()
@@ -48,7 +50,7 @@ class AbstractCommentsController extends AbstractController
 	
 	public function is_display()
 	{
-		return $this->provider->is_display($this->get_module_id(), $this->get_id_in_module());
+		return !empty($this->provider) && $this->provider->is_display($this->get_module_id(), $this->get_id_in_module());
 	}
 
 	public function get_module_id()
@@ -68,7 +70,7 @@ class AbstractCommentsController extends AbstractController
 	
 	public function get_authorizations()
 	{
-		return $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module());
+		return !empty($this->provider) ? $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module()) : array();
 	}
 }
 ?>

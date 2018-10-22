@@ -166,7 +166,7 @@ class Feed
 	 */
 	public function read()
 	{
-		if ($this->is_in_cache())
+		if ($this->is_in_cache() && isset($__feed_object))
 		{
 			$include = include($this->get_cache_file_name());
 			if ($include)
@@ -294,7 +294,7 @@ class Feed
 		if ($feed_data_cache_file_exists)
 		{
 			include $feed_data_cache_file;
-			if ($__feed_object)
+			if (isset($__feed_object) && !empty($__feed_object))
 			{
 				$feed = new Feed($module_id, $name);
 				$feed->load_data($__feed_object);
