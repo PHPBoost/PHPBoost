@@ -53,7 +53,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 				$this->update_smallads_table();
 			
 			$this->delete_old_mini_menu();
-			$this->pics_to_upload();
+			self::pics_to_upload();
 		}
 		
 		$this->delete_old_files();
@@ -187,7 +187,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		}
 	}
 
-	public function pics_to_upload()
+	private static function pics_to_upload()
 	{
 		// Move pics content to upload and delete pics
 		$source = PATH_TO_ROOT . '/smallads/pics/';
