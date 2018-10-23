@@ -70,7 +70,7 @@ class AbstractCommentsController extends AbstractController
 	
 	public function get_authorizations()
 	{
-		return !empty($this->provider) ? $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module()) : array();
+		return !empty($this->provider) ? $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module()) : new CommentsAuthorizations();
 	}
 }
 ?>
