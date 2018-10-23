@@ -349,7 +349,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			$graphical_environment->set_page_title($this->lang['articles'], '', $page);
 		
 		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort, $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
@@ -358,7 +358,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $sort_field, $sort_mode, $category->get_id() == $this->category->get_id() ? $page : 1)));
+				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $page : 1)));
 		}
 		
 		return $response;
