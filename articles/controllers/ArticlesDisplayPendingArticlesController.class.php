@@ -33,6 +33,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private $lang;
 	private $view;
 	private $form;
+	private $config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -42,7 +43,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	private function init()
@@ -50,6 +51,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = ArticlesConfig::load();
 	}
 	
 	private function build_sorting_form($field, $mode)
@@ -80,19 +82,18 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->form = $form;
 	}
 	
-	private function build_view($request)
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$config = ArticlesConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		
-		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 		
 		if (in_array($field, array(Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE])))
 			$sort_field = array_search($field, Article::SORT_FIELDS_URL_VALUES);
@@ -108,7 +109,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
+		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
@@ -132,13 +133,13 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'C_ARTICLES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
-			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
 		));
 		
 		if ($nbr_articles_pending > 0)
 		{
-			$number_columns_display_per_line = $config->get_number_cols_display_per_line();
+			$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
@@ -230,19 +231,22 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		return $pagination;
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['articles.pending_articles'], $this->lang['articles']);
+		$graphical_environment->set_page_title($this->lang['articles.pending_articles'], $this->lang['articles'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
-	
+		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
+		
 		return $response;
 	}
 }

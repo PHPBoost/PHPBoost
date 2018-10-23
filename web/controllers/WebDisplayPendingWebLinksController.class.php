@@ -33,6 +33,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 {
 	private $tpl;
 	private $lang;
+	private $config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -42,7 +43,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	public function init()
@@ -50,17 +51,17 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$this->lang = LangLoader::get('common', 'web');
 		$this->tpl = new FileTemplate('web/WebDisplaySeveralWebLinksController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->config = WebConfig::load();
 	}
 	
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$config = WebConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
@@ -71,11 +72,11 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
+		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 		
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(WebLink::ASC, WebLink::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(WebLink::ASC, WebLink::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 		
 		if (in_array($field, array(WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_ALPHABETIC], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_DATE])))
 			$sort_field = array_search($field, WebLink::SORT_FIELDS_URL_VALUES);
@@ -95,14 +96,14 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 		
-		$number_columns_display_per_line = $config->get_columns_number_per_line();
+		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
 
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
+			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line,
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('web'),
@@ -201,18 +202,21 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['web.pending'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['web.pending'], $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_pending(AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->lang['web.pending'], WebUrlBuilder::display_pending());
+		$breadcrumb->add($this->lang['web.pending'], WebUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 		
 		return $response;
 	}

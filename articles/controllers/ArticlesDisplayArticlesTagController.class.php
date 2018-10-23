@@ -43,7 +43,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	private function init()
@@ -68,19 +68,19 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 					$this->keyword = ArticlesService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		return $this->keyword;
 	}
 	
-	private function build_view($request)
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
 		
@@ -106,7 +106,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
+		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
@@ -166,7 +166,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$i = 1;
 			foreach ($sources as $name => $url)
-			{       
+			{
 				$this->view->assign_block_vars('articles.sources', array(
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
@@ -261,18 +261,21 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['articles']);
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['articles'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['articles.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'),AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'),AppContext::get_request()->get_getint('page', 1)));
+		$breadcrumb->add($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		return $response;
 	}

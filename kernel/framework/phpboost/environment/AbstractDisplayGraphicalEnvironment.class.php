@@ -88,11 +88,11 @@
 		return $this->get_seo_meta_data()->get_title();
 	}
 	
-	public function set_page_title($title, $section = '')
+	public function set_page_title($title, $section = '', $page = 1)
 	{
-		$this->get_seo_meta_data()->set_title($title, $section);
-			
-		defined('TITLE') or define('TITLE', $title);
+		$this->get_seo_meta_data()->set_title($title, $section, $page);
+		
+		defined('TITLE') or define('TITLE', $this->get_page_title());
 		
 		self::set_page_localization($this->get_page_title(), $this->get_location_id());
 	}

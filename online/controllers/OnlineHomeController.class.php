@@ -136,7 +136,7 @@ class OnlineHomeController extends ModuleController
 		
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['online']);
+		$graphical_environment->set_page_title($this->lang['online'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(OnlineUrlBuilder::home($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

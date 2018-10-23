@@ -42,9 +42,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	private function init()
@@ -58,14 +58,13 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$this->content_management_config = ContentManagementConfig::load();
 	}
 	
-	private function build_view()
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$request = AppContext::get_request();
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-		$page = AppContext::get_request()->get_getint('page', 1);
-		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
+		$page = $request->get_getint('page', 1);
+		$subcategories_page = $request->get_getint('subcategories_page', 1);
 		
 		$sort_mode = TextHelper::strtoupper($mode);
 		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
@@ -335,20 +334,23 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		
 		if ($this->category->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles']);
+			$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['articles']);
+			$graphical_environment->set_page_title($this->lang['articles'], '', $page);
 		
 		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
-	
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort, $page));
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
 		
@@ -356,7 +358,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
+				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $sort_field, $sort_mode, $category->get_id() == $this->category->get_id() ? $page : 1)));
 		}
 		
 		return $response;

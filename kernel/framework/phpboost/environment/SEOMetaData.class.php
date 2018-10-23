@@ -40,18 +40,18 @@ class SEOMetaData
 	private $page_type = 'website';
 	private $additionnal_properties = array();
 	
-	public function set_title($title, $section = '')
+	public function set_title($title, $section = '', $page = 1)
 	{
-		$this->title = $title;
+		$this->title = $title . ($page > 1 ? ' - ' . LangLoader::get_message('page', 'main') . ' ' . $page);
 
 		if (!Environment::home_page_running())
 		{
-			$this->full_title = (empty($section) ? $title : $title . ' - ' . $section) . ' - ' . GeneralConfig::load()->get_site_name();
+			$this->full_title = (empty($section) ? $this->title : $this->title . ' - ' . $section);
 		}
 		else
 		{
 			// HomePage
-			$this->full_title = GeneralConfig::load()->get_site_name() . ' - ' . $title;
+			$this->full_title = GeneralConfig::load()->get_site_name() . ' - ' . $this->title;
 		}
 	}
 	

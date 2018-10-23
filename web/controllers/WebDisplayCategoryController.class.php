@@ -47,7 +47,7 @@ class WebDisplayCategoryController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	private function init()
@@ -66,8 +66,8 @@ class WebDisplayCategoryController extends ModuleController
 		
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-		$page = AppContext::get_request()->get_getint('page', 1);
-		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
+		$page = $request->get_getint('page', 1);
+		$subcategories_page = $request->get_getint('subcategories_page', 1);
 		
 		$subcategories = WebService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), WebService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
@@ -304,19 +304,22 @@ class WebDisplayCategoryController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
 		
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
 		
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
@@ -325,7 +328,7 @@ class WebDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $sort_field, $sort_mode, $category->get_id() == $this->get_category()->get_id() ? $page : 1));
 		}
 		
 		return $response;

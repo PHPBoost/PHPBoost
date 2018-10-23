@@ -33,6 +33,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 {
 	private $tpl;
 	private $lang;
+	private $config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -42,7 +43,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	public function init()
@@ -50,17 +51,17 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		$this->lang = LangLoader::get('common', 'faq');
 		$this->tpl = new FileTemplate('faq/FaqDisplaySeveralFaqQuestionsController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->config = FaqConfig::load();
 	}
 	
 	public function build_view(HTTPRequestCustom $request)
 	{
-		$config = FaqConfig::load();
 		$authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$mode = $request->get_getstring('sort', $config->get_items_default_sort_mode());
-		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$config->get_items_default_sort_field()]);
+		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(FaqQuestion::ASC, FaqQuestion::DESC)) ? $sort_mode : $config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, array(FaqQuestion::ASC, FaqQuestion::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 		
 		if (in_array($field, FaqQuestion::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, FaqQuestion::SORT_FIELDS_URL_VALUES);
@@ -135,18 +136,20 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['faq.pending'], $this->lang['module_title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending($sort_field, $sort_mode));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
-		$breadcrumb->add($this->lang['faq.pending'], FaqUrlBuilder::display_pending());
+		$breadcrumb->add($this->lang['faq.pending'], FaqUrlBuilder::display_pending($sort_field, $sort_mode));
 		
 		return $response;
 	}

@@ -135,7 +135,7 @@ class CalendarDisplayEventController extends ModuleController
 		
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($event->get_content()->get_title(), $this->lang['module_title']);
+		$graphical_environment->set_page_title($event->get_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());

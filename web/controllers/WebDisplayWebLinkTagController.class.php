@@ -48,7 +48,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return $this->generate_response($request);
 	}
 	
 	public function init()
@@ -78,7 +78,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
+		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 		
 		$sort_mode = TextHelper::strtoupper($mode);
@@ -244,18 +244,21 @@ class WebDisplayWebLinkTagController extends ModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
+		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
+		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
-		$breadcrumb->add($this->get_keyword()->get_name(), WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$breadcrumb->add($this->get_keyword()->get_name(), WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		return $response;
 	}
