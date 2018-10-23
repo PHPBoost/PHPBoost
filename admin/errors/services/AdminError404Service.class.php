@@ -43,10 +43,11 @@ class AdminError404Service
 
 	public static function register_404()
 	{
-		if (!empty($_SERVER['REQUEST_URI']) && (preg_match('bingbot|Google', $_SERVER['HTTP_USER_AGENT']) || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)))
+		$request = AppContext::get_request();
+		if (!empty($_SERVER['REQUEST_URI']) && ($request->is_search_engine_robot() || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)))
 		{
 			$requested_url = TextHelper::substr($_SERVER['REQUEST_URI'], 0, 255);
-			$from_url = (string)TextHelper::substr(AppContext::get_request()->get_url_referrer(), 0, 255);
+			$from_url = (string)TextHelper::substr($request->get_url_referrer(), 0, 255);
 			$error_404 = null;
 			$result = AdminError404DAO::instance()->find_by_criteria('WHERE requested_url=:requested_url AND from_url=:from_url', array('requested_url' => $requested_url, 'from_url' => $from_url));
 			if ($result->get_rows_count() > 0 && $result->has_next())
