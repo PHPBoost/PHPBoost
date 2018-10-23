@@ -166,10 +166,10 @@ class Feed
 	 */
 	public function read()
 	{
-		if ($this->is_in_cache() && isset($__feed_object))
+		if ($this->is_in_cache())
 		{
 			$include = include($this->get_cache_file_name());
-			if ($include)
+			if ($include && isset($__feed_object) && !empty($__feed_object))
 			{
 				$this->data = $__feed_object;
 				return $this->export();
