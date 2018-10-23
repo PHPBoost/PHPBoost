@@ -128,7 +128,7 @@ class Search
 
 				foreach ($modules as $module_name => $options)
 				{
-					if (!$this->is_in_cache($module_name))
+					if (!$this->is_in_cache($module_name) && !$this->id_search[$module_name])
 					{
 						$reqInsert .= "('" . $this->id_user . "','" . $module_name . "','" . $this->search . "','" . md5(implode('|', $options)) . "','" . time() . "', '0'),";
 						// Executes 10 insertions
