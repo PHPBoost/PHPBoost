@@ -42,7 +42,7 @@ class SEOMetaData
 	
 	public function set_title($title, $section = '', $page = 1)
 	{
-		$this->title = $title . ($page > 1 ? ' - ' . LangLoader::get_message('page', 'main') . ' ' . $page);
+		$this->title = $title . ($page > 1 ? ' - ' . LangLoader::get_message('page', 'main') . ' ' . $page : '');
 
 		if (!Environment::home_page_running())
 		{
