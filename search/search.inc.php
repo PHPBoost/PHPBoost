@@ -85,7 +85,7 @@ function get_search_results($search_string, &$search_modules, &$modules_args, &$
 function get_html_results(&$results, &$html_results, &$results_name)
 {
 	$provider_service = AppContext::get_extension_provider_service();
-	$display_all_results = ($results_name == 'all' ? true : false);
+	$display_all_results = ($results_name == 'all');
 	
 	$tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
 	$tpl_results->assign_vars(Array(
@@ -141,7 +141,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 					));
 				}
 				$tpl_result->assign_vars(array(
-					'TITLE' => $results[$num_item]['title'],
+					'TITLE' => stripslashes($results[$num_item]['title']),
 					'U_LINK' => url($results[$num_item]['link'])
 				));
 				
