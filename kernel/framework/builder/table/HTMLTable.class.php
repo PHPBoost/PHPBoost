@@ -147,7 +147,7 @@ class HTMLTable extends AbstractHTMLElement
 			}
 
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
-            $form->add_button(new FormButtonButton(LangLoader::get_message('apply', 'common'), 'return ' . $submit_function . '()', 'submit'));
+			$form->add_button(new FormButtonButton(LangLoader::get_message('apply', 'common'), 'return ' . $submit_function . '()', 'submit'));
 
 			$this->tpl->put_all(array(
 				'C_FILTERS' => $has_filters,
@@ -324,6 +324,11 @@ class HTMLTable extends AbstractHTMLElement
 	private function get_nb_pages()
 	{
 		return ceil($this->nb_rows / $this->get_nb_rows_per_page());
+	}
+
+	public function get_page_number()
+	{
+		return $this->page_number;
 	}
 
 	public function get_nb_rows_per_page()

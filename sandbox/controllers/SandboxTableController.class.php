@@ -36,10 +36,9 @@ class SandboxTableController extends ModuleController
 
 		$this->init();
 
-		$table = $this->build_table();
-		$this->view->put('table', $table->display());
+		$current_page = $this->build_table();
 
-		return $this->generate_response();
+		return $this->generate_response($current_page);
 	}
 
 	private function init()
@@ -65,24 +64,24 @@ class SandboxTableController extends ModuleController
 
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
 		$table->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', 'login Equals', $options));
-        $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`u'));
-        $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', 'login Begins with (no regex)'));
-        $table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`u'));
-        $table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter5', 'login Ends with (no regex)'));
-        $table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter6', 'login Like (regex)', '`^toto`u'));
-        $table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter7', 'login Like (no regex)'));
-        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter8', 'id >'));
-        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter9', 'id > (lower=3)', 3));
-        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter10', 'id > (upper=3)', HTMLTableNumberComparatorSQLFilter::NOT_BOUNDED, 3));
-        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter11', 'id > (lower=1, upper=3)', 1, 3));
-        $table->add_filter(new HTMLTableLessThanSQLFilter('user_id', 'filter12', 'id <'));
-        $table->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
-        $table->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
-        $table->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
+		$table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`u'));
+		$table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', 'login Begins with (no regex)'));
+		$table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`u'));
+		$table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter5', 'login Ends with (no regex)'));
+		$table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter6', 'login Like (regex)', '`^toto`u'));
+		$table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter7', 'login Like (no regex)'));
+		$table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter8', 'id >'));
+		$table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter9', 'id > (lower=3)', 3));
+		$table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter10', 'id > (upper=3)', HTMLTableNumberComparatorSQLFilter::NOT_BOUNDED, 3));
+		$table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter11', 'id > (lower=1, upper=3)', 1, 3));
+		$table->add_filter(new HTMLTableLessThanSQLFilter('user_id', 'filter12', 'id <'));
+		$table->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
+		$table->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
+		$table->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
 
 		$html_table = new HTMLTable($table);
 
-        $results = array();
+		$results = array();
 		$result = $table->get_sql_results();
 		foreach ($result as $row)
 		{
@@ -96,8 +95,9 @@ class SandboxTableController extends ModuleController
 			));
 		}
 		$html_table->set_rows($table->get_number_of_matching_rows(), $results);
-
-		return $html_table;
+		$this->view->put('table', $html_table->display());
+		
+		return $table->get_page_number();
 	}
 
 	private function check_authorizations()
@@ -109,11 +109,11 @@ class SandboxTableController extends ModuleController
 		}
 	}
 
-	private function generate_response()
+	private function generate_response($page = 1)
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.table.builder'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->lang['title.table.builder'], $this->lang['module.title'], $page);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());

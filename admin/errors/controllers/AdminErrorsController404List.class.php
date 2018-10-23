@@ -43,9 +43,9 @@ class AdminErrorsController404List extends AdminController
 	{
 		$this->init();
 		
-		$this->build_table();
+		$current_page = $this->build_table();
 		
-		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list']);
+		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list'], $current_page);
 	}
 
 	private function init()
@@ -93,6 +93,8 @@ class AdminErrorsController404List extends AdminController
 		}
 		else
 			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
+		
+		return $table->get_page_number();
 	}
 	
 	private function build_form()

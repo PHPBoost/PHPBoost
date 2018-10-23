@@ -39,9 +39,9 @@ class CalendarEventsListController extends ModuleController
 		
 		$this->init();
 		
-		$this->build_table();
+		$current_page = $this->build_table();
 		
-		return $this->generate_response();
+		return $this->generate_response($current_page);
 	}
 	
 	private function init()
@@ -130,6 +130,8 @@ class CalendarEventsListController extends ModuleController
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
+		
+		return $table->get_page_number();
 	}
 	
 	private function check_authorizations()
@@ -167,11 +169,11 @@ class CalendarEventsListController extends ModuleController
 		return $label;
 	}
 	
-	private function generate_response()
+	private function generate_response($page = 1)
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.events_list'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['calendar.events_list'], $this->lang['module_title'], $page);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());

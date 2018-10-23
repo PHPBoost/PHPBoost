@@ -36,9 +36,9 @@ class NewsManageController extends AdminModuleController
 		
 		$this->init();
 		
-		$this->build_table();
+		$current_page = $this->build_table();
 		
-		return $this->generate_response();
+		return $this->generate_response($current_page);
 	}
 	
 	private function init()
@@ -101,6 +101,8 @@ class NewsManageController extends AdminModuleController
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
+		
+		return $table->get_page_number();
 	}
 	
 	private function check_authorizations()
@@ -112,12 +114,12 @@ class NewsManageController extends AdminModuleController
 		}
 	}
 	
-	private function generate_response()
+	private function generate_response($page = 1)
 	{
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['news.management'], $this->lang['news']);
+		$graphical_environment->set_page_title($this->lang['news.management'], $this->lang['news'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::manage_news());
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

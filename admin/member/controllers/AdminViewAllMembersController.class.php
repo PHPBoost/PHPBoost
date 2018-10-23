@@ -32,10 +32,10 @@ class AdminViewAllMembersController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-
-		$this->build_table();
 		
-		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-user-common'));
+		$current_page = $this->build_table();
+		
+		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-user-common'), $current_page);
 	}
 	
 	private function init()
@@ -105,6 +105,8 @@ class AdminViewAllMembersController extends AdminController
 			'FORM' => $this->build_form()->display(),
 			'table' => $table->display()
 		));
+		
+		return $table->get_page_number();
 	}
 }
 ?>

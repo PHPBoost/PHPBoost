@@ -27,7 +27,7 @@
 
 class AdminSmileysDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view, $title_page)
+	public function __construct($view, $title_page, $page = 1)
 	{
 		parent::__construct($view);
 		
@@ -38,7 +38,7 @@ class AdminSmileysDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['add_smiley'], AdminSmileysUrlBuilder::add());
 		
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+		$env->set_page_title($title_page, '', $page);
 	}
 }
 ?>

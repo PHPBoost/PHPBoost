@@ -39,9 +39,9 @@ class AdminLoggedErrorsControllerList extends AdminController
 	{
 		$this->init();
 		
-		$this->build_table();
+		$current_page = $this->build_table();
 		
-		return new AdminErrorsDisplayResponse($this->view, $this->lang['logged_errors']);
+		return new AdminErrorsDisplayResponse($this->view, $this->lang['logged_errors'], $current_page);
 	}
 
 	private function init()
@@ -98,6 +98,8 @@ class AdminLoggedErrorsControllerList extends AdminController
 		}
 		else
 			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
+		
+		return $table->get_page_number();
 	}
 	
 	private function build_form()

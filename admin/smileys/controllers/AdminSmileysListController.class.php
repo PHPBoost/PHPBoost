@@ -34,9 +34,9 @@ class AdminSmileysListController extends AdminController
 	{
 		$this->init();
 		
-		$this->build_table();
+		$current_page = $this->build_table();
 		
-		return new AdminSmileysDisplayResponse($this->view, $this->lang['smiley_management']);
+		return new AdminSmileysDisplayResponse($this->view, $this->lang['smiley_management'], $current_page);
 	}
 
 	private function init()
@@ -73,6 +73,8 @@ class AdminSmileysListController extends AdminController
 		$table->set_rows(count($results), $results);
 		
 		$this->view->put('table', $table->display());
+		
+		return $table->get_page_number();
 	}
 }
 ?>
