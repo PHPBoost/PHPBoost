@@ -64,7 +64,7 @@
 				</div>
 				# ENDIF #
 				<div class="forget-pass-container">
-					<a class="forgot-pass small" rel="nofollow" href="${relative_url(UserUrlBuilder::forget_password())}">
+					<a class="forgot-pass small" href="${relative_url(UserUrlBuilder::forget_password())}">
 						<i class="fa fa-question-circle"></i><span>${LangLoader::get_message('forget-password', 'user-common')}</span>
 					</a>
 				</div>
@@ -95,31 +95,31 @@
 					</a>
 				</li>
 				<li class="connect-element connect-pm# IF C_HAS_PM # connect-event# ENDIF #">
-					<a href="{U_USER_PM}" class="small" rel="nofollow">
+					<a href="{U_USER_PM}" class="small">
 						<i class="fa fa-envelope# IF C_HAS_PM # blink# ENDIF #"></i><span>{L_PM_PANEL}</span># IF C_HAS_PM #<span class="blink">({NUMBER_PM})</span># ENDIF #
 					</a>
 				</li>
 				# IF C_ADMIN_AUTH #
 				<li class="connect-element connect-admin# IF C_UNREAD_ALERT # connect-event# ENDIF #">
-					<a href="${relative_url(UserUrlBuilder::administration())}" class="small" rel="nofollow">
+					<a href="${relative_url(UserUrlBuilder::administration())}" class="small">
 						<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i><span>{L_ADMIN_PANEL}</span># IF C_UNREAD_ALERT #<span class="blink">({NUMBER_UNREAD_ALERTS})</span># ENDIF #
 					</a>
 				</li>
 				# ENDIF #
 				# IF C_MODERATOR_AUTH #
 				<li class="connect-element connect-modo">
-					<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small" rel="nofollow">
+					<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">
 						<i class="fa fa-legal"></i><span>{L_MODO_PANEL}</span>
 					</a>
 				</li>
 				# ENDIF #
 				<li class="connect-element connect-contribution# IF C_UNREAD_CONTRIBUTION # connect-event# ENDIF #">
-					<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small" rel="nofollow">
+					<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">
 						<i class="fa fa-file-alt# IF C_UNREAD_CONTRIBUTION # blink# ENDIF #"></i><span>{L_CONTRIBUTION_PANEL}</span># IF C_UNREAD_CONTRIBUTION #<span class="blink">({NUMBER_UNREAD_CONTRIBUTIONS})</span># ENDIF #
 					</a>
 				</li>
 				<li class="connect-element connect-disconnect">
-					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small" rel="nofollow">
+					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small">
 						<i class="fa fa-sign-out"></i><span>{@disconnect}</span>
 					</a>
 				</li>

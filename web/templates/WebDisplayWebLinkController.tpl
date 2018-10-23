@@ -49,7 +49,7 @@
 							# ENDIF #
 						# ENDIF #
 						# IF C_VISIBLE #
-							<a href="{U_VISIT}" rel="nofollow" class="basic-button">
+							<a href="{U_VISIT}" class="basic-button">
 								<i class="fa fa-globe"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
