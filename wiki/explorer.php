@@ -50,9 +50,9 @@ foreach (WikiCategoriesCache::load()->get_categories() as $key => $cat)
 	if ($cat['id_parent'] == 0)
 	{
 		$template->assign_block_vars('list_cats', array(
-			'KEY' =>  $key,
+			'KEY'       =>  $key,
 			'ID_PARENT' => $cat['id_parent'],
-			'TITLE' => stripslashes($cat['title'])
+			'TITLE'     => stripslashes($cat['title'])
 		));
 	}
 }
@@ -71,10 +71,11 @@ while ($row = $result->fetch())
 $result->dispose();
 
 $template->put_all(array(
-	'TITLE' => $LANG['wiki_explorer'],
-	'L_ROOT' => $LANG['wiki_root'],
+	'TITLE'        => $LANG['wiki_explorer'],
+	'L_ROOT'       => $LANG['wiki_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
-	'L_CATS' => $LANG['wiki_cats_tree'],
+	'L_CATS'       => $LANG['wiki_cats_tree'],
+	'L_CONTENTS'   => $LANG['wiki_contents'],
 ));
 
 $result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
@@ -95,9 +96,9 @@ while ($row = $result->fetch())
 $result->dispose();
 $template->put_all(array(
 	'SELECTED_CAT' => 0,
-	'CAT_0' => 'selected',
-	'CAT_LIST' => '',
-	'CURRENT_CAT' => $LANG['wiki_no_selected_cat']
+	'CAT_0'        => 'selected',
+	'CAT_LIST'     => '',
+	'CURRENT_CAT'  => $LANG['wiki_no_selected_cat']
 ));
 
 echo $template->render();

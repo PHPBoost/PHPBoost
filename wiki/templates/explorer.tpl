@@ -6,9 +6,10 @@
 		</script>
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
-<div class="explorer">
+<section id="module-wiki-explorer" class="explorer">
+	<h1>{TITLE}</h1>
 	<div class="cats">
-		<h2>{TITLE}</h2>
+		<h2>{L_CATS}</h2>
 		<div class="content">
 			<ul class="no-list">
 				<li><a id="class-0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="fa fa-folder"></i> {L_ROOT}</a>
@@ -31,7 +32,7 @@
 		</div>
 	</div>
 	<div class="files">
-		<h2>{L_CATS}</h2>
+		<h2>{L_CONTENTS}</h2>
 		<div class="content" id="cat-contents">
 			<ul>
 				# START list_cats #
@@ -47,4 +48,4 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</section>

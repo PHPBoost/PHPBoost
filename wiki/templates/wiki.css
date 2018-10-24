@@ -98,6 +98,16 @@ ul.no-list a i.fa {
 	margin: 0 0.228em 0 0;
 }
 
+.explorer h1,
+.wiki-history h1 {
+	font-size: 1.456em;
+	margin-bottom: 1.309rem;
+}
+
+.explorer h2 {
+	font-size: 1.228em;
+}
+
 /* Main categories - Last articles */
 
 .wiki-list-top {

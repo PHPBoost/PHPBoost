@@ -237,8 +237,8 @@ $LANG['wiki_desc'] = 'Home text';
 //explorateur du wiki
 $LANG['wiki_explorer'] = 'Wiki explorer';
 $LANG['wiki_root'] = 'Wiki root';
-$LANG['wiki_root_contents'] = 'Root content';
-$LANG['wiki_cats_tree'] = 'Wiki category tree';
+$LANG['wiki_contents'] = 'Content';
+$LANG['wiki_cats_tree'] = 'Category tree';
 $LANG['wiki_explorer_short'] = 'Explorer';
 
 ?>

@@ -1,6 +1,7 @@
+	<section id="module-wiki-history" class="wiki-history">
 		# IF C_ARTICLE #
+		<h1>{L_HISTORY} : <a href="{U_ARTICLE}">{TITLE}</a></h1>
 		<table id="table">
-			<caption>{L_HISTORY}: <a href="{U_ARTICLE}">{TITLE}</a></caption>
 			<thead>
 				<tr>
 					<th>
@@ -44,6 +45,7 @@
 			</tbody>
 		</table>
 		# ELSE #
+		<h1>{L_HISTORY}</h1>
 		<table id="table2">
 			<caption>{L_HISTORY}</caption>
 			<thead>
@@ -89,4 +91,4 @@
 			</tbody>
 		</table>
 		# END IF #
-		
+	</section>

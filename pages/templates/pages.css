@@ -11,6 +11,16 @@ ol {
 	padding-left: 1em;
 }
 
+.article-pages header h1 {
+	text-align: left;
+	font-size: 1.456em;
+}
+
+.article-pages header .actions {
+	font-size: 0.809em;
+	padding-top: 0.456em;
+}
+
 .article-pages .options {
 	float: left;
 	width: auto;
