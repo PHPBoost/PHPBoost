@@ -99,6 +99,9 @@ class TinyMCEParser extends ContentFormattingParser
 		//Prepare the content (HTML modifications such as entities treatment)
 		$this->prepare_content();
 
+		//Replace smilies code by smilies images
+		$this->parse_smilies();
+
 		//Module eventual special tags replacement
 		$this->parse_module_special_tags();
 
@@ -110,9 +113,6 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			$this->parse_tables();
 		}
-
-		//Replace smilies code by smilies images
-		$this->parse_smilies();
 
 		//Parse the tags which are not supported by TinyMCE but expected in BBCode
 		$this->parse_bbcode_tags();
