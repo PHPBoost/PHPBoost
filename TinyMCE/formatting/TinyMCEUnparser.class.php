@@ -149,7 +149,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" title="([^"]+)" class="smiley" />`iu',
-		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
+		'<img title="$3" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
 
 	/**

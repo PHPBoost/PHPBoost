@@ -605,12 +605,12 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="(.+)?/images/smileys/([^"]+)" alt="" /&gt;`iu',
-			'<img src="/images/smileys/$3" title="$1" alt="$1" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img(?: class="smiley")? title="([^"]+)" src="(.+)?/images/smileys/([^"]+)"(?: alt="([^"]+)")? /&gt;`iu',
-			'<img src="/images/smileys/$3" title="$1" alt="$1" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`iu',
-			'<img src="/images/smileys/$2" title="$3" alt="$3" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img title="([^"]+)" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)"(?: border="0")? /&gt;`iu',
+			'<img src="/images/smileys/$2" alt="$3" title="$4" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)"(?: title="([^"]+)?")? /&gt;`iu',
+			'<img src="/images/smileys/$2" alt="$3" title="$4" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)"(?: title="([^"]+)?")? class="smiley" /&gt;`iu',
+			'<img src="/images/smileys/$2" alt="$3" title="$4" class="smiley" />', $this->content);
 
 		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
