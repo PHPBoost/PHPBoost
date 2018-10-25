@@ -54,10 +54,10 @@ $lang = array(
 	'installation.confirmRestart' => 'Etes-vous certain de vouloir recommencer l\'installation ?',
 	'language.change' => 'Changer de langue',
 	'change' => 'Changer',
-    'step.previous' => 'Etape précédente',
-    'step.next' => 'Etape suivante',
-    'yes' => 'Oui',
-    'no' => 'Non',
+	'step.previous' => 'Etape précédente',
+	'step.next' => 'Etape suivante',
+	'yes' => 'Oui',
+	'no' => 'Non',
 	'unknown' => 'Inconnu',
 	'generatedBy' => 'Généré par %s',
 	'poweredBy' => 'Boosté par',
@@ -69,7 +69,7 @@ $lang = array(
 //Introduction
 	'step.welcome.title' => 'Préambule',
 	'step.welcome.message' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
-    'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
+	'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement, l\'équipe PHPBoost</p>',
 	'step.welcome.distribution' => 'Distribution :distribution',
@@ -113,14 +113,14 @@ $lang = array(
 	'folders.chmod.error' => 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.',
 
 //Base de données
-    'step.dbConfig.title' => 'Configuration base de données',
+	'step.dbConfig.title' => 'Configuration base de données',
 	'db.parameters.config' => 'Paramètres de connexion à la base de données',
 	'db.parameters.config.explanation' => '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>',
 	'dbms.parameters' => 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>',
 	'dbms.host' => 'Nom de l\'hôte',
 	'dbms.host.explanation' => 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.',
-    'dbms.port' => 'Port du serveur',
-    'dbms.port.explanation' => 'Port du serveur qui gère la base de données, <em>3306</em> la plupart du temps.',
+	'dbms.port' => 'Port du serveur',
+	'dbms.port.explanation' => 'Port du serveur qui gère la base de données, <em>3306</em> la plupart du temps.',
 	'dbms.login' => 'Identifiant',
 	'dbms.login.explanation' => 'Fourni par l\'hébergeur',
 	'dbms.password' => 'Mot de passe',
@@ -147,7 +147,7 @@ $lang = array(
 	'phpboost.alreadyInstalled.overwrite.confirm' => 'Vous devez confirmer l\'écrasement de la précédente installation',
 
 //configuraton du site
-    'step.websiteConfig.title' => 'Configuration du serveur',
+	'step.websiteConfig.title' => 'Configuration du serveur',
 	'websiteConfig' => 'Configuration du site',
 	'websiteConfig.explanation' => '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration dans la rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>',
 	'website.yours' => 'Votre site',
@@ -157,9 +157,9 @@ $lang = array(
 	'website.path.explanation' => 'Vide si votre site est à la racine du serveur, de la forme /dossier sinon',
 	'website.name' => 'Nom du site',
 	'website.slogan' => 'Slogan du site',
-    'website.description' => 'Description du site',
-    'website.description.explanation' => '(facultatif) Utile pour le référencement dans les moteurs de recherche',
-    'website.timezone' => 'Fuseau horaire du site',
+	'website.description' => 'Description du site',
+	'website.description.explanation' => '(facultatif) Utile pour le référencement dans les moteurs de recherche',
+	'website.timezone' => 'Fuseau horaire du site',
 	'website.timezone.explanation' => 'La valeur par défaut est celle correspondant à la localisation de votre serveur. Pour la France, il s\'agit d\'<strong>Europe/Paris</strong>. Vous pourrez changer cette valeur par la suite dans le panneau d\'administration.',
 	'website.host.required' => 'Vous devez entrer l\'adresse de votre site !',
 	'website.name.required' => 'Vous devez entrer le nom de votre site !',
@@ -168,7 +168,7 @@ $lang = array(
 //	'site_config_mail_signature' => 'Cordialement, l\'équipe du site.',
 
 //administration
-    'step.admin.title' => 'Compte administrateur',
+	'step.admin.title' => 'Compte administrateur',
 	'adminCreation' => 'Création du compte administrateur',
 	'adminCreation.explanation' => '<p>Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte par la suite en consultant votre profil.</p>
 <p>Par la suite, il sera possible de donner à plusieurs personnes le statut d\'administrateur, ce compte est celui du premier administrateur, sans lequel vous ne pourriez pas gérer le site.</p>',
@@ -204,9 +204,9 @@ Cordialement l\'équipe PHPBoost.',
 
 //Fin de l'installation
 	'congratulations' => 'Félicitations !',
-    'step.finish.title' => 'Fin de l\'installation',
+	'step.finish.title' => 'Fin de l\'installation',
 	'finish.message' => '<fieldset>
-                            <legend>PHPBoost est désormais installé !</legend>
+							<legend>PHPBoost est désormais installé !</legend>
 							<div class="fielset-inset">
 								<p class="message-helper success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
 								<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
@@ -238,9 +238,24 @@ Cordialement l\'équipe PHPBoost.',
 									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a> : Tables responsive</li>
 								</ul>
 							</div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Crédits</legend>
+						</fieldset>
+						<fieldset>
+							<legend>Faire un don</legend>
+							<div class="fielset-inset">
+								Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
+								
+								<div class="center">
+									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+										<input type="hidden" name="cmd" value="_s-xclick">
+										<input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
+										<input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+										<img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+									</form>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Crédits</legend>
 							<div class="fielset-inset">
 								<ul>
 									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
@@ -250,7 +265,7 @@ Cordialement l\'équipe PHPBoost.',
 									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
 								</ul>
 							</div>
-                        </fieldset>',
+						</fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',
 	'admin.index' => 'Aller dans le panneau d\'administration'
 );

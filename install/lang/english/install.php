@@ -54,10 +54,10 @@ $lang = array(
 	'installation.confirmRestart' => 'Are you sure you want to restart the installation?',
 	'language.change' => 'Change language',
 	'change' => 'Change',
-    'step.previous' => 'Previous step',
-    'step.next' => 'Next step',
-    'yes' => 'Yes',
-    'no' => 'No',
+	'step.previous' => 'Previous step',
+	'step.next' => 'Next step',
+	'yes' => 'Yes',
+	'no' => 'No',
 	'unknown' => 'Unknown',
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
@@ -112,14 +112,14 @@ $lang = array(
 	'folders.chmod.error' => 'Some directories seem to be missing and/or not writable. You need to create the missing directories or make the directories writable.',
 
 // Database
-    'step.dbConfig.title' => 'Database settings',
+	'step.dbConfig.title' => 'Database settings',
 	'db.parameters.config' => 'Database connection parameters',
 	'db.parameters.config.explanation' => '<p>This step will generate a configuration file that contains the database settings and database tables will also be created at the same time. If you don\'t know your database settings, you might be able to find them in your host panel or need to ask for them from your host support.</p>',
 	'dbms.parameters' => 'DBMS connection parameters',
 	'dbms.host' => 'Database server hostname or DSN:',
 	'dbms.host.explanation' => 'Database managing system server URL, often <em>localhost</em>',
-    'dbms.port' => 'Database port',
-    'dbms.port.explanation' => 'Database server port, <em>3306</em> most of the time.',
+	'dbms.port' => 'Database port',
+	'dbms.port.explanation' => 'Database server port, <em>3306</em> most of the time.',
 	'dbms.login' => 'Database username',
 	'dbms.login.explanation' => 'Provided by your host',
 	'dbms.password' => 'Database password',
@@ -146,7 +146,7 @@ $lang = array(
 	'phpboost.alreadyInstalled.overwrite.confirm' => 'Please, confirm the previous installation override',
 
 // Website settings
-    'step.websiteConfig.title' => 'Server settings',
+	'step.websiteConfig.title' => 'Server settings',
 	'websiteConfig' => 'Website settings',
 	'websiteConfig.explanation' => '<p>At this stage, some basic settings will be created that will allow PHPBoost to work. Anything you enter in this form may be modified after installation in the administration panel. Also after the installation, you will have to set advanced configurations in the admin panel.</p>',
 	'website.yours' => 'Your website',
@@ -167,7 +167,7 @@ $lang = array(
 //	'site_config_mail_signature' => 'Best regards, the site team.',
 
 // Administration
-    'step.admin.title' => 'Admin Account',
+	'step.admin.title' => 'Admin Account',
 	'adminCreation' => 'Administrator account creation',
 	'adminCreation.explanation' => '<p>This account gives you access to administration panel in which you can setup your website.</p>
 <p>You will be able to grant administrator rights to other members later. Here you just create the first administrator account, without which you can\'t manage your website.</p>',
@@ -204,9 +204,9 @@ The PHPBoost Team.',
 
 // End of installation
 	'congratulations' => 'Congratulations!',
-    'step.finish.title' => 'End of installation',
+	'step.finish.title' => 'End of installation',
 	'finish.message' => '<fieldset>
-                            <legend>PHPBoost is now installed and ready to run!</legend>
+							<legend>PHPBoost is now installed and ready to run!</legend>
 							<div class="fielset-inset">
 								<p class="message-helper success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
 								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
@@ -214,9 +214,9 @@ The PHPBoost Team.',
 								<p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
 								<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 							</div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Thanks</legend>
+						</fieldset>
+						<fieldset>
+							<legend>Thanks</legend>
 							<div class="fielset-inset">
 								<h2>Members</h2>
 								<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
@@ -238,9 +238,24 @@ The PHPBoost Team.',
 									<li><a href="http://www.jerrylow.com/basictable/">BasicTable.js</a>: Tables responsive</li>
 								</ul>
 							</div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Credits</legend>
+						</fieldset>
+						<fieldset>
+							<legend>Make a donation</legend>
+							<div class="fielset-inset">
+								If you want to support PHPBoost financially you can donate via paypal :
+								
+								<div class="center">
+									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+										<input type="hidden" name="cmd" value="_s-xclick">
+										<input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
+										<input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+										<img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+									</form>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Credits</legend>
 							<div class="fielset-inset">
 								<ul>
 									<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
@@ -250,7 +265,7 @@ The PHPBoost Team.',
 									<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
 								</ul>
 							</div>
-                        </fieldset>',
+						</fieldset>',
 	'site.index' => 'Go to the website',
 	'admin.index' => 'Go to the administration panel'
 );
