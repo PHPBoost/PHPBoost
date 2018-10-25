@@ -536,7 +536,7 @@ class BBCodeParser extends ContentFormattingParser
 
 	protected function parse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[1]);
+		$img_pathinfo = pathinfo($matches[5]);
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
 		$alt = !empty($matches[1]) ? $matches[1] : $img_name;
