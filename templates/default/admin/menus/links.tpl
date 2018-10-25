@@ -66,7 +66,7 @@ function addSubElement(menu_element_id) {
 	jQuery('<label/>', {for : 'menu_element_' + id + '_image'}).text({JL_IMAGE} + ' ').appendTo('#menu_title_' + id);
 	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_title_' + id);
 	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview'}).appendTo('#menu_title_' + id);
-	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview'}).appendTo('#menu_element_' + id + '_image_preview_span');
+	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', alt : id, title : id}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
 	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog"></i>').appendTo('#menu_element_' + id + '_actions');
@@ -105,7 +105,7 @@ function addSubMenu(menu_element_id) {
 	jQuery('<label/>', {for : 'menu_element_' + id + '_image'}).text({JL_IMAGE} + ' ').appendTo('#menu_title_' + id);
 	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_title_' + id);
 	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview'}).appendTo('#menu_title_' + id);
-	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview'}).appendTo('#menu_element_' + id + '_image_preview_span');
+	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', alt : id, title : id}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
 	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', title : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog"></i>').appendTo('#menu_element_' + id + '_actions');

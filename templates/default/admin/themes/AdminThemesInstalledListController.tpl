@@ -36,7 +36,7 @@
 					<div class="admin-element-picture" >
 						# IF themes_installed.C_PICTURES #
 						<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}">
-							<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" class="picture-table" />
+							<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" title="{themes_installed.NAME}" class="picture-table" />
 							<br/>{@themes.view_real_preview}
 						</a>
 						# START themes_installed.pictures #

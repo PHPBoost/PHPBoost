@@ -22,7 +22,7 @@
 	</label>
 
 	<div class="form-field">
-		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="preview" style="vertical-align:top" />
+		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="${LangLoader::get_message('form.picture.preview', 'common')}" title="${LangLoader::get_message('form.picture.preview', 'common')}" style="vertical-align:top" />
 	</div>
 </div>
 

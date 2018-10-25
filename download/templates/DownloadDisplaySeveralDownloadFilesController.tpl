@@ -17,7 +17,7 @@
 		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #
-					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 					</a>
 				# ENDIF #
@@ -147,7 +147,7 @@
 					<div class="content">
 						# IF downloadfiles.C_PICTURE #
 						<a href="{downloadfiles.U_LINK}" class="thumbnail-item">
-							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
+							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" title="{downloadfiles.NAME}" itemprop="image" />
 						</a>
 						# ENDIF #
 						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
@@ -158,7 +158,7 @@
 						<div class="options infos">
 							<div class="center">
 								# IF downloadfiles.C_PICTURE #
-									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
+									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" title="{downloadfiles.NAME}" itemprop="image" />
 									<div class="spacer"></div>
 								# ENDIF #
 								# IF downloadfiles.C_VISIBLE #

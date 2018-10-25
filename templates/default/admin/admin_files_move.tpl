@@ -34,7 +34,7 @@
 							# START file #
 								<div class="file-move-container">
 									# IF file.C_DISPLAY_REAL_IMG #
-										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
+										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" title="{file.NAME}" />
 									# ELSE #
 										<i class="fa {file.FILE_ICON}"></i>
 									# ENDIF #

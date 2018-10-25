@@ -28,7 +28,7 @@
 				});
 			-->
 			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" /></span>
+			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{ID}" title="{ID}" /></span>
 		</div>
 		<div class="sortable-actions">
 			<a href="" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"><i class="fa fa-cog"></i></a>
@@ -72,7 +72,7 @@
 				});
 			-->
 			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" /></span>
+			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{ID}" title="{ID}" /></span>
 		</div>
 		<div class="sortable-actions">
 			<a href="" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"><i class="fa fa-cog"></i></a>

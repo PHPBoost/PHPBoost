@@ -43,7 +43,7 @@
 							<span class="infos-options"><span class="text-strong">{@calendar.labels.end_date}</span> : <time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>
 						</p>
 						# IF C_HAS_PICTURE #
-							<img itemprop="thumbnailUrl" src="{PICTURE}" alt="{TITLE}" />
+							<img itemprop="thumbnailUrl" src="{PICTURE}" alt="{TITLE}" title="{TITLE}" />
 						# ENDIF #
 						# IF C_LOCATION #
 						<p itemprop="location" itemscope itemtype="http://schema.org/Place">

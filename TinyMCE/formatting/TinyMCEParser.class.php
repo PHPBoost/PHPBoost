@@ -620,7 +620,7 @@ class TinyMCEParser extends ContentFormattingParser
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')(?:(?![a-z0-9]))`';
-				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" class="smiley" />';
+				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" title="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
@@ -949,8 +949,10 @@ class TinyMCEParser extends ContentFormattingParser
 
 	private function parse_img($matches)
 	{
+		$img_pathinfo = pathinfo($matches[2]);
+		$alt = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
+		$title = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
 		$width = $height = 0;
-		$alt = !empty($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[1]) ? $matches[1] : '';
 
 		if (preg_match('`width:.?([0-9]+)px;`iuU', $style, $temp_array))
@@ -1001,7 +1003,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$style = !empty($style) ? ' style="' . implode(';', array_filter($style)) . '"' : '';
 
-		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
+		return '<img src="' . $matches[2] . '" alt="' . $alt . '" title="' . $title . '"' . $style .' />';
 	}
 
 	protected function parse_fa($matches)

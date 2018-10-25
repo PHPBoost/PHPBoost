@@ -18,7 +18,7 @@
 			<div class="subcat-content">
 				# IF C_DISPLAY_CATS_ICON #
 					# IF sub_categories_list.C_CATEGORY_IMAGE #
-						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 						</a>
 					# ENDIF #
@@ -90,7 +90,7 @@
 					</header>
 
 					<div class="content">
-						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
+						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" title="{articles.TITLE}" /></a># ENDIF #
 						<div itemprop="text">{articles.DESCRIPTION}# IF articles.C_READ_MORE #... <a href="{articles.U_ARTICLE}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</div>
 					</div>
 

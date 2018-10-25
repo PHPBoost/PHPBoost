@@ -60,7 +60,7 @@ function XMLHttpRequest_preview(field)
 						# START smileys #
 							<li>
 								<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" title="{smileys.CODE}">
-									<img src="{smileys.URL}" title="{smileys.CODE}" alt="{smileys.CODE}">
+									<img src="{smileys.URL}" alt="{smileys.CODE}" title="{smileys.CODE}" class="smiley" />
 								</a>
 							</li>
 						# END smileys #

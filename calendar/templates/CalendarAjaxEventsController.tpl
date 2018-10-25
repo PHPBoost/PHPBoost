@@ -44,7 +44,7 @@
 									</p>
 
 									# IF event.C_HAS_PICTURE #
-										<img itemprop="thumbnailUrl" src="{event.PICTURE}" alt="{event.TITLE}" />
+										<img itemprop="thumbnailUrl" src="{event.PICTURE}" alt="{event.TITLE}" title="{event.TITLE}" />
 									# ENDIF #
 									# IF event.C_LOCATION #
 										<div class="spacer"></div>

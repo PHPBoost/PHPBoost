@@ -28,12 +28,12 @@
 							{messages.PSEUDO}
 							# ENDIF #
 						</div>
-						# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
+						# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 						# IF messages.C_USER_GROUPS #
 							<div class="spacer"></div>
 							# START messages.user_groups #
 								# IF messages.user_groups.C_GROUP_PICTURE #
-								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}" class="message-user-group"/>
+								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}" class="message-user-group" />
 								# ELSE #
 								${LangLoader::get_message('group', 'main')}: {messages.user_groups.GROUP_NAME}
 								# ENDIF #

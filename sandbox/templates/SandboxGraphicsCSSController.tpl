@@ -69,7 +69,7 @@
 				<div class="more">{@css.more}</div>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				<div>{@framework.lorem.large}</div>
 			</div>
 		</article>
@@ -140,7 +140,7 @@
 				<div class="options infos">
 					<div class="center">
 						<span>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" title="PHPBoost" itemprop="image">
 						</span>
 						<div class="spacer"></div>
 						<a href="#" class="basic-button">
@@ -541,7 +541,7 @@
 								<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" title="{@css.messages.login}">{@css.messages.login}</a>
 								<div class="message-level">{@css.messages.level}</div>
 							</div>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" />
 						</div>
 
 						<div class="message-date">
@@ -599,7 +599,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.medium}
 			</div>
 		</article>
@@ -612,7 +612,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -621,7 +621,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -634,7 +634,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -643,7 +643,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -652,7 +652,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>

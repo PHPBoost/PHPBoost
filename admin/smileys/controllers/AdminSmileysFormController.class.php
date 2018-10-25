@@ -160,7 +160,7 @@ class AdminSmileysFormController extends AdminController
 			))
 		));
 		
-		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => ''));
+		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => $this->smiley['code_smiley'], 'title' => $this->smiley['code_smiley']));
 		
 		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'common'), $img_smiley->display(),
 			array('hidden' => !$this->smiley['idsmiley'])

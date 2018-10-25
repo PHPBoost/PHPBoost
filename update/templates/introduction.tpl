@@ -3,7 +3,7 @@
 	</header>
 	
 	<div class="content">
-		<img class="float-right pbt-box" src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
+		<img class="float-right pbt-box" src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" title="{@phpboost.logo}" />
 	
 		{@H|step.introduction.explanation}
 		# IF C_PUT_UNDER_MAINTENANCE #{@H|step.introduction.maintenance_notice}# ENDIF #

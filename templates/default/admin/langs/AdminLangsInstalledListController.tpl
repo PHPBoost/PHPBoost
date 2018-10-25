@@ -32,7 +32,7 @@
 
 					<h2 class="installed-theme-name">
 						# IF langs_installed.C_HAS_PICTURE #
-						<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="valign-middle" />
+						<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" title="{langs_installed.NAME}" class="valign-middle" />
 						# ENDIF #
 						{langs_installed.NAME}<em> ({langs_installed.VERSION})</em></h2>
 				</header>

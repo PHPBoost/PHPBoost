@@ -36,16 +36,16 @@
 					<div class="center">
 						# IF C_IS_PARTNER #
 							# IF C_HAS_PARTNER_PICTURE #
-								<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
+								<img src="{U_PARTNER_PICTURE}" alt="{NAME}" title="{NAME}" itemprop="image" />
 							# ELSE #
 								# IF C_PICTURE #
-									<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+									<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" itemprop="image" />
 								# ENDIF #
 							# ENDIF #
 							<div class="spacer"></div>
 						# ELSE #
 							# IF C_PICTURE #
-								<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+								<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" itemprop="image" />
 							# ENDIF #
 						# ENDIF #
 						# IF C_VISIBLE #

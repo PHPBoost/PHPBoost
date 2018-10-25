@@ -19,7 +19,7 @@
 		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #
-					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 					</a>
 				# ENDIF #
@@ -139,7 +139,7 @@
 			<div class="content">
 				# IF weblinks.C_PICTURE #
 				<a href="{weblinks.U_LINK}" class="thumbnail-item">
-					<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+					<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" title="{weblinks.NAME}" itemprop="image" />
 				</a>
 				# ENDIF #
 				{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
@@ -151,16 +151,16 @@
 					<div class="center">
 						# IF weblinks.C_IS_PARTNER #
 							# IF weblinks.C_HAS_PARTNER_PICTURE #
-								<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+								<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" title="{weblinks.NAME}" itemprop="image" />
 							# ELSE #
 								# IF weblinks.C_PICTURE #
-									<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+									<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" title="{weblinks.NAME}" itemprop="image" />
 								# ENDIF #
 							# ENDIF #
 						<div class="spacer"></div>
 						# ELSE #
 							# IF weblinks.C_PICTURE #
-								<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
+								<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" title="{weblinks.NAME}" itemprop="image" />
 							# ENDIF #
 						<div class="spacer"></div>
 						# ENDIF #

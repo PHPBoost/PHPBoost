@@ -158,7 +158,7 @@ class BBCodeParser extends ContentFormattingParser
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')(?:(?![a-z0-9]))`';
-				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" class="smiley" />';
+				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" title="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
@@ -536,14 +536,15 @@ class BBCodeParser extends ContentFormattingParser
 
 	protected function parse_img($matches)
 	{
-		$alt = !empty($matches[1]) ? $matches[1] : '';
-		$title = !empty($matches[2]) ? ' title="' . $matches[2] . '"' : '';
+		$img_pathinfo = pathinfo($matches[5]);
+		$alt = !empty($matches[1]) ? $matches[1] : $img_pathinfo['filename'];
+		$title = !empty($matches[2]) ? $matches[2] : $img_pathinfo['filename'];
 		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
 		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 		if (preg_match('`^image/(jpg|jpeg|bmp|gif|png|tiff|svg);base`su', $matches[5]))
 			$matches[5] = 'data:' . $matches[5];
 
-		return '<img src="' . $matches[5] . '" alt="' . $alt . '"' . $class . $title . $style .' />';
+		return '<img src="' . $matches[5] . '" alt="' . $alt . '" title="' . $title . '"' . $class . $style .' />';
 	}
 
 

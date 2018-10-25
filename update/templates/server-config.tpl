@@ -3,7 +3,7 @@
 	</header>
 
 	<div class="content">
-		<a href="http://www.php.net/">
+		<a href="http://www.php.net/" title="PHP">
 			<img src="templates/images/php.png" alt="PHP" class="float-right" />
 		</a>
 		<span class="spacer">&nbsp;</span>

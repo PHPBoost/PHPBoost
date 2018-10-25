@@ -147,6 +147,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`iu',
 		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
+
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" title="([^"]+)" class="smiley" />`iu',
+		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
 	}
 
 	/**
@@ -244,7 +247,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 
 			//Image
-			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
 
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
@@ -428,11 +431,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 	private function unparse_img($matches)
 	{
-		$alt = !empty($matches[2]) ? $matches[2] : '';
+		$img_pathinfo = pathinfo($matches[1]);
+		$alt = !empty($matches[2]) ? $matches[2] : $img_pathinfo['filename'];
+		$title = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
 		$style = '';
 		$params = '';
-		if (isset($matches[3])) {
-			foreach (explode(';', $matches[3]) as $style_att)
+		if (isset($matches[4])) {
+			foreach (explode(';', $matches[4]) as $style_att)
 			{
 				$exp = explode(':', $style_att);
 				if (count($exp) < 2)
@@ -459,7 +464,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$style = ' style="' . $style . '"';
 			}
 		}
-		return '<img' . $style . ' src="' . $matches[1] . '" alt="' . $alt . '" ' . $params . '/>';
+		return '<img' . $style . ' src="' . $matches[1] . '" alt="' . $alt . '" title="' . $title . '" ' . $params . '/>';
 	}
 
 	private function unparse_fa($matches)

@@ -35,7 +35,7 @@
 				<div class="options infos">
 					<div class="center">
 						# IF C_PICTURE #
-							<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+							<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" itemprop="image" />
 							<div class="spacer"></div>
 						# ENDIF #
 						# IF C_VISIBLE #

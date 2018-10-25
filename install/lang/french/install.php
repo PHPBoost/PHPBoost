@@ -79,7 +79,7 @@ $lang = array(
 //licence
 	'step.license.title' => 'Licence',
 	'step.license.agreement' => 'Acceptation des termes de la licence',
-	'step.license.require.agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://org.rodage.com/gpl-3.0.fr.txt">ici</a>.</p>',
+	'step.license.require.agreement' => '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" title="Français" /> <a href="http://org.rodage.com/gpl-3.0.fr.txt">ici</a>.</p>',
 	'step.license.terms.title' => 'Termes de la licence',
 	'step.license.please_agree' => 'J\'ai pris connaissance des termes de la licence et je les accepte',
 	'step.license.submit.alert' => 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !',
@@ -214,9 +214,9 @@ Cordialement l\'équipe PHPBoost.',
 								<p>N\'oubliez pas de consulter la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
 								<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
 							</div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Remerciements</legend>
+						</fieldset>
+						<fieldset>
+							<legend>Remerciements</legend>
 							<div class="fielset-inset">
 								<h2>Membres de la communauté</h2>
 								<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>

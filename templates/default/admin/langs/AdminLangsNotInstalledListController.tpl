@@ -21,7 +21,7 @@
 
 					<h2 class="not-installed-lang-name">
 						# IF langs_not_installed.C_HAS_PICTURE #
-							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
+							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" title="{langs_not_installed.NAME}" class="valign-middle" />
 						# ENDIF #
 						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
 				</header>

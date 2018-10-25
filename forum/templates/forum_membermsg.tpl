@@ -30,11 +30,11 @@
 								</div>
 
 								# IF list.C_USER_RANK #<p class="center">{list.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
-								# IF list.C_USER_IMG_ASSOC #<p class="center"><img src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}"/></p> # ENDIF #
+								# IF list.C_USER_IMG_ASSOC #<p class="center"><img src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" title="${LangLoader::get_message('rank', 'main')}" /></p> # ENDIF #
 							</div>
 
 							<div class="msg-avatar-mbr center">
-								<img src="# IF list.C_USER_AVATAR #{list.U_USER_AVATAR}# ELSE #{list.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}" />
+								<img src="# IF list.C_USER_AVATAR #{list.U_USER_AVATAR}# ELSE #{list.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" />
 							</div>
 
 							<div class="msg-info-mbr">

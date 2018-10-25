@@ -237,7 +237,7 @@
 				<h5>{@bbcode.image}</h5>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.image}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.image}" title="{@bbcode.image}" />
 			</div>
 		</article>
 		<article id="lightbox" class="block">

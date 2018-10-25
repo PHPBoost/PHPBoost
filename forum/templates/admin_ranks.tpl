@@ -65,7 +65,7 @@
 										</select>
 										# IF rank.IMG_RANK #
 											<span class="field-description">
-												<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" />
+												<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" title="{rank.IMG_RANK}" />
 											</span>
 										# ENDIF #
 									</td>

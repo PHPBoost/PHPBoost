@@ -65,7 +65,7 @@ class AdminSmileysListController extends AdminController
 			$delete_link = new LinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'far fa-delete');
 			
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => ''))),
+				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'title' => $row['idsmiley']))),
 				new HTMLTableRowCell($code),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));

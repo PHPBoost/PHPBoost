@@ -82,7 +82,7 @@
 		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #
-					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 					</a>
 				# ENDIF #

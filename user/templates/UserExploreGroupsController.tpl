@@ -17,7 +17,7 @@
 				<header></header>
 				<div class="content">
 					<div class="avatar-container">
-					# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}"/># ENDIF #
+					# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}" title="{members_list.PSEUDO}" /># ENDIF #
 					</div>
 					<div class="infos-container">
 						<div class="user-level">{members_list.LEVEL}</div>
@@ -54,7 +54,7 @@
 		<div class="groups-list-select">
 		# START group #
 			# IF group.C_GROUP_HAS_IMG #
-			<a href="#" id="group-button-{group.GROUP_ID}" class="group-button group-has-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}"/></a>
+			<a href="#" id="group-button-{group.GROUP_ID}" class="group-button group-has-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}" /></a>
 			# ELSE #
 			<a href="#" id="group-button-{group.GROUP_ID}" class="button group-button group-without-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;">{group.GROUP_NAME}</a>
 			# ENDIF #
@@ -81,7 +81,7 @@
 					<div class="content">
 						<div class="avatar-container">
 							# IF admins_list.C_AVATAR #
-							<img class="valign-middle" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}"/>
+							<img class="valign-middle" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}" title="{admins_list.PSEUDO}" />
 							# ENDIF #
 						</div>
 						<div class="infos-container">
@@ -122,7 +122,7 @@
 					<div class="content">
 						<div class="avatar-container">
 							# IF modos_list.C_AVATAR #
-							<img class="valign-middle" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}"/>
+							<img class="valign-middle" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}" title="{modos_list.PSEUDO}" />
 							# ENDIF #
 						</div>
 						<div class="infos-container">
@@ -168,7 +168,7 @@
 							<div class="content">
 								<div class="avatar-container">
 									# IF group.group_members_list.C_AVATAR #
-									<img class="valign-middle" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}"/>
+									<img class="valign-middle" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}" title="{group.group_members_list.PSEUDO}" />
 									# ENDIF #
 								</div>
 								<div class="infos-container">

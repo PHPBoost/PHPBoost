@@ -124,7 +124,7 @@
 			<legend>{L_TEMPLATES}</legend>
 			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
-					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
+					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" title="{L_TEMPLATES}" />
 				</div>
 				<div class="block">
 					<table id="table2">
@@ -688,7 +688,7 @@
 				<div class="fieldset-inset elements-container columns-2">
 					# IF C_ROBOTS_DATA #
 					<div class="block center">
-						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />
+						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" title="{L_ROBOTS}" />
 					</div>
 					# ENDIF #
 					<div class="block">

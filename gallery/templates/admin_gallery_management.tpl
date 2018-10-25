@@ -185,12 +185,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_left]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_left]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" title="' + array_pics[key_left]['path'] + '" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_right]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_right]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" title="' + array_pics[key_right]['path'] + '" /></a>';
 						j++;
 					}
 				}
@@ -259,7 +259,7 @@
 						# START cat.list #
 						# IF cat.list.C_DISPLAY_TR_START #<tr># ENDIF #
 							<td class="valign-bottom" style="width:{COLUMN_WIDTH_CAT}%;">
-								<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
+								<a href="admin_gallery.php?cat={cat.list.IDCAT}" title="{cat.list.CAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
 								<div class="spacer"></div>
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
 								<div class="spacer"></div>
@@ -290,7 +290,7 @@
 							<tbody>
 								<tr>
 									<td id="pics_max" colspan="{pics.pics_max.COLSPAN_PICTURE}">
-										<img src="show_pics.php?id={pics.ID}&amp;cat={pics.IDCAT}" alt="{pics.CATNAME}" />
+										<img src="show_pics.php?id={pics.ID}&amp;cat={pics.IDCAT}" alt="{pics.CATNAME}" title="{pics.CATNAME}" />
 									</td>
 								</tr>
 								<tr>

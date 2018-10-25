@@ -8,7 +8,7 @@
 				# END langs #
 				</select>
 			</label>
-			# IF C_HAS_PICTURE #<img src="{LANG_PICTURE_URL}" alt="{LANG_NAME}" class="valign-middle" /># ENDIF #
+			# IF C_HAS_PICTURE #<img src="{LANG_PICTURE_URL}" alt="{LANG_NAME}" title="{LANG_NAME}" class="valign-middle" /># ENDIF #
 		</div>
 
 		<a href="?switchlang={DEFAULT_LANG}">{@default_lang}</a>

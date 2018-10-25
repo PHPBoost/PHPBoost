@@ -26,7 +26,7 @@
 					<div class="admin-element-picture" >
 						# IF themes_not_installed.C_PICTURES #
 						<a href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" title="{themes_not_installed.NAME}">
-							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" class="picture-table" />
+							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" title="{themes_not_installed.NAME}" class="picture-table" />
 							<br/>{@themes.view_real_preview}
 						</a>
 						# START themes_not_installed.pictures #

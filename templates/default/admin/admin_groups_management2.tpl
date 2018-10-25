@@ -128,7 +128,7 @@
 									<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 										{IMG_GROUPS}
 									</select>
-									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display: none;" />
+									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" title="{IMG}" class="valign-middle" style="display: none;" />
 								</label>
 							</div>
 						</div>
@@ -283,7 +283,7 @@
 								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" class="valign-middle" style="display: none;" />
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" title="{IMG}" class="valign-middle" style="display: none;" />
 							</label></div>
 						</div>
 					</div>

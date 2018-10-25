@@ -188,12 +188,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" title="' + array_pics[key_left]['path'] + '" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" title="' + array_pics[key_right]['path'] + '" /></a>';
 						j++;
 					}
 				}
@@ -296,7 +296,7 @@
 				<div class="subcat-element block">
 					<div class="subcat-content">
 						# IF sub_categories_list.C_CATEGORY_IMAGE #
-							<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+							<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							</a>
 						# ENDIF #
@@ -322,7 +322,7 @@
 						<p class="center" id="pics_max"></p>
 
 						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" title="{NAME}" alt="" /></a></p>
+							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" title="{NAME}" alt="{NAME}" /></a></p>
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
@@ -409,7 +409,7 @@
 								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
 								<td class="valign-bottom# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #" style="width:{COLUMN_WIDTH_PICS}%;">
 									<div id="pics{pics_list.ID}" class="thumbnails-list-container">
-										<a class="small" href="{pics_list.U_DISPLAY}" title="{pics_list.NAME}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" alt="" class="gallery-img" /></a>
+										<a class="small" href="{pics_list.U_DISPLAY}" title="{pics_list.NAME}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" title="{pics_list.NAME}" class="gallery-img" /></a>
 									</div>
 
 									<div class="spacer"></div>

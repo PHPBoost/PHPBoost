@@ -18,7 +18,7 @@
 			<div class="subcat-element block">
 				<div class="subcat-content">
 					# IF sub_categories_list.C_CATEGORY_IMAGE #
-						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
 							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 						</a>
 					# ENDIF #
@@ -87,7 +87,7 @@
 						# ENDIF #
 				</div>
 				<div class="content">
-				# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="thumbnail-item" alt="{file.NAME}" /></a># ENDIF #
+				# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="thumbnail-item" alt="{file.NAME}" title="{file.NAME}" /></a># ENDIF #
 				# IF file.C_DESCRIPTION #
 					<div itemprop="text">
 					{file.DESCRIPTION}

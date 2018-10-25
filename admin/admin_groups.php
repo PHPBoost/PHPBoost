@@ -392,7 +392,7 @@ else //Liste des groupes.
 			'ID' => $row['id'],
 			'NAME' => stripslashes($row['name']),
 			'GROUP_COLOR' => '#' . $row['color'],
-			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . stripslashes($row['name']) . '" />' : ''
+			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="' . stripslashes($row['name']) . '" title="' . stripslashes($row['name']) . '" />' : ''
 		));
 	}
 	$result->dispose();

@@ -221,7 +221,7 @@
 								# ENDIF #
 								</div>
 								# IF msg.C_USER_RANK #<p class="center">{msg.USER_RANK}</p># ELSE #<p class="center">${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
-								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}"/></p> # ENDIF #
+								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" title="${LangLoader::get_message('rank', 'main')}" /></p> # ENDIF #
 							</div>
 
 							<div class="msg-avatar-mbr center">
@@ -233,7 +233,7 @@
 								<p class="center">
 									# START msg.usergroups #
 										# IF msg.usergroups.C_IMG_USERGROUP #
-										<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" title="{msg.usergroups.USERGROUP_NAME}"/></a>
+										<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" title="{msg.usergroups.USERGROUP_NAME}" /></a>
 										# ELSE #
 										{msg.usergroups.L_USER_GROUP} : <a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 										# ENDIF #
