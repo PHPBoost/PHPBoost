@@ -186,7 +186,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	else
 		$error = 'e_upload_failed_unwritable';
 	
-	$error = !empty($error) ? '&error=' . $error : '';
+	$error = !empty($error) ? '&error=' . $error : '&success=1';
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);
 }
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
@@ -309,6 +309,11 @@ elseif ($add) //Interface d'ajout du groupe.
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
 	//Gestion erreur.
+	$get_sucess = retrieve(GET, 'success', '');
+	if ($get_success == 1)
+	{
+		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
+	}
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{

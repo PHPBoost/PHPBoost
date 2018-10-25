@@ -148,31 +148,6 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
-				<p class="center">{L_REQUIRE}</p>
-				<fieldset>
-					<legend>{L_ADD_MBR_GROUP}</legend>
-					<div class="fieldset-inset">
-						<div class="form-element">
-							<label for="login">* {L_PSEUDO}</label>
-							<div class="form-field">
-								<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
-								<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
-								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset class="fieldset-submit">
-					<legend>{L_ADD}</legend>
-					<div class="fieldset-inset">
-						<button type="submit" class="submit" name="add_mbr" value="true">{L_ADD}</button>
-						<input type="hidden" value="{TOKEN}" name="token">
-					</div>
-				</fieldset>
-			</form>
-			
-			
 			<table id="table">
 				<caption>
 					{L_MBR_GROUP}
@@ -207,6 +182,30 @@
 					# ENDIF #
 				</tbody>
 			</table>
+			
+			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
+				<fieldset>
+					<legend>{L_ADD_MBR_GROUP}</legend>
+					<div class="fieldset-inset">
+						<div class="form-element">
+							<label for="login">* {L_PSEUDO}</label>
+							<div class="form-field">
+								<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
+								<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
+								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="fieldset-submit">
+					<legend>{L_ADD}</legend>
+					<div class="fieldset-inset">
+						<button type="submit" class="submit" name="add_mbr" value="true">{L_ADD}</button>
+						<input type="hidden" value="{TOKEN}" name="token">
+					</div>
+				</fieldset>
+			</form>
 			# ENDIF #
 			
 			
