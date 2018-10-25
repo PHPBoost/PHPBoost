@@ -40,10 +40,10 @@ class NewsletterHomeController extends ModuleController
 		
 		$this->build_form($request);
 
-		return $this->build_response($this->full_view);
+		return $this->generate_response($request);
 	}
 
-	private function build_form($request)
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$pagination = $this->get_pagination();
 		
@@ -124,16 +124,18 @@ class NewsletterHomeController extends ModuleController
 		return $pagination;
 	}
 
-	private function build_response(View $view)
+	private function generate_response(HTTPRequestCustom $request)
 	{
-		$response = new SiteDisplayResponse($view);
+		$page = $request->get_getint('page', 1);
+		
+		$response = new SiteDisplayResponse($this->full_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home($page)->absolute());
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['newsletter.list_newsletters'], $this->lang['newsletter']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::home());
+		$graphical_environment->set_page_title($this->lang['newsletter.list_newsletters'], $this->lang['newsletter'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::home($page));
 		
 		return $response;
 	}

@@ -126,8 +126,9 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);
 	}
 	
-	public static function comments($module = '', $user_id = null, $page = '')
+	public static function comments($module = '', $user_id = null, $page = 1)
 	{
+		$page = $page !== 1 ? $page : '';
 		if (!empty($user_id))
 		{
 			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . (!empty($module) ? $module . '/' : '') . $page);

@@ -200,7 +200,7 @@ class BugtrackerHistoryListController extends ModuleController
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id());
+		$graphical_environment->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id(), $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

@@ -46,10 +46,10 @@ class NewsletterSubscribersListController extends ModuleController
 		$this->init();
 		$this->build_form($request);
 
-		return $this->build_response($this->view);
+		return $this->generate_response($request);
 	}
 
-	private function build_form($request)
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$field = $request->get_value('field', 'pseudo');
 		$sort = $request->get_value('sort', 'top');
@@ -136,20 +136,24 @@ class NewsletterSubscribersListController extends ModuleController
 		$this->user = AppContext::get_current_user();
 	}
 
-	private function build_response(View $view)
+	private function generate_response(HTTPRequestCustom $request)
 	{
+		$sort_field = $request->get_getvalue('field', 'pseudo');
+		$sort_mode = $request->get_getvalue('sort', 'top');
+		$page = $request->get_getint('page', 1);
+		
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
-		$body_view->put('TEMPLATE', $view);
+		$body_view->put('TEMPLATE', $this->view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
-		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name())->rel());
+		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page)->rel());
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($name_page, $this->lang['newsletter']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
+		$graphical_environment->set_page_title($name_page, $this->lang['newsletter'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		return $response;
 	}

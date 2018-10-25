@@ -55,7 +55,7 @@ class UserCommentsController extends AbstractController
 		
 		$this->init($request);
 
-		return $this->build_response();
+		return $this->build_response($request);
 	}
 	
 	private function init($request)
@@ -231,11 +231,18 @@ class UserCommentsController extends AbstractController
 		return $modules;
 	}
 	
-	private function build_response()
+	private function build_response($request)
 	{
+		$module_id = $request->get_getstring('module_id', '');
+		$page = $request->get_getint('page', 1);
+		
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['comments']);
+		
+		if ($this->user !== null)
+			$graphical_environment->set_page_title($this->user->get_display_name(), $this->lang['comments'], $page);
+		else
+			$graphical_environment->set_page_title($this->lang['comments'], '', $page);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 
@@ -243,7 +250,7 @@ class UserCommentsController extends AbstractController
 		{
 			$breadcrumb->add($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
 			$breadcrumb->add(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
-			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->rel());
+			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments($module_id, $this->user->get_id(), $page)->rel());
 		}
 		else
 		{
