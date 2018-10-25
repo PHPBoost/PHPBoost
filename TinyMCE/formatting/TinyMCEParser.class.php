@@ -534,7 +534,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")?(?: title="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
 		}
 
 		//indent tag
@@ -949,11 +949,11 @@ class TinyMCEParser extends ContentFormattingParser
 
 	private function parse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[1]);
+		$img_pathinfo = pathinfo($matches[3]);
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
-		$alt = !empty($matches[3]) ? $matches[3] : $img_name;
-		$title = !empty($matches[3]) ? $matches[3] : $img_name;
+		$alt = !empty($matches[4]) ? $matches[4] : $img_name;
+		$title = !empty($matches[2]) ? $matches[2] : $img_name;
 		$width = $height = 0;
 		$style = !empty($matches[1]) ? $matches[1] : '';
 
@@ -970,7 +970,7 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 		$style = explode(';', $style);
 
-		foreach (explode('" ', $matches[4] . ' ') as $raw_property)
+		foreach (explode('" ', $matches[5] . ' ') as $raw_property)
 		{
 			$exp = explode('="', $raw_property);
 			if (count($exp) < 2)
@@ -985,7 +985,10 @@ class TinyMCEParser extends ContentFormattingParser
 					array_merge($style, explode(';', $value));
 					break;
 				case 'width':
-					$width = $value;
+					$width = !empty($value) ? $value : $img_name;
+					break;
+				case 'title':
+					$title = $value;
 					break;
 				case 'height':
 					$height = $value;
@@ -1005,7 +1008,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$style = !empty($style) ? ' style="' . implode(';', array_filter($style)) . '"' : '';
 
-		return '<img src="' . $matches[2] . '" alt="' . $alt . '" title="' . $title . '"' . $style .' />';
+		return '<img src="' . $matches[3] . '" alt="' . $alt . '" title="' . $title . '"' . $style .' />';
 	}
 
 	protected function parse_fa($matches)
