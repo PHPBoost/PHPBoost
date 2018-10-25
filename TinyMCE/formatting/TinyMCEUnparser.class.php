@@ -432,8 +432,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_img($matches)
 	{
 		$img_pathinfo = pathinfo($matches[1]);
-		$alt = !empty($matches[2]) ? $matches[2] : $img_pathinfo['filename'];
-		$title = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
+		$file_array = explode('.', $img_pathinfo['filename']);
+		$img_name = $file_array[0];
+		$alt = !empty($matches[2]) ? $matches[2] : $img_name;
+		$title = !empty($matches[3]) ? $matches[3] : $img_name;
 		$style = '';
 		$params = '';
 		if (isset($matches[4])) {
@@ -464,7 +466,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$style = ' style="' . $style . '"';
 			}
 		}
-		return '<img' . $style . ' src="' . $matches[1] . '" alt="' . $alt . '" title="' . $title . '" ' . $params . '/>';
+		return '<img src="' . $matches[1] . '" alt="' . $alt . '" title="' . $title . '"' . $style . ' ' . $params . '/>';
 	}
 
 	private function unparse_fa($matches)

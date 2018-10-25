@@ -949,9 +949,11 @@ class TinyMCEParser extends ContentFormattingParser
 
 	private function parse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[2]);
-		$alt = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
-		$title = !empty($matches[3]) ? $matches[3] : $img_pathinfo['filename'];
+		$img_pathinfo = pathinfo($matches[1]);
+		$file_array = explode('.', $img_pathinfo['filename']);
+		$img_name = $file_array[0];
+		$alt = !empty($matches[3]) ? $matches[3] : $img_name;
+		$title = !empty($matches[3]) ? $matches[3] : $img_name;
 		$width = $height = 0;
 		$style = !empty($matches[1]) ? $matches[1] : '';
 

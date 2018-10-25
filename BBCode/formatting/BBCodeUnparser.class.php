@@ -257,8 +257,11 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 	private function unparse_img($matches)
 	{
-		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
-		$title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
+		$img_pathinfo = pathinfo($matches[1]);
+		$file_array = explode('.', $img_pathinfo['filename']);
+		$img_name = $file_array[0];
+		$alt = !empty($matches[2]) && $matches[2] != $img_name ? ' alt="' . $matches[2] . '"' : '';
+		$title = !empty($matches[3]) && $matches[3] != $img_name ? ' title="' . $matches[3] . '"' : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
