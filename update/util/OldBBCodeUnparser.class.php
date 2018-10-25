@@ -64,13 +64,13 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		$this->unparse_simple_tags();
 		
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<table class="formatter-table"') !== false)
+		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<li class="formatter-li"') !== false)
+		if (TextHelper::strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
 		}
@@ -92,13 +92,13 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			//Création du tableau de remplacement
 			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`sU';
+				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img class="smiley" title="' . preg_quote($code) . '"(.*) />`sU';
+				$smiley_img_url[] = '`<img class="smiley" title="' . preg_quote($code) . '"(.*) />`suU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
@@ -121,50 +121,45 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_simple_tags()
 	{
-		$array_str = array(
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<sup>', '</sup>',
-			'<sub>', '</sub>', '<pre>', '</pre>'
-			);
-		$array_str_replace = array(
-			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
-		);
-		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-		
 		$array_preg = array(
-			'`<span style="text-decoration: ?underline;">(.*)</span>`isU',
-			'`<span style="color: ?([^;]+);">(.*)</span>`isU',
-			'`<span style="background-color: ?([^;]+);">(.*)</span>`isU',
-			'`<span style="font-size: ?([0-9]+)px;?">(.*)</span>`isU',
-			'`<span style="font-family: ?([ a-z0-9,_-]+);?">(.*)</span>`isU',
-			'`<p style="text-align: ?(left|center|right|justify);?">(.*)</p>`isU',
-			'`<p class="float-(left|right)">(.*)</p>`isU',
-			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isU',
-			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="formatter-acronym">(.*)</acronym>`isU',
-			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
-			'`<a href="mailto:(.*)">(.*)</a>`isU',
-			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isU',
-			'`<h1 class="formatter-title">(.*)</h1>`isU',
-			'`<h2 class="formatter-title">(.*)</h2>`isU',
-			'`<h3 class="formatter-title">(.*)</h3>`isU',
-			'`<h4 class="formatter-title">(.*)</h4>`isU',
-			'`<h5 class="formatter-title">(.*)</h5>`isU',
-			'`<h6 class="formatter-title">(.*)</h6>`isU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<hr(?: class="([^"]+)?")? />`isU',
-			'`<audio controls><source src="(.*)" /></audio>`isU',
-			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
-			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
-			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
-			'`<script><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
-			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<script><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
-			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
-			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
-			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
-			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isU',
-			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU',
+			'`<span style="text-decoration: ?underline;?">(.*)</span>`isuU',
+			'`<span style="color: ?([^;]+);">(.*)</span>`isuU',
+			'`<span style="background-color: ?([^;]+);">(.*)</span>`isuU',
+			'`<span style="font-size: ?([0-9]+)px;?">(.*)</span>`isuU',
+			'`<span style="font-family: ([ a-z0-9,_-]+);?">(.*)</span>`isuU',
+			'`<p style="text-align: ?(left|center|right|justify);?">(.*)</p>`isuU',
+			'`<p class="float-(left|right)">(.*)</p>`isuU',
+			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
+			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
+			'`<acronym class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<acronym title="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<a href="mailto:(.*)">(.*)</a>`isuU',
+			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
+			'`<h1 class="formatter-title">(.*)</h1>`isuU',
+			'`<h2 class="formatter-title">(.*)</h2>`isuU',
+			'`<h3 class="formatter-title">(.*)</h3>`isuU',
+			'`<h4 class="formatter-title">(.*)</h4>`isuU',
+			'`<h5 class="formatter-title">(.*)</h5>`isuU',
+			'`<h6 class="formatter-title">(.*)</h6>`isuU',
+			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isuU',
+			'`<hr(?: class="([^"]+)?")? />`isuU',
+			'`<audio controls><source src="(.*)" /></audio>`isuU',
+			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`suU',
+			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
+			'`<script><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
+			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
+			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3}), ([^\']+)\);\[\[/MEDIA\]\]`suU',
+			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
+			'`<script><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
+			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
+			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
+			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU',
+			'`<a href="([^"]+)" rel="lightbox\[2\]"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
+			'`<a href="([^"]+)" data-lightbox="formatter"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
+			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
+			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
 
 		$array_preg_replace = array(
@@ -177,8 +172,10 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[float=$1]$2[/float]",
 			"[anchor=$1][/anchor]",
 			"[anchor=$1]$2[/anchor]",
+			"[acronym]$1[/acronym]",
 			"[acronym=$1]$2[/acronym]",
-			"[acronym=$1]$2[/acronym]",
+			"[abbr]$1[/abbr]",
+			"[abbr=$1]$2[/abbr]",
 			"[mail=$1]$2[/mail]",
 			"[url=$2]$4[/url]",
 			"[title=1]$1[/title]",
@@ -192,48 +189,64 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
-			"[movie=$1,$2]$3[/movie]",
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3,$4]$1[/movie]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[youtube=$2,$3]$1[/youtube]",
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
-			"[lightbox=$1]$2[/lightbox]"
+			"[lightbox=$1]$2[/lightbox]",
+			"[member]$1[/member]",
+			"[moderator]$1[/moderator]",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-			
+		
+		$array_str = array(
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
+			'<sub>', '</sub>', '<pre>', '</pre>'
+			);
+		$array_str_replace = array(
+			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+		);
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
+		
 		##Nested tags
 		//Quotes
-		$this->_parse_imbricated('<span class="formatter-blockquote">', '`<span class="formatter-blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '[quote=$1]$2[/quote]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote=$1]$2[/quote]', $this->content);
 
 		//Hidden bloc
-		$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
 
 		//Block
-		$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-block" style=', '`<div class="formatter-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 		
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
+		
+		//FA Icon
+		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
-		while (preg_match('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
 		//Wikipedia link
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
 
 		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
 		
 		// Feed
-		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`U', '[feed$1]$2[/feed]', $this->content);
+		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
 
 	private function unparse_img($matches)
@@ -243,7 +256,24 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $title . $style . $class. ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . $class . ']' . $matches[1] . '[/img]';
+	}
+
+	private function unparse_fa($matches)
+	{
+		$fa_code = "";
+		if ( !empty($matches[2]) ) {
+			$options = explode(' ', $matches[2]);
+			foreach ($options as $index => $option) {
+				if ( $index == 0 ) {
+					$fa_code = "=" . $fa_code;
+				} else {
+					if ( $index > 1 ) { $fa_code = $fa_code . ","; }
+					$fa_code = $fa_code . $option;
+				}
+			}
+		}
+		return '[fa' . $fa_code . ']' . $matches[1] . '[/fa]';
 	}
 
 	/**
@@ -252,21 +282,21 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while (strpos($this->content, '<table class="formatter-table"') !== false)
+		while (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
-			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
 		}
-		while (strpos($this->content, '<tr class="formatter-table-row"') !== false)
+		while (TextHelper::strpos($this->content, '<tr class="formatter-table-row"') !== false)
 		{
-			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`suU', '[row$1]$2[/row]', $this->content);
 		}
-		while (strpos($this->content, '<th class="formatter-table-head"') !== false)
+		while (TextHelper::strpos($this->content, '<th class="formatter-table-head"') !== false)
 		{
-			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`suU', '[head$1]$2[/head]', $this->content);
 		}
-		while (strpos($this->content, '<td class="formatter-table-col"') !== false)
+		while (TextHelper::strpos($this->content, '<td class="formatter-table-col"') !== false)
 		{
-			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
+			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`suU', '[col$1]$2[/col]', $this->content);
 		}
 	}
 
@@ -276,17 +306,17 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while (strpos($this->content, '<ul class="formatter-ul">') !== false)
+		while (TextHelper::strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`suU', '[list$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<ol class="formatter-ol">') !== false)
+		while (TextHelper::strpos($this->content, '<ol class="formatter-ol">') !== false)
 		{
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`suU', '[list=ordered$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<li class="formatter-li">') !== false)
+		while (TextHelper::strpos($this->content, '<li class="formatter-li">') !== false)
 		{
-			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isU', '[*]$1', $this->content);
+			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isuU', '[*]$1', $this->content);
 		}
 	}
 
