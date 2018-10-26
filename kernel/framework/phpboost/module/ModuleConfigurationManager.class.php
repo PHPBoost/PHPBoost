@@ -78,6 +78,15 @@ class ModuleConfigurationManager
 
 	private static function find_desc_ini_file($module_id)
 	{
+		// Module - Langs priority order
+		//      /lang/$lang/modules/$module/desc.ini
+		//      /$module/lang/$lang/desc.ini
+		$desc_ini_file = PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_locale() . '/modules/' . $module_id . '/desc.ini';
+		if (file_exists($desc_ini_file))
+		{
+			return $desc_ini_file;
+		}
+
 		$desc_ini_folder = PATH_TO_ROOT . '/' . $module_id . '/lang/';
 
 		$desc_ini_file = $desc_ini_folder . AppContext::get_current_user()->get_locale() . '/desc.ini';

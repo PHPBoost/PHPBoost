@@ -31,9 +31,7 @@
  */
 class LangLoader
 {
-	const DEFAULT_LOCALE = 'english';
-
-	private static $locale = self::DEFAULT_LOCALE;
+	private static $locale = '';
 
 	/**
 	 * @var CacheFactory
@@ -46,7 +44,7 @@ class LangLoader
 	 */
 	public static function set_locale($locale)
 	{
-		self::$locale = $locale;
+		self::$locale = in_array($locale, self::get_available_langs()) ? $locale : self::get_default_lang();
 	}
 	
 	/**
@@ -55,7 +53,27 @@ class LangLoader
 	 */
 	public static function get_locale()
 	{
-		return self::$locale;
+		return self::$locale ? self::$locale : self::get_default_lang();
+	}
+
+	public static function get_available_langs()
+	{
+		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
+		$langs_list = $langs_folder->get_folders();
+		
+		$available_langs = array();
+		foreach ($langs_list as $lang)
+		{
+			$available_langs[] = $lang->get_name();
+		}
+		
+		return $available_langs;
+	}
+
+	public static function get_default_lang()
+	{
+		$langs = self::get_available_langs();
+		return $langs[0];
 	}
 
 	/**
@@ -116,13 +134,20 @@ class LangLoader
 	 */
 	private static function get_real_lang_path($folder, $filename)
 	{
-		$real_folder = PATH_TO_ROOT;
+		$real_folder = PATH_TO_ROOT . (!empty($folder) ? '/' . $folder : '') . '/lang/';
+		$filename_with_extension = '/' . $filename . '.php';
+
 		if (!empty($folder))
 		{
-			$real_folder .= '/' . $folder;
+			// Module - Langs priority order
+			//      /lang/$lang/modules/$module/$file.php
+			//      /$module/lang/$lang/$file.php
+			$real_lang_file = PATH_TO_ROOT . '/lang/' . self::$locale . '/modules/' . $folder . $filename_with_extension;
+			if (file_exists($real_lang_file))
+			{
+				return $real_lang_file;
+			}
 		}
-		$real_folder .= '/lang/';
-		$filename_with_extension = '/' . $filename . '.php';
 
 		$real_lang_file = $real_folder . self::$locale . $filename_with_extension;
 		if (file_exists($real_lang_file))
@@ -130,7 +155,8 @@ class LangLoader
 			return $real_lang_file;
 		}
 
-		$real_lang_file = $real_folder . self::DEFAULT_LOCALE . $filename_with_extension;
+		// Get default lang file if nothing else is found
+		$real_lang_file = $real_folder . self::get_default_lang() . $filename_with_extension;
 		if (file_exists($real_lang_file))
 		{
 			return $real_lang_file;
