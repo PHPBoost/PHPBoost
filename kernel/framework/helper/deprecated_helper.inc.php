@@ -189,10 +189,19 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
 	global $LANG;
-
+	
 	$user_locale = AppContext::get_current_user()->get_locale();
-	$file = $path . '/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
-	$result = include_once $file;
+	
+	$module_lang_file = $path . '/lang/' . $user_locale . '/modules/' . $module_name . '/' . $module_name . '_' . $user_locale . '.php';
+	if (file_exists($module_lang_file))
+	{
+		$result = include_once $module_lang_file;
+	}
+	else
+	{
+		$file = $path . '/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
+		$result = include_once $file;
+	}
 
 	if (!$result)
 	{
