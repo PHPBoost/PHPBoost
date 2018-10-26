@@ -309,7 +309,7 @@ elseif ($add) //Interface d'ajout du groupe.
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
 	//Gestion erreur.
-	$get_sucess = retrieve(GET, 'success', '');
+	$get_success = retrieve(GET, 'success', '');
 	if ($get_success == 1)
 	{
 		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
