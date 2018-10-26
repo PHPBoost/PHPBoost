@@ -31,57 +31,57 @@
  */
 class FormFieldsetHTML extends AbstractFormFieldset
 {
-    private $title = '';
+	protected $title = '';
 
-    /**
-     * @desc constructor
-     * @param string $name The name of the fieldset
-     */
-    public function __construct($id, $name = '', $options = array())
-    {
-        parent::__construct($id, $options);
-        $this->title = $name;
-    }
+	/**
+	 * @desc constructor
+	 * @param string $name The name of the fieldset
+	 */
+	public function __construct($id, $name = '', $options = array())
+	{
+		parent::__construct($id, $options);
+		$this->title = $name;
+	}
 
-    /**
-     * @desc Return the form
-     * @param Template $template Optionnal template
-     * @return string
-     */
-    public function display()
-    {
-        $template = $this->get_template_to_use();
+	/**
+	 * @desc Return the form
+	 * @param Template $template Optionnal template
+	 * @return string
+	 */
+	public function display()
+	{
+		$template = $this->get_template_to_use();
 
-        $template->put_all(array(
-            'C_TITLE' => !empty($this->title),
-            'L_TITLE' => $this->title
-        ));
+		$template->put_all(array(
+			'C_TITLE' => !empty($this->title),
+			'L_TITLE' => $this->title
+		));
 
-        $this->assign_template_fields($template);
+		$this->assign_template_fields($template);
 
-        return $template;
-    }
+		return $template;
+	}
 
-    /**
-     * @param string $title The fieldset title
-     */
-    public function set_title($title)
-    {
-        $this->title = $title;
-    }
+	/**
+	 * @param string $title The fieldset title
+	 */
+	public function set_title($title)
+	{
+		$this->title = $title;
+	}
 
-    /**
-     * @return string The fieldset title
-     */
-    public function get_title()
-    {
-        return $this->title;
-    }
+	/**
+	 * @return string The fieldset title
+	 */
+	public function get_title()
+	{
+		return $this->title;
+	}
 
-    protected function get_default_template()
-    {
-        return new FileTemplate('framework/builder/form/FormFieldset.tpl');
-    }
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/FormFieldset.tpl');
+	}
 }
 
 ?>

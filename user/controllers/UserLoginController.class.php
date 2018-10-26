@@ -220,7 +220,7 @@ class UserLoginController extends AbstractController
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
 		$this->form->set_css_class('fieldset-content');
 
-		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connection']);
+		$this->fieldset = new FormFieldsetHTMLHeading('loginFieldset', $this->lang['connection']);
 		$this->form->add_fieldset($this->fieldset);
 		
 		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
