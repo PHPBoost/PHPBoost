@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # xmlns:og="http://ogp.me/ns#"# ENDIF #>
+<html lang="{L_XML_LANGUAGE}"# IF C_OPENGRAPH # prefix="og: http://ogp.me/ns#"# ENDIF #>
 	<head>
 		<title>{TITLE}</title>
 		<meta charset="UTF-8" />
