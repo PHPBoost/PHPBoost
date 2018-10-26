@@ -1,26 +1,22 @@
 <section id="module-articles">
 	<header>
-		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
-		</h1>
+		<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+		{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
 	</header>
 	<div class="elements-container">
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #">
-			<header>
-				<h2>
-					<span itemprop="name">{TITLE}</span>
-					<span class="actions">
-						# IF C_EDIT #
-							<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-						# ENDIF #
-						# IF C_DELETE #
-							<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-						# ENDIF #
-							<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
-					</span>
-				</h2>
+			<header>				
+				<span class="actions">
+					# IF C_EDIT #
+					<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+					# ENDIF #
+					# IF C_DELETE #
+					<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+					# ENDIF #
+					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
+				</span>
+				<h1><span itemprop="name">{TITLE}</span></h1>
 
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #

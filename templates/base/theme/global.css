@@ -48,7 +48,8 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: normal;
 }
 
-section header h1 {
+section > header,
+section > header h1 {
 	font-size: 1em;
 	text-align: right;
 }

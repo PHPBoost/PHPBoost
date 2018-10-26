@@ -5,9 +5,9 @@
 			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
-			</div>
+		<div class="cat-description">
+			{CATEGORY_DESCRIPTION}
+		</div>
 		# ENDIF #
 	</header>
 
