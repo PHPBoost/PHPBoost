@@ -598,6 +598,13 @@ class UpdateServices
 		// $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/phpboost/deprecated');
 		// if ($folder->exists())
 		// 	$folder->delete();
+		
+		$file = new File(PATH_TO_ROOT . '/database/lang/english/database_english.php');
+		$file->delete();
+		
+		$file = new File(PATH_TO_ROOT . '/database/lang/french/database_french.php');
+		$file->delete();
+		
 	}
 	
 	private function delete_old_files_kernel()

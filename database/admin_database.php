@@ -46,7 +46,8 @@ if (!empty($read_file) && TextHelper::substr($read_file, -4) == '.sql')
 	}
 	exit;
 }
-load_module_lang('database'); //Chargement de la langue du module.
+
+$LANG = LangLoader::get('common', 'database');
 define('TITLE', $LANG['database_management']);
 require_once('../admin/admin_header.php');
 
@@ -79,7 +80,7 @@ $tpl->put_all(array(
 	'L_INSERT' => $LANG['db_insert'],
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_BACKUP' => $LANG['db_backup'],
-	'L_TRUNCATE' => $LANG['empty'],
+	'L_TRUNCATE' => LangLoader::get_message('empty', 'main'),
 	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
@@ -259,13 +260,13 @@ elseif ($action == 'restore')
 				break;
 			case 'failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['db_restore_failure'], UserErrorController::FATAL);
-                DispatchManager::redirect($controller);
+					$LANG['db_restore_failure'], UserErrorController::FATAL);
+				DispatchManager::redirect($controller);
 				break;
 			case 'upload_failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['db_upload_failure'], UserErrorController::FATAL);
-                DispatchManager::redirect($controller);
+					$LANG['db_upload_failure'], UserErrorController::FATAL);
+				DispatchManager::redirect($controller);
 				break;
 			case 'file_already_exists' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], MessageHelper::WARNING));
@@ -275,8 +276,8 @@ elseif ($action == 'restore')
 				break;
 			case 'unlink_failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                    $LANG['db_unlink_failure'], UserErrorController::FATAL);
-                DispatchManager::redirect($controller);
+					$LANG['db_unlink_failure'], UserErrorController::FATAL);
+				DispatchManager::redirect($controller);
 				break;
 			case 'file_does_not_exist':
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_file_does_not_exist'], MessageHelper::WARNING));
@@ -358,8 +359,8 @@ else
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($tables),
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
-			'SELECT_ALL' => $LANG['select_all'],
-			'SELECT_NONE' => $LANG['select_none'],
+			'SELECT_ALL' => LangLoader::get_message('select_all', 'main'),
+			'SELECT_NONE' => LangLoader::get_message('select_none', 'main'),
 			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
 			'L_EXPLAIN_BACKUP' => $LANG['db_backup_explain'],
 			'L_SELECTION' => $LANG['db_selected_tables'],
