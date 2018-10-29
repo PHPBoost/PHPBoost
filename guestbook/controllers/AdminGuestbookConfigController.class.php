@@ -80,7 +80,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),

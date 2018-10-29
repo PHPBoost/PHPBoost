@@ -78,7 +78,7 @@ class WebFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_weblink()->get_name(), array('required' => true)));

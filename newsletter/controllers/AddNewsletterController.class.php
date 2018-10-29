@@ -79,7 +79,7 @@ class AddNewsletterController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
+		$fieldset = new FormFieldsetHTMLHeading('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
 		if (NewsletterConfig::load()->get_mail_sender())

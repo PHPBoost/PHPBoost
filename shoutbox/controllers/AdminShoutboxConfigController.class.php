@@ -81,7 +81,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTMLHeading('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),

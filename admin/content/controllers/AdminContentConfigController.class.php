@@ -87,7 +87,7 @@ class AdminContentConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('language-config', $this->lang['content.config.language']);
+		$fieldset = new FormFieldsetHTMLHeading('language-config', $this->lang['content.config.language']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['content.config.default-formatting-language'], $this->content_formatting_config->get_default_editor(),

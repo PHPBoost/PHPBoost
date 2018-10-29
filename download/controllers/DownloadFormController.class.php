@@ -81,7 +81,7 @@ class DownloadFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('download',  $this->get_downloadfile()->get_id() === null ? $this->lang['download.add'] : $this->lang['download.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('download',  $this->get_downloadfile()->get_id() === null ? $this->lang['download.add'] : $this->lang['download.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_downloadfile()->get_name(), array('required' => true)));

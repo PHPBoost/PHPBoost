@@ -109,7 +109,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$this->get_advises($form);
 
-		$fieldset = new FormFieldsetHTML('server-report', $this->admin_lang['server']);
+		$fieldset = new FormFieldsetHTMLHeading('server-report', $this->admin_lang['server']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('php_version', $this->admin_lang['php_version'], ServerConfiguration::get_phpversion()));

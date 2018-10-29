@@ -66,7 +66,7 @@ class AdminMemberAddController extends AdminController
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
+		$fieldset = new FormFieldsetHTMLHeading('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',

@@ -111,7 +111,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('delete_category', $this->get_title());
+		$fieldset = new FormFieldsetHTMLHeading('delete_category', $this->get_title());
 		$fieldset->set_description($this->get_description());
 		$form->add_fieldset($fieldset);
 		

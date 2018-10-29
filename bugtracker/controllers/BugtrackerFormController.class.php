@@ -99,7 +99,7 @@ class BugtrackerFormController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['titles.bugs_infos']);
+		$fieldset = new FormFieldsetHTMLHeading('bug_infos', $this->lang['titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $bug->get_title(), array('required' => true)));

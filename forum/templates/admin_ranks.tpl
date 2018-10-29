@@ -31,7 +31,7 @@
 		<div id="admin-contents">
 			<form action="admin_ranks.php" method="post">
 				<fieldset>
-					<legend>{L_FORUM_RANKS_MANAGEMENT}</legend>
+					<legend><h1>{L_FORUM_RANKS_MANAGEMENT}</h1></legend>
 					<div class="fieldset-inset">
 						<table id="table">
 							<thead>

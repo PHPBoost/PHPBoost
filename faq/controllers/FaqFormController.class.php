@@ -78,7 +78,7 @@ class FaqFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('faq', $this->get_faq_question()->get_id() === null ? $this->lang['faq.add'] : $this->lang['faq.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('faq', $this->get_faq_question()->get_id() === null ? $this->lang['faq.add'] : $this->lang['faq.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));

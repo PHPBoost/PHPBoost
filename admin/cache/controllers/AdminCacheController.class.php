@@ -67,7 +67,7 @@ class AdminCacheController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('cache', $this->lang['cache']);
+		$fieldset = new FormFieldsetHTMLHeading('cache', $this->lang['cache']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_data_cache']));

@@ -97,7 +97,7 @@ jQuery(document).ready(function() {
 # INCLUDE MSG #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ContactFields.serialize_sortable();" class="fieldset-content">
 	<fieldset id="contact_fields_management">
-		<legend>${LangLoader::get_message('admin.fields.manage', 'common', 'contact')}</legend>
+		<legend><h1>${LangLoader::get_message('admin.fields.manage', 'common', 'contact')}</h1></legend>
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
 				<li class="sortable-element" id="list-{fields_list.ID}" data-id="{fields_list.ID}">

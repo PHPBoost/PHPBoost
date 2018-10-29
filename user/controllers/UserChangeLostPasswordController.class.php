@@ -68,7 +68,7 @@ class UserChangeLostPasswordController extends AbstractController
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['change-password']);
+		$fieldset = new FormFieldsetHTMLHeading('fieldset', $this->lang['change-password']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password.new'], '',

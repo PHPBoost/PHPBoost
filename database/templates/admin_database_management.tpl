@@ -27,7 +27,7 @@
 
 
 				<fieldset>
-						<legend>{L_DATABASE_MANAGEMENT}</legend>
+						<legend><h1>{L_DATABASE_MANAGEMENT}</h1></legend>
 						<div class="fieldset-inset">
 								{L_EXPLAIN_ACTIONS}
 								<div class="spacer"></div>

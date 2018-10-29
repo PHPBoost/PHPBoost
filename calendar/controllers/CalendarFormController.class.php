@@ -81,7 +81,7 @@ class CalendarFormController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('event', $this->lang['calendar.titles.event']);
+		$fieldset = new FormFieldsetHTMLHeading('event', $this->lang['calendar.titles.event']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $event_content->get_title(), array('required' => true)));

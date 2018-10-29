@@ -77,7 +77,7 @@ class AdminCommentsConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comments.config']);
+		$fieldset = new FormFieldsetHTMLHeading('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comments.config.enabled'], $this->configuration->are_comments_enabled(), array('events' => array('click' => '

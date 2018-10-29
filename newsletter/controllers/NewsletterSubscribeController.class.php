@@ -80,7 +80,7 @@ class NewslettersubscribeController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('subscribe.newsletter', $this->lang['subscribe.newsletter']);
+		$fieldset = new FormFieldsetHTMLHeading('subscribe.newsletter', $this->lang['subscribe.newsletter']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $email,

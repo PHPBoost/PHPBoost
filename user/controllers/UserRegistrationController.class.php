@@ -72,7 +72,7 @@ class UserRegistrationController extends AbstractController
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 
-		$fieldset = new FormFieldsetHTML('registration', $this->lang['registration']);
+		$fieldset = new FormFieldsetHTMLHeading('registration', $this->lang['registration']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));

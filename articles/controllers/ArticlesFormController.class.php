@@ -79,7 +79,7 @@ class ArticlesFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('articles', $this->lang['articles']);
+		$fieldset = new FormFieldsetHTMLHeading('articles', $this->lang['articles']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.title'], $this->get_article()->get_title(), 

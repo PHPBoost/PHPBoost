@@ -51,7 +51,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>{@labels.fields.title} : {TITLE}</legend>
+	<legend><h1>{@labels.fields.title} : {TITLE}</h1></legend>
 	<div class="content">{CONTENTS}</div>
 </fieldset>
 

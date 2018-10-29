@@ -89,7 +89,7 @@ class AdminContactFieldFormController extends AdminModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('field', !empty($this->id) ? $this->lang['admin.fields.title.edit_field'] : $this->lang['admin.fields.title.add_field']);
+		$fieldset = new FormFieldsetHTMLHeading('field', !empty($this->id) ? $this->lang['admin.fields.title.edit_field'] : $this->lang['admin.fields.title.add_field']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->admin_user_common_lang['field.name'], $field->get_name(),

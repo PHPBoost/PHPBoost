@@ -89,7 +89,7 @@ class AdminUninstallLangController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
+		$fieldset = new FormFieldsetHTMLHeading('uninstall_lang', $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
 		$form->add_fieldset($fieldset);
 	
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['langs.drop_files_multiple'] : $this->lang['langs.drop_files'], '0',

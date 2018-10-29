@@ -69,7 +69,7 @@ class AdminMailConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('general_config', $this->lang['mail-config.general_mail_config']);
+		$fieldset = new FormFieldsetHTMLHeading('general_config', $this->lang['mail-config.general_mail_config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['mail-config.default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['mail-config.default_mail_sender_explain'])));

@@ -70,7 +70,7 @@ class AdminCacheConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('explain', $this->lang['cache_configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('explain', $this->lang['cache_configuration']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp_php_cache', $this->lang['explain_php_cache']));
 		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['apc_available'], $this->is_apc_available(), array('description' => $this->lang['explain_apc_available'])));

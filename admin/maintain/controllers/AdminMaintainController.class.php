@@ -97,7 +97,7 @@ class AdminMaintainController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('maintain', LangLoader::get_message('maintain', 'user-common'));
+		$fieldset = new FormFieldsetHTMLHeading('maintain', LangLoader::get_message('maintain', 'user-common'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_type', $this->lang['maintain_type'], $this->get_maintain_type(), $this->build_maintain_select_options(),

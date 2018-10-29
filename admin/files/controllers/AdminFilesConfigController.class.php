@@ -72,7 +72,7 @@ class AdminFilesConfigController extends AdminController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('files-config', LangLoader::get_message('files_config', 'main'));
+		$fieldset = new FormFieldsetHTMLHeading('files-config', LangLoader::get_message('files_config', 'main'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['size_limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),

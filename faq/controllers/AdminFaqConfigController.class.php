@@ -79,7 +79,7 @@ class AdminFaqConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),

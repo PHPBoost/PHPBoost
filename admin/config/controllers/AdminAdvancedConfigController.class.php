@@ -87,7 +87,7 @@ class AdminAdvancedConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('advanced-config', $this->lang['advanced-config']);
+		$fieldset = new FormFieldsetHTMLHeading('advanced-config', $this->lang['advanced-config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(),

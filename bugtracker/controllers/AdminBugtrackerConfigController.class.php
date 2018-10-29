@@ -97,7 +97,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$severities = $this->config->get_severities();
 
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTMLHeading('config', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), (int)$this->config->get_items_per_page(),

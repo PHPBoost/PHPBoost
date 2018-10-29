@@ -82,7 +82,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
-		$fieldset = new FormFieldsetHTML('edit-subscriber', $this->lang['subscriber.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('edit-subscriber', $this->lang['subscriber.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $row['mail'],

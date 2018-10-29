@@ -73,7 +73,7 @@ class AdminReCaptchaConfig extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['config.title']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['config.title']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldFree('explain', '', $this->lang['config.recaptcha-explain']));

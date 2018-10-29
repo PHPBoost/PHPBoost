@@ -72,7 +72,7 @@ class AdminOnlineConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset_config = new FormFieldsetHTMLHeading('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_number_member_displayed(),

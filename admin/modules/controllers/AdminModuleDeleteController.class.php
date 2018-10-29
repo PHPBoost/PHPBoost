@@ -118,7 +118,7 @@ class AdminModuleDeleteController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['modules.delete_module_multiple'] : $this->lang['modules.delete_module']);
+		$fieldset = new FormFieldsetHTMLHeading('delete_module', $this->multiple ? $this->lang['modules.delete_module_multiple'] : $this->lang['modules.delete_module']);
 		$form->add_fieldset($fieldset);
 	
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['modules.drop_files_multiple'] : $this->lang['modules.drop_files'], '0',

@@ -89,7 +89,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('customize-favicon', $this->lang['customization.favicon']);
+		$fieldset = new FormFieldsetHTMLHeading('customize-favicon', $this->lang['customization.favicon']);
 		$form->add_fieldset($fieldset);
 
 		if ($this->config->get_favicon_path() == null || $this->config->get_favicon_path() == '')

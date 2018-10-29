@@ -67,7 +67,7 @@ class AdminSyndicationCacheController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('syndication_cache', $this->lang['syndication_cache']);
+		$fieldset = new FormFieldsetHTMLHeading('syndication_cache', $this->lang['syndication_cache']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache']));

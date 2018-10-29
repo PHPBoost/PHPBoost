@@ -77,7 +77,7 @@ class AdminMemberConfigController extends AdminController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('members_config', $this->lang['members.config-members']);
+		$fieldset = new FormFieldsetHTMLHeading('members_config', $this->lang['members.config-members']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $this->user_accounts_config->is_registration_enabled(),

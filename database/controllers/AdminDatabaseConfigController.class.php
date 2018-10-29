@@ -80,7 +80,7 @@ class AdminDatabaseConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['config.database-tables-optimization-enabled'], $this->config->is_database_tables_optimization_enabled(),

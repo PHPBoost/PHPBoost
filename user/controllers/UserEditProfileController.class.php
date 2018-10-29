@@ -129,7 +129,7 @@ class UserEditProfileController extends AbstractController
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
-		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('edit_profile', $this->lang['profile.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(),

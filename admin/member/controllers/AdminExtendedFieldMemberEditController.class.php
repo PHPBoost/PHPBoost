@@ -104,7 +104,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$regex_type = is_numeric($this->extended_field['regex']) ? $this->extended_field['regex'] : 6;
 		$regex = is_string($this->extended_field['regex']) ? $this->extended_field['regex'] : '';
 
-		$fieldset = new FormFieldsetHTML('edit_fields', $this->lang['extended-field-edit']);
+		$fieldset = new FormFieldsetHTMLHeading('edit_fields', $this->lang['extended-field-edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $this->extended_field['name'],
