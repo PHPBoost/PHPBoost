@@ -61,6 +61,11 @@ if ($id_cat != 0)
 	$result->dispose();
 	echo '</ul>';
 }
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 require_once('../kernel/footer_no_display.php');
 ?>

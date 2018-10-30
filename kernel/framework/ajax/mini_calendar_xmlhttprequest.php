@@ -154,6 +154,8 @@ if ($calendar_type == 'date')
 else
 {
 	//Non supporté
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 $tpl->display();

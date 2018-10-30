@@ -120,4 +120,6 @@ elseif (!empty($rename_file)) //Renomme un fichier d'un dossier dans la gestion 
 		echo 0;
 	}
 }
+else
+	echo -1;
 ?>

@@ -227,6 +227,11 @@ elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve
 	else
 		echo $LANG['no_result'];
 }
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

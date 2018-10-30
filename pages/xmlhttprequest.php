@@ -110,7 +110,11 @@ elseif (!empty($open_cat) || $root == 1)
 	$return .= '</ul>';
 	echo $return;
 }
-
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 require_once('../kernel/footer_no_display.php');
 ?>

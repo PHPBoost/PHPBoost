@@ -39,6 +39,12 @@ $editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_defau
 
 $contents = stripslashes(retrieve(POST, 'contents', ''));
 
+if (empty($contents))
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
+
 $ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
 

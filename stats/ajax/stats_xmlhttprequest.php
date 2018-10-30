@@ -124,6 +124,11 @@ elseif (!empty($stats_keyword))
 		$result->dispose();
 	}
 }
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>
