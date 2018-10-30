@@ -85,6 +85,12 @@ class LangLoader
 	public static function get_message($message_id, $filename, $module = '')
 	{
 		$lang = self::get($filename, $module);
+		if (!isset($lang[$message_id]))
+		{
+			$lang = self::get($filename, $module, 'real_lang');
+			if (!isset($lang[$message_id]))
+				$lang = self::get($filename, $module, 'default');
+		}
 		return $lang[$message_id];
 	}
 
@@ -94,30 +100,31 @@ class LangLoader
 	 * If module is empty, the kernel lang folder will be used
 	 * @param string $filename the language filename
 	 * @param string $module the module to look for languages files in
+	 * @param string $forced_file the language filename to return inevitably
 	 * @return string[string] the lang array which keys are languages identifiers and values the
 	 * translated messages
 	 */
-	public static function get($filename, $module = '')
+	public static function get($filename, $module = '', $forced_file = '')
 	{
 		$module_name = trim($module, '/');
-		return self::get_raw($module_name, $filename);
+		return self::get_raw($module_name, $filename, $forced_file);
 	}
 
-	private static function get_raw($folder, $filename)
+	private static function get_raw($folder, $filename, $forced_file = '')
 	{
 		$lang_id = $folder . '/' . $filename;
 		$ram_cache = self::get_ram_cache();
 		if (!$ram_cache->contains($lang_id))
 		{
-			self::load($lang_id, $folder, $filename);
+			self::load($lang_id, $folder, $filename, $forced_file);
 		}
 		return $ram_cache->get($lang_id);
 	}
 
-	private static function load($lang_id, $folder, $filename)
+	private static function load($lang_id, $folder, $filename, $forced_file = '')
 	{
 		$lang = array();
-		include self::get_real_lang_path($folder, $filename);
+		include self::get_real_lang_path($folder, $filename, $forced_file);
 		if (empty($lang) && !empty($LANG) && is_array($LANG))
 		{
 			$lang = $LANG;
@@ -130,14 +137,15 @@ class LangLoader
 	 * and if it's not possible, use the default locale one.
 	 * @param string $folder the folder to look in
 	 * @param string $filename the language filename
+	 * @param string $forced_file the language filename to return inevitably
 	 * @return string the real language file path
 	 */
-	private static function get_real_lang_path($folder, $filename)
+	private static function get_real_lang_path($folder, $filename, $forced_file = '')
 	{
 		$real_folder = PATH_TO_ROOT . (!empty($folder) ? '/' . $folder : '') . '/lang/';
 		$filename_with_extension = '/' . $filename . '.php';
 
-		if (!empty($folder))
+		if (!empty($folder) && empty($forced_file))
 		{
 			// Module - Langs priority order
 			//      /lang/$lang/modules/$module/$file.php
@@ -149,17 +157,23 @@ class LangLoader
 			}
 		}
 
-		$real_lang_file = $real_folder . self::$locale . $filename_with_extension;
-		if (file_exists($real_lang_file))
+		if (empty($forced_file) || $forced_file = 'real_lang')
 		{
-			return $real_lang_file;
+			$real_lang_file = $real_folder . self::$locale . $filename_with_extension;
+			if (file_exists($real_lang_file))
+			{
+				return $real_lang_file;
+			}
 		}
 
 		// Get default lang file if nothing else is found
-		$real_lang_file = $real_folder . self::get_default_lang() . $filename_with_extension;
-		if (file_exists($real_lang_file))
+		if (empty($forced_file) || $forced_file = 'default')
 		{
-			return $real_lang_file;
+			$real_lang_file = $real_folder . self::get_default_lang() . $filename_with_extension;
+			if (file_exists($real_lang_file))
+			{
+				return $real_lang_file;
+			}
 		}
 
 		throw new LangNotFoundException($folder, $filename);
