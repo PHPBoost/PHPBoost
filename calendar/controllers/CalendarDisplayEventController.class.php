@@ -132,6 +132,7 @@ class CalendarDisplayEventController extends ModuleController
 	private function generate_response()
 	{
 		$event = $this->get_event();
+		$category = $event->get_content()->get_category();
 		
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -140,7 +141,6 @@ class CalendarDisplayEventController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
-		$category = $event->get_content()->get_category();
 		$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		
