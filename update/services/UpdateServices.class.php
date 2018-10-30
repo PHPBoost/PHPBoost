@@ -62,12 +62,6 @@ class UpdateServices
 	private $update_log_file;
 	
 	/**
-	 * @var Config
-	 */
-	private $general_config;
-	private $user_accounts_config;
-	
-	/**
 	 * @var string[string]
 	 */
 	private $messages;
@@ -88,9 +82,6 @@ class UpdateServices
 		}
 		
 		$this->messages = LangLoader::get('update', 'update');
-		
-		$this->general_config = GeneralConfig::load();
-		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 	
 	public function is_already_installed($tables_prefix)
@@ -345,8 +336,8 @@ class UpdateServices
 				else
 				{
 					ModulesManager::upgrade_module($id, false);
-					$module->set_installed_version($module->get_configuration()->get_version());
 				}
+				$module->set_installed_version($module->get_configuration()->get_version());
 			}
 			else
 			{
@@ -364,9 +355,11 @@ class UpdateServices
 	
 	private function update_themes()
 	{
+		$user_accounts_config = UserAccountsConfig::load();
 		$active_themes_number = 0;
 		$default_theme_changed = false;
-		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
+		$themes_to_delete = array();
+		foreach (ThemesManager::get_installed_themes_map() as $theme)
 		{
 			if ($theme->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 			{
@@ -374,38 +367,42 @@ class UpdateServices
 			}
 			else
 			{
-				if ($this->user_accounts_config->get_default_theme() == $theme->get_id())
+				if ($user_accounts_config->get_default_theme() == $theme->get_id())
 				{
-					$this->user_accounts_config->set_default_theme('base');
 					$default_theme_changed = true;
 				}
 				
-				ThemesManager::uninstall($id);
-				
-				$this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
+				$themes_to_delete[] = $theme->get_id();
 			}
 		}
 		
 		if (empty($active_themes_number) || $default_theme_changed)
 		{
-			$folder = new Folder(PATH_TO_ROOT . '/templates/base');
-			if ($folder->exists())
+			if (ThemesManager::get_theme_existed('base'))
 				ThemesManager::install('base');
 			else
 				$this->add_information_to_file('theme base', 'has not been installed because it was not on the FTP');
 			
-			$this->user_accounts_config->set_default_theme('base');
+			$user_accounts_config->set_default_theme('base');
 			UserAccountsConfig::save();
 			
 			$this->add_information_to_file('theme base', 'has been installed and set to default because no other theme was compatible');
+		}
+		
+		foreach ($themes_to_delete as $id)
+		{
+			ThemesManager::uninstall($id);
+			$this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
 		}
 	}
 	
 	private function update_langs()
 	{
+		$user_accounts_config = UserAccountsConfig::load();
 		$active_langs_number = 0;
 		$default_lang_changed = false;
-		foreach (LangsManager::get_installed_langs_map() as $id => $lang)
+		$langs_to_delete = array();
+		foreach (LangsManager::get_installed_langs_map() as $lang)
 		{
 			if ($lang->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 			{
@@ -413,30 +410,32 @@ class UpdateServices
 			}
 			else
 			{
-				if ($this->user_accounts_config->get_default_lang() == $lang->get_id())
+				if ($user_accounts_config->get_default_lang() == $lang->get_id())
 				{
-					$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
 					$default_lang_changed = true;
 				}
 				
-				LangsManager::uninstall($id);
-				
-				$this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
+				$langs_to_delete[] = $lang->get_id();
 			}
 		}
 		
 		if (empty($active_langs_number) || $default_lang_changed)
 		{
-			$folder = new Folder(PATH_TO_ROOT . '/lang/' . LangLoader::get_locale());
-			if ($folder->exists())
+			if (LangsManager::get_lang_existed(LangLoader::get_locale())
 				LangsManager::install(LangLoader::get_locale());
 			else
 				$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has not been installed because it was not on the FTP');
 			
-			$this->user_accounts_config->set_default_lang(LangLoader::get_locale());
+			$user_accounts_config->set_default_lang(LangLoader::get_locale());
 			UserAccountsConfig::save();
 			
 			$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has been installed and set to default because no other lang was compatible');
+		}
+		
+		foreach ($langs_to_delete as $id)
+		{
+			LangsManager::uninstall($id);
+			$this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
 		}
 	}
 	
