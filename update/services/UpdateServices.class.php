@@ -378,8 +378,12 @@ class UpdateServices
 		
 		if (empty($active_themes_number) || $default_theme_changed)
 		{
-			if (ThemesManager::get_theme_existed('base'))
+			$folder = new Folder(PATH_TO_ROOT . '/templates/base');
+			if ($folder->exists())
+			{
 				ThemesManager::install('base');
+				ThemeManager::change_visibility('base', true);
+			}
 			else
 				$this->add_information_to_file('theme base', 'has not been installed because it was not on the FTP');
 			
@@ -421,8 +425,12 @@ class UpdateServices
 		
 		if (empty($active_langs_number) || $default_lang_changed)
 		{
-			if (LangsManager::get_lang_existed(LangLoader::get_locale()))
+			$folder = new Folder(PATH_TO_ROOT . '/lang/' . LangLoader::get_locale());
+			if ($folder->exists())
+			{
 				LangsManager::install(LangLoader::get_locale());
+				LangsManager::change_visibility(LangLoader::get_locale(), true);
+			}
 			else
 				$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has not been installed because it was not on the FTP');
 			

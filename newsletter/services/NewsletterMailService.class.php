@@ -52,7 +52,7 @@ class NewsletterMailService
 
 	public static function display_mail($language_type, $id, $title, $contents)
 	{
-		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
+		$row = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
 		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
 	}
 
