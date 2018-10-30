@@ -185,6 +185,10 @@ legend,
 	text-transform: none;
 }
 
+legend > h1 {
+	font-size: inherit;
+}
+
 /* --- Prévisualition --- */
 .xmlhttprequest-preview {
 	margin-top: 0.309em;
