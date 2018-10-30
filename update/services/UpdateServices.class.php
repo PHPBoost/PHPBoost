@@ -382,7 +382,7 @@ class UpdateServices
 			if ($folder->exists())
 			{
 				ThemesManager::install('base');
-				ThemeManager::change_visibility('base', true);
+				ThemesManager::change_visibility('base', true);
 			}
 			else
 				$this->add_information_to_file('theme base', 'has not been installed because it was not on the FTP');
