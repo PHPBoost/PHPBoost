@@ -81,6 +81,7 @@ class Environment
 
 		self::load_dynamic_constants();
 		self::init_session();
+		self::set_default_timezone();
 
 		self::load_lang_files();
 		self::process_changeday_tasks_if_needed();
@@ -118,7 +119,6 @@ class Environment
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
-		Date::set_default_timezone();
 		
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
@@ -180,6 +180,11 @@ class Environment
 		{
 			AppContext::get_current_user()->update_lang($default_lang);
 		}
+	}
+
+	public static function set_default_timezone()
+	{
+		Date::set_default_timezone();
 	}
 
 	public static function init_output_bufferization()
