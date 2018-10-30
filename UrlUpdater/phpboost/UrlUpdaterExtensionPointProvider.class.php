@@ -42,6 +42,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		
 		$phpboost_4_1_release_date = new Date('2014-07-15');
 		$phpboost_5_0_release_date = new Date('2016-02-16');
+		$phpboost_5_1_release_date = new Date('2017-07-18');
 		
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_4_1_release_date))
 		{
@@ -160,10 +161,23 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 		
-		//Old categories management urls replacement
-		$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/categories([^.]*)?$', '$1/categories$2', 'L,R=301');
-		//Old modules elements management urls replacement
-		$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/manage([^.]*)?$', '$1/manage$2', 'L,R=301');
+		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_5_1_release_date))
+		{
+			//Old categories management urls replacement
+			$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/categories([^.]*)?$', '$1/categories$2', 'L,R=301');
+			//Old modules elements management urls replacement
+			$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/manage([^.]*)?$', '$1/manage$2', 'L,R=301');
+		}
+		
+		//Old user rewrited urls replacement
+		$this->urls_mappings[] = new UrlMapping('^user/login/?$', '/login/', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^user/aboutcookie/?$', '/aboutcookie/', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^user/registration/?$', '/registration/', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^registration/confirm(?:/([a-z0-9]+))?/?$', '/registration/confirm$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^password/lost/?$', '/password/lost/', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^password/change(?:/([a-z0-9]+))?/?$', '/password/change$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^error/403/?$', '/error/403/', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^error/404/?$', '/error/404/', 'L,R=301');
 		
 		return new UrlMappings($this->urls_mappings);
 	}

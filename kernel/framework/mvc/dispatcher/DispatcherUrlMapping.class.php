@@ -34,14 +34,14 @@ class DispatcherUrlMapping extends UrlMapping
 	/**
 	 * @param UrlMapping[] $mappings
 	 */
-	public function __construct($dispatcher_name, $match = '([\w/_-]*)$', $from_path = '')
+	public function __construct($dispatcher_name, $match = '([\w/_-]*)$', $from_path = '', $redirect_path = '')
 	{
 		if (!empty($from_path))
 		{
 			if ($from_path == 'root')
 			{
 				$from = '^' . $match;
-				$to = $dispatcher_name . '?url=/$1';
+				$to = $dispatcher_name . '?url=/' . ($redirect_path ? $redirect_path : '$1');
 				$this->low_priority = true;
 			}
 			else

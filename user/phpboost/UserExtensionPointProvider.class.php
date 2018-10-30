@@ -56,7 +56,17 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$')));
+		return new UrlMappings(array(
+			new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$'),
+			new DispatcherUrlMapping('/user/index.php', 'login/?$', 'root', 'login/'),
+			new DispatcherUrlMapping('/user/index.php', 'aboutcookie/?$', 'root', 'aboutcookie/'),
+			new DispatcherUrlMapping('/user/index.php', 'registration/?$', 'root', 'registration/'),
+			new DispatcherUrlMapping('/user/index.php', 'registration/confirm(?:/([a-z0-9]+))?/?$', 'root', 'registration/confirm$1'),
+			new DispatcherUrlMapping('/user/index.php', 'password/lost/?$', 'root', 'password/lost/'),
+			new DispatcherUrlMapping('/user/index.php', 'password/change(?:/([a-z0-9]+))?/?$', 'root', 'password/change$1'),
+			new DispatcherUrlMapping('/user/index.php', 'error/403/?$', 'root', 'error/403/'),
+			new DispatcherUrlMapping('/user/index.php', 'error/404/?$', 'root', 'error/404/')
+		));
 	}
 	
 	public function comments()
