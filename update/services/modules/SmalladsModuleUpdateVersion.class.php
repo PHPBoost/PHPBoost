@@ -208,14 +208,14 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$folder->delete();
 
 			// update thumbnail_url files to /upload/files
-			$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'thumbnail_url'));
+			$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'smallads', array('id', 'thumbnail_url'));
 			while ($row = $result->fetch()) {
 				if ($row['thumbnail_url'] != "") {
-					$this->querier->update(PREFIX . 'smallads', array(
+					PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
 						'thumbnail_url' => '/upload/' . $row['thumbnail_url'],
 					), 'WHERE id = :id', array('id' => $row['id']));
 				} else {
-					$this->querier->update(PREFIX . 'smallads', array(
+					PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
 						'thumbnail_url' => '/smallads/templates/images/no-thumb.png',
 					), 'WHERE id = :id', array('id' => $row['id']));
 				}

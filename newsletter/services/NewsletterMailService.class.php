@@ -52,7 +52,7 @@ class NewsletterMailService
 
 	public static function display_mail($language_type, $id, $title, $contents)
 	{
-		$row = $this->querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
+		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
 		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['contents']);
 	}
 
@@ -66,8 +66,8 @@ class NewsletterMailService
 			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (id_cat, title, contents, timestamp, type, subscribers)
 			VALUES (:id_cat, :title, :contents, :timestamp, :type, :field_type, :subscribers)", array(
 				'id_cat' => $id_cat,
-                'title' => $title,
-                'contents' => $contents,
+				'title' => $title,
+				'contents' => $contents,
 				'timestamp' => time(),
 				'type' => $language_type,
 				'subscribers' => 0

@@ -421,7 +421,7 @@ class UpdateServices
 		
 		if (empty($active_langs_number) || $default_lang_changed)
 		{
-			if (LangsManager::get_lang_existed(LangLoader::get_locale())
+			if (LangsManager::get_lang_existed(LangLoader::get_locale()))
 				LangsManager::install(LangLoader::get_locale());
 			else
 				$this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has not been installed because it was not on the FTP');
