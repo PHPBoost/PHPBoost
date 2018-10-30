@@ -306,7 +306,7 @@ class SessionData
 		}
 		else
 		{
-			$data = new SessionData($user_id, KeyGenerator::generate_key(64));
+			$data = new self($user_id, KeyGenerator::generate_key(64));
 			$data->token = KeyGenerator::generate_key(16);
 			$data->timestamp = time();
 			$data->ip = AppContext::get_request()->get_ip_address();
