@@ -4,6 +4,12 @@
 	# START forums_list #
 		# START forums_list.endcats #
 					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</article>
@@ -42,12 +48,6 @@
 							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
-					<tfoot>
-						<tr>
-							<td colspan="5">
-							</td>
-						</tr>
-					</tfoot>
 					<tbody>
 		# END forums_list.cats #
 		# START forums_list.subcats #

@@ -26,12 +26,6 @@
 								<th class="forum-last-topic"><i class="fa fa-clock fa-fw" title="{L_LAST_MESSAGE}"></i></th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<td colspan="6">
-								</td>
-							</tr>
-						</tfoot>
 						<tbody>
 					# START subcats #
 							<tr>
@@ -77,6 +71,12 @@
 							</tr>
 				# END subcats #
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6">
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</article>
@@ -114,22 +114,7 @@
 							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
-					<tfoot>
-						<tr>
-							<th colspan="7">
-								<div class="float-left">
-									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> 
-									# START syndication_cats #
-										<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
-									# END syndication_cats #
-									# IF C_POST_NEW_SUBJECT #
-										<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
-									# ENDIF #
-								</div>
-								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
-							</th>
-						</tr>
-					</tfoot>
+					<tbody>
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
 						<td colspan="7">
@@ -198,11 +183,25 @@
 						</td>
 					</tr>
 					# ENDIF #
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="7">
+								<div class="float-left">
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> 
+									# START syndication_cats #
+										<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
+									# END syndication_cats #
+									# IF C_POST_NEW_SUBJECT #
+										<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
+									# ENDIF #
+								</div>
+								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+							</th>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</article>
-
-
-
 
 		# INCLUDE forum_bottom #

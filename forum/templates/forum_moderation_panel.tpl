@@ -64,18 +64,6 @@
 								</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<td colspan="4">
-									# IF C_FORUM_ADMIN #
-									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
-									# ENDIF #
-									# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
-									# ENDIF #
-								</td>
-							</tr>
-						</tfoot>
 						<tbody>
 						# START action_list #
 						<tr>
@@ -109,6 +97,18 @@
 						</tr>
 						# ENDIF #
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="4">
+									# IF C_FORUM_ADMIN #
+									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
+									# ENDIF #
+									# IF C_DISPLAY_LINK_MORE_ACTION #
+									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
+									# ENDIF #
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
@@ -138,13 +138,6 @@
 								<th class="td70">{L_TIME}</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<td colspan="6">
-									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
-								</td>
-							</tr>
-						</tfoot>
 						<tbody>
 							# START alert_list #
 							<tr>
@@ -181,6 +174,13 @@
 							</tr>
 							# ENDIF #
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6">
+									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</form>
