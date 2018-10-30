@@ -612,6 +612,10 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/database/lang/french/database_french.php');
 		$file->delete();
 		
+		$folder = new Folder(PATH_TO_ROOT . '/ReCaptcha/lib');
+		if ($folder->exists())
+			$folder->delete();
+		
 	}
 	
 	private function delete_old_files_kernel()

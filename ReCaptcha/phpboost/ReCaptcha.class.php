@@ -30,14 +30,10 @@ class ReCaptcha extends Captcha
 	public static $_signupUrl = "https://www.google.com/recaptcha/admin";
 	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 	
-	private $recaptcha_response;
-	private $recaptcha_error;
-	private $lang;
 	private $config;
 	
 	public function __construct()
 	{
-		require_once(PATH_TO_ROOT . '/ReCaptcha/lib/recaptchalib.php');
 		$this->config = ReCaptchaConfig::load();
 	}
 	
@@ -48,8 +44,7 @@ class ReCaptcha extends Captcha
 	
 	public function is_available()
 	{
-		$config = ReCaptchaConfig::load();
-		return Url::check_url_validity('www.google.com') && $config->get_site_key() && $config->get_secret_key();
+		return Url::check_url_validity('www.google.com') && $this->config->get_site_key() && $this->config->get_secret_key();
 	}
 	
 	public function is_valid()
@@ -88,8 +83,7 @@ class ReCaptcha extends Captcha
 	public function display()
 	{
 		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
-		$this->lang = LangLoader::get('common', 'ReCaptcha');
-		$tpl->add_lang($this->lang);
+		$tpl->add_lang(LangLoader::get('common', 'ReCaptcha'));
 		$tpl->put_all(array(
 			'C_INVISIBLE' => $this->config->is_invisible_mode_enabled(),
 			'SITE_KEY' => $this->config->get_site_key(),
@@ -102,18 +96,6 @@ class ReCaptcha extends Captcha
 	public function is_visible()
 	{
 		return !$this->config->is_invisible_mode_enabled();
-	}
-	
-	public function get_error()
-	{
-		if ($this->recaptcha_error !== null)
-		{
-			return $this->recaptcha_error;
-		}
-		else if ($this->recaptcha_response !== null)
-		{
-			return $this->recaptcha_response->error;
-		}
 	}
 }
 ?>
