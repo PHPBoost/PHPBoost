@@ -188,7 +188,10 @@ class FaqDisplayCategoryController extends ModuleController
 		else
 			$graphical_environment->set_page_title($this->lang['module_title'], $page);
 		
-		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
+		$description = $this->get_category()->get_description();
+		if (empty($description))
+			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '');
+		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

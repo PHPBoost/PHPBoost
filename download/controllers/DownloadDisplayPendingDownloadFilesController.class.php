@@ -213,7 +213,7 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['download.pending'], $this->lang['module_title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.seo.description.pending']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_pending($sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

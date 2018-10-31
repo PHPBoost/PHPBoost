@@ -306,7 +306,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->article->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . $this->lang['articles']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_description());
+		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_real_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
 		
 		if ($this->article->has_picture())

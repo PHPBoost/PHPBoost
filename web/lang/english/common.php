@@ -61,6 +61,7 @@ $lang['config.sort_type.visits'] = 'Visits number';
 $lang['config.partners_number_in_menu'] = 'Max partners displayed number';
 
 //SEO
+$lang['web.seo.description.root'] = 'All :site\'s links.';
 $lang['web.seo.description.tag'] = 'All links on :subject.';
 $lang['web.seo.description.pending'] = 'All pending links.';
 

@@ -160,7 +160,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['news.pending'], $this->lang['news'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_pending_news($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

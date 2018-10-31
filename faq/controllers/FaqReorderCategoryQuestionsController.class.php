@@ -152,7 +152,10 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 		else
 			$graphical_environment->set_page_title($this->lang['module_title']);
 		
-		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
+		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions_order_management'];
+		if (empty($description))
+			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions_order_management'];
+		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

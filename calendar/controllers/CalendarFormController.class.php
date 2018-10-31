@@ -558,6 +558,7 @@ class CalendarFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['calendar.titles.add_event'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.titles.add_event']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
 		}
 		else
@@ -571,6 +572,7 @@ class CalendarFormController extends ModuleController
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.titles.event_edition']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id()));
 		}
 		

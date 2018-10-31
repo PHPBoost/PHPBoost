@@ -294,17 +294,21 @@ class MediaDisplayCategoryController extends ModuleController
 	
 	private function generate_response()
 	{
+		$page = AppContext::get_request()->get_getint('p', 1);
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
 		
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
 		
-		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$description = $this->get_category()->get_description();
+		if (empty($description))
+			$description = StringVars::replace_vars($this->lang['media.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '');
+		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], MediaUrlBuilder::home());
@@ -313,7 +317,7 @@ class MediaDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), ($category->get_id() == $this->get_category()->get_id() ? $page : 1)));
 		}
 		
 		return $response;

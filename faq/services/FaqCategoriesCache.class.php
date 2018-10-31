@@ -55,7 +55,10 @@ class FaqCategoriesCache extends CategoriesCache
 	{
 		$root = new RichRootCategory();
 		$root->set_authorizations(FaqConfig::load()->get_authorizations());
-		$root->set_description(FaqConfig::load()->get_root_category_description());
+		$description = FaqConfig::load()->get_root_category_description();
+		if (empty($description))
+			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name()));
+		$root->set_description($description);
 		return $root;
 	}
 }

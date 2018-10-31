@@ -70,6 +70,7 @@ $lang['admin.config.download_number_view_enabled'] = 'Enable number of view disp
 $lang['authorizations.display_download_link'] = 'Display download link permission';
 
 //SEO
+$lang['download.seo.description.root'] = 'All :site\'s download files.';
 $lang['download.seo.description.tag'] = 'All downloads on :subject.';
 $lang['download.seo.description.pending'] = 'All pending downloads.';
 

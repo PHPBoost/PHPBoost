@@ -240,7 +240,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['articles.pending_articles'], $this->lang['articles'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

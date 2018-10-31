@@ -348,7 +348,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 		else
 			$graphical_environment->set_page_title($this->lang['articles'], '', $page);
 		
-		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
+		$description = $this->category->get_description();
+		if (empty($description))
+			$description = StringVars::replace_vars($this->lang['articles.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('in_category', 'categories-common') . ' ' . $this->category->get_name() : '');
+		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

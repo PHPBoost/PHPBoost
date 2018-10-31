@@ -61,6 +61,10 @@ class GalleryCategoriesCache extends CategoriesCache
 	{
 		$root = new RichRootCategory();
 		$root->set_authorizations(GalleryConfig::load()->get_authorizations());
+		$root->set_description(
+			StringVars::replace_vars(LangLoader::get_message('gallery.seo.description.root', 'common', 'gallery'), 
+			array('site' => GeneralConfig::load()->get_site_name()
+		)));
 		return $root;
 	}
 }

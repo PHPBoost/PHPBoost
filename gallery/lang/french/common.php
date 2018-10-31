@@ -36,4 +36,7 @@ $lang['module_config_title'] = 'Configuration du module galerie';
 $lang['gallery.actions.add'] = 'Ajout d\'images';
 $lang['gallery.manage'] = 'Gérer les images';
 $lang['gallery.management'] = 'Gestion de la galerie';
+
+//SEO
+$lang['gallery.seo.description.root'] = 'Toutes les images de la galerie du site :site.';
 ?>

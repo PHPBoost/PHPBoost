@@ -51,6 +51,7 @@ $lang['config.display_type.display_all_answers'] = 'Afficher toutes les réponse
 $lang['config.items_default_sort.explain'] = 'Sur la page "Questions en attente"';
 
 //SEO
+$lang['faq.seo.description.root'] = 'Toutes les questions de la Foire Aux Questions du site :site.';
 $lang['faq.seo.description.pending'] = 'Toutes les questions en attente.';
 
 //contribution

@@ -61,7 +61,10 @@ class WebCategoriesCache extends CategoriesCache
 	{
 		$root = new RichRootCategory();
 		$root->set_authorizations(WebConfig::load()->get_authorizations());
-		$root->set_description(WebConfig::load()->get_root_category_description());
+		$description = WebConfig::load()->get_root_category_description();
+		if (empty($description))
+			$description = StringVars::replace_vars(LangLoader::get_message('web.seo.description.root', 'common', 'web'), array('site' => GeneralConfig::load()->get_site_name()));
+		$root->set_description($description);
 		return $root;
 	}
 }

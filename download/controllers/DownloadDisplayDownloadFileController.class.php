@@ -186,7 +186,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($downloadfile->get_name(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
-		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_real_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
 		
 		if ($downloadfile->has_picture())

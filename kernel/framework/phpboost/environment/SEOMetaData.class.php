@@ -65,9 +65,9 @@ class SEOMetaData
 		return $this->full_title;
 	}
 	
-	public function set_description($description)
+	public function set_description($description, $page = 1)
 	{
-		$this->description = $description;
+		$this->description = $description . ($page > 1 ? ' (' . TextHelper::lcfirst(LangLoader::get_message('page', 'main')) . ' ' . $page . ')' : '');
 	}
 	
 	public function complete_description($additional_description)

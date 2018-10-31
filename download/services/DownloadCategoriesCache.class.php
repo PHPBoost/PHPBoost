@@ -61,7 +61,10 @@ class DownloadCategoriesCache extends CategoriesCache
 	{
 		$root = new RichRootCategory();
 		$root->set_authorizations(DownloadConfig::load()->get_authorizations());
-		$root->set_description(DownloadConfig::load()->get_root_category_description());
+		$description = DownloadConfig::load()->get_root_category_description();
+		if (empty($description))
+			$description = StringVars::replace_vars(LangLoader::get_message('download.seo.description.root', 'common', 'download'), array('site' => GeneralConfig::load()->get_site_name()));
+		$root->set_description($description);
 		return $root;
 	}
 }

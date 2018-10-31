@@ -46,4 +46,7 @@ $lang['content_type.video'] = 'Video';
 $lang['config.max_video_width'] = 'Maximum video width';
 $lang['config.max_video_height'] = 'Maximum video height';
 $lang['config.root_category_content_type'] = 'Multimedia root category type of files allowed';
+
+//SEO
+$lang['media.seo.description.root'] = 'All :site\'s multimedia files.';
 ?>

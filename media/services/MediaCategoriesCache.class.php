@@ -69,7 +69,10 @@ class MediaCategoriesCache extends CategoriesCache
 		$root->set_rewrited_name('root');
 		$root->set_order(0);
 		$root->set_authorizations($config->get_authorizations());
-		$root->set_description($config->get_root_category_description());
+		$description = $config->get_root_category_description();
+		if (empty($description))
+			$description = StringVars::replace_vars(LangLoader::get_message('media.seo.description.root', 'common', 'media'), array('site' => GeneralConfig::load()->get_site_name()));
+		$root->set_description($description);
 		$root->set_content_type($config->get_root_category_content_type());
 		return $root;
 	}

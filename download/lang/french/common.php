@@ -70,6 +70,7 @@ $lang['admin.config.download_number_view_enabled'] = 'Activer l\'affichage du no
 $lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de téléchargement';
 
 //SEO
+$lang['download.seo.description.root'] = 'Tous les fichiers en téléchargement du site :site.';
 $lang['download.seo.description.tag'] = 'Tous les fichiers sur le sujet :subject.';
 $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
 
