@@ -279,6 +279,19 @@ body {
 	text-align: center;
 }
 
+@media (max-width: 768px) {
+	.cookiebar-container {
+		position: fixed;
+		top: auto;
+		bottom: 0;
+		padding: 1.309em 1.309em 0.456em 1.309em;
+		margin: 1em 0.456em;
+		border-style: solid;
+		border-width: 1px;
+		font-size: 1em;
+	}
+}
+
 .cookiebar-container.fixed {
 	position: fixed;
 }
