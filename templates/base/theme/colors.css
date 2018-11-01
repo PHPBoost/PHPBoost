@@ -524,6 +524,20 @@ td.calendar-week 		{ border-color: #81A4C8; }
 .modo-only    { border-color: #7657AE; background-color: rgba(93, 60, 151, 0.2); }
 .admin-only   { border-color: #5D3B9A; background-color: rgba(93, 60, 151, 0.2); }
 
+.floating-message-container .message-helper {
+	background-color: rgba(235, 239, 244, 1);
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.floating-message-container .error          { background-color: rgba(249, 218, 219, 1); }
+.floating-message-container .notice         { background-color: rgba(215, 215, 215, 1); }
+.floating-message-container .warning        { background-color: rgba(248, 229, 218, 1); }
+.floating-message-container .success        { background-color: rgba(217, 240, 219, 1); }
+.floating-message-container .question       { background-color: rgba(215, 224, 233, 1); }
+.floating-message-container .member-only    { background-color: rgba(223, 216, 234, 1); }
+.floating-message-container .modo-only      { background-color: rgba(223, 216, 234, 1); }
+.floating-message-container .admin-only     { background-color: rgba(223, 216, 234, 1); }
+
 .formatter-content {
 	background-color: #f0f1f5;
 	border-color: #cdd1df;
