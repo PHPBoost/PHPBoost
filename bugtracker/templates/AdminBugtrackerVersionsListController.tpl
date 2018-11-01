@@ -143,19 +143,6 @@ function display_default_version_radio(version_id)
 			</th>
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td>
-				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" title="{@titles.add_version}" id="add-version"><i class="fa fa-plus"></i></a>
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
-			</td>
-		</tr>
-	</tfoot>
 	<tbody id="versions_list">
 		<tr id="no-version"# IF C_VERSIONS # style="display: none;"# ENDIF #>
 			<td colspan="5">
@@ -195,4 +182,17 @@ function display_default_version_radio(version_id)
 		</tr>
 		# END versions #
 	</tbody>
+	<tfoot>
+		<tr>
+			<td>
+				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" title="{@titles.add_version}" id="add-version"><i class="fa fa-plus"></i></a>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+			</td>
+		</tr>
+	</tfoot>
 </table>

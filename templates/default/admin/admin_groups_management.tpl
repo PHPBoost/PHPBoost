@@ -33,13 +33,6 @@
 								</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<td colspan="4">
-									<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
-								</td>
-							</tr>
-						</tfoot>
 						<tbody>
 							# START group #
 							<tr>
@@ -58,6 +51,13 @@
 							</tr>
 							# END group #
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="4">
+									<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</fieldset>

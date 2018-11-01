@@ -55,13 +55,6 @@
 				</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<td colspan="2">
-					<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
-				</td>
-			</tr>
-		</tfoot>
 		<tbody>
 			# START redirection.list #
 			<tr>
@@ -81,6 +74,13 @@
 			</tr>
 			# ENDIF #
 		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
+				</td>
+			</tr>
+		</tfoot>
 	</table>
 	# END redirection #
 # ENDIF #

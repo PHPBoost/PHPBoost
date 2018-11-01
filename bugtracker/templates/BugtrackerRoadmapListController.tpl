@@ -54,15 +54,6 @@
 				</th>
 			</tr>
 		</thead>
-		# IF C_PAGINATION #
-		<tfoot>
-			<tr>
-				<td colspan="{BUGS_COLSPAN}">
-					# INCLUDE PAGINATION #
-				</td>
-			</tr>
-		</tfoot>
-		# ENDIF #
 		<tbody>
 			# START bug #
 			<tr>
@@ -112,8 +103,16 @@
 				<td colspan="{BUGS_COLSPAN}" class="legend-line"># INCLUDE LEGEND #</td>
 			</tr>
 		</tbody>
+		# IF C_PAGINATION #
+		<tfoot>
+			<tr>
+				<td colspan="{BUGS_COLSPAN}">
+					# INCLUDE PAGINATION #
+				</td>
+			</tr>
+		</tfoot>
+		# ENDIF #
 	</table>
-
 	# ELSE #
 	<div class="message-helper notice"># IF C_STATUS_IN_PROGRESS #{@notice.no_bug_in_progress}# ELSE #{@notice.no_bug_fixed}# ENDIF #</div>
 	# ENDIF #

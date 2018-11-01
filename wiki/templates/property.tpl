@@ -244,13 +244,6 @@
 					</th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<td colspan="2">
-						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
-					</td>
-				</tr>
-			</tfoot>
 			<tbody>
 				# START redirect.list #
 				<tr>
@@ -270,6 +263,13 @@
 				</tr>
 				# ENDIF #
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">
+						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 		# END redirect #
 

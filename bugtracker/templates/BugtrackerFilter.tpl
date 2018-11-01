@@ -55,11 +55,6 @@ function toggle_filters_table() {
 			# ENDIF #
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
-		</tr>
-	</tfoot>
 	<tbody>
 		<tr>
 			# IF C_DISPLAY_TYPES #
@@ -101,6 +96,11 @@ function toggle_filters_table() {
 		# END filters #
 		# ENDIF #
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="{FILTERS_NUMBER}">${LangLoader::get_message('items_number', 'common')} : {BUGS_NUMBER}</td>
+		</tr>
+	</tfoot>
 </table>
 
 <div class="spacer"></div>

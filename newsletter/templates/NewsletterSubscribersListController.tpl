@@ -13,15 +13,6 @@
 			<th></th>
 		</tr>
 	</thead>
-	# IF C_PAGINATION #
-	<tfoot>
-		<tr>
-			<td colspan="3">
-				# INCLUDE PAGINATION #
-			</td>
-		</tr>
-	</tfoot>
-	# ENDIF #
 	<tbody>
 		# START subscribers_list #
 		<tr>
@@ -50,5 +41,14 @@
 			</td>
 		</tr>
 	</tbody>
+	# ENDIF #
+	# IF C_PAGINATION #
+	<tfoot>
+		<tr>
+			<td colspan="3">
+				# INCLUDE PAGINATION #
+			</td>
+		</tr>
+	</tfoot>
 	# ENDIF #
 </table>

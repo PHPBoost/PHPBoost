@@ -67,16 +67,6 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 			</th>
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td>
-				<a href="" onclick="BugtrackerFormFieldCategories.add_category();return false;" title="{@titles.add_category}" id="add-category"><i class="fa fa-plus"></i></a>
-			</td>
-			<td colspan="2" class="right">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
-			</td>
-		</tr>
-	</tfoot>
 	<tbody id="categories_list">
 		<tr id="no-category"# IF C_CATEGORIES # style="display: none;"# ENDIF #>
 			<td colspan="3">
@@ -100,4 +90,14 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		</tr>
 		# END categories #
 	</tbody>
+	<tfoot>
+		<tr>
+			<td>
+				<a href="" onclick="BugtrackerFormFieldCategories.add_category();return false;" title="{@titles.add_category}" id="add-category"><i class="fa fa-plus"></i></a>
+			</td>
+			<td colspan="2" class="right">
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+			</td>
+		</tr>
+	</tfoot>
 </table>

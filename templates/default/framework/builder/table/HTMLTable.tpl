@@ -35,6 +35,31 @@
 		</tr>
 	</thead>
 
+	<tbody>
+		# START row #
+		<tr
+		# IF row.C_ID # id="{row.ID}"# ENDIF #
+		# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+		# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+			# START row.cell #
+			<td
+			# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+			# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
+			# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+			# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+				{row.cell.VALUE}
+			</td>
+			# END row.cell #
+		</tr>
+		# END row #
+		# IF NOT C_HAS_ROWS #
+		<tr>
+			<td colspan="{NUMBER_OF_COLUMNS}">
+				${LangLoader::get_message('no_item_now', 'common')}
+			</td>
+		</tr>
+		# ENDIF #
+	</tbody>
 	# IF C_DISPLAY_FOOTER #
 	<tfoot>
 		<tr>
@@ -65,32 +90,6 @@
 		</tr>
 	</tfoot>
 	# ENDIF #
-
-	<tbody>
-		# START row #
-		<tr
-		# IF row.C_ID # id="{row.ID}"# ENDIF #
-		# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
-		# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-			# START row.cell #
-			<td
-			# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
-			# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
-			# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-			# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
-				{row.cell.VALUE}
-			</td>
-			# END row.cell #
-		</tr>
-		# END row #
-		# IF NOT C_HAS_ROWS #
-		<tr>
-			<td colspan="{NUMBER_OF_COLUMNS}">
-				${LangLoader::get_message('no_item_now', 'common')}
-			</td>
-		</tr>
-		# ENDIF #
-	</tbody>
 </table>
 # IF C_FILTERS #
 <script>

@@ -67,18 +67,6 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 			</th>
 		</tr>
 	</thead>
-	<tfoot>
-		<tr>
-			<td colspan="3">
-				<div class="cw25 float-left">
-					<a href="" onclick="BugtrackerFormFieldTypes.add_type();return false;" title="{@titles.add_type}" id="add-type"><i class="fa fa-plus"></i></a>
-				</div>
-				<div class="float-right">
-					# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
-				</div>
-			</td>
-		</tr>
-	</tfoot>
 	<tbody id="types_list">
 		<tr id="no-type"# IF C_TYPES # style="display: none;"# ENDIF #>
 			<td colspan="3">
@@ -102,4 +90,16 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		</tr>
 		# END types #
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="3">
+				<div class="cw25 float-left">
+					<a href="" onclick="BugtrackerFormFieldTypes.add_type();return false;" title="{@titles.add_type}" id="add-type"><i class="fa fa-plus"></i></a>
+				</div>
+				<div class="float-right">
+					# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+				</div>
+			</td>
+		</tr>
+	</tfoot>
 </table>

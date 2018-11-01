@@ -12,15 +12,6 @@
 			</th>
 		</tr>
 	</thead>
-	# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
-	<tfoot>
-	<tr>
-		<td colspan="3">
-			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
-		</td>
-	</tr>
-	</tfoot>
-	# ENDIF #
 	<tbody>
 		# START severities #
 		<tr>
@@ -39,4 +30,13 @@
 		</tr>
 		# END severities #
 	</tbody>
+		# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+	<tfoot>
+	<tr>
+		<td colspan="3">
+			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
+		</td>
+	</tr>
+	</tfoot>
+		# ENDIF #
 </table>

@@ -22,13 +22,6 @@
 			</th>
 		</tr>
 	</thead>
-	# IF C_PAGINATION #
-	<tfoot>
-		<tr>
-			<td colspan="6"># INCLUDE PAGINATION #</td>
-		</tr>
-	</tfoot>
-	# ENDIF #
 	<tbody>
 		# START history #
 		<tr>
@@ -53,6 +46,13 @@
 		</tr>
 		# END history #
 	</tbody>
+	# IF C_PAGINATION #
+	<tfoot>
+		<tr>
+			<td colspan="6"># INCLUDE PAGINATION #</td>
+		</tr>
+	</tfoot>
+	# ENDIF #
 </table>
 # ELSE #
 <div class="message-helper notice">{@notice.no_history}</div>

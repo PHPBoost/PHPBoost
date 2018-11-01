@@ -29,16 +29,7 @@
 			# ENDIF #
 		</tr>
 	</thead>
-	# IF C_PAGINATION #
-	<tfoot>
-		<tr>
-			<td colspan="{NUMBER_COLUMN}">
-				# INCLUDE PAGINATION #
-			</td>
-		</tr>
-	</tfoot>
-	# ENDIF #
-	<tbody>
+		<tbody>
 		# START archives_list #
 			<tr>
 				# IF NOT C_SPECIFIC_STREAM #
@@ -72,4 +63,14 @@
 		</tr>
 	</tbody>
 	# ENDIF #
+	# IF C_PAGINATION #
+	<tfoot>
+		<tr>
+			<td colspan="{NUMBER_COLUMN}">
+				# INCLUDE PAGINATION #
+			</td>
+		</tr>
+	</tfoot>
+	# ENDIF #
+
 </table>

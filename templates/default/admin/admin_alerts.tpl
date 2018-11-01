@@ -130,15 +130,6 @@ function delete_alert(id)
 					</th>
 				</tr>
 			</thead>
-			# IF C_PAGINATION #
-			<tfoot>
-				<tr>
-					<td colspan="4">
-						# INCLUDE PAGINATION #
-					</td>
-				</tr>
-			</tfoot>
-			# ENDIF #
 			<tbody>
 				# START alerts #
 				<tr id="delete_{alerts.ID}">
@@ -159,6 +150,15 @@ function delete_alert(id)
 				</tr>
 				# END alerts #
 			</tbody>
+			# IF C_PAGINATION #
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						# INCLUDE PAGINATION #
+					</td>
+				</tr>
+			</tfoot>
+			# ENDIF #
 		</table>
 		# ELSE #
 		<div class="message-helper question message-helper-small">{L_NO_ALERT}</div>

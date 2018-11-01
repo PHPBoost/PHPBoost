@@ -38,15 +38,6 @@
 			</th>
 		</tr>
 	</thead>
-	# IF C_PAGINATION #
-	<tfoot>
-		<tr>
-			<td colspan="5">
-				# INCLUDE PAGINATION #
-			</td>
-		</tr>
-	</tfoot>
-	# ENDIF #
 	<tbody>
 	# IF C_STREAMS #
 		# START streams_list #
@@ -76,4 +67,13 @@
 		</tr>
 	# ENDIF #
 	</tbody>
+	# IF C_PAGINATION #
+	<tfoot>
+		<tr>
+			<td colspan="5">
+				# INCLUDE PAGINATION #
+			</td>
+		</tr>
+	</tfoot>
+	# ENDIF #
 </table>
