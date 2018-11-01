@@ -174,7 +174,7 @@ class NewsConfig extends AbstractConfigData
 			self::NUMBER_COLUMNS_DISPLAY_NEWS => 1,
 			self::DISPLAY_CONDENSED_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::NUMBER_CHARACTER_TO_CUT => 250,
+			self::NUMBER_CHARACTER_TO_CUT => 150,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,

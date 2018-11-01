@@ -53,7 +53,7 @@ class DownloadConfig extends AbstractConfigData
 	
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 	
-	const NUMBER_CARACTERS_BEFORE_CUT = 250;
+	const NUMBER_CARACTERS_BEFORE_CUT = 150;
 	
 	public function get_items_number_per_page()
 	{

@@ -196,7 +196,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::NUMBER_COLS_DISPLAY_PER_LINE => 2,
-			self::NUMBER_CHARACTER_TO_CUT => 128,
+			self::NUMBER_CHARACTER_TO_CUT => 150,
 			self::ITEMS_DEFAULT_SORT_FIELD => Article::SORT_DATE,
 			self::ITEMS_DEFAULT_SORT_MODE => Article::DESC,
 			self::CATS_ICON_ENABLED => false,
