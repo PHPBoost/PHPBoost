@@ -36,7 +36,10 @@ class ViewSitemapController extends ModuleController
 		$tpl = $this->build_view();
 		
 		$response = new SiteDisplayResponse($tpl);
-		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['sitemap']);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['sitemap.seo.description'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(SitemapUrlBuilder::view_sitemap());
 		return $response;
 	}
 	

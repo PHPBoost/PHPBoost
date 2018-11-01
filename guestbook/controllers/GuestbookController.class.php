@@ -156,6 +156,7 @@ class GuestbookController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['guestbook.seo.description'], array('site' => GeneralConfig::load()->get_site_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

@@ -37,6 +37,8 @@ class CalendarConfig extends AbstractConfigData
 	
 	const AUTHORIZATIONS = 'authorizations';
 	
+	const NUMBER_CARACTERS_BEFORE_CUT = 150;
+	
 	public function get_items_number_per_page()
 	{
 		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);

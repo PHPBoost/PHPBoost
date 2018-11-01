@@ -82,6 +82,9 @@ $lang['field.possible_values.subject'] = 'Objet';
 $lang['field.possible_values.recipient'] = 'Destinataire(s)';
 $lang['field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
 
+//SEO
+$lang['contact.seo.description'] = 'Formulaire de contact du site :site.';
+
 //Messages
 $lang['message.success.add'] = 'Le champ <b>:name</b> a été ajouté';
 $lang['message.success.edit'] = 'Le champ <b>:name</b> a été modifié';

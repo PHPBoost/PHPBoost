@@ -42,6 +42,9 @@ $lang['admin.config.max_links_number_per_message_enabled'] = 'Limit links number
 $lang['admin.config.max_links'] = 'Max links number in a message';
 $lang['admin.authorizations.read']  = 'Permission to display the guestbook';
 
+//SEO
+$lang['guestbook.seo.description'] = 'All :site\'s guestbook messages.';
+
 //Messages
 $lang['guestbook.message.success.delete'] = 'The message has been deleted';
 

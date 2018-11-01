@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-$lang = array();
 $lang['sitemap'] = 'Plan du site';
 $lang['sitemap_xml_could_not_been_written'] = 'Le fichier sitemap.xml généré par le module sitemap n\'a pas pu être écrit probablement à cause d\'un problème d\'autorisation à la racine du site.';
 $lang['general_config'] = 'Configuration générale';
@@ -37,4 +36,7 @@ $lang['auto_generate_xml_file'] = 'Générer automatiquement le fichier sitemap.
 $lang['xml_file_life_time'] = 'Durée de vie du fichier sitemap.xml';
 $lang['xml_file_life_time_explain'] = 'En jours';
 $lang['generate_xml_file'] = 'Générer le fichier sitemap.xml';
+
+//SEO
+$lang['sitemap.seo.description'] = 'Plan du site :site.';
 ?>

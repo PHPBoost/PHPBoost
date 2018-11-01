@@ -97,8 +97,9 @@ $lang['calendar.authorizations.display_registered_users'] = 'Display registered 
 $lang['calendar.authorizations.register'] = 'Register permissions';
 
 //SEO
-$lang['calendar.seo.description.root'] = 'All events of :site.';
+$lang['calendar.seo.description.root'] = 'All :site\'s events.';
 $lang['calendar.seo.description.pending'] = 'All pending events.';
+$lang['calendar.seo.description.events_list'] = ':site\'s events list.';
 
 //Feed name
 $lang['calendar.feed.name'] = 'Events';

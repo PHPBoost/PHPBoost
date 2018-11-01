@@ -82,6 +82,9 @@ $lang['field.possible_values.subject'] = 'Subject';
 $lang['field.possible_values.recipient'] = 'Recipient(s)';
 $lang['field.possible_values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
 
+//SEO
+$lang['contact.seo.description'] = ':site\'s contact form.';
+
 //Messages
 $lang['message.success.add'] = 'The field <b>:name</b> has been added';
 $lang['message.success.edit'] = 'The field <b>:name</b> has been modified';

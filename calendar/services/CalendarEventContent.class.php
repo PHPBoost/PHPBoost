@@ -115,6 +115,11 @@ class CalendarEventContent
 		return $this->contents;
 	}
 	
+	public function get_real_short_contents()
+	{
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)CalendarConfig::NUMBER_CARACTERS_BEFORE_CUT);
+	}
+	
 	public function set_picture(Url $picture)
 	{
 		$this->picture_url = $picture;

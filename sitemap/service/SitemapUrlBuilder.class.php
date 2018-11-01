@@ -44,5 +44,21 @@ class SitemapUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/generate');
 	}
+
+	/**
+	 * @return Url
+	 */
+	public static function view_sitemap_xml()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/view/xml');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function view_sitemap()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/');
+	}
 }
 ?>

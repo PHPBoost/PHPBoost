@@ -55,6 +55,9 @@ $lang['config.shout_max_messages_number'] = 'Nombre de messages maximum à affic
 $lang['config.shout_bbcode_enabled'] = 'Afficher une mini barre BBcode avant le bouton Envoyer';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Envoyer le message en appuyant sur la touche Entrée';
 
+//SEO
+$lang['shoutbox.seo.description'] = 'Tous les messages de la boîte de discussions du site :site.';
+
 //Messages
 $lang['shoutbox.message.success.delete'] = 'Le message a été supprimé';
 

@@ -55,6 +55,9 @@ $lang['config.shout_max_messages_number'] = 'Maximum number of message to displa
 $lang['config.shout_bbcode_enabled'] = 'Display a small BBcode bar before the send button';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
 
+//SEO
+$lang['shoutbox.seo.description'] = 'All :site\'s shoutbox messages.';
+
 //Messages
 $lang['shoutbox.message.success.delete'] = 'The message has been deleted';
 

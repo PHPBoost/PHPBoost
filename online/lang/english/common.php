@@ -41,6 +41,9 @@ $lang['online.last_update'] = 'Last update';
 $lang['online_user'] = 'online user';
 $lang['online_users'] = 'online users';
 
+//SEO
+$lang['online.seo.description'] = 'Online users list.';
+
 //Admin
 $lang['admin.nbr-displayed'] = 'Number of online members displayed in the menu';
 $lang['admin.nbr-members-per-page'] = 'Number of members per page';
