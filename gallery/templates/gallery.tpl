@@ -397,7 +397,7 @@
 									# INCLUDE PAGINATION #
 									</td>
 								</tr>
-							</foot>
+							</tfoot>
 							# ENDIF #
 							<tbody>
 							# START pics_list #
