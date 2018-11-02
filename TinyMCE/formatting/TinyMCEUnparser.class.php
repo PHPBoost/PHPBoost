@@ -472,17 +472,15 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_fa($matches)
 	{
 		$fa_code = "";
-
-		if ( !empty($matches[1]) ) {
-			$fa_code = "=" . 'fa' . $matches[1];
-		}
-
-		if ( !empty($matches[3]) ) {
-			$options = explode(' ', $matches[3]);
+		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's'));
+		$options_list = isset($matches[3]) ? $matches[3] : '';
+		
+		if ( !empty($options_list) ) {
+			$options = explode(' ', $options_list);
 			foreach ($options as $index => $option) {
 				if (!empty($option)) {
-					if ( $index == 0 && empty($fa_code) ) {
-						$fa_code = "=" . $fa_code;
+					if ( $index == 1 && empty($fa_code) ) {
+						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
 					} else {
 						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
 						$fa_code = $fa_code . $option;
