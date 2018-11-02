@@ -63,7 +63,7 @@ class AdminViewAllMembersController extends AdminController
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['level'], 'level'),
-			new HTMLTableColumn($this->lang['email']),
+			new HTMLTableColumn($this->lang['email'], 'email'),
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['approbation'], 'approved'),
