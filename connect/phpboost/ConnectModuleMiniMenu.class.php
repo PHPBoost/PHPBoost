@@ -36,7 +36,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	{
 		global $LANG;
 		
-		if (!Url::is_current_url('/user/login'))
+		if (!Url::is_current_url('/login'))
 		{
 			$tpl = new FileTemplate('connect/connect_mini.tpl');
 			$tpl->add_lang(LangLoader::get('user-common'));
