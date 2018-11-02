@@ -66,6 +66,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$redirect_title = '';
 		
 	define('TITLE', stripslashes($page_infos['title']));
+	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($page_infos['contents']), '<br><br/>'), 150));
 	
 	//Définition du fil d'Ariane de la page
 	if ($page_infos['is_cat'] == 0)
@@ -98,6 +99,7 @@ elseif ($id_com > 0)
 	$page_infos = $result->fetch();
 	$result->dispose();
 	define('TITLE', sprintf($LANG['pages_page_com'], stripslashes($page_infos['title'])));
+	define('DESCRIPTION', sprintf($LANG['pages_page_com_seo'], stripslashes($page_infos['title'])));
 	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)

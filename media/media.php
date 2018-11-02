@@ -85,6 +85,7 @@ elseif ($id_media > 0)
 	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
 
 	define('TITLE', $media['name']);
+	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['contents'])), '<br><br/>'), 150));
 	require_once('../kernel/header.php');
 
 	//MAJ du compteur.

@@ -78,11 +78,13 @@ $LANG['pages_confirm_delete'] = 'Etes-vous sur de vouloir supprimer cette page ?
 $LANG['pages_links_list'] = 'Outils';
 $LANG['pages_com'] = 'Commentaires';
 $LANG['pages_explorer'] = 'Explorateur';
+$LANG['pages_explorer_seo'] = 'Explorateur permettant de naviguer dans l\'arborescence des différentes pages du site.';
 $LANG['pages_root'] = 'Racine';
 $LANG['pages_cats_tree'] = 'Arborescence des pages';
 $LANG['pages_display_coms'] = 'Commentaires (%d)';
 $LANG['pages_post_com'] = 'Poster un commentaire';
 $LANG['pages_page_com'] = 'Commentaires de la page %s';
+$LANG['pages_page_com_seo'] = 'Tous les commentaires de la page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous pouvez ici gérer l\'ensemble de vos pages.<br /><br />

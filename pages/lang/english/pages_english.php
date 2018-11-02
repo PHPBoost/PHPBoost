@@ -79,11 +79,13 @@ $LANG['pages_confirm_delete'] = 'Are you sure you want to delete this page ?';
 $LANG['pages_links_list'] = 'Tools';
 $LANG['pages_com'] = 'Comments';
 $LANG['pages_explorer'] = 'Explorer';
+$LANG['pages_explorer_seo'] = 'Explorer to navigate the tree of different pages of the site.';
 $LANG['pages_root'] = 'Root';
 $LANG['pages_cats_tree'] = 'Categories tree';
 $LANG['pages_display_coms'] = 'Comments (%d)';
 $LANG['pages_post_com'] = 'Post a comment';
 $LANG['pages_page_com'] = 'Comments of the page %s';
+$LANG['pages_page_com_seo'] = 'All comments of the page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you can manage your whole pages.<br /><br />

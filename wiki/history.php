@@ -33,8 +33,6 @@ $id_article = (int)retrieve(GET, 'id', 0);
 $field = retrieve(GET, 'field', '');
 $order = retrieve(GET, 'order', '');
 
-define('TITLE' , $LANG['wiki_history']);
-
 if (!empty($id_article))
 {
 	try {
@@ -44,6 +42,9 @@ if (!empty($id_article))
 		DispatchManager::redirect($error_controller);
 	}
 }
+
+define('TITLE', sprintf($LANG['wiki_article_history'], stripslashes($articles_infos['title'])));
+define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($articles_infos['title'])));
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');

@@ -51,6 +51,10 @@ if (!Environment::home_page_running() && ModulesManager::is_module_installed($mo
 }
 
 $env->set_page_title(TITLE, $section);
+if (defined('DESCRIPTION'))
+{
+	$env->get_seo_meta_data()->set_description(DESCRIPTION);
+}
 
 ob_start();
 

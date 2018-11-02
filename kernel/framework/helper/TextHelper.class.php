@@ -118,7 +118,7 @@ class TextHelper
 			return $string;
 
 		$str = mb_substr(str_replace('<br />', '<br/>', $string), 0, $length + 1, 'UTF-8');
-		return substr($str, 0, strrpos($str, ' '));
+		return substr($str, 0, strrpos($str, ' ')) . '...';
 	}
 
 	/**

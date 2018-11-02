@@ -34,6 +34,8 @@
 $LANG['wiki'] = 'Wiki';
 $LANG['wiki_article_hits'] = 'Cette page a été vue %d fois';
 $LANG['wiki_history'] = 'Historique';
+$LANG['wiki_article_com'] = 'Historique l\'article %s';
+$LANG['wiki_history_seo'] = 'Tout l\'historique de l\'article %s';
 $LANG['wiki_contribution_tools'] = 'Contribuer';
 $LANG['wiki_other_tools'] = 'Outils';
 $LANG['wiki_author'] = 'Auteur';
@@ -171,8 +173,9 @@ $LANG['wiki_search_where_contents'] = 'Contenu';
 $LANG['wiki_search_where_all'] = 'Titre &amp; contenu';
 
 //Discussion
-$LANG['wiki_article_com'] = 'Discussion sur l\'article';
+$LANG['wiki_article_com'] = 'Discussion sur l\'article %s';
 $LANG['wiki_article_com_article'] = 'Discussion';
+$LANG['wiki_article_com_seo'] = 'Toutes les discussions sur l\'article %s';
 
 //Suppression
 $LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article ?';
@@ -193,6 +196,7 @@ $LANG['wiki_rss_last_articles'] = '%s : derniers articles';
 
 //Favoris
 $LANG['wiki_favorites'] = 'Favoris';
+$LANG['wiki_favorites_seo'] = 'Liste des articles favoris du wiki.';
 $LANG['wiki_unwatch_this_topic'] = 'Ne plus suivre cet article';
 $LANG['wiki_unwatch'] = 'Ne plus suivre';
 $LANG['wiki_watch'] = 'Suivre cet article';
@@ -236,6 +240,7 @@ $LANG['wiki_desc'] = 'Texte de l\'accueil';
 
 //explorateur du wiki
 $LANG['wiki_explorer'] = 'Explorateur du wiki';
+$LANG['wiki_explorer_seo'] = 'Explorateur permettant de naviguer dans l\'arborescence des différentes pages du wiki.';
 $LANG['wiki_root'] = 'Racine du wiki';
 $LANG['wiki_contents'] = 'Contenu';
 $LANG['wiki_cats_tree'] = 'Arborescence';

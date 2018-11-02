@@ -29,6 +29,7 @@ require_once('../kernel/begin.php');
 load_module_lang('wiki');
 
 define('TITLE' , $LANG['wiki_favorites']);
+define('DESCRIPTION', $LANG['wiki_favorites_seo']);
 
 $bread_crumb_key = 'wiki_favorites';
 require_once('../wiki/wiki_bread_crumb.php');

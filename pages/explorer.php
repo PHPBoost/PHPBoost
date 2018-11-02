@@ -28,6 +28,7 @@
 require_once('../kernel/begin.php'); 
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages_explorer']);
+define('DESCRIPTION', $LANG['pages_explorer_seo']);
 $request = AppContext::get_request();
 
 $cat = $request->get_getint('cat', 0);

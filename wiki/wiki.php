@@ -107,6 +107,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 $page_title = (!empty($article_infos['title']) ? stripslashes($article_infos['title']) . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
 define('TITLE', $page_title);
+define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])), '<br><br/>'), 150));
 
 require_once('../kernel/header.php');
 

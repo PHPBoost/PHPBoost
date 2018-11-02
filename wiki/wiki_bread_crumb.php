@@ -97,7 +97,7 @@ switch ($bread_crumb_key)
 		elseif ($create_redirection > 0)
 			$Bread_crumb->add($LANG['wiki_create_redirection'], url('property.php?create_redirection=' . $create_redirection));
 		elseif (AppContext::get_request()->has_getparameter('i') && $idcom > 0)
-			$Bread_crumb->add($LANG['wiki_article_com'], url('property.php?com=' . $idcom . '&amp;i=0'));
+			$Bread_crumb->add($LANG['wiki_article_com_article'], url('property.php?com=' . $idcom . '&amp;i=0'));
 		elseif ($del_article > 0)
 			$Bread_crumb->add($LANG['wiki_remove_cat'], url('property.php?del=' . $del_article));
 			
