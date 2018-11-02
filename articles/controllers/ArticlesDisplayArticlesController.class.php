@@ -320,7 +320,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		);
 		
 		if ($this->article->get_keywords())
-			$additionnal_properties['article:tag'] = implode(', ', $this->article->get_keywords_name());
+			$additionnal_properties['article:tag'] = $this->article->get_keywords_name();
 		
 		if ($this->article->get_date_updated() !== null)
 			$additionnal_properties['article:modified_time'] = $this->article->get_date_updated()->format(Date::FORMAT_ISO8601);
