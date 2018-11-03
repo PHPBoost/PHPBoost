@@ -1,8 +1,14 @@
-body{
-	width: 98%;
+/* --------------------------------------
+		print.css
+Mise en forme d'une page pour l'impression
+--------------------------------------*/
+
+body {
+	margin: auto;
+	width: 97%;
 	background-color: #FFFFFF;
-	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
-	font-size: 12px;
+	font-family: serif;
+	font-size: 1.309em;
 	color: black;
 }
 
