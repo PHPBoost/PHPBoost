@@ -123,30 +123,21 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{ID}" class="forum-contents">
 			<header>
+				# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
+				<span class="actions">
+				# IF C_FORUM_MODERATOR #
+					# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban"></i></a>
+					# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban"></i></a>
+					# ENDIF #
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move"></i></a>
+				# ENDIF #
+				</span>
 				<h2>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
-
-					<span class="float-right">
-						# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
-
-						# IF C_FORUM_MODERATOR #
-							# IF C_FORUM_LOCK_TOPIC #
-						<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}">
-							<i class="fa fa-ban"></i>
-						</a>
-							# ELSE #
-						<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}">
-							<i class="fa fa-unban"></i>
-						</a>
-							# ENDIF #
-
-						<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}">
-							<i class="fa fa-move"></i>
-						</a>
-						# ENDIF #
-					</span>
-				</h2>
+				</h2>		
 
 			</header>
 
@@ -324,22 +315,22 @@
 			</div>
 		# END msg #
 			<footer>
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+				<span class="actions">
+				# IF C_FORUM_MODERATOR #
+					# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban"></i></a>
+					# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban"></i></a>
+					# ENDIF #
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move"></i></a>
+				# ENDIF #
+				</span>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 				{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
-				<span class="float-right">
-					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
+				
 
-					# IF C_FORUM_MODERATOR #
-						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
-						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
-						# ENDIF #
-
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
-					# ENDIF #
-				</span>&nbsp;
 				<div class="spacer"></div>
 			</footer>
 

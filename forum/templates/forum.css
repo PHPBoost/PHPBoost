@@ -30,7 +30,8 @@ header#forum-top h1 {
 	border-width: 0 0 1px;
 }
 
-#module-forum header h2 i {
+#module-forum header h2 > i,
+.footer-forum > i {
 	font-size: 0.618em;
 }
 
@@ -154,17 +155,24 @@ article footer ul.pagination {
 	margin: 0;
 }
 
-.forum-contents header h2 {
+.forum-contents header h2,
+.footer-forum,
+.forum-contents footer {
 	border: none;
 	font-weight: 300;
-	font-size: 1.482em;
+	font-size: 1.382em;
+}
+
+.footer-forum {
+	padding: 0 0.618em;
 }
 
 .forum-contents header a {
 	font-size: 1em;
 }
 
-.forum-contents header a.basic-button {
+.forum-contents header a.basic-button,
+.footer-forum a.basic-button {
 	font-size: 0.618em;
 }
 

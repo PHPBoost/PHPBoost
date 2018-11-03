@@ -11,8 +11,8 @@
 			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-subforum" class="forum-contents">
 				<header>
 					<h2>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-						&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+						&nbsp;<strong>{L_SUBFORUMS}</strong>
 					</h2>
 				</header>
 				<div class="content">
@@ -84,21 +84,18 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
+				<span class="actions">
+					# IF IDCAT #<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a># ENDIF #		
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
+				</span>
 				<h2>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> 
 					# START syndication_cats #
-						<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
+					<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 					# END syndication_cats #
-
 					# IF C_POST_NEW_SUBJECT #
-						<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+					<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
-					<span class="actions">
-						# IF IDCAT #
-						<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
-						# ENDIF #
-						# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
-					</span>
 				</h2>
 			</header>
 			<div class="content">
@@ -163,7 +160,7 @@
 						<td class="forum-last-topic">
 							<span class="last-topic-title">
 								<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right fa-fw"></i> {topics.LAST_MSG_DATE_FULL}</a>
-							</span><br />
+							</span>
 							<span class="last-topic-user">
 								<i class="fa fa-user-o fa-fw"></i>
 								# IF topics.C_LAST_MSG_GUEST #
@@ -187,7 +184,7 @@
 					<tfoot>
 						<tr>
 							<th colspan="7">
-								<div class="float-left">
+								<div class="footer-forum">
 									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> 
 									# START syndication_cats #
 										<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
