@@ -15,18 +15,15 @@
 		# START news #
 			<article id="article-news-{news.ID}" class="article-news article-several# IF news.C_TOP_LIST # top-list# ENDIF ## IF C_DISPLAY_BLOCK_TYPE # block# ENDIF ## IF news.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
-					<h2>
-						<a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a>
-						<span class="actions">
-							# IF news.C_EDIT #
-								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-							# ENDIF #
-							# IF news.C_DELETE #
-								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-							# ENDIF #
-						</span>
-					</h2>
-
+					<h2><a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a></h2>
+					<div class="actions">
+						# IF news.C_EDIT #
+						<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+						# ENDIF #
+						# IF news.C_DELETE #
+						<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+						# ENDIF #
+					</div>
 					<div class="more">
 						# IF news.C_AUTHOR_DISPLAYED #
 							<i class="fa fa-user-o"></i>
