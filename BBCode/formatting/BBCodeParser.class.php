@@ -245,7 +245,7 @@ class BBCodeParser extends ContentFormattingParser
 			'acronym2' => "<acronym title=\"$1\" class=\"formatter-acronym\">$2</acronym>",
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
 			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
-			'style' => "<span class=\"$1\">$2</span>",
+			'style' => "<span class=\"message-helper $1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, $3);[[/MEDIA]]',

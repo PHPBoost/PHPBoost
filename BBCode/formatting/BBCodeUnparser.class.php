@@ -143,7 +143,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<h4 class="formatter-title">(.*)</h4>`isuU',
 			'`<h5 class="formatter-title">(.*)</h5>`isuU',
 			'`<h6 class="formatter-title">(.*)</h6>`isuU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isuU',
+			'`<span class="message-helper (success|question|notice|warning|error)">(.*)</span>`isuU',
 			'`<hr(?: class="([^"]+)?")? />`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`suU',
@@ -273,7 +273,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$fa_code = "";
 		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's'));
 		$options_list = isset($matches[3]) ? $matches[3] : '';
-		
+
 		if ( !empty($options_list) ) {
 			$options = explode(' ', $options_list);
 			foreach ($options as $index => $option) {
