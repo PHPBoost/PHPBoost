@@ -45,3 +45,4 @@ lang/*
 #Fichiers projets
 *.sublime-project
 *.sublime-workspace
+.*/*
