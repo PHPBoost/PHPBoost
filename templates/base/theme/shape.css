@@ -127,6 +127,7 @@
 	justify-content: space-around;
 	-ms-flex-pack: distribute;
 	-webkit-justify-content: space-around;
+	clear: both;
 }
 
 .elements-container > .block {
