@@ -190,7 +190,7 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($common_lang['authorizations.read'], ShoutboxAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], ShoutboxAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], ShoutboxAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], ShoutboxAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);

@@ -114,7 +114,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['admin.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

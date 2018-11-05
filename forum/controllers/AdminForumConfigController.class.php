@@ -162,13 +162,13 @@ class AdminForumConfigController extends AdminModuleController
 
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.read_topics_content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.hide_edition_mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.unlimited_topics_tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
+			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

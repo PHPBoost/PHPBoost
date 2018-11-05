@@ -178,8 +178,7 @@ class AdminMemberConfigController extends AdminController
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['members.config.authorization-read-member-profile'], UserAccountsConfig::AUTH_READ_MEMBERS_BIT)));
 		$auth_settings->build_from_auth_array($this->user_accounts_config->get_auth_read_members());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-		$fieldset->add_field($auth_setter);
+		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
 		$form->add_fieldset($fieldset);

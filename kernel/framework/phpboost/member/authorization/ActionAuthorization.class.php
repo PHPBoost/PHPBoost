@@ -42,6 +42,8 @@ class ActionAuthorization
 	 * @var RolesAuthorizations
 	 */
 	private $roles;
+	
+	private $disabled_ranks = array();
 
 	/**
 	 * @desc Builds an ActionAuthorization from its properties
@@ -49,8 +51,9 @@ class ActionAuthorization
 	 * @param int $bit The bit used to store authorizations (2^number)
 	 * @param string $description The description to use
 	 * @param RolesAuthorizations $roles The authorization roles
+	 * @param mixed[] $disabled_ranks The ranks to disable in select
 	 */
-	public function __construct($label, $bit, $description = '', RolesAuthorizations $roles = null)
+	public function __construct($label, $bit, $description = '', RolesAuthorizations $roles = null, $disabled_ranks = array())
 	{
 		$this->label = $label;
 		$this->bit = $bit;
@@ -63,6 +66,7 @@ class ActionAuthorization
 		{
 			$this->roles = new RolesAuthorizations();
 		}
+		$this->disabled_ranks = $disabled_ranks;
 	}
 
 	/**
@@ -132,10 +136,28 @@ class ActionAuthorization
 	/**
 	 * @desc Sets the roles authorizations
 	 * @param RolesAuthorizations $roles The roles
-s	 */
+	 */
 	public function set_roles_auths(RolesAuthorizations $roles)
 	{
 		$this->roles = $roles;
+	}
+
+	/**
+	 * @desc Returns the disabled ranks in select associated to this action
+	 * @return mixed[] The disabled ranks
+	 */
+	public function get_disabled_ranks()
+	{
+		return $this->disabled_ranks;
+	}
+
+	/**
+	 * @desc Sets the disabled ranks in select
+	 * @param mixed[] $disabled_ranks The ranks to disable
+	 */
+	public function set_disabled_ranks(Array $disabled_ranks)
+	{
+		$this->disabled_ranks = $disabled_ranks;
 	}
 
 	/**

@@ -209,9 +209,6 @@ $vars_tpl = array(
 	'L_RESET'                 => $LANG['reset']
 );
 
-//Création du tableau des rangs.
-$array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
-
 $extended_fields_cache = ExtendedFieldsCache::load();
 $displayed_extended_fields = $extended_fields_cache->get_websites_or_emails_extended_field_field_types();
 $extended_fields_to_recover_list = '';

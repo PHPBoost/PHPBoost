@@ -164,8 +164,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)
 		));
 		$auth_settings->build_from_auth_array($auth);
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-		$fieldset->add_field($auth_setter);
+		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 

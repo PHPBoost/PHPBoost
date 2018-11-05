@@ -174,23 +174,16 @@ class AdminDownloadConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 365))
 		));
 
-		$common_lang = LangLoader::get('common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
+		$auth_settings = new AuthorizationsSettings(array_merge(AbstractCategoriesFormController::get_authorizations_settings(), array(
 			new ActionAuthorization($this->lang['authorizations.display_download_link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
-		));
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
+		)));
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
-		$fieldset_authorizations->add_field($auth_setter);
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

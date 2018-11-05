@@ -106,24 +106,23 @@ class Authorizations
 	 * @param array $array_auth Array of authorization, allow you to select value authorized for this bit.
 	 * @param array $array_ranks_default Array of ranks selected by default.
 	 * @param string $idselect Html id used for the select.
-	 * @param int $disabled Disabled all option for the select. Set to 1 for disable.
+	 * @param int $disabled Disabled all options for the select. Set to true to disable all options.
 	 * @param boolean $disabled_advanced_auth Disable advanced authorizations.
+	 * @param mixed[] $disabled_ranks The ranks to disable in select.
 	 * @return String The formated select.
 	 * @static
 	 */
-	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = array())
 	{
-		global $LANG, $array_ranks;
+		$lang = LangLoader::get('main');
 
 		//Récupération du tableau des rangs.
-		$array_ranks = is_array($array_ranks) ?
-			$array_ranks :
-			array(
-				'-1' => $LANG['guest'],
-				'0' => $LANG['member'],
-				'1' => $LANG['modo'],
-				'2' => $LANG['admin']
-			);
+		$array_ranks = array(
+			User::VISITOR_LEVEL => $lang['guest'],
+			User::MEMBER_LEVEL => $lang['member'],
+			User::MODERATOR_LEVEL => $lang['modo'],
+			User::ADMIN_LEVEL => $lang['admin']
+		);
 
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
@@ -134,16 +133,16 @@ class Authorizations
 			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,
 			'IDSELECT' => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
-			'L_USERS' => $LANG['member_s'],
-			'L_ADD_USER' => $LANG['add_member'],
-			'L_REQUIRE_PSEUDO' => addslashes($LANG['require_pseudo']),
-			'L_RANKS' => $LANG['ranks'],
-			'L_GROUPS' => $LANG['groups'],
-			'L_GO' => $LANG['go'],
-			'L_ADVANCED_AUTHORIZATION' => $LANG['advanced_authorization'],
-			'L_SELECT_ALL' => $LANG['select_all'],
-			'L_SELECT_NONE' => $LANG['select_none'],
-			'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple']
+			'L_USERS' => $lang['member_s'],
+			'L_ADD_USER' => $lang['add_member'],
+			'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
+			'L_RANKS' => $lang['ranks'],
+			'L_GROUPS' => $lang['groups'],
+			'L_GO' => $lang['go'],
+			'L_ADVANCED_AUTHORIZATION' => $lang['advanced_authorization'],
+			'L_SELECT_ALL' => $lang['select_all'],
+			'L_SELECT_NONE' => $lang['select_none'],
+			'L_EXPLAIN_SELECT_MULTIPLE' => $lang['explain_select_multiple']
 		));
 
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
@@ -172,11 +171,11 @@ class Authorizations
 				$selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 
 				$tpl->assign_block_vars('ranks_list', array(
-					'ID' => $j,
-					'IDRANK' => $idrank,
-					'RANK_NAME' => $group_name,
-					'DISABLED' => (!empty($disabled) ? 'disabled = "disabled" ' : ''),
-					'SELECTED' => $selected
+					'C_DISABLED' => !empty($disabled) || in_array($idrank, $disabled_ranks),
+					'ID'         => $j,
+					'IDRANK'     => $idrank,
+					'RANK_NAME'  => $group_name,
+					'SELECTED'   => $selected
 				));
 			}
 			$j++;
@@ -193,10 +192,10 @@ class Authorizations
 			}
 
 			$tpl->assign_block_vars('groups_list', array(
-				'IDGROUP' => $idgroup,
-				'GROUP_NAME' => $group_name,
-				'DISABLED' => $disabled,
-				'SELECTED' => $selected
+				'C_DISABLED'   => !empty($disabled),
+				'IDGROUP'      => $idgroup,
+				'GROUP_NAME'   => $group_name,
+				'SELECTED'     => $selected
 			));
 		}
 

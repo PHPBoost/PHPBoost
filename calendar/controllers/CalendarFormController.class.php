@@ -185,7 +185,7 @@ class CalendarFormController extends ModuleController
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['calendar.authorizations.display_registered_users'], CalendarEventContent::DISPLAY_REGISTERED_USERS_AUTHORIZATION),
-			new ActionAuthorization($this->lang['calendar.authorizations.register'], CalendarEventContent::REGISTER_AUTHORIZATION)
+			new VisitorDisabledActionAuthorization($this->lang['calendar.authorizations.register'], CalendarEventContent::REGISTER_AUTHORIZATION)
 		));
 		$auth_settings->build_from_auth_array($event_content->get_register_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$event_content->is_registration_authorized()));

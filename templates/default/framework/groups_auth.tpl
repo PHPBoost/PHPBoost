@@ -3,13 +3,13 @@
 		<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 			<optgroup label="{L_RANKS}">
 			# START ranks_list #
-				<option {ranks_list.DISABLED} value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
+				<option # IF ranks_list.C_DISABLED #disabled = "disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
 			# END ranks_list #
 			</optgroup>
 
 			<optgroup label="{L_GROUPS}">
 			# START groups_list #
-				<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
+				<option # IF groups_list.C_DISABLED #disabled = "disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 			# END groups_list #
 			</optgroup>
 		</select>

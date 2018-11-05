@@ -83,11 +83,11 @@ class AdminNewsletterConfigController extends AdminModuleController
 			new ActionAuthorization($this->lang['auth.read'], NewsletterAuthorizationsService::AUTH_READ),
 			new ActionAuthorization($this->lang['auth.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
 			new ActionAuthorization($this->lang['auth.subscribers-read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
+			new MemberDisabledActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
+			new VisitorDisabledActionAuthorization($this->lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
 			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES),
-			new ActionAuthorization($this->lang['auth.archives-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES),
-			new ActionAuthorization($this->lang['auth.manage-streams'], NewsletterAuthorizationsService::AUTH_MANAGE_STREAMS)
+			new MemberDisabledActionAuthorization($this->lang['auth.archives-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES),
+			new MemberDisabledActionAuthorization($this->lang['auth.manage-streams'], NewsletterAuthorizationsService::AUTH_MANAGE_STREAMS)
 		));
 		
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());

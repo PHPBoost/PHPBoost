@@ -112,22 +112,14 @@ class AdminCalendarConfigController extends AdminModuleController
 			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.e_user_born_field_disabled'], MessageHelper::WARNING)->render()));
 		}
 
-		$common_lang = LangLoader::get('common');
-		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
+		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
 		);
 		$form->add_fieldset($fieldset);
 
-		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-			new ActionAuthorization($common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
-		));
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
+		$auth_settings = new AuthorizationsSettings(AbstractCategoriesFormController::get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
-		$fieldset->add_field($auth_setter);
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		//Submit and reset buttons
 		$this->submit_button = new FormButtonDefaultSubmit();

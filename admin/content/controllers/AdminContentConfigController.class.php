@@ -103,8 +103,7 @@ class AdminContentConfigController extends AdminController
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['content.config.html-language-use-authorization'], self::HTML_USAGE_AUTHORIZATIONS, $this->lang['content.config.html-language-use-authorization-explain'])));
 		$auth_settings->build_from_auth_array($this->content_formatting_config->get_html_tag_auth());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-		$fieldset->add_field($auth_setter);
+		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		$fieldset = new FormFieldsetHTML('post-management', $this->lang['content.config.post-management']);
 		$form->add_fieldset($fieldset);
