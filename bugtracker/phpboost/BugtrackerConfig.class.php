@@ -76,6 +76,8 @@ class BugtrackerConfig extends AbstractConfigData
 	const AUTHORIZATIONS = 'authorizations';
 	const STATUS_LIST = 'status_list';
 	
+	const NUMBER_CARACTERS_BEFORE_CUT = 150;
+	
 	//Admin alerts fix type
 	const FIX = 'fix';
 	const DELETE = 'delete';

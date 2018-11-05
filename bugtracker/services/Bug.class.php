@@ -100,6 +100,11 @@ class Bug
 		return $this->contents;
 	}
 	
+	public function get_real_short_contents()
+	{
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)BugtrackerConfig::NUMBER_CARACTERS_BEFORE_CUT);
+	}
+	
 	public function set_author_user(User $user)
 	{
 		$this->author_user = $user;

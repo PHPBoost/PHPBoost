@@ -271,7 +271,8 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.roadmap'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['titles.roadmap.version'], array('version' => $versions[key($versions)]['name'])), $this->lang['module_title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.roadmap'], array('version' => $versions[key($versions)]['name'])), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

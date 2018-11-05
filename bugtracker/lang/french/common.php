@@ -69,6 +69,7 @@ $lang['titles.delete'] = 'Suppression du ticket';
 $lang['titles.history'] = 'Historique du ticket';
 $lang['titles.detail'] = 'Ticket';
 $lang['titles.roadmap'] = 'Feuille de route';
+$lang['titles.roadmap.version'] = 'Feuille de route de la version :version';
 $lang['titles.bugs_infos'] = 'Informations sur le ticket';
 $lang['titles.stats'] = 'Statistiques';
 $lang['titles.bugs_treatment_state'] = 'Etat du traitement du ticket';
@@ -89,6 +90,13 @@ $lang['titles.filter'] = 'Filtre';
 $lang['titles.filters'] = 'Filtres';
 $lang['titles.informations'] = 'Informations';
 $lang['titles.version_informations'] = 'Informations sur la version';
+
+//SEO
+$lang['seo.history'] = 'Tout l\'historique du ticket #:id.';
+$lang['seo.roadmap'] = 'Tous les tickets en cours / corrigés dans la version :version.';
+$lang['seo.stats'] = 'Statistiques des tickets ouverts / fermés par version.';
+$lang['seo.solved'] = 'Tous les tickets corrigés.';
+$lang['seo.unsolved'] = 'Tous les tickets en cours.';
 
 //Libellés
 $lang['labels.fields.id'] = 'ID';
