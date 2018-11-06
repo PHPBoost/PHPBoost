@@ -129,10 +129,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}')
 		)));
 		
-		$auth_settings = new AuthorizationsSettings(self::get_authorizations_settings());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth)));
+		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
-		$fieldset_authorizations->add_field($auth_setter);
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth))));
 		
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 		
@@ -224,18 +223,15 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	}
 	
 	/**
-	 * @return AuthorizationsSettings
+	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
 	 */
-	public static function get_authorizations_settings()
+	public function get_authorizations_settings()
 	{
-		self::$common_lang = LangLoader::get('common');
-		
 		return array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 	}
 	

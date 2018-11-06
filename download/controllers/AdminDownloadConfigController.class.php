@@ -179,7 +179,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array_merge(AbstractCategoriesFormController::get_authorizations_settings(), array(
+		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), array(
 			new ActionAuthorization($this->lang['authorizations.display_download_link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
 		)));
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

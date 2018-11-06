@@ -35,5 +35,21 @@ class RootCategory extends Category
 		$this->set_rewrited_name('root');
 		$this->set_order(0);
 	}
+	
+	/**
+	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
+	 */
+	public static function get_authorizations_settings()
+	{
+		$common_lang = LangLoader::get('common');
+		
+		return array(
+			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
+		);
+	}
 }
 ?>
