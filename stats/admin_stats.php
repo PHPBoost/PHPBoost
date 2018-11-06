@@ -590,7 +590,7 @@ else
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 			$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
 			try {
-				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
+				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
 			} catch (RowNotFoundException $e) {}
 		}
 		
