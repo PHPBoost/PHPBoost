@@ -6,7 +6,7 @@
 	<div class="elements-container">
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #">
-			<header>				
+			<header>
 				<span class="actions">
 					# IF C_EDIT #
 					<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>

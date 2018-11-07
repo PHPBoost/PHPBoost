@@ -34,7 +34,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
 	{
-		global $LANG;
+		$lang = LangLoader::get('main');
 		
 		if (!Url::is_current_url('/login'))
 		{
@@ -112,13 +112,13 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 					'U_AVATAR_IMG' => Url::to_rel($user_avatar),
-					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging'],
-					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $LANG['message_s'] : $LANG['message'],
-					'L_PM_PANEL' => $LANG['private_messaging'],
-					'L_ADMIN_PANEL' => $LANG['admin_panel'],
-					'L_MODO_PANEL' => $LANG['modo_panel'],
-					'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
-					'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
+					'L_NBR_PM'  => $user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . ($user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'])) : $lang['private_messaging'],
+					'L_MESSAGE' => $user->get_unread_pm() > 1 ? $lang['message_s'] : $lang['message'],
+					'L_PM_PANEL' => $lang['private_messaging'],
+					'L_ADMIN_PANEL' => $lang['admin_panel'],
+					'L_MODO_PANEL' => $lang['modo_panel'],
+					'L_PRIVATE_PROFIL' => $lang['my_private_profile'],
+					'L_CONTRIBUTION_PANEL' => $lang['contribution_panel']
 				));
 			}
 			else
@@ -126,8 +126,8 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$tpl->put_all(array(
 					'C_USER_NOTCONNECTED' => true,
 					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
-					'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-					'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+					'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
+					'L_REQUIRE_PASSWORD' => $lang['require_password'],
 					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
 					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
 				));

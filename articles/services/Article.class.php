@@ -80,7 +80,7 @@ class Article
 
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
-        
+
 	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
 
 	public function set_id($id)
@@ -214,7 +214,7 @@ class Article
 	
 	public function get_author_user()
 	{
-	    return $this->author_user;
+		return $this->author_user;
 	}
 	
 	public function get_author_custom_name()
@@ -239,7 +239,7 @@ class Article
 	
 	public function get_notation()
 	{
-	    return $this->notation;
+		return $this->notation;
 	}
 	
 	public function set_publishing_state($published)
@@ -316,7 +316,7 @@ class Article
 	
 	public function set_date_updated(Date $date_updated)
 	{
-	    $this->date_updated = $date_updated;
+		$this->date_updated = $date_updated;
 	}
 	
 	public function add_source($source)
@@ -457,7 +457,7 @@ class Article
 	public function get_array_tpl_vars()
 	{
 		$category         = $this->get_category();
-		$contents	  = FormatingHelper::second_parse($this->contents);
+		$contents	      = FormatingHelper::second_parse($this->contents);
 		$description      = $this->get_real_description();
 		$user             = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -482,7 +482,6 @@ class Article
 			'C_DATE_UPDATED'                  => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
-			'C_NOTATION_ENABLED'              => ContentManagementConfig::load()->module_notation_is_enabled('articles'),
 			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,

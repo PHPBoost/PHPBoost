@@ -188,13 +188,11 @@ class File extends FileSystemElement
 	public function delete()
 	{
 		$this->close();
-		if (file_exists($this->get_path())) {
-			if (!unlink($this->get_path()))
-			{
-				// Empty the file if it couldn't delete it
-				$this->erase();
-				throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
-			}
+		if (file_exists($this->get_path()) && !unlink($this->get_path()))
+		{
+			// Empty the file if it couldn't delete it
+			$this->erase();
+			throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
 		}
 	}
 

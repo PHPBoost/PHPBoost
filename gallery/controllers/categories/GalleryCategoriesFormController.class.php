@@ -36,7 +36,7 @@ class GalleryCategoriesFormController extends AbstractRichCategoriesFormControll
 	 */
 	public function get_authorizations_settings()
 	{
-		array(
+		return array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
