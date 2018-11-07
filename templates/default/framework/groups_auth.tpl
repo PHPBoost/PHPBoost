@@ -3,13 +3,13 @@
 		<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 			<optgroup label="{L_RANKS}">
 			# START ranks_list #
-				<option # IF ranks_list.C_DISABLED #disabled = "disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
+				<option # IF ranks_list.C_DISABLED #disabled="disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
 			# END ranks_list #
 			</optgroup>
 
 			<optgroup label="{L_GROUPS}">
 			# START groups_list #
-				<option # IF groups_list.C_DISABLED #disabled = "disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
+				<option # IF groups_list.C_DISABLED #disabled="disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 			# END groups_list #
 			</optgroup>
 		</select>
@@ -69,18 +69,18 @@ function check_select_multiple(id, status)
 	//Sélection des membres.
 	var selectidmember = jQuery('#members_auth' + id)[0];
 	for(i = 0; i < selectidmember.length; i++)
-	{	
+	{
 		if (selectidmember[i])
 			selectidmember[i].selected = status;
-	}	
+	}
 }
 
 function check_select_multiple_ranks(id, start)
 {
-	var i;			
+	var i;
 	for(i = start; i <= 2; i++)
-	{	
-		if (jQuery('#' + id + i))
+	{
+		if (jQuery('#' + id + i) && jQuery('#' + id + i)[0].disabled != true)
 			jQuery('#' + id + i)[0].selected = true;
 	}
 }
@@ -88,21 +88,21 @@ function check_select_multiple_ranks(id, start)
 //Fonction d'ajout de membre dans les autorisations.
 function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
 {
-    var selectid = jQuery('#members_auth' + searchid)[0];
-    for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
-    {
-        if (selectid[i].value == user_id)
-        {
-            alert(alert_already_auth);
-            return;
-        }
-    }
-    var oOption = new Option(login, user_id);
-    oOption.id = searchid + 'm' + (selectid.length - 1);
-        oOption.selected = true;
+	var selectid = jQuery('#members_auth' + searchid)[0];
+	for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
+	{
+		if (selectid[i].value == user_id)
+		{
+			alert(alert_already_auth);
+			return;
+		}
+	}
+	var oOption = new Option(login, user_id);
+	oOption.id = searchid + 'm' + (selectid.length - 1);
+		oOption.selected = true;
 
-    if (jQuery('#members_auth' + searchid)) //Ajout du membre.
-        jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
+	if (jQuery('#members_auth' + searchid)) //Ajout du membre.
+		jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
 }
 
 function open_advanced_auth(id) {
