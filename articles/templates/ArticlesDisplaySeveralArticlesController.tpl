@@ -1,8 +1,9 @@
 <section id="module-articles">
 	<header>
+		 # IF C_CATEGORY ## IF IS_ADMIN #<span class="actions"><a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a></span># ENDIF ## ENDIF #
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF ## ENDIF #
+			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 		<div class="cat-description">
@@ -57,18 +58,15 @@
 			# START articles #
 				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # block# ENDIF ## IF articles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
-						<h2>
-							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
-							<span class="actions">
-								# IF articles.C_EDIT #
-									<a href="{articles.U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-								# ENDIF #
-								# IF articles.C_DELETE #
-									<a href="{articles.U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
-								# ENDIF #
-							</span>
-						</h2>
-
+						<h2><a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a></h2>
+						<span class="actions">
+							# IF articles.C_EDIT #
+							<a href="{articles.U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							# ENDIF #
+							# IF articles.C_DELETE #
+							<a href="{articles.U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							# ENDIF #
+						</span>
 						<div class="more">
 							# IF articles.C_AUTHOR_DISPLAYED #
 								<i class="fa fa-user-o"></i>

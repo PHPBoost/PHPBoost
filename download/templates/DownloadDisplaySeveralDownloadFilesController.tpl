@@ -1,8 +1,9 @@
 <section id="module-download">
 	<header>
+		 # IF C_CATEGORY ## IF IS_ADMIN #<span class="actions"><a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a></span># ENDIF ## ENDIF #
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF ## ENDIF #
+			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="cat-description">
@@ -107,20 +108,18 @@
 			# START downloadfiles #
 			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
-					<h2>
-						<span class="actions">
-							# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
-							# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
-						</span>
-						<a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a>
-					</h2>
-
+					<span class="actions">
+						# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
+						# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
+					</span>
+					<h2><a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a></h2>
 					<meta itemprop="url" content="{downloadfiles.U_LINK}">
 					<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
 					# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
 					# ENDIF #
+					<div class="spacer"></div>
 				</header>
 
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #

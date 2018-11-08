@@ -7,6 +7,7 @@
 		# INCLUDE NOT_VISIBLE_MESSAGE #
 		<article itemscope="itemscope" itemtype="http://schema.org/Article" id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<header>
+				<h1><span itemprop="name">{TITLE}</span></h1>
 				<span class="actions">
 					# IF C_EDIT #
 					<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
@@ -16,8 +17,6 @@
 					# ENDIF #
 					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
 				</span>
-				<h1><span itemprop="name">{TITLE}</span></h1>
-
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
 					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
