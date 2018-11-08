@@ -206,7 +206,7 @@
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
 								# IF msg.C_FORUM_USER_LOGIN #
-									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"{msg.FORUM_USER_GROUP_COLOR}>{msg.FORUM_USER_LOGIN}</a>
 								# ELSE #
 									<em>{L_GUEST}</em>
 								# ENDIF #
@@ -314,7 +314,7 @@
 				</div>
 			</div>
 		# END msg #
-			<footer>
+			<footer class="footer-forum">
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 				<span class="actions">
 				# IF C_FORUM_MODERATOR #

@@ -367,7 +367,8 @@ while ( $row = $result->fetch() )
 	}
 	
 	$user_accounts_config = UserAccountsConfig::load();
-		
+	$user_group_color     = User::get_group_color($row['groups'], $row['level']);
+
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 	
 	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
@@ -383,6 +384,8 @@ while ( $row = $result->fetch() )
 		'FORUM_USER_LOGIN'            => $row['login'],
 		'FORUM_MSG_CONTENTS'          => FormatingHelper::second_parse(stripslashes($row['contents'])),
 		'FORUM_USER_EDITOR_LOGIN'     => $row['login_edit'],
+		'FORUM_USER_LEVEL'            => UserService::get_level_class($row['level']),
+		'FORUM_USER_GROUP_COLOR'      => (!empty($user_group_color) ? ' style="color:' . $user_group_color . '"' : ''),
 		'C_USER_RANK'                 => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
 		'USER_RANK'                   => $user_rank,
 		'USER_IMG_ASSOC'              => $rank_img,
