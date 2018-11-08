@@ -12,7 +12,7 @@
 	border-width: 1px 1px 0;
 	border-style: solid;
 	border-color: transparent;
-	border-color: rgba(54, 100, 147, 0.4);
+	border-color: rgba(54, 100, 147, 0.2);
 }
 
 .bbcode-containers {
@@ -41,7 +41,7 @@
 
 @media (min-width: 769px) {
 	.bbcode-container { position: relative; }
-	.bbcode-container:after { background-color: rgba(54, 100, 147, 0.4); }
+	.bbcode-container:after { background-color: rgba(54, 100, 147, 0.2); }
 }
 
 .bbcode-elements {
@@ -67,7 +67,7 @@
 .bbcode-elements > a:hover {
 	color: #353535;
 	text-decoration: none;
-	background-color: #FFFFFF;
+	background-color: rgba(54, 100, 147, 0.2);
 }
 
 .bbcode-elements-more {
