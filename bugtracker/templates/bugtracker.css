@@ -76,3 +76,18 @@ div[id*="calendar"] {
 		display: none !important;
 	}
 }
+
+.bugtracker-actions a {
+	padding: 0.228em;
+}
+
+@media (max-width: 768px) {
+	.bugtracker-actions a {
+		display: inline-block;
+		padding: 1em;
+	}
+}
+
+.bugtracker-filter {
+	text-align: left;
+}
