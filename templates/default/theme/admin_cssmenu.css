@@ -397,7 +397,7 @@ Contient les elements associes aux menus
 }
 
 /* --- Variante cssmenu-group small-screen --- */
-.cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.309em 0.618em}
+.cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.618em}
 
 /* -- Variantes cssmenu-statique -- */
 /* -------------------------------------------------------------------------- */
