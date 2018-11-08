@@ -75,7 +75,9 @@
 		-->
 	</script>
 
+	
 	<div class="forum-online">
+		# IF USERS_ONLINE #
 		<span class="float-left">
 			{TOTAL_ONLINE} {L_USER} {L_ONLINE} : {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
 			<span class="spacer"></span>
@@ -113,7 +115,8 @@
 			# ENDIF #
 		</div>
 		<div class="spacer"></div>
-
+		# ENDIF #
+		
 		# IF C_TOTAL_POST #
 		<div>
 			<span class="float-left">

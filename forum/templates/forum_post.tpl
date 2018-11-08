@@ -186,7 +186,7 @@
 					</div>
 				</form>
 			</div>
-			<footer>
+			<footer class="footer-forum">
 				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 			</footer>
 		</article>
