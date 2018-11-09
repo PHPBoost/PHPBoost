@@ -369,6 +369,7 @@ class WebFormController extends ModuleController
 		Feed::clear_cache('web');
 		WebCache::invalidate();
 		WebCategoriesCache::invalidate();
+		WebKeywordsCache::invalidate();
 	}
 	
 	private function contribution_actions(WebLink $weblink, $id)

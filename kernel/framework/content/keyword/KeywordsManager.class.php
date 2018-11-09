@@ -34,11 +34,22 @@ class KeywordsManager
 	 * @var string module identifier.
 	 */
 	private $module_id;
+	
+	/**
+	 * @var KeywordsCache The cached data class.
+	 */
+	private $keywords_cache;
+	
 	private $db_querier;
 	
-	public function __construct($module_id)
+	/**
+	 * @param KeywordsCache $keywords_cache A child object of the class KeywordsCache
+	 */
+	public function __construct(KeywordsCache $keywords_cache)
 	{
-		$this->module_id = $module_id;
+		$this->module_id = $keywords_cache->get_module_identifier();
+		$this->keywords_cache = $keywords_cache;
+		
 		$this->db_querier = PersistenceContext::get_querier();
 	}
 
@@ -80,23 +91,7 @@ class KeywordsManager
 	
 	public function get_keywords($id_in_module)
 	{
-		$keywords = array();
-		$result = $this->db_querier->select('SELECT relation.id_in_module, relation.id_keyword, keyword.*
-			FROM '. DB_TABLE_KEYWORDS_RELATIONS .' relation
-			LEFT JOIN '. DB_TABLE_KEYWORDS .' keyword ON keyword.id = relation.id_keyword
-			WHERE relation.module_id = :module_id AND relation.id_in_module = :id_in_module
-			ORDER BY relation.id_keyword', array(
-				'module_id' => $this->module_id,
-				'id_in_module' => $id_in_module,
-		));
-		while ($row = $result->fetch())
-		{
-			$keyword = new Keyword();
-			$keyword->set_properties($row);
-			$keywords[$row['name']] = $keyword;
-		}
-		$result->dispose();
-		return $keywords;
+		return $this->get_keywords_cache()->get_keywords($id_in_module);
 	}
 	
 	public function delete_relations($id_in_module)
@@ -113,5 +108,21 @@ class KeywordsManager
 	{
 		return $this->db_querier->row_exists(DB_TABLE_KEYWORDS, 'WHERE name=:name OR rewrited_name=:rewrited_name', array('name' => TextHelper::htmlspecialchars($name), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($name))));
 	}
+
+	public function regenerate_cache()
+	{
+		$class = get_class($this->get_keywords_cache());
+		call_user_func(array($class, 'invalidate'));
+	}
+	
+	/**
+	 * @return KeywordsCache 
+	 */
+	public function get_keywords_cache() { return $this->keywords_cache; }
+	
+	/**
+	 * @return string module identifier.
+	 */
+	public function get_module_id() { return $this->module_id; }
 }
 ?>

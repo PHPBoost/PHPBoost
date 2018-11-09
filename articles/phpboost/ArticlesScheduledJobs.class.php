@@ -50,6 +50,7 @@ class ArticlesScheduledJobs extends AbstractScheduledJobExtensionPoint
 			{
 				Feed::clear_cache('articles');
 				ArticlesCategoriesCache::invalidate();
+				ArticlesKeywordsCache::invalidate();
 				
 				$config->set_deferred_operations($deferred_operations);
 				ArticlesConfig::save();

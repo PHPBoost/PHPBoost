@@ -110,7 +110,7 @@ class ArticlesService
 	{
 		if (self::$keywords_manager === null)
 		{
-			self::$keywords_manager = new KeywordsManager('articles');
+			self::$keywords_manager = new KeywordsManager(ArticlesKeywordsCache::load());
 		}
 		return self::$keywords_manager;
 	}

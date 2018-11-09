@@ -145,7 +145,7 @@ class WebService
 	{
 		if (self::$keywords_manager === null)
 		{
-			self::$keywords_manager = new KeywordsManager('web');
+			self::$keywords_manager = new KeywordsManager(WebKeywordsCache::load());
 		}
 		return self::$keywords_manager;
 	}

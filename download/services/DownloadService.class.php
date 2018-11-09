@@ -150,7 +150,7 @@ class DownloadService
 	{
 		if (self::$keywords_manager === null)
 		{
-			self::$keywords_manager = new KeywordsManager('download');
+			self::$keywords_manager = new KeywordsManager(DownloadKeywordsCache::load());
 		}
 		return self::$keywords_manager;
 	}

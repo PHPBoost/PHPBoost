@@ -376,6 +376,7 @@ class DownloadFormController extends ModuleController
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
 		DownloadCategoriesCache::invalidate();
+		DownloadKeywordsCache::invalidate();
 	}
 	
 	private function contribution_actions(DownloadFile $downloadfile, $id)

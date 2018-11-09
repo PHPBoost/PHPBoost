@@ -101,7 +101,7 @@ class NewsService
 	{
 		if (self::$keywords_manager === null)
 		{
-			self::$keywords_manager = new KeywordsManager('news');
+			self::$keywords_manager = new KeywordsManager(NewsKeywordsCache::load());
 		}
 		return self::$keywords_manager;
 	}

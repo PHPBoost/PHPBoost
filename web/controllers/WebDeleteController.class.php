@@ -52,6 +52,7 @@ class WebDeleteController extends ModuleController
 		Feed::clear_cache('web');
 		WebCache::invalidate();
 		WebCategoriesCache::invalidate();
+		WebKeywordsCache::invalidate();
 		
 		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), WebUrlBuilder::display($this->weblink->get_category()->get_id(), $this->weblink->get_category()->get_rewrited_name(), $this->weblink->get_id(), $this->weblink->get_rewrited_name())->rel()) ? $request->get_url_referrer() : WebUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('web.message.success.delete', 'common', 'web'), array('name' => $this->weblink->get_name())));
 	}

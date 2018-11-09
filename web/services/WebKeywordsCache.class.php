@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                         DownloadScheduledJobs.class.php
+ *                        WebKeywordsCache.class.php
  *                            -------------------
- *   begin                : December 15, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
+ *   begin                : November 9, 2018
+ *   copyright            : (C) 2018 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
  *
@@ -25,38 +25,14 @@
  *
  ###################################################*/
 
-class DownloadScheduledJobs extends AbstractScheduledJobExtensionPoint
+/**
+ * @author Julien BRISWALTER <j1.seth@phpboost.com>
+ */
+class WebKeywordsCache extends KeywordsCache
 {
-	public function on_changepage()
+	public function get_module_identifier()
 	{
-		$config = DownloadConfig::load();
-		$deferred_operations = $config->get_deferred_operations();
-		
-		if (!empty($deferred_operations))
-		{
-			$now = new Date();
-			$is_modified = false;
-			
-			foreach ($deferred_operations as $id => $timestamp)
-			{
-				if ($timestamp <= $now->get_timestamp())
-				{
-					unset($deferred_operations[$id]);
-					$is_modified = true;
-				}
-			}
-			
-			if ($is_modified)
-			{
-				Feed::clear_cache('download');
-				DownloadCache::invalidate();
-				DownloadCategoriesCache::invalidate();
-				DownloadKeywordsCache::invalidate();
-				
-				$config->set_deferred_operations($deferred_operations);
-				DownloadConfig::save();
-			}
-		}
+		return 'web';
 	}
 }
 ?>

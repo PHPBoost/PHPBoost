@@ -443,6 +443,7 @@ class ArticlesFormController extends ModuleController
 
 		Feed::clear_cache('articles');
 		ArticlesCategoriesCache::invalidate();
+		ArticlesKeywordsCache::invalidate();
 	}
 
 	private function contribution_actions(Article $article, $id_article)

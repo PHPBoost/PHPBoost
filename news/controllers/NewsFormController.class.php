@@ -381,6 +381,8 @@ class NewsFormController extends ModuleController
 		NewsService::get_keywords_manager()->put_relations($id_news, $this->form->get_value('keywords'));
 		
 		Feed::clear_cache('news');
+		NewsCategoriesCache::invalidate();
+		NewsKeywordsCache::invalidate();
 	}
 	
 	private function contribution_actions(News $news, $id_news)
