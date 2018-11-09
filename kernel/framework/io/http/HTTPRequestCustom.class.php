@@ -423,7 +423,7 @@ class HTTPRequestCustom
 
 	public function is_search_engine_robot()
 	{
-		return isset($_SERVER['HTTP_USER_AGENT']) ? preg_match('/Bing|Google|Yahoo|Yandex|Baidu|Exalead|Voila|Gigablast|W3C|Ahrefs/i', $_SERVER['HTTP_USER_AGENT']) : false;
+		return Robots::is_robot();
 	}
 	
 	public function get_ip_address()

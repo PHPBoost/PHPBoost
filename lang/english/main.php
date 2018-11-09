@@ -99,6 +99,8 @@ $LANG['loading'] = 'Loading';
 //All
 $LANG['user'] = 'User';
 $LANG['user_s'] = 'Users';
+$LANG['robot'] = 'Robot';
+$LANG['robot_s'] = 'Robots';
 $LANG['guest'] = 'Visitor';
 $LANG['guest_s'] = 'Visitors';
 $LANG['member'] = 'Member';

@@ -491,7 +491,8 @@ class SessionData
 		}
 		catch (RowNotFoundException $ex)
 		{
-			$data->cached_data = User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
+			$current_robot_name = Robots::get_current_robot_name();
+			$data->cached_data = !empty($current_robot_name) ? User::get_visitor_properties($current_robot_name, User::ROBOT_LEVEL) : User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
 		}
 	}
 

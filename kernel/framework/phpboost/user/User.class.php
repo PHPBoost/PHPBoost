@@ -36,6 +36,7 @@ define('USER_TYPE', 3);
  */
 class User
 {
+	const ROBOT_LEVEL = -2;
 	const VISITOR_LEVEL = -1;
 	const MEMBER_LEVEL = 0;
 	const MODERATOR_LEVEL = 1;
@@ -82,6 +83,11 @@ class User
 	public function is_guest()
 	{
 		return $this->level == self::VISITOR_LEVEL;
+	}
+	
+	public function is_robot()
+	{
+		return $this->level == self::ROBOT_LEVEL;
 	}
 	
 	public function is_moderator()
@@ -283,17 +289,22 @@ class User
 		$this->set_groups($properties['groups']);
 	}
 	
+	public function init_robot_user($robot_name)
+	{
+		$this->set_properties(self::get_visitor_properties($robot_name, self::ROBOT_LEVEL));
+	}
+	
 	public function init_visitor_user()
 	{
 		$this->set_properties(self::get_visitor_properties());
 	}
 	
-	public static function get_visitor_properties($display_name = null)
+	public static function get_visitor_properties($display_name = null, $level = self::VISITOR_LEVEL)
 	{
 		return array(
 			'user_id' => Session::VISITOR_SESSION_ID,
 			'display_name' => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
-			'level' => self::VISITOR_LEVEL,
+			'level' => $level,
 			'email' => null,
 			'show_email' => false,
 			'locale' => UserAccountsConfig::load()->get_default_lang(),

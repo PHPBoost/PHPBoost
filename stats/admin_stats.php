@@ -1220,57 +1220,26 @@ else
 	elseif ($bot)
 	{
 		$array_robot = StatsSaver::retrieve_stats('robots');
-		$stats_array = array();
+		$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+		unset($array_robot['unknow_bot']);
 		$robots_visits_number = 0;
-		if (is_array($array_robot))
+		foreach ($array_robot as $key => $value)
 		{
-			foreach ($array_robot as $key => $value)
-			{
-				if ($key == 'unknow_bot')
-					$key = addslashes($LANG['unknown_bot']);
-				
-				$array_info = explode('/', $value);
-				$robots_visits_number = $robots_visits_number + $array_info[0];
-				if (isset($array_info[0]) && isset($array_info[1]))
-				{
-					$name = TextHelper::convert_case($array_info[0], MB_CASE_TITLE);
-					if (array_key_exists($name, $stats_array))
-					{
-						$stats_array[$name] = ($stats_array[$name] + $array_info[1]);
-					}
-					else
-					{
-						$stats_array[$name] = $array_info[1];
-					}
-				}
-				else if (isset($array_info[0]))
-				{
-					$name = TextHelper::convert_case($key, MB_CASE_TITLE);
-					if (array_key_exists($name, $stats_array))
-					{
-						$stats_array[$name] = ($stats_array[$name] + $array_info[0]);
-					}
-					else
-					{
-						$stats_array[$name] = $array_info[0];
-					}
-				}
-			}
+			$robots_visits_number += $value;
 		}
 		
 		if ($robots_visits_number)
 		{
 			$Stats = new ImagesStats();
-			$Stats->load_data($stats_array, 'ellipse');
+			$Stats->load_data($array_robot, 'ellipse');
 			foreach ($Stats->data_stats as $key => $angle_value)
 			{
 					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-					$name = TextHelper::ucfirst($key);
 					$tpl->assign_block_vars('list', array(
 						'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-						'VIEWS' => NumberHelper::round(($angle_value * $Stats->nbr_entry)/360, 0),
+						'VIEWS' => $array_robot[$key],
 						'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
-						'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
+						'L_NAME' => $key
 					));
 			}
 		}

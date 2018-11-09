@@ -338,42 +338,10 @@ elseif ($get_sex)
 elseif ($get_bot)
 {
 	$array_robot = StatsSaver::retrieve_stats('robots');
-	$stats_array = array();
-	if (is_array($array_robot))
-	{
-		foreach ($array_robot as $key => $value)
-		{
-			if ($key == 'unknow_bot')
-				$key = addslashes($LANG['unknown_bot']);
-			
-			$array_info = explode('/', $value);
-			if (isset($array_info[0]) && isset($array_info[1]))
-			{
-				$name = TextHelper::convert_case($array_info[0], MB_CASE_TITLE);
-				if (array_key_exists($name, $stats_array))
-				{
-					$stats_array[$name] = ($stats_array[$name] + $array_info[1]);
-				}
-				else
-				{
-					$stats_array[$name] = $array_info[1];
-				}
-			}
-			else if (isset($array_info[0]))
-			{
-				$name = TextHelper::convert_case($key, MB_CASE_TITLE);
-				if (array_key_exists($name, $stats_array))
-				{
-					$stats_array[$name] = ($stats_array[$name] + $array_info[0]);
-				}
-				else
-				{
-					$stats_array[$name] = $array_info[0];
-				}
-			}
-		}
-	}
-	$Stats->load_data($stats_array, 'ellipse', 5);
+	$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+	unset($array_robot['unknow_bot']);
+
+	$Stats->load_data($array_robot, 'ellipse', 5);
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/bot.png');
 }
 

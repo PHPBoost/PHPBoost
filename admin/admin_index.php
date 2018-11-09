@@ -148,7 +148,7 @@ $tpl->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, m.display_name, m.groups, m.level
+$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data, m.display_name, m.groups, m.level
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
 WHERE s.timestamp > :timestamp
@@ -157,34 +157,23 @@ ORDER BY s.timestamp DESC", array(
 ));
 while ($row = $result->fetch())
 {
-	//On vérifie que la session ne correspond pas à un robot.
-	$robot = Robots::get_robot_by_ip($row['ip']);
-
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
+	if ($row['user_id'] == Session::VISITOR_SESSION_ID)
 	{
-		case User::MEMBER_LEVEL:
-		$class = 'member';
-		break;
-		
-		case User::MODERATOR_LEVEL: 
-		$class = 'modo';
-		break;
-		
-		case User::ADMIN_LEVEL: 
-		$class = 'admin';
-		break;
-	} 
-	
-	if (!empty($robot))
-		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
-	else
-	{
-		$group_color = User::get_group_color($row['groups'], $row['level']);
-		$login = !empty($row['display_name']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : $LANG['guest'];
+		$cached_data = TextHelper::unserialize($row['cached_data']);
+		$row['level'] = $cached_data['level'];
+		$row['display_name'] = $cached_data['display_name'];
 	}
 	
+	$group_color = User::get_group_color($row['groups'], $row['level']);
+	
 	$tpl->assign_block_vars('user', array(
-		'USER' => !empty($login) ? $login : $LANG['guest'],
+		'C_ROBOT' => $row['level'] == User::ROBOT_LEVEL,
+		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL,
+		'C_GROUP_COLOR' => !empty($group_color),
+		'PSEUDO' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : $LANG['guest'],
+		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+		'GROUP_COLOR' => $group_color,
+		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'USER_IP' => $row['ip'],
 		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknown']) . '</a>',
 		'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)

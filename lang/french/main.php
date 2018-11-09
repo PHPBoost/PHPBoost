@@ -98,6 +98,8 @@ $LANG['loading'] = 'Chargement';
 //Commun
 $LANG['user'] = 'Utilisateur';
 $LANG['user_s'] = 'Utilisateurs';
+$LANG['robot'] = 'Robot';
+$LANG['robot_s'] = 'Robots';
 $LANG['guest'] = 'Visiteur';
 $LANG['guest_s'] = 'Visiteurs';
 $LANG['member'] = 'Membre';

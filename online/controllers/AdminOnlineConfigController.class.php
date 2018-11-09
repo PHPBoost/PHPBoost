@@ -92,6 +92,8 @@ class AdminOnlineConfigController extends AdminModuleController
 			)
 		));
 		
+		$fieldset_config->add_field(new FormFieldCheckbox('display_robots', $this->lang['admin.robots-displayed'], $this->config->are_robots_displayed()));
+		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
@@ -115,6 +117,12 @@ class AdminOnlineConfigController extends AdminModuleController
 		$this->config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
 		$this->config->set_number_members_per_page($this->form->get_value('number_members_per_page'));
 		$this->config->set_display_order($this->form->get_value('display_order')->get_raw_value());
+		
+		if ($this->form->get_value('display_robots'))
+			$this->config->display_robots();
+		else
+			$this->config->hide_robots();
+		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
 	}

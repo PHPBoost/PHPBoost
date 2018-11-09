@@ -47,6 +47,7 @@ $lang['online.seo.description'] = 'Liste des utilisateurs en ligne.';
 //Admin
 $lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichés dans le menu';
 $lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichés par page';
+$lang['admin.robots-displayed'] = 'Afficher les robots dans la liste';
 $lang['admin.display-order'] = 'Ordre d\'affichage';
 $lang['admin.authorizations.read'] = 'Autorisation d\'afficher la liste des membres en ligne';
 ?>

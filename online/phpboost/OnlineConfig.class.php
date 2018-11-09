@@ -33,6 +33,7 @@ class OnlineConfig extends AbstractConfigData
 	const DISPLAY_ORDER = 'display_order';
 	const NUMBER_MEMBER_DISPLAYED = 'number_member_displayed';
 	const NUMBER_MEMBERS_PER_PAGE = 'number_members_per_page';
+	const ROBOTS_DISPLAYED = 'robots_displayed';
 	
 	const LEVEL_DISPLAY_ORDER = 'level_display_order';
 	const SESSION_TIME_DISPLAY_ORDER = 'session_time_display_order';
@@ -86,6 +87,20 @@ class OnlineConfig extends AbstractConfigData
 		$this->set_property(self::NUMBER_MEMBERS_PER_PAGE, $number);
 	}
 	
+	public function display_robots() 
+	{
+		$this->set_property(self::ROBOTS_DISPLAYED, true);
+	}
+
+	public function hide_robots() {
+		$this->set_property(self::ROBOTS_DISPLAYED, false);
+	}
+	
+	public function are_robots_displayed()
+	{
+		return $this->get_property(self::ROBOTS_DISPLAYED);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -102,6 +117,7 @@ class OnlineConfig extends AbstractConfigData
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
 			self::NUMBER_MEMBER_DISPLAYED => 4,
 			self::NUMBER_MEMBERS_PER_PAGE => 20,
+			self::ROBOTS_DISPLAYED => false,
 			self::AUTHORIZATIONS => array('r0' => 1, 'r1' => 1)
 		);
 	}

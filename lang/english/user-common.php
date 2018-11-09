@@ -136,6 +136,7 @@ $lang['share.sms'] = 'SMS';
 
 // Ranks
 $lang['rank'] = 'Rank';
+$lang['robot'] = 'Robot';
 $lang['visitor'] = 'Visitor';
 $lang['member'] = 'Member';
 $lang['moderator'] = 'Moderator';

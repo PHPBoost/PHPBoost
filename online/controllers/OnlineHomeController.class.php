@@ -45,37 +45,39 @@ class OnlineHomeController extends ModuleController
 	public function build_view()
 	{
 		$active_sessions_start_time = time() - SessionsConfig::load()->get_active_session_duration();
-		$number_users_online = OnlineService::get_number_users_connected('WHERE user_id <> -1 AND timestamp > :time', array('time' => $active_sessions_start_time));
+		$number_users_online = OnlineService::get_number_users_connected('WHERE timestamp > :time', array('time' => $active_sessions_start_time), true);
 		$pagination = $this->get_pagination($number_users_online);
 		
-		$users = OnlineService::get_online_users('WHERE s.user_id <> -1 AND s.timestamp > :time
+		$users = OnlineService::get_online_users('WHERE s.timestamp > :time
 		ORDER BY '. $this->config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from(),
 				'time' => $active_sessions_start_time
-			)
+			),
+			true
 		);
 		
 		foreach ($users as $user)
 		{
-			if ($user->get_id() == AppContext::get_current_user()->get_id())
+			if ($this->config->are_robots_displayed() || ($user->get_level() != User::ROBOT_LEVEL))
 			{
-				$user->set_location_script(OnlineUrlBuilder::home()->rel());
-				$user->set_location_title($this->lang['online']);
-				$user->set_last_update(new Date());
-			}
-			
-			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			
-			if ($user->get_level() != User::VISITOR_LEVEL) 
-			{
+				if ($user->get_id() == AppContext::get_current_user()->get_id())
+				{
+					$user->set_location_script(OnlineUrlBuilder::home()->rel());
+					$user->set_location_title($this->lang['online']);
+					$user->set_last_update(new Date());
+				}
+				
+				$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+				
 				$this->view->assign_block_vars('users', array_merge(
 					Date::get_array_tpl_vars($user->get_last_update(), 'last_update_date'),
 					array(
 					'C_AVATAR' => $user->has_avatar(),
 					'C_GROUP_COLOR' => !empty($group_color),
+					'C_ROBOT' => $user->get_level() == User::ROBOT_LEVEL,
 					'PSEUDO' => $user->get_display_name(),
 					'LEVEL' => UserService::get_level_lang($user->get_level()),
 					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

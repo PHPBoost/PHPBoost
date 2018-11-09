@@ -248,10 +248,10 @@ class StatsSaver
 	 */
 	public static function register_bot()
 	{
-		$current_robot = Robots::get_current_robot();
+		$current_robot = Robots::get_current_robot_name();
 		if ($current_robot!== null)
 		{
-			self::write_stats('robots', $current_robot);
+			self::write_stats('robots', $current_robot, false);
 		}
 	}
 	
@@ -280,7 +280,7 @@ class StatsSaver
     /**
 	 * @desc Save stats to file
 	 */
-	private static function write_stats($file_path, $stats_item)
+	private static function write_stats($file_path, $stats_item, $strtolower = true)
 	{
 		$file_path = PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt';
 		if (!file_exists($file_path)) 
@@ -293,10 +293,10 @@ class StatsSaver
 		{
 			$line = file($file_path);
 			$stats_array = TextHelper::unserialize($line[0]);
-			if (isset($stats_array[TextHelper::strtolower($stats_item)]))
-				$stats_array[TextHelper::strtolower($stats_item)]++;
+			if (isset($stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item]))
+				$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item]++;
 			else
-				$stats_array[TextHelper::strtolower($stats_item)] = 1;
+				$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item] = 1;
 			
 			$file = @fopen($file_path, 'r+');
 			fwrite($file, TextHelper::serialize($stats_array));

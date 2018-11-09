@@ -1,8 +1,12 @@
-<span class="smaller">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}, {TOTAL_MEMBER_CONNECTED} {L_MEMBER}, {TOTAL_MODERATOR_CONNECTED} {L_MODO}, {TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN} ${TextHelper::lcfirst(LangLoader::get_message('online', 'common', 'online'))}.</span>
+<span class="smaller"># IF C_DISPLAY_ROBOTS #{TOTAL_ROBOT_CONNECTED} {L_ROBOT}, # ENDIF #{TOTAL_VISITOR_CONNECTED} {L_VISITOR}, {TOTAL_MEMBER_CONNECTED} {L_MEMBER}, {TOTAL_MODERATOR_CONNECTED} {L_MODO}, {TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN} ${TextHelper::lcfirst(LangLoader::get_message('online', 'common', 'online'))}.</span>
 
 <div class="online-users-container">
 	# START users #
+		# IF users.C_ROBOT #
+		<span class="{users.LEVEL_CLASS}">{users.PSEUDO}</span>
+		# ELSE #
 		<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS} online-user" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
+		# ENDIF #
 	# END users #
 </div>
 

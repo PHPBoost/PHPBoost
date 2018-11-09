@@ -27,6 +27,7 @@
 
 class OnlineModuleMiniMenu extends ModuleMiniMenu
 {
+	private $number_robot = 0;
 	private $number_visitor = 0;
 	private $number_member = 0;
 	private $number_moderator = 0;
@@ -73,26 +74,35 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		{
 			$this->incremente_level($user);
 			
-			if ($this->total_users <= $online_config->get_number_member_displayed())
+			if ($online_config->are_robots_displayed() || ($user->get_level() != User::ROBOT_LEVEL))
 			{
-				$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-				
-				if ($user->get_level() != User::VISITOR_LEVEL) 
+				if ($this->total_users <= $online_config->get_number_member_displayed())
 				{
-					$tpl->assign_block_vars('users', array(
-						'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-						'PSEUDO' => $user->get_display_name(),
-						'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-						'C_GROUP_COLOR' => !empty($group_color),
-						'GROUP_COLOR' => $group_color,
-					));
+					$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+					
+					if ($user->get_level() != User::VISITOR_LEVEL) 
+					{
+						$tpl->assign_block_vars('users', array(
+							'C_ROBOT' => $user->get_level() == User::ROBOT_LEVEL,
+							'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+							'PSEUDO' => $user->get_display_name(),
+							'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+							'C_GROUP_COLOR' => !empty($group_color),
+							'GROUP_COLOR' => $group_color,
+						));
+					}
 				}
 			}
 		}
 		
+		if (!$online_config->are_robots_displayed())
+			$this->number_visitor += $this->number_robot;
+		
 		$main_lang = LangLoader::get('main');
 		$tpl->put_all(array(
+			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
 			'C_MORE_USERS' => $this->total_users > $online_config->get_number_member_displayed(),
+			'L_ROBOT' => $this->number_robot > 1 ? $main_lang['robot_s'] : $main_lang['robot'],
 			'L_VISITOR' => $this->number_visitor > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
 			'L_MEMBER' => $this->number_member > 1 ? $main_lang['member_s'] : $main_lang['member'],
 			'L_MODO' => $this->number_moderator > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
@@ -100,6 +110,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			'L_USERS_ONLINE' => $this->total_users > 1 ? $lang['online_users'] : $lang['online_user'],
 			'L_TOTAL' => $main_lang['total'],
 			'TOTAL_USERS_CONNECTED' => $this->total_users,
+			'TOTAL_ROBOT_CONNECTED' => $this->number_robot,
 			'TOTAL_VISITOR_CONNECTED' => $this->number_visitor,
 			'TOTAL_MEMBER_CONNECTED' => $this->number_member,
 			'TOTAL_MODERATOR_CONNECTED' => $this->number_moderator,
@@ -114,6 +125,9 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		$this->incremente_user();
 		switch ($user->get_level())
 		{
+			case User::ROBOT_LEVEL:
+				$this->incremente_robot();
+			break;
 			case User::VISITOR_LEVEL:
 				$this->incremente_visitor();
 			break;
@@ -132,6 +146,11 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 	private function incremente_user()
 	{
 		$this->total_users++;
+	}
+	
+	private function incremente_robot()
+	{
+		$this->number_robot++;
 	}
 	
 	private function incremente_visitor()
