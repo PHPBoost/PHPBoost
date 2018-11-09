@@ -67,7 +67,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			$g_mode = $array_match[2];
 		}
 		else
-			list($g_type, $g_mode) = array('date', 'desc');
+			list($g_type, $g_mode) = array('name', 'asc');
 
 		$comments_topic = new GalleryCommentsTopic();
 		$config = GalleryConfig::load();
