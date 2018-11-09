@@ -76,11 +76,21 @@ class GalleryDisplayCategoryController extends ModuleController
 		$category = $this->get_category();
 
 		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
+		
 		$elements_number = $category->get_elements_number();
+		$nbr_pics = $elements_number['pics_aprob'];
+		
+		if ($category->get_id() == Category::ROOT_CATEGORY)
+		{
+			foreach ($subcategories as $cat)
+			{
+				$elements_number = $cat->get_elements_number();
+				$nbr_pics += $elements_number['pics_aprob'];
+			}
+		}
 
 		$Gallery = new Gallery();
 
-		$nbr_pics = $elements_number['pics_aprob'];
 		$total_cat = count($subcategories);
 
 		//On crée une pagination si le nombre de catégories est trop important.
@@ -165,7 +175,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
-			'L_TOTAL_IMG' => $category->get_id() != Category::ROOT_CATEGORY ? sprintf($LANG['total_img_cat'], $nbr_pics) : '',
+			'L_TOTAL_IMG' => $nbr_pics > 0 ? ($category->get_id() != Category::ROOT_CATEGORY ? sprintf($LANG['total_img_cat'], $nbr_pics) : ($nbr_pics > 1 ? sprintf($LANG['total_img_root'], $nbr_pics) : $LANG['total_img_root_single'])) : '',
 			'L_ADD_IMG' => $LANG['add_pic'],
 			'L_GALLERY' => $this->lang['module_title'],
 			'L_CATEGORIES' => ($category->get_id_parent() >= 0) ? $LANG['sub_album'] : $LANG['album'],
