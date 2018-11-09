@@ -133,7 +133,7 @@ class AdministratorAlertService
 	 * @return AdministratorAlert[] The list of the matching alerts.
 	 */
 	public static function find_by_identifier($identifier, $type = '')
-	{        
+	{
 		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
 			FROM " . DB_TABLE_EVENTS  . "
 			WHERE identifier = :identifier" . (!empty($type) ? " AND type = :type" : '') . " ORDER BY creation_date DESC
@@ -196,10 +196,7 @@ class AdministratorAlertService
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
 		{
-			//This line exists only to be compatible with PHP 4 (we cannot use $var->get_var()->method(), whe have to use a temp var)
-			$creation_date = $alert->get_creation_date();
-			
-			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => utf8_encode($alert->get_entitled()), 'description' => utf8_encode($alert->get_properties()), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
+			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $alert->get_creation_date()->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
 			
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
@@ -211,7 +208,7 @@ class AdministratorAlertService
 		else //We create it
 		{
 			$creation_date = new Date();
-			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => utf8_encode($alert->get_entitled()), 'description' => utf8_encode($alert->get_properties()), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
+			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
 			$alert->set_id($result->get_last_inserted_id());
 
 			//Cache regeneration

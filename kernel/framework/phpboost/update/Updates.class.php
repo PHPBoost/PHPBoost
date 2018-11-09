@@ -140,7 +140,6 @@ class Updates
 		if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
 		{
 			$alert = new AdministratorAlert();
-			require_once(PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_locale() . '/admin.php');
 			
 			if ($app->get_type() == Application::KERNEL_TYPE)
 				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));
@@ -149,7 +148,7 @@ class Updates
 
 			$alert->set_fixing_url('/admin/updates/detail.php?identifier=' . $identifier);
 			$alert->set_priority($app->get_priority());
-			$alert->set_properties(serialize($app));
+			$alert->set_properties(TextHelper::serialize_base64($app));
 			$alert->set_type('updates');
 			$alert->set_identifier($identifier);
 

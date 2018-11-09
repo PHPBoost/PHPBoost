@@ -144,13 +144,13 @@ class Application
 		foreach ($authors_elts as $author)
 		{
 			$this->authors[] = array(
-                'name' => self::get_attribute($author, 'name'),
-                'email' => self::get_attribute($author, 'email')
+				'name' => self::get_attribute($author, 'name'),
+				'email' => self::get_attribute($author, 'email')
 			);
 		}
 
 		$this->description = $xml_desc->xpath('description');
-		$this->description = utf8_decode((string) $this->description[0]);
+		$this->description = (string) $this->description[0];
 
 		$this->new_features = array();
 		$this->improvements = array();
@@ -202,13 +202,13 @@ class Application
 	{
 		$current_version = $this->get_installed_version();
 		
-        if ($current_version == '0')
-        {
-        	return false;
-        }
-        
-        $phpboost_version = Environment::get_phpboost_version();
-        
+		if ($current_version == '0')
+		{
+			return false;
+		}
+		
+		$phpboost_version = Environment::get_phpboost_version();
+		
 		return version_compare($current_version, $this->get_version(), '<') > 0 &&
 		(($phpboost_version >= $this->compatibility_min) && ($this->compatibility_max == null ||
 		($phpboost_version <= $this->compatibility_max && $this->compatibility_max >= $this->compatibility_min)));
