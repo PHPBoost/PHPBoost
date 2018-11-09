@@ -162,7 +162,7 @@ class ArticlesFormController extends ModuleController
 			array('description' => $this->common_lang['form.keywords.description'])
 		));
 
-		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_article()->get_sources()));
+		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_article()->get_sources()));
 
 		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{

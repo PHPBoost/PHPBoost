@@ -144,7 +144,7 @@ class NewsFormController extends ModuleController
 
 		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 		
-		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
+		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
 		
 		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{

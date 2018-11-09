@@ -57,7 +57,14 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function delete_old_files()
 	{
+		$folder = new Folder(PATH_TO_ROOT . '/' . $this->module_id . '/fields');
+		if ($folder->exists())
+			$folder->delete();
+		
 		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/NewsNewContent.class.php');
+		$file->delete();
+		
+		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/templates/NewsFormFieldSelectSources.tpl');
 		$file->delete();
 	}
 }
