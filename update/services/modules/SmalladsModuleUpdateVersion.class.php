@@ -232,6 +232,9 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		$file = new File(PATH_TO_ROOT . '/smallads/controllers/SmalladsHomeController.class.php');
 		$file->delete();
 		
+		$file = new File(PATH_TO_ROOT . '/smallads/fields/SmalladsFormFieldSelectSources.class.php');
+		$file->delete();
+		
 		$file = new File(PATH_TO_ROOT . '/smallads/lang/english/smallads_french.php');
 		$file->delete();
 		
@@ -245,6 +248,9 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		$file->delete();
 		
 		$file = new File(PATH_TO_ROOT . '/smallads/templates/SmalladsModuleMiniMenu.tpl');
+		$file->delete();
+		
+		$file = new File(PATH_TO_ROOT . '/smallads/templates/fields/SmalladsFormFieldSelectSources.tpl');
 		$file->delete();
 		
 		$file = new File(PATH_TO_ROOT . '/smallads/smallads.class.php');
