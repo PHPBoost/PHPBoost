@@ -84,6 +84,11 @@ class User
 		return $this->level == self::VISITOR_LEVEL;
 	}
 	
+	public function is_moderator()
+	{
+		return $this->level == self::MODERATOR_LEVEL;
+	}
+	
 	public function is_admin()
 	{
 		return $this->level == self::ADMIN_LEVEL;

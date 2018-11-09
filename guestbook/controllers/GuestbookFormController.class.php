@@ -90,6 +90,7 @@ class GuestbookFormController extends ModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$config = GuestbookConfig::load();
+		$current_user = AppContext::get_current_user();
 		
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($config->get_forbidden_tags());
@@ -99,7 +100,7 @@ class GuestbookFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('message', $this->is_new_message ? $this->lang['guestbook.add'] : $this->lang['guestbook.edit']);
 		$form->add_fieldset($fieldset);
 		
-		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldTextEditor('pseudo', LangLoader::get_message('form.name', 'common'), $this->get_message()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
@@ -109,7 +110,7 @@ class GuestbookFormController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('contents',  LangLoader::get_message('message', 'main'), $this->get_message()->get_contents(), 
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true), 
 			array(
-				new FormFieldConstraintMaxLinks($config->get_maximum_links_message(), true),
+				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_maximum_links_message(), true) : ''),
 				new FormFieldConstraintAntiFlood(GuestbookService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id())
 			))
 		));
