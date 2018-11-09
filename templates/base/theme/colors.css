@@ -43,6 +43,10 @@ body {
 .cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
 .cookiebar-button-declined:hover 	{ background-color: #CE271A; }
 
+.robot {
+   color: #FF6600;
+}
+
 @media (max-width: 768px) {
 	.cookiebar-container {
 		background-color: rgb(215, 224, 233);

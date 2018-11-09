@@ -17,11 +17,6 @@ html, body {
 	margin: 0;
 	padding: 0; }
 
-img {
-	border: none;
-	overflow: auto;
-	vertical-align: middle; }
-
 img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {
 	max-width: 100%; }
 
@@ -488,7 +483,7 @@ table.table-fixed {
 .fa.fa-delete,
 .fa.fa-eye,
 .fa.fa-star-empty,
-.fa.fa-star-half-empty:before { 
+.fa.fa-star-half-empty:before {
   font-weight: 400; }
 
 
@@ -612,5 +607,5 @@ table.table-fixed {
 .fa.fa-minus-square-o,
 .fa.fa-plus-square-o,
 .fa.fa-star-o,
-.fa.fa-user-o { 
+.fa.fa-user-o {
   font-weight: 400; }

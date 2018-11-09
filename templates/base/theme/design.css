@@ -358,3 +358,9 @@ body {
 .cookiebar-change-choice-link {
 	text-align: center;
 }
+
+/* --- Search engines ====================================== */
+.robot {
+	font-size: 0.9em;
+	font-weight: bold;
+}

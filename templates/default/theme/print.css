@@ -2,6 +2,13 @@
 		print.css
 Mise en forme d'une page pour l'impression
 --------------------------------------*/
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	outline: none; }
 
 body {
 	margin: auto;
@@ -23,3 +30,14 @@ td, th {
 th {
 	font-weight: bold;
 }
+
+img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {
+	max-width: 100%; }
+
+div, textarea, table, td, th, code, pre, samp {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto; }
