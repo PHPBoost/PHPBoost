@@ -45,10 +45,10 @@ $app = null;
 
 if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
-    $app = TextHelper::mb_unserialize($update->get_properties());
+    $app = TextHelper::unserialize($update->get_properties());
 }
 
-if ($app !== null && $app->check_compatibility())
+if ($app instanceof Application && $app->check_compatibility())
 {
     $authors = $app->get_authors();
     $new_features = $app->get_new_features();

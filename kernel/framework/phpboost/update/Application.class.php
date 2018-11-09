@@ -150,7 +150,7 @@ class Application
 		}
 
 		$this->description = $xml_desc->xpath('description');
-		$this->description = utf8_decode((string) $this->description[0]);
+		$this->description = (string) $this->description[0];
 
 		$this->new_features = array();
 		$this->improvements = array();

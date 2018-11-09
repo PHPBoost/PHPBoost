@@ -272,9 +272,14 @@ class TextHelper
 		return serialize($string);
 	}
 
+	public static function serialize_base64($string)
+	{
+		return base64_encode(self::serialize($string));
+	}
+
 	public static function unserialize($string)
 	{
-		return unserialize($string);
+		return unserialize(self:: is_base64($string) ? base64_decode($string) : $string);
 	}
 
 	public static function mb_unserialize($string)
@@ -285,6 +290,12 @@ class TextHelper
 		}, $string
 		);
 		return unserialize($string);
+	}
+
+	private static function is_base64($string)
+	{
+		$decoded = base64_decode($string, true);
+		return preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string) && false !== $decoded && base64_encode($decoded) == $string;
 	}
 
 	/**

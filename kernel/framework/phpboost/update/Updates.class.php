@@ -149,7 +149,7 @@ class Updates
 
 			$alert->set_fixing_url('/admin/updates/detail.php?identifier=' . $identifier);
 			$alert->set_priority($app->get_priority());
-			$alert->set_properties(serialize($app));
+			$alert->set_properties(TextHelper::serialize_base64($app));
 			$alert->set_type('updates');
 			$alert->set_identifier($identifier);
 
