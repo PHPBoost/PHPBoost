@@ -60,7 +60,10 @@ class HtaccessFileCache implements CacheData
 			$this->force_redirection_if_available();
 			
 			$this->add_core_rules();
+			
 			$this->add_modules_rules();
+			
+			$this->add_user_rules();
 			
 			$this->add_php_and_http_protections();
 			
@@ -186,18 +189,9 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
-
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
-		$authorized_extension_point = array('kernel', 'user');
-		foreach ($mappings as $id => $mapping_list)
-		{
-			if (in_array($id, $authorized_extension_point))
-			{
-				$this->add_url_mapping($mapping_list);
-			}
-		}
+		$this->add_url_mapping($mappings['kernel']);
 	}
 
 	private function add_modules_rules()
@@ -289,6 +283,17 @@ class HtaccessFileCache implements CacheData
 				}
 			}
 		}
+	}
+	
+	private function add_user_rules()
+	{
+		$this->add_section('User');
+
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
+
+		$eps = AppContext::get_extension_provider_service();
+		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
+		$this->add_url_mapping($mappings['user']);
 	}
 
 	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
