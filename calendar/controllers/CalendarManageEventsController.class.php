@@ -41,7 +41,7 @@ class CalendarManageEventsController extends AdminModuleController
 		
 		$current_page = $this->build_table();
 		
-		return $this->generate_response($curent_page);
+		return $this->generate_response($current_page);
 	}
 	
 	private function init()
