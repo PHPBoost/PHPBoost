@@ -916,10 +916,18 @@ h3.menu-title {
 	color: #1F507F;
 }
 
-.themesmanagement {
-	background-color: #353535;
-	color: #ffffff;
+@media (max-width: 769px) {
+    .themesmanagement {
+    	background-color: #353535;
+    	color: #ffffff;
+    }
+
+    .themesmanagement select {
+        background-color: #ffffff;
+        color: #353535
+    }
 }
+
 
 @media (min-width: 769px) {
 	.themesmanagement {
@@ -1034,8 +1042,8 @@ h3.menu-title {
 
 /* -- Sharing elements (Email, print...) -- */
 /* ------------------ */
-.sharing-element > a {
-	color: #FFFFFF;
+.sharing-element > a i {
+	color: #FFFFFF !important;
 }
 
 .sharing-element-comments > a { background-color: #CDCDCD; }

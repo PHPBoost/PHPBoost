@@ -22,7 +22,7 @@
 	transition: 0.3s
 }
 
-#menustats.active-stats ul{
+#menustats.opened ul{
 	height: 280px;
 	opacity: 1;
 	visibility: visible;
