@@ -1059,7 +1059,7 @@ div.container-block-absolute {
 	position: absolute;
 	float: left;
 	display: none;
-	bottom: 2px;
+	bottom: 3px;
 	margin-left: 0;
 }
 
@@ -1078,7 +1078,7 @@ div.container-block-absolute > div {
 	border-radius: 5px 5px 0 0;
 	text-align: center;
 	font-weight: bold;
-	padding: 0 0 0.482em 0;
+	padding: 0.309em 0;
  }
 
 .menus-block-add {
@@ -1091,6 +1091,7 @@ div.container-block-absolute > div {
 	border-radius: 0 0 5px 5px;
 	cursor: pointer;
 	text-align: center;
+	padding: 0 0 0.309em;
  }
 
 .menus-block-add i {
