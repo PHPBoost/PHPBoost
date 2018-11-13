@@ -1060,7 +1060,7 @@ div.container-block-absolute {
 	position: absolute;
 	float: left;
 	display: none;
-	margin-top: 38px;
+	bottom: 2px;
 	margin-left: 0;
 }
 
@@ -1105,7 +1105,7 @@ div.container-block-absolute > div {
 }
 
 .menus-block-add-links:last-child {
-	border-width: 0 0 1px 0;
+	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 	border-radius: 0 0 5px 5px;
