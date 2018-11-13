@@ -1093,6 +1093,10 @@ div.container-block-absolute > div {
 	text-align: center;
  }
 
+.menus-block-add i {
+	margin-right: 0.309em;
+}
+
 .menus-block-add-links {
 	margin: -1px 0 0;
 	padding: 2px 0;
@@ -1246,8 +1250,8 @@ div.container-block-absolute > div {
 .menusmanagement .fa-arrows-alt {
 	display: none;
 }
-.menusmanagement a.fa,
-.menusmanagement a i{
+
+.menusmanagement a.fa{
 	padding: 0 8px;
 }
 
