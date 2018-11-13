@@ -1051,7 +1051,6 @@ div.container-block {
 }
 
 div.container-block > div {
-	float: left;
 	position: relative;
 	z-index: 2;
 }
@@ -1079,6 +1078,7 @@ div.container-block-absolute > div {
 	border-radius: 5px 5px 0 0;
 	text-align: center;
 	font-weight: bold;
+	padding: 0 0 0.482em 0;
  }
 
 .menus-block-add {
@@ -1205,7 +1205,7 @@ div.container-block-absolute > div {
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
-	margin-top: 20px;
+	margin-top: -15px;
 	padding: 30px 10px 10px 10px;
 	min-height: 75px;
 	border-width: 2px;
