@@ -552,6 +552,11 @@ optgroup {
 .field-large 	{ width: 200px; }
 .field-xlarge 	{ width: 300px; }
 
+.upload-input 	{
+	width: calc(100% - 40px);
+	vertical-align: top;
+}
+
 
 .form-field-date,
 .form-field-datetime {
