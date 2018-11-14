@@ -553,7 +553,7 @@ optgroup {
 .field-xlarge 	{ width: 300px; }
 
 .upload-input 	{
-	width: calc(100% - 40px);
+	width: calc(100% - 43px);
 	vertical-align: top;
 }
 
