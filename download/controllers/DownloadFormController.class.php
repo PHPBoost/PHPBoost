@@ -61,6 +61,8 @@ class DownloadFormController extends ModuleController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			$this->form->get_field_by_id('file_size')->set_hidden($this->is_file_size_automatic());
+			$this->form->get_field_by_id('file_size_unit')->set_hidden($this->is_file_size_automatic());
 			$this->save();
 			$this->redirect();
 		}
@@ -96,6 +98,40 @@ class DownloadFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_downloadfile()->get_url()->relative(), array('required' => true)));
 		
+		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine_file_size_automatically'], $this->is_file_size_automatic(), 
+			array('events' => array('click' => '
+			if (HTMLForms.getField("determine_file_size_automatically_enabled").getValue()) {
+				HTMLForms.getField("file_size").disable();
+				HTMLForms.getField("file_size_unit").disable();
+			} else {
+				HTMLForms.getField("file_size").enable();
+				HTMLForms.getField("file_size_unit").enable();
+			}'))
+		));
+		
+		if (!empty($this->get_downloadfile()->get_size()))
+		{
+			$formated_file_size = explode(' ', $this->get_downloadfile()->get_formated_size());
+			$file_size = $formated_file_size[0];
+			$file_size_unit = $formated_file_size[1];
+		}
+		else
+			$file_size = $file_size_unit = 0;
+		
+		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file_size'], $file_size,
+			array('min' => 0, 'step' => 0.05, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file_size_unit'], $file_size_unit,
+			array(
+				new FormFieldSelectChoiceOption('', ''),
+				new FormFieldSelectChoiceOption($this->common_lang['unit.kilobytes'], $this->common_lang['unit.kilobytes']),
+				new FormFieldSelectChoiceOption($this->common_lang['unit.megabytes'], $this->common_lang['unit.megabytes']),
+				new FormFieldSelectChoiceOption($this->common_lang['unit.gigabytes'], $this->common_lang['unit.gigabytes'])
+			),
+			array('hidden' => $this->is_file_size_automatic(), 'required' => true)
+		));
+		
 		if ($this->get_downloadfile()->get_id() !== null && $this->get_downloadfile()->get_number_downloads() > 0)
 		{
 			$fieldset->add_field(new FormFieldCheckbox('reset_number_downloads', $this->lang['download.form.reset_number_downloads']));
@@ -107,7 +143,7 @@ class DownloadFormController extends ModuleController
 			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
 			if (HTMLForms.getField("short_contents_enabled").getValue()) {
 				HTMLForms.getField("short_contents").enable();
-			} else { 
+			} else {
 				HTMLForms.getField("short_contents").disable();
 			}'))
 		));
@@ -122,7 +158,7 @@ class DownloadFormController extends ModuleController
 				array('events' => array('click' => '
 				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 					HTMLForms.getField("author_custom_name").enable();
-				} else { 
+				} else {
 					HTMLForms.getField("author_custom_name").disable();
 				}'))
 			));
@@ -136,6 +172,8 @@ class DownloadFormController extends ModuleController
 		$form->add_fieldset($other_fieldset);
 		
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_downloadfile()->get_picture()->relative()));
+		
+		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software_version'], $this->get_downloadfile()->get_software_version()));
 		
 		$other_fieldset->add_field(DownloadService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 		
@@ -164,7 +202,7 @@ class DownloadFormController extends ModuleController
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {
 					jQuery("#' . __CLASS__ . '_start_date_field").show();
 					HTMLForms.getField("end_date_enabled").enable();
-				} else { 
+				} else {
 					jQuery("#' . __CLASS__ . '_start_date_field").hide();
 					HTMLForms.getField("end_date_enabled").disable();
 				}'))
@@ -177,7 +215,7 @@ class DownloadFormController extends ModuleController
 			'events' => array('click' => '
 			if (HTMLForms.getField("end_date_enabled").getValue()) {
 				HTMLForms.getField("end_date").enable();
-			} else { 
+			} else {
 				HTMLForms.getField("end_date").disable();
 			}'
 			))));
@@ -211,6 +249,11 @@ class DownloadFormController extends ModuleController
 	private function is_contributor_member()
 	{
 		return (!DownloadAuthorizationsService::check_authorizations()->write() && DownloadAuthorizationsService::check_authorizations()->contribution());
+	}
+	
+	private function is_file_size_automatic()
+	{
+		return $this->get_downloadfile()->get_id() === null || $this->get_downloadfile()->get_size() == 0 || ($this->get_downloadfile()->get_size() ==  Url::get_url_file_size($this->get_downloadfile()->get_url()));
 	}
 	
 	private function get_downloadfile()
@@ -278,12 +321,22 @@ class DownloadFormController extends ModuleController
 		$downloadfile->set_contents($this->form->get_value('contents'));
 		$downloadfile->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
 		$downloadfile->set_picture(new Url($this->form->get_value('picture')));
+		$downloadfile->set_software_version($this->form->get_value('software_version'));
 		
 		if ($this->config->is_author_displayed())
 			$downloadfile->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
 		
-		$file_size = Url::get_url_file_size($downloadfile->get_url());
-		$file_size = (empty($file_size) && $downloadfile->get_size()) ? $downloadfile->get_size() : $file_size;
+		if ($this->form->get_value('determine_file_size_automatically_enabled'))
+		{
+			$file_size = Url::get_url_file_size($downloadfile->get_url());
+			$file_size = (empty($file_size) && $downloadfile->get_size()) ? $downloadfile->get_size() : $file_size;
+		}
+		else
+		{
+			$units = array($this->common_lang['unit.bytes'], $this->common_lang['unit.kilobytes'], $this->common_lang['unit.megabytes'], $this->common_lang['unit.gigabytes']);
+			$power = array_search($this->form->get_value('file_size_unit')->get_raw_value(), $units);
+			$file_size = (int)($this->form->get_value('file_size') * pow(1024, $power));
+		}
 		
 		$downloadfile->set_size($file_size);
 		

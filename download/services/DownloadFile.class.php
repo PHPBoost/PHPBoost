@@ -54,6 +54,7 @@ class DownloadFile
 	private $author_custom_name_enabled;
 	
 	private $picture_url;
+	private $software_version;
 	private $number_downloads;
 	private $notation;
 	private $keywords;
@@ -153,6 +154,16 @@ class DownloadFile
 	public function set_size($size)
 	{
 		$this->size = $size;
+	}
+	
+	public function get_formated_size()
+	{
+		return $this->formated_size;
+	}
+	
+	public function set_formated_size($formated_size)
+	{
+		$this->formated_size = $formated_size;
 	}
 	
 	public function get_contents()
@@ -322,6 +333,16 @@ class DownloadFile
 		return !empty($picture);
 	}
 	
+	public function get_software_version()
+	{
+		return $this->software_version;
+	}
+	
+	public function set_software_version($software_version)
+	{
+		$this->software_version = $software_version;
+	}
+	
 	public function get_number_downloads()
 	{
 		return $this->number_downloads;
@@ -391,7 +412,8 @@ class DownloadFile
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_downloads' => $this->get_number_downloads(),
 			'number_view' => $this->get_number_view(),
-			'picture_url' => $this->get_picture()->relative()
+			'picture_url' => $this->get_picture()->relative(),
+			'software_version' => $this->get_software_version()
 		);
 	}
 	
@@ -414,6 +436,7 @@ class DownloadFile
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->number_downloads = $properties['number_downloads'];
 		$this->picture_url = new Url($properties['picture_url']);
+		$this->software_version = $properties['software_version'];
 		
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -452,6 +475,7 @@ class DownloadFile
 		$this->number_downloads = 0;
 		$this->number_view = 0;
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->software_version = '';
 		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
@@ -491,6 +515,7 @@ class DownloadFile
 			'C_READ_MORE' => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SIZE' => !empty($this->size),
 			'C_PICTURE' => $this->has_picture(),
+			'C_SOFTWARE_VERSION' => !empty($this->software_version),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
 			'C_NB_VIEW_ENABLED' => $config->get_nb_view_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
@@ -510,6 +535,7 @@ class DownloadFile
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+			'SOFTWARE_VERSION' => $this->software_version,
 			'NUMBER_DOWNLOADS' => $this->number_downloads,
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('downloaded_times', 'common', 'download'), array('number_downloads' => $this->number_downloads)),
@@ -518,7 +544,7 @@ class DownloadFile
 			
 			'C_COMMENTS' => !empty($number_comments),
 			'L_COMMENTS' => CommentsService::get_lang_comments('download', $this->id),
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('download', $this->id),
+			'NUMBER_COMMENTS' => $number_comments,
 			
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

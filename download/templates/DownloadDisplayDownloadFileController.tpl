@@ -52,6 +52,7 @@
 						# ENDIF #
 					</div>
 					<h6>{@file_infos}</h6>
+					# IF C_SOFTWARE_VERSION #<span class="text-strong">{@software_version} : </span><span>{SOFTWARE_VERSION}</span><br/># ENDIF #
 					<span class="infos-options"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span># IF C_SIZE #{SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span>
 					<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time></span>
 					# IF C_UPDATED_DATE #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{UPDATED_DATE_ISO8601}" itemprop="dateModified">{UPDATED_DATE}</time></span># ENDIF #

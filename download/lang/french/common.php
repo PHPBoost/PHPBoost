@@ -48,7 +48,7 @@ $lang['downloads_number'] = 'Nombre de téléchargements';
 $lang['file_infos'] = 'Informations sur le fichier';
 $lang['file'] = 'Fichier';
 $lang['files'] = 'Fichiers';
-
+$lang['software_version'] = 'Version';
 $lang['download.view'] = 'vues';
 $lang['download.number.view'] = 'Nombre de vues';
 
@@ -79,6 +79,9 @@ $lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à aj
 
 //Form
 $lang['download.form.reset_number_downloads'] = 'Réinitialiser le nombre de téléchargements';
+$lang['download.form.determine_file_size_automatically'] = 'Déterminer la taille du fichier automatiquement';
+$lang['download.form.file_size'] = 'Taille du fichier';
+$lang['download.form.file_size_unit'] = 'Unité';
 
 //Messages
 $lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';

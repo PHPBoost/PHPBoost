@@ -91,7 +91,8 @@ class DownloadSetup extends DefaultModuleSetup
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_downloads' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
+			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'software_version' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id'),

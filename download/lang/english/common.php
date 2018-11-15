@@ -48,7 +48,7 @@ $lang['downloads_number'] = 'Downloads number';
 $lang['file_infos'] = 'File informations';
 $lang['file'] = 'File';
 $lang['files'] = 'Files';
-
+$lang['software_version'] = 'Version';
 $lang['download.view'] = 'views';
 $lang['download.number.view'] = 'Number of views';
 
@@ -79,6 +79,9 @@ $lang['download.form.contribution.explain'] = 'You are not authorized to post a 
 
 //Form
 $lang['download.form.reset_number_downloads'] = 'Reset downloads number';
+$lang['download.form.determine_file_size_automatically'] = 'Determine file size automatically';
+$lang['download.form.file_size'] = 'File size';
+$lang['download.form.file_size_unit'] = 'File size unit';
 
 //Messages
 $lang['download.message.success.add'] = 'The file <b>:name</b> has been added';

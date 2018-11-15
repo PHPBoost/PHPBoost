@@ -172,6 +172,7 @@
 								# ENDIF #
 							</div>
 							<h6>{@file_infos}</h6>
+							# IF downloadfiles.C_SOFTWARE_VERSION #<span class="text-strong">{@software_version} : </span><span>{downloadfiles.SOFTWARE_VERSION}</span><br/># ENDIF #
 							<span class="infos-options"><span class="text-strong">${LangLoader::get_message('size', 'common')} : </span># IF downloadfiles.C_SIZE #{downloadfiles.SIZE}# ELSE #${LangLoader::get_message('unknown_size', 'common')}# ENDIF #</span>
 							<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span>
 							# IF downloadfiles.C_UPDATED_DATE #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span># ENDIF #
