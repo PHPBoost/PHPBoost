@@ -95,10 +95,9 @@ class AdminFilesConfigController extends AdminController
 			array('class' => 'top-field', 'size' => 12)
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['auth_files'], FileUploadConfig::AUTH_FILES_BIT)));
+		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['auth_files'], FileUploadConfig::AUTH_FILES_BIT)));
 		$auth_settings->build_from_auth_array($this->file_upload_config->get_authorization_enable_interface_files());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-		$fieldset->add_field($auth_setter);
+		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
