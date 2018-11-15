@@ -148,33 +148,36 @@ function image_preview(input,image,is_value = false)
 	else
 		var url = input.value;
 	
-	jQuery.ajax({
-		url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
-		type: "post",
-		dataType: "json",
-		async: false,
-		data: {url_to_check : url, token : TOKEN},
-		success: function(returnData){
-			if (returnData.is_valid == 1)
-			{
-				if (url.charAt(0) == '/')
-					image.src = PATH_TO_ROOT + url;
-				else
-					image.src = url;
+	if (url != '') {
+		jQuery.ajax({
+			url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
+			type: "post",
+			dataType: "json",
+			async: false,
+			data: {url_to_check : url, token : TOKEN},
+			success: function(returnData) {
+				if (returnData.is_valid == 1) {
+					if (url.charAt(0) == '/')
+						image.src = PATH_TO_ROOT + url;
+					else
+						image.src = url;
 
-				jQuery('#' + image.id).show();
-			}
-			else
-			{
+					jQuery('#' + image.id).show();
+				}
+				else {
+					image.src = '';
+					jQuery('#' + image.id).hide();
+				}
+			},
+			error: function(returnData) {
 				image.src = '';
 				jQuery('#' + image.id).hide();
 			}
-		},
-		error: function(returnData){
-			image.src = '';
-			jQuery('#' + image.id).hide();
-		}
-	});
+		});
+	} else {
+		image.src = '';
+		jQuery('#' + image.id).hide();
+	}
 }
 
 jQuery(document).ready(function() {
