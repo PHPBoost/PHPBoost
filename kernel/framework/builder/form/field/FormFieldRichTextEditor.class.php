@@ -96,16 +96,19 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 
 	private function get_reset_button_code()
 	{
-		return '<script>
-		<!--
-			function XMLHttpRequest_reset_' . $this->get_html_id() . '()
-			{
-				' . (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' : 
-				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');') . '
-			}
-		-->
-		</script>
-		<button type="button" class="small" onclick="XMLHttpRequest_reset_' . $this->get_html_id() . '();">' . LangLoader::get_message('reset', 'main') . '</button>';
+		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
+		
+		$template->put_all(array(
+			'C_CLASS' => true,
+			'C_ONCLICK_FUNCTION' => true,
+			'HTML_ID' => $this->get_html_id(),
+			'CLASS' => 'small',
+			'L_RESET' => LangLoader::get_message('reset', 'main'),
+			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' : 
+				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');')
+		));
+		
+		return $template->render();
 	}
 
 	/**
