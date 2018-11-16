@@ -37,7 +37,7 @@ $lang['notice.no_one'] = 'Personne';
 $lang['notice.none'] = 'Aucun';
 $lang['notice.none_e'] = 'Aucune';
 $lang['notice.no_bug'] = 'Aucun ticket n\'a été déclaré';
-$lang['notice.no_bug_solved'] = 'Aucun ticket n\'a été corrigé';
+$lang['notice.no_bug_solved'] = 'Aucun ticket n\'a été traité';
 $lang['notice.no_bug_fixed'] = 'Aucun ticket n\'a été corrigé dans cette version';
 $lang['notice.no_bug_in_progress'] = 'Aucun ticket n\'est en cours de correction dans cette version';
 $lang['notice.no_bug_matching_filter'] = 'Aucun ticket ne correspond au filtre sélectionné';
@@ -82,7 +82,7 @@ $lang['titles.admin.authorizations.manage'] = 'Gérer les autorisations';
 $lang['titles.admin.module_config'] = 'Configuration du module bugtracker';
 $lang['titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
 $lang['titles.choose_version'] = 'Version à afficher';
-$lang['titles.solved'] = 'Tickets corrigés';
+$lang['titles.solved'] = 'Tickets traités';
 $lang['titles.unsolved'] = 'Tickets en cours';
 $lang['titles.contents_value_title'] = 'Description par défaut du ticket';
 $lang['titles.contents_value'] = 'Description par défaut';
@@ -95,7 +95,7 @@ $lang['titles.version_informations'] = 'Informations sur la version';
 $lang['seo.history'] = 'Tout l\'historique du ticket #:id.';
 $lang['seo.roadmap'] = 'Tous les tickets en cours / corrigés dans la version :version.';
 $lang['seo.stats'] = 'Statistiques des tickets ouverts / fermés par version.';
-$lang['seo.solved'] = 'Tous les tickets corrigés.';
+$lang['seo.solved'] = 'Tous les tickets traités.';
 $lang['seo.unsolved'] = 'Tous les tickets en cours.';
 
 //Libellés

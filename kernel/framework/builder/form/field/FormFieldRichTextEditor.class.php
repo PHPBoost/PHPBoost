@@ -99,7 +99,6 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
 		
 		$template->put_all(array(
-			'C_CLASS' => true,
 			'C_ONCLICK_FUNCTION' => true,
 			'HTML_ID' => $this->get_html_id(),
 			'CLASS' => 'small',
