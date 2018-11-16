@@ -354,5 +354,6 @@
 		# END remove #
 
 		# IF C_COMMENTS #
+		<h1>{TITLE}</h1>
 		{COMMENTS}
 		# ENDIF #

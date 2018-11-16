@@ -225,6 +225,7 @@ elseif ($id_com > 0)
 	$comments_topic->set_id_in_module($id_com);
 	$comments_topic->set_url(new Url(PagesUrlBuilder::get_link_item_com($id_com,'%s')));
 	$tpl->put_all(array(
+		'TITLE' => sprintf($LANG['pages_page_com'], stripslashes($page_infos['title'])),
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 	
