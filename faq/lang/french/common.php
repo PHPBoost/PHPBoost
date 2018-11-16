@@ -44,6 +44,7 @@ $lang['faq.reorder_questions'] = 'Changer l\'ordre des questions';
 $lang['faq.questions_order_management'] = 'Gestion de l\'ordre des questions';
 $lang['faq.random_question'] = 'Question aléatoire';
 $lang['faq.questions'] = 'Questions';
+$lang['faq.actions.menu'] = 'Menu d\'actions';
 
 //config
 $lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les réponses';

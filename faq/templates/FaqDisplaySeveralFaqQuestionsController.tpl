@@ -127,7 +127,7 @@
 						<span class="actions"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw"></i></a></span>
 						# ELSE #
 						<span class="actions actions-menu question-actions" id="question-{questions.ID}-actions">
-							<a href="" title="Menu d'action" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-actions-menu"></i></a>
+							<a href="" title="{@faq.actions.menu}" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-actions-menu"></i></a>
 							<ul class="actions-submenu">
 								<li class="action"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');"><i class="fa fa-hand-point-right fa-fw"></i> {questions.L_LINK_QUESTION}</a></li>
 								# IF questions.C_EDIT #

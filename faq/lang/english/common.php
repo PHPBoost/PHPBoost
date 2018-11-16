@@ -44,6 +44,7 @@ $lang['faq.reorder_questions'] = 'Reorder questions';
 $lang['faq.questions_order_management'] = 'Questions order management';
 $lang['faq.random_question'] = 'Random question';
 $lang['faq.questions'] = 'Questions';
+$lang['faq.actions.menu'] = 'Actions menu';
 
 //config
 $lang['config.display_type.answers_hidden'] = 'Clic on questions to display answers';
