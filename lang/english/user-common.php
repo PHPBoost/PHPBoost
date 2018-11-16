@@ -207,6 +207,23 @@ Login : :login
 See you on :host
 
 :signature';
+$lang['registration.content-mail.admin'] = 'Dear(e) :pseudo,
+
+You have been registered on :site_name by an administrator. Now you are part of the site members.
+You get access to the member area that offers several advantages. You can, among other things, be automatically recognized throughout the site to post messages, change the language and / or the default theme, edit your profile, access to classes for members only ... In short you access to all the community site.
+
+To connect, you must retain your username and password.
+
+Here are your identifiers.
+
+Login : :login
+:lost_password_link
+
+:accounts_validation_explain
+
+See you on :host
+
+:signature';
 
 $lang['agreement'] = 'Agreement';
 $lang['agreement.agree'] = 'I agree this agreement';

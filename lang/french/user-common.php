@@ -206,6 +206,23 @@ Identifiant : :login
 A bientôt sur :host
 
 :signature';
+$lang['registration.content-mail.admin'] = 'Cher(e) :pseudo,
+
+Vous avez été inscrit sur le site :site_name par un administrateur. Vous faites maintenant partie des membres du site.
+Vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
+
+Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
+
+Nous vous rappelons vos identifiants.
+
+Identifiant : :login
+:lost_password_link
+
+:accounts_validation_explain
+
+A bientôt sur :host
+
+:signature';
 
 $lang['agreement'] = 'Règlement';
 $lang['agreement.agree'] = 'J\'accepte les conditions';
