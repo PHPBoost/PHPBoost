@@ -144,6 +144,8 @@ class UserUsersListController extends AbstractController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['users'], '', $page);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.list'], $page);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home());
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());

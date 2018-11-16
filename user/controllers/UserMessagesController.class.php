@@ -86,6 +86,8 @@ class UserMessagesController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.messages'], array('name' => $this->user->get_display_name())));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::messages($this->user->get_id()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());

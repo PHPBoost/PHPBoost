@@ -217,6 +217,16 @@ $lang['user.message.success.edit'] = 'Le profil a été modifié';
 $lang['user.message.success.delete'] = 'L\'utilisateur <b>:name</b> a été supprimé';
 $lang['user.message.success.delete.member'] = 'Votre compte a été supprimé';
 
+//SEO
+$lang['seo.user.profile'] = 'Toutes les informations de profil de :name.';
+$lang['seo.user.list'] = 'Tableau de la liste des utilisateurs du site.';
+$lang['seo.user.groups'] = 'Utilisateurs de chaque groupe du site.';
+$lang['seo.user.comments'] = 'Tous les commentaires de l\'utilisateur :name.';
+$lang['seo.user.messages'] = 'Tous les messages de l\'utilisateur :name.';
+$lang['seo.user.registration'] = 'Renseignez toutes les informations demandées pour créer un compte.';
+$lang['seo.user.forget-password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';
+$lang['seo.user.about-cookie'] = 'Toutes les informations relatives aux cookies sur le site.';
+
 ############## Extended Field ##############
 
 $lang['extended-field.field.sex'] = 'Sexe';

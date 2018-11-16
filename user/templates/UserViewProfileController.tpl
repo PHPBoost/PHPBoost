@@ -1,5 +1,5 @@
 <fieldset class="member-view-standard-fieldset">
-	<legend>{@profile}</legend>
+	<legend><h1>{TITLE_PROFILE}</h1></legend>
 	<div class="fieldset-inset">
 		# IF C_DISPLAY_EDIT_LINK #
 		<div class="form-element user-profile-edit">

@@ -140,7 +140,7 @@ class UserExploreGroupsController extends AbstractController
 				$this->view->assign_block_vars('group', array(
 					'GROUP_ID'        => $key,
 					'GROUP_NAME'      => $group['name'],
-					'U_GROUP'         => UserUrlBuilder::groups()->rel() . $key,			
+					'U_GROUP'         => UserUrlBuilder::groups()->rel() . $key,
 					'C_GROUP_COLOR'   => !empty($group_color),
 					'GROUP_COLOR'     => $group_color,
 					'C_GROUP_HAS_IMG' => !empty($group['img']),
@@ -263,6 +263,8 @@ class UserExploreGroupsController extends AbstractController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['groups'], $this->lang['user']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.groups']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::groups());
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());

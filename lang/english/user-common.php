@@ -218,6 +218,16 @@ $lang['user.message.success.edit'] = 'The profile has been modified';
 $lang['user.message.success.delete'] = 'The user <b>:name</b> has been deleted';
 $lang['user.message.success.delete.member'] = 'Your account has been deleted';
 
+//SEO
+$lang['seo.user.profile'] = 'All informations about :name.';
+$lang['seo.user.list'] = 'Table of users list.';
+$lang['seo.user.groups'] = 'Each group users.';
+$lang['seo.user.comments'] = 'All comments of :name.';
+$lang['seo.user.messages'] = 'All messages of :name.';
+$lang['seo.user.registration'] = 'Fill all required informations to create an account.';
+$lang['seo.user.forget-password'] = 'Fill all required informations to receive a link to change your password.';
+$lang['seo.user.about-cookie'] = 'All informations about cookies.';
+
 ############## Extended Field ##############
 
 $lang['extended-field.field.sex'] = 'Sex';
