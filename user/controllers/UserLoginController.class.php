@@ -249,7 +249,8 @@ class UserLoginController extends AbstractController
 			else
 				return DispatchManager::get_url('/admin/admin_index.php', $redirect);
 		}
-		return DispatchManager::get_url('/user/index.php', '/login' . $redirect);
+		$dispatch = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '/' : '/user';
+		return DispatchManager::get_url($dispatch, '/login/' . $redirect);
 	}
 
 	private function get_redirect_url()
