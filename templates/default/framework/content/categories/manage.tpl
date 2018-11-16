@@ -56,7 +56,7 @@ function change_reposition_pictures()
 # INCLUDE MSG #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
-		<legend>{FIELDSET_TITLE}</legend>
+		<legend><h1>{FIELDSET_TITLE}</h1></legend>
 			<div class="fieldset-inset">
 				<ul id="categories" class="sortable-block">
 					# IF C_NO_CATEGORIES #

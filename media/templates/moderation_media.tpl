@@ -51,7 +51,7 @@
 		</script>
 		<form action="moderation_media.php" method="post" class="fieldset-content">
 			<fieldset>
-				<legend>{L_MODO_PANEL}</legend>
+				<legend><h1>{L_MODO_PANEL}</h1></legend>
 				<table id="table">
 					<thead>
 						<tr>

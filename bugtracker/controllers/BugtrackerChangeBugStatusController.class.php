@@ -105,7 +105,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('fix_bug');
+		$fieldset = new FormFieldsetHTMLHeading('fix_bug');
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $this->bug->get_status(), $this->generate_status_list_select(),

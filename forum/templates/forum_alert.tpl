@@ -24,7 +24,7 @@
 
 				<form method="post" action="alert.php" onsubmit="javascript:return check_form_alert();">
 					<fieldset>
-						<legend>{L_ALERT}</legend>
+						<legend><h1>{L_ALERT}</h1></legend>
 
 						<div class="message-helper notice">{L_ALERT_EXPLAIN}: <a title="{alert_form.TITLE}" href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">

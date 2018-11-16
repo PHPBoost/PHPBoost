@@ -4,7 +4,7 @@
 			<h1>{L_CONTRIBUTION_PANEL}</h1>
 		</header>
 		<div class="content">
-			<h1>{L_CONTRIBUTION_LIST}</h1>
+			{L_CONTRIBUTION_LIST}
 
 			# IF C_NO_CONTRIBUTION #
 				<div class="message-helper success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
@@ -138,7 +138,7 @@
 
 				<hr>
 
-				<h1>{L_CONTRIBUTE}</h1>
+				<h2>{L_CONTRIBUTE}</h2>
 
 				# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
 					<p>{L_CONTRIBUTE_EXPLAIN}</p>

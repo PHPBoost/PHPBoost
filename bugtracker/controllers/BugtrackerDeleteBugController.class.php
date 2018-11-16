@@ -96,7 +96,7 @@ class BugtrackerDeleteBugController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('delete_bug');
+		$fieldset = new FormFieldsetHTMLHeading('delete_bug');
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(

@@ -89,7 +89,7 @@
 # INCLUDE message_helper #
 <form action="action.php" method="post" class="fieldset-content">
 	<fieldset>
-		<legend>{L_TITLE}</legend>
+		<legend><h1>{L_TITLE}</h1></legend>
 		<p>{L_EXPLAIN_RENAME}</p>
 		<div class="form-element">
 			<label for="new_title">{L_NEW_TITLE}</label>
@@ -116,7 +116,7 @@
 # INCLUDE message_helper #
 <form action="action.php" method="post" class="fieldset-content">
 	<fieldset>
-		<legend>{L_TITLE}</legend>
+		<legend><h1>{L_TITLE}</h1></legend>
 		<div class="form-element">
 			<label for="redirection_name">{L_REDIRECTION_NAME}</label>
 			<div class="form-field">
@@ -147,7 +147,7 @@
 # INCLUDE message_helper #
 <form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">
 	<fieldset>
-		<legend>{L_TITLE}</legend>
+		<legend><h1>{L_TITLE}</h1></legend>
 		<div class="form-element">
 			<label for="action">{L_TITLE}</label>
 			<div class="form-field">
