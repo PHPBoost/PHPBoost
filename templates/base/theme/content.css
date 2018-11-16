@@ -815,22 +815,18 @@ div#release {
 	font-style: italic;
 }
 
-/*@media (min-width: 769px) {
-	.more {
-		margin: 0 0.228em 0.618em 1em;
-		padding: 0;
-	}
-}*/
+/* --- Sharing items
+----------------------------------------------------------------------------- */
 
 .more-element-sharing {
 	position: relative;
-	margin: 5px 0 0 0;
+	margin: 0.309em 0 0 0;
 	padding: 0;
 }
 
 @media (min-width: 769px) {
 	.more-element-sharing {
-		margin: 20px 0 5px 0;
+		margin: 1.309em 0 0.309em 0;
 	}
 }
 
@@ -873,21 +869,13 @@ div#release {
 
 @media (min-width: 769px) {
 	.sharing-element {
-		margin: 0 6px 6px 0;
+		margin: 0 0.309em 0.309em 0;
 	}
 }
 
 .sharing-element a {
 	display: block;
-	padding: 6px 20px 10px 20px;
-}
-
-@media (max-width: 768px) {
-	.sharing-element a {
-		font-size: 1.2em;
-		width: 90%;
-		display: block;
-		margin: 20px 0 0 0;
-		padding: 6px 30px 10px 23px;
-	}
+	padding: 0.618em 1.228em;
+	display: block;
+	margin: 0 0.1em 0.309em 0;
 }

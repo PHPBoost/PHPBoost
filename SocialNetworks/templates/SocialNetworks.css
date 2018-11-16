@@ -2,13 +2,13 @@
 /* -------------------- */
 .more-element-sharing {
 	position: relative;
-	margin: 5px 0 0 0;
+	margin: 0.309em 0 0 0;
 	padding: 0;
 }
 
 @media (min-width: 769px) {
 	.more-element-sharing {
-		margin: 20px 0 5px 0;
+		margin: 1.309em 0 0.309em 0;
 	}
 }
 
@@ -51,23 +51,15 @@
 
 @media (min-width: 769px) {
 	.sharing-element {
-	margin: 0 0.309em 0.309em 0;
+		margin: 0 0.309em 0.309em 0;
 	}
 }
 
 .sharing-element a {
 	display: block;
-	padding: 6px 20px 10px 20px;
-}
-
-@media (max-width: 768px) {
-	.sharing-element a {
-		font-size: 1.2em;
-		width: 90%;
-		display: block;
-		margin: 20px 0 0 0;
-		padding: 6px 30px 10px 23px;
-	}
+	padding: 0.618em 1.228em;
+	display: block;
+	margin: 0 0.1em 0.309em 0;
 }
 
 /* -- Social Connect -- */
@@ -83,12 +75,12 @@ a.social-connect {
 @media (max-width: 468px) {
 	a.social-connect.login-page {
 		display: block;
-	}	
+	}
 }
 
 a.social-connect.login-page {
 	margin: 0.809em 0;
-}	
+}
 
 .horizontal-fieldset a.social-connect {
 	margin: 0;
@@ -159,7 +151,7 @@ a.social-connect span {
 
 /* -- Configuration -- */
 /* -------------------------- */
-.social-networks-list-container .sortable-title { padding: 8px 5px 12px 10px; }
+.social-networks-list-container .sortable-title { padding: 8px 0.309em 12px 10px; }
 .social-networks-list-container .sortable-title > span {
 	font-size: .6em;
 	font-weight: normal;
