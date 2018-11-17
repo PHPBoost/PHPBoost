@@ -57,7 +57,7 @@ $lang['members.config.default-avatar-activation'] = 'Activer l\'avatar par défa
 $lang['members.config.default-avatar-activation-explain'] = 'Met un avatar aux membres qui n\'en ont pas';
 $lang['members.config.default-avatar-link'] = 'Adresse de l\'avatar par défaut';
 $lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de votre thème';
-$lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les autorisations de lecture de la liste des groupes et des membres ainsi que certaines informations personnelles comme leurs emails.';
+$lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les autorisations de lecture de la liste des groupes et des membres ainsi que certaines informations personnelles des utilisateurs comme leurs emails, messages et profils.';
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
 $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
 
