@@ -3,6 +3,9 @@
 	</header>
 	
 	<div class="content">
+		# IF SUCCESS #
+			<div class="message-helper success">{SUCCESS}</div>
+		# END #
 		# IF ERROR #
 			<div class="message-helper error">{ERROR}</div>
 		# END #

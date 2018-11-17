@@ -119,6 +119,8 @@ class InstallationServices
 		}
 		catch (Exception $ex)
 		{
+			$exception_handler = new ExceptionHandler();
+			$exception_handler->handle($ex);
 			DBFactory::reset_db_connection();
 			return self::UNKNOWN_ERROR;
 		}

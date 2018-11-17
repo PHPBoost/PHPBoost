@@ -134,6 +134,7 @@ $lang = array(
 	'db.connection.error' => 'Could not connect to the database. Please check the settings you have entered.',
 	'db.creation.error' => 'The database name you entered doesn\'t exist and we can\'t create it for you. You need to manually create the database.',
 	'db.unknown.error' => 'An unknown error has occured.',
+	'db.unknown.error.detail' => 'An unknown error has occured. You can get the complete error in the file <em>/cache/error.log</em> on your FTP if the support ask for it.',
 	'phpboost.alreadyInstalled.alert' => 'A PHPBoost installation has been found on this database with the prefix you entered. <span style="font-weight: bold;">If you proceed, all the data in this database will be lost.</span>',
 	'db.required.host' => 'You must enter database hostname!',
 	'db.required.port' => 'You must enter database port!',

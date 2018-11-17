@@ -37,7 +37,11 @@ class InstallDBConfigController extends InstallController
 	 */
 	private $form;
 	/**
-	 * @var HTMLForm
+	 * @var FormButtonSubmit
+	 */
+	private $check_button;
+	/**
+	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
 	/**
@@ -48,13 +52,14 @@ class InstallDBConfigController extends InstallController
 	 * @var FormFieldCheckbox
 	 */
 	private $overwrite_field;
+	private $success = null;
 	private $error = null;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if (($this->submit_button->has_been_submited() || $this->check_button->has_been_submited()) && $this->form->validate())
 		{
 			$host = $this->form->get_value('host');
 			$port = $this->form->get_value('port');
@@ -62,7 +67,11 @@ class InstallDBConfigController extends InstallController
 			$password = TextHelper::html_entity_decode($this->form->get_value('password'));
 			$schema = $this->form->get_value('schema');
 			$tables_prefix = $this->form->get_value('tablesPrefix');
-			$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
+			
+			if ($this->submit_button->has_been_submited())
+				$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
+			else
+				$this->handle_test($host, $port, $login, $password, $schema, $tables_prefix);
 		}
 		return $this->create_response();
 	}
@@ -114,11 +123,33 @@ class InstallDBConfigController extends InstallController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'database');
-		$action_fieldset->add_element($check);
+		$this->check_button = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'check_database');
+		$action_fieldset->add_element($this->check_button);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
+	}
+
+	private function handle_test($host, $port, $login, $password, $schema, $tables_prefix)
+	{
+		$service = new InstallationServices();
+		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
+		switch ($status)
+		{
+			case InstallationServices::CONNECTION_SUCCESSFUL:
+				$this->success = $this->lang['db.connection.success'];
+				break;
+			case InstallationServices::CONNECTION_ERROR:
+				$this->error = $this->lang['db.connection.error'];
+				break;
+			case InstallationServices::UNABLE_TO_CREATE_DATABASE:
+				$this->error = $this->lang['db.creation.error'];
+				break;
+			case InstallationServices::UNKNOWN_ERROR:
+			default:
+				$this->error = $this->lang['db.unknown.error.detail'];
+				break;
+		}
 	}
 
 	private function handle_form($host, $port, $login, $password, $schema, $tables_prefix)
@@ -165,6 +196,10 @@ class InstallDBConfigController extends InstallController
 	{
 		$this->view = new FileTemplate('install/database.tpl');
 		$this->view->put('DATABASE_FORM', $this->form->display());
+		if (!empty($this->success))
+		{
+			$this->view->put('SUCCESS', $this->success);
+		}
 		if (!empty($this->error))
 		{
 			$this->view->put('ERROR', $this->error);
