@@ -173,7 +173,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['langs.warning_before_install'], array('class' => 'full-field')));
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['langs.upload_description'], array('class' => 'half-field')));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['langs.upload_description'], array('class' => 'half-field', 'authorized_extensions' => 'gz|zip')));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

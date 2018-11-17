@@ -43,7 +43,8 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'])
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain']),
+				array(new FormFieldConstraintPictureFile())
 			));
 		}
 		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['extended-field.field.avatar.link'], '', 
@@ -62,7 +63,8 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['extended-field.field.avatar.upload_avatar'],
-				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain'])
+				array('description' => $this->lang['extended-field.field.avatar.upload_avatar-explain']),
+				array(new FormFieldConstraintPictureFile())
 			));
 		}
 		

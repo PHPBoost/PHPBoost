@@ -83,6 +83,7 @@ $lang['form.doesnt_match_url_regex'] = 'La valeur saisie doit être une url vali
 $lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
 $lang['form.doesnt_match_tel_regex'] = 'La valeur saisie doit être un numéro de téléphone valide';
 $lang['form.doesnt_match_number_regex'] = 'La valeur saisie doit être un nombre';
+$lang['form.doesnt_match_authorized_extensions_regex'] = 'L\'extension du fichier n\'est pas autorisée. Extensions valides : :extensions.';
 $lang['form.doesnt_match_picture_file_regex'] = 'La valeur saisie doit correspondre à une image';
 $lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie (:lower_bound <= valeur <= :upper_bound)';
 $lang['form.doesnt_match_length_min'] = 'La valeur saisie doit faire au moins :lower_bound caractères';

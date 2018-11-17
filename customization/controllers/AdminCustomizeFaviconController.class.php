@@ -117,7 +117,8 @@ class AdminCustomizeFaviconController extends AdminModuleController
 		}
 
 		$fieldset->add_field(new FormFieldFilePicker('favicon', $this->lang['customization.favicon.current.change'],
-			array('class' => 'third-field')
+			array('class' => 'third-field'),
+			array(new FormFieldConstraintPictureFile())
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

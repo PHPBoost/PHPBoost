@@ -145,7 +145,8 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		}
 
 		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change'],
-			array('class' => 'third-field', 'description' => $this->lang['customization.interface.logo.current.change-explain'])
+			array('class' => 'third-field', 'description' => $this->lang['customization.interface.logo.current.change-explain']),
+			array(new FormFieldConstraintPictureFile())
 		));
 
 		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED,

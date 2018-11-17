@@ -32,6 +32,7 @@
  */
 class FormFieldUploadFile extends AbstractFormField
 {
+	protected $authorized_extensions = '';
 	/**
 	 * @desc Constructs a FormFieldUploadFile.
 	 * @param string $id Field identifier
@@ -43,6 +44,8 @@ class FormFieldUploadFile extends AbstractFormField
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		$constraints[] = new FormFieldConstraintUrlExists(LangLoader::get_message('form.unexisting_file', 'status-messages-common'));
+		if (isset($field_options['authorized_extensions']))
+			$constraints[] = new FormFieldConstraintFileExtension($field_options['authorized_extensions']);
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
@@ -64,6 +67,22 @@ class FormFieldUploadFile extends AbstractFormField
 		));
 
 		return $template;
+	}
+
+	protected function compute_options(array &$field_options)
+	{
+		foreach($field_options as $attribute => $value)
+		{
+			$attribute = TextHelper::strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'authorized_extensions':
+					$this->authorized_extensions = $value;
+					unset($field_options['authorized_extensions']);
+					break;
+			}
+		}
+		parent::compute_options($field_options);
 	}
 
 	protected function get_default_template()

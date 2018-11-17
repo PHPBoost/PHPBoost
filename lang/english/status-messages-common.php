@@ -83,6 +83,7 @@ $lang['form.doesnt_match_url_regex'] = 'The entered value has to be a valid url'
 $lang['form.doesnt_match_mail_regex'] = 'The entered value has to be a valid mail';
 $lang['form.doesnt_match_tel_regex'] = 'The entered value has to be a valid phone number';
 $lang['form.doesnt_match_number_regex'] = 'The value entered must be a number';
+$lang['form.doesnt_match_authorized_extensions_regex'] = 'File extension is not authorized. Valid extensions : :extensions.';
 $lang['form.doesnt_match_picture_file_regex'] = 'The value entered must correspond to a picture';
 $lang['form.doesnt_match_length_intervall'] = 'The entered value does not fit the specified length (:lower_bound <= value <= :upper_bound)';
 $lang['form.doesnt_match_length_min'] = 'The entered value must be at least :lower_bound characters';

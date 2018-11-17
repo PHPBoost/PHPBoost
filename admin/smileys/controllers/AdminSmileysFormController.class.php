@@ -83,7 +83,9 @@ class AdminSmileysFormController extends AdminController
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['upload_smiley']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img'],
+			array('authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions())))
+		));
 		
 		$this->upload_submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->upload_submit_button);
