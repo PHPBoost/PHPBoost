@@ -883,6 +883,12 @@ h4.stitle1 {
 .error 		{ background-color: #F3DFDF; border-color: #ECCDD2; }
 .success 	{ background-color: #E0F1D9; border-color: #D7EAC7; }
 
+.message-helper-button.error        { background-color: #BA4B49; }
+.message-helper-button.notice       { background-color: #888888; }
+.message-helper-button.warning      { background-color: #C19954; }
+.message-helper-button.success      { background-color: #478948; }
+.message-helper-button.question     { background-color: #3B88AE; }
+
 /* -- AdminMenu ModalMenu CssMenu
     #   #  #####  #   #  #   #  #####
     ## ##  #      ##  #  #   #  #

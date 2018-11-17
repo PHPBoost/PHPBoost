@@ -512,11 +512,10 @@ div.message-helper-small {
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 3;
-	top: 0.456em;
+	top: 0.618em;
 }
 
 .floating-message-container .message-helper {
-	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 	overflow: visible;
 	opacity: 0;
 }
@@ -533,16 +532,26 @@ div.message-helper-small {
 	}
 }
 
-.floating-message-container .fa-close-message {
+.floating-message-container .message-helper-button {
 	position: absolute;
 	z-index: 1;
-	top: -6px;
-	right: -6px;
-	font-size: 1.5em;
+	top: -10px;
+	right: -10px;
+	height: 1.482em;
+	width: 1.482em;
+	border-radius: 100em;
+	text-align: center;
+}
+
+.floating-message-container .fa-close-message {
+	display: inline-block;
+	color: white;
+	font-size: 1em;
+	margin: auto;
 }
 
 .floating-message-container .fa-close-message:before {
-	content: "\f057";
+	content: "\f00d";
 }
 
 .floating-message-container .message-helper > a {

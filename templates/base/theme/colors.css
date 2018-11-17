@@ -542,6 +542,15 @@ td.calendar-week 		{ border-color: #81A4C8; }
 .floating-message-container .modo-only      { background-color: rgba(223, 216, 234, 1); }
 .floating-message-container .admin-only     { background-color: rgba(223, 216, 234, 1); }
 
+.message-helper-button.error        { background-color: #E0464A; }
+.message-helper-button.notice       { background-color: #7f7f7f; }
+.message-helper-button.warning      { background-color: #E27B47; }
+.message-helper-button.success      { background-color: #40b73a; }
+.message-helper-button.question     { background-color: #1E5083; }
+.message-helper-button.member-only  { background-color: #9F86CD; }
+.message-helper-button.modo-only    { background-color: #7657AE; }
+.message-helper-button.admin-only   { background-color: #5D3B9A; }
+
 .formatter-content {
 	background-color: #f0f1f5;
 	border-color: #cdd1df;

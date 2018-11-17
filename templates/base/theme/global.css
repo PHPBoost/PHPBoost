@@ -559,7 +559,7 @@ li.small-block .fa-stack {
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 3;
-	top: 0.456em;
+	top: 0.618em;
 }
 
 .floating-message-container .message-helper {
@@ -579,16 +579,27 @@ li.small-block .fa-stack {
 	}
 }
 
-.floating-message-container .fa-close-message {
+.floating-message-container .message-helper-button {
 	position: absolute;
 	z-index: 1;
-	top: -6px;
-	right: -6px;
-	font-size: 1.5em;
+	top: -13px;
+	right: -12px;
+	height: 1.482em;
+	width: 1.482em;
+	border-radius: 100em;
+	text-align: center;
+	padding-top: 0.1618em;
+}
+
+.floating-message-container .fa-close-message {
+	display: inline-block;
+	color: white;
+	font-size: 1em;
+	margin: auto;
 }
 
 .floating-message-container .fa-close-message:before {
-	content: "\f057";
+	content: "\f00d";
 }
 
 .floating-message-container .message-helper > a {
