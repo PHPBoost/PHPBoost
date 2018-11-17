@@ -86,7 +86,7 @@ class MessageHelper
 				$image      = 'error_' . $type . '_' . self::GROUP;
 				$group_only = true;
 		}
-		
+
 		$tpl->put_all(array(
 			'ID'                => KeyGenerator::generate_key(4),
 			'MESSAGE_CSS_CLASS' => $css_class . ($display_small ? ' message-helper-small' : ''),

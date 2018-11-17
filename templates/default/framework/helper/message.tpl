@@ -1,6 +1,8 @@
 # IF C_FLOATING #
 <div id="message-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}" style="display: none;">
-	<a id="message-helper-button-{ID}" class="{MESSAGE_CSS_CLASS}" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message"></i></a>
+	# IF NOT C_TIMEOUT #
+	<a id="message-helper-button-{ID}" class="message-helper-button {MESSAGE_CSS_CLASS}" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message"></i></a>
+	# ENDIF #
 	{MESSAGE_CONTENT}
 </div>
 <script>
