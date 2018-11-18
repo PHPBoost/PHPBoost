@@ -35,4 +35,7 @@ $lang['form.question'] = 'Question';
 $lang['form.answers'] = 'Answer(s)';
 $lang['form.change_question'] = 'Change question';
 $lang['config.title'] = 'Questions configuration';
+
+$lang['config.delete'] = 'Delete a question';
+$lang['config.add'] = 'Add a question';
 ?>
