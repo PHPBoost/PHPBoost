@@ -1,7 +1,8 @@
 # INCLUDE MAINTAIN #
+<a href="#global" aria-label="${LangLoader::get_message('go.to.content', 'main')}"></a>
 <header id="header">
 	<div id="top-header">
-		<div id="site-infos">
+		<div id="site-infos" role="banner">
 			<div id="site-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
 			<div id="site-name-container">
 				<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
@@ -43,7 +44,7 @@
 	<div class="spacer"></div>
 </header>
 
-<div id="global">
+<div id="global" role="main">
 	# IF C_MENUS_LEFT_CONTENT #
 	<aside id="menu-left">
 		# START menus_left #
@@ -123,7 +124,7 @@
 	</div>
 	# ENDIF #
 
-	<div class="footer-infos">
+	<div role="contentinfo" class="footer-infos">
 		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="http://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
 		# IF C_DISPLAY_BENCH #
 		<span class="footer-infos-separator"> | </span>

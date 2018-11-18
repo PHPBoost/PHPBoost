@@ -29,7 +29,7 @@
  ####################################################
 #                      French                      #
  ####################################################
- 
+
  // Admin panel
 $LANG['index.support'] = 'Support';
 $LANG['index.faq'] = 'F.A.Q.';
@@ -94,6 +94,9 @@ $LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre pat
 $LANG['maintain_delay'] = 'Délai estimé avant réouverture du site :';
 $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';
+
+// Accessibility
+$LANG['go.to.content'] = 'Aller au contenu';
 
 //Commun
 $LANG['user'] = 'Utilisateur';

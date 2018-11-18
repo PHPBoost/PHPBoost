@@ -30,7 +30,7 @@
  ####################################################
 #                      English                     #
  ####################################################
- 
+
  // Admin panel
 $LANG['index.support'] = 'Support';
 $LANG['index.faq'] = 'F.A.Q.';
@@ -95,6 +95,9 @@ $LANG['maintain'] = 'The website is under maintenance.';
 $LANG['maintain_delay'] = 'Time remaining:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
+
+// Accessibility
+$LANG['go.to.content'] = 'Go to content';
 
 //All
 $LANG['user'] = 'User';
