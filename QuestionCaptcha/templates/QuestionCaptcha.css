@@ -11,6 +11,13 @@ textarea {
 
 textarea.answers {
 	margin-left: 0.309em;
+	width: 37%;
+}
+
+@media (min-width: 769px) {
+	textarea.answers {
+		width: 47%;
+	}
 }
 
 .fa-delete {
