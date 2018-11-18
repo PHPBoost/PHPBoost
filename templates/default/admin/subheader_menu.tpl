@@ -5,11 +5,11 @@
 			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
-					<a class="float-left" href="#openmodule-{L_MODULES}" title="{L_MODULES}">
+					<a href="#openmodule-{L_MODULES}" title="{L_MODULES}">
 						<i class="fa fa-arrow-left"></i>
 						{L_MODULES}
 					</a>
-					<a class="float-right" href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
+					<a href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
 						{L_TOOLS}
 						<i class="fa fa-arrow-right"></i>
 					</a>
@@ -58,18 +58,18 @@
 					# ENDIF #
 				</ul>
 			</div>
-			
+
 		</li>
 		<li class="admin-li">
 			<a href="#openmodal-{L_TOOLS}" title="{L_TOOLS}"><i class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
 			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
-					<a class="float-left" href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
+					<a href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
 						<i class="fa fa-arrow-left"></i>
 						{L_ADMINISTRATION}
 					</a>
-					<a class="float-right" href="#openmodal-{L_USER}" title="{L_USER}">
+					<a href="#openmodal-{L_USER}" title="{L_USER}">
 						{L_USER}
 						<i class="fa fa-arrow-right"></i>
 					</a>
@@ -111,11 +111,11 @@
 			<div id="openmodal-{L_USER}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
-					<a class="float-left" href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
+					<a href="#openmodal-{L_TOOLS}" title="{L_TOOLS}">
 						<i class="fa fa-arrow-left"></i>
 						{L_TOOLS}
 					</a>
-					<a class="float-right" href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
+					<a href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
 						{L_CONTENT}
 						<i class="fa fa-arrow-right"></i>
 					</a>
@@ -157,11 +157,11 @@
 			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
-					<a class="float-left" href="#openmodal-{L_USER}" title="{L_USER}">
+					<a href="#openmodal-{L_USER}" title="{L_USER}">
 						<i class="fa fa-arrow-left"></i>
 						{L_USER}
 					</a>
-					<a class="float-right" href="#openmodule-{L_MODULES}" title="{L_MODULES}">
+					<a href="#openmodule-{L_MODULES}" title="{L_MODULES}">
 						{L_MODULES}
 						<i class="fa fa-arrow-right"></i>
 					</a>
@@ -213,11 +213,11 @@
 			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">
 				<a href="#closemodal" title="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
 				<div class="next-menu">
-					<a class="float-left" href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
+					<a href="#openmodal-{L_CONTENT}" title="{L_CONTENT}">
 						<i class="fa fa-arrow-left"></i>
 						{L_CONTENT}
 					</a>
-					<a class="float-right" href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
+					<a href="#openmodal-{L_ADMINISTRATION}" title="{L_ADMINISTRATION}">
 						{L_ADMINISTRATION}
 						<i class="fa fa-arrow-right"></i>
 					</a>
@@ -225,7 +225,7 @@
 				<ul class="submenu">
 					<li>
 						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES}"><i class="fa fa-fw fa-cube"></i>{L_MODULES}</a>
-						<ul class="level-2"> 
+						<ul class="level-2">
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MANAGEMENT}"><i class="fa fa-fw fa-cog"></i>{L_MANAGEMENT}</a></li>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::add_module())}" title="{L_ADD}"><i class="fa fa-fw fa-plus"></i>{L_ADD}</a></li>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::update_module())}" title="{L_UPDATES}"><i class="fa fa-fw fa-level-up-alt"></i>{L_UPDATES}</a></li>

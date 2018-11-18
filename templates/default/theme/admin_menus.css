@@ -173,6 +173,18 @@ ul.submenu li {
 	}
 }
 
+.cssmenu-modal .next-menu {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	flex-direction: row;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
 .cssmenu-modal .submenu,
 .cssmenu-modal .next-menu,
 .cssmenu-modal a.close i{
