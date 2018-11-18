@@ -97,6 +97,7 @@ $LANG['loading'] = 'Chargement';
 
 // Accessibility
 $LANG['go.to.content'] = 'Aller au contenu';
+$LANG['new.window'] = 'Nouvelle fenêtre';
 
 //Commun
 $LANG['user'] = 'Utilisateur';

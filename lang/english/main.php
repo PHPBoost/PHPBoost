@@ -98,6 +98,7 @@ $LANG['loading'] = 'Loading';
 
 // Accessibility
 $LANG['go.to.content'] = 'Go to content';
+$LANG['new.window'] = 'New window';
 
 //All
 $LANG['user'] = 'User';

@@ -12,7 +12,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,7 +31,7 @@ function textarea_resize(id, px, type)
 	{
 		var current_height = parseInt(textarea.style.height) ? parseInt(textarea.style.height) : 300;
 		var new_height = current_height + px;
-		
+
 		if( new_height > 40 )
 			textarea.style.height = new_height + "px";
 	}
@@ -39,11 +39,11 @@ function textarea_resize(id, px, type)
 	{
 		var current_width = parseInt(textarea.style.width) ? parseInt(textarea.style.width) : 150;
 		var new_width = current_width + px;
-		
+
 		if( new_width > 40 )
 			textarea.style.width = new_width + "px";
 	}
-	
+
 	return false;
 }
 
@@ -52,12 +52,12 @@ function simple_insert(open_balise, close_balise, field)
 {
 	var textarea = document.getElementById(field);
 	var scroll = textarea.scrollTop;
-	
+
 	if( close_balise != "" && close_balise != "smile" )
 		textarea.value += '[' + open_balise + '][/' + close_balise + ']';
 	else if( close_balise == "smile" )
 		textarea.value += ' ' + open_balise + ' ';
-		
+
 	textarea.focus();
 	textarea.scrollTop = scroll;
 	return;
@@ -70,7 +70,7 @@ function netscape_sel(target, open_balise, close_balise)
 	var sel_start = target.selectionStart;
 	var sel_end = target.selectionEnd;
 	var scroll = target.scrollTop; //Position verticale.
-	
+
 	if( sel_end == 1 || sel_end == 2 )
 	{
 		sel_end = sel_length;
@@ -88,8 +88,8 @@ function netscape_sel(target, open_balise, close_balise)
 	}
 	else if( close_balise == "smile" )
 	{
-		target.value = string_start + selection + ' ' + open_balise + ' ' + string_end;	
-		target.setSelectionRange(string_start.length + open_balise.length + 2, target.value.length - string_end.length);	
+		target.value = string_start + selection + ' ' + open_balise + ' ' + string_end;
+		target.setSelectionRange(string_start.length + open_balise.length + 2, target.value.length - string_end.length);
 		target.focus();
 	}
 	else
@@ -98,7 +98,7 @@ function netscape_sel(target, open_balise, close_balise)
 		target.setSelectionRange(string_start.length + open_balise.length, target.value.length - string_end.length - close_balise.length);
 		target.focus();
 	}
-	
+
 	target.scrollTop = scroll; //Remet à la bonne position le textarea.
 
 	return;
@@ -109,7 +109,7 @@ function ie_sel(target, open_balise, close_balise)
 {
 	selText = false;
 	var scroll = target.scrollTop; //Position verticale.
-	
+
 	selection = document.selection.createRange().text; // Sélection
 
 	if( close_balise != "" && selection == "" && close_balise != "smile" )
@@ -117,11 +117,11 @@ function ie_sel(target, open_balise, close_balise)
 	else if( close_balise == "smile" )
 		document.selection.createRange().text = selection + open_balise + ' ';
 	else
-		document.selection.createRange().text = open_balise + selection + close_balise;		
-	
+		document.selection.createRange().text = open_balise + selection + close_balise;
+
 	target.scrollTop = scroll; //Remet à la bonne position le textarea.
 	selText = '';
-	
+
 	return;
 }
 
@@ -129,13 +129,13 @@ function ie_sel(target, open_balise, close_balise)
 function url_encode_rewrite(link_name)
 {
 	link_name = link_name.toLowerCase(link_name);
-	
+
 	var chars_special = new Array(/ /g, /é/g, /è/g, /ê/g, /à/g, /â/g, /ù/g, /ü/g, /û/g, /ï/g, /î/g, /ô/g, /ç/g);
 	var chars_replace = new Array("-", "e", "e", "e", "a", "a", "u", "u", "u", "i", "i", "o", "c");
 	var nbr_chars = chars_special.length;
 	for( var i = 0; i < nbr_chars; i++)
 	{
-		link_name = link_name.replace(chars_special[i], chars_replace[i]); 
+		link_name = link_name.replace(chars_special[i], chars_replace[i]);
 	}
 
 	link_name = link_name.replace(/([^a-z0-9]|[\s])/g, '-');
@@ -165,27 +165,27 @@ function insertbbcode(open_balise, close_balise, field)
 function insertbbcode_select(id_select, close_balise, field)
 {
 	var select = document.getElementById(id_select + field);
-	
+
 	if( select.value != '' )
 		insertbbcode('[' + id_select + '=' + select.value + ']', close_balise, field);
-	
+
 	//On remet la valeur par défaut.
 	select.options[0].selected = true;
-	
+
 	return;
-}	
+}
 
 //Insertion dans le champs des codes de type select.
 function insertbbcode_select2(id_select, field)
 {
 	var select = document.getElementById(id_select + field);
-	
+
 	if( select.value != '' )
 		insertbbcode('[' + select.value + ']', '[/' + select.value + ']', field);
-	
+
 	//On remet la valeur par défaut.
 	select.options[0].selected = true;
-	
+
 	return;
 }
 
@@ -210,7 +210,7 @@ function show_bbcode_div(divID)
 		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 		jQuery( "." + divID).each(function(){
 			jQuery( "." + divID).fadeIn(300);
-		});		
+		});
 	}
 	else
 	{
@@ -239,7 +239,7 @@ function bbcode_color(divID, field, type)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td><a href="" style="background:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
+		contents += '<td><a href="" aria-label="' + color[i] + '" title="' + color[i] + '" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
 	}
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
@@ -250,13 +250,13 @@ function bbcode_table(field, head_name)
 	var lines = document.getElementById('bb-lines' + field).value;
 	var head = document.getElementById('bb-head' + field).checked;
 	var code = '';
-	
+
 	if( cols >= 0 && lines >= 0 )
 	{
 		var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
 		var pointor = head ? (59 + colspan.length) : 22;
 		code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']'+ head_name +'[/head]\n\t[/row]\n' : '[table]\n';
-		
+
 		for(var i = 0; i < lines; i++)
 		{
 			code += '\t[row]\n';
@@ -265,7 +265,7 @@ function bbcode_table(field, head_name)
 			code += '\t[/row]\n';
 		}
 		code += '[/table]';
-		
+
 		insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
 	}
 }
@@ -276,9 +276,9 @@ function bbcode_list(field)
 	var ordered_list = document.getElementById('bb_ordered_list' + field).checked;
 	if( elements <= 0 )
 		elements = 1;
-	
+
 	var pointor = ordered_list ? 19 : 11;
-	
+
 	code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
 	for(var j = 0; j < elements; j++)
 		code += '\t[*]\n';
@@ -324,7 +324,7 @@ function bbcode_anchor(field, prompt_text)
 function bbcode_abbr(field, prompt_text)
 {
 	var desc = prompt(prompt_text, '');
-	if(desc != '' && desc != null) 
+	if(desc != '' && desc != null)
 		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
 	else
 		insertbbcode('[abbr]', '[/abbr]', field);
@@ -333,7 +333,7 @@ function bbcode_abbr(field, prompt_text)
 function bbcode_acronym(field, prompt_text)
 {
 	var desc = prompt(prompt_text, '');
-	if(desc != '' && desc != null) 
+	if(desc != '' && desc != null)
 		insertbbcode('[acronym=' + desc + ']', '[/acronym]', field);
 	else
 		insertbbcode('[acronym]', '[/acronym]', field);
