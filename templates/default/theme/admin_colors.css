@@ -304,6 +304,7 @@ article .admin-element-menu-title,
 }
 
 .admin-element-auth i { color: #366493; }
+.default-element .admin-element-auth i { color: #AAAAAA; }
 
 .advanced-auth-input button {
 	background-color: #DEDEDE;
