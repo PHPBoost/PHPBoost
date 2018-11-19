@@ -44,7 +44,7 @@ $lang['member-management'] = 'Gestion du membre';
 $lang['punishment-management'] = 'Gestion des sanctions';
 
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
-$lang['external-auth.account-exists'] = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion veuillez vous connecter sur le site et vous rendre dans l\'édition de votre profil';
+$lang['external-auth.account-exists'] = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion, veuillez vous connecter et vous rendre dans l\'édition de votre profil';
 $lang['external-auth.email-not-found'] = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 $lang['external-auth.user-data-not-found'] = 'Les informations de votre compte n\'ont pas pu être récupérées, votre compte ne peut pas être créé.';
 
@@ -168,7 +168,7 @@ $lang['registration.validation.mail.explain'] = 'Vous devrez activer votre compt
 $lang['registration.validation.administrator.explain'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
 
 $lang['registration.confirm.success'] = 'Votre compte a été validé avec succès';
-$lang['registration.confirm.error'] = 'Un problème est survenue lors de votre activation, vérifier que votre clé est bien valide';
+$lang['registration.confirm.error'] = 'Un problème est survenu lors de votre activation, vérifiez que votre clé est bien valide';
 
 $lang['registration.success.administrator-validation'] = 'Vous vous êtes enregistré avec succès. Cependant un administrateur doit valider votre compte avant de pouvoir l\'utiliser';
 $lang['registration.success.mail-validation'] = 'Vous vous êtes enregistré avec succès. Cependant il vous faudra cliquer sur le lien d\'activation contenu dans le mail qui vous a été envoyé';

@@ -104,7 +104,7 @@ $lang['fields.action.add_field'] = 'Ajouter un champ';
 //Type 
 $lang['type.short-text'] = 'Texte court (max 255 caractères)';
 $lang['type.long-text'] = 'Texte long (illimité)';
-$lang['type.half-text'] = 'Text semi long';
+$lang['type.half-text'] = 'Texte semi long';
 $lang['type.simple-select'] = 'Sélection unique (parmi plusieurs valeurs)';
 $lang['type.multiple-select'] = 'Sélection multiple (parmi plusieurs valeurs)';
 $lang['type.simple-check'] = 'Choix unique (parmi plusieurs valeurs)';
@@ -125,7 +125,7 @@ $lang['field.name'] = 'Nom';
 $lang['field.description'] = 'Description';
 $lang['field.type'] = 'Type de champ';
 $lang['field.regex'] = 'Contrôle de la forme de l\'entrée';
-$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).';
+$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la saisie faite par l\'utilisateur. Par exemple, s\'il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).';
 $lang['field.predefined-regex'] = 'Forme prédéfinie';
 $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';

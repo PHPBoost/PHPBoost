@@ -36,13 +36,13 @@ $lang['content.config.default-formatting-language'] = 'Langage de formatage du c
 $lang['content.config.default-formatting-language-explain'] = 'Chaque utilisateur pourra choisir';
 $lang['content.config.html-language'] = 'Langage HTML';
 $lang['content.config.html-language-use-authorization'] = 'Niveau d\'autorisation pour insérer du langage HTML';
-$lang['content.config.html-language-use-authorization-explain'] = 'Attention : le code HTML peut contenir du code Javascript qui peut constituer une source de faille de sécurité si quelqu\'un y insère un code malveillant. Veillez donc à n\'autoriser seulement les personnes de confiance à insérer du HTML.';
+$lang['content.config.html-language-use-authorization-explain'] = 'Attention : le code HTML peut contenir du code Javascript susceptible de constituer une source de faille de sécurité si quelqu\'un y insère un code malveillant. Veillez donc à autoriser seulement les personnes de confiance à insérer du HTML.';
 $lang['content.config.post-management'] = 'Gestion des posts';
 $lang['content.config.max-pm-number'] = 'Nombre maximum de messages privés';
 $lang['content.config.max-pm-number-explain'] = 'Illimité pour administrateurs et modérateurs';
 $lang['content.config.anti-flood-enabled'] = 'Anti-flood';
 $lang['content.config.anti-flood-enabled-explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
-$lang['content.config.delay-flood'] = 'Interval minimum de temps entre les messages';
+$lang['content.config.delay-flood'] = 'Intervalle minimum de temps entre les messages';
 $lang['content.config.delay-flood-explain'] = 'En secondes. 7 secondes par défaut.';
 $lang['content.config.content-sharing-enabled'] = 'Afficher les liens de partage sur les pages de contenu';
 $lang['content.config.content-sharing-email-enabled'] = 'Afficher le partage par Email';
@@ -56,7 +56,7 @@ $lang['content.config.site-default-picture-url'] = 'Image par défaut du site po
 
 $lang['content.config.captcha'] = 'Captcha';
 $lang['content.config.captcha-used'] = 'Code de vérification utilisé sur le site';
-$lang['content.config.captcha-used-explain'] = 'Le code de vérification vous permet de vous prémunir contre le spam sur votre site.';
+$lang['content.config.captcha-used-explain'] = 'Le code de vérification permet de vous prémunir contre le spam sur votre site.';
 
 $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
@@ -80,9 +80,9 @@ $lang['comments.config.approbation.auto'] = 'Automatiquement';
 $lang['comments.config.approbation.moderator'] = 'Modérateur';
 $lang['comments.config.approbation.administrator'] = 'Administrateur';
 
-$lang['content.config.new-content'] = 'Activer le tag sur les nouveaux élements';
+$lang['content.config.new-content'] = 'Activer le tag sur les nouveaux éléments';
 $lang['content.config.new-content-config'] = 'Gestion du tag "new-content"';
-$lang['content.config.new-content-explain'] = 'Cette option permet d\'identifier les derniers élements ajoutés';
+$lang['content.config.new-content-explain'] = 'Cette option permet d\'identifier les derniers éléments ajoutés';
 $lang['content.config.new-content-duration'] = 'Durée d\'affichage du tag';
 $lang['content.config.new-content-duration-explain'] = 'En jours. 5 jours par défaut.';
 

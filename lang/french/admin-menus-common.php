@@ -32,7 +32,7 @@
 $lang = array(
 	'filters' => 'Filtres',
 	'add_filter' => 'Ajouter un filtre',
-	'links_menus_filters_explain' => "Les filtres permettent de définir sur quelles pages doit apparaitre ce menu.
+	'links_menus_filters_explain' => "Les filtres permettent de définir sur quelles pages doit apparaître ce menu.
 		Ils peuvent être définis sur un module complet, ou des pages de ce module. A noter que par défaut le menu est visible partout"
 );
 ?>

@@ -33,14 +33,14 @@ $lang = array();
 $lang['cache'] = 'Cache';
 $lang['clear_cache'] = 'Vider';
 $lang['explain_data_cache'] = '<p>PHPBoost met en cache un certain nombre d\'informations, ce qui permet d\'améliorer considérablement ses performances.
-Toutes les données manipulées par PHPBoost sont stockées en base de données mais chaque accès à la base de données coûte cher en temps. Les données qui sont accédées de façon régulière (notamment la configuration) sont ainsi conservées par le serveur
+Toutes les données manipulées par PHPBoost sont stockées en base de données mais chaque accès à la base de données coûte cher en ressource. Les données auxquelles on accéde de façon régulière (notamment la configuration) sont ainsi conservées par le serveur
 de façon à ne pas avoir à les demander à la base de données.</p>
 <p>En contre partie, cela signifie que certaines données sont présentes à deux endroits : dans la base de données et sur le serveur web. Si vous modifiez des données dans la base de données, la modification ne se fera peut-être pas immédiatement car le fichier de cache contient encore les anciennes données.
 Dans ce cas, il faut vider le cache à la main via cette page de configuration de façon à ce que PHPBoost soit obligé de générer de nouveaux fichiers de cache contenant les données à jour.
 L\'emplacement de référence des données est la base de données. Si vous modifiez un fichier cache, dès qu\'il sera invalidé car la base de données aura changé, les modifications seront perdues.</p>';
 $lang['syndication_cache'] = 'Cache syndication';
 $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des flux de données (RSS ou ATOM) qui lui sont demandés. En pratique, la première fois qu\'on lui demande un flux, il va le chercher en base de données, l\'enregistre sur le serveur web et n\'accède plus à la base de données les fois suivantes pour
-éviter des requêtes dans la base de données qui ralentissent considérablement l\'affichage des pages.</p>
+éviter des requêtes qui ralentissent considérablement l\'affichage des pages.</p>
 <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache de façon à forcer PHPBoost à rechercher les données dans la base de données. C\'est particulièrement utile si vous avez modifié certaines choses manuellement dans la base de données. En effet, elles ne seront pas prises en compte car le cache aura toujours les valeurs précédentes.</p>';
 $lang['cache_configuration'] = 'Configuration du cache';
 $lang['php_cache'] = 'Accélérateur PHP';
