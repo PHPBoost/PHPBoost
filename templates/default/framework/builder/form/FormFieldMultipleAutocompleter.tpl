@@ -9,16 +9,16 @@ var FormFieldMultipleAutocompleter = function(){
 FormFieldMultipleAutocompleter.prototype.add_field = function () {
 	if (this.integer <= this.max_input) {
 		var id = this.id_input + '_' + this.integer;
-		
+
 		jQuery('<div/>', {'id': id, 'class': 'form-autocompleter-container'}).appendTo('#input_fields_' + this.id_input);
-		
+
 		jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
 		jQuery('#' + id).append(' ');
-		
+
 		this.load_autocompleter('field_' + id);
-		
-		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');'}).html('<i class="fa fa-delete"></i>').appendTo('#' + id);
-		
+
+		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'aria-label' : ${escapejs(@delete)}}).html('<i class="fa fa-delete" aria-hidden title="{@delete}"></i>').appendTo('#' + id);
+
 		this.integer++;
 	}
 	if (this.integer == this.max_input) {
@@ -50,8 +50,8 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="form-autocompleter-container">
 		<input type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
-		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@delete}"><i class="fa fa-delete" aria-hidden title="{@delete}"></i></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="form-autocompleter-more-value" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" id="add-${escape(HTML_ID)}" class="form-autocompleter-more-value" aria-label="{@add}"><i class="fa fa-plus" aria-hidden title="{@add}"></i></a>

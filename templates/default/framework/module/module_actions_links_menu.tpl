@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<nav id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
+<nav role="navigation" id="cssmenu-module-{ID}" class="cssmenu cssmenu-right cssmenu-actionslinks">
 	<ul class="level-0 hidden">
 		# START element #
 			# INCLUDE element.ELEMENT #

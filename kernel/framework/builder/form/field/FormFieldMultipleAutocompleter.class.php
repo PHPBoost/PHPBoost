@@ -36,34 +36,35 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 	private $method = 'post';
 	private $file;
 	private $name_parameter = 'value';
-	
+
 	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
-    
+
 	public function display()
     {
         $template = $this->get_template_to_use();
 
 		$tpl = new FileTemplate('framework/builder/form/FormFieldMultipleAutocompleter.tpl');
+		$tpl->add_lang(LangLoader::get('common'));
         $this->assign_common_template_variables($template);
 
     	if (empty($this->file))
 		{
 			throw new Exception('Add file options containing file url');
 		}
-		
+
         $i = 0;
    		foreach ($this->get_value() as $value)
-		{			
+		{
 	        $tpl->assign_block_vars('fieldelements', array(
 				'ID' => $i,
 	        	'VALUE' => $value
 	        ));
 	        $i++;
 		}
-		
+
 		if ($i == 0)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
@@ -71,7 +72,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 	        	'VALUE' => ''
 	        ));
 		}
-		
+
 		 $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
@@ -84,14 +85,14 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 			'NAME_PARAMETER' =>  $this->name_parameter,
 		 	'FILE' =>  $this->file,
         ));
-        
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $tpl->render()
         ));
 
         return $template;
     }
-    
+
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
@@ -106,7 +107,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 		}
 		$this->set_value($values);
     }
-    
+
 	protected function compute_options(array &$field_options)
     {
         foreach($field_options as $attribute => $value)
@@ -138,7 +139,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
         }
         parent::compute_options($field_options);
     }
-    
+
  	protected function get_default_template()
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
