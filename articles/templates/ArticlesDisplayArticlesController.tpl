@@ -1,7 +1,7 @@
 <section id="module-articles">
 	<header>
-		<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-		{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+		<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+		{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
 	</header>
 	<div class="elements-container">
 		# INCLUDE NOT_VISIBLE_MESSAGE #
@@ -10,16 +10,16 @@
 				<h1><span itemprop="name">{TITLE}</span></h1>
 				<span class="actions">
 					# IF C_EDIT #
-					<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+					<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
 					# ENDIF #
 					# IF C_DELETE #
-					<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+					<a href="{U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 					# ENDIF #
-					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print"></i></a>
+					<a href="{U_PRINT_ARTICLE}" aria-label="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print" aria-hidden="true" title="${LangLoader::get_message('printable_version', 'main')}"></i></a>
 				</span>
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
+					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}" title="${LangLoader::get_message('author', 'common')}"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
@@ -59,7 +59,7 @@
 					<div itemprop="text">{CONTENTS}</div>
 					<div class="spacer"></div>
 					${ContentSharingActionsMenuService::display()}
-				
+
 				<hr />
 
 				# IF C_PAGINATION #
