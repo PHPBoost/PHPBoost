@@ -10,27 +10,27 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 	add : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '-' + this.integer;
-			
+
 			jQuery('<div/>', {id : 'marker-' + id, class: 'marker-container'}).appendTo('#input-fields-' + this.id_input);
-			
+
 			jQuery('<div/>', {id : 'field-' + id, class: 'map-input-container'}).appendTo('#marker-' + id);
-			
+
 			jQuery('<input/> ', {type : 'text', id : id, name : id, required : "required", placeholder : '{@form.marker.address}', class: 'marker-address-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
-			
+
 			jQuery('<input/> ', {type : 'text', id : 'name-' + id, name : 'name-' + id, placeholder : '{@form.marker.name}', class: 'marker-desc-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
-			
+
 			jQuery('<input/> ', {type : 'hidden', id : 'latitude-' + id, name : 'latitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'longitude-' + id, name : 'longitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'zoom-' + id, name : 'zoom-' + id}).appendTo('#field-' + id);
-			
-			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', title : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-delete"></i>').appendTo('#field-' + id);
-			
+
+			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-delete" aria-hidden="true" title="{@form.del.marker}"></i>').appendTo('#field-' + id);
+
 			jQuery('<div/>', {id : 'map-' + id, class: 'map-canvas'}).appendTo('#marker-' + id);
-			
+
 			jQuery('<script/>').html('jQuery("#' + id + '").on(\'blur\',function(){ var marker = jQuery("#' + id + '").geocomplete("marker"); if (jQuery("#' + id + '").val()) marker.setVisible(true); else marker.setVisible(false); }); jQuery(function(){ jQuery("#' + id + '").geocomplete({ map: "#map-' + id + '", location: [{DEFAULT_LATITUDE}, {DEFAULT_LONGITUDE}], types: ["geocode", "establishment"], markerOptions: { draggable: true, visible: false }, mapOptions: { scrollwheel: true } }); jQuery("#' + id + '").bind("geocode:dragged", function(event, latLng){ jQuery("input[name=latitude-' + id + ']").val(latLng.lat()); jQuery("input[name=longitude-' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:idle", function(event, latLng){ jQuery("input[name=latitude-' + id + ']").val(latLng.lat()); jQuery("input[name=longitude-' + id + ']").val(latLng.lng()); }); jQuery("#' + id + '").bind("geocode:zoom", function(event, value){ jQuery("input[name=zoom-' + id + ']").val(value); }); });').appendTo('#marker-' + id);
-			
+
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
@@ -58,7 +58,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
-			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="{@form.del.marker}"></i></a>
 		</div>
 		<div class="map-canvas" id="map-${escape(HTML_ID)}-{fieldelements.ID}"></div>
 		<script>
@@ -70,14 +70,14 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 			else
 				marker.setVisible(false);
 		});
-		
+
 		jQuery(function(){
 			# IF fieldelements.C_ADDRESS #
 			var address = "{fieldelements.ADDRESS}";
 			# ELSE #
 			var address = [{DEFAULT_LATITUDE}, {DEFAULT_LONGITUDE}];
 			# ENDIF #
-			
+
 			jQuery("#${escape(HTML_ID)}-{fieldelements.ID}").geocomplete({
 				map: "#map-${escape(HTML_ID)}-{fieldelements.ID}",
 				location: # IF fieldelements.C_COORDONATES #[{fieldelements.LATITUDE}, {fieldelements.LONGITUDE}]# ELSE #address# ENDIF #,
@@ -91,17 +91,17 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 					zoom: {fieldelements.ZOOM}# ENDIF #
 				}
 			});
-			
+
 			jQuery("#${escape(HTML_ID)}-{fieldelements.ID}").bind("geocode:dragged", function(event, latLng){
 				jQuery("input[name=latitude-${escape(HTML_ID)}-{fieldelements.ID}]").val(latLng.lat());
 				jQuery("input[name=longitude-${escape(HTML_ID)}-{fieldelements.ID}]").val(latLng.lng());
 			});
-			
+
 			jQuery("#${escape(HTML_ID)}-{fieldelements.ID}").bind("geocode:idle", function(event, latLng){
 				jQuery("input[name=latitude-${escape(HTML_ID)}-{fieldelements.ID}]").val(latLng.lat());
 				jQuery("input[name=longitude-${escape(HTML_ID)}-{fieldelements.ID}]").val(latLng.lng());
 			});
-			
+
 			jQuery("#${escape(HTML_ID)}-{fieldelements.ID}").bind("geocode:zoom", function(event, value){
 				jQuery("input[name=zoom-${escape(HTML_ID)}-{fieldelements.ID}]").val(value);
 			});
@@ -111,7 +111,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" title="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus"></i></a>
+<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" aria-label="{@form.add.marker}"><i class="fa fa-plus" aria-hidden="true" title="{@form.add.marker}"></i></a>
 
 # IF C_INCLUDE_API #
 <script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>

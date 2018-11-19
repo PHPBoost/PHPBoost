@@ -38,4 +38,6 @@ $lang['config.default_marker.position.description'] = 'Entrez une adresse puis d
 
 $lang['form.marker.address'] = 'Adresse';
 $lang['form.marker.name'] = 'Description du marqueur';
+$lang['form.add.marker'] = 'Ajouter un marqueur';
+$lang['form.del.marker'] = 'Supprimer le marqueur';
 ?>
