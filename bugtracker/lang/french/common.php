@@ -6,14 +6,14 @@
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -60,9 +60,13 @@ $lang['actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce fi
 
 //Titres
 $lang['titles.add'] = 'Ouverture d\'un ticket';
-$lang['titles.add_version'] = 'Ajout d\'une nouvelle version';
+$lang['titles.add_version'] = 'Ajouter une nouvelle version';
 $lang['titles.add_type'] = 'Ajouter un nouveau type de ticket';
 $lang['titles.add_category'] = 'Ajouter une nouvelle catégorie';
+$lang['titles.del_version'] = 'Supprimer la version';
+$lang['titles.del_type'] = 'Supprimer le type de ticket';
+$lang['titles.del_category'] = 'Supprimer la catégorie';
+$lang['titles.calendar'] = 'Ouvrir le sélecteur de date';
 $lang['titles.edit'] = 'Edition du ticket';
 $lang['titles.change_status'] = 'Changement d\'état du ticket';
 $lang['titles.delete'] = 'Suppression du ticket';

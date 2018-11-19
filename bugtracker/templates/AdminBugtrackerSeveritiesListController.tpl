@@ -17,7 +17,7 @@
 		<tr>
 			<td>
 				<div class="form-field-radio">
-					<input id="default_severity{severities.ID}" type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<input aria-label="{severities.NAME}" id="default_severity{severities.ID}" type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_severity{severities.ID}"></label>
 				</div>
 			</td>
@@ -34,7 +34,7 @@
 	<tfoot>
 	<tr>
 		<td colspan="3">
-			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
+			<a href="{LINK_DELETE_DEFAULT}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
 		</td>
 	</tr>
 	</tfoot>

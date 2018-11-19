@@ -26,7 +26,7 @@ BugtrackerFormFieldCategories.prototype = {
 
 			jQuery('<td/>', {id : 'td3_' + id, 'data-th' : ${escapejs(LangLoader::get_message('delete', 'common'))}}).appendTo('#tr_' + id);
 
-			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldCategories.delete_category(' + id + ');return false;', title : ${escapejs(LangLoader::get_message('delete', 'common'))}}).html('<i class="fa fa-delete"></i>').appendTo('#td3_' + id);
+			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldCategories.delete_category(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_category)}}).html('<i class="fa fa-delete" aria-hidden title="${@titles.del_category}"></i>').appendTo('#td3_' + id);
 
 			this.integer++;
 		}
@@ -77,7 +77,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		<tr>
 			<td>
 				<div id="categories_radio_{categories.ID}" class="form-field-radio">
-					<input id="default_category" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
+					<input aria-label="{categories.NAME}" id="default_category{categories.ID}" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
 					<label for="default_category{categories.ID}"></label>
 				</div>
 			</td>
@@ -85,7 +85,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<input type="text" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
-				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+				<a href="{categories.LINK_DELETE}" aria-label="${@titles.del_category}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden title="${@titles.del_category}"></i></a>
 			</td>
 		</tr>
 		# END categories #
@@ -93,10 +93,10 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 	<tfoot>
 		<tr>
 			<td>
-				<a href="" onclick="BugtrackerFormFieldCategories.add_category();return false;" title="{@titles.add_category}" id="add-category"><i class="fa fa-plus"></i></a>
+				<a href="" onclick="BugtrackerFormFieldCategories.add_category();return false;" aria-label="{@titles.add_category}" id="add-category"><i class="fa fa-plus" aria-hidden title="{@titles.add_category}"></i></a>
 			</td>
 			<td colspan="2" class="right">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</td>
 		</tr>
 	</tfoot>

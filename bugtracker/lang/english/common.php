@@ -6,14 +6,14 @@
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : j1.seth@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,7 +28,7 @@
 ####################################################
 # English                                          #
 ####################################################
- 
+
 //Module title
 $lang['module_title'] = 'Bugtracker';
 
@@ -63,6 +63,10 @@ $lang['titles.add'] = 'Opening ticket';
 $lang['titles.add_version'] = 'Add a new version';
 $lang['titles.add_type'] = 'Add a new ticket type';
 $lang['titles.add_category'] = 'Add a new category';
+$lang['titles.del_version'] = 'Delete the version';
+$lang['titles.del_type'] = 'Delete the type of ticket';
+$lang['titles.del_category'] = 'Delete the category';
+$lang['titles.calendar'] = 'Open the calendar selector';
 $lang['titles.edit'] = 'Ticket edition';
 $lang['titles.change_status'] = 'Status modification of ticket';
 $lang['titles.delete'] = 'Ticket suppression';
