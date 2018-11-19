@@ -42,7 +42,7 @@ var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<textarea name="field_label_${escape(HTML_ID)}_{fieldelements.ID}" id="field_label_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.question}">{fieldelements.LABEL}</textarea>
-		<textarea name="field_answers_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answers_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.answers}" class="answers"></textarea>{fieldelements.ANSWERS}</textarea>
+		<textarea name="field_answers_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answers_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.answers}" class="answers">{fieldelements.ANSWERS}</textarea>
 
 		# IF fieldelements.C_DELETE #
 			<a href="javascript:QuestionCaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@config.delete}" title="{@config.delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
@@ -51,4 +51,4 @@ var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:QuestionCaptchaFormFieldQuestions.add_question();" id="add_${escape(HTML_ID)}" class="field-question-more-value" aria-label="{@config.add}" title="{@config.add}"><i class="fa fa-plus"></i></a>
+<a href="javascript:QuestionCaptchaFormFieldQuestions.add_question();" id="add_${escape(HTML_ID)}" class="field-question-more-value" aria-label="{@config.add}"><i class="fa fa-plus" title="{@config.add}"></i></a>
