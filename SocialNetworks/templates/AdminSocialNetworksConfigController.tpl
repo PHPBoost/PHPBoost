@@ -11,7 +11,7 @@ SocialNetworks.prototype = {
 		jQuery("ul#social-networks-list").sortable({
 			handle: '.sortable-selector',
 			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
-			onDrop: function ($item, container, _super, event) { 
+			onDrop: function ($item, container, _super, event) {
 				SocialNetworks.change_reposition_pictures();
 				$item.removeClass(container.group.options.draggedClass).removeAttr("style");
 				$("body").removeClass(container.group.options.bodyClass);
@@ -89,12 +89,19 @@ jQuery(document).ready(function() {
 						{social_networks_list.NAME}
 					</div>
 					<div class="sortable-actions">
-						# IF social_networks_list.C_MOBILE_ONLY #<a href="" title="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt"></i></a># ENDIF #
-						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" title="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop"></i></a># ENDIF #
-						<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-						<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-						# IF social_networks_list.C_SHARING_CONTENT #<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}"><i # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i></a># ELSE #<i class="fa fa-ban" title="{@admin.no_sharing_content_url}"></i># ENDIF #
-						</div>
+						# IF social_networks_list.C_MOBILE_ONLY #<a href="" aria-label="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt" aria-hidden="true" title="{@admin.visible_on_mobile_only}"></i></a># ENDIF #
+						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" aria-label="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop" aria-hidden="true" title="{@admin.visible_on_desktop_only}"></i></a># ENDIF #
+						<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
+						<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+						# IF social_networks_list.C_SHARING_CONTENT #
+							<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}" aria-label="# IF social_networks_list.C_DISPLAY #{@admin.display_share_link}# ELSE #{@admin.hide_share_link}# ENDIF #">
+								<i aria-hidden="true" # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i>
+							</a>
+						# ELSE #
+							<i class="fa fa-ban" aria-hidden="true" title="{@admin.no_sharing_content_url}"></i>
+							<span class="sr-only">{@admin.no_sharing_content_url}</span>
+						# ENDIF #
+					</div>
 					<script>
 					<!--
 					jQuery(document).ready(function() {
