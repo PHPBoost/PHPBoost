@@ -81,6 +81,12 @@ if (!empty($id_get))
 	define('TITLE', $category->get_name());
 else
 	define('TITLE', $LANG['title_forum']);
+
+$description = $category->get_description();
+if (empty($description))
+	$description = StringVars::replace_vars($LANG['root_description_seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $category->get_name() : '');
+define('DESCRIPTION', $description);
+
 require_once('../kernel/header.php');
 
 //Redirection changement de catégorie.
@@ -438,7 +444,7 @@ if (!empty($id_get))
 		));
 	}
 
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/forum.php?id=' . $id_get, '/forum/forum-' . $id_get) . "%'");
 
 	//Liste des catégories.

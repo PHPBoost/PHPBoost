@@ -139,7 +139,7 @@ if (!empty($alert_post))
 
 }
 
-//Listes les utilisateurs en lignes.
+//Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '/forum/%'");
 
 $vars_tpl = array(

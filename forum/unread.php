@@ -195,7 +195,7 @@ if ($nbr_topics == 0)
 
 $l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 
-//Listes les utilisateurs en lignes.
+//Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/unread.php%'");
 
 //Liste des catégories.

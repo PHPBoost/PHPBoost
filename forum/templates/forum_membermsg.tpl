@@ -29,7 +29,7 @@
 									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 								</div>
 
-								# IF list.C_USER_RANK #<p class="center">{list.USER_RANK} : ${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
+								<p class="center"># IF list.C_USER_RANK #{list.USER_RANK}# ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #</p>
 								# IF list.C_USER_IMG_ASSOC #<p class="center"><img src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" title="${LangLoader::get_message('rank', 'main')}" /></p> # ENDIF #
 							</div>
 

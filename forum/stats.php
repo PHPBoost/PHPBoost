@@ -32,6 +32,7 @@ require_once('../forum/forum_tools.php');
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['stats'], '');
 define('TITLE', $LANG['stats']);
+define('DESCRIPTION', $LANG['stats_seo']);
 require_once('../kernel/header.php'); 
 
 $tpl = new FileTemplate('forum/forum_stats.tpl');
@@ -139,7 +140,7 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
-//Listes les utilisateurs en lignes.
+//Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '" ."/forum/stats.php'");
 
 $vars_tpl = array_merge($vars_tpl, array(

@@ -225,4 +225,11 @@ $LANG['nbr_msg'] = 'Number of messages';
 $LANG['img_assoc'] = 'Associated image';
 $LANG['require_rank_name'] = 'Please enter a name for the rank !';
 $LANG['require_nbr_msg_rank'] = 'Please enter a number of message for the rank !';
+
+//SEO
+$LANG['member_msg_seo'] = 'All member\'s forum messages';
+$LANG['root_description_seo'] = 'All site\'s :site forum catégories.';
+$LANG['show_no_answer_seo'] = 'Messages without answer list';
+$LANG['stats_seo'] = 'All forum statistics';
+$LANG['topic_title_seo'] = 'Topic :title of forum :forum';
 ?>

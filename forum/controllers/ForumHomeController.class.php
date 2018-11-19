@@ -331,7 +331,13 @@ class ForumHomeController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($LANG['title_forum']);
+		$graphical_environment->set_page_title($LANG['title_forum'], $this->category !== false && !empty($this->category) && $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : '');
+		
+		$description = $this->category !== false ? $this->category->get_description() : '';
+		if (empty($description))
+			$description = StringVars::replace_vars($LANG['root_description_seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category !== false && $this->category->get_name() && $this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
+
+		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ForumUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

@@ -224,4 +224,11 @@ $LANG['nbr_msg'] = 'Nombre de message(s)';
 $LANG['img_assoc'] = 'Image associée';
 $LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang !';
 $LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang !';
+
+//SEO
+$LANG['member_msg_seo'] = 'Tous les messages du forum d\'un membre';
+$LANG['root_description_seo'] = 'Toutes les catégories du forum du site :site.';
+$LANG['show_no_answer_seo'] = 'Liste des messages sans réponse';
+$LANG['stats_seo'] = 'Toutes les statistiques du forum';
+$LANG['topic_title_seo'] = 'Topic :title du forum :forum';
 ?>

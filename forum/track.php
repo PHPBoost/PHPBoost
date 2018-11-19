@@ -252,7 +252,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_SUBMIT'           => $LANG['submit']
 	);
 	
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/track.php%'");
 
 	//Liste des catégories.

@@ -31,6 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
+define('DESCRIPTION', $LANG['member_msg_seo']);
 require_once('../kernel/header.php');
 $request = AppContext::get_request();
 
@@ -293,7 +294,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		DispatchManager::redirect($error_controller);
 	}
 
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
 	$vars_tpl = array(

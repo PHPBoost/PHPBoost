@@ -91,7 +91,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		}
 	}
 
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array(
@@ -297,7 +297,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		));
 	}
 
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
 	$vars_tpl = array_merge($vars_tpl, array(

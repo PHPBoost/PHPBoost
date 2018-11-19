@@ -33,6 +33,7 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_no_answer'], '');
 
 define('TITLE', $LANG['show_no_answer']);
+define('DESCRIPTION', $LANG['show_no_answer_seo']);
 require_once('../kernel/header.php');
 $request = AppContext::get_request();
 
@@ -161,7 +162,7 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 	}
 	$result->dispose();
 	
-	//Listes les utilisateurs en lignes.
+	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/lastread.php%'");
 	
 	//Liste des catégories.

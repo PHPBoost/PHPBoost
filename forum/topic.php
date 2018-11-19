@@ -79,6 +79,7 @@ foreach ($categories as $id => $cat)
 $Bread_crumb->add($topic['title'], '');
 
 define('TITLE', $topic['title']);
+define('DESCRIPTION', StringVars::replace_vars($LANG['topic_title_seo'], array('title' => $topic['title'], 'forum' => ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() : ''))));
 require_once('../kernel/header.php'); 
 
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
@@ -526,7 +527,7 @@ while ( $row = $result->fetch() )
 }
 $result->dispose();
 
-//Listes les utilisateurs en lignes.
+//Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/topic.php?id=' . $id_get, '/forum/topic-' . $id_get) ."%'");
 
 //Liste des catégories.
