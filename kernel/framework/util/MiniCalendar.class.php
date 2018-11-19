@@ -48,7 +48,7 @@ class MiniCalendar
 	 * @var string The calendar id
 	 */
 	private $html_id = '';
-	
+
 	/**
 	 * @var Date The date it displays
 	 */
@@ -108,6 +108,7 @@ class MiniCalendar
 	{
 		//On crée le code selon le template
 		$template = new FileTemplate('framework/util/mini_calendar.tpl');
+		$template->add_lang(LangLoader::get('common'));
 
 		$template->put_all(array(
 			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',

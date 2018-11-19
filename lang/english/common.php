@@ -56,6 +56,8 @@ $lang['delete'] = 'Delete';
 $lang['edit'] = 'Edit';
 $lang['apply'] = 'Apply';
 
+$lang['add.files'] = 'Select files';
+
 $lang['syndication'] = 'Syndication';
 $lang['syndication.rss'] = 'RSS';
 $lang['syndication.atom'] = 'ATOM';
@@ -142,6 +144,7 @@ $lang['form.approve'] = 'Approve';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Keep in draft';
 $lang['form.approbation.now'] = 'Publish now';
+$lang['form.date.selector'] = 'Open/close the date selector';
 $lang['form.date.start'] = 'From';
 $lang['form.date.end'] = 'Until';
 $lang['form.date.creation'] = 'Creation date';

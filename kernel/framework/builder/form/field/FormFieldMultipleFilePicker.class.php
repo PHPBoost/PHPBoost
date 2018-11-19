@@ -51,6 +51,7 @@ class FormFieldMultipleFilePicker extends AbstractFormField
         $template = $this->get_template_to_use();
 
 		$tpl = new FileTemplate('framework/builder/form/FormFieldMultipleFilePicker.tpl');
+		$tpl->add_lang(LangLoader::get('common'));
         $tpl->put_all(array(
 			'MAX_FILE_SIZE' => $this->get_max_file_size(),
 			'NAME' => $this->get_html_id(),
@@ -132,7 +133,7 @@ class FormFieldMultipleFilePicker extends AbstractFormField
     {
 		$request = AppContext::get_request();
 		$array_file = array();
-		for ($i = 1; $i <= $this->max_input; $i++) 
+		for ($i = 1; $i <= $this->max_input; $i++)
 		{
 			$id = $this->get_html_id() . '_' . $i;
 			if (isset($_FILES[$id]))
