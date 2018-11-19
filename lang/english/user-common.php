@@ -243,6 +243,7 @@ $lang['seo.user.comments'] = 'All comments.';
 $lang['seo.user.comments.user'] = 'All comments of :name.';
 $lang['seo.user.messages'] = 'All messages of :name.';
 $lang['seo.user.registration'] = 'Fill all required informations to create an account.';
+$lang['seo.user.login'] = 'Login on the site to reach the protected area.';
 $lang['seo.user.forget-password'] = 'Fill all required informations to receive a link to change your password.';
 $lang['seo.user.about-cookie'] = 'All informations about cookies.';
 

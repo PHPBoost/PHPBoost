@@ -242,6 +242,7 @@ $lang['seo.user.comments'] = 'Tous les commentaires.';
 $lang['seo.user.comments.user'] = 'Tous les commentaires de l\'utilisateur :name.';
 $lang['seo.user.messages'] = 'Tous les messages de l\'utilisateur :name.';
 $lang['seo.user.registration'] = 'Renseignez toutes les informations demandées pour créer un compte.';
+$lang['seo.user.login'] = 'Connectez-vous au site pour accéder au contenu protégé.';
 $lang['seo.user.forget-password'] = 'Renseignez toutes les informations demandées pour recevoir un lien pour changer de mot de passe.';
 $lang['seo.user.about-cookie'] = 'Toutes les informations relatives aux cookies sur le site.';
 

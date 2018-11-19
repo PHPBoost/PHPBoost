@@ -245,7 +245,7 @@ class UserCommentsController extends AbstractController
 			$graphical_environment->set_page_title($this->lang['comments'], '', $page);
 		
 		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars(LangLoader::get_message('seo.user.comments.user', 'user-common'), array('name' => $this->user->get_display_name())) : LangLoader::get_message('seo.user.comments', 'user-common'));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user->get_id(), $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user !== null ? $this->user->get_id() : null, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 

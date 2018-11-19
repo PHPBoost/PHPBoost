@@ -200,6 +200,8 @@ class UserLoginController extends AbstractController
 			$response = new SiteDisplayFrameResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title(($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('administration', 'admin') : LangLoader::get_message('title_maintain', 'main')));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.login']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::connect());
 			$graphical_environment->display_css_login();
 			return $response;
 		}
@@ -208,6 +210,8 @@ class UserLoginController extends AbstractController
 			$response = new SiteDisplayResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title($this->lang['connection'], $this->lang['user']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.login']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::connect());
 			return $response;
 		}
 	}
