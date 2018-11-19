@@ -81,7 +81,7 @@ class UserViewProfileController extends AbstractController
 			'C_DISPLAY_MAIL_LINK' => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
 			'C_DISPLAY_PM_LINK' => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_EXTENDED_FIELDS' => $extended_fields_number,
-			'TITLE_PROFILE' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile_of'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])),
+			'TITLE_PROFILE' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])),
 			'DISPLAY_NAME' => $this->user_infos['display_name'],
 			'LEVEL' => UserService::get_level_lang($this->user_infos['level']),
 			'LEVEL_CLASS' => UserService::get_level_class($this->user_infos['level']),
@@ -127,13 +127,13 @@ class UserViewProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile_of'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user']));
+		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user']));
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.profile'], array('name' => $this->user_infos['display_name'])));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::profile($user_id));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
+		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
 		
 		return $response;
 	}

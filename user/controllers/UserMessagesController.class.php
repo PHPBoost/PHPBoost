@@ -41,12 +41,15 @@ class UserMessagesController extends AbstractController
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
-		
-		try {
-			$this->user = UserService::get_user($user_id);
-		} catch (RowNotFoundException $e) {
-			$error_controller = PHPBoostErrors::unexisting_element();
-			DispatchManager::redirect($error_controller);
+		else if ($user_id != $this->user->get_id())
+		{
+			if (UserService::user_exists('WHERE user_id = :id', array('id' => $user_id)))
+				$this->user = UserService::get_user($user_id);
+			else
+			{
+				$error_controller = PHPBoostErrors::unexisting_element();
+				DispatchManager::redirect($error_controller);
+			}
 		}
 		
 		$this->build_form();
