@@ -161,7 +161,7 @@ while ($row = $result->fetch())
 	{
 		$cached_data = TextHelper::unserialize($row['cached_data']);
 		$row['level'] = $cached_data['level'];
-		$row['display_name'] = $cached_data['display_name'];
+		$row['display_name'] = ($cached_data['level'] == User::ROBOT_LEVEL && $cached_data['display_name'] == 'unknow_bot') ? LangLoader::get_message('unknow_bot', 'admin') : $cached_data['display_name'];
 	}
 	
 	$group_color = User::get_group_color($row['groups'], $row['level']);
