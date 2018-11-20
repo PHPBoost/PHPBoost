@@ -150,6 +150,9 @@ class Forum
 		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('first_msg_id' => $last_msg_id), 'WHERE id=:id', array('id' => $last_topic_id));
 
+		//Mise à jour du nombre de messages du membre.
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+
 		forum_generate_feeds(); //Regénération des flux flux
 		ForumCategoriesCache::invalidate();
 		
