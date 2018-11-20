@@ -11,11 +11,11 @@
 			<article class="block admin-element module-element upgrade-element">
 				<header>
 					<div class="admin-element-menu-container">
-						<button type="submit" class="submit admin-element-menu-title" name="add-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
+						<button type="submit" class="submit admin-element-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
 					</div>
 					# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="add-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
+						<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
 						<label for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}"></label>
 					</div>
 					# ENDIF #
@@ -48,10 +48,10 @@
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 	<div class="multiple-select-menu-container admin-element-menu-title">
 		<div class="form-field form-field-checkbox-mini select-all-checkbox">
-			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
-			<label for="add-all-checkbox"></label>
+			<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+			<label for="upgrade-all-checkbox"></label>
 		</div>
-		<button type="submit" name="add-selected-modules" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
+		<button type="submit" name="upgrade-selected-modules" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
 	</div>
 	# ENDIF #
 </form>
