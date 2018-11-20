@@ -39,7 +39,7 @@ class UserUserExtensionPoint implements UserExtensionPoint
 
 	public function get_messages_list_link_img()
 	{
-		return '<i class="fa fa-comments-o"></i>';
+		return 'fa fa-comments-o';
 	}
 	
 	public function get_number_messages($user_id)

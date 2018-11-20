@@ -71,9 +71,9 @@ class UserMessagesController extends AbstractController
 		{
 			$img = $module->get_messages_list_link_img();
 			$this->tpl->assign_block_vars('available_modules_msg', array(
-				'NAME_USER_MSG' => $module->get_messages_list_link_name(),
-				'IMG_USER_MSG' => $img,
-				'C_IMG_USER_MSG' => !empty($img),
+				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
+				'IMG_USER_MSG'    => $img,
+				'C_IMG_USER_MSG'  => !empty($img),
 				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
 			));
 		}
