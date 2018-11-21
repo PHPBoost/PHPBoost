@@ -299,7 +299,7 @@
 								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
 								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 								<div class="upload-repertory-controls">
-									{folder.RENAME_FOLDER}
+									# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span># ENDIF #
 									<span>
 										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
 									</span>
@@ -327,7 +327,7 @@
 							<span id="fi{files.ID}"></span>
 							{files.BBCODE}
 							<div class="upload-file-controls">
-								{files.RENAME_FILE}
+								<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
 								<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
 								{files.INSERT}
