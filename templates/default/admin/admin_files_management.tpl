@@ -273,7 +273,7 @@
 						<a href="admin_files.php?root=1">
 							<i class="fa fa-home"></i> {L_ROOT}
 						</a>
-						<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}">
+						<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
 							<i class="fa fa-level-up"></i> {L_FOLDER_UP}
 						</a>
 						<a href="javascript:display_new_folder();">

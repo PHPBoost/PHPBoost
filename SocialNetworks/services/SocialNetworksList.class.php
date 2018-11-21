@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                        SocialNetworksList.class.class.php
+ *		                        SocialNetworksList.class.php
  *                            -------------------
  *   begin                : April 10, 2018
  *   copyright            : (C) 2018 Julien BRISWALTER

@@ -104,7 +104,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	//Suppression du dossier et de tout le contenu	
+	//Suppression du dossier et de tout le contenu
 	Uploads::Del_folder($del_folder);
 	
 	if (!empty($folder_member))
@@ -214,15 +214,15 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$url = Uploads::get_admin_url($folder, '');
 		
 	$template->put_all(array(
-		'FOLDER_ID' => !empty($folder) ? $folder : '0',
-		'URL' => $url,
-		'L_FILES_MANAGEMENT' => $LANG['files_management'],
-		'L_FILES_ACTION' => $LANG['files_management'],
-		'L_CONFIG_FILES' => $LANG['files_config'],
-		'L_MOVE_TO' => $LANG['moveto'],
-		'L_ROOT' => $LANG['root'],
-		'L_URL' => $LANG['url'],
-		'L_SUBMIT' => $LANG['submit']
+		'FOLDER_ID'            => !empty($folder) ? $folder : '0',
+		'URL'                  => $url,
+		'L_FILES_MANAGEMENT'   => $LANG['files_management'],
+		'L_FILES_ACTION'       => $LANG['files_management'],
+		'L_CONFIG_FILES'       => $LANG['files_config'],
+		'L_MOVE_TO'            => $LANG['moveto'],
+		'L_ROOT'               => $LANG['root'],
+		'L_URL'                => $LANG['url'],
+		'L_SUBMIT'             => $LANG['submit']
 	));
 	
 	if ($get_error == 'folder_contains_folder')
@@ -360,6 +360,7 @@ else
 		$url = Uploads::get_admin_url($folder, '');
 		
 	$template->put_all(array(
+		'C_MEMBER_ROOT_FOLDER' => $folder == 0 && !empty($folder_info['user_id']),
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
