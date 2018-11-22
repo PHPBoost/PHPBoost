@@ -104,6 +104,8 @@ $lang['sort_by.best_note'] = 'Best note';
 $lang['sort_by.number_comments'] = 'Comments number';
 $lang['sort.asc'] = 'Ascending';
 $lang['sort.desc'] = 'Descending';
+$lang['sort.up'] = 'Move back up';
+$lang['sort.down'] = 'Move forward';
 
 //Units
 $lang['unit.gigabytes'] = 'Gb';

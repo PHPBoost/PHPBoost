@@ -22,7 +22,7 @@ function toggle_filters_table() {
 </script>
 <div class="cssmenu-group bugtracker-filter">
 	<li>
-		<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter"></i> {L_FILTERS}</a>
+		<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 	</li>
 </div>
 <table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
@@ -84,7 +84,7 @@ function toggle_filters_table() {
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}" title="{@labels.save_filters}"><i class="fa fa-save"></i></a>
+				<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-save" aria-hidden="true" title="{@labels.save_filters}"></i></a>
 			</td>
 			# ENDIF #
 		</tr>
@@ -92,7 +92,8 @@ function toggle_filters_table() {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="" title="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete"></i></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a> 
+				<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #
