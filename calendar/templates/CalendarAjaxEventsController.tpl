@@ -9,15 +9,15 @@
 					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>
 							<h2>
-								<a href="{event.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+								<a href="{event.U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 								<a href="{event.U_LINK}"><span itemprop="name">{event.TITLE}</span></a>
 								<span class="actions">
-									# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments-o"></i> {event.L_COMMENTS}</a># ENDIF #
+									# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments-o" aria-hidden="true"></i> {event.L_COMMENTS}</a># ENDIF #
 									# IF event.C_EDIT #
-										<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+										<a href="{event.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
 									# ENDIF #
 									# IF event.C_DELETE #
-										<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete"></i></a>
+										<a href="{event.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 									# ENDIF #
 								</span>
 							</h2>

@@ -49,10 +49,10 @@
 		<div class="calendar-container">
 			<div class="calendar-top-container">
 				<div class="calendar-top-l">
-					<a onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}"><i class="fa fa-angle-double-left"></i></a>
+					<a onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});" aria-label="{PREVIOUS_MONTH_TITLE}"><i class="fa fa-angle-double-left" aria-hidden="true" title="{PREVIOUS_MONTH_TITLE}"></i></a>
 				</div>
 				<div class="calendar-top-r">
-					<a onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"><i class="fa fa-angle-double-right"></i></a>
+					<a onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" aria-label="{NEXT_MONTH_TITLE}"><i class="fa fa-angle-double-right" aria-hidden="true" title="{NEXT_MONTH_TITLE}"></i></a>
 				</div>
 				<div class="calendar-top-content">
 					<h5>{DATE}</h5>
