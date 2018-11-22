@@ -52,6 +52,12 @@ $lang['software_version'] = 'Version';
 $lang['download.view'] = 'vues';
 $lang['download.number.view'] = 'Nombre de vues';
 
+// Mini access
+$lang['download.sort.date'] = 'Date';
+$lang['download.sort.trophy'] = 'Position';
+$lang['download.sort.dls'] = 'Nombre de téléchargements';
+$lang['download.sort.notes'] = 'Note';
+
 //config
 $lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
 $lang['config.category_display_type.display_summary'] = 'Résumé';
