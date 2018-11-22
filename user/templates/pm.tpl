@@ -58,10 +58,10 @@
 					<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
 							<li>
-								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
+								<a href="{convers.U_POST_NEW_CONVERS}" class="cssmenu-title"><i class="fa fa-plus" aria-hidden="true"></i> {convers.L_POST_NEW_CONVERS}</a>
 							</li>
 							<li>
-								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
+								<a href="{convers.U_MARK_AS_READ}" class="cssmenu-title"><i class="fa fa-eraser" aria-hidden="true"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
 					</nav>
@@ -138,13 +138,13 @@
 					<table class="announce-legend">
 						<tr>
 							<td>
-								<i class="fa fa-envelope message-announce"></i> {L_READ}
+								<i class="fa fa-envelope message-announce" aria-hidden="true"></i> {L_READ}
 							</td>
 							<td class="no-separator">
-								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}
+								<i class="fa fa-envelope message-announce-track" aria-hidden="true"></i> {L_TRACK}
 							</td>
 							<td class="no-separator">
-								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}
+								<i class="fa fa-envelope message-announce-new" aria-hidden="true"></i> {L_NOT_READ}
 							</td>
 						</tr>
 					</table>
@@ -185,8 +185,8 @@
 							<span class="actions">
 								<a href="#article-pm-{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
-								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="fa fa-edit"></a>
-								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_EDIT}"></i></a>
+								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
 								# ENDIF #
 							</span>
 							<span>${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</span>

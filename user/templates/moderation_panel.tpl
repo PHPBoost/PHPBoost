@@ -8,20 +8,20 @@
 					<tbody>
 						<tr>
 							<td class="no-separator">
-								<a class="infos-options" href="{U_WARNING}" title="{L_USERS_WARNING}">
-									<i class="fa fa-warning fa-2x"></i>
+								<a class="infos-options" href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
+									<i class="fa fa-warning fa-2x" aria-hidden="true"></i>
 								</a>
 								<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 							</td>
 							<td class="no-separator">
-								<a class="infos-options" href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">
-									<i class="fa fa-error fa-2x"></i>
+								<a class="infos-options" href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
+									<i class="fa fa-error fa-2x" aria-hidden="true" title="{L_USERS_PUNISHMENT}"></i>
 								</a>
 								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 							</td>
 							<td class="no-separator">
-								<a class="infos-options" href="{U_BAN}" title="{L_USERS_BAN}">
-									<i class="fa fa-forbidden fa-2x"></i>
+								<a class="infos-options" href="{U_BAN}" aria-label="{L_USERS_BAN}">
+									<i class="fa fa-forbidden fa-2x" aria-hidden="true" title="{L_USERS_BAN}"></i>
 								</a>
 								<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
 							</td>

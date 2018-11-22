@@ -4,7 +4,7 @@
 		<h1>
 			{@members_list} {@group.of_group} {GROUP_NAME} ({NUMBER_MEMBERS})
 			# IF C_ADMIN #
-				<a href="{U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+				<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
 			# ENDIF #
 			</h1>
 	</header>
@@ -24,7 +24,7 @@
 						<div class="user-pseudo">
 							<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>{members_list.PSEUDO}</a>
 						</div>
-						
+
 					# IF C_EXTENDED_FIELDS #
 					# START members_list.extended_fields #
 						<div class="user-extended-field">{members_list.extended_fields.NAME} : {members_list.extended_fields.VALUE}</div>
@@ -89,7 +89,7 @@
 							<div class="user-pseudo">
 								<a href="{admins_list.U_PROFILE}" class="{admins_list.LEVEL_CLASS}" # IF admins_list.C_GROUP_COLOR # style="color:{admins_list.GROUP_COLOR}" # ENDIF #>{admins_list.PSEUDO}</a>
 							</div>
-						
+
 							# IF C_EXTENDED_FIELDS #
 							# START admins_list.extended_fields #
 							<div class="user-extended-field">{admins_list.extended_fields.NAME} : {admins_list.extended_fields.VALUE}</div>
@@ -130,7 +130,7 @@
 							<div class="user-pseudo">
 								<a href="{modos_list.U_PROFILE}" class="{modos_list.LEVEL_CLASS}" # IF modos_list.C_GROUP_COLOR # style="color:{modos_list.GROUP_COLOR}" # ENDIF #>{modos_list.PSEUDO}</a>
 							</div>
-						
+
 							# IF C_EXTENDED_FIELDS #
 							# START modos_list.extended_fields #
 							<div class="user-extended-field">{modos_list.extended_fields.NAME} : {modos_list.extended_fields.VALUE}</div>
@@ -145,7 +145,7 @@
 			<footer></footer>
 		</section>
 		# ENDIF #
-		
+
 		# START group #
 		<section id="list-members-container-{group.GROUP_ID}" class="list-group-container list-members-container">
 			<header>
@@ -176,7 +176,7 @@
 									<div class="user-pseudo">
 										<a href="{group.group_members_list.U_PROFILE}" class="{group.group_members_list.LEVEL_CLASS}" # IF group.group_members_list.C_GROUP_COLOR # style="color:{group.group_members_list.GROUP_COLOR}" # ENDIF #>{group.group_members_list.PSEUDO}</a>
 									</div>
-								
+
 									# IF C_EXTENDED_FIELDS #
 									# START group.group_members_list.extended_fields #
 									<div class="user-extended-field">{group.group_members_list.extended_fields.NAME} : {group.group_members_list.extended_fields.VALUE}</div>
@@ -197,15 +197,15 @@
 	</div>
 	<footer></footer>
 </section>
-	
+
 <script>
 function open_group(myid, mytype)
 {
 	var myclass = 'selected';
 	var mytype = (typeof mytype !== 'undefined') ? mytype : 2;
 
-	if ((jQuery('#list-members-container-' + myid).hasClass(myclass) && mytype == 2 ) || mytype == 0)  
-	{ 
+	if ((jQuery('#list-members-container-' + myid).hasClass(myclass) && mytype == 2 ) || mytype == 0)
+	{
 		if (typeof myid == 'number')
 			jQuery('#group-button-' + myid).removeClass(myclass);
 		jQuery('#list-members-container-' + myid).removeClass('reorder-top');

@@ -331,18 +331,18 @@
 			</div>
 
 			<div class="upload-address-bar">
-				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
+				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
 			</div>
 
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
-					<i class="fa fa-level-up"></i> {L_FOLDER_UP}
+					<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
 				</a>
 				<a href="javascript:display_new_folder();">
-					<i class="fa fa-plus"></i> {L_FOLDER_NEW}
+					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
 				</a>
 				<a href="javascript:document.getElementById('upload-file').click();">
-					<i class="fa fa-save"></i> {L_ADD_FILES}
+					<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
 				</a>
 			</div>
 			<div class="spacer"></div>
@@ -364,10 +364,10 @@
 							<div class="upload-repertory-controls">
 								{folder.RENAME_FOLDER}
 								<span>
-									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}"  class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-delete" aria-hidden="true" title="{folder.L_TYPE_DEL_FOLDER}"></i></a>
 								</span>
 								<span>
-									<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+									<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a>
 								</span>
 								<span id="img{folder.ID}"></span>
 							</div>
@@ -391,8 +391,8 @@
 						{files.BBCODE}
 						<div class="upload-file-controls">
 							{files.RENAME_FILE}
-							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-							<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+							<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a>
 							{files.INSERT}
 						</div>
 						<span class="infos-options text-strong">{files.FILETYPE}</span>
