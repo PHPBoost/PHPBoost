@@ -119,9 +119,9 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
 		'events' => array('click' => '
 		if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 			HTMLForms.getField("rewrited_name").enable();
@@ -130,12 +130,12 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 		}'
 		))));
 		
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
-			'description' => $this->common_lang['form.rewrited_name.description'], 
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
+			'description' => self::$common_lang['form.rewrited_name.description'], 
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_category()->get_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$common_lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
 		));
 		
@@ -145,7 +145,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 		if ($this->get_category()->get_id())
 			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 		
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
+		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', self::$common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options, array('required' => true, 'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('status', LangLoader::get_message('category.status.locked', 'common', 'forum'), $this->get_category()->get_status(),
 			array('hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
@@ -155,13 +155,13 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 			array('required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL)
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth), 
-		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth), 
+		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			jQuery("#' . __CLASS__ . '_authorizations").show();
 			if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ' || HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_URL . ') {
