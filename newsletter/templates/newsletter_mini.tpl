@@ -9,7 +9,7 @@
 	</p>
 	<p>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit" name="" value="true"><i class="fa fa-envelope-o"></i></button>
+		<button type="submit" name="" value="true"><i class="fa fa-envelope-o" aria-hidden="true"></i><span class="sr-only">{@subscribe.newsletter}</span></button>
 	</p>
 	<p class="newsletter-link">
 		<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{@newsletter.archives}</a>
