@@ -36,7 +36,7 @@ class FormButtonLinkCssImg extends AbstractFormButton
     	$full_label = '';
     	if (!empty($css_class_image))
     	{
-    		$full_label = '<i class="' . $css_class_image . '" title="' . $label . '"></i>' . $text_button;
+    		$full_label = '<i class="' . $css_class_image . '" title="' . $label . '" aria-hidden="true"></i><span class="sr-only">' . $label . '</span>' . $text_button;
     	}
     	else
     	{
