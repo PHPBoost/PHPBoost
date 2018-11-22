@@ -3,7 +3,9 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 				</h2>
 			</header>
 			<div class="content">
@@ -12,19 +14,19 @@
 						<tr>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}" class="moderation-type-block">
-									<i class="fa fa-warning fa-2x"></i>
+									<i class="fa fa-warning fa-2x" aria-hidden="true"></i>
 									<span>{L_USERS_WARNING}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}" class="moderation-type-block">
-									<i class="fa fa-error fa-2x"></i>
+									<i class="fa fa-error fa-2x" aria-hidden="true"></i>
 									<span>{L_USERS_PUNISHMENT}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}" class="moderation-type-block">
-									<i class="fa fa-forbidden fa-2x"></i>
+									<i class="fa fa-forbidden fa-2x" aria-hidden="true"></i>
 									<span>{L_ALERT_MANAGEMENT}</span>
 								</a>
 							</td>

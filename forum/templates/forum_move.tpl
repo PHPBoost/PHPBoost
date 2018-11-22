@@ -14,7 +14,7 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-move" class="forum-contents">
 			<header>
-				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></h2>
+				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></h2>
 			</header>
 
 			<div class="content">
@@ -39,7 +39,7 @@
 					</fieldset>
 				</form>
 			</div>
-			<footer><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></footer>
+			<footer><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a></footer>
 		</article>
 
 		# INCLUDE forum_bottom #

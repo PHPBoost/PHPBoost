@@ -19,11 +19,11 @@
 					<table id="table" class="forum-table">
 						<thead>
 							<tr>
-								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
+								<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
 								<th class="forum-topic">{L_FORUM}</th>
-								<th class="forum-subject-nb"><i class="fa fa-com fa-fw" title="{L_TOPIC}"></i></th>
-								<th class="forum-message-nb"><i class="fa fa-coms fa-fw" title="{L_MESSAGE}"></i></th>
-								<th class="forum-last-topic"><i class="fa fa-clock fa-fw" title="{L_LAST_MESSAGE}"></i></th>
+								<th class="forum-subject-nb"><i class="fa fa-com fa-fw" aria-hidden="true" title="{L_TOPIC}"></i><span class="sr-only">{L_TOPIC}</span></th>
+								<th class="forum-message-nb"><i class="fa fa-coms fa-fw" aria-hidden="true" title="{L_MESSAGE}"></i><span class="sr-only">{L_MESSAGE}</span></th>
+								<th class="forum-last-topic"><i class="fa fa-clock fa-fw" aria-hidden="true" title="{L_LAST_MESSAGE}"></i><span class="sr-only">{L_LAST_MESSAGE}</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -31,7 +31,7 @@
 							<tr>
 								# IF subcats.U_FORUM_URL #
 								<td class="forum-announce-topic">
-									<i class="fa fa-globe fa-2x"></i>
+									<i class="fa fa-globe fa-2x" aria-hidden="true"></i>
 								</td>
 								<td class="forum-topic" colspan="4">
 									<a href="{subcats.U_FORUM_URL}" title="{subcats.NAME}">{subcats.NAME}</a>
@@ -39,7 +39,7 @@
 								</td>
 								# ELSE #
 								<td class="forum-announce-topic">
-									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.IMG_ANNOUNCE}"></i>
+									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.IMG_ANNOUNCE}" aria-hidden="true"></i>
 								</td>
 								<td class="forum-topic">
 									<a href="forum{subcats.U_FORUM_VARS}" title="{subcats.NAME}">{subcats.NAME}</a>
@@ -55,7 +55,7 @@
 								<td class="forum-last-topic">
 									# IF subcats.C_LAST_TOPIC_MSG #
 										<span class="last-topic-title"><a href="{subcats.U_LAST_TOPIC}" class="last-topic-title">{subcats.LAST_TOPIC_TITLE}</a></span>
-										<span class="last-topic-user"><i class="fa fa-hand-o-right"></i><a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"></a>
+										<span class="last-topic-user"><i class="fa fa-hand-o-right" aria-hidden="true"></i><a href="{subcats.U_LAST_MSG}" title="" class="last-topic-date"></a>
 										<br />${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}</span>
 										${LangLoader::get_message('by', 'main')}
 										# IF subcats.C_LAST_MSG_GUEST #
@@ -85,16 +85,16 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
 				<span class="actions">
-					# IF IDCAT #<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a># ENDIF #		
+					# IF IDCAT #<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread" aria-hidden="true"></i></a># ENDIF #
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</span>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> 
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					# START syndication_cats #
 					<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 					# END syndication_cats #
 					# IF C_POST_NEW_SUBJECT #
-					<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+					<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
 				</h2>
 			</header>
@@ -102,13 +102,13 @@
 				<table id="table2" class="forum-table">
 					<thead>
 						<tr>
-							<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
-							<th class="forum-fixed-topic"><i class="fa fa-check"></i></th>
-							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-							<th class="forum-author"><i class="fa fa-user-o fa-fw hidden-small-screens" title="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" title="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
-							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" title="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+							<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
+							<th class="forum-fixed-topic"><i class="fa fa-check" aria-hidden="true"></i></th>
+							<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-author"><i class="fa fa-user-o fa-fw hidden-small-screens" aria-hidden="true" title="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" aria-hidden="true" title="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
+							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" aria-hidden="true" title="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
+							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" aria-hidden="true" title="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -129,19 +129,19 @@
 						# ENDIF #
 						<td class="forum-announce-topic">
 							# IF NOT topics.C_HOT_TOPIC #
-							<i class="fa {topics.IMG_ANNOUNCE}"></i>
+							<i class="fa {topics.IMG_ANNOUNCE}" aria-hidden="true"></i>
 							# ELSE #
-							<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
+							<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot" aria-hidden="true"></i>
 							# ENDIF #
 						</td>
 						<td class="forum-fixed-topic">
-							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF #
-							# IF topics.C_IMG_POLL #<i class="fa fa-tasks" title="{L_POLL}"></i># ENDIF #
-							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
+							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display" aria-hidden="true"></i># ENDIF #
+							# IF topics.C_IMG_POLL #<i class="fa fa-tasks" aria-hidden="true" title="{L_POLL}"></i># ENDIF #
+							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track" aria-hidden="true"></i># ENDIF #
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}" title=""><i class="fa fa-hand-o-right"></i></a># ENDIF # # IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF # <a href="topic{topics.U_TOPIC_VARS}" title="{topics.TITLE}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}" title=""><i class="fa fa-hand-o-right" aria-hidden="true"></i></a># ENDIF # # IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF # <a href="topic{topics.U_TOPIC_VARS}" title="{topics.TITLE}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<span class="smaller">{topics.DESC}</span>
 						</td>
 						<td class="forum-author">
@@ -159,10 +159,10 @@
 						</td>
 						<td class="forum-last-topic">
 							<span class="last-topic-title">
-								<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right fa-fw"></i> {topics.LAST_MSG_DATE_FULL}</a>
+								<a href={topics.LAST_MSG_URL} title="{topics.TITLE}"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
 							</span>
 							<span class="last-topic-user">
-								<i class="fa fa-user-o fa-fw"></i>
+								<i class="fa fa-user-o fa-fw" aria-hidden="true"></i>
 								# IF topics.C_LAST_MSG_GUEST #
 								<a href="{topics.LAST_MSG_USER_PROFIL}" class="{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR}>{topics.LAST_MSG_USER_LOGIN}</a>
 								# ELSE #
@@ -185,12 +185,12 @@
 						<tr>
 							<th colspan="7">
 								<div class="footer-forum">
-									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a> 
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
 									# START syndication_cats #
 										<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 									# END syndication_cats #
 									# IF C_POST_NEW_SUBJECT #
-										<i class="fa fa-angle-double-right"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
+										<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button" title="{L_POST_NEW_SUBJECT}">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #
 								</div>
 								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #

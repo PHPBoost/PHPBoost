@@ -83,8 +83,8 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 			$last_topic_title = addslashes($last_topic_title);
 			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
-			
-			$contents .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-o-right"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
+
+			$contents .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '</td></tr>';
 			$nbr_msg_not_read++;
 		}
 		$result->dispose();
@@ -108,12 +108,12 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 
 	$idm_get = retrieve(GET, 'idm', '');
 	$msg = $topic = array();
-	
+
 	//Info sur le message.
 	try {
 		$msg = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, idtopic FROM ' . PREFIX . 'forum_msg WHERE id=:id', array('id' => $idm_get));
 	} catch (RowNotFoundException $e) {}
-	
+
 	//On va chercher les infos sur le topic
 	if ($msg)
 	{
@@ -121,7 +121,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, idcat, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
 		} catch (RowNotFoundException $e) {}
 	}
-	
+
 	if ($msg && $topic && !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
 		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
@@ -189,12 +189,12 @@ elseif (!empty($msg_d))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$topic = array();
-	
+
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
 	} catch (RowNotFoundException $e) {}
-	
+
 	if ($topic && ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()))
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
@@ -212,7 +212,7 @@ elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			if (retrieve(GET, 'warning_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a><br />';
 			elseif (retrieve(GET, 'punish_moderation_panel', false))

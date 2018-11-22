@@ -41,6 +41,8 @@ $lang['forum.no_answer'] = 'Sujets sans réponse';
 $lang['xml_forum_desc'] = 'Derniers sujets du forum';
 $lang['go_top'] = 'Remonter';
 $lang['go_bottom'] = 'Descendre';
+$lang['forum.connected.mbr.yes'] = 'Membre connecté';
+$lang['forum.connected.mbr.no'] = 'Membre non connecté';
 
 $lang['forum.links'] = 'Liens';
 $lang['forum.message_options'] = 'Options du message';

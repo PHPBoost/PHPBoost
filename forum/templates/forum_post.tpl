@@ -71,7 +71,7 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-post" class="forum-contents">
 			<header>
 				<h2>
-					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
+					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 
@@ -151,7 +151,7 @@
 
 										<p class="center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a title="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus"></i></a>
+											<a aria-label="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true" title="${LangLoader::get_message('add', 'common')}"></i></a>
 											# ENDIF #
 										</p>
 									</div>
@@ -178,7 +178,7 @@
 							# IF C_DISPLAY_MSG #
 								<p>
 									<span id="forum_change_statut">
-										<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+										<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 									</span>
 								</p>
 							# ENDIF #
@@ -187,7 +187,7 @@
 				</form>
 			</div>
 			<footer class="footer-forum">
-				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
+				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}" class="basic-button">{L_NEW_SUBJECT}</a> <span><em>{DESC}</em></span>
 			</footer>
 		</article>
 

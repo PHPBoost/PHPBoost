@@ -16,17 +16,25 @@
 				# START list #
 				<div class="msg-position">
 					<div class="msg-title">
-						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-angle-double-right"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
+						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
 						<span class="float-right">
-							<a href="#go-top" title="go top"><i class="fa fa-arrow-up"></i></a>
-							<a href="#go-bottom" title="go bottom"><i class="fa fa-arrow-down"></i></a>
+							<a href="#go-top" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('scroll-to.top', 'user-common')}"></i></a>
+							<a href="#go-bottom" aria-label="${LangLoader::get_message('scroll-to.bottom', 'user-common')}"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('scroll-to.bottom', 'user-common')}"></i></a>
 						</span>
 					</div>
 					<div class="msg-container">
 						<div class="msg-top">
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
-									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">{list.USER_PSEUDO}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
+									# IF NOT list.C_GUEST #
+										<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}" title="{list.USER_PSEUDO}">
+											{list.USER_PSEUDO}
+										</a>
+										<span class="sr-only"># IF C_USER_ONLINE #${LangLoader::get_message('forum.connected.mbr.yes', 'common', 'forum')}# ELSE #${LangLoader::get_message('forum.connected.mbr.no', 'common', 'forum')}# ENDIF #</span>
+									# ELSE #
+										${LangLoader::get_message('guest', 'main')}
+									# ENDIF #
 								</div>
 
 								<p class="center"># IF list.C_USER_RANK #{list.USER_RANK}# ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #</p>
@@ -50,7 +58,7 @@
 										# ELSE #
 										<span class="user-group">
 											{list.usergroups.L_USER_GROUP} : <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID}"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
-										</span>										
+										</span>
 										# ENDIF #
 									# END list.usergroups #
 								</p>
@@ -61,7 +69,7 @@
 								# ELSE #
 								<p class="left"># IF list.C_IS_USER # <a href="{list.U_USER_MEMBERMG}" class="small">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
 								# ENDIF #
-								
+
 							</div>
 
 						</div>
@@ -69,7 +77,7 @@
 						<div class="msg-contents-container">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title="{list.DATE}"><i class="fa fa-hand-o-right"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
+									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" aria-label="{list.DATE}"><i class="fa fa-hand-o-right" aria-hidden="true" title="{list.DATE}"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
 								</span>
 
 							</div>

@@ -127,17 +127,17 @@
 				<span class="actions">
 				# IF C_FORUM_MODERATOR #
 					# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban"></i></a>
+					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
 					# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban"></i></a>
+					<a href="action{U_TOPIC_UNLOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-unban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
 					# ENDIF #
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move"></i></a>
+					<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-move" aria-hidden="true" title="{L_TOPIC_MOVE}"></i></a>
 				# ENDIF #
 				</span>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
-				</h2>		
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" ari-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+					{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+				</h2>
 
 			</header>
 
@@ -206,7 +206,11 @@
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
 								# IF msg.C_FORUM_USER_LOGIN #
-									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"{msg.FORUM_USER_GROUP_COLOR}>{msg.FORUM_USER_LOGIN}</a>
+									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
+									<a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"{msg.FORUM_USER_GROUP_COLOR}>
+										{msg.FORUM_USER_LOGIN}
+									</a>
+									<span class="sr-only"># IF C_USER_ONLINE #${LangLoader::get_message('forum.connected.mbr.yes', 'common', 'forum')}# ELSE #${LangLoader::get_message('forum.connected.mbr.no', 'common', 'forum')}# ENDIF #</span>
 								# ELSE #
 									<em>{L_GUEST}</em>
 								# ENDIF #
@@ -242,18 +246,18 @@
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
 							<div class="msg-contents-info">
 								<span class="float-left">
-									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true" title="{msg.TOPIC_DATE_FULL}"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
 								</span>
 								<span class="float-right">
-									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a># ENDIF #
+									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true" title="{L_QUOTE}"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #
-									<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}"><i class="fa fa-edit"></i></a>
+									<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_EDIT}"></i></a>
 									# ENDIF #
 
 									# IF msg.C_FORUM_MSG_DEL #
 										# IF msg.C_FORUM_MSG_DEL_MSG #
-									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}"><i class="fa fa-delete del-msg"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}"><i class="fa fa-delete del-msg" aria-hidden="true" title="{L_DELETE}"></i></a>
 									<script>
 									<!--
 										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
@@ -261,13 +265,18 @@
 									-->
 									</script>
 										# ELSE #
-									<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-delete"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
 										# ENDIF #
 									# ENDIF #
 
-									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut"></i></a> # ENDIF #
+									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" aria-label="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut" aria-hidden="true" title="{L_CUT_TOPIC}"></i></a> # ENDIF #
 
-									<a title="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a title="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a>
+									<a aria-label="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;">
+										<i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('go_top', 'common', 'forum')}"></i>
+									</a>
+									<a aria-label="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;">
+										<i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('go_bottom', 'common', 'forum')}"></i>
+									</a>
 								</span>
 							</div>
 							<div class="msg-contents">
@@ -319,17 +328,17 @@
 				<span class="actions">
 				# IF C_FORUM_MODERATOR #
 					# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban"></i></a>
+					<a href="action{U_TOPIC_LOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
 					# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban"></i></a>
+					<a href="action{U_TOPIC_UNLOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
 					# ENDIF #
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move"></i></a>
+					<a href="move{U_TOPIC_MOVE}" aria-label="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move" aria-hidden="true" title="{L_TOPIC_MOVE}"></i></a>
 				# ENDIF #
 				</span>
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-				{U_FORUM_CAT} <i class="fa fa-angle-double-right"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+				{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
-				
+
 
 				<div class="spacer"></div>
 			</footer>
