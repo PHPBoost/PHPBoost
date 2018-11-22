@@ -238,7 +238,7 @@
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a># ENDIF #
+					{GALLERY} # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
 				</h1>
 
 				# IF C_CATEGORY_DESCRIPTION #
@@ -251,28 +251,28 @@
 			<div class="gallery-tools-container">
 				<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 					<ul class="level-0 hidden">
-						<li><a class="cssmenu-title"><i class="fa fa-eye"></i> {L_DISPLAY}</a>
+						<li><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_DISPLAY}</a>
 							<ul class="level-1">
-								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
-								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li># ENDIF #
+								<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_BEST_VIEWS}</a></li>
+								# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_BEST_NOTES}</a></li># ENDIF #
 							</ul>
 						</li>
-						<li><a class="cssmenu-title"><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
+						<li><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
 							<ul class="level-1">
-								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag"></i> {L_NAME}</a></li>
-								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
-								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
+								<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag" aria-hidden="true"></i> {L_NAME}</a></li>
+								<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o" aria-hidden="true"></i> {L_DATE}</a></li>
+								<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_VIEWS}</a></li>
 								# IF C_NOTATION_ENABLED #
-								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
+								<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_NOTES}</a></li>
 								# ENDIF #
 								# IF C_COMMENTS_ENABLED #
-								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o"></i> {L_COM}</a></li># ENDIF #
+								<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
 							</ul>
 						</li>
 						<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul class="level-1">
-								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
-								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
+								<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i> {L_DESC}</a></li>
 							</ul>
 						</li>
 					</ul>
