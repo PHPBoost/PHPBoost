@@ -44,19 +44,19 @@
 					<div class="message-date">
 						<span class="actions">
 							# IF messages.C_EDIT #
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+							<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
 							# ENDIF #
 							# IF messages.C_DELETE #
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+							<a href="{messages.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 							# ENDIF #
 						</span>
-						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
 					</div>
 
 					<div class="message-message">
 						<div class="message-content">{messages.CONTENTS}</div>
 					</div>
-					
+
 				</div>
 				<footer></footer>
 			</article>
