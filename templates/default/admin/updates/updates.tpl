@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
-	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_WEBSITE_UPDATES}">
-		<i class="fa fa-bars"></i> {L_WEBSITE_UPDATES}
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
+		<i class="fa fa-bars" aria-hidden="true" title="{L_WEBSITE_UPDATES}"></i> {L_WEBSITE_UPDATES}
 	</a>
 	<ul>
 		<li>
@@ -41,7 +41,7 @@
 				</thead>
 				<tbody>
 					# START apps #
-					<tr> 
+					<tr>
 						# IF C_ALL #
 						<td class="center">{apps.type}</td>
 						# ENDIF #
@@ -52,10 +52,10 @@
 						</td>
 						<td>{apps.L_PRIORITY}</td>
 						<td class="center">
-							<a href="{apps.download_url}" title="{L_DOWNLOAD_THE_COMPLETE_PACK}">{L_DOWNLOAD_PACK}</a><br />
+							<a href="{apps.download_url}"><i class="fa fa-cloud-download-alt" aria-hidden="true" title="{L_DOWNLOAD_THE_COMPLETE_PACK}"></i> {L_DOWNLOAD_PACK}</a><br />
 							# IF apps.update_url #
 							/<br />
-							<a href="{apps.update_url}" title="{L_DOWNLOAD_THE_UPDATE_PACK}">{L_UPDATE_PACK}</a>
+							<a href="{apps.update_url}"><i class="fa fa-sync-alt" aria-hidden="true" title="{L_DOWNLOAD_THE_UPDATE_PACK}"></i> {L_UPDATE_PACK}</a>
 							# ENDIF #
 						</td>
 					</tr>

@@ -45,8 +45,8 @@ $lang = array(
 	'installation.progression' => 'Progression de la mise à jour',
 	'language.change' => 'Changer de langue',
 	'change' => 'Changer',
-	'step.previous' => 'Etape précédente',
-	'step.next' => 'Etape suivante',
+	'step.previous' => 'Étape précédente',
+	'step.next' => 'Étape suivante',
 	'yes' => 'Oui',
 	'no' => 'Non',
 	'unknown' => 'Inconnu',
@@ -132,7 +132,7 @@ $lang = array(
 	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
 	<br /><br />
 	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
-	
+
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost est désormais mis à jour !</legend>
 							<div class="fielset-inset">
@@ -172,7 +172,7 @@ $lang = array(
 							<legend>Faire un don</legend>
 							<div class="fielset-inset">
 								Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
-								
+
 								<div class="center">
 									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">

@@ -54,8 +54,8 @@ $lang = array(
 	'installation.confirmRestart' => 'Etes-vous certain de vouloir recommencer l\'installation ?',
 	'language.change' => 'Changer de langue',
 	'change' => 'Changer',
-	'step.previous' => 'Etape précédente',
-	'step.next' => 'Etape suivante',
+	'step.previous' => 'Étape précédente',
+	'step.next' => 'Étape suivante',
 	'yes' => 'Oui',
 	'no' => 'Non',
 	'unknown' => 'Inconnu',
@@ -244,7 +244,7 @@ Cordialement l\'équipe PHPBoost.',
 							<legend>Faire un don</legend>
 							<div class="fielset-inset">
 								Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
-								
+
 								<div class="center">
 									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">

@@ -79,7 +79,7 @@ ${resources('install/install')}
 							# START step #
 								<li class="{step.CSS_CLASS}">
 									<span class="cssmenu-title">
-										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
+										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}" aria-hidden="true"></i><span>{step.NAME}</span>
 									</span>
 								</li>
 							# END step #
@@ -106,13 +106,13 @@ ${resources('install/install')}
 						<nav class="cssmenu cssmenu-vertical help-menu">
 							<ul>
 								<li>
-									<a class="cssmenu-title" href="{@documentation.link}" title="{@documentation}">
-										<i class="fa fa-book fa-fw"></i> <span>{@documentation}</span>
+									<a class="cssmenu-title" href="{@documentation.link}">
+										<i class="fa fa-book fa-fw" aria-hidden="true"></i> <span>{@documentation}</span>
 									</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');" title="{@installation.restart}">
-										<i class="fa fa-refresh fa-fw"></i> <span>{@installation.restart}</span>
+									<a class="cssmenu-title" href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');">
+										<i class="fa fa-refresh fa-fw" aria-hidden="true"></i> <span>{@installation.restart}</span>
 									</a>
 								</li>
 							</ul>

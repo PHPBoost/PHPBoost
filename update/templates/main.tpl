@@ -79,7 +79,7 @@ ${resources('update/update')}
 							# START step #
 								<li class="{step.CSS_CLASS}# IF step.C_NO_DATABASE_STEP_CLASS # no-database-step# ENDIF #">
 									<span class="cssmenu-title">
-										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}"></i><span>{step.NAME}</span>
+										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}" aria-hidden="true"></i><span>{step.NAME}</span>
 									</span>
 								</li>
 							# END step #
