@@ -1,6 +1,6 @@
 		<nav id="admin-quick-menu">
 				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_DATABASE_MANAGEMENT}">
-					<i class="fa fa-bars"></i> {L_DATABASE_MANAGEMENT}
+					<i class="fa fa-bars" aria-hidden="true"></i> {L_DATABASE_MANAGEMENT}
 				</a>
 				<ul>
 					<li>
@@ -152,15 +152,15 @@
 										<input type="hidden" name="token" value="{TOKEN}">
 										<ul class="elements-container columns-3 center no-list no-style">
 											<li class="block">
-												<i class="fa fa-chart-bar fa-2x"></i>
+												<i class="fa fa-chart-bar fa-2x" aria-hidden="true"></i>
 												<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 											</li>
 											<li class="block">
-												<i class="fa fa-cogs fa-2x"></i>
+												<i class="fa fa-cogs fa-2x" aria-hidden="true"></i>
 												<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 											</li>
 											<li class="block">
-												<i class="fa fa-save fa-2x"></i>
+												<i class="fa fa-save fa-2x" aria-hidden="true"></i>
 												<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 											</li>
 										</ul>
@@ -192,37 +192,37 @@
 					<ul>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">
-								<i class="fa fa-fw fa-code-branch"></i> {L_TABLE_STRUCTURE}
+								<i class="fa fa-fw fa-code-branch" aria-hidden="true"></i> {L_TABLE_STRUCTURE}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">
-								<i class="fa fa-fw fa-laptop"></i> {L_TABLE_DISPLAY}
+								<i class="fa fa-fw fa-laptop" aria-hidden="true"></i> {L_TABLE_DISPLAY}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">
-								<i class="fa fa-fw fa-wrench"></i> SQL
+								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i> SQL
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">
-								<i class="fa fa-fw fa-plus"></i> {L_INSERT}
+								<i class="fa fa-fw fa-plus" aria-hidden="true"></i> {L_INSERT}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">
-								<i class="fa fa-fw fa-save"></i> {L_BACKUP}
+								<i class="fa fa-fw fa-save" aria-hidden="true"></i> {L_BACKUP}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}">
-								<i class="fa fa-fw fa-share-square"></i> {L_TRUNCATE}
+								<i class="fa fa-fw fa-share-square" aria-hidden="true"></i> {L_TRUNCATE}
 							</a>
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-								<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+								<i class="fa fa-fw fa-delete" aria-hidden="true"></i> {L_DELETE}
 							</a>
 						</li>
 					</ul>
@@ -276,23 +276,23 @@
 							</td>
 							<td>
 								<p>{L_EXPLAIN_BACKUP}</p>
-								<p class="center"><i class="fa fa-2x fa-save"></i></p>
+								<p class="center"><i class="fa fa-2x fa-save" aria-hidden="true"></i></p>
 								<p>
-										<div class="form-field-radio">
-												<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
-												<label for="backup_all"></label>
-										</div>
-										<span class="form-field-radio-span">{L_BACKUP_ALL}</span>
-										<div class="form-field-radio">
-												<input type="radio" id="backup_struct" name="backup_type" value="struct">
-												<label for="backup_struct"></label>
-										</div>
-										<span class="form-field-radio-span">{L_BACKUP_STRUCT}</span>
-										<div class="form-field-radio">
-												<input type="radio" id="backup_data" name="backup_type" value="data"/>
-												<label for="backup_data"></label>
-										</div>
-										<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
+									<div class="form-field-radio">
+											<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
+											<label for="backup_all"></label>
+									</div>
+									<span class="form-field-radio-span">{L_BACKUP_ALL}</span>
+									<div class="form-field-radio">
+											<input type="radio" id="backup_struct" name="backup_type" value="struct">
+											<label for="backup_struct"></label>
+									</div>
+									<span class="form-field-radio-span">{L_BACKUP_STRUCT}</span>
+									<div class="form-field-radio">
+											<input type="radio" id="backup_data" name="backup_type" value="data"/>
+											<label for="backup_data"></label>
+									</div>
+									<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
 								</p>
 								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
@@ -436,7 +436,7 @@
 						<tr>
 							<td>
 								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
-									<i class="fa fa-server"></i>
+									<i class="fa fa-server" aria-hidden="true"></i>
 									{file.FILE_NAME}
 								</a>
 							</td>
