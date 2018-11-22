@@ -66,8 +66,20 @@
 <section id="module-faq">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
-			# IF C_PENDING #{@faq.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF # # IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i></a># ENDIF ## IF C_DISPLAY_REORDER_LINK #<a href="{U_REORDER_QUESTIONS}" title="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw"></i></a># ENDIF ## ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			# IF C_PENDING #
+				{@faq.pending}
+			# ELSE #
+				{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			# ENDIF #
+			# IF C_CATEGORY #
+				# IF IS_ADMIN #
+					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+				# ENDIF #
+				# IF C_DISPLAY_REORDER_LINK #
+					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw" aria-hidden="true" title="{@faq.reorder_questions}"></i></a>
+				# ENDIF #
+			# ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="cat-description">
@@ -124,17 +136,17 @@
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF questions.C_ACTION_USER #
-						<span class="actions"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw"></i></a></span>
+						<span class="actions"><a href="{questions.U_LINK}" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true" title="{questions.L_LINK_QUESTION}"></i></a></span>
 						# ELSE #
 						<span class="actions actions-menu question-actions" id="question-{questions.ID}-actions">
 							<a href="" title="{@faq.actions.menu}" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-actions-menu"></i></a>
 							<ul class="actions-submenu">
-								<li class="action"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');"><i class="fa fa-hand-point-right fa-fw"></i> {questions.L_LINK_QUESTION}</a></li>
+								<li class="action"><a href="{questions.U_LINK}" title="{questions.L_LINK_QUESTION}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i> {questions.L_LINK_QUESTION}</a></li>
 								# IF questions.C_EDIT #
-								<li class="action"><a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw"></i> ${LangLoader::get_message('edit', 'common')}</a></li>
+								<li class="action"><a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i> ${LangLoader::get_message('edit', 'common')}</a></li>
 								# ENDIF #
 								# IF questions.C_DELETE #
-								<li class="action"><a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i> ${LangLoader::get_message('delete', 'common')}</a></li>
+								<li class="action"><a href="" onclick="delete_question({questions.ID});return false;" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true"></i> ${LangLoader::get_message('delete', 'common')}</a></li>
 								# ENDIF #
 							</ul>
 						</span>
