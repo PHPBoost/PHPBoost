@@ -186,7 +186,7 @@ class ForumCategoriesFormController extends AbstractCategoriesFormController
 		-->
 		</script>'));
 		
-		$auth_settings = $this->get_authorizations_settings();
+		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth)));
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
