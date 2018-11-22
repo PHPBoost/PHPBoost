@@ -78,7 +78,6 @@ class Robots
 			'Cliqzbot',
 			'coccocbot',
 			'Daumoa',
-			'Detectify',
 			'DeuSu',
 			'Elefent',
 			'exif-search',
