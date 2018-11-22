@@ -120,8 +120,8 @@ elseif ($id_to_update > 0)
 elseif ($id_to_delete > 0)
 {
 	//Vérification de la validité du jeton
-    AppContext::get_session()->csrf_get_protect();
-	
+	AppContext::get_session()->csrf_get_protect();
+
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
@@ -411,5 +411,3 @@ else
 $template->display();
 
 require_once('../kernel/footer.php');
-
-?>
