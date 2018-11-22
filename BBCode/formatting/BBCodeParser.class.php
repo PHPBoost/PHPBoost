@@ -564,10 +564,10 @@ class BBCodeParser extends ContentFormattingParser
 				}
 			}
 		}
-		if ( $fa_prefix <> "" )
-			return '<i class="' . $fa_prefix . ' fa-' . $matches[2] . $fa_code .'"></i>';
+		if ($fa_prefix <> "")
+			return '<i class="' . $fa_prefix . ' fa-' . $matches[2] . $fa_code .'" aria-hidden="true" title="' . $matches[2] . '"></i>';
 		else
-			return '<i class="fa fa-' . $matches[2] . $fa_code .'"></i>';
+			return '<i class="fa fa-' . $matches[2] . $fa_code .'" aria-hidden="true" title="' . $matches[2] . '"></i>';
 	}
 
 

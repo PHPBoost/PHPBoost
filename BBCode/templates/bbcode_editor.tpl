@@ -289,7 +289,7 @@ function XMLHttpRequest_preview(field)
 					<ul class="bbcode-block bbcode-block-fa" onmouseover="bb_hide_block('12', '{FIELD}', 1);" onmouseout="bb_hide_block('12', '{FIELD}', 0);">
 						# START code_fa #
 						<li>
-							<a href="" onclick="{DISABLED_FA}insertbbcode('[fa]{code_fa.CODE}[/fa]', '', '{FIELD}');bb_hide_block('12', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{code_fa.CODE}">
+							<a href="" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');bb_hide_block('12', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{code_fa.CODE}">
 								<i class="{code_fa.PREFIX} fa-{code_fa.CODE}" aria-hidden="true" title="{code_fa.CODE}"></i>
 							</a>
 						</li>

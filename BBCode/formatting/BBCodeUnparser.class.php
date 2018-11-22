@@ -237,7 +237,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
