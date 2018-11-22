@@ -28,8 +28,8 @@
  ####################################################
 #                     English                       #
  ####################################################
- 
-// Title 
+
+// Title
 $lang['members.config-members'] = 'Members configuration';
 $lang['members.members-management'] = 'Members management';
 $lang['members.add-member'] = 'Add member';
@@ -101,7 +101,7 @@ $lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHP
 $lang['fields.management'] = 'Profile field management';
 $lang['fields.action.add_field'] = 'Add a field';
 
-//Type 
+//Type
 $lang['type.short-text'] = 'Short text (max 255 characters)';
 $lang['type.long-text'] = 'Long text (unlimited)';
 $lang['type.half-text'] = 'Medium text';
@@ -135,6 +135,7 @@ $lang['field.possible_values.delete_default'] = 'Delete default value';
 $lang['field.default-value'] = 'Default value';
 $lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
 $lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
+$lang['field.refresh'] = 'Refresh';
 $lang['field.display'] = 'Displayed';
 $lang['field.not_display'] = 'Not displayed';
 

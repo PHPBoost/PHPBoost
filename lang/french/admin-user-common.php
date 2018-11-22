@@ -28,8 +28,8 @@
  ####################################################
 #                     French                       #
  ####################################################
- 
-// Title 
+
+// Title
 $lang['members.config-members'] = 'Configuration des membres';
 $lang['members.members-management'] = 'Gestion des membres';
 $lang['members.add-member'] = 'Ajouter un membre';
@@ -101,7 +101,7 @@ $lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défa
 $lang['fields.management'] = 'Gestion des champs du profil';
 $lang['fields.action.add_field'] = 'Ajouter un champ';
 
-//Type 
+//Type
 $lang['type.short-text'] = 'Texte court (max 255 caractères)';
 $lang['type.long-text'] = 'Texte long (illimité)';
 $lang['type.half-text'] = 'Texte semi long';
@@ -135,6 +135,7 @@ $lang['field.possible_values.delete_default'] = 'Supprimer la valeur par défaut
 $lang['field.default-value'] = 'Valeur par défaut';
 $lang['field.read_authorizations'] = 'Autorisations de lecture du champ dans le profil';
 $lang['field.actions_authorizations'] = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
+$lang['field.refresh'] = 'Rafraichir';
 $lang['field.display'] = 'Afficher';
 $lang['field.not_display'] = 'Ne pas afficher';
 
