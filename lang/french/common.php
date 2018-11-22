@@ -105,7 +105,7 @@ $lang['sort_by.number_comments'] = 'Nombre de commentaires';
 $lang['sort.asc'] = 'Croissant';
 $lang['sort.desc'] = 'Décroissant';
 $lang['sort.up'] = 'Remonter';
-$lang['sort.down'] = 'Décendre';
+$lang['sort.down'] = 'Descendre';
 
 //Units
 $lang['unit.gigabytes'] = 'Go';

@@ -16,9 +16,9 @@
                     <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
                     <div class="form-field">
                     # IF PHP_VERSION_OK #
-                        <i class="fa fa-success fa-2x" title="{@yes}"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-success fa-2x" aria-hidden="true" title="{@yes}"></i><span class="sr-only">{@yes}</span>
                     # ELSE #
-                        <i class="fa fa-error fa-2x" title="{@no}"></i><span class="sr-only"></span>
+                        <i class="fa fa-error fa-2x" aria-hidden="true" title="{@no}"></i><span class="sr-only"></span>
                     # ENDIF #
                     </div>
                 </div>
