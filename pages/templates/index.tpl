@@ -29,7 +29,7 @@
 											</a>
 											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 										# ELSE #
-											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder"></i>{list.TITLE}</a>
+											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder" aria-hidden="true"></i>{list.TITLE}</a>
 										# ENDIF #
 										<span id="cat-{list.ID}"></span>
 									</li>

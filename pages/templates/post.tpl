@@ -31,9 +31,9 @@
 		</script>
 
 		<script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
-	
+
 		# INCLUDE message_helper #
-		
+
 		# START previewing #
 		<article>
 			<header>
@@ -43,7 +43,7 @@
 			<footer></footer>
 		</article>
 		# END previewing #
-		
+
 		<form action="post.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{L_TITLE_POST}</legend>
@@ -60,8 +60,8 @@
 						<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
 				</div>
-			</fieldset>	
-			
+			</fieldset>
+
 			<fieldset>
 				<legend>{L_PATH}</legend>
 				<div class="form-element">
@@ -75,7 +75,7 @@
 							<div class="content">
 								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 								<ul>
-									<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_ROOT}</a></li>
+									<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_ROOT}</a></li>
 									{CAT_LIST}
 								</ul>
 							</div>
@@ -83,7 +83,7 @@
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset>
 				<legend>{L_PROPERTIES}</legend>
 				<div class="form-element">
@@ -99,7 +99,7 @@
 					<div class="form-field"><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}></label></div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset>
 				<legend>{L_AUTH}</legend>
 				<div class="form-element">
@@ -121,7 +121,7 @@
 					</div>
 				</span>
 			</fieldset>
-			
+
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">

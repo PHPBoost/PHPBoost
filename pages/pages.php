@@ -13,7 +13,7 @@
 *  it under the terms of the GNU General Public License as published by
 *  the Free Software Foundation; either version 2 of the License, or
 *  (at your option) any later version.
-* 
+*
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
 *
  ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 $request = AppContext::get_request();
 
 $encoded_title = $request->get_getstring('title', '');
@@ -49,7 +49,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
@@ -64,14 +64,14 @@ if (!empty($encoded_title)) //Si on connait son titre
 	}
 	else
 		$redirect_title = '';
-		
+
 	define('TITLE', stripslashes($page_infos['title']));
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($page_infos['contents']), '<br><br/>'), 150));
-	
+
 	//Définition du fil d'Ariane de la page
 	if ($page_infos['is_cat'] == 0)
 		$Bread_crumb->add(stripslashes($page_infos['title']), PagesUrlBuilder::get_link_item($encoded_title));
-	
+
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
@@ -81,7 +81,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 			$Bread_crumb->add(stripslashes($cat['title']),
 				PagesUrlBuilder::get_link_item(Url::encode_rewrite(stripslashes($cat['title']))));
 		$id = (int)$cat['id_parent'];
-	}	
+	}
 	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
@@ -131,7 +131,7 @@ require_once('../kernel/header.php');
 if (!empty($encoded_title) && $num_rows == 1)
 {
 	$tpl = new FileTemplate('pages/page.tpl');
-	
+
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = TextHelper::unserialize($page_infos['auth']);
@@ -142,36 +142,36 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$auth = ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE));
 	$tpl->put_all(array(
 		'C_TOOLS_AUTH' => $auth,
 		'C_PRINT' => $page_infos['display_print_link'],
-	
+
 		'L_EDIT' => $LANG['pages_edit'],
 		'L_RENAME' => $LANG['pages_rename'],
 		'L_DELETE' => $LANG['pages_delete'],
 		'L_PRINT' => $LANG['printable_version'],
-	
+
 		'U_EDIT' => url('post.php?id=' . $page_infos['id']),
 		'U_RENAME' => url('action.php?rename=' . $page_infos['id']),
 		'U_DELETE' => $page_infos['is_cat'] == 1 ? url('action.php?del_cat=' . $page_infos['id']) : url('post.php?del=' . $page_infos['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_PRINT' => url('print.php?title=' . $encoded_title)
 	));
-	
+
 	//Redirections
 	if (!empty($redirect_title))
 	{
 		$tpl->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
+				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $LANG['pages_delete_redirection'] . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . $LANG['pages_delete_redirection'] . '"></i></a>' : ''
 		));
 	}
-	
+
 	//Affichage des commentaires si il y en a la possibilité
 	if ($page_infos['activ_com'] == 1 && (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_COM))))
-	{	
+	{
 		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
 		$tpl->put_all(array(
 			'C_ACTIV_COM' => true,
@@ -179,11 +179,11 @@ if (!empty($encoded_title) && $num_rows == 1)
 			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
 		));
 	}
-	
+
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = " . $page_infos['id']);
-	
+
 	$tpl->put_all(array(
 		'ID' => $page_infos['id'],
 		'TITLE' => stripslashes(stripslashes($page_infos['title'])),
@@ -192,7 +192,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		'L_LINKS' => $LANG['pages_links_list'],
 		'L_PAGE_OUTILS' => $LANG['pages_links_list']
 	));
-	
+
 	$tpl->display();
 }
 //Page non trouvée
@@ -209,7 +209,7 @@ elseif ($id_com > 0)
 	{
 		DispatchManager::redirect(PHPBoostErrors::unexisting_page());
 	}
-		
+
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = TextHelper::unserialize($page_infos['auth']);
@@ -218,9 +218,9 @@ elseif ($id_com > 0)
 	{
 		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 	}
-	
+
 	$tpl = new FileTemplate('pages/com.tpl');
-	
+
 	$comments_topic = new PagesCommentsTopic();
 	$comments_topic->set_id_in_module($id_com);
 	$comments_topic->set_url(new Url(PagesUrlBuilder::get_link_item_com($id_com,'%s')));
@@ -228,7 +228,7 @@ elseif ($id_com > 0)
 		'TITLE' => sprintf($LANG['pages_page_com'], stripslashes($page_infos['title'])),
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
-	
+
 	$tpl->display();
 }
 else
@@ -241,6 +241,6 @@ else
 	}
 }
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>
