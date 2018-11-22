@@ -43,7 +43,8 @@ class CurrentUser extends User
 	public function __construct(SessionData $session)
 	{
 		$this->id = $session->get_user_id();
-		$this->level = $session->get_cached_data('level', -1);
+		$this->level = $session->get_cached_data('level', User::VISITOR_LEVEL);
+		$this->level = ($this->level == User::ROBOT_LEVEL ? User::VISITOR_LEVEL : $this->level);
 		$this->is_admin = ($this->level == 2);
 
 		$this->display_name = $session->get_cached_data('display_name', SessionData::DEFAULT_VISITOR_DISPLAY_NAME);
