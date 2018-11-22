@@ -82,7 +82,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 	//Mod anti-flood
 	$check_time = false;
-	
+
 	if (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1)
 	{
 		try {
@@ -178,7 +178,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $locked_cat ? $LANG['e_cat_lock_forum'] : $LANG['e_cat_write']);
 				DispatchManager::redirect($controller);
 			}
-			
+
 			$tpl = new FileTemplate('forum/forum_post.tpl');
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
@@ -241,7 +241,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			);
 
 			$tpl->put_all($vars_tpl);
-			
+
 			$tpl->put('forum_top', $tpl_top->display());
 			$tpl->display();
 			$tpl->put('forum_bottom', $tpl_bottom->display());
@@ -251,7 +251,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 	{
 		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
-		
+
 		try {
 			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, nbr_msg, last_user_id, last_msg_id, status
 			FROM ' . PREFIX . 'forum_topics
@@ -271,7 +271,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		if ($check_status == ForumCategory::STATUS_LOCKED) //Verrouillée
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#message_helper');
-			
+
 		//Mod anti Flood
 		if ($check_time !== false)
 		{
@@ -297,14 +297,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$last_page = ceil( $topic['nbr_msg'] / $config->get_number_messages_per_page() );
 					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 					$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
-					
+
 					$message_content = '';
 					try {
 						$message_content = FormatingHelper::unparse(PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'contents', 'WHERE id = :id', array('id' => $topic['last_msg_id'])));
 					} catch (RowNotFoundException $e) {}
-					
+
 					$now = new Date();
-					
+
 					if (AppContext::get_current_user()->get_editor() == 'TinyMCE')
 					{
 						$message_content .= '<br /><br />-------------------------------------------<br /><em>' . $LANG['edit_on'] . ' ' . $now->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT) . '</em><br /><br />' . $contents;
@@ -318,21 +318,21 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 ' . $contents;
 					}
-					
+
 					$Forumfct->Update_msg($idt_get, $topic['last_msg_id'], $message_content, $topic['last_user_id']); //Mise à jour du topic.
 					$last_msg_id = $topic['last_msg_id'];
-					
+
 					$last_timestamp = time();
 					//Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
 					PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idt_get));
-					
+
 					//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
 					$categories = array_keys(ForumService::get_categories_manager()->get_parents($topic['idcat'], true));
 					PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idt_get), 'WHERE id IN :categories_id', array('categories_id' => $categories));
-					
+
 					//On supprime les marqueurs de messages lus pour ce message.
 					PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', array('id' => $idt_get, 'id_message' => $last_msg_id));
-					
+
 					//On marque le topic comme lu pour le posteur
 					mark_topic_as_read($idt_get, $last_msg_id, $last_timestamp);
 				}
@@ -355,20 +355,20 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		$id_m = (int)retrieve(GET, 'idm', 0);
 		$update = (bool)retrieve(GET, 'update', false);
-		
+
 		try {
 			$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
 			DispatchManager::redirect($controller);
 		}
-		
+
 		try {
 			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {
@@ -384,7 +384,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			try {
 				$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
 			} catch (RowNotFoundException $e) {}
-			
+
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
@@ -453,7 +453,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				try {
 					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_first));
 				} catch (RowNotFoundException $e) {}
-				
+
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
@@ -478,17 +478,17 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				try {
 					$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
 				} catch (RowNotFoundException $e) {}
-				
+
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
 				$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
-				
+
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
-					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
+					$img_display = $topic['display_msg'] ? 'fa fa-msg-not-display' : 'fa fa-msg-display';
 					$tpl_bottom->put_all(array(
 						'C_DISPLAY_MSG'                 => true,
 						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),
@@ -531,7 +531,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					));
 					$nbr_poll_field++;
 				}
-				
+
 				$vars_tpl = array(
 					'FORUM_NAME'           => $config->get_forum_name(),
 					'TITLE'                => stripslashes($topic['title']),
@@ -588,7 +588,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				}
 
 				$tpl->put_all($vars_tpl);
-				
+
 				$tpl->put('forum_top', $tpl_top->display());
 				$tpl->display();
 				$tpl->put('forum_bottom', $tpl_bottom->display());
@@ -602,7 +602,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			try {
 				$user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
 			} catch (RowNotFoundException $e) {}
-			
+
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
@@ -636,12 +636,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			else
 			{
 				$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-				
+
 				$contents = '';
 				try {
 					$contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'contents', 'WHERE id = :id', array('id' => $id_m));
 				} catch (RowNotFoundException $e) {}
-				
+
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
@@ -669,7 +669,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				);
 
 				$tpl->put_all($vars_tpl);
-				
+
 				$tpl->put('forum_top', $tpl_top->display());
 				$tpl->display();
 				$tpl->put('forum_bottom', $tpl_bottom->display());
@@ -688,13 +688,13 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                     $LANG['e_unexist_topic_forum']);
                 DispatchManager::redirect($controller);
 			}
 
 			$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
-			
+
 
 			//Gestion erreur.
 			switch ($error_get)
@@ -741,7 +741,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
 			$tpl = new FileTemplate('forum/forum_post.tpl');
-			
+
 
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
@@ -833,7 +833,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		}
 
 		$tpl->put_all($vars_tpl);
-		
+
 		$tpl->put('forum_top', $tpl_top->display());
 		$tpl->display();
 		$tpl->put('forum_bottom', $tpl_bottom->display());
