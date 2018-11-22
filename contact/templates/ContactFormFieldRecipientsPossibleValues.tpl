@@ -24,7 +24,7 @@ ContactFormFieldRecipientsPossibleValues.prototype = {
 			jQuery('<input/>', {type : 'email', id : 'field_email_' + id, name : 'field_email_' + id, placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}", required : "required", multiple : "multiple"}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 
-			jQuery('<a/>', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-delete" aria-hidden="true" title=""></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-delete" aria-hidden="true" title="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"></i>').appendTo('#' + id);
 
 			this.integer++;
 		}
