@@ -229,7 +229,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_FILES_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -266,21 +266,21 @@
 				<legend>{L_FILES_ACTION}</legend>
 				<div class="fieldset-inset">
 					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
+						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
 					</div>
 
 					<div class="upload-address-bar-links">
 						<a href="admin_files.php?root=1">
-							<i class="fa fa-home"></i> {L_ROOT}
+							<i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}
 						</a>
 						<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
-							<i class="fa fa-level-up"></i> {L_FOLDER_UP}
+							<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
 						</a>
 						<a href="javascript:display_new_folder();">
-							<i class="fa fa-plus"></i> {L_FOLDER_NEW}
+							<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
 						</a>
 						<a href="javascript:document.getElementById('upload-file').click();">
-							<i class="fa fa-save"></i> {L_ADD_FILES}
+							<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
 						</a>
 					</div>
 				</div>
@@ -299,12 +299,12 @@
 								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
 								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 								<div class="upload-repertory-controls">
-									# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span># ENDIF #
+									# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
 									<span>
-										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"><i class="fa fa-delete"></i></a># ENDIF #
+										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-delete" aria-hidden="true" title="{folder.L_TYPE_DEL_FOLDER}"></i></a># ENDIF #
 									</span>
 									<span>
-										# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><i class="fa fa-move"></i></a># ENDIF #
+										# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a># ENDIF #
 									</span>
 									<span id="img{folder.ID}"></span>
 								</div>
@@ -327,9 +327,9 @@
 							<span id="fi{files.ID}"></span>
 							{files.BBCODE}
 							<div class="upload-file-controls">
-								<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
-								<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-								<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="fa fa-move"></a>
+								<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" title="${LangLoader::get_message('edit', 'common')}"></i></a></span>
+								<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+								<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a>
 								{files.INSERT}
 							</div>
 							<span class="text-strong">{files.FILETYPE}</span><br />

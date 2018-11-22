@@ -1,8 +1,8 @@
-		
-		
+
+
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_FILES_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -13,24 +13,24 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			<fieldset>
 				<legend>{L_FILES_MANAGEMENT}</legend>
 				<div class="fieldset-inset">
 					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
+						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
 					</div>
-					
+
 					# INCLUDE message_helper #
 					<form action="{TARGET}" method="post">
 						<div class="upload-elements-container">
 							# START folder #
 								<div class="file-move-container">
-									<i class="fa fa-folder fa-2x"></i> {folder.NAME}
-								</div>	
+									<i class="fa fa-folder fa-2x" aria-hidden="true"></i> {folder.NAME}
+								</div>
 							# END folder #
-									
+
 							# START file #
 								<div class="file-move-container">
 									# IF file.C_DISPLAY_REAL_IMG #
@@ -43,11 +43,11 @@
 									<span class="smaller">{file.SIZE}</span><br />
 								</div>
 							# END file #
-							
+
 							<div class="file-move-container">
 								<strong>{L_MOVE_TO}</strong>
 								<br />
-								<i class="fa fa-arrow-right fa-2x"></i>
+								<i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
 							</div>
 							<div class="file-move-container">
 									<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
@@ -57,7 +57,7 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 							</div>
@@ -72,4 +72,3 @@
 				</div>
 			</fieldset>
 		</div>
-		

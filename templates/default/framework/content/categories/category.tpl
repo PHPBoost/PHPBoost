@@ -1,15 +1,15 @@
 <li id="cat-{ID}" class="sortable-element" data-id="{ID}">
 	<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
-	<div class="sortable-title"> 
-		<i class="fa fa-globe"></i>
+	<div class="sortable-title">
+		<i class="fa fa-globe" aria-hidden="true"></i>
 		<a href="{U_DISPLAY}" title="{NAME}">{NAME}</a>
 		# IF C_DESCRIPTION #<span class="cat-desc"> | {DESCRIPTION}</span># ENDIF #
 	</div>
 	<div class="sortable-actions">
-		<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up"></i></a>
-		<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;"><i class="fa fa-arrow-down"></i></a>
-		<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-		<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="fa fa-delete"></i></a>
+		<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
+		<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+		<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+		<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 	</div>
 	<script>
 	<!--
@@ -19,7 +19,7 @@
 			li.insertBefore( li.prev() );
 			change_reposition_pictures();
 		});
-		
+
 		jQuery("#move-down-{ID}").on('click',function(){
 			var li = jQuery(this).closest('li');
 			li.insertAfter( li.next() );

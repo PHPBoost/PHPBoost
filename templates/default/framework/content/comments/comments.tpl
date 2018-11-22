@@ -14,7 +14,7 @@ function refresh_comments() {
 }
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
-jQuery(document).ready(function(){ 
+jQuery(document).ready(function(){
 	jQuery("#refresh-comments").click(function() {
 		refresh_comments();
 	});
@@ -34,21 +34,21 @@ jQuery(document).ready(function(){
 				# INCLUDE COMMENT_FORM #
 			</div>
 		# ENDIF #
-		
+
 		# INCLUDE KEEP_MESSAGE #
-		
+
 		# IF C_MODERATE #
 			<div class="message-moderate">
 				# IF C_IS_LOCKED #
-				<a href="{U_UNLOCK}"><i class="fa fa-ban"></i> {@unlock}</a>
+				<a href="{U_UNLOCK}"><i class="fa fa-ban" aria-hidden="true"></i> {@unlock}</a>
 				# ELSE #
-				<a href="{U_LOCK}"><i class="fa fa-unban"></i> {@lock}</a>
+				<a href="{U_LOCK}"><i class="fa fa-unban" aria-hidden="true"></i> {@lock}</a>
 				# ENDIF #
 			</div>
 		# ENDIF #
-		
+
 		<div class="spacer"></div>
-		
+
 		# INCLUDE COMMENTS_LIST #
 	</div>
 	<footer></footer>

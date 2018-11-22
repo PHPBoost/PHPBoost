@@ -1,6 +1,6 @@
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_QUICK_LINKS}">
-				<i class="fa fa-bars"></i> {L_QUICK_LINKS}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_QUICK_LINKS}
 			</a>
 			<ul>
 				<li>
@@ -38,10 +38,10 @@
 			</div>
 
 			<div class="quick-access">
-				<h2><i class="fa fa-angle-double-right"></i> {L_QUICK_ACCESS}</h2>
+				<h2><i class="fa fa-angle-double-right" aria-hidden="true"></i> {L_QUICK_ACCESS}</h2>
 				<div class="fieldset-inset elements-container columns-3 no-style">
 					<div class="block">
-						<h3><i class="fa fa-fw fa-cogs"></i> {L_SITE_MANAGEMENT}</h3>
+						<h3><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
@@ -51,7 +51,7 @@
 						</ul>
 					</div>
 					<div class="block">
-						<h3><i class="fa fa-fw fa-image"></i> {L_CUSTOMIZE_SITE}</h3>
+						<h3><i class="fa fa-fw fa-image" aria-hidden="true"></i> {L_CUSTOMIZE_SITE}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
 							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
@@ -61,7 +61,7 @@
 						</ul>
 					</div>
 					<div class="block">
-						<h3><i class="fa fa-fw fa-plus"></i> {L_ADD_CONTENT}</h3>
+						<h3><i class="fa fa-fw fa-plus" aria-hidden="true"></i> {L_ADD_CONTENT}</h3>
 						<ul>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
 							# IF C_MODULE_ARTICLES_INSTALLED #
@@ -77,7 +77,7 @@
 			<div class="elements-container columns-2 no-style">
 				<div class="block">
 					<div class="admin-index-alert">
-						<h2><i class="fa fa-bell"></i> {L_ADMIN_ALERTS}</h2>
+						<h2><i class="fa fa-bell" aria-hidden="true"></i> {L_ADMIN_ALERTS}</h2>
 						<div class="fieldset-inset">
 							# IF C_UNREAD_ALERTS #
 								<div class="message-helper warning">{L_UNREAD_ALERT}</div>
@@ -92,12 +92,12 @@
 						</div>
 					</div>
 					<div class="admin-index-comments">
-						<h2><i class="fa fa-comment"></i> {L_LAST_COMMENTS}</h2>
+						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 						<div class="fieldset-inset">
 							# START comments_list #
-								<a href="{comments_list.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-								<a href="{comments_list.U_LINK}">
-									<i class="far fa-hand-point-right"></i>
+								<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title=""></i></a>
+								<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
+									<i class="far fa-hand-point-right" aria-hidden="true"></i>
 								</a>
 								<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
 								<br /><br />
@@ -111,7 +111,7 @@
 
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-user-online">
-							<h2><i class="fa fa-user"></i> {L_USER_ONLINE}</h2>
+							<h2><i class="fa fa-user" aria-hidden="true"></i> {L_USER_ONLINE}</h2>
 							<div class="fieldset-inset-user">
 								<table id="table">
 									<thead>
@@ -154,7 +154,7 @@
 
 					<form action="admin_index.php" method="post">
 						<div class="admin-index-writting-pad">
-							<h2><i class="fa fa-edit"></i> {L_WRITING_PAD}</h2>
+							<h2><i class="fa fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
 							<div class="fieldset-inset">
 								<div class="form-element full-field">
 									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>

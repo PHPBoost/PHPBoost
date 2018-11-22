@@ -14,7 +14,7 @@
 					'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
 					'</select> / <input type="text" name="f' + new_id + '" id="f' + new_id + '" value="">' +
-					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" class="fa fa-delete"></a>' +
+					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"><i class="fa fa-delete" aria-hidden="true" title="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '"></i></a>' +
 					'</p><span id="add_filter' + new_id + '"></span>';
 			}
 			function delete_filter(id) {
@@ -41,13 +41,13 @@
 								# END filters.modules #
 							</select>
 							/ <input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}">
-							&nbsp;<a href="javascript:delete_filter({filters.ID});" class="fa fa-delete"></a>
+							&nbsp;<a href="javascript:delete_filter({filters.ID});" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 						</p>
 						# END filters #
 
 						<span id="add_filter{NBR_FILTER}"></span>
 						<p class="center">
-							<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="fa fa-plus"></i></a>
+							<a href="javascript:add_filter({NBR_FILTER})" aria-label="{@add_filter}"><i class="fa fa-plus" aria-hidden="true" title="{@add_filter}"></i></a>
 						</p>
 					</div>
 				</div>

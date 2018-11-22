@@ -19,7 +19,7 @@
 		function img_change(url)
 		{
 			if( document.images && url != '' )
-			{	
+			{
 				document.getElementById('img_group_change').style.display = 'inline';
 				document.getElementById('img_group_change').src = "{PATH_TO_ROOT}/images/group/" + url;
 			}
@@ -46,7 +46,7 @@
 						jQuery('#search_img').children("i").remove();
 					}
 				});
-			}	
+			}
 			else
 				alert("{L_REQUIRE_LOGIN}");
 		}
@@ -54,7 +54,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GROUPS_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_GROUPS_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_GROUPS_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -65,7 +65,7 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			# IF C_EDIT_GROUP #
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
@@ -134,7 +134,7 @@
 						</div>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
@@ -145,15 +145,15 @@
 					</div>
 				</fieldset>
 			</form>
-			
+
 			# INCLUDE message_helper #
-			
+
 			<table id="table">
 				<caption>
 					{L_MBR_GROUP}
 				</caption>
 				<thead>
-					<tr> 
+					<tr>
 						<th>
 							{L_PSEUDO}
 						</th>
@@ -164,12 +164,12 @@
 				</thead>
 				<tbody>
 					# START member #
-					<tr> 
+					<tr>
 						<td>
 							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
 						</td>
 						<td>
-							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 						</td>
 					</tr>
 					# END member #
@@ -182,7 +182,7 @@
 					# ENDIF #
 				</tbody>
 			</table>
-			
+
 			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
@@ -191,7 +191,7 @@
 						<div class="form-element">
 							<label for="login">* {L_PSEUDO}</label>
 							<div class="form-field">
-								<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
+								<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr">
 								<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
 								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 							</div>
@@ -207,12 +207,12 @@
 				</fieldset>
 			</form>
 			# ENDIF #
-			
-			
+
+
 			# IF C_ADD_GROUP #
-			
+
 			# INCLUDE message_helper #
-			
+
 			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_UPLOAD_GROUPS}</legend>
@@ -231,7 +231,7 @@
 					</div>
 				</fieldset>
 			</form>
-			
+
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>

@@ -23,8 +23,8 @@
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
-						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						<a href="{comments.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+						<a href="{comments.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 					# ENDIF #
 				</span>
 				<time itemprop="datePublished" datetime="{comments.DATE_ISO8601}">{comments.DATE_FULL}</time>
@@ -36,7 +36,7 @@
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}\#com{comments.ID_COMMENT}">
 						{L_VIEW_TOPIC}
-						<i class="fa fa-arrow-circle-right"></i>
+						<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 					</a>
 					</div>
 				# ENDIF #

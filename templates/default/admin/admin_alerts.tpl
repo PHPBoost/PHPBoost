@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_ADMIN_ALERTS}">
-		<i class="fa fa-bars"></i> {L_ADMIN_ALERTS}
+		<i class="fa fa-bars aria-hidden="true""></i> {L_ADMIN_ALERTS}
 	</a>
 	<ul>
 		<li>
@@ -94,38 +94,38 @@ function delete_alert(id)
 				<tr>
 					<th>
 						# IF NOT C_ORDER_ENTITLED_ASC #
-							<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
+							<a href="{U_ORDER_ENTITLED_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 						# ENDIF #
 						{L_TYPE}
 						# IF NOT C_ORDER_ENTITLED_DESC #
-							<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
+							<a href="{U_ORDER_ENTITLED_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 						# ENDIF #
 					</th>
 					<th>
 						# IF NOT C_ORDER_CREATION_DATE_ASC #
-							<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
+							<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 						# ENDIF #
 						{L_DATE}
 						# IF NOT C_ORDER_CREATION_DATE_DESC #
-							<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
+							<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 						# ENDIF #
 					</th>
 					<th>
 						# IF NOT C_ORDER_PRIORITY_ASC #
-							<a href="{U_ORDER_PRIORITY_ASC}" class="fa fa-table-sort-up"></a>
+							<a href="{U_ORDER_PRIORITY_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 						# ENDIF #
 						{L_PRIORITY}
 						# IF NOT C_ORDER_PRIORITY_DESC #
-							<a href="{U_ORDER_PRIORITY_DESC}" class="fa fa-table-sort-down"></a>
+							<a href="{U_ORDER_PRIORITY_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 						# ENDIF #
 					</th>
 					<th>
 						# IF NOT C_ORDER_STATUS_ASC #
-							<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
+							<a href="{U_ORDER_STATUS_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 						# ENDIF #
 						{L_ACTIONS}
 						# IF NOT C_ORDER_STATUS_DESC #
-							<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
+							<a href="{U_ORDER_STATUS_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 						# ENDIF #
 					</th>
 				</tr>
@@ -145,7 +145,7 @@ function delete_alert(id)
 					<td>
 						{alerts.ACTIONS}
 						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-success# ELSE #fa-error# ENDIF #"></i></a>
-						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete"></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
 					</td>
 				</tr>
 				# END alerts #

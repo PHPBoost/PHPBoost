@@ -4,18 +4,18 @@
 
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus-block-title">{NAME}</h5>
-		
-		<a href="" class="menus-block-move-cursor" title="${LangLoader::get_message('move', 'admin')}" onclick="return false;"><i class="fa fa-arrows-alt"></i></a>
+
+		<a href="" class="menus-block-move-cursor" onclick="return false;" aria-label="${LangLoader::get_message('move', 'admin')}"><i class="fa fa-arrows-alt" aria-hidden="true" title="${LangLoader::get_message('move', 'admin')}"></i></a>
 		# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
+			<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_EDIT}"></i></a>
 		# ENDIF #
 		# IF C_DEL #
-			<a href="{U_DELETE}" title="{L_DEL}" class="fa fa-delete" data-confirmation="delete-element"></a>
+			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{L_DEL}"><i class="fa fa-delete" aria-hidden="true" title="{L_DEL}"></i></a>
 		# ENDIF #
-		
+
 		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #"><i class="fa # IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
 	</div>
-	
+
 	{CONTENTS}
 	# IF C_DOWN #<div class="menus-block-move menus-block-move-bot"><a href="{U_DOWN}" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}"></a></div># ENDIF #
 </div>

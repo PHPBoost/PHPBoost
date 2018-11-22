@@ -11,15 +11,15 @@ function menu_display_block(divID)
 {
 	if( timeout )
 		clearTimeout(timeout);
-	
+
 	if( document.getElementById(previous) )
-	{		
+	{
 		document.getElementById(previous).style.display = 'none';
 		started = false
-	}	
+	}
 
 	if( document.getElementById('move' + divID) )
-	{			
+	{
 		document.getElementById('move' + divID).style.display = 'block';
 		previous = 'move' + divID;
 		started = true;
@@ -33,10 +33,10 @@ function menu_hide_block(idfield, stop)
 	else if( started )
 		timeout = setTimeout('menu_display_block()', delay);
 }
-function minimize_container(input, containerName) 
+function minimize_container(input, containerName)
 {
 	var container = document.getElementById('mod_' + containerName);
-	
+
 	if (!container)
 		return;
 
@@ -64,7 +64,7 @@ var menusContainerList = new Array(
 	'mod_topfooter',
 	'mod_footer'
 );
-function build_menu_tree() 
+function build_menu_tree()
 {
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
@@ -77,7 +77,7 @@ function build_menu_tree()
 		}).appendTo('#form_menus');
 	}
 }
-function createSortableMenu() 
+function createSortableMenu()
 {
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
@@ -97,10 +97,10 @@ function createSortableMenu()
 
 
 	<form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
-		
+
 		<div class="themesmanagement">
 			<div>
-				<strong>{L_THEME_MANAGEMENT} :</strong> 
+				<strong>{L_THEME_MANAGEMENT} :</strong>
 				<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
 					# START themes #
 						<option value="{themes.IDNAME}" {themes.SELECTED} >{themes.NAME}</option>
@@ -108,7 +108,7 @@ function createSortableMenu()
 				</select>
 			</div>
 		</div>
-		<div id="admin-contents admin-contents-no-column">		
+		<div id="admin-contents admin-contents-no-column">
 			<div class="menusmanagement">
 				<div>
 					<div id="container-header">
@@ -135,7 +135,7 @@ function createSortableMenu()
 									{L_HEADER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
-									<i class="fa fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -172,7 +172,7 @@ function createSortableMenu()
 									{L_SUB_HEADER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu2');" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
-									<i class="fa fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -201,7 +201,7 @@ function createSortableMenu()
 												<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=7" class="small">{L_ADD_FEED_MENUS}</a>
 											</p>
 										</div>
-									</div>									
+									</div>
 									<p class="menu-block-libelle">
 										<span class="form-field-checkbox-mini">
 											<input id="left_column_enabled" onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN} />
@@ -209,7 +209,7 @@ function createSortableMenu()
 										</span>
 										{L_LEFT_MENU}
 									</p><p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
-										<i class="fa fa-plus"></i> {L_ADD_MENU}
+										<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 									</p>
 								</div>
 							</div>
@@ -239,7 +239,7 @@ function createSortableMenu()
 													<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=3" class="small">{L_ADD_FEED_MENUS}</a>
 												</p>
 											</div>
-										</div>																			
+										</div>
 										<p class="menu-block-libelle">
 											<span class="form-field-checkbox-mini">
 												<input id="top_central_enabled" onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN} />
@@ -248,7 +248,7 @@ function createSortableMenu()
 											{L_TOP_CENTRAL_MENU}
 										</p>
 										<p class="menus-block-add" onclick="menu_display_block('addmenu4');" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
-											<i class="fa fa-plus"></i> {L_ADD_MENU}
+											<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -268,7 +268,7 @@ function createSortableMenu()
 										<p class="menus-block-add"></p>
 									</div>
 								</div>
-								
+
 								<div id="mod_central">
 									# START mod_central #
 										{mod_central.MENU}
@@ -293,7 +293,7 @@ function createSortableMenu()
 													<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=4" class="small">{L_ADD_FEED_MENUS}</a>
 												</p>
 											</div>
-										</div>																		
+										</div>
 										<p class="menu-block-libelle">
 											<span class="form-field-checkbox-mini">
 												<input id="bottom_central_enabled" onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN} />
@@ -302,7 +302,7 @@ function createSortableMenu()
 											{L_BOTTOM_CENTRAL_MENU}
 										</p>
 										<p class="menus-block-add" onclick="menu_display_block('addmenu5');" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
-											<i class="fa fa-plus"></i> {L_ADD_MENU}
+											<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -331,7 +331,7 @@ function createSortableMenu()
 												<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=8" class="small">{L_ADD_FEED_MENUS}</a>
 											</p>
 										</div>
-									</div>																	
+									</div>
 									<p class="menu-block-libelle">
 										<span class="form-field-checkbox-mini">
 											<input id="right_column_enabled" onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN} />
@@ -340,7 +340,7 @@ function createSortableMenu()
 										{L_RIGHT_MENU}
 									</p>
 									<p class="menus-block-add" onclick="menu_display_block('addmenu6');" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
-										<i class="fa fa-plus"></i> {L_ADD_MENU}
+										<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 									</p>
 								</div>
 							</div>
@@ -351,10 +351,10 @@ function createSortableMenu()
 								# END mod_right #
 								<div id="menu-spacer7" class="menu-spacer"></div>
 							</div>
-						</div> 
+						</div>
 					</div><!-- container-right -->
 				</div> <!-- MenusManagementColumn -->
-			
+
 				<div>
 					<div id="container-topfooter">
 						<div class="container-block">
@@ -371,7 +371,7 @@ function createSortableMenu()
 											<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=5" class="small">{L_ADD_FEED_MENUS}</a>
 										</p>
 									</div>
-								</div>																
+								</div>
 								<p class="menu-block-libelle">
 									<span class="form-field-checkbox-mini">
 										<input id="top_footer_enabled" onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN} />
@@ -380,7 +380,7 @@ function createSortableMenu()
 									{L_TOP_FOOTER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu7');" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
-									<i class="fa fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -408,7 +408,7 @@ function createSortableMenu()
 											<a href="{PATH_TO_ROOT}/admin/menus/feed.php?s=6" class="small">{L_ADD_FEED_MENUS}</a>
 										</p>
 									</div>
-								</div>																
+								</div>
 								<p class="menu-block-libelle">
 									<span class="form-field-checkbox-mini">
 										<input id="footer_enabled" onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN} />
@@ -417,7 +417,7 @@ function createSortableMenu()
 									{L_FOOTER}
 								</p>
 								<p class="menus-block-add" onclick="menu_display_block('addmenu8');" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
-									<i class="fa fa-plus"></i> {L_ADD_MENU}
+									<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
 								</p>
 							</div>
 						</div>
@@ -428,16 +428,16 @@ function createSortableMenu()
 							<div id="menu-spacer9" class="menu-spacer"></div>
 						</div>
 					</div>
-				</div> <!-- container-footer -->	
+				</div> <!-- container-footer -->
 			</div> <!-- MenuManagment -->
-		
+
 			<div id="valid-position-menus">
 				<button type="submit" class="submit" name="valid" value="true">{L_VALID_POSTIONS}</button>
 				<input type="hidden" name="theme" value="{NAME_THEME}">
 				<input type="hidden" name="token" value="{TOKEN}">
 			</div>
 		</div> <!-- admin-contents -->
-		
+
 		<script>
 		<!--
 		jQuery(document).ready(function() {
@@ -446,5 +446,3 @@ function createSortableMenu()
 		-->
 		</script>
 	</form>
-
-		

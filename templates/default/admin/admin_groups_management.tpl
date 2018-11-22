@@ -1,6 +1,6 @@
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GROUPS_MANAGEMENT}">
-				<i class="fa fa-bars"></i> {L_GROUPS_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_GROUPS_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -43,10 +43,10 @@
 									{group.IMAGE}
 								</td>
 								<td>
-									<a href="admin_groups.php?id={group.ID}" title="{L_UPDATE}" class="fa fa-edit"></a>
+									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true" title="{L_UPDATE}"></i></a>
 								</td>
 								<td>
-									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
 								</td>
 							</tr>
 							# END group #

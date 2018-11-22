@@ -63,7 +63,7 @@ h3.title1, h3.title2 {
 	border-style: solid;
 	border-color: transparent;
 	padding: 0 0 0 3px;
-	margin-bottom: 15px;
+	margin-bottom: 1em;
 	font-weight: bold;
 }
 
@@ -75,26 +75,26 @@ h3.title1 {
 /* --- Titre 2 --- */
 h3.title2 {
 	display: inline-block;
-	margin-left: 20px;
+	margin-left: 1.309em;
 	font-size: 1.7em;
 }
 
 /* --- Sous titre 1 --- */
 h4.stitle1 {
-	margin: 0 0 10px 40px;
+	margin: 0 0 0.618em 2.618em;
 	font-size: 1.5em;
 }
 
 /* --- Sous titre 2 --- */
 h4.stitle2 {
-	margin: 0 0 10px 60px;
+	margin: 0 0 0.618em 4.236em;
 	font-size: 1.3em;
 }
 
 /* --- Les listes --- */
 ul, ol {
-	margin-left: 20px;
-	margin-bottom: 10px;
+	margin-left: 1.309em;
+	margin-bottom: 0.618em;
 }
 
 /* -- Mise en forme du contenu ===========================================*/
@@ -141,11 +141,11 @@ ul, ol {
 
 .calendar-block .date-picker a {
 	display: block;
-	padding: 10px 0;
+	padding: 0.618em 0;
 }
 
 .calendar-block .date-select-container {
-	padding: 2px 0;
+	padding: 0.1618em 0;
 	border-radius: 3px 3px 0 0;
 }
 
@@ -161,7 +161,7 @@ ul, ol {
 .calendar-block .date-select-next i,
 .calendar-block .date-select-previous i {
 	display: block;
-	padding: 0 10px;
+	padding: 0 0.618em;
 }
 
 .calendar-block .date-select-content {
@@ -190,7 +190,7 @@ ul, ol {
 }
 
 .calendar-block .date-picker thead tr th {
-	padding: 5px 0;
+	padding: 0.309em 0;
 	border-width: 1px 0 0 0;
 	border-style: solid;
 	border-color: transparent;
@@ -277,8 +277,8 @@ ul, ol {
 
 .blockquote, .code, .hide {
 	overflow: auto;
-	margin: 0 25px;
-	padding: 8px;
+	margin: 0 1.482em;
+	padding: 0.618em;
 	max-height: 500px;
 	border-width: 1px;
 	border-style: solid;
@@ -288,7 +288,7 @@ ul, ol {
 
 .hide {
 	cursor: pointer;
-	height: 10px;
+	height: 0.618em;
 	overflow: hidden;
 }
 
@@ -309,15 +309,15 @@ ul, ol {
 .formatter-block {
 	display: block;
 	overflow: hidden;
-	margin: 5px 20px;
-	padding: 5px;
+	margin: 0.309em 1.309em;
+	padding: 0.309em;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 }
 
 .formatter-fieldset {
-	margin: 10px;
+	margin: 0.618em;
 }
 
 .formatter-ul {
@@ -349,7 +349,7 @@ ul, ol {
 /* --- La barre de progression --- */
 .progressbar-container {
 	position: relative;
-	margin: 4px 0 10px;
+	margin: 4px 0 0.618em;
 	padding: 2px;
 	border-radius: 3px;
 }
@@ -385,7 +385,7 @@ ul, ol {
 
 .notation .star,
 .static-notation .star {
-	padding-right: 5px;
+	padding-right: 0.309em;
 	font-size: 1.1em;
 	text-decoration: none;
 }
@@ -401,7 +401,7 @@ li.block .fa-stack {
 	position: absolute;
 	z-index: 1;
 	top: -3px;
-	left: 20px;
+	left: 1.309em;
 	font-size: 1.32em;
 }
 
@@ -417,7 +417,7 @@ li.block .fa-stack {
 
 /* --- menu de flux --- */
 .feed-list {
-	margin: 5px 0;
+	margin: 0.309em 0;
 	list-style-type: none;
 	text-align: left;
 }
@@ -437,7 +437,7 @@ li.block .fa-stack {
 }
 
 .list {
-	margin-top: 8px
+	margin-top: 0.618em
 }
 
 /* --- menu de flux avec image --- */
@@ -456,7 +456,7 @@ li.block .fa-stack {
 /* --- menus de contenu --- */
 .block-contents div {
 	text-align: justify;
-	padding-top: 5px;
+	padding-top: 0.309em;
 }
 
 /* -- Les message d erreurs --
@@ -476,14 +476,14 @@ div.message-helper-small {
 	display: block;
 	overflow: hidden;
 	height: auto;
-	padding: 10px 10px 10px 40px;
-	margin: 5px auto 15px auto;
+	padding: 0.618em 0.618em 0.618em 2.618em;
+	margin: 0.309em auto 1em auto;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 	border-radius: 4px;
 	text-align: left;
-	line-height: 20px;
+	line-height: 1.309em;
 }
 
 .message-helper:before {
@@ -528,15 +528,15 @@ div.message-helper-small {
 
 	.floating-message-container .message-helper {
 		max-width: 90%;
-		padding: 10px 10px 10px 50px;
+		padding: 0.618em 0.618em 0.618em 2.618em;
 	}
 }
 
 .floating-message-container .message-helper-button {
 	position: absolute;
 	z-index: 1;
-	top: -10px;
-	right: -10px;
+	top: -0.618em;
+	right: -0.618em;
 	height: 1.482em;
 	width: 1.482em;
 	border-radius: 100em;
