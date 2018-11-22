@@ -14,7 +14,7 @@
 				{LAST_UPDATE}
 			</td>
 			<td class="no-separator trend-head">
-				# IF C_PICTURE #<i class="fa fa-trend-{PICTURE}"></i> # ENDIF #({SIGN}{TREND}%)
+				# IF C_PICTURE #<i class="fa fa-trend-{PICTURE}" aria-hidden="true"></i> # ENDIF #({SIGN}{TREND}%)
 			</td>
 		</tr>
 	</tbody>

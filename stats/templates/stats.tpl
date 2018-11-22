@@ -6,52 +6,52 @@
 
 		<nav id="menustats">
 			<a href="" class="js-menu-button" onclick="open_stats_menu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
-				<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
+				<i class="fa fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
 			</a>
 			<ul>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats">
-						<i class="fa fa-home"></i> <span>{L_SITE}</span>
+						<i class="fa fa-home" aria-hidden="true"></i> <span>{L_SITE}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats">
-						<i class="fa fa-users"></i> <span>{L_USERS}</span>
+						<i class="fa fa-users" aria-hidden="true"></i> <span>{L_USERS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">
-						<i class="fa fa-eye"></i> <span>{L_VISITS}</span>
+						<i class="fa fa-eye" aria-hidden="true"></i> <span>{L_VISITS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats">
-						<i class="far fa-file"></i> <span>{L_PAGES}</span>
+						<i class="far fa-file" aria-hidden="true"></i> <span>{L_PAGES}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">
-						<i class="fa fa-globe"></i> <span>{L_BROWSERS}</span>
+						<i class="fa fa-globe" aria-hidden="true"></i> <span>{L_BROWSERS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">
-						<i class="fa fa-laptop"></i> <span>{L_OS}</span>
+						<i class="fa fa-laptop" aria-hidden="true"></i> <span>{L_OS}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">
-						<i class="fa fa-flag"></i> <span>{L_LANG}</span>
+						<i class="fa fa-flag" aria-hidden="true"></i> <span>{L_LANG}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats">
-						<i class="fa fa-share-square"></i> <span>{L_REFERER}</span>
+						<i class="fa fa-share-square" aria-hidden="true"></i> <span>{L_REFERER}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats">
-						<i class="fa fa-key"></i> <span>{L_KEYWORD}</span>
+						<i class="fa fa-key" aria-hidden="true"></i> <span>{L_KEYWORD}</span>
 					</a>
 				</li>
 			</ul>
@@ -242,7 +242,7 @@
 						# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
 						<div class="date-selector-container">
 							<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-							<a class="fa fa-arrow-left" href="stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoader::get_message('previous', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 							# IF C_STATS_DAY #
 							<select name="d">
 								{STATS_DAY}
@@ -260,7 +260,7 @@
 							# ENDIF #
 
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
+							<a href="stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoader::get_message('next', 'common')}"></i></a>
 							<p>
 								<input type="hidden" name="{TYPE}" value="1">
 								<input type="hidden" name="token" value="{TOKEN}">

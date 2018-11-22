@@ -14,57 +14,57 @@
 			<div class="fieldset-inset">
 				<nav id="menustats">
 					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
-						<i class="fa fa-bars"></i> ${LangLoader::get_message('categories', 'categories-common')}
+						<i class="fa fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
 					</a>
 					<ul>
 						<li>
 							<a href="admin_stats.php?site=1#stats">
-								<i class="fa fa-home"></i> <span>{L_SITE}</span>
+								<i class="fa fa-home" aria-hidden="true"></i> <span>{L_SITE}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?members=1#stats">
-								<i class="fa fa-users"></i> <span>{L_USERS}</span>
+								<i class="fa fa-users" aria-hidden="true"></i> <span>{L_USERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?visit=1#stats">
-								<i class="fa fa-eye"></i> <span>{L_VISITS}</span>
+								<i class="fa fa-eye" aria-hidden="true"></i> <span>{L_VISITS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?pages=1#stats">
-								<i class="far fa-file"></i> <span>{L_PAGES}</span>
+								<i class="far fa-file" aria-hidden="true"></i> <span>{L_PAGES}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?browser=1#stats">
-								<i class="fa fa-globe"></i> <span>{L_BROWSERS}</span>
+								<i class="fa fa-globe" aria-hidden="true"></i> <span>{L_BROWSERS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?os=1#stats">
-								<i class="fa fa-laptop"></i> <span>{L_OS}</span>
+								<i class="fa fa-laptop" aria-hidden="true"></i> <span>{L_OS}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?lang=1#stats">
-								<i class="fa fa-flag"></i> <span>{L_LANG}</span>
+								<i class="fa fa-flag" aria-hidden="true"></i> <span>{L_LANG}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?referer=1#stats">
-								<i class="fa fa-share-square"></i> <span>{L_REFERER}</span>
+								<i class="fa fa-share-square" aria-hidden="true"></i> <span>{L_REFERER}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?keyword=1#stats">
-								<i class="fa fa-key"></i> <span>{L_KEYWORD}</span>
+								<i class="fa fa-key" aria-hidden="true"></i> <span>{L_KEYWORD}</span>
 							</a>
 						</li>
 						<li>
 							<a href="admin_stats.php?bot=1#stats">
-								<i class="fa fa-search"></i> <span>{L_ROBOTS}</span>
+								<i class="fa fa-search" aria-hidden="true"></i> <span>{L_ROBOTS}</span>
 							</a>
 						</li>
 					</ul>
@@ -246,8 +246,8 @@
 					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
-							<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;
-							<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;
+							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoade::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoade::get_message('previous', 'common')}"></i></a>&nbsp;
+							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoade::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoade::get_message('next', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;
 						</p>
 						# IF C_STATS_DAY #
 						<select name="d" style="width: 80%; margin: 5px auto;">
@@ -753,7 +753,7 @@
 								<label>{L_READ_AUTHORIZATION}</label>
 								<div class="form-field">{READ_AUTHORIZATION}</div>
 							</div>
-						</div>						
+						</div>
 					</div>
 				</fieldset>
 
