@@ -115,7 +115,7 @@ class UserCommentsController extends AbstractController
 			
 			$template->assign_block_vars('comments', array(
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
-				'C_VISITOR' => empty($row['login']),
+				'C_VISITOR' => empty($row['display_name']),
 				'C_VIEW_TOPIC' => true,
 				'C_GROUP_COLOR' => !empty($group_color),
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
@@ -130,14 +130,14 @@ class UserCommentsController extends AbstractController
 				'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
 				'MESSAGE' => FormatingHelper::second_parse($row['message']),
-					
+				
 				// User
 				'USER_ID' => $row['user_id'],
-				'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
+				'PSEUDO' => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				
-				'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1')
+				'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
 			));
 			
 			$template->put_all(array(
