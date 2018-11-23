@@ -91,7 +91,7 @@ body {
 	border-color: #81A4C8;
 }
 
-.explorer .content ul a:hover {
+.explorer .content ul a:not(.parent):hover {
 	background-color: rgba(54, 100, 147, 0.15);
 }
 

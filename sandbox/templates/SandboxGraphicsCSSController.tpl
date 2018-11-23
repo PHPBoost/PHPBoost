@@ -5,8 +5,8 @@
 		</h1>
 	</header>
 	<div class="sandbox-summary">
-      <div class="close-summary">
-        <i class="fa fa-arrow-circle-left"></i>
+      <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
+        <i class="fa fa-arrow-circle-left" arria-hidden="true"></i>
       </div>
       <ul>
         <li>
@@ -48,7 +48,7 @@
       </ul>
     </div>
 	<div class="open-summary">
-        <i class="fa fa-arrow-circle-right"></i> {@sandbox.summary}
+        <i class="fa fa-arrow-circle-right" arria-hidden="true"></i> {@sandbox.summary}
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
 
@@ -56,20 +56,20 @@
 		<h2>{@css.title.framework}</h2>
 	</div>
 
-	<div class="no-style">
+	<div class="no-style" aria-labelledby="content">
 		<article id="page-title" class="block">
 			<header>
 				<h2>
 					<span>{@css.page.title}</span>
-					<span class="actions">
-						<a href="#" class="fa fa-edit" title="{@css.edit}"></a>
-						<a href="#" class="fa fa-delete" title="{@css.delete}"></a>
-					</span>
 				</h2>
+				<span class="actions">
+					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" arria-hidden="true"></i></a>
+					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" arria-hidden="true"></i></a>
+				</span>
 				<div class="more">{@css.more}</div>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				<div>{@framework.lorem.large}</div>
 			</div>
 		</article>
@@ -140,14 +140,14 @@
 				<div class="options infos">
 					<div class="center">
 						<span>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" title="PHPBoost" itemprop="image">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
 						</span>
 						<div class="spacer"></div>
 						<a href="#" class="basic-button">
-							<i class="fa fa-globe"></i> {@css.options.link}
+							<i class="fa fa-globe" arria-hidden="true"></i> {@css.options.link}
 						</a>
-						<a href="#" class="basic-button alt" title="{@css.options.link}">
-							<i class="fa fa-unlink"></i>
+						<a href="#" class="basic-button alt" aria-label="{@css.options.link}">
+							<i class="fa fa-unlink" arria-hidden="true"></i>
 						</a>
 					</div>
 					<h6>{@css.options.file.title}</h6>
@@ -166,7 +166,7 @@
 							</span>
 							<span class="notes">
 								<span class="number-notes">0</span>
-								<span title="0 {@css.options.sort_by.note}">{@css.options.sort_by.note}</span>
+								<span>{@css.options.sort_by.note}</span>
 							</span>
 						</div>
 					</div>
@@ -226,7 +226,7 @@
 				<em>{@css.text_italic}</em><br />
 				<span style="text-decoration: underline;">{@css.text_underline}</span><br />
 				<strike>{@css.text_strike}</strike><br />
-				<a href="#" title="{@css.link}">{@css.link}</a>
+				<a href="#">{@css.link}</a>
 			</div>
 		</article>
 		<article id="rank-colors" class="block">
@@ -234,9 +234,9 @@
 				<h5>{@css.rank_color}</h5>
 			</header>
 			<div class="content">
-				<a href="#" class="admin" title="{@css.admin}">{@css.admin}</a> <br />
-				<a href="#" class="modo" title="{@css.modo}">{@css.modo}</a> <br />
-				<a href="#" class="member" title="{@css.member}">{@css.member}</a> <br />
+				<a href="#" class="admin">{@css.admin}</a> <br />
+				<a href="#" class="modo">{@css.modo}</a> <br />
+				<a href="#" class="member">{@css.member}</a> <br />
 			</div>
 		</article>
 	</div>
@@ -283,11 +283,11 @@
 			</header>
 			<div class="content">
 				<ul>
-					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" title="{@css.rss_feed}"></a></li>
-					<li>{@css.edit} : <a href="#" class="fa fa-edit" title="{@css.edit}"></a></li>
-					<li>{@css.delete} : <a href="#" class="fa fa-delete" title="{@css.delete}"></a></li>
-					<li>{@css.delete.confirm} : <a href="#" class="fa fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a></li>
-					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}" title="{@css.delete.confirm.custom}"></a></li>
+					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" aria-label="{@css.rss_feed}"></a></li>
+					<li>{@css.edit} : <a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a></li>
+					<li>{@css.delete} : <a href="#" class="fa fa-delete" aria-label="{@css.delete}"></a></li>
+					<li>{@css.delete.confirm} : <a href="#" class="fa fa-delete" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
+					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}" aria-label="{@css.delete.confirm.custom}"></a></li>
 				</ul>
 			</div>
 		</article>
@@ -311,18 +311,18 @@
 							<h2>{@css.explorer}</h2>
 						<div class="content">
 							<ul>
-								<li><a id="class_0" href="#" title="{@css.root}"><i class="fa fa-folder"></i>{@css.root}</a>
+								<li><a id="class_0" href="#"><i class="fa fa-folder"></i>{@css.root}</a>
 									<ul>
-										<li class="sub"><a id="class_1" href="#" title="{@css.cat} 1"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
+										<li class="sub"><a id="class_1" href="#"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
 										<li class="sub">
-											<a class="parent" href="javascript:show_cat_contents(2, 0);" title="{@css.cat} 2">
-												<span class="far fa-minus-square" id="img2_2"></span><span class="fa fa-folder-open" id ="img_2"></span>
+											<a class="parent" href="#">
+												<span class="far fa-minus-square" id="img2_2"></span><span class="fa fa-folder-open" id="img_2"></span>
 											</a>
-											<a class="selected" id="class_2" href="#" title="{@css.cat} 2">{@css.cat} 2</a>
+											<a class="selected" id="class_2" href="#">{@css.cat} 2</a>
 											<span id="cat_2">
 												<ul>
-													<li class="sub"><a href="#"><i class="fa fa-folder" title="{@css.cat} 3"></i>{@css.cat} 3</a></li>
-													<li class="sub"><a href="#"><i class="fa fa-folder" title="{@css.cat} 4"></i>{@css.cat} 4</a></li>
+													<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
+													<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
 												</ul>
 											</span>
 										</li>
@@ -335,10 +335,10 @@
 							<h2>{@css.tree}</h2>
 						<div class="content" id="cat_contents">
 							<ul>
-								<li><a href="#" title="{@css.cat} 3"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
-								<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);" title="{@css.cat} 4"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
-								<li><a href="#" title="{@css.file} 1"><i class="fa fa-file"></i>{@css.file} 1</a></li>
-								<li><a href="#" title="{@css.file} 2"><i class="fa fa-file"></i>{@css.file} 2</a></li>
+								<li><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
+								<li><a href="#"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
+								<li><a href="#"><i class="fa fa-file"></i>{@css.file} 1</a></li>
+								<li><a href="#"><i class="fa fa-file"></i>{@css.file} 2</a></li>
 							</ul>
 						</div>
 					</div>
@@ -424,7 +424,7 @@
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-1"><span class="star-width star-width-100"></span></a>
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-25"></span></a>
 					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a> 
+					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>
 				</div>
 			</div>
 		</article>
@@ -446,13 +446,13 @@
 			<div class="content">
 				<ul class="sortable-block">
 					<li class="sortable-element">
-						<div class="sortable-selector" title="{@css.sortable.move}"></div>
+						<div class="sortable-selector" aria-label="{@css.sortable.move}"></div>
 						<div class="sortable-title">
 							<span><a>{@css.static.sortable}</a></span>
 						</div>
 					</li>
 					<li class="sortable-element dragged" style="position: relative;">
-						<div class="sortable-selector" title="{@css.sortable.move}"></div>
+						<div class="sortable-selector" aria-label="{@css.sortable.move}"></div>
 						<div class="sortable-title">
 							<span><a>{@css.moving.sortable}</a></span>
 						</div>
@@ -485,9 +485,9 @@
 					<thead>
 						<tr>
 							<th>
-								<a href="#" class="fa fa-table-sort-up" title="{@css.table.sort.up}"></a>
+								<a href="#" class="fa fa-table-sort-up" aria-label="{@css.table.sort.up}"></a>
 								{@css.table.name}
-								<a href="#" class="fa fa-table-sort-down" title="{@css.table.sort.down}"></a>
+								<a href="#" class="fa fa-table-sort-down" aria-label="{@css.table.sort.down}"></a>
 							</th>
 							<th>{@css.table.description}</th>
 							<th>{@css.table.author}</th>
@@ -538,17 +538,17 @@
 
 						<div class="message-user-infos">
 							<div class="message-pseudo">
-								<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" title="{@css.messages.login}">{@css.messages.login}</a>
+								<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin">{@css.messages.login}</a>
 								<div class="message-level">{@css.messages.level}</div>
 							</div>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" />
 						</div>
 
 						<div class="message-date">
 							<span class="actions">
-								<a itemprop="url" href="#com2" title="#2">#2</a>
-								<a href="#" class="fa fa-edit" title="{@css.edit}"></a>
-								<a href="#" class="fa fa-delete" data-confirmation="delete-element" title="{@css.delete.confirm}"></a>
+								<a itemprop="url" href="#com2">#2</a>
+								<a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a>
+								<a href="#" class="fa fa-delete" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a>
 							</span>
 							<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 						</div>
@@ -599,7 +599,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.medium}
 			</div>
 		</article>
@@ -612,7 +612,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -621,7 +621,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -634,7 +634,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -643,7 +643,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>
@@ -652,7 +652,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" title="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
 				{@framework.lorem.mini}
 			</div>
 		</article>

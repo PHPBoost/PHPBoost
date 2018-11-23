@@ -11,41 +11,41 @@
 				<nav id="horizontal-scrolling-top" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+							<a class="cssmenu-title" href="#">
 								<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 							</a>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+									<a class="cssmenu-title" href="#">
 										<img src="{PATH_TO_ROOT}/templates/base/theme/images/logo.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 									</a>
 								</li>
 								<li class="has-sub">
-									<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}"><img src="{PATH_TO_ROOT}/sandbox/sandbox.png" alt="{@cssmenu.element}" />{@cssmenu.sub.element}</span>
+									<span class="cssmenu-title" href="#"><img src="{PATH_TO_ROOT}/sandbox/sandbox.png" alt="{@cssmenu.element}" />{@cssmenu.sub.element}</span>
 									<ul class="level-2">
 										<li>
-											<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+											<a class="cssmenu-title" href="#">
 												<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 											</a>
 										</li>
 										<li class="has-sub">
-											<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+											<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 											<ul class="level-3">
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+													<a class="cssmenu-title" href="#">
 														<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 													</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+													<a class="cssmenu-title" href="#">
 														<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 													</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+													<a class="cssmenu-title" href="#">
 														<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />{@cssmenu.element}
 													</a>
 												</li>
@@ -56,19 +56,19 @@
 							</ul>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 							</ul>
 						</li>
@@ -82,48 +82,48 @@
 				<nav id="horizontal-sub-header" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li class="has-sub">
-							<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin" title="{@cssmenu.sub.admin}">{@cssmenu.sub.admin}</a>
+							<a class="cssmenu-title" href="{PATH_TO_ROOT}/admin">{@cssmenu.sub.admin}</a>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li class="has-sub">
-									<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+									<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 									<ul class="level-2">
 										<li>
-											<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+											<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 										</li>
 										<li class="has-sub">
-											<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+											<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 											<ul class="level-3">
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 											</ul>
 										</li>
@@ -151,31 +151,31 @@
 					<nav id="vertical-scrolling-left" class="cssmenu cssmenu-vertical cssmenu-left cssmenu-with-submenu">
 						<ul class="level-0">
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li class="has-sub">
-								<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 								<ul class="level-1">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li class="has-sub">
-										<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+										<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 										<ul class="level-2">
 											<li>
-												<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+												<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 											</li>
 											<li class="has-sub">
-												<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+												<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 												<ul class="level-3">
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 												</ul>
 											</li>
@@ -184,19 +184,19 @@
 								</ul>
 							</li>
 							<li class="has-sub">
-								<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 								<ul class="level-1">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 								</ul>
 							</li>
@@ -215,25 +215,25 @@
 					<nav id="vertical-img" class="cssmenu cssmenu-vertical cssmenu-left">
 						<ul class="level-0">
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+								<a class="cssmenu-title" href="#">
 									<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />
 									{@cssmenu.element}
 								</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+								<a class="cssmenu-title" href="#">
 									<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />
 									{@cssmenu.element}
 								</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+								<a class="cssmenu-title" href="#">
 									<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />
 									{@cssmenu.element}
 								</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">
+								<a class="cssmenu-title" href="#">
 									<img src="{PATH_TO_ROOT}/sandbox/sandbox_mini.png" alt="{@cssmenu.element}" />
 									{@cssmenu.element}
 								</a>
@@ -253,31 +253,31 @@
 				<nav id="horizontal-scrolling" class="cssmenu cssmenu-horizontal">
 					<ul class="level-0">
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li class="has-sub">
-									<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+									<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 									<ul class="level-2">
 										<li>
-											<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+											<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 										</li>
 										<li class="has-sub">
-											<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+											<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 											<ul class="level-3">
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 												<li>
-													<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+													<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 												</li>
 											</ul>
 										</li>
@@ -286,19 +286,19 @@
 							</ul>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 							</ul>
 						</li>
@@ -313,53 +313,53 @@
 				<nav id="sandbox-actionslinks" class="cssmenu cssmenu-right cssmenu-actionslinks">
 					<ul class="level-0">
 						<li class="has-sub">
-							<span class="cssmenu-title" href="#" title="{@cssmenu.actionslinks.sandbox}">{@cssmenu.actionslinks.sandbox}</span>
+							<span class="cssmenu-title" href="#">{@cssmenu.actionslinks.sandbox}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox" title="{@cssmenu.actionslinks.index}">{@cssmenu.actionslinks.index}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox">{@cssmenu.actionslinks.index}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/admin/config" title="{@mini.config}">{@mini.config}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/admin/config">{@mini.config}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/form" title="{@cssmenu.actionslinks.css}">{@cssmenu.actionslinks.form}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/form">{@cssmenu.actionslinks.form}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/css" title="{@cssmenu.actionslinks.css}">{@cssmenu.actionslinks.css}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/css">{@cssmenu.actionslinks.css}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/bbcode" title="{@cssmenu.actionslinks.css}">{@cssmenu.actionslinks.bbcode}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/bbcode">{@cssmenu.actionslinks.bbcode}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/menu" title="{@cssmenu.actionslinks.menu}">{@cssmenu.actionslinks.menu}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/menu">{@cssmenu.actionslinks.menu}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/icons" title="{@cssmenu.actionslinks.icons}">{@cssmenu.actionslinks.icons}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/icons">{@cssmenu.actionslinks.icons}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/table" title="{@cssmenu.actionslinks.table}">{@cssmenu.actionslinks.table}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/table">{@cssmenu.actionslinks.table}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/mail" title="{@cssmenu.actionslinks.mail}">{@cssmenu.actionslinks.mail}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/mail">{@cssmenu.actionslinks.mail}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/template" title="{@cssmenu.actionslinks.template}">{@cssmenu.actionslinks.template}</a>
+									<a class="cssmenu-title" href="{PATH_TO_ROOT}/sandbox/template">{@cssmenu.actionslinks.template}</a>
 								</li>
 							</ul>
 						</li>
 						<li class="has-sub">
-							<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+							<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 								<li>
-									<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 					</ul>
 				</nav>
@@ -368,12 +368,12 @@
 				<nav id="breadcrumb" itemprop="breadcrumb">
 					<ol>
 						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-							<a href="{PATH_TO_ROOT}/" title="{@cssmenu.breadcrumb.index}" itemprop="url">
+							<a href="{PATH_TO_ROOT}/" itemprop="url">
 								<span itemprop="title">{@cssmenu.breadcrumb.index}</span>
 							</a>
 						</li>
 						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-							<a href="{PATH_TO_ROOT}/sandbox" title="{@cssmenu.breadcrumb.sandbox}" itemprop="url">
+							<a href="{PATH_TO_ROOT}/sandbox" itemprop="url">
 								<span itemprop="title">{@cssmenu.breadcrumb.sandbox}</span>
 							</a>
 						</li>
@@ -396,16 +396,16 @@
 							<nav id="sandbox-group" class="cssmenu cssmenu-group">
 								<ul class="level-0">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li class="current">
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 								</ul>
 							</nav>
@@ -439,31 +439,31 @@
 					<nav id="vertical-scrolling-right" class="cssmenu cssmenu-vertical cssmenu-right cssmenu-with-submenu">
 						<ul class="level-0">
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li class="has-sub">
-								<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 								<ul class="level-1">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li class="has-sub">
-										<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+										<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 										<ul class="level-2">
 											<li>
-												<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+												<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 											</li>
 											<li class="has-sub">
-												<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+												<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 												<ul class="level-3">
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 													<li>
-														<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+														<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 													</li>
 												</ul>
 											</li>
@@ -472,19 +472,19 @@
 								</ul>
 							</li>
 							<li class="has-sub">
-								<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 								<ul class="level-1">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 								</ul>
 							</li>
@@ -505,57 +505,57 @@
 			<nav id="sandbox-static" class="cssmenu cssmenu-static">
 				<ul class="level-0">
 					<li class="has-sub">
-						<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+						<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 						<ul class="level-1">
 							<li class="has-sub">
-								<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 								<ul class="level-2">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li class="has-sub">
-								<span class="cssmenu-title" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 								<ul class="level-2">
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 									<li>
-										<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 									</li>
 								</ul>
 							</li>
 						</ul>
 					</li>
 					<li class="has-sub">
-						<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+						<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 						<ul class="level-1">
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 						</ul>
 					</li>
 					<li class="has-sub">
-						<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+						<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 						<ul class="level-1">
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 							<li>
-								<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 							</li>
 						</ul>
 					</li>
@@ -568,35 +568,35 @@
 			<nav id="sandbox-static-footer" class="cssmenu cssmenu-static">
 			<ul class="level-0">
 				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+					<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 					<ul class="level-1">
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 					</ul>
 				</li>
 				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+					<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 					<ul class="level-1">
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 					</ul>
 				</li>
 				<li class="has-sub">
-					<span class="cssmenu-title" href="#" title="{@cssmenu.sub.element}">{@cssmenu.sub.element}</span>
+					<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 					<ul class="level-1">
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 						<li>
-							<a class="cssmenu-title" href="#" title="{@cssmenu.element}">{@cssmenu.element}</a>
+							<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
 						</li>
 					</ul>
 				</li>

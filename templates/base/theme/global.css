@@ -40,7 +40,6 @@ h5 { font-size: 1.4em; }
 h6 { font-size: 1.2em; }
 
 h1, h2, h3, h4, h5, h6 {
-	overflow: hidden;
 	font-weight: 400;
 	word-wrap: normal;
 	overflow-wrap: normal;

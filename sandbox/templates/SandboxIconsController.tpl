@@ -1,8 +1,6 @@
 <style>
-	<!--
-		.code {margin-bottom: 5px;}
-		.fa:before {margin-right: 3px}
-	-->
+	.code {margin-bottom: 5px;}
+	.fa:before {margin-right: 3px}
 </style>
 
 <section>
@@ -55,7 +53,7 @@
 				</tbody>
 			</table>
 		</div>
-		<footer>{@iconfa.list}<a class="basic-button" href="https://fontawesome.com/icons?d=listing&m=free" title="Font-Awesome">Cheatsheet Font-Awesome</a></footer>
+		<footer>{@iconfa.list}<a class="basic-button" href="https://fontawesome.com/icons?d=listing&m=free">Cheatsheet Font-Awesome</a></footer>
 	</article>
 
 	<article>

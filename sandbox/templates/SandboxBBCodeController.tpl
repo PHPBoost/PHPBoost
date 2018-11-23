@@ -6,8 +6,8 @@
 	</header>
 
 	<div class="sandbox-summary">
-	  <div class="close-summary">
-		<i class="fa fa-arrow-circle-left"></i>
+	  <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
+        <i class="fa fa-arrow-circle-left" arria-hidden="true"></i>
 	  </div>
 	  <ul>
 		<li>
@@ -48,7 +48,7 @@
 	  </ul>
 	</div>
 	<div class="open-summary">
-		<i class="fa fa-arrow-circle-right"></i> {@sandbox.summary}
+		<i class="fa fa-arrow-circle-right" arria-hidden="true"></i> {@sandbox.summary}
 	</div>
 
 	<div id="typography" class="sandbox-title">
@@ -237,7 +237,7 @@
 				<h5>{@bbcode.image}</h5>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.image}" title="{@bbcode.image}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.image}" />
 			</div>
 		</article>
 		<article id="lightbox" class="block">
@@ -245,10 +245,10 @@
 				<h5>{@bbcode.lightbox}</h5>
 			</header>
 			<div class="content">
-				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" data-lightbox="formatter" data-rel="lightcase:collection" title="{@bbcode.lightbox}">
+				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" data-lightbox="formatter" data-rel="lightcase:collection">
 					<img style="max-width: 150px" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.lightbox}" />
 				</a>
-				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/admin.jpg" data-lightbox="formatter" data-rel="lightcase:collection" title="{@bbcode.lightbox}">
+				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/admin.jpg" data-lightbox="formatter" data-rel="lightcase:collection">
 					<img style="max-width: 150px" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/admin.jpg" alt="{@bbcode.lightbox}" />
 				</a>
 			</div>
