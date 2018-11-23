@@ -107,4 +107,3 @@ class Image extends FileSystemElement
 		$file->delete();
 	}
 }
-?>
