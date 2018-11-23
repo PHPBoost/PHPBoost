@@ -1,5 +1,4 @@
-
-	# IF C_IS_SUPERADMIN #
+# IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
 		<span class="sbx-toggle-btn submit# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
 			<i class="fa fa-wrench"></i> {@module.title}
@@ -22,18 +21,18 @@
 					</div>
 					<div class="item-2x small" aria-label="{@mini.viewport.h}">
 						<span class="icon-stack">
-			                <i class="fa fa-tv icon-main"></i>
-			                <i class="fa fa-arrows-alt-h icon-sup"></i>
-			            </span>
+							<i class="fa fa-tv icon-main"></i>
+							<i class="fa fa-arrows-alt-h icon-sup"></i>
+						</span>
 						<span class="item-number">
 							<span id="window-width"></span>
 						</span>
 					</div>
 					<div class="item-2x small" aria-label="{@mini.viewport.v}">
 						<span class="icon-stack">
-			                <i class="fa fa-tv icon-main"></i>
-			                <i class="fa fa-arrows-alt-v icon-sup"></i>
-			            </span>
+							<i class="fa fa-tv icon-main"></i>
+							<i class="fa fa-arrows-alt-v icon-sup"></i>
+						</span>
 						<span class="item-number">
 							<span id="window-height"></span>
 						</span>
@@ -52,9 +51,9 @@
 					<div class="item-2x# IF C_LOGGED_ERRORS # blink# ENDIF #" aria-label="{@mini.errors}">
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
 							<span class="icon-stack">
-				                <i class="fa fa-terminal icon-main"></i>
-				                <i class="fa fa-warning icon-sup"></i>
-				            </span>
+								<i class="fa fa-terminal icon-main"></i>
+								<i class="fa fa-warning icon-sup"></i>
+							</span>
 							<span class="item-number">
 								({ERRORS_NB})
 							</span>
@@ -63,9 +62,9 @@
 					<div class="item-2x# IF C_404_ERRORS # blink# ENDIF #" aria-label="{@mini.404}">
 						<a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
 							<span class="icon-stack">
-				                <i class="fa fa-unlink icon-main"></i>
-				                <i class="fa fa-warning icon-sup"></i>
-				            </span>
+								<i class="fa fa-unlink icon-main"></i>
+								<i class="fa fa-warning icon-sup"></i>
+							</span>
 							<span class="item-number">
 								({404_NB})
 							</span>
@@ -74,17 +73,17 @@
 					<div class="item-2x" aria-label="{@mini.database}">
 						<a href="{PATH_TO_ROOT}/database/admin_database.php">
 							<span class="icon-stack">
-				                <i class="fa fa-database icon-main"></i>
-				                <i class="fa fa-cog icon-sup"></i>
-				            </span>
+								<i class="fa fa-database icon-main"></i>
+								<i class="fa fa-cog icon-sup"></i>
+							</span>
 						</a>
 					</div>
 					<div class="item-2x" aria-label="{@mini.coms}">
 						<a href="${relative_url(UserUrlBuilder::comments())}">
 							<span class="icon-stack">
-				                <i class="fa fa-comments icon-main"></i>
-				                <i class="fa fa-list icon-sup"></i>
-				            </span>
+								<i class="fa fa-comments icon-main"></i>
+								<i class="fa fa-list icon-sup"></i>
+							</span>
 							<span class="item-number">
 								({COMMENTS_NB})
 							</span>
@@ -96,9 +95,9 @@
 					<div class="item-3x" aria-label="{@mini.menus}/{@mini.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
-				                <i class="fa fa-bars icon-main"></i>
-				                <i class="fa fa-cog icon-sup"></i>
-				            </span>
+								<i class="fa fa-bars icon-main"></i>
+								<i class="fa fa-cog icon-sup"></i>
+							</span>
 						</a>
 					</div>
 					<div class="item-form item-3x"# IF C_LEFT_ENABLED # aria-label="{@mini.disable.left.col}"# ELSE # aria-label="{@mini.enable.left.col}"# ENDIF #>
