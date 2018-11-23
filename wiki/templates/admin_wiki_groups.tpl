@@ -19,6 +19,7 @@
 </nav>
 
 <div id="admin-contents">
+	# INCLUDE MSG #
 	<form action="admin_wiki_groups.php" method="post" class="fieldset-content">
 		<fieldset>
 			<legend>{L_WIKI_GROUPS}</legend>

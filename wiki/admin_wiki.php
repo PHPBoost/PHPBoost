@@ -41,6 +41,9 @@ $hits_counter = $request->get_postvalue('hits_counter', false);
 $sticky_menu = $request->get_postvalue('sticky_menu', false);
 
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
+
+$tpl = new FileTemplate('wiki/admin_wiki.tpl');
+
 if ($update) //Mise à jour
 {
 	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
@@ -63,9 +66,9 @@ if ($update) //Mise à jour
 
 	//Régénération du cache
 	WikiCategoriesCache::invalidate();
+	
+	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-
-$tpl = new FileTemplate('wiki/admin_wiki.tpl');
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();

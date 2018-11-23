@@ -38,6 +38,8 @@ $request = AppContext::get_request();
 
 $update = $request->get_postvalue('update', false);
 
+$tpl = new FileTemplate('pages/admin_pages.tpl');
+
 if ($update)  //Mise à jour
 {
 	$pages_config->set_authorizations(Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM));
@@ -51,10 +53,8 @@ if ($update)  //Mise à jour
 	###### Régénération du cache #######
 	PagesCategoriesCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-
-$tpl = new FileTemplate('pages/admin_pages.tpl');
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();

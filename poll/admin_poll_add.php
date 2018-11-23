@@ -34,6 +34,8 @@ $request = AppContext::get_request();
 
 $valid = $request->get_postvalue('valid', false);
 
+$tpl = new FileTemplate('poll/admin_poll_add.tpl');
+
 if ($valid)
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
@@ -74,12 +76,12 @@ if ($valid)
 				$end_timestamp = 0;
 		}
 		elseif ($get_visible == 1)
-		{	
+		{
 			$start_timestamp = 0;
 			$end_timestamp = 0;
 		}
 		else
-		{	
+		{
 			$visible = 0;
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -112,54 +114,44 @@ if ($valid)
 		AppContext::get_response()->redirect('/poll/admin_poll.php');
 	}
 	else
-		AppContext::get_response()->redirect('/poll/admin_poll_add.php?error=incomplete#message_helper');
-}
-else
-{
-	$tpl = new FileTemplate('poll/admin_poll_add.tpl');
-	 
-	$calendar_start = new MiniCalendar('start');
-	$calendar_end = new MiniCalendar('end');
-	$calendar_current_date = new MiniCalendar('current_date', new Date());
-	
-	$tpl->put_all(array(
-		'VISIBLE_ENABLED'       => 'checked="checked"',
-		'CALENDAR_START'        => $calendar_start->display(),
-		'CALENDAR_END'          => $calendar_end->display(),
-		'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
-		'L_REQUIRE_QUESTION'    => $LANG['require_question'],
-		'L_REQUIRE_ANSWER'      => $LANG['require_answer'],
-		'L_POLL_MANAGEMENT'     => $LANG['poll_management'],
-		'L_POLL_ADD'            => $LANG['poll_add'],
-		'L_POLL_CONFIG'         => $LANG['poll_config'],
-		'L_REQUIRE'             => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_QUESTION'            => $LANG['question'],
-		'L_ANSWERS_TYPE'        => $LANG['answer_type'],
-               'L_YES'                 => LangLoader::get_message('yes', 'common'),
-		'L_NO'                  => LangLoader::get_message('no', 'common'),
-		'L_ARCHIVES'            => $LANG['archives'],
-		'L_SINGLE'              => $LANG['single'],
-		'L_MULTIPLE'            => $LANG['multiple'],
-		'L_ANSWERS'             => $LANG['answers'],
-		'L_NUMBER_VOTE'         => $LANG['number_vote'],
-		'L_DATE'                => LangLoader::get_message('date', 'date-common'),
-		'L_UNTIL'               => $LANG['until'],
-		'L_RELEASE_DATE'        => $LANG['release_date'],
-		'L_IMMEDIATE'           => $LANG['immediate'],
-		'L_UNAPROB'             => $LANG['unaprob'],
-		'L_POLL_DATE'           => $LANG['poll_date'],
-		'L_SUBMIT'              => $LANG['submit'],
-		'L_RESET'               => $LANG['reset']
-	));
-	
-	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
-	if ($get_error == 'incomplete')
 		$tpl->put('message_helper', MessageHelper::display($LANG['incomplete'], MessageHelper::NOTICE));
-		
-	$tpl->display();
 }
+
+$calendar_start = new MiniCalendar('start');
+$calendar_end = new MiniCalendar('end');
+$calendar_current_date = new MiniCalendar('current_date', new Date());
+
+$tpl->put_all(array(
+	'VISIBLE_ENABLED'       => 'checked="checked"',
+	'CALENDAR_START'        => $calendar_start->display(),
+	'CALENDAR_END'          => $calendar_end->display(),
+	'CALENDAR_CURRENT_DATE' => $calendar_current_date->display(),
+	'L_REQUIRE_QUESTION'    => $LANG['require_question'],
+	'L_REQUIRE_ANSWER'      => $LANG['require_answer'],
+	'L_POLL_MANAGEMENT'     => $LANG['poll_management'],
+	'L_POLL_ADD'            => $LANG['poll_add'],
+	'L_POLL_CONFIG'         => $LANG['poll_config'],
+	'L_REQUIRE'             => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_QUESTION'            => $LANG['question'],
+	'L_ANSWERS_TYPE'        => $LANG['answer_type'],
+	'L_YES'                 => LangLoader::get_message('yes', 'common'),
+	'L_NO'                  => LangLoader::get_message('no', 'common'),
+	'L_ARCHIVES'            => $LANG['archives'],
+	'L_SINGLE'              => $LANG['single'],
+	'L_MULTIPLE'            => $LANG['multiple'],
+	'L_ANSWERS'             => $LANG['answers'],
+	'L_NUMBER_VOTE'         => $LANG['number_vote'],
+	'L_DATE'                => LangLoader::get_message('date', 'date-common'),
+	'L_UNTIL'               => $LANG['until'],
+	'L_RELEASE_DATE'        => $LANG['release_date'],
+	'L_IMMEDIATE'           => $LANG['immediate'],
+	'L_UNAPROB'             => $LANG['unaprob'],
+	'L_POLL_DATE'           => $LANG['poll_date'],
+	'L_SUBMIT'              => $LANG['submit'],
+	'L_RESET'               => $LANG['reset']
+));
+
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
-
 ?>

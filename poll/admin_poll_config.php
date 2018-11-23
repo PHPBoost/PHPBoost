@@ -35,6 +35,8 @@ $request = AppContext::get_request();
 
 $valid = $request->get_postvalue('valid', false);
 
+$tpl = new FileTemplate('poll/admin_poll_config.tpl');
+
 if ($valid)
 {
 	$displayed_in_mini_module_list = explode(',', retrieve(POST, 'displayed_in_mini_module_list', ''));
@@ -54,59 +56,55 @@ if ($valid)
 	###### Régénération du cache des sondages #######
 	PollMiniMenuCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-else
+
+$config_authorizations = $poll_config->get_authorizations();
+
+$i = 0;
+//Liste des sondages
+$poll_list = '';
+$result = PersistenceContext::get_querier()->select("SELECT id, question 
+FROM " . PREFIX . "poll
+WHERE archive = 0 AND visible = 1
+ORDER BY timestamp");
+while ($row = $result->fetch())
 {
-	$tpl = new FileTemplate('poll/admin_poll_config.tpl');
-	
-	$config_authorizations = $poll_config->get_authorizations();
-	
-	$i = 0;
-	//Liste des sondages
-	$poll_list = '';
-	$result = PersistenceContext::get_querier()->select("SELECT id, question 
-	FROM " . PREFIX . "poll
-	WHERE archive = 0 AND visible = 1
-	ORDER BY timestamp");
-	while ($row = $result->fetch())
-	{
-		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
-		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . stripslashes($row['question']) . '</option>';
-	}
-	$result->dispose(); 
-	
-	$tpl->put_all(array(
-		'COOKIE_NAME'                             => $poll_config->get_cookie_name(),
-		'COOKIE_LENGHT'                           => $poll_config->get_cookie_lenght(),
-		'C_DISPLAY_RESULTS_BEFORE_POLLS_END'      => $poll_config->are_results_displayed_before_polls_end(),
-		'POLL_LIST'                               => $poll_list,
-		'NBR_POLL'                                => $i,
-		'READ_AUTHORIZATION'                      => Authorizations::generate_select(PollAuthorizationsService::READ_AUTHORIZATIONS, $poll_config->get_authorizations()),
-		'WRITE_AUTHORIZATION'                     => Authorizations::generate_select(PollAuthorizationsService::WRITE_AUTHORIZATIONS, $poll_config->get_authorizations()),
-		'L_POLL_MANAGEMENT'                       => $LANG['poll_management'],
-		'L_POLL_ADD'                              => $LANG['poll_add'],
-		'L_POLL_CONFIG'                           => $LANG['poll_config'],
-		'L_POLL_CONFIG_MINI'                      => $LANG['poll_config_mini'],
-		'L_POLL_CONFIG_ADVANCED'                  => $LANG['poll_config_advanced'],
-		'L_DISPLAYED_IN_MINI_MODULE_LIST'         => $LANG['displayed_in_mini_module_list'],
-		'L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN' => $LANG['displayed_in_mini_module_list_explain'],
-		'L_AUTHORIZATIONS'                        => $LANG['admin.authorizations'],
-		'L_READ_AUTHORIZATION'                    => $LANG['admin.authorizations.read'],
-		'L_WRITE_AUTHORIZATION'                   => $LANG['admin.authorizations.write'],
-		'L_COOKIE_NAME'                           => $LANG['cookie_name'],
-		'L_COOKIE_LENGHT'                         => $LANG['cookie_lenght'],
-		'L_DISPLAY_RESULTS_BEFORE_POLLS_END'      => $LANG['display_results_before_polls_end'],
-		'L_SELECT_ALL'                            => $LANG['select_all'],
-		'L_SELECT_NONE'                           => $LANG['select_none'],
-		'L_REQUIRE'                               => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_DAYS'                                  => LangLoader::get_message('days', 'date-common'),
-		'L_UPDATE'                                => $LANG['update'],
-		'L_RESET'                                 => $LANG['reset']
-	));
-	 
-	$tpl->display();
+	$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
+	$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . stripslashes($row['question']) . '</option>';
 }
+$result->dispose(); 
+
+$tpl->put_all(array(
+	'COOKIE_NAME'                             => $poll_config->get_cookie_name(),
+	'COOKIE_LENGHT'                           => $poll_config->get_cookie_lenght(),
+	'C_DISPLAY_RESULTS_BEFORE_POLLS_END'      => $poll_config->are_results_displayed_before_polls_end(),
+	'POLL_LIST'                               => $poll_list,
+	'NBR_POLL'                                => $i,
+	'READ_AUTHORIZATION'                      => Authorizations::generate_select(PollAuthorizationsService::READ_AUTHORIZATIONS, $poll_config->get_authorizations()),
+	'WRITE_AUTHORIZATION'                     => Authorizations::generate_select(PollAuthorizationsService::WRITE_AUTHORIZATIONS, $poll_config->get_authorizations()),
+	'L_POLL_MANAGEMENT'                       => $LANG['poll_management'],
+	'L_POLL_ADD'                              => $LANG['poll_add'],
+	'L_POLL_CONFIG'                           => $LANG['poll_config'],
+	'L_POLL_CONFIG_MINI'                      => $LANG['poll_config_mini'],
+	'L_POLL_CONFIG_ADVANCED'                  => $LANG['poll_config_advanced'],
+	'L_DISPLAYED_IN_MINI_MODULE_LIST'         => $LANG['displayed_in_mini_module_list'],
+	'L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN' => $LANG['displayed_in_mini_module_list_explain'],
+	'L_AUTHORIZATIONS'                        => $LANG['admin.authorizations'],
+	'L_READ_AUTHORIZATION'                    => $LANG['admin.authorizations.read'],
+	'L_WRITE_AUTHORIZATION'                   => $LANG['admin.authorizations.write'],
+	'L_COOKIE_NAME'                           => $LANG['cookie_name'],
+	'L_COOKIE_LENGHT'                         => $LANG['cookie_lenght'],
+	'L_DISPLAY_RESULTS_BEFORE_POLLS_END'      => $LANG['display_results_before_polls_end'],
+	'L_SELECT_ALL'                            => $LANG['select_all'],
+	'L_SELECT_NONE'                           => $LANG['select_none'],
+	'L_REQUIRE'                               => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_DAYS'                                  => LangLoader::get_message('days', 'date-common'),
+	'L_UPDATE'                                => $LANG['update'],
+	'L_RESET'                                 => $LANG['reset']
+));
+ 
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

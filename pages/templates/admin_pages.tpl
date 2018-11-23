@@ -19,7 +19,7 @@
 		</nav>
 
 		<div id="admin-contents">
-
+			# INCLUDE MSG #
 			<form action="admin_pages.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_PAGES_CONGIG}</legend>
