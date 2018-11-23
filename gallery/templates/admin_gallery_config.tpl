@@ -322,7 +322,7 @@
 					<legend>{L_CACHE}</legend>
 					<div class="fieldset-inset">
 						<p class="center"><i class="fa fa-2x fa-refresh" aria-hidden="true"></i></p>
-						{L_EXPLAIN_GALLERY_CACHE}
+						<p class="center">{L_EXPLAIN_GALLERY_CACHE}</p>
 					</div>
 				</fieldset>
 
