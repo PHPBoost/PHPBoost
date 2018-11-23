@@ -32,6 +32,27 @@
 	opacity: 1;
 }
 
+.actions [aria-label]:after  {
+	transform: translateX(0);
+	left: auto;
+	right: 0;
+}
+
+.item-2x:nth-child(even)[aria-label]:after,
+.item-3x:nth-child(2n)[aria-label]:after,
+.item-4x:nth-child(4n+1)[aria-label]:after {
+	transform: translateX(0);
+	left: 0.309em;
+}
+
+.item-2x:nth-child(odd)[aria-label]:after,
+.item-3x:nth-child(3n+1)[aria-label]:after,
+.item-4x:nth-child(4n)[aria-label]:after {
+	transform: translateX(0);
+	left: auto;
+	right: 0.309em;
+}
+
 /* --- Summary --- */
 
 body {

@@ -101,18 +101,18 @@
 				            </span>
 						</a>
 					</div>
-					<div class="item-form item-3x">
+					<div class="item-form item-3x"# IF C_LEFT_ENABLED # aria-label="{@mini.disable.left.col}"# ELSE # aria-label="{@mini.enable.left.col}"# ENDIF #>
 						# IF C_LEFT_ENABLED #
-							<div aria-label="{@mini.disable.left.col}"># INCLUDE DISABLE_LEFT_COL #</div>
+							<div># INCLUDE DISABLE_LEFT_COL #</div>
 						# ELSE #
-							<div aria-label="{@mini.enable.left.col}"># INCLUDE ENABLE_LEFT_COL #</div>
+							<div># INCLUDE ENABLE_LEFT_COL #</div>
 						# ENDIF #
 					</div>
-					<div class="item-form item-3x">
+					<div class="item-form item-3x"# IF C_RIGHT_ENABLED # aria-label="{@mini.disable.right.col}"# ELSE # aria-label="{@mini.enable.right.col}"# ENDIF #>
 						# IF C_RIGHT_ENABLED #
-							<div aria-label="{@mini.disable.right.col}"># INCLUDE DISABLE_RIGHT_COL #</div>
+							<div># INCLUDE DISABLE_RIGHT_COL #</div>
 						# ELSE #
-							<div aria-label="{@mini.enable.right.col}"># INCLUDE ENABLE_RIGHT_COL #</div>
+							<div># INCLUDE ENABLE_RIGHT_COL #</div>
 						# ENDIF #
 					</div>
 					<div class="item-4x" aria-label="{@mini.theme}/{@mini.manage}">
@@ -182,12 +182,12 @@
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.sandbox.mod}</div>
-					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/form" aria-label="{@mini.sandbox.form}"><i class="far fa-square fa-2x"></i></a></div>
-					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/css" aria-label="{@mini.sandbox.css}"><i class="fab fa-css3 fa-2x"></i></a></div>
-					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/bbcode" aria-label="{@mini.sandbox.bbcode}"><i class="fa fa-code fa-2x"></i></a></div>
-					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/menu" aria-label="{@mini.sandbox.menu}"><i class="fa fa-bars fa-2x"></i></a></div>
-					<div class="item-3x"><a href="{PATH_TO_ROOT}/sandbox/table" aria-label="{@mini.sandbox.table}"><i class="fa fa-table fa-2x"></i></a></div>
-					<div class="item-3x"><a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@mini.config}"><i class="fa fa-cogs fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x"></i></a></div>
+					<div class="item-3x" aria-label="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x"></i></a></div>
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>
