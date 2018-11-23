@@ -1,7 +1,7 @@
 <section id="module-web">
 	<header>
-		 # IF IS_ADMIN #<span class="actions"><a href="{U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small"></i></a></span># ENDIF #
-		<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+		 # IF IS_ADMIN #<span class="actions"><a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
+		<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 		{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 	</header>
 	<div class="content">
@@ -9,10 +9,10 @@
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
 		<article id="article-web-{ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-web# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
-			<header>	
+			<header>
 				<span class="actions">
-					# IF C_EDIT #<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a># ENDIF #
-					# IF C_DELETE #<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a># ENDIF #
+					# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+					# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a># ENDIF #
 				</span>
 				<h1><span id="name" itemprop="name">{NAME}</span></h1>
 
@@ -43,11 +43,11 @@
 						# ENDIF #
 						# IF C_VISIBLE #
 							<a href="{U_VISIT}" class="basic-button">
-								<i class="fa fa-globe"></i> {@visit}
+								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
-							<a href="{U_DEADLINK}" class="basic-button alt" title="${LangLoader::get_message('deadlink', 'common')}">
-								<i class="fa fa-unlink"></i>
+							<a href="{U_DEADLINK}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+								<i class="fa fa-unlink" aria-hidden="true" title="${LangLoader::get_message('deadlink', 'common')}"></i>
 							</a>
 							# ENDIF #
 						# ENDIF #
