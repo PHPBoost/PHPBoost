@@ -86,6 +86,11 @@ $LANG['alert_delete_msg'] = 'Delete the message ?';
 //Impression
 $LANG['printable_version'] = 'Printable version';
 
+//Share
+$LANG['share.print'] = 'Print';
+$LANG['share.mail'] = 'Share by email';
+$LANG['share.sms'] = 'Share by sms';
+
 //Connection
 $LANG['private_messaging'] = 'Private message';
 $LANG['my_private_profile'] = 'My profile';
