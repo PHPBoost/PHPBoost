@@ -105,7 +105,7 @@
 					<legend>{L_CLEAR_OUT_CACHE}</legend>
 					<div class="fieldset-inset fieldset-refresh">
 						<div class="form-element full-field">
-							<a href="admin_search.php?clear=1" class="button submit" title="{L_CLEAR_OUT_CACHE}">
+							<a href="admin_search.php?clear=1" class="button submit alt" title="{L_CLEAR_OUT_CACHE}">
 								<i class="fa fa-refresh" aria-hidden="true"></i>
 								<span>{L_CLEAR_OUT_CACHE}</span>
 							</a>
