@@ -5,11 +5,11 @@
 				if(document.getElementById('name').value == "") {
 					alert("{L_REQUIRE_RANK_NAME}");
 					return false;
-			    }
+				}
 				if(document.getElementById('msg').value == "") {
 					alert("{L_REQUIRE_NBR_MSG_RANK}");
 					return false;
-			    }
+				}
 				return true;
 			}
 

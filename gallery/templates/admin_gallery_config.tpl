@@ -67,6 +67,7 @@
 		</nav>
 
 		<div id="admin-contents">
+			# INCLUDE MSG #
 			<form action="admin_gallery_config.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<p class="center">{L_REQUIRE}</p>
 				<fieldset>

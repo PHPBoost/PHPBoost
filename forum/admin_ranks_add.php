@@ -35,12 +35,14 @@ $request = AppContext::get_request();
 
 $add = $request->get_postbool('add', false);
 
+$template = new FileTemplate('forum/admin_ranks_add.tpl');
+
 //Ajout du rang.
 if ($add)
 {
 	$name = $request->get_poststring('name', '');
-	$msg_number = $request->get_postint('msg', 0);    
-	$icon = $request->get_poststring('icon', ''); 
+	$msg_number = $request->get_postint('msg', 0);
+	$icon = $request->get_poststring('icon', '');
 	
 	if (!empty($name) && $msg_number >= 0)
 	{
@@ -50,10 +52,10 @@ if ($add)
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
 		
-		AppContext::get_response()->redirect('/forum/admin_ranks.php');	
+		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 	}
 	else
-		AppContext::get_response()->redirect('/forum/admin_ranks_add.php?error=incomplete#message_helper');
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
@@ -81,54 +83,44 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	else
 		$error = 'e_upload_failed_unwritable';
 	
-	$error = !empty($error) ? '?error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
+	if (!empty($error))
+		$template->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
+	else
+		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-else //Sinon on rempli le formulaire
+
+//On recupère les images des groupes
+$rank_options = '<option value="">--</option>';
+
+
+$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks/');
+foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 {
-	$template = new FileTemplate('forum/admin_ranks_add.tpl');
-
-	//Gestion erreur.
-	$get_error = $request->get_poststring('error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
-	if (in_array($get_error, $array_error))
-		$template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
-	if ($get_error == 'incomplete')
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
-	
-	//On recupère les images des groupes
-	$rank_options = '<option value="">--</option>';
-	
-	
-	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks/');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
-	{
-		$file = $image->get_name();
-		$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
-	}
-	
-	$template->put_all(array(
-		'RANK_OPTIONS'             => $rank_options,
-		'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
-		'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
-		'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
-		'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
-		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
-		'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
-		'L_UPLOAD_RANKS'           => $LANG['upload_rank'],
-		'L_UPLOAD_FORMAT'          => $LANG['explain_upload_img'],
-		'L_UPLOAD'                 => $LANG['upload'],
-		'L_RANK_NAME'              => $LANG['rank_name'],
-		'L_NBR_MSG'                => $LANG['nbr_msg'],
-		'L_IMG_ASSOC'              => $LANG['img_assoc'],
-		'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE'                 => $LANG['update'],
-		'L_RESET'                  => $LANG['reset'],
-		'L_ADD'                    => LangLoader::get_message('add', 'common')
-	));
-
-	$template->display();
+	$file = $image->get_name();
+	$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
 }
+
+$template->put_all(array(
+	'RANK_OPTIONS'             => $rank_options,
+	'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
+	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
+	'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
+	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
+	'L_UPLOAD_RANKS'           => $LANG['upload_rank'],
+	'L_UPLOAD_FORMAT'          => $LANG['explain_upload_img'],
+	'L_UPLOAD'                 => $LANG['upload'],
+	'L_RANK_NAME'              => $LANG['rank_name'],
+	'L_NBR_MSG'                => $LANG['nbr_msg'],
+	'L_IMG_ASSOC'              => $LANG['img_assoc'],
+	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
+	'L_UPDATE'                 => $LANG['update'],
+	'L_RESET'                  => $LANG['reset'],
+	'L_ADD'                    => LangLoader::get_message('add', 'common')
+));
+
+$template->display();
 
 require_once('../admin/admin_footer.php');
 ?>

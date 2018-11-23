@@ -38,6 +38,8 @@ $del = $request->get_getint('del', 0);
 
 $valid = $request->get_postbool('valid', false);
 
+$template = new FileTemplate('forum/admin_ranks.tpl');
+
 //Si c'est confirmé on execute
 if ($valid)
 {
@@ -58,7 +60,7 @@ if ($valid)
 
 	ForumRanksCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 {
@@ -68,63 +70,59 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-else //Sinon on rempli le formulaire
+
+$template->put_all(array(
+	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
+	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
+	'L_CONFIRM_DEL_RANK'       => LangLoader::get_message('confirm.delete', 'status-messages-common'),
+	'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
+	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
+	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
+	'L_RANK_NAME'              => $LANG['rank_name'],
+	'L_NBR_MSG'                => $LANG['nbr_msg'],
+	'L_IMG_ASSOC'              => $LANG['img_assoc'],
+	'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
+	'L_UPDATE'                 => $LANG['update'],
+	'L_RESET'                  => $LANG['reset'],
+	'L_ADD'                    => LangLoader::get_message('add', 'common')
+));
+
+//On recupère les images des groupes
+
+$rank_options_array = array();
+$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
+foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 {
-	$template = new FileTemplate('forum/admin_ranks.tpl');
-
-	$template->put_all(array(
-		'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
-		'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
-		'L_CONFIRM_DEL_RANK'       => LangLoader::get_message('confirm.delete', 'status-messages-common'),
-		'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
-		'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
-		'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
-		'L_RANK_NAME'              => $LANG['rank_name'],
-		'L_NBR_MSG'                => $LANG['nbr_msg'],
-		'L_IMG_ASSOC'              => $LANG['img_assoc'],
-		'L_DELETE'                 => LangLoader::get_message('delete', 'common'),
-		'L_UPDATE'                 => $LANG['update'],
-		'L_RESET'                  => $LANG['reset'],
-		'L_ADD'                    => LangLoader::get_message('add', 'common')
-	));
-
-	//On recupère les images des groupes
-	
-	$rank_options_array = array();
-	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
-	{
-		$file = $image->get_name();
-		$rank_options_array[] = $file;
-	}
-	
-	$ranks_cache = ForumRanksCache::load()->get_ranks();
-	
-	foreach($ranks_cache as $msg => $row)
-	{
-		$rank_options = '<option value="">--</option>';
-		foreach ($rank_options_array as $icon)
-		{
-			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
-			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
-		}
-		
-		$template->assign_block_vars('rank', array(
-			'ID'             => $row['id'],
-			'RANK'           => $row['name'],
-			'MSG'            => $msg,
-			'RANK_OPTIONS'   => $rank_options,
-			'IMG_RANK'       => $row['icon'],
-			'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
-			'C_SPECIAL_RANK' => $row['special'] == 0,
-			'L_SPECIAL_RANK' => $LANG['special_rank']
-		));
-	}
-	
-	$template->display();
+	$file = $image->get_name();
+	$rank_options_array[] = $file;
 }
+
+$ranks_cache = ForumRanksCache::load()->get_ranks();
+
+foreach($ranks_cache as $msg => $row)
+{
+	$rank_options = '<option value="">--</option>';
+	foreach ($rank_options_array as $icon)
+	{
+		$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
+		$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
+	}
+	
+	$template->assign_block_vars('rank', array(
+		'ID'             => $row['id'],
+		'RANK'           => $row['name'],
+		'MSG'            => $msg,
+		'RANK_OPTIONS'   => $rank_options,
+		'IMG_RANK'       => $row['icon'],
+		'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
+		'C_SPECIAL_RANK' => $row['special'] == 0,
+		'L_SPECIAL_RANK' => $LANG['special_rank']
+	));
+}
+
+$template->display();
 
 require_once('../admin/admin_footer.php');
 ?>

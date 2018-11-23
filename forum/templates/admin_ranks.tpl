@@ -29,6 +29,9 @@
 		</nav>
 
 		<div id="admin-contents">
+
+			# INCLUDE message_helper #
+
 			<form action="admin_ranks.php" method="post">
 				<fieldset>
 					<legend><h1>{L_FORUM_RANKS_MANAGEMENT}</h1></legend>
