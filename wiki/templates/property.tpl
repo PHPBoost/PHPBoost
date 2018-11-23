@@ -173,7 +173,7 @@
 					<div class="form-field content">
 						<ul>
 							<li>
-								<a id="class-0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i> {L_DO_NOT_SELECT_ANY_CAT}</a>
+								<a id="class-0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> {L_DO_NOT_SELECT_ANY_CAT}</a>
 								{move.CATS}
 							</li>
 						</ul>
@@ -251,7 +251,7 @@
 						{redirect.list.REDIRECTION_NAME}
 					</td>
 					<td>
-						<a href="{redirect.list.U_REDIRECTION_DELETE}" class="fa fa-delete" title="{REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}"></a>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}" aria-label="{REDIRECTION_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{REDIRECTION_DELETE}"></i></a>
 					</td>
 				</tr>
 				# END redirect.list #
@@ -266,7 +266,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="2">
-						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
+						<a href="{U_CREATE_REDIRECTION}" aria-label="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward" aria-hidden="true" title="{L_CREATE_REDIRECTION}"></i> {L_CREATE_REDIRECTION}</a>
 					</td>
 				</tr>
 			</tfoot>
@@ -337,7 +337,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class-0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span class="futur-cat-pages"><a href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i> <span id="class-0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<div class="spacer"></div>
 						{remove.CATS}
 					</div>

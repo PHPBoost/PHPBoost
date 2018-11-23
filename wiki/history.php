@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 load_module_lang('wiki');
 $config = WikiConfig::load();
 
@@ -49,7 +49,7 @@ define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($articles_
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');
 
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 if (!empty($id_article))
 {
@@ -61,12 +61,12 @@ if (!empty($id_article))
 		'TITLE' => stripslashes($article_infos['title']),
 		'U_ARTICLE' => url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])
 	));
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	$restore_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
 	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
-	
+
 	//on va chercher le contenu de la page
 	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, c.change_reason, m.display_name, m.groups, m.level, c.id_article, c.activ
 		FROM " . PREFIX . "wiki_contents c
@@ -76,17 +76,17 @@ if (!empty($id_article))
 		ORDER BY c.timestamp DESC", array(
 			'id' => $id_article
 		));
-	
+
 	while ($row = $result->fetch())
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-undo" title="' . $LANG['wiki_restore_version'] . '"></a> &nbsp; ' : '';
-		
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_restore_version'] . '"><i class="fa fa-undo" aria-hidden="true" title="' . $LANG['wiki_restore_version'] . '"></i></a> &nbsp; ' : '';
+
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"></a>' : '';
-		
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . LangLoader::get_message('delete', 'common') . '"></i></a>' : '';
+
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		
+
 		$tpl->assign_block_vars('list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
 			'AUTHOR' => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
@@ -98,7 +98,7 @@ if (!empty($id_article))
 		));
 	}
 	$result->dispose();
-	
+
 	$tpl->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
@@ -106,31 +106,31 @@ if (!empty($id_article))
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		'L_CHANGE_REASON' => $LANG['wiki_change_reason']
 		));
-	
+
 	$tpl->display();
 }
-else //On affiche la liste des modifications 
+else //On affiche la liste des modifications
 {
 	$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY = 25;
-	
+
 	//Champs sur lesquels on ordonne
 	$field = ($field == 'title') ? 'title' : 'timestamp';
 	$order = $order == 'asc' ? 'asc' : 'desc';
-	
+
 	//On compte le nombre d'articles
 	$nbr_articles = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE redirect = 0');
-	
+
 	//On instancie la classe de pagination
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_articles, $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY);
 	$pagination->set_url(new Url('/wiki/history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'));
-	
+
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$tpl = new FileTemplate('wiki/history.tpl');
 
 	$tpl->put_all(array(
@@ -158,11 +158,11 @@ else //On affiche la liste des modifications
 				'display_from' => $pagination->get_display_from()
 			)
 		);
-	
+
 	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		
+
 		$tpl->assign_block_vars('list', array(
 			'TITLE' => stripslashes($row['title']),
 			'AUTHOR' => !empty($row['display_name']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $row['user_ip'],
@@ -171,9 +171,9 @@ else //On affiche la liste des modifications
 		));
 	}
 	$result->dispose();
-	
+
 	$tpl->display();
 }
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 ?>

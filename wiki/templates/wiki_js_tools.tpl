@@ -14,7 +14,7 @@
 			<div class="bbcode-containers">
 				<ul id="wiki-link-container" class="bbcode-container">
 					<li class="bbcode-elements">
-						<a href="javascript:insert_link();" title="{L_INSERT_LINK}" class="bbcode-wiki-insert">{L_INSERT_LINK} <i class="fa fa-link"></i></a>
+						<a href="javascript:insert_link();" class="bbcode-wiki-insert">{L_INSERT_LINK} <i class="fa fa-link" aria-hidden="true"></i></a>
 					</li>
 				</ul>
 				<ul id="wiki-paragraph-container" class="bbcode-container">
@@ -28,11 +28,9 @@
 				</ul>
 				<ul id="wiki-help-container" class="bbcode-container">
 					<li class="bbcode-elements">
-						<a href="http://www.phpboost.com/wiki/" title="{L_HELP_WIKI_TAGS}"><i class="fa fa-fw bbcode-icon-help"></i></a>
+						<a href="http://www.phpboost.com/wiki/" aria-label="{L_HELP_WIKI_TAGS}"><i class="fa fa-fw bbcode-icon-help" aria-hidden="true" title="{L_HELP_WIKI_TAGS}"></i></a>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<noscript><div>{L_NO_JS}</div></noscript>	
-		
-		
+		<noscript><div>{L_NO_JS}</div></noscript>

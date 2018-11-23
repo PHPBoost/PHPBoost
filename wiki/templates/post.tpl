@@ -60,7 +60,7 @@
 						<div class="cats">
 							<div class="content">
 								<ul>
-									<li><a class="{CAT_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
+									<li><a class="{CAT_0}" id="class-0" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_DO_NOT_SELECT_ANY_CAT}</a>
 										<ul>
 											# START create.list #
 											<li class="sub">
@@ -71,7 +71,7 @@
 												</a>
 												<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});">{create.list.TITLE}</a>
 												# ELSE #
-												<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});"><i class="fa fa-folder"></i>{create.list.TITLE}</a>
+												<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});"><i class="fa fa-folder" aria-hidden="true"></i>{create.list.TITLE}</a>
 												# ENDIF #
 												<span id="cat-{create.list.ID}"></span>
 											</li>
@@ -93,7 +93,7 @@
 						<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
 				</div>
-    
+
 				# IF C_EDIT #
 				<br />
 				<div class="form-element-textarea">
@@ -123,7 +123,7 @@
 				-->
 				</script>
 				# ENDIF #
-				
+
 			</fieldset>
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>

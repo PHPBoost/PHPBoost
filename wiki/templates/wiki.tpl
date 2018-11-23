@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication smaller"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication smaller" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 			${LangLoader::get_message('category', 'main')} {ID_CAT}
 		</h1>
 	</header>
@@ -21,7 +21,7 @@
 							<div class="wiki-list-content">
 								# START cat.list_cats #
 									<div class="wiki-list-item">
-										<i class="fa fa-folder-o"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+										<i class="fa fa-folder-o" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 									</div>
 								# END cat.list_cats #
 								# START cat.no_sub_cat #
@@ -37,7 +37,7 @@
 						<div class="wiki-list-content">
 							# START cat.list_art #
 								<div class="wiki-list-item">
-									<i class="fa fa-file-o"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+									<i class="fa fa-file-o" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 								</div>
 							# END cat.list_art #
 							# START cat.no_sub_article #
@@ -62,7 +62,7 @@
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"></i></a>
 						# END redirect.remove_redirection #
 					</div>
 					<div class="spacer"></div>

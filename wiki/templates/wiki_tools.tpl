@@ -3,69 +3,69 @@
 				<ul class="level-0 hidden">
 					# IF C_ACTIV_COM #
 						<li>
-							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments-o"></i> {L_COM}</a>
+							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments-o" aria-hidden="true"></i> {L_COM}</a>
 						</li>
 					# ENDIF #
-					<li><a href="{U_HISTORY}" title="{L_HISTORY}" class="cssmenu-title">
-						<i class="fa fa-fw fa-reply"></i> {L_HISTORY}
+					<li><a href="{U_HISTORY}" class="cssmenu-title">
+						<i class="fa fa-fw fa-reply" aria-hidden="true"></i> {L_HISTORY}
 					</a></li>
 					# IF C_INDEX_PAGE #
 						# IF IS_ADMIN #
-							<li><a href="{U_EDIT_INDEX}" title="{L_EDIT_INDEX}" class="cssmenu-title">
-								<i class="fa fa-fw fa-edit"></i> {L_EDIT_INDEX}
+							<li><a href="{U_EDIT_INDEX}" class="cssmenu-title">
+								<i class="fa fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT_INDEX}
 							</a></li>
 						# ENDIF #
 					# ENDIF #
 					# IF NOT C_INDEX_PAGE #
 						# IF C_EDIT #
-						<li><a href="{U_EDIT}" title="{L_EDIT}" class="cssmenu-title">
-							<i class="fa fa-fw fa-edit"></i> {L_EDIT}
+						<li><a href="{U_EDIT}" class="cssmenu-title">
+							<i class="fa fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT}
 						</a></li>
 						# ENDIF #
 						# IF C_DELETE #
-						<li><a href="{U_DELETE}" title="{L_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
-							<i class="fa fa-fw fa-delete"></i> {L_DELETE}
+						<li><a href="{U_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
+							<i class="fa fa-fw fa-delete" aria-hidden="true"></i> {L_DELETE}
 						</a></li>
 						# ENDIF #
 						# IF C_RENAME #
-						<li><a href="{U_RENAME}" title="{L_RENAME}" class="cssmenu-title">
-							<i class="fa fa-fw fa-magic"></i> {L_RENAME}
+						<li><a href="{U_RENAME}" class="cssmenu-title">
+							<i class="fa fa-fw fa-magic" aria-hidden="true"></i> {L_RENAME}
 						</a></li>
 						# ENDIF #
 						# IF C_REDIRECT #
-						<li><a href="{U_REDIRECT}" title="{L_REDIRECT}" class="cssmenu-title">
-							<i class="fa fa-fw fa-fast-forward"></i> {L_REDIRECT}
+						<li><a href="{U_REDIRECT}" class="cssmenu-title">
+							<i class="fa fa-fw fa-fast-forward" aria-hidden="true"></i> {L_REDIRECT}
 						</a></li>
 						# ENDIF #
 						# IF C_MOVE #
-						<li><a href="{U_MOVE}" title="{L_MOVE}" class="cssmenu-title">
-							<i class="fa fa-fw fa-move"></i> {L_MOVE}
+						<li><a href="{U_MOVE}" class="cssmenu-title">
+							<i class="fa fa-fw fa-move" aria-hidden="true"></i> {L_MOVE}
 						</a></li>
 						# ENDIF #
 						# IF C_STATUS #
-						<li><a href="{U_STATUS}" title="{L_STATUS}" class="cssmenu-title">
-							<i class="fa fa-fw fa-tasks"></i> {L_STATUS}
+						<li><a href="{U_STATUS}" class="cssmenu-title">
+							<i class="fa fa-fw fa-tasks" aria-hidden="true"></i> {L_STATUS}
 						</a></li>
 						# ENDIF #
 						# IF C_RESTRICTION #
-						<li><a href="{U_RESTRICTION}" title="{L_RESTRICTION}" class="cssmenu-title">
-							<i class="fa fa-fw fa-lock"></i> {L_RESTRICTION}
+						<li><a href="{U_RESTRICTION}" class="cssmenu-title">
+							<i class="fa fa-fw fa-lock" aria-hidden="true"></i> {L_RESTRICTION}
 						</a></li>
 						# ENDIF #
 						# IF IS_USER_CONNECTED #
-							<li><a href="{U_WATCH}" title="{L_WATCH}" class="cssmenu-title">
-								<i class="fa fa-fw fa-heart"></i> {L_WATCH}
+							<li><a href="{U_WATCH}" class="cssmenu-title">
+								<i class="fa fa-fw fa-heart" aria-hidden="true"></i> {L_WATCH}
 							</a></li>
 						# ENDIF #
 					# ENDIF #
 					# IF C_INDEX_PAGE #
-						<li><a href="{U_RANDOM}" title="{L_RANDOM}" class="cssmenu-title">
-							<i class="fa fa-fw fa-random"></i> {L_RANDOM}
+						<li><a href="{U_RANDOM}" class="cssmenu-title">
+							<i class="fa fa-fw fa-random" aria-hidden="true"></i> {L_RANDOM}
 						</a></li>
 					# ENDIF #
 					# IF NOT C_INDEX_PAGE #
-						<li><a href="{U_PRINT}" title="{L_PRINT}" class="cssmenu-title">
-							<i class="fa fa-fw fa-print"></i> {L_PRINT}
+						<li><a href="{U_PRINT}" class="cssmenu-title">
+							<i class="fa fa-fw fa-print" aria-hidden="true"></i> {L_PRINT}
 						</a></li>
 					# ENDIF #
 				</ul>
