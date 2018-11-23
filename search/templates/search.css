@@ -2,6 +2,10 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+/* Config */
+.fieldset-refresh .form-element {
+	align-content: center;
+}
 
 /* -- Zone de saisie de la recherche
 -------------------------------------------*/
