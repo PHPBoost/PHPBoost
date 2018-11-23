@@ -44,7 +44,9 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 			CONCAT('" . PATH_TO_ROOT . "/news/" . (!ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? "index.php?url=/" : "") . "', id_category, '-', IF(id_category != 0, cat.rewrited_name, 'root'), '/', n.id, '-', n.rewrited_name) AS link
 			FROM " . NewsSetup::$news_table . " n
 			LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
-			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
+			LEFT JOIN ". DB_TABLE_KEYWORDS_RELATIONS ." relation ON relation.module_id = 'news' AND relation.id_in_module = n.id
+			LEFT JOIN ". DB_TABLE_KEYWORDS ." keyword ON keyword.id = relation.id_keyword
+			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') ) OR keyword.rewrited_name = '" . Url::encode_rewrite($args['search']) . "'
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
 			ORDER BY relevance DESC
