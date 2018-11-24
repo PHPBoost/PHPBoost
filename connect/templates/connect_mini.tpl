@@ -35,7 +35,7 @@
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 						<label for="login">
 							<span>{@login}</span>
-							<input type="text" id="login" name="login" title="{@login}" placeholder="{@login}">
+							<input type="text" id="login" name="login" title="{@login.tooltip}" placeholder="{@login}">
 						</label>
 						<label for="password">
 							<span>{@password}</span>

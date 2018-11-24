@@ -54,7 +54,7 @@ $lang['contribution.explain'] = 'Votre contribution suivra le parcours classique
 $lang['contribution.description'] = 'Complément de contribution';
 $lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
-$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a> 
+$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a>
 et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
 $lang['contribution.pm.title'] = 'La contribution <strong>:title</strong> a été commentée';
 $lang['contribution.pm.contents'] = ':author a ajouté un commentaire à la contribution <strong>:title</strong>.<br />
@@ -71,6 +71,7 @@ $lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
 $lang['login.custom.explain'] = '<span class="color-alert">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
+$lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';
 $lang['password'] = 'Mot de passe';
@@ -149,7 +150,7 @@ $lang['forget-password.error'] = 'Les informations fournies ne sont pas correcte
 $lang['change-password'] = 'Changement de mot de passe';
 $lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host. 
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host.
 Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
 
 Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
@@ -160,7 +161,7 @@ Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du sit
 
 :signature';
 
-//Registration 
+//Registration
 $lang['register'] = 'S\'inscrire';
 $lang['registration'] = 'Inscription';
 

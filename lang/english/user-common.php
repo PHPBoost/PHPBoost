@@ -54,7 +54,7 @@ $lang['contribution.explain'] = 'Your contribution will be treated in the contri
 $lang['contribution.description'] = 'Contribution counterpart';
 $lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
-$lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a> 
+$lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a>
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
 $lang['contribution.pm.title'] = 'The contribution <strong>:title</strong> has been commented';
 $lang['contribution.pm.contents'] = ':author add a comment to the contribution <strong>:title</strong>.<br />
@@ -72,6 +72,7 @@ $lang['login'] = 'Login';
 $lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
 $lang['login.custom.explain'] = '<span class="color-alert">Default, you must log in with your email address.</span>';
+$lang['login.tooltip'] = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.';
 $lang['password.custom'] = 'Define a password';
 $lang['password.custom.explain'] = 'The password is automatically generated per default';
 $lang['password'] = 'Password';
@@ -150,7 +151,7 @@ $lang['forget-password.error'] = 'Information provided are not correct, please c
 $lang['change-password'] = 'Change password';
 $lang['forget-password.mail.content'] = 'Dear(e) :pseudo,
 
-You are receiving this email because you (or someone claiming to be) have requested a new password to be sent to your account :host. 
+You are receiving this email because you (or someone claiming to be) have requested a new password to be sent to your account :host.
 If you have not asked to change your password, please ignore it. If you continue to receive it, please contact the site administrator.
 
 To change your password, click on the link below and follow the directions on the site.
@@ -161,7 +162,7 @@ If you have problems, please contact the site administrator.
 
 :signature';
 
-//Registration 
+//Registration
 $lang['register'] = 'Register';
 $lang['registration'] = 'Registration';
 
@@ -297,7 +298,7 @@ A cookie is a small text file that a website saves on your computer or mobile de
 It enables the website to remember your actions and preferences (such as login, language, font size and other display preferences) over a period of time, so you don\'t have to keep re-entering them whenever you come back to the site or browse from one page to another.
 
 <h2 class="formatter-title">Technical Cookies : </h2>
-' . GeneralConfig::load()->get_site_name() . ' use technical cookie to :<br /> 
+' . GeneralConfig::load()->get_site_name() . ' use technical cookie to :<br />
 <ul class="formatter-ul">
 <li class="formatter-li"> manage login (essential if you want to connect),
 </li><li class="formatter-li"> save BBCode preferences (not essential, but you will have to re-open extend BBCode à each visit),

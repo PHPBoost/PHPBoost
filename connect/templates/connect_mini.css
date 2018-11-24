@@ -3,6 +3,10 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+input#login {
+	cursor: help;
+}
+
 /* -- Connected & not-connected --*/
 #module-connect .horizontal-fieldset {
 	margin: 0;
