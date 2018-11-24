@@ -752,9 +752,9 @@ a:hover {
 }
 
 /* --- Les liens des utilisateurs --- */
-a.admin 	{ color: #FFA34F; }
-a.modo 		{ color: #006699; }
-a.member 	{ color: #000000; }
+a.admin 	{ color: #C72125; }
+a.modo 		{ color: #E27B47; }
+a.member 	{ color: #22A31B; }
 
 /* --- Couleur de texte --- */
 .color-alert 		{ color: #B22222; }
