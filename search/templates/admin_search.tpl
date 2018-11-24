@@ -100,17 +100,15 @@
 					</div>
 				</fieldset>
 			</form>
-			<form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset-content">
+			<form action="admin_search.php?clear=1" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CLEAR_OUT_CACHE}</legend>
-					<div class="fieldset-inset fieldset-refresh">
-						<div class="form-element full-field">
-							<a href="admin_search.php?clear=1" class="button submit alt" title="{L_CLEAR_OUT_CACHE}">
-								<i class="fa fa-refresh" aria-hidden="true"></i>
-								<span>{L_CLEAR_OUT_CACHE}</span>
-							</a>
-						</div>
+					<div class="fieldset-inset">
 					</div>
+				</fieldset>
+				<fieldset class="fieldset-submit">
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" name="gallery_cache" value="true" class="submit alt">{L_CLEAR_OUT_CACHE}</button>
 				</fieldset>
 			</form>
 			# ELSE #
