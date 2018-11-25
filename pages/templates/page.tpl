@@ -1,8 +1,9 @@
 <section id="module-pages">
 	<article id="article-pages-{ID}" class="article-pages">
 		<header>
+			<h1>{TITLE}</h1>
 			<span class="actions">
-				# IF C_ACTIV_COM #<a href="{U_COM}"><i class="fa fa-comments-o" aria-hidden="true"></i> {L_COM}</a>&nbsp;# ENDIF #
+				# IF C_ACTIV_COM #<a href="{U_COM}" aria-label="{L_COM}"><i class="fa fa-comments-o" title="{L_COM}"></i></a># ENDIF #
 				# IF C_TOOLS_AUTH #
 				<a href="{U_RENAME}" aria-label="{L_RENAME}"><i class="fa fa-magic" title="{L_RENAME}"></i></a>
 				<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" title="{L_EDIT}"></i></a>
@@ -10,7 +11,6 @@
 				# ENDIF #
 				# IF C_PRINT #<a href="{U_PRINT}" aria-label="{L_PRINT}"><i class="fa fa-print" title="{L_PRINT}"></i></a># ENDIF #
 			</span>
-			<h1>{TITLE}</h1>
 		</header>
 		<div class="content">
 			# START redirect #
