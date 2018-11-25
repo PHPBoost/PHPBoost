@@ -32,11 +32,13 @@
 				<thead>
 					<tr>
 						# IF C_ALL #
-						<th class="td100">{L_TYPE}</td>
+						<th class="td100">{L_TYPE}</th>
 						# ENDIF #
-						<th>{L_DESCRIPTION}</td>
-						<th class="td75">{L_PRIORITY}</td>
-						<th class="td150">{L_UPDATE_DOWNLOAD}</td>
+						<th>{L_NAME}</th>
+						<th>{L_VERSION}</th>
+						<th class="tdw50">{L_DESCRIPTION}</th>
+						<th>{L_PRIORITY}</th>
+						<th>{L_UPDATE_DOWNLOAD}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -45,17 +47,18 @@
 						# IF C_ALL #
 						<td class="center">{apps.type}</td>
 						# ENDIF #
+						<td>{apps.name}</td>
+						<td>{apps.version}</td>
 						<td>
-							{L_NAME} : <strong>{apps.name}</strong> - {L_VERSION} : <strong>{apps.version}</strong>
 							<div class="update-desc">{apps.short_description}</div>
 							<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
 						</td>
 						<td>{apps.L_PRIORITY}</td>
 						<td class="center">
-							<a href="{apps.download_url}"><i class="fa fa-cloud-download-alt" aria-hidden="true" title="{L_DOWNLOAD_THE_COMPLETE_PACK}"></i> {L_DOWNLOAD_PACK}</a><br />
+							<a href="{apps.download_url}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a><br />
 							# IF apps.update_url #
 							/<br />
-							<a href="{apps.update_url}"><i class="fa fa-sync-alt" aria-hidden="true" title="{L_DOWNLOAD_THE_UPDATE_PACK}"></i> {L_UPDATE_PACK}</a>
+							<a href="{apps.update_url}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
 							# ENDIF #
 						</td>
 					</tr>

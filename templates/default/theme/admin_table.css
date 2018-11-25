@@ -209,6 +209,10 @@ table.bt thead th {
 
 /* --- largeur specifique de colonne --- */
 @media (min-width: 981px) {
+	.tdw50 	{ width: 50%; }
+	.tdw30 	{ width: 30%; }
+	.tdw25 	{ width: 25%; }
+	.td200 	{ width: 200px; }
 	.td150 	{ width: 150px; }
 	.td100 	{ width: 100px; }
 	.td75	{ width: 75px;  }
