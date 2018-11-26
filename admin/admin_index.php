@@ -55,17 +55,16 @@ $result = PersistenceContext::get_querier()->select("
 $i = 0;
 while ($row = $result->fetch())
 {
-	if (!empty($row['user_id'])) 
-	{
-		$group_color = User::get_group_color($row['groups'], $row['level']);
-		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->rel() .'" title="' . $row['display_name'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>';
-	}
-	else
-		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['display_name']) ? $row['display_name'] : $LANG['guest']) . '</span>';
+	$group_color = User::get_group_color($row['groups'], $row['level']);
 	
 	$tpl->assign_block_vars('comments_list', array(
+		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
+		'C_GROUP_COLOR' => !empty($group_color),
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
-		'U_PSEUDO' => $com_pseudo,
+		'PSEUDO' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
+		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+		'GROUP_COLOR' => $group_color,
+		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
 		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
 	));

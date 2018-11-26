@@ -99,7 +99,8 @@
 								<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 									<i class="far fa-hand-point-right" aria-hidden="true"></i>
 								</a>
-								<span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span> : {comments_list.CONTENT}
+								<span class="smaller">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
+								{comments_list.CONTENT}
 								<br /><br />
 							# END comments_list #
 							# IF C_NO_COM #
