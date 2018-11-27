@@ -73,3 +73,4 @@ class MenuControllerConfigurationsList extends AdminController
 		$env->set_page_title($LANG['menu_configurations']);
 	}
 }
+?>

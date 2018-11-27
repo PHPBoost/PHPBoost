@@ -411,3 +411,4 @@ else
 $template->display();
 
 require_once('../kernel/footer.php');
+?>
