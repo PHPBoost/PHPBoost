@@ -26,6 +26,7 @@
 				<div class="horizontal-fieldset" id="CalendarAjaxCalendarController_choose-date">
 					<div id="CalendarAjaxCalendarController_month_field" class="form-element">
 						<div class="form-field">
+							<label for="CalendarAjaxCalendarController_month" class="sr-only">{@month}</label>
 							<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 								# START months #
 								<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}</option>
@@ -35,6 +36,7 @@
 					</div>
 					<div id="CalendarAjaxCalendarController_year_field" class="form-element">
 						<div class="form-field">
+							<label for="CalendarAjaxCalendarController_year" class="sr-only">{@year}</label>
 							<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 								# START years #
 								<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
@@ -63,7 +65,7 @@
 				<table class="# IF C_MINI_MODULE #mini # ENDIF #calendar-table">
 					<thead>
 						<tr>
-							<th></th>
+							<th class="sr-only">{@week_mini}</th>
 							<th class="text-strong">{@monday_mini}</th>
 							<th class="text-strong">{@tuesday_mini}</th>
 							<th class="text-strong">{@wednesday_mini}</th>

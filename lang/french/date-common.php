@@ -61,6 +61,7 @@ $lang['october']   = 'Octobre';
 $lang['november']  = 'Novembre';
 $lang['december']  = 'Décembre';
 
+$lang['week_mini']      = 'Se';
 $lang['monday_mini']    = 'Lu';
 $lang['tuesday_mini']   = 'Ma';
 $lang['wednesday_mini'] = 'Me';
