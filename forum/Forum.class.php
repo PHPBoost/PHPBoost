@@ -31,12 +31,6 @@ define('FORUM_PM_TRACKING', 2);
 
 class Forum
 {
-	## Public Methods ##
-	//Constructeur
-	function Forum()
-	{
-	}
-
 	//Ajout d'un message.
 	function Add_msg($idtopic, $idcat, $contents, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{

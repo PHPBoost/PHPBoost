@@ -36,7 +36,7 @@ abstract class FileSystemElement
 	/**
 	 * @var string Path of the file system element
 	 */
-	private $path;
+	protected $path;
 
 	/**
 	 * @desc Builds a FileSystemElement object from the path of the element.
