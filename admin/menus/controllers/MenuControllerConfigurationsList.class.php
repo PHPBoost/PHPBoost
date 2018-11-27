@@ -39,8 +39,6 @@ class MenuControllerConfigurationsList extends AdminController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		global $LANG;
-
 		$this->load_env();
 
 		$menu_configurations = MenuConfigurationDAO::instance()->find_by_criteria(
@@ -75,4 +73,3 @@ class MenuControllerConfigurationsList extends AdminController
 		$env->set_page_title($LANG['menu_configurations']);
 	}
 }
-?>
