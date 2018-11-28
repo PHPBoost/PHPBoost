@@ -246,8 +246,8 @@
 					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
-							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoade::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoade::get_message('previous', 'common')}"></i></a>&nbsp;
-							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoade::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoade::get_message('next', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;
+							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoader::get_message('previous', 'common')}"></i></a>&nbsp;
+							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoader::get_message('next', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;
 						</p>
 						# IF C_STATS_DAY #
 						<select name="d" style="width: 80%; margin: 5px auto;">
