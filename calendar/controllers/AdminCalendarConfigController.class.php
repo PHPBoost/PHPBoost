@@ -119,7 +119,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$auth_settings = new AuthorizationsSettings(RootCategory::get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
-		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
+		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
 		//Submit and reset buttons
 		$this->submit_button = new FormButtonDefaultSubmit();
