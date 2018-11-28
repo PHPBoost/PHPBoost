@@ -426,7 +426,7 @@ class HTMLForm implements HTMLElement
 		$this->enable_all_fields();
 		$request = AppContext::get_request();
 
-		$disabled_fieldsets_str = $request->get_string($this->html_id . '_disabled_fieldsets');
+		$disabled_fieldsets_str = $request->get_string($this->html_id . '_disabled_fieldsets', '');
 		$disabled_fieldsets_str = trim($disabled_fieldsets_str, '|');
 		if ($disabled_fieldsets_str != '')
 		{
