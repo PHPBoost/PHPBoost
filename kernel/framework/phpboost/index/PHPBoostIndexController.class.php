@@ -66,7 +66,11 @@ class PHPBoostIndexController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->general_config->get_other_home_page() ? $this->general_config->get_other_home_page() : new Url('/' .$this->general_config->get_module_home_page() . '/'));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(new Url(Url::to_rel('/')));
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($title, $this->general_config->get_other_home_page() ? $this->general_config->get_other_home_page() : new Url('/' . $this->general_config->get_module_home_page() . '/'));
+		
 		return $response;
 	}
 }

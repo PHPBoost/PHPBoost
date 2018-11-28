@@ -87,8 +87,7 @@ class BreadCrumb
 	{
 		if (empty($this->array_links))
 		{
-			$url = $this->graphical_environment->get_seo_meta_data()->canonical_link_exists() ? $this->graphical_environment->get_seo_meta_data()->get_canonical_link() : REWRITED_SCRIPT; 
-			$this->add($this->graphical_environment->get_page_title(), $url);
+			$this->add($this->graphical_environment->get_page_title(), REWRITED_SCRIPT);
 		}
 		
 		$tpl->put_all(array(
