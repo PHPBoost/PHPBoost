@@ -119,7 +119,7 @@ class DownloadFormController extends ModuleController
 			$file_size = $file_size_unit = 0;
 		
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file_size'], $file_size,
-			array('min' => 0, 'step' => 0.05, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
+			array('min' => 0, 'step' => 0.01, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file_size_unit'], $file_size_unit,
