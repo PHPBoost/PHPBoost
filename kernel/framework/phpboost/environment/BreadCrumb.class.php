@@ -35,102 +35,101 @@
  */
 class BreadCrumb
 {
-    /**
-     * @var string[string] List of the links
-     */
-    private $array_links = array();
-    /**
-     * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
-     */
-    private $graphical_environment;
+	/**
+	 * @var string[string] List of the links
+	 */
+	private $array_links = array();
+	/**
+	 * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
+	 */
+	private $graphical_environment;
 
-    /**
-     * @desc Adds a link in the bread crumb. This link will be put at the end of the list.
-     * @param string $text Name of the page
-     * @param string $target Link whose target is the page
-     */
-    public function add($text, $target = '')
-    {
-        if (!empty($text))
-        {
-            $url = $target instanceof Url ? $target->rel() : $target;
-            $this->array_links[] = array($text, $url);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+	/**
+	 * @desc Adds a link in the bread crumb. This link will be put at the end of the list.
+	 * @param string $text Name of the page
+	 * @param string $target Link whose target is the page
+	 */
+	public function add($text, $target = '')
+	{
+		if (!empty($text))
+		{
+			$url = $target instanceof Url ? $target->rel() : $target;
+			$this->array_links[] = array($text, $url);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
-    /**
-     * @desc Reverses the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
-     * end, you only need to reverse the list and it will be ok.
-     */
-    public function reverse()
-    {
-        $this->array_links = array_reverse($this->array_links);
-    }
+	/**
+	 * @desc Reverses the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
+	 * end, you only need to reverse the list and it will be ok.
+	 */
+	public function reverse()
+	{
+		$this->array_links = array_reverse($this->array_links);
+	}
 
-    /**
-     * @desc Removes the last link of the list
-     */
-    public function remove_last()
-    {
-        array_pop($this->array_links);
-    }
+	/**
+	 * @desc Removes the last link of the list
+	 */
+	public function remove_last()
+	{
+		array_pop($this->array_links);
+	}
 
-    /**
-     * @desc Displays the bread crumb.
-     */
-    public function display(Template $tpl)
-    {
-        if (empty($this->array_links))
-        {
-            $this->add($this->get_page_title(), REWRITED_SCRIPT);
-        }
-        
-        $tpl->put_all(array(
-            'START_PAGE' => TPL_PATH_TO_ROOT . '/',
-            'L_INDEX'    => LangLoader::get_message('home', 'main')
-        ));
-        
-        $output = array_slice($this->array_links, -1, 1);
-        foreach ($this->array_links as $key => $array)
-        {
-            $tpl->assign_block_vars('link_bread_crumb', array(
-                'C_CURRENT' => $output[0] == $array,
-                'URL'   => $array[1],
-                'TITLE' => $array[0]
-            ));
-        }
-    }
+	/**
+	 * @desc Displays the bread crumb.
+	 */
+	public function display(Template $tpl)
+	{
+		if (empty($this->array_links))
+		{
+			$url = $this->graphical_environment->get_seo_meta_data()->canonical_link_exists() ? $this->graphical_environment->get_seo_meta_data()->get_canonical_link() : REWRITED_SCRIPT; 
+			$this->add($this->graphical_environment->get_page_title(), $url);
+		}
+		
+		$tpl->put_all(array(
+			'START_PAGE' => TPL_PATH_TO_ROOT . '/',
+			'L_INDEX'    => LangLoader::get_message('home', 'main')
+		));
+		
+		$output = array_slice($this->array_links, -1, 1);
+		foreach ($this->array_links as $key => $array)
+		{
+			$tpl->assign_block_vars('link_bread_crumb', array(
+				'C_CURRENT' => $output[0] == $array,
+				'URL'   => $array[1],
+				'TITLE' => $array[0]
+			));
+		}
+	}
 
-    /**
-     * @desc Removes all the existing links.
-     */
-    public function clean()
-    {
-        $this->array_links = array();
-    }
-    
-    public function get_links()
-    {
-        return $this->array_links;
-    }
-    
-    /**
-     * Sets the reference to the parent graphical environment
-     * @param SiteDisplayGraphicalEnvironment $env The parent environment
-     */
-    public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env)
-    {
-        $this->graphical_environment = $env;
-    }
-    
-    private function get_page_title()
-    {
-        return $this->graphical_environment->get_page_title();
-    }
+	/**
+	 * @desc Removes all the existing links.
+	 */
+	public function clean()
+	{
+		$this->array_links = array();
+	}
+	
+	 /**
+	 * @desc Get all links of the list
+	 */
+	public function get_links()
+	{
+		return $this->array_links;
+	}
+	
+	/**
+	 * Sets the reference to the parent graphical environment
+	 * @param SiteDisplayGraphicalEnvironment $env The parent environment
+	 */
+	public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env)
+	{
+		$this->graphical_environment = $env;
+	}
 }
 ?>

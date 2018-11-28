@@ -27,11 +27,13 @@
 
 class PHPBoostIndexController extends AbstractController
 {
+	private $general_config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$general_config = GeneralConfig::load();
+		$this->general_config = GeneralConfig::load();
 		
-		$other_home_page = $general_config->get_other_home_page();
+		$other_home_page = $this->general_config->get_other_home_page();
 		if (TextHelper::strpos($other_home_page, '/index.php') !== false)
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
@@ -43,7 +45,7 @@ class PHPBoostIndexController extends AbstractController
 		else
 		{
 			try {
-				$module = AppContext::get_extension_provider_service()->get_provider($general_config->get_module_home_page());
+				$module = AppContext::get_extension_provider_service()->get_provider($this->general_config->get_module_home_page());
 				if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 				{
 					$home_page = $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page();
@@ -64,7 +66,7 @@ class PHPBoostIndexController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(new Url(Url::get_absolute_root()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->general_config->get_other_home_page() ? $this->general_config->get_other_home_page() : new Url('/' .$this->general_config->get_module_home_page() . '/'));
 		return $response;
 	}
 }
