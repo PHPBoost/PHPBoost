@@ -19,7 +19,7 @@
 				</span>
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
-					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}" title="${LangLoader::get_message('author', 'common')}"></i>
+					<i class="fa fa-user-o" title="${LangLoader::get_message('author', 'common')}"></i>
 						# IF C_AUTHOR_CUSTOM_NAME #
 							{AUTHOR_CUSTOM_NAME}
 						# ELSE #
