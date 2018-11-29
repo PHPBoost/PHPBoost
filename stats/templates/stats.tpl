@@ -5,7 +5,7 @@
 		</header>
 
 		<nav id="menustats">
-			<a href="" class="js-menu-button" onclick="open_stats_menu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
+			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
 				<i class="fa fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
 			</a>
 			<ul>
@@ -693,11 +693,3 @@
 		</article>
 		# ENDIF #
 	</section>
-	<script>
-		<!--
-			function open_stats_menu(myid)
-			{
-				jQuery('#' + myid).toggleClass('active-stats');
-			}
-		-->
-	</script>
