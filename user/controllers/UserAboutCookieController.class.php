@@ -48,8 +48,8 @@ class UserAboutCookieController extends AbstractController
 		$config = CookieBarConfig::load();
 		
 		$response = new SiteDisplayResponse($view);
-		$graphical_env = $response->get_graphical_environment();
-		$graphical_env->set_page_title($config->get_cookiebar_aboutcookie_title());
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($config->get_cookiebar_aboutcookie_title());
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.about-cookie']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::aboutcookie());
 		
