@@ -39,7 +39,7 @@ abstract class AbstractFormButton implements FormButton
 	private $css_class;
 	private $data_confirmation;
 
-	public function __construct($type, $label, $name, $onclick_action = '', $css_class = '', $data_confirmation = '')
+	public function __construct($type, $label, $name, $onclick_action = '', $css_class = '', $data_confirmation = '', $form_id = '')
 	{
 		$this->type = $type;
 		$this->label = $label;
@@ -47,6 +47,7 @@ abstract class AbstractFormButton implements FormButton
 		$this->onclick_action = $onclick_action;
 		$this->css_class = $css_class;
 		$this->data_confirmation = $data_confirmation;
+		$this->form_id = $form_id;
 	}
 
 	/**
@@ -74,7 +75,7 @@ abstract class AbstractFormButton implements FormButton
 
 	public function get_html_name()
 	{
-		return $this->form_id . '_' . $this->name;
+		return ($this->form_id ? $this->form_id . '_' : '') . $this->name;
 	}
 
 	public function set_name($name)

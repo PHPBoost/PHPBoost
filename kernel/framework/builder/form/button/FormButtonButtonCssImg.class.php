@@ -31,18 +31,18 @@
  */
 class FormButtonButtonCssImg extends AbstractFormButton
 {
-    public function __construct($value, $onclick_action = '', $name = '', $css_class_image = '', $text_button = '', $css_class = '', $data_confirmation = '')
-    {
-    	$full_label = '';
-    	if (!empty($css_class_image))
-    	{
-    		$full_label = '<i class="' . $css_class_image . '" title="' . $value . '" aria-hidden="true"></i><span class="sr-only">' . $value . '</span>' . $text_button;
-    	}
-    	else
-    	{
-    		$full_label = $value;
-    	}
-        parent::__construct('button', $full_label, $name, $onclick_action, $css_class, $data_confirmation = '');
-    }
+	public function __construct($value, $onclick_action = '', $name = '', $css_class_image = '', $text_button = '', $css_class = '', $data_confirmation = '', $form_id = '')
+	{
+		$full_label = '';
+		if (!empty($css_class_image))
+		{
+			$full_label = '<i class="' . $css_class_image . '" title="' . $value . '" aria-hidden="true"></i><span class="sr-only">' . $value . '</span>' . $text_button;
+		}
+		else
+		{
+			$full_label = $value;
+		}
+		parent::__construct('button', $full_label, $name, $onclick_action, $css_class, $data_confirmation, $form_id);
+	}
 }
 ?>

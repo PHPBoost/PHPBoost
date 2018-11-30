@@ -31,10 +31,10 @@
  */
 class FormButtonSubmitCssImg extends FormButtonSubmit
 {
-    public function __construct($value, $css_class_image, $name, $onclick_action = '', $data_confirmation = '')
-    {
-    	$new_value = '<i class="' . $css_class_image . '" title="' . $value . '" aria-hidden="true"></i><span class="sr-only">' . $value . '</span>';
-    	parent::__construct($new_value, $name, $onclick_action, 'image', $data_confirmation);
-    }
+	public function __construct($value, $css_class_image, $name, $onclick_action = '', $data_confirmation = '', $form_id = '')
+	{
+		$new_value = '<i class="' . $css_class_image . '" title="' . $value . '" aria-hidden="true"></i><span class="sr-only">' . $value . '</span>';
+		parent::__construct($new_value, $name, $onclick_action, 'image', $data_confirmation, $form_id);
+	}
 }
 ?>

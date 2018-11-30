@@ -153,7 +153,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain'], array('class' => 'half-field')));
 
-		$fieldset->add_element(new FormButtonButton($this->admin_lang['copy_report'], 'copy_code_clipboard(\'system-report_report-content\')', $this->admin_lang['copy_report'], 'copy-to-clipboard'));
+		$fieldset->add_element(new FormButtonButton($this->admin_lang['copy_report'], 'copy_code_clipboard(\'system-report_report-content\')', 'copy_report', 'copy-to-clipboard', '', 'system-report'));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization, array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
 		));
