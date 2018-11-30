@@ -135,7 +135,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id, id_search, title, link
+			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 
@@ -151,7 +151,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id, id_search, title, link
+			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
@@ -166,7 +166,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
 			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
-			GROUP BY t.id, id_search, id_content, title, link
+			GROUP BY t.id, id_search, id_content, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 	}
