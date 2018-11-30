@@ -37,7 +37,7 @@ $lang['config.authorizations.read']  = 'Autorisation d\'afficher le compte à re
 // --- Mini module
 $lang['mini.module.title'] = 'Bac à sable';
 $lang['mini.config.title'] = 'Configuration du mini-module bac à sable';
-$lang['mini.superadmin.enabled'] = 'Limiter l\'acces au menu à un seul administrateur';
+$lang['mini.superadmin.enabled'] = 'Limiter l\'accès au menu à un seul administrateur';
 $lang['mini.superadmin.id'] = 'Choix de l\'administrateur';
 $lang['mini.open.menu'] = 'Ouvrir le menu sur le côté :';
 $lang['mini.open.menu.left'] = 'gauche';
