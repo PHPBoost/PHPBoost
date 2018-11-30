@@ -36,7 +36,7 @@ class WebConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		$old_config = $this->get_old_config();
 		
-		if ($old_config)
+		if (class_exists('WebConfig') && !empty($old_config))
 		{
 			$config = WebConfig::load();
 			$config->set_partners_sort_field($old_config->get_property('sort_type'));

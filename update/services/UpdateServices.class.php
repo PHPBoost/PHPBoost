@@ -463,7 +463,7 @@ class UpdateServices
 		
 		$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
 			FROM ' . $table . '
-			WHERE (' . $contents . ' LIKE "%class=\"formatter-blockquote\"%" OR ' . $contents . ' LIKE "%class=\"formatter-hide\"%" OR ' . $contents . ' LIKE "%class=\"formatter-code\"%" OR ' . $contents . ' LIKE "%class=\"formatter-block\"%" OR ' . $contents . ' LIKE "%class=\"formatter-fieldset\"%")'
+			WHERE (' . $contents . ' LIKE "%class=\"message-helper\"%")'
 		);
 		
 		$selected_rows = $result->get_rows_count();
