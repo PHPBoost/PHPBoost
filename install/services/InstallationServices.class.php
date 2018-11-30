@@ -201,6 +201,8 @@ class InstallationServices
 		$user->set_locale($locale);
 		AppContext::set_current_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
+		$this->configure_default_editor();
+		$this->configure_default_captcha();
 		$this->save_server_environnement_config();
 		$this->init_graphical_config();
 		$this->init_debug_mode();
@@ -406,6 +408,26 @@ class InstallationServices
 		foreach ($langs_to_install as $lang)
 		{
 			LangsManager::install($lang->get_id());
+		}
+	}
+
+	private function configure_default_editor()
+	{
+		if (isset($this->distribution_config['default_editor']))
+		{
+			$content_formatting_config = ContentFormattingConfig::load();
+			$content_formatting_config->set_default_editor($this->distribution_config['default_editor']);
+			ContentFormattingConfig::save();
+		}
+	}
+
+	private function configure_default_captcha()
+	{
+		if (isset($this->distribution_config['default_captcha']))
+		{
+			$content_management_config = ContentManagementConfig::load();
+			$content_management_config->set_used_captcha_module($this->distribution_config['default_captcha']);
+			ContentManagementConfig::save();
 		}
 	}
 
