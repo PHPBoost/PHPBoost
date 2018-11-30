@@ -51,7 +51,7 @@ class ServerConfiguration
 	 */
 	public function is_php_compatible()
 	{
-		return ServerConfiguration::get_phpversion() >= self::MIN_PHP_VERSION;
+		return self::get_phpversion() >= self::MIN_PHP_VERSION;
 	}
 
 	/**
