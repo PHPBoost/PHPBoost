@@ -161,7 +161,8 @@ class ContentFormattingService
 				else
 					return LangLoader::get_message('is_default_editor', 'editor-common');
 			}
-			return LangLoader::get_message('last_editor_installed', 'editor-common');
+			else
+				return LangLoader::get_message('last_editor_installed', 'editor-common');
 		}
 	}
 	

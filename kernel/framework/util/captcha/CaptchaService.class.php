@@ -108,10 +108,11 @@ class CaptchaService
 			if (count($captchas) > 1)
 			{
 				$default_captcha = $this->get_default_captcha();
-				if ($default_captcha === $module_id)
+				if ($default_captcha === $id_module)
 					return LangLoader::get_message('captcha.is_default', 'status-messages-common');
 			}
-			return LangLoader::get_message('captcha.last_installed', 'status-messages-common');
+			else
+				return LangLoader::get_message('captcha.last_installed', 'status-messages-common');
 		}
 	}
 }
