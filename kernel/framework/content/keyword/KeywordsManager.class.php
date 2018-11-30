@@ -63,20 +63,25 @@ class KeywordsManager
 	{
 		$this->delete_relations($id_in_module);
 		
-		foreach ($keywords as $keyword)
+		foreach ($keywords as $keyword_list)
 		{
-			if (!empty($keyword))
+			if (!empty($keyword_list))
 			{
-				if (!$this->exists($keyword))
+				$array_keywords = explode(',', str_replace(array(', ', '; ', ';'), ',', $keyword_list));
+				
+				foreach ($array_keywords as $keyword)
 				{
-					$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => TextHelper::htmlspecialchars($keyword), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
-					$id_keyword = $result->get_last_inserted_id();
+					if (!$this->exists($keyword))
+					{
+						$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => TextHelper::htmlspecialchars($keyword), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
+						$id_keyword = $result->get_last_inserted_id();
+					}
+					else
+					{
+						$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE name=:name OR rewrited_name=:rewrited_name', array('name' => TextHelper::htmlspecialchars($keyword), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
+					}
+					$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 				}
-				else
-				{
-					$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE name=:name OR rewrited_name=:rewrited_name', array('name' => TextHelper::htmlspecialchars($keyword), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($keyword))));
-				}
-				$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 			}
 		}
 	}
