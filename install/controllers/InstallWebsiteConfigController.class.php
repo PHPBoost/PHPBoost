@@ -44,6 +44,11 @@ class InstallWebsiteConfigController extends InstallController
 	private $security_config;
 	private $server_configuration;
 
+	/**
+	 * @var mixed[string] Distribution configuration
+	 */
+	private $distribution_config;
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
@@ -60,6 +65,7 @@ class InstallWebsiteConfigController extends InstallController
 	{
 		$this->security_config = SecurityConfig::load();
 		$this->server_configuration = new ServerConfiguration();
+		$this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
 	}
 
 	private function build_form()
@@ -110,6 +116,14 @@ class InstallWebsiteConfigController extends InstallController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
+		
+		if ($this->distribution_config['default_captcha'])
+		{
+			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['website.captcha.config']);
+			$this->form->add_fieldset($fieldset);
+			
+			$this->distribution_config['default_captcha']::display_config_form_fields($fieldset);
+		}
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
@@ -136,6 +150,9 @@ class InstallWebsiteConfigController extends InstallController
 			$this->security_config->allow_login_and_email_in_password();
 		
 		SecurityConfig::save();
+		
+		if ($this->distribution_config['default_captcha'])
+			$this->distribution_config['default_captcha']::save_config($this->form);
 		
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}
@@ -176,7 +193,8 @@ if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(va
 		$this->view = new FileTemplate('install/website.tpl');
 		$this->view->put('WEBSITE_FORM', $this->form->display());
 		$step_title = $this->lang['step.websiteConfig.title'];
-		$response = new InstallDisplayResponse(4, $step_title, $this->view);
+		$additional_stylesheet = $this->distribution_config['default_captcha'] ? $this->distribution_config['default_captcha']::get_css_stylesheet() : '';
+		$response = new InstallDisplayResponse(4, $step_title, $this->view, $additional_stylesheet);
 		return $response;
 	}
 }

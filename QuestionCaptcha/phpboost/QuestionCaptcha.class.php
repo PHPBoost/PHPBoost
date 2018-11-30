@@ -39,6 +39,21 @@ class QuestionCaptcha extends Captcha
 		return 'QuestionCaptcha';
 	}
 	
+	public static function display_config_form_fields(FormFieldset $fieldset)
+	{
+		return AdminQuestionCaptchaConfig::get_form_fields($fieldset);
+	}
+	
+	public static function save_config(HTMLForm $form)
+	{
+		AdminQuestionCaptchaConfig::save_config($form);
+	}
+	
+	public static function get_css_stylesheet()
+	{
+		return '/QuestionCaptcha/templates/QuestionCaptcha.css';
+	}
+	
 	public function is_available()
 	{
 		return true;

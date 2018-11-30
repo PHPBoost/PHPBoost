@@ -166,6 +166,7 @@ $lang = array(
 	'website.name.required' => 'Vous devez entrer le nom de votre site !',
 	'website.host.warning' => 'L\'adresse du site que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir cette adresse ?',
 	'website.path.warning' => 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?',
+	'website.captcha.config' => 'Configuration du captcha',
 //	'site_config_mail_signature' => 'Cordialement, l\'équipe du site.',
 
 //administration

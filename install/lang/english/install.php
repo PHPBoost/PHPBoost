@@ -165,6 +165,7 @@ $lang = array(
 	'website.name.required' => 'You must enter your website\'s name!',
 	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed?',
 	'website.path.warning' => 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered?',
+	'website.captcha.config' => 'Captcha configuration',
 //	'site_config_mail_signature' => 'Best regards, the site team.',
 
 // Administration

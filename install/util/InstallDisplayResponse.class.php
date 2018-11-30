@@ -44,7 +44,7 @@ class InstallDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 
-	public function __construct($step_number, $step_title, Template $view)
+	public function __construct($step_number, $step_title, Template $view, $additional_stylesheet = '')
 	{
 		$this->load_language_resources();
 		$this->init_response($step_number, $view);
@@ -55,12 +55,14 @@ class InstallDisplayResponse extends AbstractResponse
 
 		$this->full_view->put_all(array(
 			'RESTART' => InstallUrlBuilder::welcome()->rel(),
-            'STEP_TITLE' => $step_title,
-            'C_HAS_PREVIOUS_STEP' => false,
-            'C_HAS_NEXT_STEP' => false,
+			'STEP_TITLE' => $step_title,
+			'C_HAS_PREVIOUS_STEP' => false,
+			'C_HAS_NEXT_STEP' => false,
+			'C_ADDITIONAL_STYLESHEET' => !empty($additional_stylesheet),
+			'ADDITIONAL_STYLESHEET_URL' => $additional_stylesheet,
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-            'PROGRESSION' => floor(100 * $this->current_step / ($this->nb_steps -1)),
-		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
+			'PROGRESSION' => floor(100 * $this->current_step / ($this->nb_steps -1)),
+			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
 		parent::__construct($env, $this->full_view);

@@ -76,6 +76,17 @@ class AdminReCaptchaConfig extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['config.title']);
 		$form->add_fieldset($fieldset);
 		
+		$this->display_fields($fieldset);
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
+		
+		$this->form = $form;
+	}
+	
+	private function display_fields(FormFieldset $fieldset)
+	{
 		$fieldset->add_field(new FormFieldFree('explain', '', $this->lang['config.recaptcha-explain']));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_key', $this->lang['config.site_key'], $this->config->get_site_key(),
@@ -91,12 +102,6 @@ class AdminReCaptchaConfig extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('invisible_mode_enabled', $this->lang['config.invisible_mode_enabled'], $this->config->is_invisible_mode_enabled(),
 			array('description' => $this->lang['config.invisible_mode_enabled.explain'])
 		));
-		
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonReset());
-		
-		$this->form = $form;
 	}
 	
 	private function save()
@@ -122,6 +127,21 @@ class AdminReCaptchaConfig extends AdminModuleController
 		$env->set_page_title($title);
 		
 		return $response;
+	}
+	
+	public static function get_form_fields(FormFieldset $fieldset)
+	{
+		$object = new self();
+		$object->init();
+		return $object->display_fields($fieldset);
+	}
+	
+	public static function save_config(HTMLForm $form)
+	{
+		$object = new self();
+		$object->init();
+		$object->form = $form;
+		$object->save();
 	}
 }
 ?>

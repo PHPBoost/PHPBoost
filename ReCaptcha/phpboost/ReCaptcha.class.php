@@ -42,6 +42,16 @@ class ReCaptcha extends Captcha
 		return 'ReCaptcha';
 	}
 	
+	public static function display_config_form_fields(FormFieldset $fieldset)
+	{
+		return AdminReCaptchaConfig::get_form_fields($fieldset);
+	}
+	
+	public static function save_config(HTMLForm $form)
+	{
+		AdminReCaptchaConfig::save_config($form);
+	}
+	
 	public function is_available()
 	{
 		return Url::check_url_validity('www.google.com') && $this->config->get_site_key() && $this->config->get_secret_key();
