@@ -335,14 +335,14 @@ form .constraint-status-right textarea {
 
 [disabled=disabled],
 [disabled=disabled]:hover,
-[disabled=disabled]:focus, {
+[disabled=disabled]:focus {
 	background-color: rgba(0, 0, 0, 0.2);
 	border-color: rgba(0, 0, 0, 0.6);
 }
 
 [readonly=readonly],
 [readonly=readonly]:hover,
-[readonly=readonly]:focus, {
+[readonly=readonly]:focus {
 	background-color: #FAFAFA;
 	border-color: #CCCCCC;
 	color: #888888;

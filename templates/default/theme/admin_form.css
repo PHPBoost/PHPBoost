@@ -172,6 +172,11 @@ fieldset p {
 	display: none;
 }
 
+#system-report_copy_report {
+	height: 35px;
+	margin-top: 15px;
+}
+
 legend,
 .legend {
 	display: block;

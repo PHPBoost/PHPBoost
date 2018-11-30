@@ -109,7 +109,7 @@
 							<span class="actions">
 								# IF C_IS_ADMIN #
 								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete aria-hidden="true"" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 								# ENDIF #
 							</span>
 						</h2>
