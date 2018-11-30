@@ -38,4 +38,7 @@ $lang['config.title'] = 'Questions configuration';
 
 $lang['config.delete'] = 'Delete a question';
 $lang['config.add'] = 'Add a question';
+
+$lang['advises.QuestionCaptcha_questions_number'] = 'The captcha QuestionCaptcha is used to secure forms, think to <a title="Add questions" href="' . QuestionCaptchaUrlBuilder::configuration()-> rel() . '">Add questions </a>to enhance security.';
+
 ?>

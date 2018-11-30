@@ -30,7 +30,6 @@
  ####################################################
  
 $lang['advises'] = 'Conseils';
-$lang['QuestionCaptcha_questions_number'] = 'Le captcha QuestionCaptcha est utilisé pour sécuriser les formulaires, pensez à <a title="Ajouter des questions" href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
 $lang['advises.modules_management'] = '<a title="Désactivez ou désinstallez les modules" href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Désactivez ou désinstallez les modules</a> que vous n\'utilisez pas pour économiser les ressources du site.';
 $lang['advises.check_modules_authorizations'] = 'Vérifiez les autorisations d\'accès de tous vos modules et menus avant de mettre le site en ligne pour éviter que les visiteurs ou des utilisateurs non autorisés aient accès à des sections protégées du site.';
 $lang['advises.disable_debug_mode'] = '<a title="Désactivez le mode debug" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Désactivez le mode debug</a> pour ne pas afficher les erreurs aux utilisateurs (les erreurs sont quand même logguées dans les <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Erreurs archivées</a>).';

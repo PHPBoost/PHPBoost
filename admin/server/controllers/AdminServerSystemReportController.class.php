@@ -175,13 +175,12 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		try
 		{
 			$url_rewriting_available = $server_configuration->has_url_rewriting();
-		}catch(UnsupportedOperationException $ex) {
-			}
+		}catch(UnsupportedOperationException $ex) {}
 
 		$fieldset = new FormFieldsetHTML('advises', $lang['advises']);
 
 		if (ModulesManager::is_module_installed('QuestionCaptcha') && ModulesManager::is_module_activated('QuestionCaptcha') && ContentManagementConfig::load()->get_used_captcha_module() == 'QuestionCaptcha' && QuestionCaptchaConfig::load()->count_questions() < 3)
-			$fieldset->add_field(new FormFieldFree('QuestionCaptcha_questions_number', '', MessageHelper::display($lang['QuestionCaptcha_questions_number'], MessageHelper::WARNING)->render()));
+			$fieldset->add_field(new FormFieldFree('QuestionCaptcha_questions_number', '', MessageHelper::display(LangLoader::get_message('advises.QuestionCaptcha_questions_number', 'common', 'QuestionCaptcha'), MessageHelper::WARNING)->render()));
 
 		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['advises.modules_management'], MessageHelper::SUCCESS)->render()));
 

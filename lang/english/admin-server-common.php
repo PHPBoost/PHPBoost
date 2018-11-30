@@ -30,7 +30,6 @@
  ####################################################
  
 $lang['advises'] = 'Advises';
-$lang['QuestionCaptcha_questions_number'] = 'The captcha QuestionCaptcha is used to secure forms, think to <a title="Add questions" href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Add questions </a>to enhance security.';
 $lang['advises.modules_management'] = '<a title="Disable or uninstall modules" href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Disable or uninstall modules</a> you don\'t you to free ressources on the website.';
 $lang['advises.check_modules_authorizations'] = 'Check the authorizations of all your modules and menus before opening your website to avoit guest or unauthorized users accessing protected areas.';
 $lang['advises.disable_debug_mode'] = '<a title="Disable debug mode" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Disable debug mode</a> to hide errors to users (the errors are loggued in the <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Loggued errors</a>).';
