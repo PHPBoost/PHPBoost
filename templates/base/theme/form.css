@@ -413,7 +413,7 @@ textarea {
 
 .advanced-auth-group select {
 	padding-right: 0.309em;
-	max-width: 153px;
+	margin-right: 0.618em;
 	overflow-x: auto;
 }
 
