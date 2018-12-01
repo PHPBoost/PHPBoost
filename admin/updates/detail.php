@@ -52,12 +52,14 @@ if ($app instanceof Application && $app->check_compatibility())
 {
 	$authors = $app->get_authors();
 	$new_features = $app->get_new_features();
+	$warning = $app->get_warning();
 	$improvements = $app->get_improvements();
 	$bug_corrections = $app->get_bug_corrections();
 	$security_improvements = $app->get_security_improvements();
 	
 	$nb_authors = count($authors);
 	$has_new_feature = count($new_features) > 0;
+	$has_warning = count($warning) > 0;
 	$has_improvements = count($improvements) > 0;
 	$has_bug_corrections = count($bug_corrections) > 0;
 	$has_security_improvements = count($security_improvements) > 0;
@@ -85,7 +87,7 @@ if ($app instanceof Application && $app->check_compatibility())
 		'APP_PUBDATE' => $app->get_pubdate(),
 		'APP_DESCRIPTION' => $app->get_description(),
 		'APP_WARNING_LEVEL' => $app->get_warning_level(),
-		'APP_WARNING' => $app->get_warning(),
+		'APP_WARNING' => $warning,
 		'U_APP_DOWNLOAD' => $app->get_download_url(),
 		'U_APP_UPDATE' => $app->get_update_url(),
 		'PRIORITY_CSS_CLASS' => 'row_' . $priority,
@@ -100,6 +102,7 @@ if ($app instanceof Application && $app->check_compatibility())
 		'L_WARNING' => $LANG['warning'],
 		'L_APP_UPDATE_MESSAGE' => $update ->get_entitled(),
 		'C_NEW_FEATURES' => $has_new_feature,
+		'C_APP_WARNING' => $has_warning,
 		'C_IMPROVEMENTS' => $has_improvements,
 		'C_BUG_CORRECTIONS' => $has_bug_corrections,
 		'C_SECURITY_IMPROVEMENTS' => $has_security_improvements,
