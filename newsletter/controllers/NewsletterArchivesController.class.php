@@ -179,6 +179,10 @@ class NewsletterArchivesController extends ModuleController
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['archives.list'], $this->lang['newsletter'], $page);
+		$description = $this->stream->get_description();
+		if (empty($description))
+			$description = StringVars::replace_vars($this->lang['newsletter.seo.archives'], array('name' => $this->stream->get_name()));
+		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		return $response;

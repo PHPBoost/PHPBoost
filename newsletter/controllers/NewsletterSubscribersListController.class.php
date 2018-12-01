@@ -153,6 +153,7 @@ class NewsletterSubscribersListController extends ModuleController
 		
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($name_page, $this->lang['newsletter'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.suscribers.list'], array('name' => $this->stream->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page));
 		
 		return $response;

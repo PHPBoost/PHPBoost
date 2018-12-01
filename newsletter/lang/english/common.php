@@ -136,4 +136,11 @@ $lang['newsletter.message.success.delete'] = 'The archive has been deleted';
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Subscribe to newsletters';
 $lang['extended_fields.newsletter.description'] = 'Select the newsletter you wish to be registered';
+
+//SEO
+$lang['newsletter.seo.suscribe'] = 'Enter your email address and choose the newsletters you wish to receive.';
+$lang['newsletter.seo.unsuscribe'] = 'Choose the newsletters that you do not want to receive anymore.';
+$lang['newsletter.seo.suscribers.list'] = 'List of subscribers to the newsletter :name.';
+$lang['newsletter.seo.home'] = 'List of site :site newsletters.';
+$lang['newsletter.seo.archives'] = 'List of newsletters :name archives.';
 ?>
