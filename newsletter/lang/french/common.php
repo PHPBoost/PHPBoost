@@ -138,7 +138,7 @@ $lang['extended_fields.newsletter.name'] = 'Newsletter(s) souscrite(s)';
 $lang['extended_fields.newsletter.description'] = 'Sélectionnez la(les) newsletter(s) auxquelles vous souhaitez être inscrit';
 
 //SEO
-$lang['newsletter.seo.suscribe'] = 'Renseignez votre adresse email et choisissez les newsletters que vous souhaitez recevoir.';
+$lang['newsletter.seo.suscribe'] = 'Renseignez votre adresse email et choisissez la ou les newsletters que vous souhaitez recevoir.';
 $lang['newsletter.seo.unsuscribe'] = 'Choisissez la ou les newsletters que vous ne souhaitez plus recevoir.';
 $lang['newsletter.seo.suscribers.list'] = 'Liste des inscrits à la newsletter :name.';
 $lang['newsletter.seo.home'] = 'Liste des newsletters du site :site.';
