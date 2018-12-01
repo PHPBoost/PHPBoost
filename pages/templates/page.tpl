@@ -24,6 +24,6 @@
 			<div class="spacer"></div>
 			${ContentSharingActionsMenuService::display()}
 		</div>
-		<footer class="center">{COUNT_HITS}</footer>
+		<footer class="center"><span class="page-count-hit">{COUNT_HITS}</span></footer>
 	</article>
 </section>
