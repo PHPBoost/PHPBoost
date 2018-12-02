@@ -314,7 +314,7 @@
 
 			<div class="content">
 				# IF C_GALLERY_PICS #
-				<article id="article-gallery-{ID}" class="article-gallery article-several block">
+				<article id="article-gallery-{ID}" class="article-gallery article-several">
 					<header>
 						<h2>${LangLoader::get_message('image', 'main')}</h2>
 					</header>
