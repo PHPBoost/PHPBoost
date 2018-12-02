@@ -1,15 +1,11 @@
 <section id="module-wiki">
 	<header>
-		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication smaller" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-			{CATEGORY_TITLE}
-		</h1>
+		<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication smaller" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+		{CATEGORY_TITLE}
 	</header>
 	<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
 		<header>
-			<h2>
-				{TITLE}
-			</h2>
+			<h1 itemprop="name">{TITLE}</h1>
 		</header>
 
 		<div class="elements-container columns-2">
