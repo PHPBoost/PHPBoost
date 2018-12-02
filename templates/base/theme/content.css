@@ -375,21 +375,21 @@ ul.pagination-block-bis li a.next-page:hover {
 	text-align: left;
 }
 
-.explorer .content ul .fa {
+.explorer .content ul i {
 	width: 1.309em;
 	vertical-align: top;
 	margin-right: 0.309em;
 }
 
-.explorer .content ul .fa:before {
+.explorer .content ul i:before {
 	vertical-align: middle;
 }
 
-.explorer .content ul a.parent .fa:first-child {
+.explorer .content ul a.parent i:first-child {
 	width: 0.809em;
 }
 
-.explorer .content ul a.parent .fa:first-child:before {
+.explorer .content ul a.parent i:first-child:before {
 	font-size: 0.809em;
 }
 
