@@ -169,12 +169,14 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	));
 
 	$date = new Date($article_infos['timestamp'], Timezone::SERVER_TIMEZONE);
-
+	$categories = WikiCategoriesCache::load()->get_categories();
+	
 	$tpl->put_all(array_merge(
 		Date::get_array_tpl_vars($date,'date'),
 		array(
 		'ID' => $article_infos['id'],
 		'ID_CAT' => $article_infos['id_cat'],
+		'CATEGORY_TITLE' => $article_infos['id_cat'] == 0 ? ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']) : $categories[$article_infos['id_cat']]['title'],
 		'TITLE' => stripslashes($article_infos['title']),
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',

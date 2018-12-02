@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication smaller" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-			${LangLoader::get_message('category', 'main')} {ID_CAT}
+			{CATEGORY_TITLE}
 		</h1>
 	</header>
 	<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
