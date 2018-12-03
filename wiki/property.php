@@ -162,8 +162,8 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	define('TITLE', sprintf($LANG['wiki_article_com'], stripslashes($articles_infos['title'])));
-	define('DESCRIPTION', sprintf($LANG['wiki_article_com_seo'], stripslashes($articles_infos['title'])));
+	define('TITLE', sprintf($LANG['wiki_article_com'], stripslashes($article_infos['title'])));
+	define('DESCRIPTION', sprintf($LANG['wiki_article_com_seo'], stripslashes($article_infos['title'])));
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	
