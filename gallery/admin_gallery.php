@@ -116,7 +116,7 @@ $tpl->put_all(array(
 	'SUBCATEGORIES_PAGINATION' => $pagination->display(),
 	'COLUMN_WIDTH_CAT' => $column_width_cats,
 	'COLUMN_WIDTH_PICS' => $column_width_pics,
-	'COLSPAN' => min($nbr_pics, $config->get_columns_number()),
+	'COLSPAN' => min($nbr_column_cats, $config->get_columns_number()),
 	'CAT_ID' => $id_category,
 	'GALLERY' => !empty($id_category) ? $LANG['gallery'] . ' : ' . $category->get_name() : $LANG['gallery'],
 	'HEIGHT_MAX' => ($config->get_mini_max_height() - 15),
@@ -190,9 +190,15 @@ if ($total_cat > 0)
 	}
 }
 
+if ($nbr_pics > 0 && empty($idpics))
+{
+	$nbr_pics_category = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE idcat = :idcat', array('idcat' => $id_category));
+}
+
 ##### Affichage des photos #####
 $tpl->assign_block_vars('pics', array(
 	'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
+	'COLSPAN' => !empty($idpics) ? 1 : min($nbr_pics_category, $config->get_columns_number()),
 	'C_EDIT' => !empty($id_category),
 	'ID' => $idpics,
 	'IDCAT' => $id_category,
@@ -456,13 +462,16 @@ if ($nbr_pics > 0)
 		$result->dispose();
 
 		//Création des cellules du tableau si besoin est.
-		while (!is_int($j/$nbr_column_pics))
+		if ($j > $nbr_column_pics)
 		{
-			$j++;
-			$tpl->assign_block_vars('pics.end_td_pics', array(
-				'COLUMN_WIDTH_PICS' => $column_width_pics,
-				'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
-			));
+			while (!is_int($j/$nbr_column_pics))
+			{
+				$j++;
+				$tpl->assign_block_vars('pics.end_td_pics', array(
+					'COLUMN_WIDTH_PICS' => $column_width_pics,
+					'C_DISPLAY_TR_END' => (is_int($j/$nbr_column_pics))
+				));
+			}
 		}
 	}
 }

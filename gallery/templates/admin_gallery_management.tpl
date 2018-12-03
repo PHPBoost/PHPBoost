@@ -408,7 +408,7 @@
 						<table id="table" class="table-pics">
 							<thead>
 								<tr>
-									<th colspan="{COLSPAN}">
+									<th colspan="{pics.COLSPAN}">
 										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
 									</th>
 								</tr>
