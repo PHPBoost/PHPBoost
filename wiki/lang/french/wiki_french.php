@@ -34,7 +34,7 @@
 $LANG['wiki'] = 'Wiki';
 $LANG['wiki_article_hits'] = 'Cette page a été vue %d fois';
 $LANG['wiki_history'] = 'Historique';
-$LANG['wiki_article_com'] = 'Historique l\'article %s';
+$LANG['wiki_history_article'] = 'Historique l\'article %s';
 $LANG['wiki_history_seo'] = 'Tout l\'historique de l\'article %s';
 $LANG['wiki_contribution_tools'] = 'Contribuer';
 $LANG['wiki_other_tools'] = 'Outils';
