@@ -65,6 +65,7 @@ class UserHomeProfileController extends AbstractController
 			'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 			'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 			'C_HAS_PM' => $this->user->get_unread_pm() > 0,
+			'C_AVATAR_IMG' => !empty(AppContext::get_session()->get_cached_data('user_avatar')),
 			'COLSPAN' => $is_authorized_files_panel ? 3 : 2,
 			'PSEUDO' => $this->user->get_display_name(),
 			'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
@@ -76,6 +77,7 @@ class UserHomeProfileController extends AbstractController
 			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
 			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
 			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->rel(),
+			'U_AVATAR_IMG' => Url::to_rel(AppContext::get_session()->get_cached_data('user_avatar')),
 			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel()
 		));
 	}
