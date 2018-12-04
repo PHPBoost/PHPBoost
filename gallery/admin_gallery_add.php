@@ -89,7 +89,7 @@ if (isset($_FILES['gallery'])) //Upload
 		}
 	}
 	
-	if (empty($error) || (isset($Gallery) && !$Gallery->get_error()))
+	if (empty($error) && !$Gallery->get_error())
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
