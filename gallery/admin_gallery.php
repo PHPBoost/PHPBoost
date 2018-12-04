@@ -198,7 +198,7 @@ if ($nbr_pics > 0 && empty($idpics))
 ##### Affichage des photos #####
 $tpl->assign_block_vars('pics', array(
 	'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
-	'COLSPAN' => !empty($idpics) ? 1 : min($nbr_pics_category, $config->get_columns_number()),
+	'COLSPAN' => isset($nbr_pics_category) ? min($nbr_pics_category, $config->get_columns_number()) : 1,
 	'C_EDIT' => !empty($id_category),
 	'ID' => $idpics,
 	'IDCAT' => $id_category,
