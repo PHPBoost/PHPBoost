@@ -134,7 +134,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
-				$contents = $contents . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
+				$contents = $contents . '<br /><br />' . $current_user->get_display_name() . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
 				$send_mail = 0;
 				try {
 					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
@@ -148,7 +148,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 					} catch (RowNotFoundException $ex) {}
 					
 					if ($email_dest)
-						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents);
+						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents, '', Mail::SENDER_USER);
 				}
 			}
 			
