@@ -376,7 +376,7 @@ class ContentSecondParser extends AbstractParser
 			if (!empty($matches[4]))
 			{
 				$poster_type = new FileType(new File($matches[4]));
-				$poster = $poster_type->is_picture() ? ' poster="' . $matches[4] . '"' : '';
+				$poster = $poster_type->is_picture() ? ' poster="' . Url::to_rel($matches[4]) . '"' : '';
 			}
 
 			foreach ($video_files as $video)
