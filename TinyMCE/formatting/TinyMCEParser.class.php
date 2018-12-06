@@ -679,7 +679,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => "[[MEDIA]]insertSwfPlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie' => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",
-			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, $3);[[/MEDIA]]',
+			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, \'$3\');[[/MEDIA]]',
 			'sound' => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
 			'math' => '[[MATH]]$1[[/MATH]]',
 			'url1' => '<a href="$1">$1</a>',
