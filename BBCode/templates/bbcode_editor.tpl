@@ -52,8 +52,8 @@ function XMLHttpRequest_preview(field)
 	<div class="bbcode-containers">
 		<ul id="bbcode-container-smileys" class="bbcode-container">
 			<li class="bbcode-elements">
-				<a href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" onmouseover="{DISABLED_SMILEYS}bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover{AUTH_SMILEYS}" title="{@bb_smileys}">
-					<i class="fa fa-fw bbcode-icon-smileys"></i>
+				<a href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" onmouseover="{DISABLED_SMILEYS}bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bb_smileys}">
+					<i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true" title="{@bb_smileys}"></i>
 				</a>
 				<div id="bb-block1{FIELD}" class="bbcode-block-container" style="display: none;">
 					<ul class="bbcode-block bbcode-block-smileys" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
