@@ -3,11 +3,11 @@
 		# START action #
 		<li>
 			# IF action.C_PICTURE #
-			<a href="{action.U_LINK}" title="{action.TITLE}">
+			<a href="{action.U_LINK}" aria-label="{action.TITLE}">
 				# IF action.C_IMG #
 				<img src="{action.U_IMG}" alt="{action.TITLE}" /><br />
 				# ELSE #
-				<i class="fa {action.CSS_CLASS}"></i><br />
+				<i class="fa {action.CSS_CLASS}" aria-hidden="true" title="{action.TITLE}"></i><br />
 				# ENDIF #
 			</a>
 			# ENDIF #
