@@ -228,6 +228,7 @@ header h2 .actions {
 }
 
 .media-content {
+	clear: both;
 	position: relative;
 	padding-bottom: 52.76%;
 	height: 0;
