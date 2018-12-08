@@ -33,12 +33,12 @@ require_once('media_begin.php');
 if (empty($id_media))
 {
 	bread_crumb($id_cat);
-	
+
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($id_cat);
 	define('TITLE', $category->get_name());
 
 	require_once('../kernel/header.php');
-		
+
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module = $modulesLoader->get_provider('media');
 	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
@@ -53,7 +53,7 @@ elseif ($id_media > 0)
 	$config = MediaConfig::load();
 	$comments_config = CommentsConfig::load();
 	$content_management_config = ContentManagementConfig::load();
-	
+
 	try {
 		$media = PersistenceContext::get_querier()->select_single_row_query("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
 		FROM " . PREFIX . "media AS v
@@ -68,10 +68,10 @@ elseif ($id_media > 0)
 		$error_controller = PHPBoostErrors::unexisting_page();
    		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 		$LANG['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
@@ -98,7 +98,7 @@ elseif ($id_media > 0)
 	$notation->set_average_notes($media['average_notes']);
 	$notation->set_user_already_noted(!empty($media['note']));
 	$nbr_notes = $media['number_notes'];
-	
+
 	$group_color = User::get_group_color($media['groups'], $media['level']);
 
 	$date = new Date($media['timestamp'], Timezone::SERVER_TIMEZONE);
@@ -135,7 +135,7 @@ elseif ($id_media > 0)
 		'CATEGORY_NAME' => $media['idcat'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat'])->get_name(),
 		'U_EDIT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($media['idcat'])->rel()
 	)));
-	
+
 	if (empty($mime_type_tpl[$media['mime_type']]))
 	{
 		$media_tpl = new FileTemplate('media/format/media_other.tpl');
@@ -144,27 +144,27 @@ elseif ($id_media > 0)
 	{
 		$media_tpl = new FileTemplate('media/' . $mime_type_tpl[$media['mime_type']]);
 	}
-	
+
 	if (!empty($media['poster']))
 	{
 		$poster_type = new FileType(new File($media['poster']));
 		$picture_url = new Url($media['poster']);
-		
+
 		$media_tpl->put_all(array(
 			'C_POSTER' => $poster_type->is_picture(),
 			'POSTER' => $picture_url->rel()
 		));
 	}
-	
+
 	$media_tpl->put_all(array(
-		'URL' => $media['url'],
+		'URL' => Url::to_rel($media['url']),
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height']
 	));
-	
+
 	$tpl->put('media_format', $media_tpl);
-	
+
 	//Affichage commentaires.
 	if (AppContext::get_request()->get_getint('com', 0) == 0)
 	{

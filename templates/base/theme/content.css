@@ -227,24 +227,27 @@ header h2 .actions {
 	}
 }
 
-.media-content {
-	clear: both;
-	position: relative;
-	padding-bottom: 52.76%;
-	height: 0;
+@media (max-width: 769px) {
+	.media-content {
+		clear: both;
+		position: relative;
+		padding-bottom: 56.25%;
+		height: 0;
+	}
+
+	.media-content object,
+	.media-content embed,
+	.media-content video,
+	.media-content iframe,
+	.media-content .video-player {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
 }
 
-.media-content object,
-.media-content embed,
-.media-content video,
-.media-content iframe,
-.media-content .video-player {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
 
 /* --- Friends content --- */
 .content-friends {
