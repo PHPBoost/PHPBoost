@@ -557,6 +557,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	-ms-flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
 	padding: 0.618em;
+	max-width: calc(100% - 5.2em)
 }
 
 .sortable-block .sortable-title:hover {
