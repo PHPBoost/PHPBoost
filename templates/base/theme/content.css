@@ -227,7 +227,7 @@ header h2 .actions {
 	}
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
 	.media-content {
 		clear: both;
 		position: relative;
@@ -245,6 +245,17 @@ header h2 .actions {
 		left: 0;
 		width: 100%;
 		height: 100%;
+	}
+}
+
+@media (min-width:769px) {
+	.media-content object,
+	.media-content embed,
+	.media-content video,
+	.media-content iframe,
+	.media-content .video-player {
+		width: auto;
+		height: auto;
 	}
 }
 
