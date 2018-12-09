@@ -4,7 +4,7 @@
 */
 
 /* Aria-label Tooltip */
-[aria-label] {
+/* [aria-label] {
 	position: relative;
 }
 
@@ -51,7 +51,7 @@
 	transform: translateX(0);
 	left: auto;
 	right: 0.309em;
-}
+} */
 
 /* --- Summary --- */
 
