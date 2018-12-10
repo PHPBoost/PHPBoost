@@ -251,9 +251,7 @@ header h2 .actions {
 @media (min-width:769px) {
 	.media-content object,
 	.media-content embed,
-	.media-content video,
-	.media-content iframe,
-	.media-content .video-player {
+	.media-content iframe {
 		width: auto;
 		height: auto;
 	}
