@@ -20,7 +20,7 @@
 							<ul class="level-1">
 								<li>
 									<a class="cssmenu-title" href="#">
-										<img src="{PATH_TO_ROOT}/templates/base/theme/images/logo.png" alt="{@cssmenu.element}" />{@cssmenu.element}
+										<img src="{PATH_TO_ROOT}/templates/base/theme/images/logo.png" alt="{@cssmenu.element}" />{@cssmenu.long.element}
 									</a>
 								</li>
 								<li class="has-sub">
@@ -157,7 +157,7 @@
 								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
 								<ul class="level-1">
 									<li>
-										<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
+										<a class="cssmenu-title" href="#">{@cssmenu.long.element}</a>
 									</li>
 									<li class="has-sub">
 										<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
@@ -351,7 +351,7 @@
 							<span class="cssmenu-title" href="#">{@cssmenu.sub.element}</span>
 							<ul class="level-1">
 								<li>
-									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
+									<a class="cssmenu-title" href="#">{@cssmenu.long.element}</a>
 								</li>
 								<li>
 									<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
