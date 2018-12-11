@@ -451,6 +451,7 @@ $lang['cssmenu.breadcrumb.index'] = 'Home';
 $lang['cssmenu.breadcrumb.sandbox'] = 'Sandbox';
 $lang['cssmenu.breadcrumb.cssmenu'] = 'cssmenu';
 $lang['cssmenu.h2'] = 'All the cssmenu menus';
+$lang['cssmenu.long.element'] = 'Menu item very large to refine the cssmenu design';
 $lang['cssmenu.element'] = 'Menu item';
 $lang['cssmenu.sub.element'] = 'Submenu';
 $lang['cssmenu.horizontal.sub.header'] = 'Menu in sub-header';

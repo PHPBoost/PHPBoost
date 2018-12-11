@@ -456,6 +456,7 @@ $lang['cssmenu.breadcrumb.index'] = 'Accueil';
 $lang['cssmenu.breadcrumb.sandbox'] = 'Bac à sable';
 $lang['cssmenu.breadcrumb.cssmenu'] = 'cssmenu';
 $lang['cssmenu.h2'] = 'Les différents menus cssmenu';
+$lang['cssmenu.long.element'] = 'Item du menu très long pour affiner le design du cssmenu';
 $lang['cssmenu.element'] = 'Item du menu';
 $lang['cssmenu.sub.element'] = 'Sous menu';
 $lang['cssmenu.horizontal.top'] = 'Menu horizontal entête';

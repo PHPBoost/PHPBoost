@@ -151,7 +151,7 @@
 					<nav id="vertical-scrolling-left" class="cssmenu cssmenu-vertical cssmenu-left cssmenu-with-submenu">
 						<ul class="level-0">
 							<li>
-								<a class="cssmenu-title" href="#">{@cssmenu.element}</a>
+								<a class="cssmenu-title" href="#">{@cssmenu.long.element}</a>
 							</li>
 							<li class="has-sub">
 								<span class="cssmenu-title">{@cssmenu.sub.element}</span>
