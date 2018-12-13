@@ -59,10 +59,11 @@ class GroupsService
 		{
 			array_push($user_groups, $idgroup);
 			self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => (trim(implode('|', $user_groups), '|'))), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			$return = true;
 		}
 		else
 		{
-			return false;
+			$return = false;
 		}
 
 		//On insère le membre dans le groupe.
@@ -72,13 +73,14 @@ class GroupsService
 		{
 			array_push($group_members, $user_id);
 			self::$db_querier->update(DB_TABLE_GROUP, array('members' => (trim(implode('|', $group_members), '|'))), 'WHERE id = :id', array('id' => $idgroup));
+			$return = true;
 		}
 		else
 		{
-			return false;
+			$return = false;
 		}
 		
-		return true;
+		return $return;
 	}
 
 	/**
@@ -159,7 +161,9 @@ class GroupsService
 		
 		$user_groups = explode('|', $user_groups);
 		
-		unset($user_groups[array_search($idgroup, $user_groups)]);
+		$key = array_search($idgroup, $user_groups);
+		if($key !== false)
+			unset($user_groups, $key);
 		
 		self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		
@@ -171,7 +175,9 @@ class GroupsService
 		
 		$members_group = explode('|', $members_group);
 		
-		unset($members_group[array_search($user_id, $members_group)]);
+		$key = array_search($user_id, $members_group);
+		if($key !== false)
+			unset($members_group, $key);
 		
 		self::$db_querier->update(DB_TABLE_GROUP, array('members' => implode('|', $members_group)), 'WHERE id = :id', array('id' => $idgroup));
 	}
