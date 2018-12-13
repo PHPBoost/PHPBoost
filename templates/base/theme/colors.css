@@ -722,6 +722,12 @@ h3.formatter-title {
 .bkgd-color-op20 { background-color: rgba(54, 100, 147, 0.2); }
 .bkgd-color-op40 { background-color: rgba(54, 100, 147, 0.4); }
 
+@media (max-width: 768px) {
+	.bkgd-color-op10-sc { background-color: rgba(54, 100, 147, 0.1); }
+	.bkgd-color-op20-sc { background-color: rgba(54, 100, 147, 0.2); }
+	.bkgd-color-op40-sc { background-color: rgba(54, 100, 147, 0.4); }
+}
+
 .bkgd-color-op20-hover li:hover,
 .bkgd-color-op20-hover a:hover { background-color: rgba(54, 100, 147, 0.2); }
 
@@ -739,4 +745,65 @@ h3.formatter-title {
 		border-color: transparent;
 		border-bottom-color: #FFFFFF;
 	}
+}
+
+
+/* -- Highlight text -- */
+/* -------------------- */
+.highlight-search-word {
+	background-color: #FFFF00;
+	color: #000000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fa-announce:before,
+.fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
+.fa-announce-hot:before,
+.fa-announce-new-hot:before 	{ content: "\f086"; } /* copy comments */
+.fa-announce-lock:before,
+.fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
+.fa-announce-post:before,
+.fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
+.fa-announce-top:before,
+.fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */
+
+.fa-announce:before,
+.fa-announce-hot:before 		{ color: #81A4C8; }
+.fa-announce-new:before,
+.fa-announce-new-hot:before 	{ color: #40b73a; }
+
+.fa-msg-display:before 			{ content: "\f00c"; color: #40b73a; } /* copy check */
+.fa-msg-not-display:before 		{ content: "\f00d"; color: #E0464A; } /* copy times */
+.fa-msg-track:before 			{ content: "\f004"; color: #E0464A; } /* copy heart */
+.fa-msg-not-track:before 		{ content: "\f004"; color: #212121; } /* copy heart */
+.fa-pm-track:before 			{ content: "\f27a"; color: #517BA6; } /* copy comment-alt */
+.fa-pm-not-track:before 		{ content: "\f27a"; color: #212121; } /* copy comment-alt */
+.fa-mail-track:before 			{ content: "\f0e0"; color: #517BA6; } /* copy envelope */
+.fa-mail-not-track:before 		{ content: "\f0e0"; color: #212121; } /* copy envelope */
+.fa-lastview:before 			{ content: "\f017"; color: #353535; } /* copy clock-o */
+.fa-notread:before 				{ content: "\f15c"; color: #353535; } /* copy file-alt, regular fonts */
+.fa-showmymsg:before 			{ content: "\f4ad"; color: #353535; } /* copy comments-dots, regular fonts*/
+
+.fa-notread,
+.fa-lastview,
+.fa-showmymsg {
+	font-weight: 200;
 }

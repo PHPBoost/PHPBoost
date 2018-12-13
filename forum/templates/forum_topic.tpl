@@ -201,10 +201,10 @@
 				<div class="msg-position" id="d{msg.ID}">
 					<div class="msg-container{msg.CLASS_COLOR}">
 						<span id="m{msg.ID}"></span>
-						<div class="msg-top">
+						<div class="msg-top bkgd-color-op20-sc">
 
 							<div class="msg-top-row">
-								<div class="msg-pseudo-mbr">
+								<div class="msg-pseudo-mbr bkgd-color-op20">
 								# IF msg.C_FORUM_USER_LOGIN #
 									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
 									<a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"{msg.FORUM_USER_GROUP_COLOR}>
@@ -244,7 +244,7 @@
 							</div>
 						</div>
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
-							<div class="msg-contents-info">
+							<div class="msg-contents-info bkgd-color-op20">
 								<span class="float-left">
 									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true" title="{msg.TOPIC_DATE_FULL}"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
 								</span>
@@ -271,12 +271,8 @@
 
 									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" aria-label="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut" aria-hidden="true" title="{L_CUT_TOPIC}"></i></a> # ENDIF #
 
-									<a aria-label="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;">
-										<i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('go_top', 'common', 'forum')}"></i>
-									</a>
-									<a aria-label="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;">
-										<i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('go_bottom', 'common', 'forum')}"></i>
-									</a>
+									<a aria-label="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('go_top', 'common', 'forum')}"></i></a>
+									<a aria-label="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('go_bottom', 'common', 'forum')}"></i></a>
 								</span>
 							</div>
 							<div class="msg-contents">
