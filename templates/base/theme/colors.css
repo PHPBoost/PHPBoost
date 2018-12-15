@@ -490,22 +490,39 @@ table.calendar-table td a:hover {
 
 td.calendar-week 		{ border-color: #81A4C8; }
 
-/* --- les couleurs d icones --- */
-.fa-syndication:before { color: #F57900; }
-.fa-success:before     { color: #478948; }
-.fa-forbidden:before   { color: #E0464A; }
-.fa-error:before       { color: #E0464A; }
-.fa-warning:before     { color: #C19954; }
-.fa-ban:before         { color: #E0464A; }
-.fa-unban:before       { color: #478948; }
-.fa-male:before        { color: #8DC3E9; }
-.fa-female:before      { color: #F49CC4; }
-.fa-online:before      { color: #40b73a; }
-.fa-offline:before     { color: #E0464A; }
-.fa-trend-up:before    { color: #478948; }
-.fa-trend-down:before  { color: #E0464A; }
-.fa-circle-alert       { color: #E0464A; }
-.fa-circle-alert span  { color: #FFFFFF; }
+/* --- les couleurs d icones Font Awesome--- */
+.fa-syndication:before      { color: #F57900; }
+.fa-success:before          { color: #478948; }
+.fa-forbidden:before        { color: #E0464A; }
+.fa-error:before            { color: #E0464A; }
+.fa-warning:before          { color: #C19954; }
+.fa-ban:before              { color: #E0464A; }
+.fa-unban:before            { color: #478948; }
+.fa-male:before             { color: #8DC3E9; }
+.fa-female:before           { color: #F49CC4; }
+.fa-online:before           { color: #40b73a; }
+.fa-offline:before          { color: #E0464A; }
+.fa-trend-up:before         { color: #478948; }
+.fa-trend-down:before       { color: #E0464A; }
+.fa-circle-alert            { color: #E0464A; }
+.fa-circle-alert span       { color: #FFFFFF; }
+
+.fa-announce:before,
+.fa-announce-hot:before     { color: #81A4C8; }
+.fa-announce-new:before,
+.fa-announce-new-hot:before { color: #40b73a; }
+
+.fa-msg-display:before      { color: #40b73a; }
+.fa-msg-not-display:before 	{ color: #E0464A; }
+.fa-msg-track:before        { color: #E0464A; }
+.fa-msg-not-track:before    { color: #212121; }
+.fa-pm-track:before         { color: #517BA6; }
+.fa-pm-not-track:before     { color: #212121; }
+.fa-mail-track:before       { color: #517BA6; }
+.fa-mail-not-track:before   { color: #212121; }
+.fa-lastview:before         { color: #353535; }
+.fa-notread:before          { color: #353535; }
+.fa-showmymsg:before        { color: #353535; }
 
 /* --- Alertes --- */
 .message-helper { background-color: rgba(54, 100, 147, 0.1) }
@@ -753,57 +770,4 @@ h3.formatter-title {
 .highlight-search-word {
 	background-color: #FFFF00;
 	color: #000000;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.fa-announce:before,
-.fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
-.fa-announce-hot:before,
-.fa-announce-new-hot:before 	{ content: "\f086"; } /* copy comments */
-.fa-announce-lock:before,
-.fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
-.fa-announce-post:before,
-.fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
-.fa-announce-top:before,
-.fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */
-
-.fa-announce:before,
-.fa-announce-hot:before 		{ color: #81A4C8; }
-.fa-announce-new:before,
-.fa-announce-new-hot:before 	{ color: #40b73a; }
-
-.fa-msg-display:before 			{ content: "\f00c"; color: #40b73a; } /* copy check */
-.fa-msg-not-display:before 		{ content: "\f00d"; color: #E0464A; } /* copy times */
-.fa-msg-track:before 			{ content: "\f004"; color: #E0464A; } /* copy heart */
-.fa-msg-not-track:before 		{ content: "\f004"; color: #212121; } /* copy heart */
-.fa-pm-track:before 			{ content: "\f27a"; color: #517BA6; } /* copy comment-alt */
-.fa-pm-not-track:before 		{ content: "\f27a"; color: #212121; } /* copy comment-alt */
-.fa-mail-track:before 			{ content: "\f0e0"; color: #517BA6; } /* copy envelope */
-.fa-mail-not-track:before 		{ content: "\f0e0"; color: #212121; } /* copy envelope */
-.fa-lastview:before 			{ content: "\f017"; color: #353535; } /* copy clock-o */
-.fa-notread:before 				{ content: "\f15c"; color: #353535; } /* copy file-alt, regular fonts */
-.fa-showmymsg:before 			{ content: "\f4ad"; color: #353535; } /* copy comments-dots, regular fonts*/
-
-.fa-notread,
-.fa-lastview,
-.fa-showmymsg {
-	font-weight: 200;
 }

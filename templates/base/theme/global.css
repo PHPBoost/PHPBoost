@@ -768,3 +768,34 @@ li.small-block .fa-stack {
 .upload-root-cat {
 	padding: 0 0 0 1em;
 }
+
+/* --- Icones d'annonces --- */
+.fa-announce:before,
+.fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
+.fa-announce-hot:before,
+.fa-announce-new-hot:before 	{ content: "\f086"; } /* copy comments */
+.fa-announce-lock:before,
+.fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
+.fa-announce-post:before,
+.fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
+.fa-announce-top:before,
+.fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */
+
+/* --- Icones de messagerie --- */
+.fa-msg-display:before 			{ content: "\f00c"; } /* copy check */
+.fa-msg-not-display:before 		{ content: "\f00d"; } /* copy times */
+.fa-msg-track:before 			{ content: "\f004"; } /* copy heart */
+.fa-msg-not-track:before 		{ content: "\f004"; } /* copy heart */
+.fa-pm-track:before 			{ content: "\f27a"; } /* copy comment-alt */
+.fa-pm-not-track:before 		{ content: "\f27a"; } /* copy comment-alt */
+.fa-mail-track:before 			{ content: "\f0e0"; } /* copy envelope */
+.fa-mail-not-track:before 		{ content: "\f0e0"; } /* copy envelope */
+.fa-lastview:before 			{ content: "\f017"; } /* copy clock-o */
+.fa-notread:before 				{ content: "\f15c"; } /* copy file-alt, regular fonts */
+.fa-showmymsg:before 			{ content: "\f4ad"; } /* copy comments-dots, regular fonts*/
+
+.fa-notread,
+.fa-lastview,
+.fa-showmymsg {
+	font-weight: 200;
+}
