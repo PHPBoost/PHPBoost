@@ -44,6 +44,7 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		UpdateServices::update_table_content(PREFIX . 'forum_alerts');
 		UpdateServices::update_table_content(PREFIX . 'forum_msg');
+		UpdateServices::update_table_content(PREFIX . 'member_extended_fields', 'user_sign', 'user_id');
 	}
 }
 ?>
