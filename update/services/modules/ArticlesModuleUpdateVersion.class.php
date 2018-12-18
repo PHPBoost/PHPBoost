@@ -45,6 +45,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			
 			if (in_array(PREFIX . 'articles', $tables))
 				$this->update_articles_table();
+			
+			$this->update_content();
 		}
 		
 		$this->delete_old_files();
@@ -53,6 +55,11 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	private function update_articles_table()
 	{
 		$this->querier->inject('ALTER TABLE ' . PREFIX . 'articles CHANGE contents contents MEDIUMTEXT');
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'articles');
 	}
 	
 	private function delete_old_files()

@@ -34,7 +34,17 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
+		if (ModulesManager::is_module_installed('faq'))
+		{
+			$this->update_content();
+		}
+		
 		$this->delete_old_files();
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'faq', 'answer');
 	}
 	
 	private function delete_old_files()

@@ -52,6 +52,8 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			if (in_array(PREFIX . 'smallads', $tables))
 				$this->update_smallads_table();
 			
+			$this->update_content();
+			
 			$this->delete_old_mini_menu();
 			self::pics_to_upload();
 		}
@@ -222,6 +224,11 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			}
 			$result->dispose();
 		}
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'smallads');
 	}
 	
 	private function delete_old_files()

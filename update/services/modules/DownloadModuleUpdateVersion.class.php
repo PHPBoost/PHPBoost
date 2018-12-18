@@ -45,6 +45,8 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			
 			if (in_array(PREFIX . 'download', $tables))
 				$this->update_download_table();
+			
+			$this->update_content();
 		}
 		
 		$this->delete_old_files();
@@ -56,6 +58,11 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (!isset($columns['software_version']))
 			$this->db_utils->add_column(PREFIX . 'download', 'software_version', array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''"));
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'download');
 	}
 	
 	private function delete_old_files()

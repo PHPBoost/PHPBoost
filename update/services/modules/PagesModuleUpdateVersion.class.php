@@ -45,6 +45,8 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			
 			if (in_array(PREFIX . 'pages', $tables))
 				$this->update_pages_table();
+			
+			$this->update_content();
 		}
 	}
 	
@@ -53,6 +55,11 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		$columns = $this->db_utils->desc_table(PREFIX . 'pages');
 		
 		$this->querier->inject('ALTER TABLE ' . PREFIX . 'pages CHANGE contents contents MEDIUMTEXT');
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'pages');
 	}
 }
 ?>

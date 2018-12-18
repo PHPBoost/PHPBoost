@@ -45,6 +45,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 			
 			if (in_array(PREFIX . 'wiki_contents', $tables))
 				$this->update_wiki_contents_table();
+			
+			$this->update_content();
 		}
 		
 		$this->delete_old_files();
@@ -58,6 +60,11 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		
 		if (!isset($columns['change_reason']))
 			$this->db_utils->add_column(PREFIX . 'wiki_contents', 'change_reason', array('type' => 'text', 'length' => 100, 'notnull' => 0));
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'wiki_contents', 'content', 'id_contents');
 	}
 	
 	private function delete_old_files()

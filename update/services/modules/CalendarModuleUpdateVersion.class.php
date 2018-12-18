@@ -34,7 +34,17 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
+		if (ModulesManager::is_module_installed('calendar'))
+		{
+			$this->update_content();
+		}
+		
 		$this->delete_old_files();
+	}
+	
+	public function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'calendar_events_content');
 	}
 	
 	private function delete_old_files()

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       MediaModuleUpdateVersion.class.php
+ *                       ShoutboxModuleUpdateVersion.class.php
  *                            -------------------
  *   begin                : March 09, 2017
  *   copyright            : (C) 2017 Julien BRISWALTER
@@ -25,35 +25,24 @@
  *
  ###################################################*/
 
-class MediaModuleUpdateVersion extends ModuleUpdateVersion
+class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('media');
+		parent::__construct('shoutbox');
 	}
 	
 	public function execute()
 	{
-		if (ModulesManager::is_module_installed('media'))
+		if (ModulesManager::is_module_installed('shoutbox'))
 		{
 			$this->update_content();
 		}
-		
-		$this->delete_old_files();
 	}
 	
 	public function update_content()
 	{
-		UpdateServices::update_table_content(PREFIX . 'media');
-	}
-	
-	private function delete_old_files()
-	{
-		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/MediaNewContent.class.php');
-		$file->delete();
-		
-		$file = new File(PATH_TO_ROOT . '/' . $this->module_id . '/phpboost/MediaNotation.class.php');
-		$file->delete();
+		UpdateServices::update_table_content(PREFIX . 'shoutbox');
 	}
 }
 ?>

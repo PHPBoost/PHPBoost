@@ -463,7 +463,7 @@ class UpdateServices
 		
 		$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
 			FROM ' . $table . '
-			WHERE (' . $contents . ' LIKE "%class=\"message-helper\"%")'
+			WHERE (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%")'
 		);
 		
 		$selected_rows = $result->get_rows_count();
