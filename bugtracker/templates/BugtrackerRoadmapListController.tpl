@@ -15,12 +15,12 @@
 				<th>
 					<a href="{LINK_BUG_ID_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 					{@labels.fields.id}
-					<a href="{LINK_BUG_ID_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.bugtracker', 'common')}"></i></a>
+					<a href="{LINK_BUG_ID_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 				</th>
 				<th class="title-column">
 					<a href="{LINK_BUG_TITLE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 					${LangLoader::get_message('form.title', 'common')}
-					<a href="{LINK_BUG_TITLE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.bugtracker', 'common')}"></i></a>
+					<a href="{LINK_BUG_TITLE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 				</th>
 				# IF C_DISPLAY_TYPE_COLUMN #
 				<th>
