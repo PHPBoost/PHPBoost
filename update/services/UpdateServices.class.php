@@ -238,6 +238,11 @@ class UpdateServices
 		else
 			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 		
+		// Installation du module SocialNetworks
+		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks');
+		if ($folder->exists() && !ModulesManager::is_module_installed('SocialNetworks'))
+			ModulesManager::install_module('SocialNetworks');
+		
 		// Vérification de la date d'installation du site et correction si besoin
 		$this->check_installation_date();
 		
@@ -318,7 +323,7 @@ class UpdateServices
 		$modules_config = ModulesConfig::load();
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
-			if (ModulesManager::module_is_upgradable($id))
+			if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 			{
 				if (in_array($id, array_keys($update_modules_class)))
 				{
@@ -341,11 +346,8 @@ class UpdateServices
 			}
 			else
 			{
-				if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
-				{
-					ModulesManager::update_module($id, false, false);
-					$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
-				}
+				ModulesManager::update_module($id, false, false);
+				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
 			}
 			
 			$modules_config->update($module);
