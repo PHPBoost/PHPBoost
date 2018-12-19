@@ -152,6 +152,7 @@ div.site-logo {
 
 	.cssmenu > ul > li > .cssmenu-title {
 		padding: 5px;
+		white-space: normal;
 	}
 
 	.step-menu.cssmenu > ul > li > .cssmenu-title {
@@ -234,14 +235,9 @@ article {
 }
 
 /* --- welcome --- */
-.pbt-box {
-	padding: 0 25px 8px 8px;
-	width: 150px;
-}
-
 @media (min-width: 769px) {
 	.pbt-box {
-		width: auto;
+		padding: 0 8px 8px 25px;
 	}
 }
 
