@@ -472,6 +472,17 @@ class UpdateServices
 			$user_accounts_config->set_welcome_message($parser->get_content());
 			UserAccountsConfig::save();
 		}
+		
+		$unparser->set_content($user_accounts_config->get_registration_agreement());
+		$unparser->parse();
+		$parser->set_content($unparser->get_content());
+		$parser->parse();
+		
+		if ($parser->get_content() != $user_accounts_config->get_registration_agreement())
+		{
+			$user_accounts_config->set_registration_agreement($parser->get_content());
+			UserAccountsConfig::save();
+		}
 	}
 	
 	public static function update_table_content($table, $contents = 'contents', $id = 'id')
