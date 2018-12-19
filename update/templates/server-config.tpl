@@ -3,9 +3,11 @@
 	</header>
 
 	<div class="content">
-		<a href="http://www.php.net/" title="PHP">
-			<img src="templates/images/php.png" alt="PHP" class="float-right" />
-		</a>
+		<div class="float-right pbt-box center">
+			<a href="http://www.php.net/" title="PHP">
+				<img src="templates/images/php.png" alt="PHP" class="float-right" />
+			</a>
+		</div>
 		<span class="spacer">&nbsp;</span>
 		{@H|step.server.explanation}
 		<fieldset class="fieldset-content">
