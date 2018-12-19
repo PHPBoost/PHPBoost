@@ -456,6 +456,22 @@ class UpdateServices
 		
 		// Update pm contents if needed
 		self::update_table_content(PREFIX . 'pm_msg');
+		
+		$unparser = new OldBBCodeUnparser();
+		$parser = new BBCodeParser();
+		
+		$user_accounts_config = UserAccountsConfig::load();
+		
+		$unparser->set_content($user_accounts_config->get_welcome_message());
+		$unparser->parse();
+		$parser->set_content($unparser->get_content());
+		$parser->parse();
+		
+		if ($parser->get_content() != $user_accounts_config->get_welcome_message())
+		{
+			$user_accounts_config->set_welcome_message($parser->get_content());
+			UserAccountsConfig::save();
+		}
 	}
 	
 	public static function update_table_content($table, $contents = 'contents', $id = 'id')
