@@ -40,12 +40,9 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	 */
 	public function get_messages_list_link_name()
 	{
-		global $LANG;
-		load_module_lang('forum');
-
-		return $LANG['forum'];
+		return LangLoader::get_message('forum.messages', 'common', 'forum');
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -54,10 +51,12 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 		return 'fa fa-globe';
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get_number_messages($user_id)
 	{
-		$parameters = array('user_id' => $user_id);
-		return PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE user_id = :user_id', $parameters);
+		return PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE user_id = :user_id', array('user_id' => $user_id));
 	}
 }
 ?>

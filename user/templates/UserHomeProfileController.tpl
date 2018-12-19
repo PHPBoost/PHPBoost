@@ -48,11 +48,25 @@
 			<li class="block">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="fa fa-file-alt fa-stack-2x"></i></span><!--
-				 --># ELSE #<!--
-				 --><i class="fa fa-file-alt fa-2x"></i><!--
-				 --># ENDIF #<!--
-				 --><span class="profile-element-title">${LangLoader::get_message('contribution_panel', 'main')}</span>
+					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="fa fa-file-alt fa-stack-2x"></i></span>
+					# ELSE #
+					<i class="fa fa-file-alt fa-2x"></i>
+					# ENDIF #
+					<span class="profile-element-title">${LangLoader::get_message('contribution_panel', 'main')}</span>
+				</a>
+			</li>
+			# START modules_messages #
+			<li class="block">
+				<a href="{modules_messages.U_LINK_USER_MSG}">
+					# IF modules_messages.C_IMG_USER_MSG #<i class="{modules_messages.IMG_USER_MSG} fa-2x" aria-hidden="true"></i># ENDIF #
+					<span class="profile-element-title">{modules_messages.NAME_USER_MSG} : {modules_messages.NUMBER_MESSAGES}</span>
+				</a>
+			</li>
+			# END modules_messages #
+			<li class="block">
+				<a href="${relative_url(UserUrlBuilder::disconnect())}">
+					<i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+					<span class="profile-element-title">{@disconnect}</span>
 				</a>
 			</li>
 		</ul>

@@ -46,6 +46,7 @@ $lang['forum.connected.mbr.no'] = 'Not connected member';
 
 $lang['forum.links'] = 'Links';
 $lang['forum.message_options'] = 'Message options';
+$lang['forum.messages'] = 'Forum messages';
 
 //config
 $lang['config.forum_name'] = 'Forum name';

@@ -72,7 +72,6 @@ class UserHomeProfileController extends AbstractController
 			'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
 			'NUMBER_PM' => $this->user->get_unread_pm(),
 			'MSG_MBR' => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
-			'U_USER_ID' => UserUrlBuilder::profile($this->user->get_id())->rel(),
 			'U_USER_PM' => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
 			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
 			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
@@ -80,6 +79,19 @@ class UserHomeProfileController extends AbstractController
 			'U_AVATAR_IMG' => Url::to_rel(AppContext::get_session()->get_cached_data('user_avatar')),
 			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel()
 		));
+		
+		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
+		foreach ($modules as $module)
+		{
+			$img = $module->get_messages_list_link_img();
+			$this->tpl->assign_block_vars('modules_messages', array(
+				'C_IMG_USER_MSG'  => !empty($img),
+				'IMG_USER_MSG'    => $img,
+				'NAME_USER_MSG'   => $module->get_messages_list_link_name(),
+				'NUMBER_MESSAGES'  => (int)$module->get_number_messages($this->user->get_id()),
+				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
+			));
+		}
 	}
 	
 	private function get_unread_contributions_number()
