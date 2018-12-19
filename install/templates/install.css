@@ -17,7 +17,7 @@ header#header-admin {
 	}
 
 	div.header-admin-container {
-		position:absolute;
+		position: absolute;
 		right: -20px;
 		left: 0;
 		width: calc(100% + 20px);
@@ -193,7 +193,7 @@ section header h1 {
 article header h2 {
 	padding: 10px;
 	border-bottom: none;
-	font-weight: normal;
+	font-weight: 400;
 }
 
 article h3 {
@@ -241,7 +241,7 @@ article {
 
 @media (min-width: 769px) {
 	.pbt-box {
-		width:auto;
+		width: auto;
 	}
 }
 

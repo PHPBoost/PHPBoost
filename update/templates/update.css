@@ -5,23 +5,23 @@ header#header-admin {
 @media (min-width: 769px) {
 	header#header-admin {
 		position: fixed;
+		z-index: 3;
 		top: 0;
 		left: 0;
 		bottom: 0;
-		z-index: 3;
+		width: 250px;
 		max-width: 230px;
-		width:250px;
+		height: 100%;
 		max-height: none;
-		height:100%;
 		overflow: hidden;
 	}
 
-	div.header-admin-container{
+	div.header-admin-container {
 		position: absolute;
 		right: -20px;
 		left: 0;
-		max-height: 100%;
 		width: calc(100% + 20px);
+		max-height: 100%;
 		overflow-y: scroll;
 	}
 }
@@ -36,7 +36,7 @@ div#update-site-logo {
 	display: inline-block;
 	margin-bottom: 10px;
 	width: 25px;
-	height:25px;
+	height: 25px;
 	background-image: url(images/logo.png);
 	background-repeat: no-repeat;
 	background-position: center ;
@@ -117,7 +117,7 @@ div.site-logo {
 	}
 }
 
-.cssmenu > ul > li.row-current > .cssmenu-title span{
+.cssmenu > ul > li.row-current > .cssmenu-title span {
 	color: #FFFFFF;
 }
 
@@ -141,6 +141,8 @@ div.site-logo {
 	}
 
 	.step-menu.cssmenu > ul > li.no-database-step {
+		display: block;
+		float: left;
 		width: calc(100% / 4);
 	}
 
@@ -149,11 +151,11 @@ div.site-logo {
 	}
 
 	.cssmenu > ul > li > .cssmenu-title {
-		display: block;
 		padding: 5px;
 	}
 
 	.step-menu.cssmenu > ul > li > .cssmenu-title {
+		display: block;
 		padding: 5px;
 		text-align: center;
 	}
@@ -173,7 +175,8 @@ div.site-logo {
 }
 
 /* --- contenu ====================================================================== */
-section#global, article {
+section#global,
+article {
 	margin: 0;
 	width: 100%;
 }
@@ -231,7 +234,6 @@ article {
 }
 
 /* --- welcome --- */
-
 .pbt-box {
 	padding: 0 25px 8px 8px;
 	width: 150px;
@@ -317,17 +319,17 @@ article {
 /* --- finish --- */
 
 nav.finish-menu ul {
-	list-style-type: none;
 	display: table;
 	margin: 20px auto;
 	padding: 0;
+	list-style-type: none;
 }
 
 nav.finish-menu ul li {
 	display: inline-block;
-	text-align: center;
-	padding:10px;
+	padding: 10px;
 	width: 100%;
+	text-align: center;
 }
 
 nav.finish-menu ul li a {
@@ -339,8 +341,7 @@ nav.finish-menu ul li span {
 	display: block;
 }
 
-@media (min-width:769px){
-
+@media (min-width: 769px) {
 	nav.finish-menu ul li {
 		width: 200px;
 		vertical-align: top;
@@ -353,13 +354,12 @@ nav.finish-menu ul li span {
 }
 
 /* --- footer --- */
-
 section > footer {
-	padding: 10px;
-	text-align: right;
-	background: #404040;
 	margin: 0;
+	padding: 10px;
 	min-height: 5vh;
-	color: #ffffff;
+	background: #404040;
 	border-top: 5px solid #366393;
+	color: #FFFFFF;
+	text-align: right;
 }
