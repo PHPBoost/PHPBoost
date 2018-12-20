@@ -1,0 +1,21 @@
+
+=> Rendre mon module installable :
+1 - On crée un repertoire en privilegent un nom sans majuscule et surtout sans espace
+
+2 - On créer le fichier config.ini
+
+3 - On créer le repertoire lang avec le fichier french/english et le fichier desc.ini
+
+A partir de ce moment la, le module est disponible pour installation : admin/modules/add/
+mais il ne fera rien du tout. Vu que je lui ait indiqué qu'il devait etre dans le content, je le retrouve dans le menu "contenu" mais le lien renvoi une 404.
+
+4 - Il faudra quand meme ajouté à la racine du répertoire un logo {nom_du_module}.png et {nom_du_module}_mini.png respectivement en 32x32 et 16x16
+
+
+=> Je veux ajouter la gestion de fichier css :
+1 - créer le repertoire PHPBoost
+2 - Créer le fichier patternsExtensionPointProvider.class.php
+3 - Ajouter dans ce fichier la fonction "public function css_files()"
+
+
+=> Je veux que m'on module crée dans la base de donnée une table pattern pour y stocker les différents pattern.
