@@ -76,7 +76,7 @@ $lang['bb_style'] = 'Style [style=x]texte[/style]';
 $lang['bb_hide'] = 'Texte Caché';
 $lang['bb_member'] = 'Membre';
 $lang['bb_moderator'] = 'Modérateur';
-$lang['bb_hide_all'] = 'Cache le texte et l\'affiche au clique [hide]text[/hide]';
+$lang['bb_hide_all'] = 'Cache le texte et l\'affiche au clic [hide]text[/hide]';
 $lang['bb_hide_view_member'] = 'Cache le texte pour les visiteurs [member]text[/member]';
 $lang['bb_hide_view_moderator'] = 'Cache le texte pour les membres [moderator]text[/moderator]';
 $lang['bb_positions'] = 'Positionnement';

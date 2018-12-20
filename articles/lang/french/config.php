@@ -35,7 +35,7 @@ $lang['root_category_description'] = 'Bienvenue dans l\'espace des articles du s
 Une catégorie et un article ont été créés pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien débuter sur ce module.
 <br /><br /> 
 <ul class="formatter-ul">
-	<li class="formatter-li"> Pour configurer ou personnaliser l\'accueil de votre module, rendez vous dans l\'<a href="' . ArticlesUrlBuilder::configuration()->relative() . '">administration du module</a></li>
+	<li class="formatter-li"> Pour configurer ou personnaliser l\'accueil de votre module, rendez-vous dans l\'<a href="' . ArticlesUrlBuilder::configuration()->relative() . '">administration du module</a></li>
 	<li class="formatter-li"> Pour créer des catégories, <a href="' . ArticlesUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
 	<li class="formatter-li"> Pour ajouter des articles, <a href="' . ArticlesUrlBuilder::add_article()->relative() . '">cliquez ici</a></li>
 </ul>

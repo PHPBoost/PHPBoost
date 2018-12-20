@@ -33,7 +33,7 @@ $lang['module_name'] = 'Réseaux Sociaux';
 $lang['module_config_title'] = 'Configuration du module Réseaux sociaux';
 
 //Authentication Configuration
-$lang['authentication.config.curl_extension_disabled'] = 'L\'extension <b>php_curl</b> est désactivée sur ce serveur. Veuillez l\'activez pour utiliser les authentifications des réseaux sociaux.';
+$lang['authentication.config.curl_extension_disabled'] = 'L\'extension <b>php_curl</b> est désactivée sur ce serveur. Veuillez l\'activer pour utiliser les authentifications des réseaux sociaux.';
 
 $lang['authentication.config.authentication-enabled'] = 'Activer l\'authentification via :name';
 $lang['authentication.config.authentication-enabled-explain'] = 'Rendez-vous sur <a href=":identifiers_creation_url">:identifiers_creation_url</a> pour créer vos identifiants.';
@@ -53,8 +53,8 @@ $lang['admin.display_share_link'] = 'Afficher le lien de partage';
 $lang['admin.hide_share_link'] = 'Cacher le lien de partage';
 $lang['admin.no_sharing_content_url'] = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';
 $lang['admin.menu.position'] = 'Positionnement du menu';
-$lang['admin.menu.mini_module_message'] = 'Pour afficher les liens de partage dans un mini-module sur toutes les pages, activer le mini-module dédié dans la <a href="' . PATH_TO_ROOT . '/admin/menus/menus.php">gestion des Menus</a>.';
-$lang['admin.menu.content_message'] = 'Pour afficher les liens de partage sur les pages de contenu uniquement, activer l\'option <b>Afficher les liens de partage sur les pages de contenu</b> dans la <a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '">gestion du Contenu</a>.';
+$lang['admin.menu.mini_module_message'] = 'Pour afficher les liens de partage dans un mini-module sur toutes les pages, activez le mini-module dédié dans la <a href="' . PATH_TO_ROOT . '/admin/menus/menus.php">gestion des Menus</a>.';
+$lang['admin.menu.content_message'] = 'Pour afficher les liens de partage sur les pages de contenu uniquement, activez l\'option <b>Afficher les liens de partage sur les pages de contenu</b> dans la <a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '">gestion du Contenu</a>.';
 
 
 //Sign in label

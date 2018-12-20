@@ -63,7 +63,7 @@ $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le cham
 $lang['admin.config.map'] = 'Localisation sur une carte';
 $lang['admin.config.map_enabled'] = 'Afficher la carte';
 $lang['admin.config.map_position'] = 'Position de la carte';
-$lang['admin.config.map.position_top'] = 'Au-dessus du formulaire';
+$lang['admin.config.map.position_top'] = 'Au dessus du formulaire';
 $lang['admin.config.map.position_bottom'] = 'En dessous du formulaire';
 $lang['admin.config.map.markers'] = 'Adresse(s)';
 

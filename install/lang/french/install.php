@@ -70,7 +70,7 @@ $lang = array(
 	'step.welcome.title' => 'Préambule',
 	'step.welcome.message' => 'Bienvenue dans l\'assistant d\'installation de PHPBoost',
 	'step.welcome.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
-<p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
+<p>Pour installer PHPBoost, vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 <p>Cordialement, l\'équipe PHPBoost</p>',
 	'step.welcome.distribution' => 'Distribution :distribution',
 	'step.welcome.distribution.explanation' => '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p><p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>',
@@ -135,7 +135,7 @@ $lang = array(
 	'db.connection.error' => 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.',
 	'db.creation.error' => 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.',
 	'db.unknown.error' => 'Une erreur inconnue a été rencontrée.',
-	'db.unknown.error.detail' => 'Une erreur inconnue a été rencontrée. Vous pouvez récupérer le contenu complet de l\'erreur dans le fichier <em>/cache/error.log</em> sur votre FTP si le support vous la demande.',
+	'db.unknown.error.detail' => 'Une erreur inconnue a été rencontrée. Vous pouvez récupérer le contenu complet de l\'erreur dans le fichier <em>/cache/error.log</em> sur votre FTP si le support vous le demande.',
 	'phpboost.alreadyInstalled.alert' => 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.',
 	'db.required.host' => 'Vous devez renseigner le nom de l\'hôte !',
 	'db.required.port' => 'Vous devez renseigner le port !',
@@ -150,7 +150,7 @@ $lang = array(
 //configuraton du site
 	'step.websiteConfig.title' => 'Configuration du serveur',
 	'websiteConfig' => 'Configuration du site',
-	'websiteConfig.explanation' => '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration dans la rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>',
+	'websiteConfig.explanation' => '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration, rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>',
 	'website.yours' => 'Votre site',
 	'website.host' => 'Adresse du site',
 	'website.host.explanation' => 'De la forme http://www.phpboost.com',

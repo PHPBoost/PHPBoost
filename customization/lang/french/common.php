@@ -38,7 +38,7 @@ $lang['customization.interface.all-themes'] = 'Tous les thèmes';
 $lang['customization.interface.select-theme'] = 'Sélectionnez le thème auquel vous souhaitez attribuer les changements';
 $lang['customization.interface.theme-choice'] = 'Choix du thème';
 $lang['customization.interface.logo.current.change'] = 'Changer le logo';
-$lang['customization.interface.logo.current.change-explain'] = 'La dimension du logo doit être de taille 90 x 90 pixels. À défaut, vous devez modifier <a href="../customization/?url=/editor/base/design.css">la classe css</a> correspondante pour l\'adapter';
+$lang['customization.interface.logo.current.change-explain'] = 'La dimension du logo doit être de 90 x 90 pixels. À défaut, vous devez modifier <a href="../customization/?url=/editor/base/design.css">la classe css</a> correspondante pour l\'adapter';
 $lang['customization.interface.logo.current'] = 'Logo actuel';
 $lang['customization.interface.logo.current.null'] = 'Vous n\'avez aucun logo actuellement';
 $lang['customization.interface.logo.current.erased'] = 'Le logo que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre';

@@ -48,5 +48,5 @@ $lang['config.max_video_height'] = 'Hauteur maximale d\'une vidéo';
 $lang['config.root_category_content_type'] = 'Types de fichiers autorisés dans la racine des fichiers multimédia';
 
 //SEO
-$lang['media.seo.description.root'] = 'Toutes les fichiers multimédia du site :site.';
+$lang['media.seo.description.root'] = 'Tous les fichiers multimédia du site :site.';
 ?>

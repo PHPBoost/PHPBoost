@@ -114,5 +114,5 @@ $lang['calendar.message.success.delete'] = 'L\'événement <b>:title</b> a été
 $lang['calendar.error.e_invalid_date'] = 'La date entrée est invalide';
 $lang['calendar.error.e_invalid_start_date'] = 'La date de début entrée est invalide';
 $lang['calendar.error.e_invalid_end_date'] = 'La date de fin entrée est invalide';
-$lang['calendar.error.e_user_born_field_disabled'] = 'Le champ <b>Date de naissance</b> n\'est pas affiché dans le profil des membres. Veuillez activer l\'affichage du champ dans la <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Gestion des champs du profils</a> pour permettre aux membres de renseigner leur date de naissance et afficher leur date d\'anniversaire dans le calendrier.';
+$lang['calendar.error.e_user_born_field_disabled'] = 'Le champ <b>Date de naissance</b> n\'est pas affiché dans le profil des membres. Veuillez activer l\'affichage du champ dans la <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Gestion des champs du profil</a> pour permettre aux membres de renseigner leur date de naissance et afficher leur date d\'anniversaire dans le calendrier.';
 ?>

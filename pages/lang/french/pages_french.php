@@ -94,7 +94,7 @@ $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous
 <p>Cette balise existe uniquement sur les modules pages et wiki.</p>
 <div class="message-helper warning">Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
-$LANG['pages_num_pages'] = '%d page(s) existantes';
+$LANG['pages_num_pages'] = '%d page(s) existante(s)';
 $LANG['pages_num_coms'] = '%d commentaire(s) sur l\'ensemble des pages soit %1.1f commentaire par page';
 $LANG['pages_stats'] = 'Statistiques';
 $LANG['pages_tools'] = 'Outils';
