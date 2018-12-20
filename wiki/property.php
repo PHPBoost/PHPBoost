@@ -387,7 +387,7 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0) //Affi
 	
 	$tpl->put_all(array(
 		'C_COMMENTS' => true,
-		'TITLE' => sprintf($LANG['wiki_article_com'], stripslashes($articles_infos['title'])),
+		'TITLE' => sprintf($LANG['wiki_article_com'], stripslashes($article_infos['title'])),
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 }
