@@ -4,6 +4,13 @@
 	</header>
 	<div class="content">
 		<p class="center text-strong">{@welcome} {PSEUDO}</p>
+		<p class="center">
+			# IF C_AVATAR_IMG #
+				<img src="{U_AVATAR_IMG}" alt="{@avatar}" />
+			# ELSE #
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@avatar}" />
+			# ENDIF #
+		</p>
 
 		<ul id="profile-container" class="elements-container columns-3">
 			<li class="block">
