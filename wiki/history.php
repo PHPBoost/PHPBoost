@@ -41,10 +41,10 @@ if (!empty($id_article))
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-}
 
-define('TITLE', sprintf($LANG['wiki_history_article'], stripslashes($article_infos['title'])));
-define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($article_infos['title'])));
+	define('TITLE', sprintf($LANG['wiki_history_article'], stripslashes($article_infos['title'])));
+	define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($article_infos['title'])));
+}
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');
