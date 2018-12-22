@@ -63,7 +63,7 @@
 									<span class="smaller">{topics.DESC}</span>
 								</td>
 								<td class="forum-author">
-									# IF C_AUTHOR #
+									# IF topics.C_AUTHOR #
 									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"{topics.GROUP_COLOR}>{topics.AUTHOR}</a>
 									# ELSE #
 									<em>{topics.L_GUEST}</em>
