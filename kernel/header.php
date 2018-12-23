@@ -40,7 +40,7 @@ Environment::set_graphical_environment($env);
 
 if (!defined('TITLE'))
 {
-	define('TITLE', LangLoader::get_message('unknow', 'main'));
+	define('TITLE', LangLoader::get_message('unknown', 'main'));
 }
 
 $module_id = Environment::get_running_module_name();

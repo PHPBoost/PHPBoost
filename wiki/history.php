@@ -45,6 +45,8 @@ if (!empty($id_article))
 	define('TITLE', sprintf($LANG['wiki_history_article'], stripslashes($article_infos['title'])));
 	define('DESCRIPTION', sprintf($LANG['wiki_history_seo'], stripslashes($article_infos['title'])));
 }
+else
+	define('TITLE', $LANG['wiki_history_all']);
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
 require_once('../wiki/wiki_bread_crumb.php');

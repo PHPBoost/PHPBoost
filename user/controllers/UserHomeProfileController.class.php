@@ -147,7 +147,7 @@ class UserHomeProfileController extends AbstractController
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['dashboard'], UserUrlBuilder::profile($this->user->get_id())->rel());
+		$breadcrumb->add($this->lang['dashboard'], UserUrlBuilder::home_profile()->rel());
 		
 		return $response;
 	}

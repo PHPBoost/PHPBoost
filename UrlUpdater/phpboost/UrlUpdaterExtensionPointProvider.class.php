@@ -173,9 +173,9 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		$this->urls_mappings[] = new UrlMapping('^user/login/?$', '/login/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/aboutcookie/?$', '/aboutcookie/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/registration/?$', '/registration/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/registration/confirm(?:/([a-z0-9]+))?/?$', '/registration/confirm$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^registration/confirm/?([a-z0-9]+)?/?$', '/registration/confirm/$1', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/password/lost/?$', '/password/lost/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/password/change(?:/([a-z0-9]+))?/?$', '/password/change$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^password/change/?([a-z0-9]+)?/?$', '/password/change/$1', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/error/403/?$', '/error/403/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/error/404/?$', '/error/404/', 'L,R=301');
 		
