@@ -207,7 +207,7 @@
 								<div class="msg-pseudo-mbr bkgd-color-op20">
 								# IF msg.C_FORUM_USER_LOGIN #
 									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
-									<a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"{msg.FORUM_USER_GROUP_COLOR}>
+									<a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 										{msg.FORUM_USER_LOGIN}
 									</a>
 									<span class="sr-only"># IF C_USER_ONLINE #${LangLoader::get_message('forum.connected.mbr.yes', 'common', 'forum')}# ELSE #${LangLoader::get_message('forum.connected.mbr.no', 'common', 'forum')}# ENDIF #</span>

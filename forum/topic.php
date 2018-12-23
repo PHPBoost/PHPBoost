@@ -102,7 +102,7 @@ $tpl = new FileTemplate('forum/forum_topic.tpl');
 $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
-//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
+//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
 $check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation();
 if ($check_group_edit_auth)
 {
@@ -113,7 +113,7 @@ if ($check_group_edit_auth)
 		'U_TOPIC_UNLOCK'       => url('.php?id=' . $id_get . '&amp;lock=false&amp;token=' . AppContext::get_session()->get_token()),
 		'U_TOPIC_MOVE'         => url('.php?id=' . $id_get),
 		'L_TOPIC_LOCK'         => ($topic['status'] == '1') ? $LANG['forum_lock'] : $LANG['forum_unlock'],
-		'L_TOPIC_MOVE'         => $LANG['forum_move'],	
+		'L_TOPIC_MOVE'         => $LANG['forum_move'],
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
 		'L_ALERT_LOCK_TOPIC'   => $LANG['alert_lock_topic'],
 		'L_ALERT_UNLOCK_TOPIC' => $LANG['alert_unlock_topic'],
@@ -332,13 +332,13 @@ while ( $row = $result->fetch() )
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
-	if ($row['level'] === '2') //Rang spécial (admins).  
+	if ($row['level'] === '2') //Rang spécial (admins).
 	{
 		$user_rank = $ranks_cache[-2]['name'];
 		$user_group = $user_rank;
 		$user_rank_icon = $ranks_cache[-2]['icon'];
 	}
-	elseif ($row['level'] === '1') //Rang spécial (modos).  
+	elseif ($row['level'] === '1') //Rang spécial (modos).
 	{
 		$user_rank = $ranks_cache[-1]['name'];
 		$user_group = $user_rank;
@@ -386,7 +386,8 @@ while ( $row = $result->fetch() )
 		'FORUM_MSG_CONTENTS'          => FormatingHelper::second_parse(stripslashes($row['contents'])),
 		'FORUM_USER_EDITOR_LOGIN'     => $row['login_edit'],
 		'FORUM_USER_LEVEL'            => UserService::get_level_class($row['level']),
-		'FORUM_USER_GROUP_COLOR'      => (!empty($user_group_color) ? ' style="color:' . $user_group_color . '"' : ''),
+		'C_FORUM_USER_GROUP_COLOR'    => !empty($user_group_color),
+		'FORUM_USER_GROUP_COLOR'      => $user_group_color,
 		'C_USER_RANK'                 => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
 		'USER_RANK'                   => $user_rank,
 		'USER_IMG_ASSOC'              => $rank_img,

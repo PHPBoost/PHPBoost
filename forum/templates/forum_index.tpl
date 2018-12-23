@@ -86,7 +86,7 @@
 								<span class="last-topic-user">
 									<i class="fa fa-user-o fa-fw"></i>
 									# IF forums_list.subcats.C_LAST_MSG_GUEST #
-										<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class="{forums_list.subcats.LAST_MSG_USER_LEVEL}" {forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
+										<a href="{forums_list.subcats.U_LAST_MSG_USER_PROFIL}" class="{forums_list.subcats.LAST_MSG_USER_LEVEL}"# IF forums_list.subcats.C_LAST_MSG_USER_GROUP_COLOR # style="color:{forums_list.subcats.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{forums_list.subcats.LAST_MSG_USER_LOGIN}</a>
 									# ELSE #
 										${LangLoader::get_message('guest', 'main')}
 									# ENDIF #

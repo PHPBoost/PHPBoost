@@ -64,7 +64,7 @@
 								</td>
 								<td class="forum-author">
 									# IF topics.C_AUTHOR #
-									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"{topics.GROUP_COLOR}>{topics.AUTHOR}</a>
+									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
 									# ELSE #
 									<em>{topics.L_GUEST}</em>
 									# ENDIF #
@@ -91,7 +91,7 @@
 									<span class="last-topic-user">
 										<i class="fa fa-user-o"></i>
 										# IF topics.C_LAST_MSG_GUEST #
-										<a href="{topics.LAST_MSG_USER_PROFIL}" class="small{topics.LAST_MSG_USER_LEVEL}"{topics.LAST_MSG_USER_GROUP_COLOR} >{topics.LAST_MSG_USER_LOGIN}</a>
+										<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
 										# ELSE #
 											<em>${LangLoader::get_message('guest', 'main')}</em>
 										# ENDIF #

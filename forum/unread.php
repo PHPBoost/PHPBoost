@@ -151,36 +151,38 @@ while ($row = $result->fetch())
 	$tpl->assign_block_vars('topics', array_merge(
 		Date::get_array_tpl_vars($last_msg_date, 'last_msg_date'),
 		array(
-		'C_PAGINATION'              => $topic_pagination->has_several_pages(),
-		'C_IMG_POLL'                => !empty($row['question']),
-		'C_IMG_TRACK'               => !empty($row['idtrack']),
-		'C_DISPLAY_MSG'             => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
-		'C_HOT_TOPIC'               => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
-		'C_BLINK'                   => true,
-		'IMG_ANNOUNCE'              => $img_announce,
-		'U_ANCRE'                   => $new_ancre,
-		'TYPE'                      => $type[$row['type']],
-		'TITLE'                     => stripslashes($row['title']),
-		'C_AUTHOR'                  => !empty($row['login']),
-		'U_AUTHOR'                  => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'AUTHOR_LEVEL'              => UserService::get_level_class($row['user_level']),
-		'AUTHOR'                    => $row['login'],
-		'GROUP_COLOR'               => (!empty($group_color) ? ' style="color:' . $group_color . '"' : ''),
-		'L_GUEST'                   => $LANG['guest'],
-		'DESC'                      => stripslashes($row['subtitle']),
-		'PAGINATION'                => $topic_pagination->display(),
-		'MSG'                       => ($row['nbr_msg'] - 1),
-		'VUS'                       => $row['nbr_views'],
-		'U_TOPIC_VARS'              => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
-		'L_DISPLAY_MSG'             => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
-		'LAST_MSG_URL'              => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
-		'C_LAST_MSG_GUEST'          => !empty($row['last_login']),
-		'LAST_MSG_USER_PROFIL'      => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-		'LAST_MSG_USER_LOGIN'       => $row['last_login'],
-		'LAST_MSG_USER_LEVEL'       => " " . UserService::get_level_class($row['last_user_level']),
-		'LAST_MSG_USER_GROUP_COLOR' => (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '')
+		'C_PAGINATION'                => $topic_pagination->has_several_pages(),
+		'C_IMG_POLL'                  => !empty($row['question']),
+		'C_IMG_TRACK'                 => !empty($row['idtrack']),
+		'C_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
+		'C_HOT_TOPIC'                 => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
+		'C_BLINK'                     => true,
+		'IMG_ANNOUNCE'                => $img_announce,
+		'U_ANCRE'                     => $new_ancre,
+		'TYPE'                        => $type[$row['type']],
+		'TITLE'                       => stripslashes($row['title']),
+		'C_AUTHOR'                    => !empty($row['login']),
+		'U_AUTHOR'                    => UserUrlBuilder::profile($row['user_id'])->rel(),
+		'AUTHOR_LEVEL'                => UserService::get_level_class($row['user_level']),
+		'AUTHOR'                      => $row['login'],
+		'C_GROUP_COLOR'               => !empty($group_color),
+		'GROUP_COLOR'                 => $group_color,
+		'L_GUEST'                     => $LANG['guest'],
+		'DESC'                        => stripslashes($row['subtitle']),
+		'PAGINATION'                  => $topic_pagination->display(),
+		'MSG'                         => ($row['nbr_msg'] - 1),
+		'VUS'                         => $row['nbr_views'],
+		'U_TOPIC_VARS'                => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
+		'L_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
+		'LAST_MSG_URL'                => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
+		'C_LAST_MSG_GUEST'            => !empty($row['last_login']),
+		'LAST_MSG_USER_PROFIL'        => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+		'LAST_MSG_USER_LOGIN'         => $row['last_login'],
+		'LAST_MSG_USER_LEVEL'         => UserService::get_level_class($row['last_user_level']),
+		'C_LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color),
+		'LAST_MSG_USER_GROUP_COLOR'   => $last_group_color
 		)
-	));	
+	));
 }
 $result->dispose();
 
@@ -190,7 +192,7 @@ if ($nbr_topics == 0)
 	$tpl->put_all(array(
 		'C_NO_MSG_NOT_READ' => true,
 		'L_MSG_NOT_READ'    => $LANG['no_msg_not_read']
-	));		
+	));
 }
 
 $l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];

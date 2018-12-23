@@ -183,11 +183,11 @@ class ForumHomeController extends ModuleController
 
 						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . $row['title'];
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
-						$group_color = User::get_group_color($row['groups'], $row['user_level']);
+						$last_group_color = User::get_group_color($row['groups'], $row['user_level']);
 					}
 					else
 					{
-						$row['last_timestamp'] = '';
+						$row['last_timestamp'] = $last_group_color = '';
 					}
 
 					//Vérifications des topics Lu/non Lus.
@@ -230,7 +230,8 @@ class ForumHomeController extends ModuleController
 						'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 						'LAST_MSG_USER_LOGIN' => $row['login'],
 						'LAST_MSG_USER_LEVEL' => UserService::get_level_class($row['user_level']),
-						'LAST_MSG_USER_GROUP_COLOR' => !empty($group_color) ? ' style="color:' . $group_color . '"' : '',
+						'C_LAST_MSG_USER_GROUP_COLOR' => !empty($last_group_color),
+						'LAST_MSG_USER_GROUP_COLOR' => $last_group_color,
 						'L_NO_MSG' => $LANG['no_message']
 					)));
 				}
