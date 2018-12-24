@@ -41,7 +41,7 @@
 
 .bbcode-elements {
 	display: inline-block;
-	font-size: 1.309rem;
+	font-size: 1.456rem;
 }
 
 @media (min-width: 769px) {
@@ -53,7 +53,7 @@
 /* Icones de la barre BBCode */
 .bbcode-elements > a {
 	display: inline-block;
-	font-size: 1.309rem;
+	font-size: 1.456rem;
 	padding: 0.309em;
 	text-align: center;
 	vertical-align: 0;
