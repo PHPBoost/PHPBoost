@@ -62,7 +62,7 @@ $lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jou
 $lang['modules.not_installed_module'] = 'Ce module n\'est pas installé !';
 $lang['modules.updates_available'] = 'Mises à jour disponibles';
 $lang['modules.config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
-$lang['modules.not_compatible'] = 'Ce module n\'est pas compatible avec la version actuelle de PHPBoost vérifiez la disponibilité d\'une nouvelle version sur <a href="http://www.phpboost.com/download">le site de PHPBoost</a>.';
+$lang['modules.not_compatible'] = 'Ce module n\'est pas compatible avec la version actuelle de PHPBoost vérifiez la disponibilité d\'une nouvelle version sur <a href="https://www.phpboost.com/download">le site de PHPBoost</a>.';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';

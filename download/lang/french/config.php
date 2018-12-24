@@ -39,5 +39,5 @@ Une catégorie et un fichier ont été créés pour vous montrer comment fonctio
 	<li class="formatter-li"> Pour créer des catégories, <a href="' . DownloadUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
 	<li class="formatter-li"> Pour ajouter des fichiers en téléchargement, <a href="' . DownloadUrlBuilder::add()->relative() . '">cliquez ici</a></li>
 </ul>
-<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
+<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="https://www.phpboost.com">PHPBoost</a>.';
 ?>

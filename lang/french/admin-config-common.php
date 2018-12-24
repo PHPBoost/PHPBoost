@@ -78,7 +78,7 @@ $lang = array(
 	//Advanced config
 	'advanced-config' => 'Configuration avancée',
 	'advanced-config.site_url' => 'URL du serveur',
-	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
+	'advanced-config.site_url-explain' => 'Ex : https://www.phpboost.com',
 	'advanced-config.site_path' => 'Chemin de PHPBoost',
 	'advanced-config.site_path-explain' => 'Vide par défaut : site à la racine du serveur',
 	'advanced-config.site_timezone' => 'Choix du fuseau horaire',

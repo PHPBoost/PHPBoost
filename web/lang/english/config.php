@@ -39,5 +39,5 @@ One category and one link were created to show you how this module works. Here a
 	<li class="formatter-li"> To create categories, <a href="' . WebUrlBuilder::add_category()->relative() . '">clic here</a></li>
 	<li class="formatter-li"> To create links, <a href="' . WebUrlBuilder::add()->relative() . '">clic here</a></li>
 </ul>
-<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="http://www.phpboost.com">PHPBoost</a> website.';
+<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="https://www.phpboost.com">PHPBoost</a> website.';
 ?>

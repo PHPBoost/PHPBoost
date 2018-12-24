@@ -77,7 +77,7 @@ $lang = array(
 	//Advanced config
 	'advanced-config' => 'Advanced configuration',
 	'advanced-config.site_url' => 'Server\'s URL',
-	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
+	'advanced-config.site_url-explain' => 'Ex : https://www.phpboost.com',
 	'advanced-config.site_path' => 'PHPBoost path',
 	'advanced-config.site_path-explain' => 'Empty by default : website at server\'s root',
 	'advanced-config.site_timezone' => 'Timezone',

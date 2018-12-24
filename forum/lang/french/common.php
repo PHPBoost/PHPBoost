@@ -71,7 +71,7 @@ $lang['category.status.locked'] = 'Verrouillé';
 
 //Extended Field
 $lang['extended-field.field.website'] = 'Site web';
-$lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
+$lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : https://www.phpboost.com)';
 
 $lang['extended-field.field.skype'] = 'Skype';
 $lang['extended-field.field.skype-explain'] = '';

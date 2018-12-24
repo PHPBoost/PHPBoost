@@ -49,7 +49,7 @@ $lang = array(
 	'installation.progression' => 'Installation progression',
 	'appendices' => 'Appendices',
 	'documentation' => 'Documentation',
-	'documentation.link' => 'http://www.phpboost.com/wiki/install-phpboost',
+	'documentation.link' => 'https://www.phpboost.com/wiki/install-phpboost',
 	'installation.restart' => 'Restart the installation',
 	'installation.confirmRestart' => 'Are you sure you want to restart the installation?',
 	'language.change' => 'Change language',
@@ -86,7 +86,7 @@ $lang = array(
 
 // Server setup
 	'step.server.title' => 'Looking up server configuration...',
-	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.com/forum/">Support Forums</a>.</p>
+	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="https://www.phpboost.com/forum/">Support Forums</a>.</p>
 <div class="message-helper notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP minimum version :min_php_version',
@@ -152,7 +152,7 @@ $lang = array(
 	'websiteConfig.explanation' => '<p>At this stage, some basic settings will be created that will allow PHPBoost to work. Anything you enter in this form may be modified after installation in the administration panel. Also after the installation, you will have to set advanced configurations in the admin panel.</p>',
 	'website.yours' => 'Your website',
 	'website.host' => 'Website url',
-	'website.host.explanation' => 'e.g. http://www.phpboost.com',
+	'website.host.explanation' => 'e.g. https://www.phpboost.com',
 	'website.path' => 'PHPBoost path',
 	'website.path.explanation' => 'The path where PHPBoost is located relative to the domain name, e.g. /PHPBoost.',
 	'website.name' => 'Website name',
@@ -194,7 +194,7 @@ $lang = array(
 	'admin.created.email.object' => 'PHPBoost: message to be preserved',
 	'admin.created.email.unlockCode' => 'Dear %s,
 
-First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : http://www.phpboost.com/forum/
+First of all, thank you for powering your website with PHPBoost software, we hope you will be satisfied. If you have any problems ask your questions on the PHPBoost support forum : https://www.phpboost.com/forum/
 
 Here is your login and password (don\'t lose them, you will need them to setup your website):
 
@@ -211,10 +211,10 @@ The PHPBoost Team.',
 							<legend>PHPBoost is now installed and ready to run!</legend>
 							<div class="fielset-inset">
 								<p class="message-helper success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="https://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
 								<p class="message-helper warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
-								<p>Don\'t forget to consult the <a href="http://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-								<p>If you have any problem please go to the <a href="http://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
+								<p>Don\'t forget to consult the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+								<p>If you have any problem please go to the <a href="https://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 							</div>
 						</fieldset>
 						<fieldset>

@@ -81,7 +81,7 @@ $LANG['wiki_title_link'] = 'Article title';
 $LANG['wiki_no_js_insert_link'] = 'If you want to insert a link to an article you can use the link tag : [link=a]b[/link] where a is the title of the article in which you want to create a link (enough special characters) and b represents the name of the link.';
 $LANG['wiki_explain_paragraph'] = 'Insert a paragraph of level %d';
 $LANG['wiki_help_tags'] = 'Know more about wiki specific tags';
-$LANG['wiki_help_url'] = 'http://www.phpboost.com/wiki/';
+$LANG['wiki_help_url'] = 'https://www.phpboost.com/wiki/';
 $LANG['wiki_paragraph_name'] = 'Please enter a paragraph name';
 $LANG['wiki_paragraph_name_example'] = 'Paragraph title';
 

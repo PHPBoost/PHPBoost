@@ -39,5 +39,5 @@ Here are some tips for a good start with this module :<br /><br />
 <li class="formatter-li">To create articles, <a href="' . WikiUrlBuilder::add()->relative() . '">click here</a></li>
 </ul><br /><br />
 To customize the home page of this module, <a href="' . WikiUrlBuilder::configuration()->relative() . '">click here</a>.<br /><br />
-For more information about the features of this module, feel free to ask questions on the <a href="http://www.phpboost.com/forum/">support forum</a>.';
+For more information about the features of this module, feel free to ask questions on the <a href="https://www.phpboost.com/forum/">support forum</a>.';
 ?>

@@ -78,7 +78,7 @@ $LANG['save_database'] = 'Save the database';
 $LANG['welcome_title'] = 'Welcome to the administration panel of your site';
 $LANG['welcome_desc'] = 'The administration lets you manage content and configuration of your site<br />The home page lists the most common actions<br />Take time to read the tips to optimize the security of your site';
 $LANG['update_available'] = 'Update available';
-$LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
+$LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="https://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No newer version, system is up to date';
 $LANG['module_update_available'] = 'Module update available !';
 $LANG['no_module_update_available'] = 'No newer module versions available, you are up to date !';
@@ -266,6 +266,6 @@ $LANG['download_the_update_pack'] = 'Download the update pack';
 $LANG['no_available_update'] = 'No update is available for the moment.';
 $LANG['incompatible_php_version'] = 'Can\'t check for updates.
 Please upgrade to PHP version %s or above.<br />If you can\'t use PHP5,
-check for updates on our <a href="http://www.phpboost.com">official website</a>.';
+check for updates on our <a href="https://www.phpboost.com">official website</a>.';
 $LANG['check_for_updates_now'] = 'Check for updates now!';
 ?>

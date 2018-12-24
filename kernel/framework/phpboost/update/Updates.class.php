@@ -40,8 +40,7 @@ class Updates
 	private $repositories = array();
 	private $apps = array();
 	
-	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
-	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../../../main.xml'; // Test repository
+	const PHPBOOST_OFFICIAL_REPOSITORY = 'https://www.phpboost.com/repository/main.xml';
 	const PHP_MIN_VERSION_UPDATES = '5';
 	
 	/**

@@ -39,5 +39,5 @@ $lang['root_category_description'] = 'Bienvenue dans la FAQ !
 	<li class="formatter-li"> Pour créer des catégories, <a href="' . FaqUrlBuilder::add_category()->relative() . '">cliquez ici</a> </li>
 	<li class="formatter-li"> Pour créer des questions, <a href="' . FaqUrlBuilder::add()->relative() . '">cliquez ici</a></li>
 </ul>
-<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.';
+<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="https://www.phpboost.com">PHPBoost</a>.';
 ?>

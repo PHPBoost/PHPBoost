@@ -125,7 +125,7 @@
 	# ENDIF #
 
 	<div role="contentinfo" class="footer-infos">
-		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="http://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
+		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="https://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
 		# IF C_DISPLAY_BENCH #
 		<span class="footer-infos-separator"> | </span>
 		<span class="footer-infos-benchmark">{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}</span>

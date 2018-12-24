@@ -39,5 +39,5 @@ Two categories and some questions were created to show you how this module works
 	<li class="formatter-li"> To create categories, <a href="' . FaqUrlBuilder::add_category()->relative() . '">clic here</a></li>
 	<li class="formatter-li"> To create questions, <a href="' . FaqUrlBuilder::add()->relative() . '">clic here</a></li>
 </ul>
-<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="http://www.phpboost.com">PHPBoost</a> website.';
+<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="https://www.phpboost.com">PHPBoost</a> website.';
 ?>

@@ -137,7 +137,7 @@ class WebSetup extends DefaultModuleSetup
 			'id_category' => 1,
 			'name' => $this->messages['default.weblink.name'],
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.weblink.name']),
-			'url' => 'http://www.phpboost.com',
+			'url' => 'https://www.phpboost.com',
 			'contents' => $this->messages['default.weblink.content'],
 			'short_contents' => '',
 			'approbation_type' => WebLink::APPROVAL_NOW,

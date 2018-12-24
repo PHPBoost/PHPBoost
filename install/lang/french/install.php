@@ -49,7 +49,7 @@ $lang = array(
 	'installation.progression' => 'Progression de l\'installation',
 	'appendices' => 'Annexes',
 	'documentation' => 'Documentation',
-	'documentation.link' => 'http://www.phpboost.com/wiki/installer-phpboost',
+	'documentation.link' => 'https://www.phpboost.com/wiki/installer-phpboost',
 	'installation.restart' => 'Recommencer l\'installation',
 	'installation.confirmRestart' => 'Etes-vous certain de vouloir recommencer l\'installation ?',
 	'language.change' => 'Changer de langue',
@@ -88,7 +88,7 @@ $lang = array(
 	'step.server.title' => 'Vérification de la configuration du serveur',
 	'step.server.explanation' => '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
 <div class="message-helper notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
-<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/">forum de support</a>.</p>',
+<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="https://www.phpboost.com/forum/">forum de support</a>.</p>',
 	'php.version' => 'Version de PHP',
 	'php.version.check' => 'PHP version minimum :min_php_version',
 	'php.version.check.explanation' => '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.',
@@ -153,7 +153,7 @@ $lang = array(
 	'websiteConfig.explanation' => '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration, rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>',
 	'website.yours' => 'Votre site',
 	'website.host' => 'Adresse du site',
-	'website.host.explanation' => 'De la forme http://www.phpboost.com',
+	'website.host.explanation' => 'De la forme https://www.phpboost.com',
 	'website.path' => 'Chemin de PHPBoost',
 	'website.path.explanation' => 'Vide si votre site est à la racine du serveur, de la forme /dossier sinon',
 	'website.name' => 'Nom du site',
@@ -195,7 +195,7 @@ $lang = array(
 	'admin.created.email.object' => 'Identifiants de votre site créé avec PHPBoost (message à conserver)',
 	'admin.created.email.unlockCode' => 'Cher %s,
 
-Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il répondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/
+Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il répondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum https://www.phpboost.com/forum/
 
 Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
 
@@ -211,10 +211,10 @@ Cordialement l\'équipe PHPBoost.',
 							<legend>PHPBoost est désormais installé !</legend>
 							<div class="fielset-inset">
 								<p class="message-helper success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-								<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
+								<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="https://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
 								<p class="message-helper warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>install</b> et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
-								<p>N\'oubliez pas de consulter la <a href="http://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
-								<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
+								<p>N\'oubliez pas de consulter la <a href="https://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="https://www.phpboost.com/faq/"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
+								<p>En cas de problème, rendez-vous sur le <a href="https://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
 							</div>
 						</fieldset>
 						<fieldset>

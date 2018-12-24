@@ -44,10 +44,10 @@ $lang['default.article.contents'] = 'This brief article will give you some simpl
 </li><li class="formatter-li">To add an item: <a href="' . ArticlesUrlBuilder::add_article()->rel() . '">click here</a> 
 </li></ul> 
 <ul class="formatter-ul">
-<li class="formatter-li">To format your articles, you can use bbcode language or the WYSIWYG editor (see this <a href="http://www.phpboost.com/wiki/bbcode">article</a>)<br /> 
+<li class="formatter-li">To format your articles, you can use bbcode language or the WYSIWYG editor (see this <a href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
-For more information, please see the module documentation on the site <a href="http://www.phpboost.com">PHPBoost</a>.<br /> 
+For more information, please see the module documentation on the site <a href="https://www.phpboost.com">PHPBoost</a>.<br /> 
 <br /> 
 <br /> 
 Good use of this module.';

@@ -78,7 +78,7 @@ $LANG['save_database'] = 'Sauvegarder la base de données';
 $LANG['welcome_title'] = 'Bienvenue sur le panneau d\'administration de votre site';
 $LANG['welcome_desc'] = 'L\'administration vous permet de gérer le contenu et la configuration de votre site<br />La page d\'accueil recense les actions les plus courantes<br />Prenez le temps de lire les conseils afin d\'optimiser la sécurité de votre site';
 $LANG['update_available'] = 'Mises à jour disponibles';
-$LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost ! <a href="http://www.phpboost.com">Plus d\'informations</a>';
+$LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost ! <a href="https://www.phpboost.com">Plus d\'informations</a>';
 $LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour !';
 $LANG['module_update_available'] = 'Des mises à jour des modules sont disponibles !';
 $LANG['no_module_update_available'] = 'Aucune mise à jour des modules, vous êtes à jour !';
@@ -265,6 +265,6 @@ $LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
 $LANG['no_available_update'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 $LANG['incompatible_php_version'] = 'Impossible de vérifier la présence de mise à jour.
 Veuillez utiliser la version %s ou ultérieure de PHP.<br />Si vous ne pouvez utiliser PHP5,
-veuillez vérifier la présence de ces mises à jour sur notre <a href="http://www.phpboost.com">site officiel</a>.';
+veuillez vérifier la présence de ces mises à jour sur notre <a href="https://www.phpboost.com">site officiel</a>.';
 $LANG['check_for_updates_now'] = 'Vérifier la présence de mises à jour';
 ?>

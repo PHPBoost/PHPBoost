@@ -47,17 +47,17 @@
 						</h3>
 						<ul>
 							<li>
-								<a href="http://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
+								<a href="https://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
 									<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
 								</a>
 							</li>
 							<li>
-								<a href="http://www.phpboost.com/faq" title="{L_INDEX_FAQ}">
+								<a href="https://www.phpboost.com/faq" title="{L_INDEX_FAQ}">
 									<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
 							<li>
-								<a href="http://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
+								<a href="https://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
 									<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
@@ -77,7 +77,7 @@
 
 		<footer id="footer">
 			<span>
-				{L_POWERED_BY} <a class="powered-by" href="http://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
+				{L_POWERED_BY} <a class="powered-by" href="https://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 			</span>
 			# IF C_DISPLAY_BENCH #
 				<span>

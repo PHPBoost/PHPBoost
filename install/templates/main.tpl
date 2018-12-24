@@ -131,7 +131,7 @@ ${resources('install/install')}
 					# INCLUDE installStep #
 				</article>
 				<footer>
-					{@poweredBy} <a href="http://www.phpboost.com" title="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
+					{@poweredBy} <a href="https://www.phpboost.com" title="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
 				</footer>
 			</section>
 	</body>

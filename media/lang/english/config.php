@@ -39,5 +39,5 @@ One category and one media file were created to show you how this module works. 
 	<li class="formatter-li"> To create categories, <a href="' . MediaUrlBuilder::add_category()->relative() . '">clic here</a></li>
 	<li class="formatter-li"> To create multimedia files, <a href="' . MediaUrlBuilder::add()->relative() . '">clic here</a></li>
 </ul>
-<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="http://www.phpboost.com">PHPBoost</a> website.';
+<br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="https://www.phpboost.com">PHPBoost</a> website.';
 ?>
