@@ -83,7 +83,7 @@
 						</div>
 					# ENDIF #
 				# END menu #
-
+				<div class="spacer"></div>
 				{CONTENTS}
 				<div class="spacer"></div>
 				${ContentSharingActionsMenuService::display()}
