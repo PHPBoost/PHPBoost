@@ -98,7 +98,7 @@
 				<br />
 				<div class="form-element-textarea">
 					<label>{L_CHANGE_REASON_LABEL}</label>
-					<textarea maxlength="100" rows="2" id="change_reason" name="change_reason"></textarea>
+					<textarea maxlength="100" rows="2" id="change_reason" name="change_reason">{CHANGE_REASON}</textarea>
 				</div>
 				# ENDIF #
 
