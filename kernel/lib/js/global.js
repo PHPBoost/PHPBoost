@@ -511,7 +511,7 @@ function open_submenu(myid, myclass, closeother)
 		}, options);
 
 		return this.each(function() {
-			$(this).click(function(event) {
+			$(this).on('click', function(event) {
 				event.preventDefault();
 				if ($(this).closest(params.osmTarget).hasClass(params.osmClass))
 					$(document).find(params.osmTarget).removeClass(params.osmClass);
@@ -521,7 +521,7 @@ function open_submenu(myid, myclass, closeother)
 				}
 				event.stopPropagation();
 			});
-			$(document).click(function(event) {
+			$(document).on('click',function(event) {
 				if (($(event.target).is(params.osmCloseExcept) === false || $(event.target).is(params.osmCloseButton) === true)) {
 					$(document).find(params.osmTarget).removeClass(params.osmClass);
 				}
@@ -761,11 +761,11 @@ jQuery(document).ready(function(){
 	});
 
 	//Scroll to Top or Bottom
-	jQuery('#scroll-to-top').click(function(){
+	jQuery('#scroll-to-top').on('click',function(){
 		jQuery('html, body').animate({scrollTop : 0},1200);
 		return false;
 	});
-	jQuery('#scroll-to-bottom').click(function(){
+	jQuery('#scroll-to-bottom').on('click',function(){
 		jQuery('html, body').animate({scrollTop: $(document).height()-$(window).height()},1200);
 		return false;
 	});

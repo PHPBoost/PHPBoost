@@ -20,14 +20,14 @@
 	}
 	
 	jQuery(document).ready(function() {
-		jQuery("#${escapejscharacters(NAME)}_select_all").click(function() {
+		jQuery("#${escapejscharacters(NAME)}_select_all").on('click',function() {
 			${escapejscharacters(NAME)}_select_all();
 			# IF C_REQUIRED #
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
 			# ENDIF #
 		});
-		jQuery("#${escapejscharacters(NAME)}_unselect_all").click(function() {
+		jQuery("#${escapejscharacters(NAME)}_unselect_all").on('click',function() {
 			${escapejscharacters(NAME)}_unselect_all();
 			# IF C_REQUIRED #
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();

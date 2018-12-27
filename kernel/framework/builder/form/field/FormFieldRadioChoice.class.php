@@ -85,7 +85,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 			return (jQuery("input[name='. $this->get_html_id() .']:checked").length > 0);
 		}
 		' . ($this->is_required() ? '
-		jQuery("#'. $this->get_html_id() .'_field input[type=radio]").click(function() {
+		jQuery("#'. $this->get_html_id() .'_field input[type=radio]").on("click",function() {
 			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").enableValidationMessage();
 			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").liveValidate();
 		});' : '');

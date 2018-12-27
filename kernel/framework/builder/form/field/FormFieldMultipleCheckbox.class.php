@@ -166,7 +166,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 			return (jQuery("#'. $this->get_html_id() .'_field input[type=checkbox]:checked").length > 0);
 		}
 		' . ($this->is_required() ? '
-		jQuery("#'. $this->get_html_id() .'_field input[type=checkbox]").click(function() {
+		jQuery("#'. $this->get_html_id() .'_field input[type=checkbox]").on("click", function() {
 			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").enableValidationMessage();
 			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").liveValidate();
 		});' : '');

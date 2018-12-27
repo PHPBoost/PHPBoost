@@ -1,7 +1,7 @@
 <script>
 <!--
 jQuery(document).ready(function() {
-	jQuery("#${escape(NAME)}").click(function() {
+	jQuery("#${escape(NAME)}").on('click', function() {
 		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
 		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
 	});

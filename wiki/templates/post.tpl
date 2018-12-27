@@ -112,7 +112,7 @@
 				<script>
 				<!--
 				jQuery(document).ready(function() {
-					jQuery('button[name="submit"]').click(function()
+					jQuery('button[name="submit"]').on('click', function()
 					{
 						if(!jQuery('#captcha').val() && !jQuery('#g-recaptcha-response').val()) {
 							alert(${escapejs(LangLoader::get_message('captcha.validation_error', 'status-messages-common'))});

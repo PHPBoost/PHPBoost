@@ -46,7 +46,7 @@
 		}
 	});
 
-	jQuery('#notation-'+object.id+' .stars .star').click(function(){
+	jQuery('#notation-'+object.id+' .stars .star').on('click', function(){
 		var star_nbr = this.id.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
 		object.send_request(star_nbr);
 	});

@@ -20,7 +20,7 @@
 		setTimeout('jQuery("#message-helper-{ID}").fadeOut("slow");', {TIMEOUT});
 		# ENDIF #
 
-		$('#message-helper-button-{ID}').click(function() {
+		$('#message-helper-button-{ID}').on('click',function() {
 			jQuery('#message-helper-{ID}').fadeTo('slow', 0);
 		});
 	});

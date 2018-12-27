@@ -70,7 +70,7 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 <script>
 <!--
 jQuery(document).ready(function() {
-	jQuery("#uncheck_default_${escape(HTML_ID)}").click(function() {
+	jQuery("#uncheck_default_${escape(HTML_ID)}").on('click',function() {
 		jQuery("input[name=field_is_default_${escape(HTML_ID)}]").prop("checked", false);
 		jQuery("#uncheck_default_${escape(HTML_ID)}").hide();
 	});

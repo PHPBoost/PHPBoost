@@ -1,5 +1,5 @@
     /* Push the body and the nav over by 285px over */
-jQuery('.open-summary').click(function(f) {
+jQuery('.open-summary').on('click', function(f) {
     jQuery('.sandbox-summary').animate({
       left: "0px"
     }, 200);
@@ -9,7 +9,7 @@ jQuery('.open-summary').click(function(f) {
     }, 200);
 	f.stopPropagation();
 });
-jQuery(document).click(function(f) {
+jQuery(document).on('click', function(f) {
     if (jQuery(f.target).is('.open-summary') === false) {
         jQuery('.sandbox-summary').animate({
           left: "-285px"
@@ -22,7 +22,7 @@ jQuery(document).click(function(f) {
 });
 
     /* Then push them back */
-jQuery('.close-summary, .summary-link').click(function() {
+jQuery('.close-summary, .summary-link').on('click', function() {
     jQuery('.sandbox-summary').animate({
       left: "-285px"
     }, 200);
@@ -33,7 +33,7 @@ jQuery('.close-summary, .summary-link').click(function() {
 });
 
 // smooth scroll
-jQuery('.summary-link').click(function(){
+jQuery('.summary-link').on('click',function(){
 	var the_id = jQuery(this).attr("href");
 
 	jQuery('html, body').animate({
@@ -44,11 +44,11 @@ jQuery('.summary-link').click(function(){
 
 // mini module
 
-jQuery('.sbx-toggle-btn').click(function(e){
+jQuery('.sbx-toggle-btn').on('click',function(e){
 	jQuery('#module-mini-sandbox').addClass('toggle');
 	e.stopPropagation();
 });
-jQuery(document).click(function(e) {
+jQuery(document).on('click', function(e) {
     if (jQuery(e.target).is('.sbx-menu, .sbx-item-title, .item-2x, .item-2x a, .item-3x a, .submit, i, .item-form select') === false) {
       jQuery('#module-mini-sandbox').removeClass('toggle');
     }
