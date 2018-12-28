@@ -1,13 +1,25 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
-	<div id="message-maintain">
-		<div class="message-helper warning message-helper-small">
+	<div id="message-maintain" class="floating-message-container">
+		<div id="message-helper-maintain" class="message-helper warning message-helper-small">
+			<a id="message-helper-button-maintain" class="message-helper-button warning {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"></i></a>
 			{L_MAINTAIN_DELAY}
 			<div id="release">{L_LOADING}...</div>	
 		</div>
 	</div>
 	# ENDIF #
-	
+	<script>
+	<!--
+		jQuery(document).ready(function(){
+			jQuery("#message-helper-maintain").fadeTo("fast", 1);
+
+			$('#message-helper-button-maintain').on('click',function() {
+				jQuery('#message-helper-maintain').fadeTo('slow', 0);
+				setTimeout('jQuery("#message-helper-maintain").hide();', 400);
+			});
+		});
+	-->
+	</script>
 	<script>
 	<!--
 		var release_timeout_seconds = 0;

@@ -804,7 +804,7 @@ div.delay {
 div#message-maintain {
 	position: absolute;
 	z-index: 20;
-	top: 0.309em;
+	top: 1em;
 	width: 100%;
 	opacity: 0.98;
 	text-align: center;
