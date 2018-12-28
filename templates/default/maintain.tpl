@@ -10,7 +10,7 @@
 	# ENDIF #
 	<script>
 	<!--
-		jQuery(document).ready(function(){
+		jQuery(function(){
 			jQuery("#message-helper-maintain").fadeTo("fast", 1);
 
 			$('#message-helper-button-maintain').on('click',function() {

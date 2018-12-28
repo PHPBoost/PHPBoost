@@ -7,7 +7,7 @@
 </div>
 <script>
 <!--
-	jQuery(document).ready(function(){
+	jQuery(function(){
 		var container = document.getElementsByClassName("floating-message-container");
 		if (container.lenght == null)
 			jQuery('<div class="floating-message-container"></div>').appendTo('body');
