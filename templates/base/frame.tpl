@@ -13,6 +13,7 @@
 			<meta property="og:locale" content="{L_XML_LANGUAGE}" />
 			<meta property="og:title" content="{PAGE_TITLE}" />
 			<meta property="og:type" content="{PAGE_TYPE}" />
+			# IF C_DESCRIPTION #<meta property="og:description" content="{SITE_DESCRIPTION}" /># ENDIF #
 			# IF C_CANONICAL_URL #<meta property="og:url" content="{U_CANONICAL}" /># ENDIF #
 			# IF C_PICTURE_URL #<meta property="og:image" content="{U_PICTURE}" /># ENDIF #
 			# START og_additionnal_properties #
