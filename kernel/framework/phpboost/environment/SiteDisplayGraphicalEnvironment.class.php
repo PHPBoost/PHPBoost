@@ -288,14 +288,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$date_lang = LangLoader::get('date-common');
 			//Durée de la maintenance.
-			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
-			21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . $date_lang['minute'],
-				'5 ' . $date_lang['minutes'], '10 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'],
-				'30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'],
-				'3 ' . $date_lang['hours'], '4 ' . $date_lang['hours'], '5 ' . $date_lang['hours'],
-				'6 ' . $date_lang['hours'], '7 ' . $date_lang['hours'], '8 ' . $date_lang['hours'],
-				'16 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['hours'],
+			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
+			$array_delay = array(LangLoader::get_message('unspecified', 'main'),
+				'1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '10 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'],
+				'1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '3 ' . $date_lang['hours'], '4 ' . $date_lang['hours'], '5 ' . $date_lang['hours'], '6 ' . $date_lang['hours'], '7 ' . $date_lang['hours'], '8 ' . $date_lang['hours'], '16 ' . $date_lang['hours'],
+				'1 ' . $date_lang['day'], '2 ' . $date_lang['day'],
 				'1 ' . $date_lang['week']);
 
 			//Retourne le délai de maintenance le plus proche.
