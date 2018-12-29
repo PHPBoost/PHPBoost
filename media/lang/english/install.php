@@ -31,13 +31,13 @@
  ####################################################
 
 $lang = array(
-	'media_name' => 'Vidéo - Big Buck Bunny',
+	'media_name' => 'Video - Big Buck Bunny',
 	'media_contents' => 'Demonstration video.<br />
 <br />
 Here is a small demonstration video file that illustrates how this module works.<br />
 <br />
 Nice video !',
-	'media_url' => '//embed.koreus.com/00071/200805/big-buck-bunny.mp4', 
+	'media_url' => 'https://www.youtube.com/v/MiKw3uPGHB4', 
 	'media_name_cat' => 'Videos',
 	'media_contents_cat' => 'This category contains a demonstration video file.',
 );

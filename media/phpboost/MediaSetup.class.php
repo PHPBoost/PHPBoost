@@ -129,7 +129,7 @@ class MediaSetup extends DefaultModuleSetup
 			'name' => $this->messages['media_name'],
 			'contents' => $this->messages['media_contents'],
 			'url' => $this->messages['media_url'],
-			'mime_type' => 'video/mp4',
+			'mime_type' => 'application/x-shockwave-flash',
 			'infos' => 2,
 			'width' => 640,
 			'height' => 438,

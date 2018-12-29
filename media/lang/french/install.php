@@ -37,7 +37,7 @@ $lang = array(
 Voici une petite vidéo de démonstration qui illustre le fonctionnement de ce module.<br />
 <br />
 Bonne visualisation !',
-	'media_url' => '//embed.koreus.com/00071/200805/big-buck-bunny.mp4', 
+	'media_url' => 'https://www.youtube.com/v/MiKw3uPGHB4', 
 	'media_name_cat' => 'Vidéos',
 	'media_contents_cat' => 'Cette catégorie contient une vidéo de démonstration.'
 );
