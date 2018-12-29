@@ -50,9 +50,9 @@ function addSubElement(menu_element_id) {
 
 	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
 	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
-	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title'}).appendTo('#menu_element_' + id);
+	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('menu.element', 'admin'))}}).appendTo('#menu_element_' + id);
 
-	jQuery('<i/>', {class : 'fa fa-globe', 'aria-label' : ${escapejs(Langloader::get_message('menu.element', 'admin'))}}).appendTo('#menu_title_' + id);
+	jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_title_' + id);
 	jQuery('#menu_title_' + id).append(' ');
 
 	jQuery('<label/>', {for : 'menu_element_' + id + '_name'}).text({JL_NAME} + ' ').appendTo('#menu_title_' + id);
@@ -89,9 +89,9 @@ function addSubMenu(menu_element_id) {
 
 	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
 	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
-	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title'}).appendTo('#menu_element_' + id);
+	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('sub.menu', 'admin'))}}).appendTo('#menu_element_' + id);
 
-	jQuery('<i/>', {class : 'fa fa-folder', 'aria-label' : ${escapejs(Langloader::get_message('sub.menu', 'admin'))}}).appendTo('#menu_title_' + id);
+	jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_title_' + id);
 	jQuery('#menu_title_' + id).append(' ');
 
 	jQuery('<label/>', {for : 'menu_element_' + id + '_name'}).text({JL_NAME} + ' ').appendTo('#menu_title_' + id);
