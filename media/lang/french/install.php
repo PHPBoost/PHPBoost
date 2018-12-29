@@ -31,15 +31,15 @@
  ####################################################
 
 $lang = array(
-	'media_name' => 'Sauvegarde et restauration de sa base de données',
-	'media_contents' => 'Il est important de réaliser régulièrement des sauvegardes de sa base de données.<br />
+	'media_name' => 'Vidéo - Big Buck Bunny',
+	'media_contents' => 'Vidéo de démonstration.<br />
 <br />
-Voici une petite vidéo vous montrant comment sauvegarder et restaurer sa base de données à l\'aide de l\'utilitaire de PHPBoost.<br />
+Voici une petite vidéo de démonstration qui illustre le fonctionnement de ce module.<br />
 <br />
 Bonne visualisation !',
-	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
+	'media_url' => '//embed.koreus.com/00071/200805/big-buck-bunny.mp4', 
 	'media_name_cat' => 'Vidéos',
-	'media_contents_cat' => 'Cette catégorie contient des tutoriels vidéos afin de vous montrer certaines actions dont vous pourriez avoir besoin durant l\'utilisation de PHPBoost. Ces vidéos sont en streaming.'
+	'media_contents_cat' => 'Cette catégorie contient une vidéo de démonstration.'
 );
 
 ?>

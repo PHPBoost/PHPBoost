@@ -31,15 +31,15 @@
  ####################################################
 
 $lang = array(
-	'media_name' => 'Save and restore database',
-	'media_contents' => 'It is important to save the database frequently.<br />
+	'media_name' => 'Vidéo - Big Buck Bunny',
+	'media_contents' => 'Demonstration video.<br />
 <br />
-Here is a short video to show you how to proceed to save and restore the database with PHPBoost tools.<br />
+Here is a small demonstration video file that illustrates how this module works.<br />
 <br />
 Nice video !',
-	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
+	'media_url' => '//embed.koreus.com/00071/200805/big-buck-bunny.mp4', 
 	'media_name_cat' => 'Videos',
-	'media_contents_cat' => 'This category contains video files.',
+	'media_contents_cat' => 'This category contains a demonstration video file.',
 );
 
 ?>
