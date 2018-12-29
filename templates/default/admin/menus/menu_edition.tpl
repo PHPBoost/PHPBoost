@@ -15,9 +15,9 @@
 
 # IF C_NEXT_MENU #
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
-		<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}" title="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title">
-			<i class="fa fa-folder" style="cursor:move"></i>
+			<i class="fa fa-folder" aria-label="${LangLoader::get_message('sub.menu', 'admin')}" style="cursor:move"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
@@ -61,7 +61,7 @@
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title">
-			<i class="fa fa-globe"></i>
+			<i class="fa fa-globe" aria-label="${LangLoader::get_message('menu.element', 'admin')}"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">

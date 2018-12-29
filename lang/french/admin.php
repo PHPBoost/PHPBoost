@@ -13,7 +13,7 @@
  *	it under the terms of the GNU General Public License as published by
  * 	the Free Software Foundation, either version 3 of the License, or
  * 	(at your option) any later version.
- * 
+ *
  *	This program is distributed in the hope that it will be useful,
  *	but WITHOUT ANY WARRANTY; without even the implied warranty of
  *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -178,6 +178,8 @@ $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';
 $LANG['add_sub_element'] = 'Ajouter un élément';
 $LANG['add_sub_menu'] = 'Ajouter un sous-menu';
+$LANG['menu.element'] = 'Élément de menu';
+$LANG['sub.menu'] = 'Sous-menu';
 $LANG['display_title'] = 'Afficher le titre';
 $LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
 $LANG['feed'] = 'flux';

@@ -652,7 +652,7 @@ header.legend .admin-element-menu-container {
 	flex: 1 0 calc(100% - 0.618em);
 	-ms-flex: 1 0 calc(100% - 0.618em);
 	-webkit-flex: 1 0 calc(100% - 0.618em);
-	margin: 0 0 0 0.618em;
+	padding: 0 0 0 1.618em;
 
 }
 
