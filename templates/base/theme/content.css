@@ -249,7 +249,6 @@ header h2 .actions {
 }
 
 @media (min-width:769px) {
-	.media-content object,
 	.media-content embed,
 	.media-content iframe {
 		width: auto;
