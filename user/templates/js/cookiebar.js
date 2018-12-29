@@ -33,7 +33,7 @@ function showCookieBar() {
 		});
 
 		//Si cookie refusé on sauvegarde le choix
-		$('#cookiebar-button-declined')..on('click', function(e){
+		$('#cookiebar-button-declined').on('click', function(e){
 			e.preventDefault();
 			$('#cookiebar-container').fadeOut();
 			sendCookie('pbt-cookiebar-viewed', 1, COOKIEBAR_DURATION);
