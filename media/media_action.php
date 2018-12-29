@@ -314,7 +314,7 @@ elseif ($submit)
 
 	require_once('../kernel/header.php');
 	
-	if (!empty($media['url']))
+	if (!empty($media['url']) && Url::check_url_validity($media['url']))
 	{
 		if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
 		{
