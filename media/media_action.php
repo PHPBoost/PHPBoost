@@ -386,7 +386,7 @@ elseif ($submit)
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_link_empty_media']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), (empty($media['url']) ? $LANG['e_link_empty_media'] : $LANG['e_link_invalid_media']));
 		DispatchManager::redirect($controller);
 	}
 

@@ -97,6 +97,7 @@ $MEDIA_LANG = array(
 $LANG['e_mime_disable_media'] = 'The type of multimedia is disabled!';
 $LANG['e_mime_unknow_media'] = 'The type of multimedia file could not be determined!';
 $LANG['e_link_empty_media'] = 'Please enter a link for your multimedia file!';
+$LANG['e_link_invalid_media'] = 'Please enter a valid link for your multimedia file!';
 $LANG['e_unexist_media'] = 'The multimedia file requested doesn\'t exist!';
 
 ?>
