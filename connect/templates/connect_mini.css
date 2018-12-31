@@ -161,10 +161,6 @@ input#login {
 	.horizontal .connect-element {
 		display: inline-block;
 	}
-
-	.horizontal .connect-element .small {
-		font-size: 0.8em;
-	}
 }
 
 @media (max-width: 768px) {
