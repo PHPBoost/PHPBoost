@@ -1,5 +1,12 @@
-/* --- Structure des emplacements
------------------------------------------------------------------------------ */
+/* -------------------------------------
+		shape.css
+ Contient la structure des emplacements propre à PHPBoost.
+ - Structure des emplacements
+ - Structure des éléments
+------------------------------------- */
+
+/* -- Structure des emplacements -- */
+/* -------------------------------- */
 
 /* --- Partie superieure du header --- */
 #top-header {
@@ -46,7 +53,6 @@
 }
 
 /* --- Contenu du site --- */
-
 #global {
 	display: flex;
 	display: -ms-flexbox;
@@ -56,13 +62,13 @@
 	-webkit-flex-direction: column;
 }
 
-#main       {
+#main {
 	order : 1;
 	-ms-flex-order: 1;
 	-webkit-flex-order: 1;
 }
 
-#menu-left  {
+#menu-left {
 	order : 2;
 	-ms-flex-order: 2;
 	-webkit-flex-order: 2;
@@ -73,8 +79,6 @@
 	-ms-flex-order: 3;
 	-webkit-flex-order: 3;
 }
-
-
 
 @media (min-width: 769px) {
 	#global {
@@ -101,16 +105,19 @@
 		-webkit-flex-order: 2;
 		flex: 1 0 auto;
 		-ms-flex: 1 0 100%;
+		-webkit-flex: 1 0 auto;
 	}
 
 	#main.main-with-left,
 	#main.main-with-right,
-	#main.main-with-left.main-with-right { -ms-flex: 1 0 auto; }
+	#main.main-with-left.main-with-right {
+		-ms-flex: 1 0 auto;
+	}
 }
 
-/* --- Structure des éléments
------------------------------------------------------------------------------ */
 
+/* -- Structure des éléments -- */
+/* ---------------------------- */
 .elements-container {
 	display: flex;
 	display: -ms-flexbox;

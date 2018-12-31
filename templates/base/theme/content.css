@@ -1,14 +1,15 @@
 /* --------------------------------------
 		content.css
 Contient les elements :
- - conteneurs generaux, elements de module,
+ - conteneurs, elements de module,
  - pagination des pages,
  - exploreur de categorie,
  - gestion des categories,
  - mini-module,
  - message postes,
  - maintenance,
------------------------------------------*/
+ - sharing elements
+-------------------------------------- */
 
 /* -- Conteneurs, elements de module -- */
 /* ------------------------------------ */
@@ -120,8 +121,6 @@ header h2 .actions {
 	right: 0;
 }
 
-.actions-title { }
-
 .action {
 	font-size: 1.5rem;
 	padding: 0.309em 0.456em;
@@ -137,7 +136,6 @@ header h2 .actions {
 	text-align: center;
 	width: 20px;
 }
-
 
 /* --- Contenu --- */
 .content {
@@ -190,7 +188,6 @@ header h2 .actions {
 
 /* --- Gestion en colonnes pour ecran large --- */
 @media (min-width: 769px) {
-
 	.columns-1 .block { width: 98%; }
 	.columns-2 .block { width: calc(100% / 2.1); }
 	.columns-3 .block { width: calc(100% / 3.1); }
@@ -203,7 +200,6 @@ header h2 .actions {
 }
 
 /* --- Gestion des media --- */
-
 .thumbnail-item {
 	padding: 0.309em 0;
 	display: block;
@@ -256,7 +252,6 @@ header h2 .actions {
 	}
 }
 
-
 /* --- Friends content --- */
 .content-friends {
 	border-width: 7px 1px 1px 1px;
@@ -265,6 +260,7 @@ header h2 .actions {
 .content-privileged-friends {
 	border-width: 7px 1px 1px 1px;
 }
+
 
 /* -- Pagination des pages -- */
 /* -------------------------- */
@@ -455,6 +451,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	display: block;
 }
 
+
 /* -- Gestion des categories -- */
 /* ---------------------------- */
 .cat-description {
@@ -535,7 +532,7 @@ ul.pagination-block-bis li a.next-page:hover {
 	.sortable-selector:after {
 		content: "\f0b2";
 		font-family: 'Font Awesome 5 Free';
-		font-weight: 900; /* Solid icons*/
+		font-weight: 900;
 	}
 }
 
@@ -657,7 +654,6 @@ body.dragging * {
 
 
 /* -- Messages postes par les membres -- */
-/*          (mp & commentaires)          */
 /* ------------------------------------- */
 #comments-list {
 	clear: both;
@@ -686,8 +682,14 @@ body.dragging * {
 	padding: 0.309em;
 }
 
-.message-pseudo { float: left;  }
-.message-avatar { float: right; max-width: 3.82em; }
+.message-pseudo {
+	float: left;
+}
+
+.message-avatar {
+	float: right;
+	max-width: 3.82em;
+}
 
 .view-topic {
 	padding: 0.809em 0;
@@ -700,7 +702,9 @@ body.dragging * {
 /* --- infos du message --- */
 @media (min-width: 769px) {
 	.message-pseudo,
-	.message-avatar { float: none; }
+	.message-avatar {
+		float: none;
+	}
 
 	.message-avatar {
 		max-width: 100%;
@@ -714,7 +718,9 @@ body.dragging * {
 		padding: 0;
 	}
 
-	.message-date { padding: 0; }
+	.message-date {
+		padding: 0;
+	}
 
 	.message-date {
 		margin-left: 150px;
@@ -817,10 +823,11 @@ div#release {
 	margin-top: 1.309em;
 }
 
+
 /* -- Elements .more d'un contenu -- */
 /* --------------------------------- */
 
-/* General */
+/* --- General --- */
 .more {
 	padding: 0.618em 0.618em 1.618em;
 	font-size: 0.809em;
@@ -828,9 +835,7 @@ div#release {
 	font-style: italic;
 }
 
-/* --- Sharing items
------------------------------------------------------------------------------ */
-
+/* --- Sharing items --- */
 .more-element-sharing {
 	position: relative;
 	margin: 0.309em 0 0 0;

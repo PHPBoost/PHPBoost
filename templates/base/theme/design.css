@@ -1,8 +1,8 @@
-/*--------------------------------------
+/* --------------------------------------
 		design.css
 Contient les conteneurs de mise en page.
 Le design.css permet de mettre en forme votre site web avec le design de votre choix
---------------------------------------*/
+-------------------------------------- */
 
 /* -- Elements HTML generiques specifique au theme -- */
 /* -------------------------------------------------- */
@@ -27,9 +27,9 @@ body {
 	}
 }
 
+
 /* -- Gestion de la taille du site -- */
 /* ---------------------------------- */
-
 #header,
 #global,
 #footer {
@@ -38,7 +38,9 @@ body {
 }
 
 @media (min-width: 769px)  {
-	#header { padding: 1.618em 0; }
+	#header {
+		padding: 1.618em 0;
+	}
 
 	#top-header,
 	#sub-header,
@@ -48,20 +50,25 @@ body {
 		padding: 1.618em 0;
 	}
 
-	#top-header, #sub-header, #global, #footer { width: 768px; }
+	#top-header,
+	#sub-header,
+	#global,
+	#footer { 
+		width: 768px;
+	}
 }
 
 @media (min-width: 1025px) { #top-header, #sub-header, #global, #footer { width: 1024px; } }
 @media (min-width: 1367px) { #top-header, #sub-header, #global, #footer { width: 1280px; } }
 
+
 /* -- En-tete de page - Header -- */
 /* ------------------------------ */
-#header {
+#header { 
 	position: relative;
 }
 
 /* --- Partie inferieur du header --- */
-
 #site-logo {
 	width: 60px;
 	height: 60px;
@@ -71,7 +78,9 @@ body {
 	background-size: cover;
 }
 
-#site-name-container { margin: 0.2em 0 0 0.809em; }
+#site-name-container {
+	margin: 0.2em 0 0 0.809em;
+}
 
 #site-name {
 	font-size: 1.618em;
@@ -93,7 +102,9 @@ body {
 		height: 90px;
 	}
 
-	#site-name-container { margin: 0 0 0 1.618em; }
+	#site-name-container {
+		margin: 0 0 0 1.618em;
+	}
 
 	#site-name {
 		font-size: 3.236em;
@@ -106,9 +117,9 @@ body {
 	}
 }
 
+
 /* -- Conteneur global du site -- */
 /* ------------------------------ */
-
 #main {
 	width: 100%;
 }
@@ -119,7 +130,6 @@ body {
 }
 
 @media (min-width: 769px) {
-
 	#menu-left { margin-right: 1.618em; }
 	#menu-right { margin-left: 1.618em; }
 
@@ -128,7 +138,7 @@ body {
 		width: calc(100% / 13 * 3.5);
 	}
 
-	#menu-left.narrow-menu-left { margin-right: 0.809em; }
+	#menu-left.narrow-menu-left  { margin-right: 0.809em; }
 	#menu-right.narrow-menu-right { margin-left: 0.809em; }
 
 	#menu-left.narrow-menu-left,
@@ -136,7 +146,9 @@ body {
 		width: calc(100% / 13 * 2.5);
 	}
 
-	#main { padding: 0 0 1.618em; }
+	#main {
+		padding: 0 0 1.618em;
+	}
 
 	#main.main-with-left,
 	#main.main-with-right {
@@ -148,9 +160,13 @@ body {
 	}
 }
 
-#top-footer { padding: 0.809em; }
+#top-footer {
+	padding: 0.809em;
+}
 
-.block-container { margin-top: 1em; }
+.block-container {
+	margin-top: 1em;
+}
 
 /* --- Emplacement au dessus et en dessous du contenu de la page --- */
 #top-content {
@@ -192,14 +208,19 @@ body {
 	display: block;
 }
 
-.footer-infos span.footer-infos-separator { display: none; }
+.footer-infos span.footer-infos-separator {
+	display: none;
+}
 
 @media (min-width: 769px) {
-	.footer-infos span { display: inline-block; }
+	.footer-infos span,
+	.footer-infos span.footer-infos-separator {
+		display: inline-block;
+	}
 
-	.footer-infos span.footer-infos-separator { display: inline-block; }
-
-	.footer-infos { padding: 0.618em 0 0; }
+	.footer-infos {
+		padding: 0.618em 0 0;
+	}
 }
 
 
@@ -268,8 +289,7 @@ body {
 	}
 }
 
-/* --   Cookie Bar  -- */
-/* ------------------- */
+/* --- Cookie Bar --- */
 .cookiebar-container {
 	z-index: 100;
 	left: 0;
@@ -360,7 +380,7 @@ body {
 	text-align: center;
 }
 
-/* --- Search engines ====================================== */
+/* --- Search engines --- */
 .robot {
 	font-size: 0.9em;
 	font-weight: bold;

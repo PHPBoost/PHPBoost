@@ -1,13 +1,17 @@
 /* --------------------------------------
 		cssmenu.css
 Contient les elements associes aux menus
------------------------------------------*/
+-------------------------------------- */
 
 /* --- Module-mini --- */
-.cssmenu-content .module-mini-contents { padding: 0; }
+/* ------------------- */
+.cssmenu-content .module-mini-contents {
+	padding: 0;
+}
+
 
 /* -- Classes generales cssmenu -- */
-/* -------------------------------------------------------------------------- */
+/* ------------------------------- */
 .cssmenu {
 	font-size: 0;
 }
@@ -43,7 +47,9 @@ Contient les elements associes aux menus
 		margin-left: 1.309rem;
 	}
 
-	.cssmenu .menu-with-img { display: inline-block;}
+	.cssmenu .menu-with-img {
+		display: inline-block;
+	}
 
 	.module-mini-top img {
 		margin: 0 0.309em 0 0;
@@ -77,8 +83,9 @@ Contient les elements associes aux menus
 	margin-right: 0.1618em;
 }
 
+
 /* -- Classes Items -- */
-/* -------------------------------------------------------------------------- */
+/* --------------------*/
 .cssmenu-horizontal > ul > li {
 	display: inline-block;
 	vertical-align: middle;
@@ -90,8 +97,13 @@ Contient les elements associes aux menus
 }
 
 /* --- Indicateur de sous menu --- */
-.cssmenu-horizontal > ul > li >.cssmenu-title { padding: 0.618em 1.618em 0.618em 0.618em; }
-.cssmenu-right li.has-sub > .cssmenu-title { padding-left: 1.618em; }
+.cssmenu-horizontal > ul > li >.cssmenu-title {
+	padding: 0.618em 1.618em 0.618em 0.618em;
+}
+
+.cssmenu-right li.has-sub > .cssmenu-title {
+	padding-left: 1.618em;
+}
 
 .cssmenu ul li.has-sub > .cssmenu-title:after,
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
@@ -105,13 +117,33 @@ Contient les elements associes aux menus
 	transform: translateY(-40%);
 }
 
-.cssmenu ul li.has-sub > .cssmenu-title:after 				{ right: 1em; content: '\f067'; transition: 0.2s; }
-.cssmenu-right ul li.has-sub > .cssmenu-title:after 		{ content: ''; }
-.cssmenu-right ul li.has-sub > .cssmenu-title:before 		{ left: 1em; content: '\f067'; }
+.cssmenu ul li.has-sub > .cssmenu-title:after {
+	right: 1em;
+	content: '\f067';
+	transition: 0.2s;
+}
 
-.cssmenu ul li.has-sub:hover > .cssmenu-title:after			{ content: '\f068'; transition: 0.2s; }
-.cssmenu-right ul li.has-sub:hover > .cssmenu-title:after 	{ content: ''; }
-.cssmenu-right ul li.has-sub:hover > .cssmenu-title:before 	{ content: '\f068'; }
+.cssmenu-right ul li.has-sub > .cssmenu-title:after {
+	content: '';
+}
+
+.cssmenu-right ul li.has-sub > .cssmenu-title:before {
+	left: 1em;
+	content: '\f067';
+}
+
+.cssmenu ul li.has-sub:hover > .cssmenu-title:after {
+	content: '\f068';
+	transition: 0.2s;
+}
+
+.cssmenu-right ul li.has-sub:hover > .cssmenu-title:after {
+	content: '';
+}
+
+.cssmenu-right ul li.has-sub:hover > .cssmenu-title:before {
+	content: '\f068';
+}
 
 /* --- Position des sous menu --- */
 .cssmenu ul ul {
@@ -120,27 +152,36 @@ Contient les elements associes aux menus
 	z-index: 10;
 }
 
-.cssmenu li:hover > ul 						{ left: auto ;				}
-.cssmenu-horizontal li:hover > ul 			{ left: 0; 	top: 100%;		}
+.cssmenu li:hover > ul                      { left: auto ;            }
+.cssmenu-horizontal li:hover > ul           { left: 0;     top: 100%; }
 .cssmenu-horizontal ul ul li:hover > ul,
-.cssmenu-left li:hover > ul         		{ left: 100% ; 	top: 0;		}
-.cssmenu-right li:hover > ul 				{ right: 100%; 	top: 0;		}
-.cssmenu-left.cssmenu-static li:hover > ul	{ left: 0; 		top: 0;		}
-.cssmenu-right.cssmenu-static li:hover > ul { right: 0;		top: 0;		}
-.cssmenu-actionslinks li:hover > ul 		{ right: 0;		top: 100%;	}
-.cssmenu-actionslinks ul li:hover > ul 		{ right: 100%;	top: 0;		}
-.cssmenu ul ul ul 							{				top: 0;		}
+.cssmenu-left li:hover > ul                 { left: 100% ; top: 0;    }
+.cssmenu-right li:hover > ul                { right: 100%; top: 0;    }
+.cssmenu-left.cssmenu-static li:hover > ul  { left: 0;     top: 0;    }
+.cssmenu-right.cssmenu-static li:hover > ul { right: 0;    top: 0;    }
+.cssmenu-actionslinks li:hover > ul         { right: 0;    top: 100%; }
+.cssmenu-actionslinks ul li:hover > ul      { right: 100%; top: 0;    }
+.cssmenu ul ul ul                           {              top: 0;    }
 
-.small-screen li:hover > ul 				{ left: 0;  				}
-.cssmenu-right.small-screen li:hover > ul 	{ right: 0; 				}
-.cssmenu-left.small-screen li:hover > ul 	{ left: 0;  				}
+.small-screen li:hover > ul                 { left: 0;                }
+.cssmenu-right.small-screen li:hover > ul   { right: 0;               }
+.cssmenu-left.small-screen li:hover > ul    { left: 0;                }
 
-/* --- Decommenter pour déplier le dernier item de rang 1 vers la gauche pour un menu horizontal ---*/
-/*.cssmenu-horizontal > ul > li:hover:last-child > ul { left: auto; right: 0;     }
-.cssmenu-horizontal > ul > li:hover:last-child > ul li:hover > ul { left: auto; right: 100%;     }*/
+/* --- Decommenter pour déplier le dernier item de rang 1 vers la gauche pour un menu horizontal --- */
+/*
+.cssmenu-horizontal > ul > li:hover:last-child > ul {
+	left: auto;
+	right: 0;
+}
+
+.cssmenu-horizontal > ul > li:hover:last-child > ul li:hover > ul {
+	left: auto;
+	right: 100%;
+}
+*/
 
 /* -- Small screens - change the viewprot limit in /templates/default/framework/menus/link.tpl -- */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
 .small-screen,
 .small-screen ul,
 .small-screen ul li {
@@ -164,7 +205,9 @@ Contient les elements associes aux menus
 
 .cssmenu.small-screen ul ul,
 .small-screen ul ul ul,
-.cssmenu-vertical.small-screen .cssmenu-title { text-align: left; }
+.cssmenu-vertical.small-screen .cssmenu-title {
+	text-align: left;
+}
 
 .cssmenu-horizontal.small-screen ul ul li:hover > ul,
 .cssmenu-left.small-screen li:hover > ul {
@@ -271,20 +314,23 @@ Contient les elements associes aux menus
 
 .small-screen .submenu-button.submenu-opened:after { content: '\f0d8'}
 
-/* -- Cssmenu-ssmenu-actionslinks variant -- */
-/* -------------------------------------------------------------------------- */
+
+/* -- Cssmenu-actionslinks variant -- */
+/* ---------------------------------- */
 .cssmenu-actionslinks {
 	float: right;
 	margin: 0.809rem 0.809rem 2.809rem 3.618rem;
 }
 
-.cssmenu-actionslinks .menu-button { display: block;}
+.cssmenu-actionslinks .menu-button {
+	display: block;
+}
 
 .cssmenu-actionslinks .menu-button:after {
 	position: absolute;
 	display: block;
 	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; /* Solid icons*/
+	font-weight: 900;
 	font-size: 1.482rem;
 	content: "\f013";
 	top: 0;
@@ -332,7 +378,9 @@ Contient les elements associes aux menus
 	padding: 0.618em;
 }
 
-.cssmenu-actionslinks.small-screen .menu-button.menu-opened:after { content: '\f00d'}
+.cssmenu-actionslinks.small-screen .menu-button.menu-opened:after {
+	content: '\f00d';
+}
 
 .cssmenu-actionslinks.small-screen .menu-button:hover + ul,
 .cssmenu-actionslinks.small-screen .menu-button + ul:hover {
@@ -360,8 +408,9 @@ Contient les elements associes aux menus
 	display: none;
 }
 
+
 /* -- Cssmenu-tools variant small-screen -- */
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------------- */
 .cssmenu-tools.small-screen {
 	height: auto;
 }
@@ -375,8 +424,9 @@ Contient les elements associes aux menus
 	content: "\f0c9";
 }
 
+
 /* -- Cssmenu-group variant -- */
-/* -------------------------------------------------------------------------- */
+/* --------------------------- */
 .cssmenu-group {
 	text-align: center;
 	margin-bottom: 1.618rem;
@@ -401,10 +451,13 @@ Contient les elements associes aux menus
 }
 
 /* --- Variante cssmenu-group small-screen --- */
-.cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.309em 0.618em}
+.cssmenu-group.small-screen ul li .cssmenu-title {
+	padding: 0.309em 0.618em;
+}
+
 
 /* -- Variantes cssmenu-statique -- */
-/* -------------------------------------------------------------------------- */
+/* -------------------------------- */
 .cssmenu-static > ul > li {
 	display: inline-block;
 	vertical-align: top;

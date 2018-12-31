@@ -3,11 +3,10 @@
 Contient les elements pour l'affichage des tableaux HTML et responsive.
  - Affichage des tableaux basic
  - Table responsive basictable.js
---------------------------------------*/
-
+-------------------------------------- */
 
 /* -- Affichage des tableaux basic -- */
-/* --------------------------------- */
+/* ---------------------------------- */
 table {
 	margin: 0.618em 0;
 	padding: 0;
@@ -46,10 +45,6 @@ table tbody td,
 	border-style: solid;
 	border-color: transparent;
 }
-
-/* table tbody tr:last-child td {
-	border-width: 0;
-} */
 
 table.bt tbody tr td {
 	border-bottom-width: 0;
@@ -104,7 +99,6 @@ table.formatter-table th.formatter-table-head p {
 .col-large   { width: 9em;  }
 .col-larger  { width: 12em; }
 .col-xlarge  { width: 15em; }
-
 
 
 /* -- Table responsive basictable.js -- */

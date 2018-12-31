@@ -3,7 +3,7 @@
 Contient les elements :
  - button,
  - formulaire,
------------------------------------------*/
+---------------------------------------- */
 
 
 /* -- Boutons et class boutons -- */
@@ -52,6 +52,7 @@ button.small,
 .basic-button:hover {
 	text-decoration: none;
 }
+
 
 /* -- Formulaires -- */
 /* ----------------- */
@@ -133,7 +134,7 @@ legend > h1 {
 	font-size: inherit;
 }
 
-/* Previsualisation AJAX. */
+/* --- Previsualisation AJAX --- */
 .xmlhttprequest-preview {
 	overflow: auto;
 	height: 220px;
@@ -215,9 +216,14 @@ select:focus {
     flex-wrap: nowrap;
 }
 
-.form-field-date .input-date { width: 80%; }
+.form-field-date .input-date {
+	width: 80%;
+}
 
-.form-field-datetime .input-date { width: 40%; }
+.form-field-datetime .input-date {
+	width: 40%;
+}
+
 .form-field-datetime .label-time {
 	width: 18%;
 	position: relative;
@@ -469,7 +475,6 @@ textarea {
 }
 
 /* --- Verification des contraintes de formulaire --- */
-
 .text-status-constraint {
 	position:absolute;
 	display: block;
@@ -511,7 +516,7 @@ textarea {
 	position: absolute;
 	left: -16px;
 	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; /* Solid icons*/
+	font-weight: 900;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;

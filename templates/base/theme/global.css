@@ -5,7 +5,7 @@
  - Mise en forme du contenu
  - Les Icones specifiques PHPBoost de FontAwesome
  - Systeme d upload
---------------------------------------*/
+------------------------------------- */
 
 
 /* -- La mise en forme du texte -- */
@@ -24,11 +24,11 @@ a:hover,
 }
 
 /* --- Tailles de polices --- */
-.smaller { font-size: 0.618em; }
-.small   { font-size: 0.809em; }
-.normal  { font-size: 1.0em; }
-.big     { font-size: 1.228em; }
-.bigger  { font-size: 1.456em; }
+.smaller { font-size: 0.618em;  }
+.small   { font-size: 0.809em;  }
+.normal  { font-size: 1.000em;  }
+.big     { font-size: 1.228em;  }
+.bigger  { font-size: 1.456em;  }
 .biggest { font-size: 2.1618em; }
 
 /* --- Les titres (balise h) --- */
@@ -97,11 +97,12 @@ h2.formatter-title { font-size: 2.8rem; margin-left: 0; }
 h3.formatter-title { font-size: 2.6rem; margin-left: 1rem; }
 h4.formatter-title { font-size: 2.4rem; margin-left: 2rem; }
 h5.formatter-title { font-size: 2.2rem; margin-left: 3rem; }
-h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
+h6.formatter-title { font-size: 2.0rem; margin-left: 4rem; }
 
 .formatter-title + br + .formatter-title {
 	margin-top: 0;
 }
+
 
 /* -- Mise en forme du contenu -- */
 /* ------------------------------ */
@@ -351,7 +352,7 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 .formatter-blockquote .formatter-content:after {
 	position: absolute;
 	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; /* Solid icons*/
+	font-weight: 900;
 	font-size: 1.618em;
 }
 
@@ -380,7 +381,7 @@ h6.formatter-title { font-size: 2rem;   margin-left: 4rem; }
 	padding: 0 0 0 0.228em;
 }
 
-/* --- les autres element bbcode --- */
+/* --- les autres element formates --- */
 .indent {
 	margin-left: 1.618em;
 }
@@ -516,6 +517,7 @@ li.small-block .fa-stack {
 	text-align: center;
 }
 
+
 /* -- Les messages d erreurs -- */
 /* ---------------------------- */
 .message-helper {
@@ -612,6 +614,7 @@ li.small-block .fa-stack {
 	color: inherit;
 	cursor: pointer;
 }
+
 
 /* -- Systeme d Upload -- */
 /* ---------------------- */
@@ -769,7 +772,11 @@ li.small-block .fa-stack {
 	padding: 0 0 0 1em;
 }
 
-/* --- Icones d'annonces --- */
+
+/* -- Les icones d'annonces et de messagerie -- */
+/* -------------------------------------------- */
+
+/* --- Les icones d'annonces --- */
 .fa-announce:before,
 .fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
 .fa-announce-hot:before,
