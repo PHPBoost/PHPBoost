@@ -1,32 +1,14 @@
 <?php
-/*##################################################
- *                               mini_calendar_xmlhttprequest.php
- *                            -------------------
- *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
 /**
-* @package ajax
-*
+ * @package 	Ajax
+ * @category 	Framework
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 11 27
+ * @since   	PHPBoost 1.6 - 2007 01 25
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -60,12 +42,12 @@ if ($calendar_type == 'date')
 	$month = $request->get_getint('m', $now->get_month());
 	$day = $request->get_getint('d', $now->get_day());
 	$input_date = !empty($input_date) ? trim($input_date) : $day . '/' . $month . '/' . $year;
-	
+
 	$selected = explode('/', $input_date);
 	$selected_day = NumberHelper::numeric($selected[0]);
 	$selected_month = NumberHelper::numeric($selected[1]);
 	$selected_year = NumberHelper::numeric($selected[2]);
-	
+
 	if (!checkdate($month, $day, $year))
 	{
 		list($year, $month, $day) = array(date('Y'), date('n'), date('j'));
@@ -76,7 +58,7 @@ if ($calendar_type == 'date')
 	$array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
 	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 	$month_day = $array_month[$month - 1];
-		
+
 	$tpl->put_all(array(
 		'FIELD' => $field,
 		'INPUT_FIELD' => $input_field,
@@ -104,7 +86,7 @@ if ($calendar_type == 'date')
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}
-	
+
 	//Premier jour du mois.
 	$first_day = date('w', @mktime(1, 0, 0, $month, 1, $year));
 	if ($first_day == 0)
@@ -112,8 +94,8 @@ if ($calendar_type == 'date')
 		$first_day = 7;
 	}
 
-	//Génération du calendrier. 
-   
+	//Génération du calendrier.
+
 	$month = ($month < 10 && TextHelper::substr($month, 0, 1) != 0) ? '0' . $month : $month;
 	$j = 1;
 	$last_day = ($month_day + $first_day);
@@ -123,8 +105,8 @@ if ($calendar_type == 'date')
 		{
 			$date = StringVars::replace_vars(':year-:month-:day', array('year' => $year, 'month' => $month, 'day' => ($j < 10 && TextHelper::substr($j, 0, 1) != 0) ? '0' . $j : $j));
 			$class ='';
-			if ( (($i % 7) == 6) || (($i % 7) == 0)) 
-			{ 
+			if ( (($i % 7) == 6) || (($i % 7) == 0))
+			{
 				$class = 'calendar-weekend';
 			}
 
@@ -132,7 +114,7 @@ if ($calendar_type == 'date')
 			{
 				$class = 'calendar-event';
 			}
-			
+
 			$contents = $j;
 			$j++;
 		}
