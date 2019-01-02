@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *                             FormFieldHTML.class.php
- *                            -------------------
- *   begin                : April 10, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage free contents fields.
+ * This class manage free contents fields.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>template : A template object to personnalize the field</li>
  * 	<li>content : The field html content if you don't use a personnal template</li>
  * </ul>
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2010 04 10
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormFieldHTML extends AbstractFormField
 {
 	public function __construct($id, $value)

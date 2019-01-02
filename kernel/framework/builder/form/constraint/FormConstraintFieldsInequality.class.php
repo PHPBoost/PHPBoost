@@ -1,34 +1,17 @@
 <?php
-/*##################################################
- *                         FormConstraintFieldsInequality.class.php
- *                            -------------------
- *   begin                : April 10, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\constraint
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2010 04 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormConstraintFieldsInequality implements FormConstraint
 {
 	private $js_message;
@@ -51,7 +34,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 		{
 			$this->js_message = LangLoader::get_message('form.fields_must_not_be_equal', 'status-messages-common');
 		}
-		
+
 		$this->first_field = $first_field;
 		$this->second_field = $second_field;
 
@@ -80,7 +63,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 
 	public function get_validation_error_message()
 	{
-		return StringVars::replace_vars($this->js_message, 
+		return StringVars::replace_vars($this->js_message,
 			array('field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()));
 	}
 

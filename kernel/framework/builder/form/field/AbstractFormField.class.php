@@ -1,34 +1,19 @@
 <?php
-/*##################################################
- *                       AbstractFormField.class.php
- *                            -------------------
- *   begin                : January 08, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc Abstract class that proposes a default implementation for the FormField interface.
- * @package {@package}
- */
+ * Abstract class that proposes a default implementation for the FormField interface.
+ *
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 05 31
+ * @since       PHPBoost 3.0 - 2010 01 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class AbstractFormField implements FormField
 {
 	/**
@@ -114,7 +99,7 @@ abstract class AbstractFormField implements FormField
 	protected $events = array();
 
 	/**
-	 * @desc Constructs and set parameters to the field.
+	 * Constructs and set parameters to the field.
 	 * The specific parameters of this abstract class (common with many fields) are the following:
 	 * <ul>
 	 * 	<li>description at which you must associate the description of the field</li>
@@ -235,7 +220,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * @desc Tells whether the field is required
+	 * Tells whether the field is required
 	 * @return true if it is, false otherwise
 	 */
 	public function is_required()
@@ -244,7 +229,7 @@ abstract class AbstractFormField implements FormField
 	}
 
 	/**
-	 * @desc Changes the fact that the field is required or not.
+	 * Changes the fact that the field is required or not.
 	 * @param bool $required true if it's required, false otherwise
 	 */
 	public function set_required($required)
@@ -460,7 +445,7 @@ abstract class AbstractFormField implements FormField
 			));
 			$has_js_validations = true;
 		}
-		
+
 		foreach ($this->get_js_validations() as $constraint)
 		{
 			$js_tpl->assign_block_vars('constraint', array(
@@ -537,24 +522,24 @@ abstract class AbstractFormField implements FormField
 	{
 		$this->css_class = $css_class;
 	}
-	
+
 	protected function get_css_field_class()
 	{
 		return $this->css_field_class;
 	}
-	
-	
+
+
 	protected function set_css_field_class($css_field_class)
 	{
 		$this->css_field_class = $css_field_class;
 	}
-	
+
 	protected function get_css_form_field_class()
 	{
 		return $this->css_form_field_class;
 	}
-	
-	
+
+
 	protected function set_css_form_field_class($css_form_field_class)
 	{
 		$this->css_form_field_class = $css_form_field_class;
@@ -579,42 +564,42 @@ abstract class AbstractFormField implements FormField
 	{
 		$this->disabled = $disabled;
 	}
-	
+
 	public function is_readonly()
 	{
 		return $this->readonly;
 	}
-	
+
 	public function set_readonly($readonly)
 	{
 		$this->readonly = $readonly;
 	}
-	
+
 	public function is_hidden()
 	{
 		return $this->hidden;
 	}
-	
+
 	public function set_hidden($hidden)
 	{
 		$this->hidden = $hidden;
 	}
-	
+
 	public function has_pattern()
 	{
 		return $this->pattern;
 	}
-	
+
 	public function set_pattern($pattern)
 	{
 		$this->pattern = $pattern;
 	}
-	
+
 	public function has_placeholder()
 	{
 		return $this->placeholder;
 	}
-	
+
 	public function set_placeholder($placeholder)
 	{
 		$this->placeholder = $placeholder;

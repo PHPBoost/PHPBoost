@@ -1,41 +1,25 @@
 <?php
-/*##################################################
- *                          FormFieldCheckbox.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
- * @package {@package}
- */
+ * The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2009 04 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormFieldCheckbox extends AbstractFormField
 {
 	const CHECKED = true;
 	const UNCHECKED = false;
 
 	/**
-	 * @desc Constructs a FormFieldCheckbox.
+	 * Constructs a FormFieldCheckbox.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param bool $checked FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
@@ -56,7 +40,7 @@ class FormFieldCheckbox extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
-		
+
 		$template->put_all(array(
 			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $this->get_value(),
 			'C_CHECKED' => $this->is_checked()

@@ -1,34 +1,16 @@
 <?php
-/*##################################################
- *                        AbstractFormButton.class.php
- *                            -------------------
- *   begin                : February 16, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     Builder
+ * @subpackage  Form\button
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 30
+ * @since       PHPBoost 3.0 - 2010 02 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 abstract class AbstractFormButton implements FormButton
 {
 	private $form_id = '';
@@ -50,9 +32,9 @@ abstract class AbstractFormButton implements FormButton
 		$this->form_id = $form_id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
+/**
+ * {@inheritdoc}
+ */
 	public function display()
 	{
 		$template = $this->get_template();
@@ -97,22 +79,22 @@ abstract class AbstractFormButton implements FormButton
 	{
 		return new FileTemplate('framework/builder/form/button/DefaultFormButton.tpl');
 	}
-	
+
 	public function set_css_class($css_class)
 	{
 		$this->css_class = $css_class;
 	}
-	
+
 	public function get_css_class()
 	{
 		return $this->css_class;
 	}
-	
+
 	public function set_data_confirmation($data_confirmation)
 	{
 		$this->data_confirmation = $data_confirmation;
 	}
-	
+
 	public function get_data_confirmation()
 	{
 		return $this->data_confirmation;

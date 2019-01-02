@@ -1,44 +1,29 @@
 <?php
-/*##################################################
- *                             FormFieldSimpleSelectChoice.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select fields.
+ * This class manage select fields.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
  * </ul>
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 10
+ * @since       PHPBoost 2.0 - 2009 04 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 {
 	private $default_value;
-	
+
 	/**
-	 * @desc Constructs a FormFieldSimpleSelectChoice.
+	 * Constructs a FormFieldSimpleSelectChoice.
 	 * @param string $id Field id
 	 * @param string $label Field label
 	 * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
@@ -104,7 +89,7 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 		}
 		return null;
 	}
-	
+
 	protected function assign_common_template_variables(Template $template)
 	{
 		parent::assign_common_template_variables($template);

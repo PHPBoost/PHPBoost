@@ -1,50 +1,36 @@
 <?php
-/*##################################################
- *                          FormFieldAjaxCompleter.class.php
- *                            -------------------
- *   begin                : January 9, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class represents a ajax completer field
- * @package {@package}
- */
+ * This class represents a ajax completer field
+ *
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 06 03
+ * @since       PHPBoost 3.0 - 2010 01 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldAjaxCompleter extends FormFieldTextEditor
 {
 	private $method = 'post';
 	private $file;
 	private $name_parameter = 'value';
-	
+
 	protected $display_html_in_suggestions = false;
-	
+
 	// Fill input on click on suggestions
 	protected $preserve_input = 'false';
-	
+
 	// Show results if no suggestion
 	protected $no_suggestion_notice = 'false';
-	
+
 	/**
-	 * @desc Constructs a FormFieldAjaxCompleter.
+	 * Constructs a FormFieldAjaxCompleter.
 	 * It has these options in addition to the AbstractFormField ones:
 	 * <ul>
 	 * 	<li>size: the number of size of the field</li>
@@ -77,7 +63,7 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 		{
 			throw new Exception('Add file options containing file url');
 		}
-		
+
 		$field->put_all(array(
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,

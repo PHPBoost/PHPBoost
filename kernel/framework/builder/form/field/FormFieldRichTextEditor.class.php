@@ -1,45 +1,29 @@
 <?php
-/*##################################################
- *                          FormFieldRichTextEditor.class.php
- *                            -------------------
- *   begin                : January 09, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class represents a rich text editor.
- * @package {@package}
- */
+ * This class represents a rich text editor.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 16
+ * @since       PHPBoost 3.0 - 2010 01 09
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 {
 	/**
 	 * @var ContentFormattingFactory
 	 */
 	private $formatter = null;
-	
+
 	private $reset_value = null;
 
 	/**
-	 * @desc Constructs a rich text edit field.
+	 * Constructs a rich text edit field.
 	 * In addition to the parameters of the FormMultiLineEdit ones, there is the formatter which
 	 * is an instance of the ContentFormattingFactory which ensures the formatting. The default value
 	 * corresponds to the user's default configuration and will be the one to use 99% of the time.
@@ -88,25 +72,25 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	private function get_preview_button_code()
 	{
 		$template = new FileTemplate('framework/builder/form/button/FormButtonPreview.tpl');
-		
+
 		$template->put('HTML_ID', $this->get_html_id());
-		
+
 		return $template->render();
 	}
 
 	private function get_reset_button_code()
 	{
 		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
-		
+
 		$template->put_all(array(
 			'C_ONCLICK_FUNCTION' => true,
 			'HTML_ID' => $this->get_html_id(),
 			'CLASS' => 'small',
 			'L_RESET' => LangLoader::get_message('reset', 'main'),
-			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' : 
+			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' :
 				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');')
 		));
-		
+
 		return $template->render();
 	}
 
