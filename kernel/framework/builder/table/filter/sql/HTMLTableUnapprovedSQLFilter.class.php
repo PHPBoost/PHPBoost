@@ -1,38 +1,19 @@
 <?php
-/*##################################################
- *                         HTMLTableUnapprovedSQLFilter.class.php
- *                            -------------------
- *   begin                : April 18, 2017
- *   copyright            : (C) 2017 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Table\filter\sql
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 07 31
+ * @since       PHPBoost 5.0 - 2017 04 18
+*/
+
 class HTMLTableUnapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQLFragmentBuilder
 {
 	private static $param_id_index = 0;
-	
+
 	private $db_field;
 
 	public function __construct($db_field, $name, $label, $checked = FormFieldCheckbox::UNCHECKED)
@@ -51,7 +32,7 @@ class HTMLTableUnapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQ
 		$parameters = array($parameter_name => 0);
 		return new SQLFragment($query, $parameters);
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -63,7 +44,7 @@ class HTMLTableUnapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQ
         }
         return parent::is_value_allowed($value);
     }
-    
+
     protected function get_sql_value_parameter_prefix()
     {
         return __CLASS__ . '_' . self::$param_id_index++;

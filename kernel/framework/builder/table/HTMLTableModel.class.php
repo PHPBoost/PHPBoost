@@ -1,34 +1,17 @@
 <?php
-/*##################################################
- *                        AbstractHTMLTableModel.class.php
- *                            -------------------
- *   begin                : February 25, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
- * @package {@package}
- */
+* This class allows you to manage easily html tables.
+ * @package     Builder
+ * @subpackage  Table
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 04 29
+ * @since       PHPBoost 3.0 - 2010 02 25
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class HTMLTableModel
 {
 	const NO_PAGINATION = 0;
@@ -228,17 +211,17 @@ class HTMLTableModel
 	{
 		$this->display_footer = false;
 	}
-	
+
 	public function has_footer_css_class()
 	{
 		return !empty($this->footer_css_class);
 	}
-	
+
 	public function get_footer_css_class()
 	{
 		return $this->footer_css_class;
 	}
-	
+
 	public function set_footer_css_class($class)
 	{
 		$this->footer_css_class = $class;
