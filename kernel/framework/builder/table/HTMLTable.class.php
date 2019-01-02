@@ -1,34 +1,17 @@
 <?php
-/*##################################################
- *                             HTMLTable.class.php
- *                            -------------------
- *   begin                : December 26, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
- * @package {@package}
- */
+ * This class allows you to manage easily html tables.
+ * @package     Builder
+ * @subpackage  Table
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 23
+ * @since       PHPBoost 3.0 - 2009 12 26
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class HTMLTable extends AbstractHTMLElement
 {
 	private $arg_id = 1;
@@ -59,7 +42,7 @@ class HTMLTable extends AbstractHTMLElement
 	 * @var HTMLTableRow[]
 	 */
 	private $rows = array();
-	
+
 	private $filters_fieldset_class = 'FormFieldsetHorizontal';
 
 	public function __construct(HTMLTableModel $model, $css_class = 'table', $tpl_path = '')
@@ -161,7 +144,7 @@ class HTMLTable extends AbstractHTMLElement
 	private function generate_table_structure()
 	{
 		$has_nb_rows_options = $this->model->has_nb_rows_options();
-		
+
 		$this->tpl->put_all(array(
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
@@ -191,8 +174,8 @@ class HTMLTable extends AbstractHTMLElement
 			foreach ($nb_rows_options as $value)
 			{
 				$this->tpl->assign_block_vars('nbItemsOption', array(
-					'URL' => $this->parameters->get_nb_items_per_page_url($value, $first_row_index), 
-					'VALUE' => $value, 
+					'URL' => $this->parameters->get_nb_items_per_page_url($value, $first_row_index),
+					'VALUE' => $value,
 					'C_SELECTED' => $value == $nb_rows_per_page
 				));
 			}
@@ -222,7 +205,7 @@ class HTMLTable extends AbstractHTMLElement
 	private function generate_rows_stats()
 	{
 		$this->generate_stats();
-		
+
 		if ($this->is_pagination_activated())
 		{
 			$this->generate_pagination();
@@ -266,7 +249,7 @@ class HTMLTable extends AbstractHTMLElement
 		$this->add_css_vars($row, $row_values);
 		$this->add_id_vars($row, $row_values);
 		$this->tpl->assign_block_vars('row', $row_values);
-		
+
 		foreach ($row->get_cells() as $cell)
 		{
 			if ($cell instanceof HTMLTableRowCell)

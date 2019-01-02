@@ -1,38 +1,19 @@
 <?php
-/*##################################################
- *                         HTMLTableLikeFromListSQLFilter.class.php
- *                            -------------------
- *   begin                : February 27, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Table\filter\sql
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 02 27
+*/
+
 class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder
 {
 	private static $param_id_index = 0;
-	
+
 	private $db_field;
 
 	public function __construct($db_field, $name, $label, array $allowed_values)
@@ -56,12 +37,12 @@ class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter imple
 		}
 		return new SQLFragment();
 	}
-	
+
 	protected function get_like_value()
 	{
 		return $this->get_value()->get_raw_value();
 	}
-    
+
     protected function get_sql_value_parameter_prefix()
     {
         return __CLASS__ . '_' . self::$param_id_index++;
