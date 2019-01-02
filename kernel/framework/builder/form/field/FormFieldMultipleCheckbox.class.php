@@ -1,40 +1,24 @@
 <?php
-/*##################################################
- *                      FormFieldMultipleCheckbox.class.php
- *                            -------------------
- *   begin                : November 20, 2010
- *   copyright            : (C) 2010 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class represents a field which contains several options that can be selected simultaneously.
- * @package {@package}
- */
+ * This class represents a field which contains several options that can be selected simultaneously.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 10
+ * @since       PHPBoost 3.0 - 2010 11 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldMultipleCheckbox extends AbstractFormField
 {
 	private $available_options;
-	
+
 	/**
-	 * @desc Constructs a FormFieldCheckbox.
+	 * Constructs a FormFieldCheckbox.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param FormFieldMultipleCheckboxOption[] $selected_options The selected options (can also be an array of string where strings are identifiers of selected options)
@@ -49,7 +33,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		$this->available_options = $available_options;
 		$this->set_selected_options($selected_options);
 	}
-	
+
 	private function set_selected_options(array $selected_options)
 	{
 		$value = array();
@@ -70,7 +54,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		}
 		$this->set_value($value);
 	}
-	
+
 	private function get_option($identifier)
 	{
 		foreach ($this->available_options as $option)
@@ -95,7 +79,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->generate_html_code()->render()
 		));
-		
+
 		$template->put('C_HIDE_FOR_ATTRIBUTE', true);
 
 		return $template;
@@ -127,7 +111,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	 */
 	private function generate_html_code()
 	{
-		
+
 		$rows = array();
 		foreach ($this->available_options as $option)
 		{
@@ -137,21 +121,21 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 				'C_CHECKED' => $this->is_selected($option)
 			);
 		}
-		
+
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldMultipleCheckbox.tpl');
 		$tpl->put_all(array('choice' => $rows));
 
 		return $tpl;
 	}
-	
+
 	private function get_option_id(FormFieldMultipleCheckboxOption $option)
 	{
 		return $this->get_html_id() . '_' . $option->get_id();
 	}
-	
+
 	private function is_selected(FormFieldMultipleCheckboxOption $option)
 	{
-		return in_array($option, $this->get_value()); 
+		return in_array($option, $this->get_value());
 	}
 
 	protected function get_default_template()
@@ -171,7 +155,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 			HTMLForms.get("' . $this->get_form_id() . '").getField("'. $this->get_id() . '").liveValidate();
 		});' : '');
 	}
-	
+
 	public function get_available_options()
 	{
 		return $this->available_options;

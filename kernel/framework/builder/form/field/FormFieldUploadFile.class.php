@@ -1,40 +1,23 @@
 <?php
-/*##################################################
- *		       FormFieldUploadFile.class.php
- *                            -------------------
- *   begin                : December 10, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kévin MASSY <kevin.massy@phpboost.com>
- * @desc This class manage single-line text fields with a link to access the upload modal form.
- * @package {@package}
- */
+ * This class manage single-line text fields with a link to access the upload modal form.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 17
+ * @since       PHPBoost 4.0 - 2013 12 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormFieldUploadFile extends AbstractFormField
 {
 	protected $authorized_extensions = '';
 	/**
-	 * @desc Constructs a FormFieldUploadFile.
+	 * Constructs a FormFieldUploadFile.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
@@ -55,11 +38,11 @@ class FormFieldUploadFile extends AbstractFormField
 	public function display()
 	{
 		$template = $this->get_template_to_use();
-		
+
 		$this->assign_common_template_variables($template);
-	   
+
 		$file_type = new FileType(new File($this->get_value()));
-		
+
 		$template->put_all(array(
 			'C_PREVIEW_HIDDEN' => !$file_type->is_picture(),
 			'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),

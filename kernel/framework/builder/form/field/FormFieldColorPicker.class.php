@@ -1,36 +1,21 @@
 <?php
-/*##################################################
- *                             FormFieldColorPicker.class.php
- *                            -------------------
- *   begin                : October 21, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @package {@package}
- */
+ * The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 10
+ * @since       PHPBoost 3.0 - 2012 10 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldColorPicker extends AbstractFormField
 {
-	
+
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -43,9 +28,9 @@ class FormFieldColorPicker extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		
+
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldColorPicker.tpl');
-		
+
 		$field->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
@@ -55,16 +40,16 @@ class FormFieldColorPicker extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly()
 		));
-		
+
 		$this->assign_common_template_variables($template);
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field->render()
 		));
-		
+
 		return $template;
 	}
-	
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');

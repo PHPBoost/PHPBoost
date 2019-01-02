@@ -1,46 +1,28 @@
 <?php
-/*##################################################
- *                             AbstractFormFieldConstraint.class.php
- *                            -------------------
- *   begin                : March 09, 2011
- *   copyright            : (C) 2009 MASSY Kevin
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author MASSY Kevin <kevin.massy@phpboost.com>
- * @package {@package}
- */ 
+ * @package     Builder
+ * @subpackage  Form\field\constraint
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2011 03 09
+*/
+
 class AbstractFormFieldConstraint implements FormFieldConstraint
 {
 	private $validation_error_message = '';
-	
+
 	public function validate(FormField $field) {}
 
 	public function get_js_validation(FormField $field) {}
-	
+
 	public function get_validation_error_message()
 	{
 		return $this->validation_error_message;
 	}
-	
+
 	public function set_validation_error_message($error_message)
 	{
 		$this->validation_error_message = $error_message;

@@ -1,34 +1,16 @@
 <?php
-/*##################################################
- *                         FormFieldConstraintPasswordStrength.class.php
- *                            -------------------
- *   begin                : August 5, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\field\constraint
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 11 15
+ * @since       PHPBoost 4.1 - 2015 08 05
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 {
 	// Must be at least 6 characters
@@ -39,7 +21,7 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*$/u';
 	// Must containt at least upper case letters, lower case letters, digits and special characters
 	private static $very_strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/u';
-	
+
 	public function __construct($error_message = '')
 	{
 		switch (SecurityConfig::load()->get_internal_password_strength())
@@ -48,27 +30,27 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 				$regex = self::$very_strong_strength_regex;
 				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_very_strong_password_regex', 'status-messages-common') : $error_message;
 				break;
-			
+
 			case SecurityConfig::PASSWORD_STRENGTH_STRONG :
 				$regex = self::$strong_strength_regex;
 				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_strong_password_regex', 'status-messages-common') : $error_message;
 				break;
-			
+
 			case SecurityConfig::PASSWORD_STRENGTH_MEDIUM :
 				$regex = self::$medium_strength_regex;
 				$error_message = empty($error_message) ? LangLoader::get_message('form.doesnt_match_medium_password_regex', 'status-messages-common') : $error_message;
 				break;
-			
+
 			default :
 				$regex = self::$weak_strength_regex;
 				break;
 		}
-		
+
 		$this->set_validation_error_message($error_message);
-		
+
 		parent::__construct(
-			$regex, 
-			$regex, 
+			$regex,
+			$regex,
 			$error_message
 		);
 	}

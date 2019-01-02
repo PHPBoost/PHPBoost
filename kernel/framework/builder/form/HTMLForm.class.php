@@ -1,38 +1,22 @@
 <?php
-/*##################################################
- *                             Form.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class enables you to handle all the operations regarding forms. Indeed, you build a
+ * This class enables you to handle all the operations regarding forms. Indeed, you build a
  * form using object components (fieldsets, fields, buttons) and it's able to display, to retrieve
  * the posted values and also validate the entered data from constraints you define. The validation
  * is done in PHP when the form is received, but also in live thanks to Javascript (each field is
  * validated when it looses the focus and the whole form is validated when the user submits it).
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 28
+ * @since       PHPBoost 3.0 - 2009 04 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class HTMLForm implements HTMLElement
 {
 	const HTTP_METHOD_POST = 'post';
@@ -42,7 +26,7 @@ class HTMLForm implements HTMLElement
 	const NORMAL_CSS_CLASS = 'fieldset-content';
 
 	private static $instance_id = 0;
-	
+
 	/**
 	 * @var FormConstraint[]
 	 */
@@ -83,11 +67,11 @@ class HTMLForm implements HTMLElement
 	 * @var Template
 	 */
 	private $template = null;
-	
+
 	private $enable_captcha_protection;
-	
+
 	/**
-	 * @desc Constructs a HTMLForm object
+	 * Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
 	 * @param string $target The url where the form sends data
 	 * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
@@ -97,20 +81,20 @@ class HTMLForm implements HTMLElement
 		$this->enable_captcha_protection = $enable_captcha_protection;
 		$this->set_html_id($html_id);
 		$this->set_target($target);
-		
+
 		if ($this->enable_captcha_protection)
 			$this->add_catpcha_protection(); //Add captcha protection for visitor
-		
+
 		self::$instance_id++;
 	}
-	
+
 	private function add_catpcha_protection()
 	{
 		$captcha_protection_fieldset = new FormFieldsetHTML('captcha_fieldset');
 		$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
 		$this->add_fieldset($captcha_protection_fieldset);
 	}
-	
+
 	public function move_captcha_protection_in_last_position()
 	{
 		try {
@@ -121,7 +105,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Adds fieldset in the form
+	 * Adds fieldset in the form
 	 * @param FormFieldset The fieldset to add
 	 */
 	public function add_fieldset(FormFieldset $fieldset)
@@ -131,7 +115,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Adds a constraint on the form. This kind of constraints are rules regarding several fields.
+	 * Adds a constraint on the form. This kind of constraints are rules regarding several fields.
 	 * @param FormConstraint $constraint The constraint to add
 	 */
 	public function add_constraint(FormConstraint $constraint)
@@ -140,7 +124,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Adds a button to the form
+	 * Adds a button to the form
 	 * @param FormButton $button The button to add
 	 */
 	public function add_button(FormButton $button)
@@ -150,7 +134,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Returns the value of a form field.
+	 * Returns the value of a form field.
 	 * @param string $field_id The HTML id of the field and string $default_value The default value
 	 * @return mixed The value of the field (the type depends of the field)
 	 * @throws FormBuilderException
@@ -159,7 +143,7 @@ class HTMLForm implements HTMLElement
 	{
 		try {
 			$field = $this->get_field_by_id($field_id);
-			
+
 			if ($field->is_disabled() && $default_value !== null)
 			{
 				$field->set_value($default_value);
@@ -173,9 +157,9 @@ class HTMLForm implements HTMLElement
 			return $default_value;
 		}
 	}
-	
+
 	/**
-	 * @desc Returns true if field is disabled
+	 * Returns true if field is disabled
 	 * @param string $field_id The HTML id of the field and string $default_value The default value
 	 * @return Boolean true if field is disabled
 	 */
@@ -188,9 +172,9 @@ class HTMLForm implements HTMLElement
 		}
 		return false;
 	}
-	
+
 	/**
-	 * @desc Returns true if the $field_id is in the form.
+	 * Returns true if the $field_id is in the form.
 	 * @param string $field_id The HTML id of the field
 	 * @return mixed true if the $field_id is in the form, false otherwise
 	 */
@@ -202,7 +186,7 @@ class HTMLForm implements HTMLElement
 		}
 		return true;
 	}
-	
+
 	public function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -230,14 +214,14 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Displays the form
+	 * Displays the form
 	 * @return Template The template containing all the form elements which is ready to be displayed.
 	 */
 	public function display()
 	{
 		if ($this->enable_captcha_protection)
 			$this->move_captcha_protection_in_last_position();
-		
+
 		$template = $this->get_template_to_use();
 
 		$template->put_all(array(
@@ -255,14 +239,14 @@ class HTMLForm implements HTMLElement
 
 		foreach ($this->validation_error_messages as $error_message)
 		{
-			if (!empty($error_message)) 
+			if (!empty($error_message))
 			{
 				$template->assign_block_vars('validation_error_messages', array(
 					'ERROR_MESSAGE' => $error_message
 				));
 			}
 		}
-		
+
 		self::$js_already_included = true;
 
 		foreach ($this->fieldsets as $fieldset)
@@ -330,7 +314,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Validates the form from all its constraints. If the constraints are satisfied, the
+	 * Validates the form from all its constraints. If the constraints are satisfied, the
 	 * validation errors will be displayed at the top of the form.
 	 * @return boolean true if the form is valid, false otherwise
 	 */
@@ -356,21 +340,21 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Sets the form's HTML id
+	 * Sets the form's HTML id
 	 * @param string $html_id the HTML id
 	 */
 	public function set_html_id($html_id)
 	{
 		$this->html_id = $html_id;
 	}
-	
+
 	public function get_html_id()
 	{
 		return $this->html_id;
 	}
 
 	/**
-	 * @desc Sets the form's target
+	 * Sets the form's target
 	 * @param string $target The URL at which the form will be submited
 	 */
 	public function set_target($target)
@@ -386,7 +370,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Sets the form's CSS class
+	 * Sets the form's CSS class
 	 * @param string $css_class The CSS class (see the HTMLForm::SMALL_CSS_CLASS and
 	 * HTMLForm::NORMAL_CSS_CLASS constants)
 	 */
@@ -396,7 +380,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Sets the HTTP method with which the form will be submited
+	 * Sets the HTTP method with which the form will be submited
 	 * @param string $method The method name (HTMLForm::HTTP_METHOD_POST or HTMLForm::HTTP_METHOD_POST).
 	 */
 	public function set_method($method)
@@ -412,7 +396,7 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * @desc Sets the template to use to display the form. If this method is not called,
+	 * Sets the template to use to display the form. If this method is not called,
 	 * a default template will be used (<code>/template/default/framework/builder/form/Form.tpl</code>).
 	 * @param Template $template The template to use
 	 */

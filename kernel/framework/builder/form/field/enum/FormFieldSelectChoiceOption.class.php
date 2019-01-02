@@ -1,34 +1,19 @@
 <?php
-/*##################################################
- *                       FormFieldSelectOption.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select field options.
- * @package {@package}
- */
+ * This class manage select field options.
+ * @package     Builder
+ * @subpackage  Form\field\enum
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 10
+ * @since       PHPBoost 3.0 - 2009 04 28
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 {
 	/**
@@ -40,13 +25,13 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	{
 		parent::__construct($label, $raw_value, $field_choice_options);
 	}
-		
+
 	/**
 	 * @return string The html code for the select.
 	 */
 	public function display()
 	{
-		
+
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceOption.tpl');
 		$tpl->put_all(array(
 			'VALUE' => $this->get_raw_value(),
@@ -54,7 +39,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 			'C_DISABLE' => $this->is_disable(),
 			'LABEL' => $this->get_label()
 		));
-		
+
 		return $tpl;
 	}
 }

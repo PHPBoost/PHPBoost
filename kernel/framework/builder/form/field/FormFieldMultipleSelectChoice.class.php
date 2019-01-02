@@ -1,46 +1,30 @@
 <?php
-/*##################################################
- *                             FormFieldMultipleSelectChoice.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select fields.
+ * This class manage select fields.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
  * </ul>
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 2.0 - 2009 04 28
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class FormFieldMultipleSelectChoice extends AbstractFormField
 {
 	private $selected_options;
 	private $options = array();
 	private $size = 4;
-	
+
 	/**
-	 * @desc Constructs a FormFieldMultipleSelectChoice.
+	 * Constructs a FormFieldMultipleSelectChoice.
 	 * @param string $id Field id
 	 * @param string $label Field label
 	 * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
@@ -58,10 +42,10 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		{
 			$this->add_option($option);
 		}
-		
+
 		$this->set_selected_options($selected_options);
 	}
-	
+
 	public function set_selected_options(array $selected_options)
 	{
 		$value = array();
@@ -83,7 +67,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		}
 		$this->selected_options = $value;
 	}
-	
+
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
@@ -91,12 +75,12 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		if ($request->has_parameter($this->get_html_id()))
 		{
 			$selected_options = $request->get_array($this->get_html_id());
-			
+
 			$value = array();
 			foreach ($this->get_options() as $option)
 			{
 				if (in_array($option->get_raw_value(), $selected_options))
-				{ 
+				{
 					$value[] = $option;
 				}
 			}
@@ -107,7 +91,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			$this->set_value(array());
 		}
 	}
-	
+
 	/**
 	 * @return string The html code for the select.
 	 */
@@ -142,8 +126,8 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			'L_UNSELECT_ALL' => $lang['select_none'],
 			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
 		));
-		
-		
+
+
 		foreach ($this->get_options() as $multiple_select_option)
 		{
 			if ($multiple_select_option instanceof FormFieldSelectChoiceGroupOption)
@@ -165,14 +149,14 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 					$multiple_select_option->set_active();
 				}
 			}
-			
+
 			$tpl->assign_block_vars('options', array(
 				'OPTION' => $multiple_select_option->display()
 			));
 		}
 		return $tpl;
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -188,7 +172,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-	
+
 	private function is_selected($option)
 	{
 		return in_array($option, $this->selected_options);
@@ -198,18 +182,18 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
-	
+
 	private function add_option(FormFieldEnumOption $option)
 	{
 		$option->set_field($this);
 		$this->options[] = $option;
 	}
-	
+
 	private function get_options()
 	{
 		return $this->options;
 	}
-	
+
 	private function get_option($identifier)
 	{
 		foreach ($this->options as $option)

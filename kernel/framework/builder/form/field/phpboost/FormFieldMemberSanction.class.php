@@ -1,41 +1,22 @@
 <?php
-/*##################################################
- *                             FormFieldMemberSanction.class.php
- *                            -------------------
- *   begin                : December 26, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Builder
+ * @subpackage  Form\field\phpboost
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 12 26
+*/
+
 class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 {
 	private $lang;
 	private $timestamp = 0;
-	
+
     /**
-     * @desc Constructs a FormFieldMemberSanction.
+     * Constructs a FormFieldMemberSanction.
      * @param string $id Field id
      * @param string $label Field label
      * @param timestamp $value Default value
@@ -59,15 +40,15 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 		}
 		return $options;
 	}
-	
+
 	private function load_lang()
 	{
 		$this->lang = LangLoader::get('date-common');
 	}
-	
+
 	private function get_time_value()
 	{
-		$difference = ($this->timestamp - time());	
+		$difference = ($this->timestamp - time());
 
 		$times = array_keys($this->get_sanctions_duration());
 		if ($difference > 0)
@@ -84,22 +65,22 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 			return 0;
 		}
 	}
-	
+
 	private function get_sanctions_duration()
 	{
 		return array(
-			'0' => LangLoader::get_message('no', 'common'), 
-			'60' => '1 ' . $this->lang['minute'], 
+			'0' => LangLoader::get_message('no', 'common'),
+			'60' => '1 ' . $this->lang['minute'],
 			'300' => '5 ' . $this->lang['minutes'],
-			'900' => '15 ' . $this->lang['minutes'], 
-			'1800' => '30 ' . $this->lang['minutes'], 
-			'3600' => '1 ' . $this->lang['hour'], 
+			'900' => '15 ' . $this->lang['minutes'],
+			'1800' => '30 ' . $this->lang['minutes'],
+			'3600' => '1 ' . $this->lang['hour'],
 			'7200' => '2 ' . $this->lang['hours'],
-			'86400' => '1 ' . $this->lang['day'], 
-			'172800' => '2 ' . $this->lang['days'], 
-			'604800' => '1 ' . $this->lang['week'], 
-			'1209600' => '2 ' . $this->lang['weeks'], 
-			'2419200' => '1 ' . $this->lang['month'], 
+			'86400' => '1 ' . $this->lang['day'],
+			'172800' => '2 ' . $this->lang['days'],
+			'604800' => '1 ' . $this->lang['week'],
+			'1209600' => '2 ' . $this->lang['weeks'],
+			'2419200' => '1 ' . $this->lang['month'],
 			'4838400' => '2 ' . $this->lang['month'],
 			'326592000' => LangLoader::get_message('illimited', 'main')
 		);

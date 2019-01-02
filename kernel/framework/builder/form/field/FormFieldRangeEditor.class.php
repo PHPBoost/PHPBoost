@@ -1,34 +1,18 @@
 <?php
-/*##################################################
- *                             FormFieldRangeEditor.class.php
- *                            -------------------
- *   begin                : June 1, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc This class manages a range of numbers (slider).
- * @package {@package}
- */
+ * This class manages a range of numbers (slider).
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 06 03
+ * @since       PHPBoost 4.1 - 2015 06 01
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class FormFieldRangeEditor extends FormFieldNumberEditor
 {
 	protected $type = 'range';
@@ -36,9 +20,9 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 	 * @var boolean
 	 */
 	private $vertical = false;
-	
+
 	/**
-	 * @desc Constructs a FormFieldRange.
+	 * Constructs a FormFieldRange.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
@@ -107,7 +91,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 	}
 
 	/**
-	 * @desc Tells whether the slider is vertical
+	 * Tells whether the slider is vertical
 	 * @return true if it is, false otherwise
 	 */
 	public function is_vertical()
@@ -116,7 +100,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 	}
 
 	/**
-	 * @desc Changes the fact that the field is vertical or not.
+	 * Changes the fact that the field is vertical or not.
 	 * @param bool $vertical true if it's vertical, false otherwise
 	 */
 	public function set_vertical($vertical)

@@ -1,34 +1,17 @@
 <?php
-/*##################################################
- *                             FormFieldMailEditor.class.php
- *                            -------------------
- *   begin                : April 28, 2009
- *   copyright            : (C) 2009 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manages a mail address.
- * @package {@package}
- */
+ * This class manage  a mail address.
+ * @package     Builder
+ * @subpackage  Form\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 06 03
+ * @since       PHPBoost 2.0 - 2009 04 28
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FormFieldMailEditor extends FormFieldTextEditor
 {
 	protected $type = 'email';
@@ -36,9 +19,9 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	 * @var boolean
 	 */
 	private $multiple = false;
-	
+
 	/**
-	 * @desc Constructs a FormFieldMailEditor.
+	 * Constructs a FormFieldMailEditor.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
@@ -109,7 +92,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	}
 
 	/**
-	 * @desc Tells whether the field is multiple
+	 * Tells whether the field is multiple
 	 * @return true if it is, false otherwise
 	 */
 	public function is_multiple()
@@ -118,7 +101,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	}
 
 	/**
-	 * @desc Changes the fact that the field is multiple or not.
+	 * Changes the fact that the field is multiple or not.
 	 * @param bool $multiple true if it's multiple, false otherwise
 	 */
 	public function set_multiple($multiple)
