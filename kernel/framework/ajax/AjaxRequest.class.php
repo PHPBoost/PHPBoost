@@ -1,12 +1,12 @@
 <?php
 /**
- * @package 	Ajax
- * @category 	Framework
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @package     Ajax
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2015 01 06
- * @since   	PHPBoost 3.0 - 2010 10 31
+ * @version     PHPBoost 5.2 - last update: 2015 01 06
+ * @since       PHPBoost 3.0 - 2010 10 31
  * @contributor Kevin MASSY <reidlos@phpboost.com>
 */
 
