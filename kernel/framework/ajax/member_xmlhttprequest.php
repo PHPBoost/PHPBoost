@@ -1,32 +1,14 @@
 <?php
-/*##################################################
- *                         member_xmlhttprequest.php
- *                            -------------------
- *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
 /**
-* @package ajax
-*
+ * @package 	Ajax
+ * @category 	Framework
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 11 27
+ * @since   	PHPBoost 1.6 - 2007 01 25
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -108,7 +90,7 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
 			$url_punish = ($admin) ? 'admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=punish&amp;id=' . $row['user_id']);
 			$url_ban = ($admin) ? 'admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=ban&amp;id=' . $row['user_id']);
-			
+
 			if (!empty($warning_user))
 			{
 				echo '<a href="' . $url_warn . '">' . $row['display_name'] . '</a><br />';
