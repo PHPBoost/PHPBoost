@@ -1,35 +1,18 @@
 <?php
-/* ##################################################
- *                             TextHelper.class.php
- *                            -------------------
- *   begin                : Januar 21, 2010
- *   copyright            : (C) 2010 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *
-  ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
-  ################################################### */
-
 /**
- * @desc Text helper
- * @author Régis Viarre <crowkait@phpboost.com>
- * @package {@package}
- */
+ * Text helper
+ * @package     Helper
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @since       PHPBoost 3.0 - 2010 01 24
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class TextHelper
 {
 	const HTML_NO_PROTECT = false;
@@ -38,7 +21,7 @@ class TextHelper
 	const ADDSLASHES_NONE = 2;
 
 	/**
-	 * @desc Protects an input variable. Never trust user input!
+	 * Protects an input variable. Never trust user input!
 	 * @param string $var Variable to protect.
 	 * @param bool $html_protect HTML_PROTECT if you don't accept the HTML code (it will be transformed
 	 * by the corresponding HTML entities and won't be considerer by the web browsers).
@@ -74,7 +57,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Inserts a carriage return every $lenght characters. It's equivalent to wordwrap PHP function but it can deal with the HTML entities.
+	 * Inserts a carriage return every $lenght characters. It's equivalent to wordwrap PHP function but it can deal with the HTML entities.
 	 * An entity is coded on several characters and the wordwrap function counts several characters for an entity whereas it represents only one character.
 	 * @param string $str The string to wrap.
 	 * @param int $lenght The number of characters you want in a line.
@@ -89,7 +72,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Cuts a string containing some HTML code which contains some HTML entities. The substr PHP function considers a HTML entity as several characters.
+	 * Cuts a string containing some HTML code which contains some HTML entities. The substr PHP function considers a HTML entity as several characters.
 	 * This function allows you to consider them as only one character.
 	 * @param string $str The string you want to cut.
 	 * @param int $start  If start  is non-negative, the returned string will start at the start 'th position in string , counting from zero. For instance, in the string 'abcdef', the character at position 0 is 'a', the character at position 2 is 'c', and so forth.
@@ -107,7 +90,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Cut string to the desired length, ending with the last full word.
+	 * Cut string to the desired length, ending with the last full word.
 	 * @param string $string A PHP string to convert to cut
 	 * @param int $length The desired length
 	 * @return string The substring
@@ -122,7 +105,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Exports a variable to be used in a javascript script.
+	 * Exports a variable to be used in a javascript script.
 	 * @param string $string A PHP string to convert to a JS one
 	 * @param string $add_quotes If true, returned string will be bounded by single quotes
 	 * @return string The js equivalent string
@@ -134,7 +117,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Exports a variable to be used in a json javascript script.
+	 * Exports a variable to be used in a json javascript script.
 	 * @param string $string A PHP string to convert to a json one
 	 * @param string $add_quotes If true, returned string will be bounded by double quotes
 	 * @return string The json equivalent string
@@ -149,7 +132,7 @@ class TextHelper
 	{
 		if ($flags === null)
 			$flags = ENT_COMPAT;
-		
+
 		return str_replace('&amp;', '&', htmlspecialchars($string, $flags, $encoding, $double_encode));
 	}
 
@@ -157,7 +140,7 @@ class TextHelper
 	{
 		if ($flags === null)
 			$flags = ENT_COMPAT;
-		
+
 		return htmlspecialchars_decode($string, $flags);
 	}
 
@@ -165,7 +148,7 @@ class TextHelper
 	{
 		if ($flags === null)
 			$flags = ENT_COMPAT;
-		
+
 		return html_entity_decode($string, $flags, $encoding);
 	}
 
@@ -312,7 +295,7 @@ class TextHelper
 	}
 
 	/**
-	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
+	 * Checks if a string contains less than a defined number of links (used to prevent SPAM).
 	 * @param string $contents String in which you want to count the number of links
 	 * @param int $max_nbr Maximum number of links accepted.
 	 * @param bool $has_html_links true if the content is in HTML
