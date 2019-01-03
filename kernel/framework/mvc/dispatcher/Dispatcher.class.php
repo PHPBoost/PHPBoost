@@ -1,38 +1,19 @@
 <?php
-/*##################################################
- *                           Dispatcher.class.php
- *                            -------------------
- *   begin                : June 08 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * Dispatch the current url arg to the first method matching
+ * in the UrlDispatcherItem list of the controller object
+ * @package     MVC
+ * @subpackage  Dispatcher
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2009 06 08
+*/
 
 define('REQUEST_URI', $_SERVER['REQUEST_URI']);
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc dispatch the current url arg to the first method matching
- * in the UrlDispatcherItem list of the controller object
- * @package {@package}
- */
 class Dispatcher
 {
 	// Changing this value will result in a crash in rewrite mode.
@@ -42,7 +23,7 @@ class Dispatcher
 	private $url_controller_mappers = array();
 
 	/**
-	 * @desc build a new Dispatcher from a UrlDispatcherItem List
+	 * build a new Dispatcher from a UrlDispatcherItem List
 	 * @param <code>UrlControllerMapper[]</code> $url_controller_mappers
 	 * the list of the <code>UrlControllerMapper</code>
 	 * that could be applied on an url for that module
@@ -53,7 +34,7 @@ class Dispatcher
 	}
 
 	/**
-	 * @desc dispatch the current url argument to the first method matching
+	 * dispatch the current url argument to the first method matching
 	 * in the <code>UrlControllerMapper</code> list of the controller object
 	 * @throws NoUrlMatchException
 	 */

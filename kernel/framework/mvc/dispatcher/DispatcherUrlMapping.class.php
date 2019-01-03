@@ -1,36 +1,22 @@
 <?php
-/*##################################################
- *                          DispatcherUrlMapping.class.php
- *                            -------------------
- *   begin                : October 06, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
+/**
+ * @package     MVC
+ * @subpackage  Dispatcher
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @since       PHPBoost 3.0 - 2010 10 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class DispatcherUrlMapping extends UrlMapping
 {
 	private $high_priority = false;
 	private $low_priority = false;
-	
+
 	/**
 	 * @param UrlMapping[] $mappings
 	 */
@@ -60,17 +46,17 @@ class DispatcherUrlMapping extends UrlMapping
 		}
 		parent::__construct($from, $to);
 	}
-	
+
 	/**
-	 * @desc Check if the Url must be placed in high priority in the .htaccess file
+	 * Check if the Url must be placed in high priority in the .htaccess file
 	 */
 	public function is_high_priority()
 	{
 		return $this->high_priority;
 	}
-	
+
 	/**
-	 * @desc Check if the Url must be placed in low priority in the .htaccess file
+	 * Check if the Url must be placed in low priority in the .htaccess file
 	 */
 	public function is_low_priority()
 	{
