@@ -1,5 +1,21 @@
 <?php
 /**
+ * var
+ * @package     Doctrine
+ * @subpackage  Common
+ * @category    Framework
+ * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
+ * @link        https://www.doctrine-project.org
+ * @author      Guilherme BLANCO <guilhermeblanco@hotmail.com>
+ * @author      Jonathan WAGE <jonwage@gmail.com>
+ * @author      Roman BORSCHEL <roman@code-factory.org>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 4.0 - 2013 01 01
+*/
+
+function string_var_export($var) { return var_export($var, true); }
+
+/**
  * Base Exception class of Doctrine
  * @package     Doctrine
  * @subpackage  Common
@@ -13,8 +29,6 @@
  * @since       PHPBoost 4.0 - 2013 01 01
  * @contributor mipel <mipel@phpboost.com>
 */
-
-function string_var_export($var) { return var_export($var, true); }
 
 class DoctrineException extends Exception
 {
