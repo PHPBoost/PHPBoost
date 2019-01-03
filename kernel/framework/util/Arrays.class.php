@@ -1,37 +1,18 @@
 <?php
-/*##################################################
- *                               Arrays.class.php
- *                            -------------------
- *   begin                : February 25, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 02 25
+*/
+
 class Arrays
 {
 	/**
-	 * @desc searches for $key in $values keys and returns the associated value.
+	 * searches for $key in $values keys and returns the associated value.
 	 * If it doesn't exist, it will return the $default value if it is not null. Otherwise a
 	 * TokenNotFoundException will be thrown
 	 * @param mixed $key the value to look for
@@ -52,7 +33,7 @@ class Arrays
 		}
 		return $default;
 	}
-	
+
 	public static function remove_key($key, array &$values)
 	{
 		if (array_key_exists($key, $values))

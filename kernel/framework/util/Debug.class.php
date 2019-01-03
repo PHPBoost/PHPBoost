@@ -1,39 +1,20 @@
 <?php
-/*##################################################
- *                             Debug.class.php
- *                            -------------------
- *   begin                : October 3, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 04 27
+ * @since       PHPBoost 3.0 - 2009 10 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class Debug
 {
 	const STRICT_MODE = 'strict_mode';
 	const DISPLAY_DATABASE_QUERY = 'display_database_query';
-	
+
 	private static $enabled = true;
 	private static $options = array();
 	private static $html_output = true;
@@ -50,7 +31,7 @@ class Debug
     }
 
     /**
-     * @desc Enables the debug mode for the current script only.
+     * Enables the debug mode for the current script only.
      * @param mixed[string] $options see <code>self::enabled_debug_mode()</code> for information on this parameter
      */
     public static function enabled_current_script_debug(array $options = array())
@@ -60,7 +41,7 @@ class Debug
     }
 
 	/**
-	 * @desc Enables the debug mode
+	 * Enables the debug mode
 	 * @param mixed[string] $options Here is a description of the optional debug parameters that can
 	 * be passed in the options array
 	 * <ul>
@@ -77,7 +58,7 @@ class Debug
 	}
 
     /**
-     * @desc Disables the debug mode
+     * Disables the debug mode
      */
     public static function disable_debug_mode()
     {
@@ -95,28 +76,28 @@ class Debug
 	        ' ?>');
         $file->close();
     }
-    
+
     /**
-     * @desc Tells whether the debug mode is enabled
+     * Tells whether the debug mode is enabled
      * @return bool true if enabled, false otherwise
      */
     public static function is_debug_mode_enabled()
     {
         return self::$enabled;
     }
-    
+
     /**
-     * @desc Returns true if the strict debug mode is enabled.
-     * If true, the page processing will be stopped if any notice, warning or error is encountered. 
+     * Returns true if the strict debug mode is enabled.
+     * If true, the page processing will be stopped if any notice, warning or error is encountered.
      * @return bool true if the strict debug mode is enabled
      */
     public static function is_strict_mode_enabled()
     {
         return self::is_debug_mode_enabled() && self::get_option(self::STRICT_MODE, false);
     }
-    
+
 	/**
-     * @desc Returns true if the display database query is enabled.
+     * Returns true if the display database query is enabled.
      * If true, the page display a database query with the Debug::dump() function and display stacktrace
      * @return bool true if the display database query is enabled.
      */
@@ -124,7 +105,7 @@ class Debug
     {
         return self::is_debug_mode_enabled() && self::get_option(self::DISPLAY_DATABASE_QUERY, false);
     }
-    
+
     private static function get_option($key, $default)
     {
         if (array_key_exists($key, self::$options))
@@ -135,7 +116,7 @@ class Debug
     }
 
 	/**
-	 * @desc Returns true if the page is rendered in a browser mode.
+	 * Returns true if the page is rendered in a browser mode.
 	 * @return bool true if the page is rendered in a browser mode
 	 */
 	public static function is_output_html()
@@ -144,7 +125,7 @@ class Debug
 	}
 
 	/**
-	 * @desc Inform PHPBoost that the dbug message have to be rendered in a non html (plain text) mode.
+	 * Inform PHPBoost that the dbug message have to be rendered in a non html (plain text) mode.
 	 */
 	public static function set_plain_text_output_mode()
 	{
@@ -152,7 +133,7 @@ class Debug
 	}
 
 	/**
-	 * @desc Displays information on an exception and exits
+	 * Displays information on an exception and exits
 	 * @param $exception the exception to display information on
 	 */
 	public static function fatal($exception)
@@ -176,7 +157,7 @@ class Debug
 	}
 
 	/**
-	 * @desc prints the stacktrace and exits
+	 * prints the stacktrace and exits
 	 * @param $object
 	 */
 	public static function stop($object = null)
@@ -190,7 +171,7 @@ class Debug
 	}
 
 	/**
-	 * @desc returns the current exception
+	 * returns the current exception
 	 * @return Exception the current exception
 	 */
 	public static function get_exception_context()
@@ -199,7 +180,7 @@ class Debug
 	}
 
 	/**
-	 * @desc returns the current stacktrace
+	 * returns the current stacktrace
 	 * @return string the current stacktrace
 	 */
 	public static function get_stacktrace()
@@ -210,7 +191,7 @@ class Debug
 	}
 
 	/**
-	 * @desc print the current stacktrace
+	 * print the current stacktrace
 	 */
 	public static function get_stacktrace_as_string($start_trace_index = 0, $exception = null)
 	{
@@ -233,7 +214,7 @@ class Debug
 			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' . ExceptionUtils::get_file($trace) .
 				':' . ExceptionUtils::get_line($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . "\n";
 		}
-		
+
 		$string_stacktrace .= '[URL] ' . $_SERVER['REQUEST_URI'];
 
 		if (self::is_output_html())
@@ -244,7 +225,7 @@ class Debug
 	}
 
 	/**
-	 * @desc print the current stacktrace
+	 * print the current stacktrace
 	 */
 	public static function print_stacktrace($start_trace_index = 0, Exception $exception = null)
 	{
@@ -256,7 +237,7 @@ class Debug
 	}
 
 	/**
-	 * @desc executes a <code>print_r()</code> in an html &lt;pre&gt; block
+	 * executes a <code>print_r()</code> in an html &lt;pre&gt; block
 	 * @param mixed $object the object to see using print_r
 	 */
 	public static function dump($object)
