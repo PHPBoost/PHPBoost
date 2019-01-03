@@ -1,40 +1,22 @@
 <?php
-/*##################################################
- *                             LinksMenuElement.class.php
- *                            -------------------
- *   begin                : July 08, 2008
- *   copyright            : (C) 2008 Régis Viarre; Loic Rouchon
- *   email                : crowkait@phpboost.com; loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
-// Abstract class : Do not instanciate it
-//      LinksMenuLink and LinksMenuLink classes are based on this class
-//      use, on of these
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @abstract
- * @desc A LinksMenuElement contains a Title, an url, and an image url
- * @package {@package}
- */
+ * A LinksMenuElement contains a Title, an url, and an image url
+ * <div class="message-helper notice">Abstract class : Do not instanciate it
+ * LinksMenuLink and LinksMenuLink classes are based on this class
+ * use, on of these</div>
+ * @package     PHPBoost
+ * @subpackage  Menu\links
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 07 08
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class LinksMenuElement extends Menu
 {
 	const LINKS_MENU_ELEMENT__CLASS = 'LinksMenuElement';
@@ -63,7 +45,7 @@ abstract class LinksMenuElement extends Menu
 	public $depth = 0;
 
 	/**
-	 * @desc Build a LinksMenuElement object
+	 * Build a LinksMenuElement object
 	 * @param $title
 	 * @param $url
 	 * @param $image
@@ -78,7 +60,7 @@ abstract class LinksMenuElement extends Menu
 	}
 
 	/**
-	 * @desc Assign tpl vars
+	 * Assign tpl vars
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars
 	 * @param int $mode in LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
@@ -93,14 +75,14 @@ abstract class LinksMenuElement extends Menu
 				$url = $this->image;
 			else
 				$url = new Url($this->image);
-			
+
 			if (file_exists(PATH_TO_ROOT . $this->image))
 			{
 				if (!$url->is_relative())
 					$image = new Image($url->absolute());
 				else
 					$image = new Image(PATH_TO_ROOT . $this->image);
-				
+
 				$template->put_all(array(
 					'C_IMG' => !empty($this->image),
 					'ABSOLUTE_IMG' => $url->absolute(),
@@ -111,14 +93,14 @@ abstract class LinksMenuElement extends Menu
 				));
 			}
 		}
-		
+
 		parent::_assign($template);
-		
+
 		if ($this->url instanceof Url)
 			$url = $this->url;
 		else
 			$url = new Url($this->url);
-		
+
 		$template->put_all(array(
 			'C_MENU' => false,
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
@@ -155,7 +137,7 @@ abstract class LinksMenuElement extends Menu
 			$url = $string_url;
 		else
 			$url = new Url($string_url);
-		
+
 		if ($compute_relative_url)
 		{
 			return $url->relative();
@@ -167,7 +149,7 @@ abstract class LinksMenuElement extends Menu
 	}
 
 	/**
-	 * @desc Increase the Menu Depth and set the menu type to its parent one
+	 * Increase the Menu Depth and set the menu type to its parent one
 	 * @access protected
 	 */
 	protected function _parent($type)

@@ -1,35 +1,16 @@
 <?php
-/*##################################################
- *                         LangConfiguration.class.php
- *                            -------------------
- *   begin                : January 19, 2012
- *   copyright            : (C) 2012 Bruno MERCIER
- *   email                : aiglobulles@gmail.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
+/**
+ * @package     PHPBoost
+ * @subpackage  Langs
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Bruno MERCIER <aiglobulles@gmail.com>
+ * @version     PHPBoost 5.2 - last update: 2018 01 14
+ * @since       PHPBoost 3.0 - 2012 01 19
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
- /**
- * @author Bruno MERCIER <aiglobulles@gmail.com>
- * @package {@package}
- */
 class LangConfiguration
 {
 	private $name;
@@ -41,32 +22,32 @@ class LangConfiguration
 	private $compatibility;
 	private $identifier;
 	private $picture_url;
-	
+
 	public function __construct($config_ini_file)
 	{
 		$this->load_configuration($config_ini_file);
 	}
-	
+
 	public function get_name()
 	{
 		return $this->name;
 	}
-	
+
 	public function get_author_name()
 	{
 		return $this->author_name;
 	}
-	
+
 	public function get_author_mail()
 	{
 		return $this->author_mail;
 	}
-	
+
 	public function get_author_link()
 	{
 		return $this->author_link;
 	}
-	
+
 	public function get_date()
 	{
 		return $this->date;
@@ -76,33 +57,33 @@ class LangConfiguration
 	{
 		return $this->version;
 	}
-	
+
 	public function get_compatibility()
 	{
 		return $this->compatibility;
 	}
-	
+
 	public function get_identifier()
 	{
 		return $this->identifier;
 	}
-	
+
 	public function get_picture_url()
 	{
 		return $this->picture_url;
 	}
-	
+
 	public function has_picture()
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
 	}
-	
+
 	private function load_configuration($config_ini_file)
 	{
 		$config = @parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
-		
+
 		$this->name = $config['name'];
 		$this->author_name = $config['author'];
 		$this->author_mail = $config['author_mail'];
@@ -111,12 +92,12 @@ class LangConfiguration
 		$this->version = $config['version'];
 		$this->compatibility = $config['compatibility'];
 		$this->identifier = $config['identifier'];
-		
+
 		$url = PATH_TO_ROOT . '/images/stats/countries/' . $this->identifier . '.png';
 		$picture = new File($url);
 		if (!$picture->exists())
 			$url = '';
-		
+
 		$this->picture_url = new Url($url);
 	}
 

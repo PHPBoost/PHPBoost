@@ -1,41 +1,18 @@
 <?php
-/*##################################################
- *                          Contribution.class.php
- *                            -------------------
- *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
-
-## Constants ##
-
-//Bit on which are checked the authorizations
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class represents a contribution made by a user to complete the content of the website.
+ * This class represents a contribution made by a user to complete the content of the website.
  * All the contributions are managed in the contribution panel.
- */
+ * @package     PHPBoost
+ * @subpackage  Event
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 07 21
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Contribution extends Event
 {
 	const CONTRIBUTION_AUTH_BIT = 1;
@@ -99,9 +76,9 @@ class Contribution extends Event
 	 * @var string Groups of the member who has fixed the contribution.
 	 */
 	private $fixer_groups = '';
-	
+
 	/**
-	 * @desc Builds a Contribution object.
+	 * Builds a Contribution object.
 	 */
 	public function __construct()
 	{
@@ -113,7 +90,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Builds a contribution object from its whole parameters.
+	 * Builds a contribution object from its whole parameters.
 	 * @param int $id Contribution id.
 	 * @param string $entitled Contribution entitled.
 	 * @param string $fixing_url URL associated to the event.
@@ -154,7 +131,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the module in which the contribution is used.
+	 * Sets the module in which the contribution is used.
 	 * @param string $module Module identifier (for example the name of the module folder).
 	 */
 	public function set_module($module)
@@ -163,7 +140,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the fixing date.
+	 * Sets the fixing date.
 	 * @param Date $date Date
 	 */
 	public function set_fixing_date($date)
@@ -175,7 +152,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Set the status of the contribution.
+	 * Set the status of the contribution.
 	 * @param int $new_current_status One of those elements:
 	 * <ul>
 	 * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
@@ -210,7 +187,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the authorization of the contribution. It will determine who will be able to treat the contribution.
+	 * Sets the authorization of the contribution. It will determine who will be able to treat the contribution.
 	 * @param mixed[] $auth Auth array.
 	 */
 	public function set_auth($auth)
@@ -222,7 +199,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the id of the poster.
+	 * Sets the id of the poster.
 	 * @param int $poster_id Id.
 	 */
 	public function set_poster_id($poster_id)
@@ -236,7 +213,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the id of the fixer.
+	 * Sets the id of the fixer.
 	 * @param int $fixer_id Id.
 	 */
 	public function set_fixer_id($fixer_id)
@@ -250,7 +227,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Sets the description of the contribution.
+	 * Sets the description of the contribution.
 	 * @param string $description Description (can be some HTML content).
 	 */
 	public function set_description($description)
@@ -262,7 +239,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the description of the contribution.
+	 * Gets the description of the contribution.
 	 * @return string the description
 	 */
 	public function get_description()
@@ -271,7 +248,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the module in which the contribution is used.
+	 * Gets the module in which the contribution is used.
 	 * @return string The module identifier (for example the name of its folder).
 	 */
 	public function get_module()
@@ -280,7 +257,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the contribution fixing date.
+	 * Gets the contribution fixing date.
 	 * @return The date at which the contribution has been treated.
 	 */
 	public function get_fixing_date()
@@ -289,7 +266,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the authorization of treatment of this contribution.
+	 * Gets the authorization of treatment of this contribution.
 	 * @return mixed[] The authorization array.
 	 */
 	public function get_auth()
@@ -298,7 +275,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the identifier of the poster.
+	 * Gets the identifier of the poster.
 	 * @return int Its id.
 	 */
 	public function get_poster_id()
@@ -307,7 +284,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the identifier of the fixer.
+	 * Gets the identifier of the fixer.
 	 * @return int Its id.
 	 */
 	public function get_fixer_id()
@@ -316,7 +293,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the poster login.
+	 * Gets the poster login.
 	 * @return string The poster login.
 	 */
 	public function get_poster_login()
@@ -325,7 +302,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the fixer login.
+	 * Gets the fixer login.
 	 * @return string The fixer login.
 	 */
 	public function get_fixer_login()
@@ -334,7 +311,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the poster level.
+	 * Gets the poster level.
 	 * @return string The poster level.
 	 */
 	public function get_poster_level()
@@ -343,7 +320,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the fixer level.
+	 * Gets the fixer level.
 	 * @return string The fixer level.
 	 */
 	public function get_fixer_level()
@@ -352,7 +329,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the poster groups.
+	 * Gets the poster groups.
 	 * @return string The poster groups.
 	 */
 	public function get_poster_groups()
@@ -361,7 +338,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the fixer groups.
+	 * Gets the fixer groups.
 	 * @return string The fixer groups.
 	 */
 	public function get_fixer_groups()
@@ -370,7 +347,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the contribution status name. It's automatically translated in the user language, ready to be displayed.
+	 * Gets the contribution status name. It's automatically translated in the user language, ready to be displayed.
 	 * @return string The status name.
 	 */
 	public function get_status_name()
@@ -387,7 +364,7 @@ class Contribution extends Event
 	}
 
 	/**
-	 * @desc Gets the name of the module in which the contribution is used.
+	 * Gets the name of the module in which the contribution is used.
 	 * @return string The module name.
 	 */
 	public function get_module_name()
@@ -395,7 +372,7 @@ class Contribution extends Event
 		if (!empty($this->module))
 		{
 			$module = ModulesManager::get_module($this->module);
-			
+
 			return $module ? $module->get_configuration()->get_name() : '';
 		}
 		else

@@ -1,33 +1,16 @@
 <?php
-/*##################################################
- *		                   MaintenanceConfig.class.php
- *                            -------------------
- *   begin                : July 5, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Maintenance Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Maintenance Public License for more details.
- *
- * You should have received a copy of the GNU Maintenance Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2015 07 18
+ * @since       PHPBoost 3.0 - 2010 07 05
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class MaintenanceConfig extends AbstractConfigData
 {
 	const ENABLED = 'enabled';
@@ -37,9 +20,9 @@ class MaintenanceConfig extends AbstractConfigData
 	const AUTH = 'auth';
 	const DISPLAY_DURATION = 'display_duration';
 	const DISPLAY_DURATION_FOR_ADMIN = 'display_duration_admin';
-	
+
 	const ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS = 1;
-	
+
 	public function is_maintenance_enabled()
 	{
 		return $this->get_property(self::ENABLED);
@@ -132,12 +115,12 @@ class MaintenanceConfig extends AbstractConfigData
 	{
 		return $this->is_maintenance_enabled() && ($this->is_unlimited_maintenance() || $this->is_end_date_not_reached());
 	}
-	
+
 	public function is_authorized_in_maintenance()
 	{
 		return AppContext::get_current_user()->check_auth($this->get_auth(), self::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS);
 	}
-	
+
 
 	/**
 	 * {@inheritdoc}

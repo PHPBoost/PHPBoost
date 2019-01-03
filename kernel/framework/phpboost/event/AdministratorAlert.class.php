@@ -1,37 +1,20 @@
 <?php
-/*##################################################
- *                       AdministratorAlert.class.php
- *                            -------------------
- *   begin                : August 27, 2008
- *   copyright            : (C) 2008 Benoît Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class represents an alert which must be sent to the administrator.
+ * This class represents an alert which must be sent to the administrator.
  * It allows to the module developers to handle the administrator alerts.
  * The administrator alerts can be in the administration panel and can be used when you want to signal an important event to the administrator(s).
- */
+ * @package     PHPBoost
+ * @subpackage  Event
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 07
+ * @since       PHPBoost 2.0 - 2008 08 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class AdministratorAlert extends Event
 {
 	//Priority levels
@@ -45,25 +28,25 @@ class AdministratorAlert extends Event
 	const ADMIN_ALERT_HIGH_PRIORITY = 4;
 	//Very low priority
 	const ADMIN_ALERT_VERY_HIGH_PRIORITY = 5;
-	
+
 	//Alert status (boolean)
 	//Unread alert
 	const ADMIN_ALERT_STATUS_UNREAD = Event::EVENT_STATUS_UNREAD;
 	//Processed alert
 	const ADMIN_ALERT_STATUS_PROCESSED = Event::EVENT_STATUS_PROCESSED;
-	
+
 	/**
 	 * @var int Priority of the alert
 	 */
 	private $priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
-	
+
 	/**
 	 * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
 	 */
 	private $properties = '';
-	
+
 	/**
-	 * @desc Builds an AdministratorAlert object.
+	 * Builds an AdministratorAlert object.
 	 */
 	public function __construct()
 	{
@@ -73,7 +56,7 @@ class AdministratorAlert extends Event
 	}
 
 	/**
-	 * @desc Builds an alert from its whole parameters.
+	 * Builds an alert from its whole parameters.
 	 * @param int $id Identifier of the alert.
 	 * @param string $entitled Entitled of the alert.
 	 * @param string $properties Properties of the alert.
@@ -93,7 +76,7 @@ class AdministratorAlert extends Event
 	}
 
 	/**
-	 * @desc Gets the priority of the alert.
+	 * Gets the priority of the alert.
 	 * @return int One of those values:
 	 * <ul>
 	 *  <li>AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
@@ -109,7 +92,7 @@ class AdministratorAlert extends Event
 	}
 
 	/**
-	 * @desc Gets the alert properties.
+	 * Gets the alert properties.
 	 * @return string The properties.
 	 */
 	public function get_properties()
@@ -118,7 +101,7 @@ class AdministratorAlert extends Event
 	}
 
 	/**
-	 * @desc Sets the priority of the alert.
+	 * Sets the priority of the alert.
 	 * @param int $priority The priority, it must be one of those values:
 	 * <ul>
 	 *  <li>AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY Very low priority</li>
@@ -141,8 +124,8 @@ class AdministratorAlert extends Event
 		}
 	}
 
-	/** 
-	 * @desc Sets the properties of the alert. 
+	/**
+	 * Sets the properties of the alert.
 	 * @param string $properties Properties.
 	 */
 	public function set_properties($properties)
@@ -155,7 +138,7 @@ class AdministratorAlert extends Event
 	}
 
 	/**
-	 * @desc Gets the priority name. It's automatically translater to the user language, ready to be displayed. 
+	 * Gets the priority name. It's automatically translater to the user language, ready to be displayed.
 	 * @return string The priority name.
 	 */
 	public function get_priority_name()

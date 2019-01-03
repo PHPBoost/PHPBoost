@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *                          FeedMenu.class.php
- *                            -------------------
- *   begin                : January 14, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  Menu\feed
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 03 26
+ * @since       PHPBoost 2.0 - 2009 01 14
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FeedMenu extends Menu
 {
 	const FEED_MENU__CLASS = 'FeedMenu';
-	
+
 	/**
 	 * @var string the feed url
 	 */
@@ -43,7 +26,7 @@ class FeedMenu extends Menu
 	public $category = 0;
 	public $number = 10;
 	public $begin_at = 0;
-	
+
 	public function __construct($title, $module_id, $category = 0, $name = Feed::DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
 		parent::__construct($title);
@@ -55,8 +38,8 @@ class FeedMenu extends Menu
 	}
 
 	/**
-	 * @desc Returns the tpl to parse a feed
-	 * @param string $id The feed id 
+	 * Returns the tpl to parse a feed
+	 * @param string $id The feed id
 	 * @param string $name The feed name
 	 * @param string $block_position The indentifier block position defined in the inherit class menu
 	 * @return the tpl to parse a feed
@@ -72,7 +55,7 @@ class FeedMenu extends Menu
 			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $hidden_with_small_screens
 		));
-		
+
 		return $tpl;
 	}
 
@@ -81,7 +64,7 @@ class FeedMenu extends Menu
 	 * @return string the feed menu module id
 	 */
 	public function get_module_id() { return $this->module_id; }
-	
+
 	/**
 	* @param bool $relative If false, compute the absolute url, else, returns the relative one
 	* @return Return the absolute feed Url
@@ -109,7 +92,7 @@ class FeedMenu extends Menu
 	 * @param string $value the feed's name
 	 */
 	public function set_name($value) { $this->name = $value; }
-	
+
 	/**
 	* @return Return the number of elements displayed in the menu
 	*/
@@ -117,18 +100,18 @@ class FeedMenu extends Menu
 	{
 		return $this->number;
 	}
-	
+
 	/**
 	 * @param string $value the number of elements displayed in the menu
 	 */
 	public function set_number($value) { $this->number = $value; }
-	
+
 	public function display()
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';
-		
-		foreach ($filters as $key => $filter) 
+
+		foreach ($filters as $key => $filter)
 		{
 			if ($filter->get_pattern() != '/' && $filter->match())
 			{
@@ -136,7 +119,7 @@ class FeedMenu extends Menu
 				break;
 			}
 		}
-		
+
 		if ($is_displayed)
 		{
 			return Feed::get_parsed($this->module_id, $this->name, $this->category, self::get_template($this->id, $this->get_title(), $this->get_block(), $this->hidden_with_small_screens), $this->number, $this->begin_at);

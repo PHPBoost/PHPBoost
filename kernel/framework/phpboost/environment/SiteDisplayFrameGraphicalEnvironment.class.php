@@ -1,39 +1,21 @@
 <?php
-/*##################################################
- *                   SiteDisplayFrameGraphicalEnvironment.class.php
- *                            -------------------
- *   begin                : January 21, 2014
- *   copyright            : (C) 2014 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Environment
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 11 08
+ * @since       PHPBoost 4.0 - 2014 06 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	private $display_css_login = false;
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -49,7 +31,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
-		
+
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
@@ -62,7 +44,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
 		));
-		
+
 		$lang = LangLoader::get('main');
 		$description = $this->get_seo_meta_data()->get_full_description();
 		$template->put_all(array(
@@ -83,10 +65,10 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'JS_BOTTOM'             => $js_bottom_tpl,
 			'BODY'                  => new StringTemplate($content)
 		));
-		
+
 		$template->display(true);
 	}
-	
+
 	public function display_css_login()
 	{
 		$this->display_css_login = true;

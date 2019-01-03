@@ -1,33 +1,17 @@
 <?php
-/*##################################################
- *		             FileUploadConfig.class.php
- *                            -------------------
- *   begin                : August 09, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Comments Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Comments Public License for more details.
- *
- * You should have received a copy of the GNU Comments Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 12 14
+ * @since       PHPBoost 3.0 - 2010 08 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
 class FileUploadConfig extends AbstractConfigData
 {
 	const AUTHORIZATION_ENABLE_INTERFACE_FILES = 'authorization_enable_interface_files';
@@ -36,76 +20,76 @@ class FileUploadConfig extends AbstractConfigData
 	const DISPLAY_FILE_THUMBNAIL = 'display_file_thumbnail';
 	const AUTHORIZED_EXTENSIONS = 'authorized_extensions';
 	const AUTH_FILES_BIT = 0x01;
-	
+
 	public function get_authorization_enable_interface_files()
 	{
 		return $this->get_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES);
 	}
-	
+
 	public function set_authorization_enable_interface_files(array $array)
 	{
 		$this->set_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES, $array);
 	}
-	
+
 	public function is_authorized_to_access_interface_files()
 	{
 		return AppContext::get_current_user()->check_auth($this->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
 	}
-	
+
 	public function get_maximum_size_upload()
 	{
 		return $this->get_property(self::MAXIMUM_SIZE_UPLOAD);
 	}
-	
+
 	public function set_maximum_size_upload($size)
 	{
 		$this->set_property(self::MAXIMUM_SIZE_UPLOAD, $size);
 	}
-	
+
 	public function get_enable_bandwidth_protect()
 	{
 		return $this->get_property(self::ENABLE_BANDWIDTH_PROTECTION);
 	}
-	
+
 	public function set_enable_bandwidth_protect($value)
 	{
 		$this->set_property(self::ENABLE_BANDWIDTH_PROTECTION, $value);
 	}
-	
+
 	public function get_display_file_thumbnail()
 	{
 		return $this->get_property(self::DISPLAY_FILE_THUMBNAIL);
 	}
-	
+
 	public function set_display_file_thumbnail($value)
 	{
 		$this->set_property(self::DISPLAY_FILE_THUMBNAIL, $value);
 	}
-	
+
 	public function get_authorized_extensions()
 	{
 		return $this->get_property(self::AUTHORIZED_EXTENSIONS);
 	}
-	
+
 	public function set_authorized_extensions(array $array)
 	{
 		$this->set_property(self::AUTHORIZED_EXTENSIONS, $array);
 	}
-	
+
 	public function get_authorized_picture_extensions()
 	{
 		$pictures_extensions = array('jpg', 'jpeg', 'bmp', 'gif', 'png');
 		$authorized_pictures_extensions = array();
-		
+
 		foreach ($pictures_extensions as $extension)
 		{
 			if (in_array($extension, $this->get_authorized_extensions()))
 				$authorized_pictures_extensions[] = $extension;
 		}
-		
+
 		return $authorized_pictures_extensions;
 	}
-	
+
 	public function get_default_values()
 	{
 		return array(

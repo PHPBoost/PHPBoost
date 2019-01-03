@@ -1,33 +1,19 @@
 <?php
-/*##################################################
- *		                   ContentManagementConfig.class.php
- *                            -------------------
- *   begin                : July 7, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU ContentManagement Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU ContentManagement Public License for more details.
- *
- * You should have received a copy of the GNU ContentManagement Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 09 21
+ * @since       PHPBoost 3.0 - 2010 07 07
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class ContentManagementConfig extends AbstractConfigData
 {
 	const ANTI_FLOOD_ENABLED               = 'anti_flood';
@@ -45,32 +31,32 @@ class ContentManagementConfig extends AbstractConfigData
 	const CONTENT_SHARING_SMS_ENABLED      = 'content_sharing_sms_enabled';
 	const OPENGRAPH_ENABLED                = 'opengraph_enabled';
 	const SITE_DEFAULT_PICTURE_URL         = 'site_default_picture_url';
-	
+
 	public function is_anti_flood_enabled()
 	{
 		return $this->get_property(self::ANTI_FLOOD_ENABLED);
 	}
-	
+
 	public function set_anti_flood_enabled($enabled)
 	{
 		$this->set_property(self::ANTI_FLOOD_ENABLED, $enabled);
 	}
-	
+
 	public function get_anti_flood_duration()
 	{
 		return $this->get_property(self::ANTI_FLOOD_DURATION);
 	}
-	
+
 	public function set_anti_flood_duration($duration)
 	{
 		$this->set_property(self::ANTI_FLOOD_DURATION, $duration);
 	}
-	
+
 	public function get_used_captcha_module()
 	{
 		return $this->get_property(self::USED_CAPTCHA_MODULE);
 	}
-	
+
 	public function set_used_captcha_module($module)
 	{
 		$this->set_property(self::USED_CAPTCHA_MODULE, $module);
@@ -80,7 +66,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NEW_CONTENT_ENABLED);
 	}
-	
+
 	public function set_new_content_enabled($enabled)
 	{
 		$this->set_property(self::NEW_CONTENT_ENABLED, $enabled);
@@ -90,7 +76,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NEW_CONTENT_DURATION);
 	}
-	
+
 	public function set_new_content_duration($duration)
 	{
 		$this->set_property(self::NEW_CONTENT_DURATION, $duration);
@@ -100,7 +86,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NEW_CONTENT_UNAUTHORIZED_MODULES);
 	}
-	
+
 	public function set_new_content_unauthorized_modules(array $modules)
 	{
 		$this->set_property(self::NEW_CONTENT_UNAUTHORIZED_MODULES, $modules);
@@ -110,7 +96,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NOTATION_ENABLED);
 	}
-	
+
 	public function set_notation_enabled($enabled)
 	{
 		$this->set_property(self::NOTATION_ENABLED, $enabled);
@@ -120,7 +106,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NOTATION_SCALE);
 	}
-	
+
 	public function set_notation_scale($scale)
 	{
 		$this->set_property(self::NOTATION_SCALE, $scale);
@@ -130,7 +116,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::NOTATION_UNAUTHORIZED_MODULES);
 	}
-	
+
 	public function set_notation_unauthorized_modules(array $modules)
 	{
 		$this->set_property(self::NOTATION_UNAUTHORIZED_MODULES, $modules);
@@ -140,7 +126,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CONTENT_SHARING_ENABLED);
 	}
-	
+
 	public function set_content_sharing_enabled($enabled)
 	{
 		$this->set_property(self::CONTENT_SHARING_ENABLED, $enabled);
@@ -150,7 +136,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CONTENT_SHARING_EMAIL_ENABLED);
 	}
-	
+
 	public function set_content_sharing_email_enabled($enabled)
 	{
 		$this->set_property(self::CONTENT_SHARING_EMAIL_ENABLED, $enabled);
@@ -160,7 +146,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CONTENT_SHARING_PRINT_ENABLED);
 	}
-	
+
 	public function set_content_sharing_print_enabled($enabled)
 	{
 		$this->set_property(self::CONTENT_SHARING_PRINT_ENABLED, $enabled);
@@ -170,7 +156,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CONTENT_SHARING_SMS_ENABLED);
 	}
-	
+
 	public function set_content_sharing_sms_enabled($enabled)
 	{
 		$this->set_property(self::CONTENT_SHARING_SMS_ENABLED, $enabled);
@@ -180,7 +166,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::OPENGRAPH_ENABLED);
 	}
-	
+
 	public function set_opengraph_enabled($enabled)
 	{
 		$this->set_property(self::OPENGRAPH_ENABLED, $enabled);
@@ -210,7 +196,7 @@ class ContentManagementConfig extends AbstractConfigData
 	{
 		return (time() - $date) <= $this->get_new_content_duration()*86400;
 	}
-	
+
 	public function module_notation_is_enabled($module_id)
 	{
 		return $this->is_notation_enabled() && !in_array($module_id, $this->get_notation_unauthorized_modules());

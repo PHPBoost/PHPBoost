@@ -1,34 +1,20 @@
 <?php
-/*##################################################
- *                           ModulesCssFilesService.class.php
- *                            -------------------
- *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     PHPBoost
+ * @subpackage  Module\css
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2011 10 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class ModulesCssFilesService
 {
 	private static $modules_css_files = array();
-	
+
 	public static function __static()
 	{
 		$extension_points = AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
@@ -37,7 +23,7 @@ class ModulesCssFilesService
 			self::$modules_css_files[$module_id] = $provider;
 		}
 	}
-		
+
 	public static function get_css_files_always_displayed()
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
@@ -52,7 +38,7 @@ class ModulesCssFilesService
 		}
 		return $css_files;
 	}
-	
+
 	public static function get_css_files_running_module_displayed()
 	{
 		$css_files = array();
@@ -62,7 +48,7 @@ class ModulesCssFilesService
 		{
 			$module_css_files = self::$modules_css_files[$module_id];
 			$module_css_files_running_module_displayed = $module_css_files->get_css_files_running_module_displayed();
-			
+
 			foreach ($module_css_files_running_module_displayed as $css_file_options)
 			{
 				if (!empty($css_file_options['css_file']))
@@ -74,7 +60,7 @@ class ModulesCssFilesService
 		}
 		return $css_files;
 	}
-	
+
 	private static function get_real_path_css_file($theme_id, $module_id, $css_file)
 	{
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file))

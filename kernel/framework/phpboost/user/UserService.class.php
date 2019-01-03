@@ -1,46 +1,28 @@
 <?php
-/*##################################################
- *                       UserService.class.php
- *                            -------------------
- *   begin                : March 31, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class manage users
- * @package {@package}
- */
+ * This class manage users
+ * @package     PHPBoost
+ * @subpackage  User
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @since       PHPBoost 3.0 - 2012 03 31
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class UserService
 {
 	private static $querier;
-	
+
 	public static function __static()
 	{
 		self::$querier = PersistenceContext::get_querier();
 	}
-	
+
 	/**
-	 * @desc Create a user
+	 * Create a user
 	 * @param UserAuthentification $user_authentification
 	 * @param User $user
 	 * @return InjectQueryResult
@@ -63,7 +45,7 @@ class UserService
 			));
 
 			$user_id = $result->get_last_inserted_id();
-			
+
 			if ($extended_fields instanceof MemberExtendedFieldsService)
 			{
 				try {
@@ -81,22 +63,22 @@ class UserService
 			{
 				$fields_data = $extended_fields;
 			}
-			
+
 			$auth_method->associate($user_id, $auth_method_data);
 			$fields_data['user_id'] = $user_id;
 			self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
-			
+
 			self::regenerate_cache();
-			
+
 			return $user_id;
 		}
 		return false;
 	}
-	
+
 	public static function delete_by_id($user_id)
 	{
 		MemberExtendedFieldsService::delete_user_fields($user_id);
-		
+
 		$user_auth_types = AuthenticationService::get_user_types_authentication($user_id);
 		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
 		foreach ($activated_external_authentication as $id => $authentication)
@@ -104,7 +86,7 @@ class UserService
 			if (in_array($id, $user_auth_types))
 				$authentication->delete_session_token();
 		}
-		
+
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);
@@ -115,15 +97,15 @@ class UserService
 
 		$upload = new Uploads();
 		$upload->Empty_folder_member($user_id);
-		
+
 		self::regenerate_cache();
 	}
-	
+
 	/**
-	 * @desc Update user
-	 * @param User $user 
+	 * Update user
+	 * @param User $user
 	 * @param string $condition the SQL condition update user
-	 * @param array $parameters 
+	 * @param array $parameters
 	 */
 	public static function update(User $user, $extended_fields = null)
 	{
@@ -155,16 +137,16 @@ class UserService
 				$fields_data = $extended_fields;
 			else
 				$fields_data = array();
-			
+
 			if ($fields_data)
 				self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
 		}
-		
+
 		SessionData::recheck_cached_data_from_user_id($user->get_id());
-		
+
 		self::regenerate_cache();
 	}
-	
+
 	public static function update_punishment(User $user)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
@@ -173,9 +155,9 @@ class UserService
 			'delay_banned' => $user->get_delay_banned(),
 		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 	}
-	
+
 	/**
-	 * @desc Returns a user
+	 * Returns a user
 	 * @param string $condition
 	 * @param array $parameters
 	 * @return User
@@ -187,7 +169,7 @@ class UserService
 		$user->set_properties($row);
 		return $user;
 	}
-        
+
 	public static function user_exists($condition, Array $parameters)
 	{
 		try {
@@ -196,11 +178,11 @@ class UserService
 			return false;
 		}
 	}
-	
+
 	public static function get_level_lang($level)
 	{
 		$lang = LangLoader::get('user-common');
-		switch ($level) 
+		switch ($level)
 		{
 			case User::ROBOT_LEVEL:
 				return $lang['robot'];
@@ -219,7 +201,7 @@ class UserService
 			break;
 		}
 	}
-	
+
 	public static function get_level_class($level)
 	{
 		switch ($level)
@@ -240,14 +222,14 @@ class UserService
 				return '';
 		}
 	}
-	
+
 	public static function remove_old_unactivated_member_accounts()
 	{
 		$user_account_settings = UserAccountsConfig::load();
 		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
-			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'), 
+			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'),
 			'WHERE last_connection < :last_connection AND approved = 0', array('last_connection' => (time() - $delay_unactiv_max)));
 			foreach ($result as $row)
 			{
@@ -256,24 +238,24 @@ class UserService
 			$result->dispose();
 		}
 	}
-	
+
 	public static function count_admin_members()
 	{
 		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMIN_LEVEL));
 	}
-	
+
 	public static function display_user_profile_link($user_id)
 	{
 		if ($user_id != User::VISITOR_LEVEL)
 		{
 			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-			
+
 			if ($user)
 			{
 				$tpl = new FileTemplate('user/UserProfileLink.tpl');
-				
+
 				$group_color = User::get_group_color($user['groups'], $user['level']);
-				
+
 				$tpl->put_all(array(
 					'C_GROUP_COLOR' => !empty($group_color),
 					'DISPLAY_NAME'  => $user['display_name'],
@@ -281,13 +263,13 @@ class UserService
 					'GROUP_COLOR'   => $group_color,
 					'U_PROFILE'     => UserUrlBuilder::profile($user_id)->rel()
 				));
-				
+
 				return $tpl->render();
 			}
 		}
 		return '';
 	}
-	
+
 	public static function regenerate_cache()
 	{
 		GroupsCache::invalidate();

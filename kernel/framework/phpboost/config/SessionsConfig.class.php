@@ -1,33 +1,16 @@
 <?php
-/*##################################################
- *		             SessionsConfig.class.php
- *                            -------------------
- *   begin                : July 14, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Sessions Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Sessions Public License for more details.
- *
- * You should have received a copy of the GNU Sessions Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2015 07 04
+ * @since       PHPBoost 3.0 - 2010 07 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class SessionsConfig extends AbstractConfigData
 {
 	const COOKIE_NAME = 'cookie_name';
@@ -40,40 +23,40 @@ class SessionsConfig extends AbstractConfigData
 	 */
 	const ACTIVE_SESSION_DURATION = 'active_session_duration';
 	/**
-	 * @desc Duration of autoconnect cookie (in seconds).
+	 * Duration of autoconnect cookie (in seconds).
 	 */
 	const AUTOCONNECT_DURATION = 'autoconnect_duration';
-	
+
 	public function get_cookie_name()
 	{
 		return $this->get_property(self::COOKIE_NAME);
 	}
-	
+
 	public function set_cookie_name($cookie_name)
 	{
 		$this->set_property(self::COOKIE_NAME, $cookie_name);
 	}
-	
+
 	public function get_session_duration()
 	{
 		return $this->get_property(self::SESSION_DURATION);
 	}
-	
+
 	public function set_session_duration($duration)
 	{
 		$this->set_property(self::SESSION_DURATION, $duration);
 	}
-	
+
 	public function get_active_session_duration()
 	{
 		return $this->get_property(self::ACTIVE_SESSION_DURATION);
 	}
-	
+
 	public function set_active_session_duration($duration)
 	{
 		$this->set_property(self::ACTIVE_SESSION_DURATION, $duration);
 	}
-	
+
 	public function get_autoconnect_duration()
 	{
 		return $this->get_property(self::AUTOCONNECT_DURATION);
@@ -83,7 +66,7 @@ class SessionsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTOCONNECT_DURATION, $duration);
 	}
-	
+
 	public function get_default_values()
 	{
 		return array(

@@ -1,36 +1,20 @@
 <?php
-/*##################################################
-*                             LinksMenu.class.php
-*                            -------------------
-*   begin               : July 08, 2008
-*   copyright           : (C) 2008 Régis Viarre; Loic Rouchon
-*   email               : crowkait@phpboost.com; loic.rouchon@phpboost.com
-*
-*
- ###################################################
-*
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
- ###################################################*/
-
 /**
-* @author Loic Rouchon <loic.rouchon@phpboost.com>
-* @desc Create a Menu with children.
+* Create a Menu with children.
 * Children could be Menu or LinksMenuLink objects
-* @package menu
+ * @package     PHPBoost
+ * @subpackage  Menu\links
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 07 08
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
+
 class LinksMenu extends LinksMenuElement
 {
 	const LINKS_MENU__CLASS = 'LinksMenu';
@@ -40,7 +24,7 @@ class LinksMenu extends LinksMenuElement
 	const VERTICAL_MENU = 'vertical';
 	const HORIZONTAL_MENU = 'horizontal';
 	const STATIC_MENU = 'static';
-	
+
 	/* Deprecated */
 	const VERTICAL_SCROLLING_MENU = 'vertical_scrolling';
 	const HORIZONTAL_SCROLLING_MENU = 'horizontal_scrolling';
@@ -57,7 +41,7 @@ class LinksMenu extends LinksMenuElement
 	public $elements = array();
 
 	/**
-	* @desc Constructor
+	* Constructor
 	* @param string $title Menu title
 	* @param string $url Destination url
 	* @param string $image Menu's image url relative to the website root or absolute
@@ -67,7 +51,7 @@ class LinksMenu extends LinksMenuElement
 	public function __construct($title, $url, $image = '', $type = self::AUTOMATIC_MENU)
 	{
 		// Set the menu type
-		
+
 		$this->type = $this->type == self::HORIZONTAL_SCROLLING_MENU ? self::HORIZONTAL_MENU : $this->type;
 		$this->type = $this->type == self::VERTICAL_SCROLLING_MENU ? self::VERTICAL_MENU : $this->type;
 		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::AUTOMATIC_MENU;
@@ -77,7 +61,7 @@ class LinksMenu extends LinksMenuElement
 	}
 
 	/**
-	* @desc Add a list of LinksMenu or (sub)Menu to the current one
+	* Add a list of LinksMenu or (sub)Menu to the current one
 	* @param LinksMenuElement[] $menu_elements A reference to a list of LinksMenuLink and / or Menu to add
 	*/
 	public function add_array($menu_elements)
@@ -89,7 +73,7 @@ class LinksMenu extends LinksMenuElement
 	}
 
 	/**
-	* @desc Add a single LinksMenuLink or (sub) Menu
+	* Add a single LinksMenuLink or (sub) Menu
 	* @param LinksMenuElement $element the LinksMenuLink or Menu to add
 	*/
 	public function add($element)
@@ -119,7 +103,7 @@ class LinksMenu extends LinksMenuElement
 	}
 
 	/**
-	* @desc Display the menu
+	* Display the menu
 	* @param Template $template the template to use
 	* @return string the menu parsed in xHTML
 	*/
@@ -127,8 +111,8 @@ class LinksMenu extends LinksMenuElement
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/' || $mode != LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING;
-		
-		foreach ($filters as $key => $filter) 
+
+		foreach ($filters as $key => $filter)
 		{
 			if ($filter->get_pattern() != '/' && $filter->match())
 			{
@@ -136,7 +120,7 @@ class LinksMenu extends LinksMenuElement
 				break;
 			}
 		}
-		
+
 		if ($is_displayed && $this->check_auth())
 		{
 			// Get the good Template object
@@ -161,7 +145,7 @@ class LinksMenu extends LinksMenuElement
 					$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
 					$elements_number++;
 				}
-				if (get_class($element) == self::LINKS_MENU__CLASS) 
+				if (get_class($element) == self::LINKS_MENU__CLASS)
 				{
 					$menu_with_submenu = true;
 				}
@@ -178,7 +162,7 @@ class LinksMenu extends LinksMenuElement
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 				'DEPTH' => $this->depth
 			));
-			
+
 			if ($this->type == self::AUTOMATIC_MENU)
 			{
 				$tpl->put_all(array(
@@ -201,7 +185,7 @@ class LinksMenu extends LinksMenuElement
 					'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
 				));
 			}
-			
+
 			return $tpl->render();
 		}
 		return '';
@@ -232,7 +216,7 @@ class LinksMenu extends LinksMenuElement
 			// We use a new Tpl to avoid overwrite issues
 			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
 			$elements_number++;
-			if (get_class($element) == self::LINKS_MENU__CLASS) 
+			if (get_class($element) == self::LINKS_MENU__CLASS)
 			{
 				$menu_with_submenu = true;
 			}
@@ -251,7 +235,7 @@ class LinksMenu extends LinksMenuElement
 			'ID' => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##'
 		));
-		
+
 		if ($this->type == self::AUTOMATIC_MENU)
 		{
 			$tpl->put_all(array(
@@ -302,7 +286,7 @@ class LinksMenu extends LinksMenuElement
 	}
 
 	/**
-	* @desc Increase the Menu Depth and set the menu type to its parent one
+	* Increase the Menu Depth and set the menu type to its parent one
 	* @access protected
 	* @param string $type the type of the menu
 	*/

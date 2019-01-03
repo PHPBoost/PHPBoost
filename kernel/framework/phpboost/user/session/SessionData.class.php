@@ -1,34 +1,20 @@
 <?php
-/*##################################################
- *                            SessionData.class.php
- *                            -------------------
- *   begin                : November 04, 2010
- *   copyright            : (C) 2010 loic rouchon
- *   email                : horn@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <horn@phpboost.com>
- * @desc This class manages all sessions for the users.
- * @package {@package}
- */
+ * This class manages all sessions for the users.
+ * @package     PHPBoost
+ * @subpackage  User\session
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @since       PHPBoost 3.0 - 2010 11 04
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class SessionData
 {
 	const DEFAULT_VISITOR_DISPLAY_NAME = 'visitor';
@@ -49,7 +35,7 @@ class SessionData
 
 	protected $cached_data_modified = false;
 	protected $data_modified = false;
-	
+
 	protected function __construct($user_id, $session_id)
 	{
 		$this->user_id = $user_id;
@@ -169,7 +155,7 @@ class SessionData
 		$this->cached_data_modified = true;
 		$this->save();
 	}
-	
+
 	public function save()
 	{
 		if ($this->cached_data_modified || $this->data_modified)
@@ -243,7 +229,7 @@ class SessionData
 	public function no_session_location()
 	{
 		$data = AppContext::get_session();
-		
+
 		$columns = array('timestamp' => $data->timestamp);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
@@ -255,7 +241,7 @@ class SessionData
 		$condition = 'WHERE location_id=:location_id AND user_id!=:user_id';
 		$parameters = array('location_id' => $location_id, 'user_id' => $this->user_id);
 		$value = PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS, $condition, $parameters);
-		
+
 		return $value > 0;
 	}
 
@@ -266,7 +252,7 @@ class SessionData
 		} catch (RowNotFoundException $e) {
 			$user_id = User::VISITOR_LEVEL;
 		}
-		
+
 		return $user_id;
 	}
 
@@ -276,7 +262,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 */
 	public static function gc()
 	{
@@ -284,7 +270,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @return SessionData
 	 */
 	public static function create_visitor()
@@ -293,7 +279,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param int $user_id
 	 * @return SessionData
 	 */
@@ -323,7 +309,7 @@ class SessionData
 		$ip_address = AppContext::get_request()->get_ip_address();
 		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', array('ip' => $ip_address));
 		$is_robot = Robots::is_robot();
-		
+
 		if (!$has_already_visited && !$is_robot)
 		{
 			$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
@@ -332,7 +318,7 @@ class SessionData
 			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
 			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
 		}
-		
+
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
 		foreach ($jobs as $job)
 		{
@@ -343,14 +329,14 @@ class SessionData
 	public static function update_location($title_page, $location_id = '')
 	{
 		$data = AppContext::get_session();
-		
+
 		$columns = array(
-			'timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT, 
+			'timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT,
 			'location_id' => $location_id);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-		
+
 		if (is_array($data->cached_data) && array_key_exists('last_connection_date', $data->cached_data))
 		{
 			$now = new Date();
@@ -361,10 +347,10 @@ class SessionData
 				$data->recheck_cached_data_from_user_id($data->user_id);
 			}
 		}
-		
+
 		return $data;
 	}
-	
+
 	public static function recheck_cached_data_from_user_id($user_id)
 	{
 		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
@@ -375,7 +361,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param int $user_id
 	 * @return SessionData
 	 */
@@ -387,7 +373,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param int $user_id
 	 * @return SessionData
 	 */
@@ -398,13 +384,13 @@ class SessionData
 		$data->create_cookie();
 		return $data;
 	}
-	
+
 	private static function get_existing_session($user_id)
 	{
 		$parameters = array('user_id' => $user_id);
 		$condition = 'WHERE user_id=:user_id';
 		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data');
-		
+
 		try {
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		} catch (NotASingleRowFoundException $e) {
@@ -413,7 +399,7 @@ class SessionData
 			WHERE user_id=:user_id
 			ORDER BY timestamp DESC
 			LIMIT 1', $parameters);
-			
+
 			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id AND session_id != :session_id', array('user_id' => $user_id, 'session_id' => $row['session_id']));
 		}
 		return self::init_from_row($user_id, $row['session_id'], $row);
@@ -431,7 +417,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param string $cookie_content
 	 * @return SessionData
 	 */
@@ -465,7 +451,7 @@ class SessionData
 		$fixed_cached_data = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
 			return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 		}, $row['cached_data']);
-		
+
 		$data = new SessionData($user_id, $session_id);
 		$data->token = $row['token'];
 		$data->timestamp = $row['timestamp'];
@@ -502,7 +488,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done with the token of the current session.
+	 * Check the session against CSRF attacks by POST. Checks that POSTs are done with the token of the current session.
 	 * If the token of the request doesn't match the token of the current session, this method will consider that it's a CSRF attack.
 	 */
 	public function csrf_post_protect()
@@ -512,7 +498,7 @@ class SessionData
 	}
 
 	/**
-	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done with the token of the current session.
+	 * Check the session against CSRF attacks by GET. Checks that GETs are done with the token of the current session.
 	 * If the token of the request doesn't match the token of the current session, this method will consider that it's a CSRF attack.
 	 */
 	public function csrf_get_protect()

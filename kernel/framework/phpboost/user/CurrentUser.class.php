@@ -1,35 +1,18 @@
 <?php
-/*##################################################
- *                       CurrentUser.class.php
- *                            -------------------
- *   begin                : March 31, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class represente the current user
- * @package {@package}
- */
+ * This class represente the current user
+ * @package     PHPBoost
+ * @subpackage  User
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 22
+ * @since       PHPBoost 3.0 - 2012 03 31
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class CurrentUser extends User
 {
 	public static function from_session()
@@ -37,9 +20,9 @@ class CurrentUser extends User
 		$session = AppContext::get_session();
 		return new self($session);
 	}
-	
+
 	private $groups_auth = array();
-	
+
 	public function __construct(SessionData $session)
 	{
 		$this->id = $session->get_user_id();
@@ -64,7 +47,7 @@ class CurrentUser extends User
 
 		$this->build_groups($session);
 	}
-	
+
 	protected function build_groups(SessionData $session)
 	{
 		$groups = GroupsService::get_groups();
@@ -77,12 +60,12 @@ class CurrentUser extends User
 		array_unshift($groups, 'r' . $this->level);
 		$this->set_groups($groups);
 	}
-	
+
 	public function check_level($level)
 	{
 		return $this->level >= $level;
 	}
-	
+
 	public function check_auth($array_auth_groups, $authorization_bit)
 	{
 		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
@@ -100,7 +83,7 @@ class CurrentUser extends User
 		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandé
 		return (bool)($this->sum_auth_groups($array_auth_groups) & (int)$authorization_bit);
 	}
-	
+
 	public function check_max_value($key_auth, $max_value_compare = 0)
 	{
 		if (!is_array($this->groups_auth))
@@ -125,9 +108,9 @@ class CurrentUser extends User
 
 		return $max_auth;
 	}
-	
+
 	/**
-	 * @desc Modify the theme for guest in the database (sessions table).
+	 * Modify the theme for guest in the database (sessions table).
 	 * @param string $theme The new theme
 	 */
 	public function update_theme($theme)
@@ -145,9 +128,9 @@ class CurrentUser extends User
 			$session->save();
 		}
 	}
-	
+
 	/**
-	 * @desc Modify the lang for guest in the database (sessions table).
+	 * Modify the lang for guest in the database (sessions table).
 	 * @param string $theme The new lang
 	 */
 	public function update_lang($lang)
@@ -165,13 +148,13 @@ class CurrentUser extends User
 			$session->save();
 		}
 	}
-	
+
 	public function update_visitor_display_name()
 	{
 		if ($this->id === Session::VISITOR_SESSION_ID)
 			$this->display_name = LangLoader::get_message('guest', 'main');
 	}
-	
+
 	private function sum_auth_groups($array_auth_groups)
 	{
 		//Rï¿½cupï¿½re les autorisations de tout les groupes dont le membre fait partie.

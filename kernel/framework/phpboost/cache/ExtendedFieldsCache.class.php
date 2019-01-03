@@ -1,33 +1,18 @@
 <?php
-/*##################################################
- *                      	 ExtendedFieldCache.class.php
- *                            -------------------
- *   begin                : August 10, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Cache
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 11 14
+ * @since       PHPBoost 3.0 - 2010 08 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class ExtendedFieldsCache implements CacheData
 {
 	private $extended_fields = array();
@@ -39,17 +24,17 @@ class ExtendedFieldsCache implements CacheData
 	{
 		$this->extended_fields = array();
 		$querier = PersistenceContext::get_querier();
-		
+
 		$result = $querier->select_rows(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), 'ORDER BY position');
 		while ($row = $result->fetch())
 		{
 			$auth = TextHelper::unserialize($row['auth']);
-			
+
 			$fixed_possible_values = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $row['possible_values']);
 			$possible_values = TextHelper::unserialize($fixed_possible_values);
-			
+
 			$this->extended_fields[$row['id']] = array(
 				'id' => $row['id'],
 				'position' => !empty($row['position']) ? $row['position'] : '',
@@ -73,7 +58,7 @@ class ExtendedFieldsCache implements CacheData
 	{
 		return $this->extended_fields;
 	}
-	
+
 	public function get_exist_fields()
 	{
 		return (count($this->extended_fields) > 0);
@@ -91,7 +76,7 @@ class ExtendedFieldsCache implements CacheData
 	public function get_extended_field_by_field_name($field_name)
 	{
 		$field = null;
-		
+
 		foreach ($this->extended_fields as $id => $field_options)
 		{
 			if ($field_options['field_name'] == $field_name)
@@ -99,14 +84,14 @@ class ExtendedFieldsCache implements CacheData
 				$field = $this->extended_fields[$id];
 			}
 		}
-		
+
 		return $field;
 	}
 
 	public function get_websites_or_emails_extended_field_field_types()
 	{
 		$list = array();
-		
+
 		foreach ($this->extended_fields as $id => $field_options)
 		{
 			if ($field_options['regex'] == 4 || $field_options['regex'] == 5)
@@ -114,10 +99,10 @@ class ExtendedFieldsCache implements CacheData
 				$list[] = $field_options['field_name'];
 			}
 		}
-		
+
 		return $list;
 	}
-	
+
 	/**
 	 * Loads and returns the extended_fields cached data.
 	 * @return ExtendedFieldsCache The cached data
@@ -126,7 +111,7 @@ class ExtendedFieldsCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'kernel', 'extended-fields');
 	}
-	
+
 	/**
 	 * Invalidates the current extended_fields cached data.
 	 */

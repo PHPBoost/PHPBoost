@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                    AbstractGraphicalEnvironment.class.php
- *                            -------------------
- *   begin                : October 06, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
- 
 /**
- * @package {@package}
- * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Environment
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 11 11
+ * @since       PHPBoost 3.0 - 2009 10 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+*/
+
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 {
 	protected function process_site_maintenance()
@@ -47,7 +29,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 					AppContext::get_response()->redirect(UserUrlBuilder::connect());
 				}
-				
+
 				$maintain_url = UserUrlBuilder::maintain();
 				if (!Url::is_current_url($maintain_url->relative()))
 				{
@@ -56,12 +38,12 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 			}
 		}
 	}
-	
+
 	protected static function set_page_localization($page_title, $location_id)
 	{
 		AppContext::get_session()->update_location($page_title, $location_id);
 	}
-	
+
 	protected static function no_session_location()
 	{
 		AppContext::get_session()->no_session_location();

@@ -1,58 +1,40 @@
 <?php
-/*##################################################
- *		             	CSSCacheConfig.class.php
- *                            -------------------
- *   begin                : May 16, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Comments Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Comments Public License for more details.
- *
- * You should have received a copy of the GNU Comments Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2012 05 16
+*/
+
 class CSSCacheConfig extends AbstractConfigData
 {
 	const ACTIVATED = 'activated';
 	const OPTIMIZATION_LEVEL = 'optimization_level';
-	
+
 	public function enable()
 	{
 		$this->set_property(self::ACTIVATED, true);
 	}
-	
+
 	public function disable()
 	{
 		$this->set_property(self::ACTIVATED, false);
 	}
-	
+
 	public function is_enabled()
 	{
 		return $this->get_property(self::ACTIVATED);
 	}
-	
+
 	public function set_optimization_level($level)
 	{
 		$this->set_property(self::OPTIMIZATION_LEVEL, $level);
 	}
-	
+
 	public function get_optimization_level()
 	{
 		return $this->get_property(self::OPTIMIZATION_LEVEL);

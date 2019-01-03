@@ -1,38 +1,19 @@
 <?php
-/*##################################################
 /**
- *                         ColumnsDisabled.class.php
- *                            -------------------
- *   begin                : April 10, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
+ * @package     PHPBoost
+ * @subpackage  Theme
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2011 04 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
- /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @package {@package}
- */
 class ColumnsDisabled
-{   
+{
 	private $disable_header = false;
 	private $disable_sub_header = false;
 	private $disable_top_central = false;
@@ -41,47 +22,47 @@ class ColumnsDisabled
 	private $disable_footer = false;
 	private $disable_left_columns = false;
 	private $disable_right_columns = false;
-	
+
 	public function header_is_disabled()
 	{
 		return $this->disable_header;
 	}
-	
+
 	public function sub_header_is_disabled()
 	{
 		return $this->disable_sub_header;
 	}
-	
+
 	public function top_central_is_disabled()
 	{
 		return $this->disable_top_central;
 	}
-	
+
 	public function bottom_central_is_disabled()
 	{
 		return $this->disable_bottom_central;
 	}
-	
+
 	public function top_footer_is_disabled()
 	{
 		return $this->disable_top_footer;
 	}
-	
+
 	public function footer_is_disabled()
 	{
 		return $this->disable_footer;
 	}
-	
+
 	public function left_columns_is_disabled()
 	{
 		return $this->disable_left_columns;
 	}
-	
+
 	public function right_columns_is_disabled()
 	{
 		return $this->disable_right_columns;
 	}
-	
+
 	public function set_disable_header($disable)
 	{
 		$this->disable_header = $disable;
@@ -121,7 +102,7 @@ class ColumnsDisabled
 	{
 		$this->disable_right_columns = $disable;
 	}
-	
+
 	public function set_columns_disabled(Array $disable_columns)
 	{
 		foreach($disable_columns as $columns)
@@ -164,7 +145,7 @@ class ColumnsDisabled
 			}
 		}
 	}
-	
+
 	public function menus_column_is_disabled($column)
 	{
 		switch ($column)

@@ -1,36 +1,19 @@
 <?php
-/*##################################################
- *                          ModulesManager.class.php
- *                            -------------------
- *   begin                : October 12, 2008
- *   copyright            :(C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class enables you to manages the PHPBoost packages which are nothing else than the modules.
- *
- */
+ * This class enables you to manages the PHPBoost packages which are nothing else than the modules.
+ * @package     PHPBoost
+ * @subpackage  Module
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 10
+ * @since       PHPBoost 2.0 - 2008 10 12
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class ModulesManager
 {
 	const GENERATE_CACHE_AFTER_THE_OPERATION = true;
@@ -47,7 +30,7 @@ class ModulesManager
 	const MODULE_NOT_UPGRADABLE = 9;
 	const UPGRADE_FAILED = 10;
 	const MODULE_UPDATED = 11;
-	
+
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
 	 */
@@ -55,7 +38,7 @@ class ModulesManager
 	{
 		return ModulesConfig::load()->get_modules();
 	}
-	
+
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (and activated )
 	 */
@@ -105,7 +88,7 @@ class ModulesManager
 		}
 		return $modules;
 	}
-	
+
 	public static function callback_sort_modules_by_name(Module $module1, Module $module2)
 	{
 		if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
@@ -132,7 +115,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[] 
+	 * @return string[]
 	 */
 	public static function get_activated_feature_modules($feature_id)
 	{
@@ -149,7 +132,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @desc Returns the requested module
+	 * Returns the requested module
 	 * @param $module_id the id of the module
 	 * @return Module the requested module
 	 */
@@ -159,16 +142,16 @@ class ModulesManager
 	}
 
 	/**
-	 * @desc tells whether the requested module is installed (activated or not)
+	 * tells whether the requested module is installed (activated or not)
 	 * @return bool true if the requested module is installed
 	 */
 	public static function is_module_installed($module_id)
 	{
 		return in_array($module_id, self::get_installed_modules_ids_list());
 	}
-	
+
 	/**
-	 * @desc tells whether the requested module is activated
+	 * tells whether the requested module is activated
 	 * @return bool true if the requested module is activated
 	 */
 	public static function is_module_activated($module_id)
@@ -178,7 +161,7 @@ class ModulesManager
 
 	/**
 	 * @static
-	 * @desc Installs a module.
+	 * Installs a module.
 	 * @param string $module_identifier Module identifier (name of its folder)
 	 * @param bool $enable_module true if you want the module to be enabled, otherwise false.
 	 * @return int One of the following error codes:
@@ -193,7 +176,7 @@ class ModulesManager
 	public static function install_module($module_identifier, $enable_module = true, $generate_cache = true)
 	{
 		self::update_class_list();
-		
+
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return self::UNEXISTING_MODULE;
@@ -212,7 +195,7 @@ class ModulesManager
 		{
 			return self::PHP_VERSION_CONFLICT;
 		}
-		
+
 		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		if (version_compare($phpboost_version, $configuration->get_compatibility(), '!='))
 		{
@@ -223,16 +206,16 @@ class ModulesManager
 
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
-		
+
 		// TODO Force initialization ExtensionProviderService for PHPBoost installation
 		AppContext::init_extension_provider_service();
-		
+
 		MenuService::add_mini_module($module_identifier, $generate_cache);
 
 		if ($generate_cache)
 		{
 			MenuService::generate_cache();
-			
+
 			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 			{
 				HtaccessFileCache::regenerate();
@@ -244,7 +227,7 @@ class ModulesManager
 
 	/**
 	 * @static
-	 * @desc Uninstalls a module.
+	 * Uninstalls a module.
 	 * @param int $module_id Module id (in the DB_TABLE_MODULES table)
 	 * @param bool $drop_files true if you want the module files to be dropped, otherwise false.
 	 * @return int One of the following error codes:
@@ -262,22 +245,22 @@ class ModulesManager
 			if ($error === null)
 			{
 				ContributionService::delete_contribution_module($module_id);
-				
+
 				NotationService::delete_notes_module($module_id);
-				
+
 				CommentsService::delete_comments_module($module_id);
-				
+
 				PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, "WHERE name = :name", array('name' => $module_id));
-				
+
 				//Régénération des feeds.
 				Feed::clear_cache($module_id);
-				
+
 				MenuService::delete_mini_module($module_id);
 				MenuService::delete_module_feeds_menus($module_id);
-				
+
 				ModulesConfig::load()->remove_module_by_id($module_id);
 				ModulesConfig::save();
-				
+
 				//Module home page ?
 				$general_config = GeneralConfig::load();
 				$module_home_page_selected = $general_config->get_module_home_page();
@@ -286,7 +269,7 @@ class ModulesManager
 					$general_config->set_module_home_page('');
 					$general_config->set_other_home_page('index.php');
 				}
-				
+
 				//Suppression des fichiers du module
 				if ($drop_files)
 				{
@@ -302,17 +285,17 @@ class ModulesManager
 						return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
 					}
 				}
-				
+
 				if ($generate_cache)
 				{
 					AppContext::get_cache_service()->clear_cache();
-					
+
 					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 					{
 						HtaccessFileCache::regenerate();
 					}
 				}
-				
+
 				return self::MODULE_UNINSTALLED;
 			}
 			return $error;
@@ -332,19 +315,19 @@ class ModulesManager
 				if (self::module_is_upgradable($module_identifier))
 				{
 					$module = self::get_module($module_identifier);
-					
+
 					$version_upgrading = self::execute_module_upgrade($module_identifier, $module->get_installed_version());
-					
+
 					if ($version_upgrading !== null)
 					{
 						$module->set_installed_version($version_upgrading);
 						ModulesConfig::load()->update($module);
 						ModulesConfig::save();
-						
+
 						if ($generate_cache)
 						{
 							AppContext::get_cache_service()->clear_cache();
-							
+
 							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 							{
 								HtaccessFileCache::regenerate();
@@ -370,10 +353,10 @@ class ModulesManager
 		{
 			return self::UNEXISTING_MODULE;
 		}
-		
+
 		return self::MODULE_UPDATED;
 	}
-	
+
 	public static function module_is_upgradable($module_identifier)
 	{
 		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
@@ -381,7 +364,7 @@ class ModulesManager
 			if (self::is_module_installed($module_identifier))
 			{
 				$module = self::get_module($module_identifier);
-				
+
 				if (version_compare($module->get_installed_version(), $module->get_configuration()->get_version()) == -1 && $module->get_configuration()->get_compatibility() == GeneralConfig::load()->get_phpboost_major_version())
 				{
 					return true;
@@ -390,7 +373,7 @@ class ModulesManager
 		}
 		return false;
 	}
-	
+
 	public static function update_module($module_id, $activated, $generate_cache = true)
 	{
 		$error = '';
@@ -398,7 +381,7 @@ class ModulesManager
 		{
 			MenuService::delete_mini_module($module_id);
 			MenuService::delete_module_feeds_menus($module_id);
-			
+
 			$general_config = GeneralConfig::load();
 			$module_home_page_selected = $general_config->get_module_home_page();
 			if ($module_home_page_selected == $module_id)
@@ -406,7 +389,7 @@ class ModulesManager
 				$general_config->set_module_home_page('');
 				$general_config->set_other_home_page('index.php');
 			}
-			
+
 			$editors = AppContext::get_content_formatting_service()->get_available_editors();
 			if (in_array($module_id, $editors))
 			{
@@ -415,7 +398,7 @@ class ModulesManager
 					$default_editor = ContentFormattingConfig::load()->get_default_editor();
 					if ($default_editor !== $module_id)
 					{
-						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor), 
+						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor),
 							'WHERE editor=:old_editor', array('old_editor' => $module_id
 						));
 					}
@@ -425,7 +408,7 @@ class ModulesManager
 				else
 					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
 			}
-			
+
 			$captchas = AppContext::get_captcha_service()->get_available_captchas();
 			if (in_array($module_id, $captchas))
 			{
@@ -442,7 +425,7 @@ class ModulesManager
 		else
 		{
 			$module = self::get_module($module_id);
-			
+
 			if ($module->get_configuration()->get_compatibility() != GeneralConfig::load()->get_phpboost_major_version())
 				$error = LangLoader::get_message('modules.not_compatible', 'admin-modules-common');
 		}
@@ -453,21 +436,21 @@ class ModulesManager
 			$module->set_activated($activated);
 			ModulesConfig::load()->update($module);
 			ModulesConfig::save();
-			
+
 			MenuService::add_mini_module($module_id);
 			Feed::clear_cache($module_id);
-			
+
 			if ($generate_cache)
 			{
 				AppContext::get_cache_service()->clear_cache();
-				
+
 				if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 				{
 					HtaccessFileCache::regenerate();
 				}
 			}
 		}
-		
+
 		return $error;
 	}
 
@@ -490,7 +473,7 @@ class ModulesManager
 		$module_setup = self::get_module_setup($module_id);
 		return $module_setup->uninstall();
 	}
-	
+
 	private static function execute_module_upgrade($module_id, $installed_version)
 	{
 		$module_setup = self::get_module_setup($module_id);
@@ -498,7 +481,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param string $module_id
 	 * @return ModuleSetup
 	 */

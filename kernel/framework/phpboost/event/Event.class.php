@@ -1,40 +1,20 @@
 <?php
-/*##################################################
- *                              Event.class.php
- *                            -------------------
- *   begin                : July 21, 2008
- *   copyright            : (C) 2008 Benoît Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @abstract
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc It's the common part between two types of event existing now in PHPBoost:
+ * It's the common part between two types of event existing now in PHPBoost:
  * <ul>
  * 	<li>User contribution managed into the contribution panel</li>
  * 	<li>Administrator alert, triggered for example when a new update is available or when a new member account is to approbate</li>
  * </ul>
- */
+ * @package     PHPBoost
+ * @subpackage  Event
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 07 21
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class Event
 {
@@ -45,7 +25,7 @@ class Event
 	const EVENT_STATUS_BEING_PROCESSED = 1;
 	//Read and processed, it is normally not useful anymore
 	const EVENT_STATUS_PROCESSED = 2;
-	
+
 	/**
 	 * @protected int Numerical identifier of the event (in DB).
 	 */
@@ -93,7 +73,7 @@ class Event
 	protected $must_regenerate_cache = true;
 
 	/**
-	 * @desc Builds an Event object.
+	 * Builds an Event object.
 	 */
 	public function __construct()
 	{
@@ -102,7 +82,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the id of the event. The id is the corresponding data base entry one.
+	 * Sets the id of the event. The id is the corresponding data base entry one.
 	 * @param int $id Id of the event.
 	 */
 	public function set_id($id)
@@ -112,7 +92,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the entitled of the event. The entitled can be considered as the name, it must be explicit.
+	 * Sets the entitled of the event. The entitled can be considered as the name, it must be explicit.
 	 * @param string $entitled The event entitiled.
 	 */
 	public function set_entitled($entitled)
@@ -121,7 +101,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the URL corresponding to the event. For the contributions and the administrator alerts it's the number URL at which the problem can be solved.
+	 * Sets the URL corresponding to the event. For the contributions and the administrator alerts it's the number URL at which the problem can be solved.
 	 * @param string $fixing_url Relative URL (the first character must be / for the root of the site).
 	 */
 	public function set_fixing_url($fixing_url)
@@ -130,7 +110,7 @@ class Event
 	}
 
 	/**
-	 * @desc Set the status of the event.
+	 * Set the status of the event.
 	 * @param int $new_current_status One of those elements:
 	 * <ul>
 	 * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
@@ -154,7 +134,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the creation date of the event.
+	 * Sets the creation date of the event.
 	 * @param Date $date The creation date
 	 */
 	public function set_creation_date($date)
@@ -164,7 +144,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the id in module parameter. It corresponds to the id of the element corresponding to the event in your data base tables.
+	 * Sets the id in module parameter. It corresponds to the id of the element corresponding to the event in your data base tables.
 	 * For example, il you use the events to allow user to purpose some news in your web site, it will be the id of the news added.
 	 * @param int $id Id in the module
 	 */
@@ -174,7 +154,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the event identifier. To retrieve your event, you might need to have a field in which you put some informations, for example a hash or an identifier.
+	 * Sets the event identifier. To retrieve your event, you might need to have a field in which you put some informations, for example a hash or an identifier.
 	 * It's that identifier which can be used to filter the events. You don't have to use it, you can let it blank.
 	 * @param string $identifier Identifier of the event.
 	 */
@@ -184,7 +164,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
+	 * Sets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
 	 * @param string $type The type of your event.
 	 */
 	public function set_type($type)
@@ -193,7 +173,7 @@ class Event
 	}
 
 	/**
-	 * @desc Sets a private property indicating if the changes made on this event imply the regeneration of the events cache.
+	 * Sets a private property indicating if the changes made on this event imply the regeneration of the events cache.
 	 * @param bool $must true if we must generate the events cache, otherwise false.
 	 */
 	public function set_must_regenerate_cache($must)
@@ -203,7 +183,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the id of the event (in the event data base).
+	 * Gets the id of the event (in the event data base).
 	 * @return int The id.
 	 */
 	public function get_id()
@@ -212,7 +192,7 @@ class Event
 	}
 
 	/**
-	 * @desc Returns the entitled of the event.
+	 * Returns the entitled of the event.
 	 * @return string The entitled.
 	 */
 	public function get_entitled()
@@ -221,7 +201,7 @@ class Event
 	}
 
 	/**
-	 * @desc Returns the URL corresponding to the alert.
+	 * Returns the URL corresponding to the alert.
 	 * @return string Relative URL whose first character is / for the website root.
 	 */
 	public function get_fixing_url()
@@ -230,7 +210,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the status of the event. The status is one of those elements:
+	 * Gets the status of the event. The status is one of those elements:
 	 * ul>
 	 * 	<li>Event::EVENT_STATUS_UNREAD if it's not read.</li>
 	 * 	<li>Event::EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
@@ -244,7 +224,7 @@ class Event
 	}
 
 	/**
-	 * @desc Returns the creation date of the event.
+	 * Returns the creation date of the event.
 	 * @return Date Creation date
 	 */
 	public function get_creation_date()
@@ -253,7 +233,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the id in the module. This value corresponds to the id of the daba base entry associated to the event.
+	 * Gets the id in the module. This value corresponds to the id of the daba base entry associated to the event.
 	 * @return int The id in the module.
 	 */
 	public function get_id_in_module()
@@ -262,7 +242,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the identifier of the event. To retrieve your event, you might need to have a field in which you put some informations, for example a hash or an identifier.
+	 * Gets the identifier of the event. To retrieve your event, you might need to have a field in which you put some informations, for example a hash or an identifier.
 	 * It's that identifier which can be used to filter the events.
 	 * @return string The identifier of the event.
 	 */
@@ -272,7 +252,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
+	 * Gets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
 	 * @return string The type.
 	 */
 	public function get_type()
@@ -281,7 +261,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the value indicating if the cache must be generated.
+	 * Gets the value indicating if the cache must be generated.
 	 * @return bool true if the cache has to be generated, false else.
 	 */
 	public function get_must_regenerate_cache()
@@ -290,7 +270,7 @@ class Event
 	}
 
 	/**
-	 * @desc Gets the event status name. It's automatically translated in the user language.
+	 * Gets the event status name. It's automatically translated in the user language.
 	 * @return The name of the event status, ready to be displayed.
 	 */
 	public function get_status_name()
@@ -307,7 +287,7 @@ class Event
 	}
 
 	/**
-	 * @desc Builds an event object from its whole parameters.
+	 * Builds an event object from its whole parameters.
 	 * @param int $id The event id.
 	 * @param string $entitled The event entitled.
 	 * @param string $fixing_url The URL corresponding to the event.

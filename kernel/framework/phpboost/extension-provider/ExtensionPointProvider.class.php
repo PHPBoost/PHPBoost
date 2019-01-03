@@ -1,39 +1,19 @@
 <?php
-/*##################################################
- *                        ExtensionPointProvider.class.php
- *                            -------------------
- *   begin                : January 15, 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This Class allow you to call methods on a ExtensionPointProvider extended class
+ * This Class allow you to call methods on a ExtensionPointProvider extended class
  * that you're not sure of the method's availality. It also provides a set of
  * generic methods that you could use to integrate your module with others, or
  * allow your module to share services.
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  Extension-provider
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 2.0 - 2008 01 15
+*/
+
 abstract class ExtensionPointProvider
 {
 	/**
@@ -47,7 +27,7 @@ abstract class ExtensionPointProvider
 	private $extensions_points = array();
 
 	/**
-	 * @desc ExtensionPointProvider constructor
+	 * ExtensionPointProvider constructor
 	 * @param string $extension_provider_id the provider id. It's the name of the folder in witch
 	 * the extension provider is
 	 */
@@ -66,7 +46,7 @@ abstract class ExtensionPointProvider
 	}
 
 	/**
-	 * @desc Check the existance of the extension point and if exists call it.
+	 * Check the existance of the extension point and if exists call it.
 	 * @param string $extension_point the name of the method you want to call
 	 * @param mixed $args the args you want to pass to the $extension_point method
 	 * @return mixed the $extension_point returns
@@ -82,7 +62,7 @@ abstract class ExtensionPointProvider
 	}
 
 	/**
-	 * @desc Check the availability of the extension_point (hook)
+	 * Check the availability of the extension_point (hook)
 	 * @param string $extension_point the name of the method you want to check the availability
 	 * @return bool true if the extension point exists, false otherwise
 	 */
@@ -92,7 +72,7 @@ abstract class ExtensionPointProvider
 	}
 
 	/**
-	 * @desc Check the availability of the extensions points (hook)
+	 * Check the availability of the extensions points (hook)
 	 * @param string[] $extensions_points the names of the methods you want to check the availability
 	 * @return bool true if all extensions points exist, false otherwise
 	 */

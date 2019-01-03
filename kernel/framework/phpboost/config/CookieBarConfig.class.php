@@ -1,33 +1,17 @@
 <?php
-/*##################################################
- *		             CookieBarConfig.class.php
- *                            -------------------
- *   begin                : September 18, 2016
- *   copyright            : (C) 2016 Genet Arnaud
- *   email                : elenwii@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU ServerEnvironment Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU ServerEnvironment Public License for more details.
- *
- * You should have received a copy of the GNU ServerEnvironment Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Arnaud Genet <elenwii@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @since       PHPBoost 3.0 - 2010 07 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class CookieBarConfig extends AbstractConfigData
 {
 	const COOKIEBAR_ENABLED             = 'cookiebar_enabled';
@@ -36,25 +20,25 @@ class CookieBarConfig extends AbstractConfigData
 	const COOKIEBAR_CONTENT             = 'cookiebar_content';
 	const COOKIEBAR_ABOUTCOOKIE_TITLE   = 'cookiebar_aboutcookie_title';
 	const COOKIEBAR_ABOUTCOOKIE_CONTENT = 'cookiebar_aboutcookie_content';
-	
+
 	const NOTRACKING_COOKIE             = 'notracking';
 	const TRACKING_COOKIE               = 'tracking';
-	
+
 	public function enable_cookiebar()
 	{
 		$this->set_property(self::COOKIEBAR_ENABLED, true);
 	}
-	
+
 	public function disable_cookiebar()
 	{
 		$this->set_property(self::COOKIEBAR_ENABLED, false);
 	}
-	
+
 	public function is_cookiebar_enabled()
 	{
 		return $this->get_property(self::COOKIEBAR_ENABLED);
 	}
-	
+
 	public function get_cookiebar_duration()
 	{
 		return $this->get_property(self::COOKIEBAR_DURATION);
@@ -64,7 +48,7 @@ class CookieBarConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COOKIEBAR_DURATION, $value);
 	}
-	
+
 	public function get_cookiebar_tracking_mode()
 	{
 		return $this->get_property(self::COOKIEBAR_TRACKING_MODE);
@@ -74,7 +58,7 @@ class CookieBarConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COOKIEBAR_TRACKING_MODE, $value);
 	}
-	
+
 	public function get_cookiebar_content()
 	{
 		return $this->get_property(self::COOKIEBAR_CONTENT);
@@ -84,7 +68,7 @@ class CookieBarConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COOKIEBAR_CONTENT, $value);
 	}
-	
+
 	public function get_cookiebar_aboutcookie_title()
 	{
 		return $this->get_property(self::COOKIEBAR_ABOUTCOOKIE_TITLE);
@@ -94,7 +78,7 @@ class CookieBarConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COOKIEBAR_ABOUTCOOKIE_TITLE, $value);
 	}
-	
+
 	public function get_cookiebar_aboutcookie_content()
 	{
 		return $this->get_property(self::COOKIEBAR_ABOUTCOOKIE_CONTENT);
@@ -119,7 +103,7 @@ class CookieBarConfig extends AbstractConfigData
 			self::COOKIEBAR_ABOUTCOOKIE_CONTENT => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common')
 		);
 	}
-	
+
 	/**
 	 * Returns the configuration.
 	 * @return CookieBarConfig
