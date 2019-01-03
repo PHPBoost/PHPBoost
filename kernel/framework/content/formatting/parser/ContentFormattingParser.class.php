@@ -1,35 +1,19 @@
 <?php
-/*##################################################
- *                        ContentFormattingParser.class.php
- *                            -------------------
- *   begin                : August 10, 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class is abstract. It contains tools that are usefull for implement a content parser.
- */
+ * This class is abstract. It contains tools that are usefull for implement a content parser.
+ * @package     Content
+ * @subpackage  Formatting\parser
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 03 29
+ * @since       PHPBoost 2.0 - 2008 08 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 abstract class ContentFormattingParser extends AbstractParser
 {
 	/**
@@ -42,19 +26,19 @@ abstract class ContentFormattingParser extends AbstractParser
 	protected $forbidden_tags = array();
 
 	/**
-	 * @desc Buils a ContentFormattingParser object.
+	 * Buils a ContentFormattingParser object.
 	 */
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$content_formatting_config = ContentFormattingConfig::load();
 		$this->forbidden_tags = $content_formatting_config->get_forbidden_tags();
 		$this->html_auth = $content_formatting_config->get_html_tag_auth();
 	}
 
 	/**
-	 * @desc Parses the content of the parser
+	 * Parses the content of the parser
 	 * @return void You will find the result by using the get_content method
 	 */
 	public function parse()
@@ -63,7 +47,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Sets the tags which mustn't be parsed.
+	 * Sets the tags which mustn't be parsed.
 	 * @param string[] $forbidden_tags list of the name of the tags which mustn't be parsed.
 	 */
 	public function set_forbidden_tags(array $forbidden_tags)
@@ -75,7 +59,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Gets the forbidden tags.
+	 * Gets the forbidden tags.
 	 * @return string[] List of the forbidden tags
 	 */
 	public function get_forbidden_tags()
@@ -84,7 +68,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Sets the required authorizations that are necessary to post some HTML code which
+	 * Sets the required authorizations that are necessary to post some HTML code which
 	 * will be displayed by the web browser.
 	 * @param mixed[] $array_auth authorization array
 	 */
@@ -92,9 +76,9 @@ abstract class ContentFormattingParser extends AbstractParser
 	{
 		$this->html_auth = $array_auth;
 	}
-	
+
 	/**
-	 * @desc Returns the HTML tag auth
+	 * Returns the HTML tag auth
 	 * @return mixed[]
 	 */
 	public function get_html_auth()
@@ -103,7 +87,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Splits a string accorting to a tag name.
+	 * Splits a string accorting to a tag name.
 	 * Works also with nested tags.
 	 * @param string $content Content to split, will be converted in a string[] variable containing the following pattern:
 	 * <ul>
@@ -130,7 +114,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Splits a string according to a regular expression. The matched pattern can be nested and must follow the BBCode syntax,
+	 * Splits a string according to a regular expression. The matched pattern can be nested and must follow the BBCode syntax,
 	 * i.e matching [tag=args]content of the tag[/tag].
 	 * It returns an array
 	 * For example, il you have this: $my_str = '[tag=1]test1[/tag]test2[tag=2]test3[tag=3]test4[/tag]test5[/tag]?est6';
@@ -206,7 +190,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Indexes the position of all the tags in the document. Returns the list of the positions of each tag.
+	 * Indexes the position of all the tags in the document. Returns the list of the positions of each tag.
 	 * @param $content string Content into which index the positions.
 	 * @param $tag string tag name
 	 * @param $attributes The regular expression matching the parameters of the tag (see the preg_split_safe_recurse method).
@@ -239,7 +223,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Removes the content of the tag $tag and replaces them by an identifying code. They will be reinserted in the content by the reimplant_tags method.
+	 * Removes the content of the tag $tag and replaces them by an identifying code. They will be reinserted in the content by the reimplant_tags method.
 	 * It enables you to treat the whole string enough affecting the interior of some tags.
 	 * Example: $my_parser contains this content: 'test1[tag=1]test2[/tag]test3'
 	 * $my_parser->pick_up_tag('tag', '[0-9]'); will replace the content of the parser by 'test1[CODE_TAG_1]test3'
@@ -281,7 +265,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc reimplants the code which has been picked up by the _pick_up method.
+	 * reimplants the code which has been picked up by the _pick_up method.
 	 * @param $tag string tag to reimplant.
 	 * @return bool True if the reimplantation succed, otherwise false.
 	 */
@@ -306,7 +290,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 		return true;
 	}
-	
+
 	protected function parse_feed_tag()
 	{
 		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);

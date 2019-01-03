@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                          ContentEditor.class.php
- *                            -------------------
- *   begin                : July 5 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc Abstract class for editors content.
- */
+ * Abstract class for editors content.
+ * @package     Content
+ * @subpackage  Formatting\editor
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2008 07 05
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class ContentEditor
 {
     protected $template = null;
@@ -43,7 +25,7 @@ abstract class ContentEditor
     }
 
     /**
-     * @desc Set the forbidden tags
+     * Set the forbidden tags
      * @param array List of forbidden tags.
      */
     public function set_forbidden_tags($forbidden_tags)
@@ -52,7 +34,7 @@ abstract class ContentEditor
     }
 
     /**
-     * @desc Get the fordidden tags.
+     * Get the fordidden tags.
      * @return array List of forbidden tags.
      */
     public function get_forbidden_tags()
@@ -61,7 +43,7 @@ abstract class ContentEditor
     }
 
     /**
-     * @desc Set the html identifier of the textarea field which contain the content to edit.
+     * Set the html identifier of the textarea field which contain the content to edit.
      * @param string The html identifier.
      */
     public function set_identifier($identifier)
@@ -70,7 +52,7 @@ abstract class ContentEditor
     }
 
     /**
-     * @desc Set an alternative template for the editor.
+     * Set an alternative template for the editor.
      * @param Template $template.
      */
     public function set_template($template)
@@ -79,7 +61,7 @@ abstract class ContentEditor
     }
 
     /**
-     * @desc Get the template used for the editor.
+     * Get the template used for the editor.
      * @return Template The template
      */
     public function get_template()

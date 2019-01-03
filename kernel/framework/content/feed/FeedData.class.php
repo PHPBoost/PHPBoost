@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                         FeedData.class.php
- *                         -------------------
- *   begin                : June 21, 2008
- *   copyright            : (C) 2005 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc Contains meta-informations about a feed with its entries
- * @package {@package}
- */
+ * Contains meta-informations about a feed with its entries
+ * @package     Content
+ * @subpackage  Feed
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 30
+ * @since       PHPBoost 2.0 - 2008 06 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class FeedData
 {
 	private $title = '';        // Feed Title
@@ -40,9 +22,9 @@ class FeedData
     private $host = '';         // Feed Host
     private $items = array();   // Items
     private $auth_bit = 0;      // Auth bit
-	
+
     /**
-     * @desc Builds a FeedData Object
+     * Builds a FeedData Object
      * @param FeedData $data an other FeedData object to clone
      */
     public function __construct($data = null)
@@ -58,40 +40,40 @@ class FeedData
 			$this->items = $data->items;
 		}
 	}
-    
+
     ## Setters ##
     /**
-     * @desc Sets the feed title
+     * Sets the feed title
      * @param string $value The title
      */
     public function set_title($value) { $this->title = strip_tags($value); }
     /**
-     * @desc Sets the feed data date
+     * Sets the feed data date
      * @param Date $value a date object representing the feed date
      */
     public function set_date($value) { $this->date = $value; }
     /**
-     * @desc Sets the feed description
+     * Sets the feed description
      * @param string $value the feed description
      */
     public function set_desc($value) { $this->desc = $value; }
     /**
-     * @desc Sets the feed language
+     * Sets the feed language
      * @param string $value the feed language
      */
     public function set_lang($value) { $this->lang = $value; }
     /**
-     * @desc Sets the feed host
+     * Sets the feed host
      * @param string $value the feed host
      */
     public function set_host($value) { $this->host = $value; }
     /**
-     * @desc Sets the feed auth bit, useful to check authorizations
+     * Sets the feed auth bit, useful to check authorizations
      * @param int $value the bit position in an int (from 1 to 32)
      */
     public function set_auth_bit($value) { $this->auth_bit = $value; }
     /**
-     * @desc Sets the feed item link
+     * Sets the feed item link
      * @param mixed $value a string url or an Url object
      */
     public function set_link($value)
@@ -102,9 +84,9 @@ class FeedData
         }
         $this->link = $value->absolute();
     }
-    
+
     public function add_item($item) { array_push($this->items, $item); }
-    
+
     ## Getters ##
     public function get_title() { return $this->title; }
     public function get_link() { return $this->link; }
@@ -115,9 +97,9 @@ class FeedData
     public function get_desc() { return $this->desc; }
     public function get_lang() { return $this->lang; }
     public function get_host() { return $this->host; }
-    
+
     /**
-     * @desc Returns the feed items
+     * Returns the feed items
      * @return FeedItem[] the feed items
      */
     public function get_items()
@@ -128,18 +110,18 @@ class FeedData
             if ((gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || AppContext::get_current_user()->check_auth($item->get_auth(), $this->auth_bit))
                 $items[] = $item;
         }
-        
+
         return $items;
     }
-    
+
     public function serialize()
     {
         return TextHelper::serialize($this);
     }
-    
-    
+
+
     /**
-     * @desc Returns a items list containing $number items starting from the $begin_at one
+     * Returns a items list containing $number items starting from the $begin_at one
      * @param int $number the number of items to retrieve
      * @param int $begin_at the number of the first to retrieve
      * @return FeedItem[] the items list containing $number items starting from the $begin_at one
@@ -148,12 +130,12 @@ class FeedData
     {
         $secured_items = $this->get_items();
         $nb_items = count($secured_items);
-        
+
         $items = array();
         $end_at = $begin_at + $number;
         for ($i = $begin_at; ($i < $nb_items) && ($i < $end_at) ; $i++)
             $items[] =& $secured_items[$i];
-        
+
         return $items;
     }
 }

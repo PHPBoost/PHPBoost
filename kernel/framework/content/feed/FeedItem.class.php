@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                         FeedItem.class.php
- *                         -------------------
- *   begin                : June 21, 2008
- *   copyright            : (C) 2005 Loïc Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc Contains meta-informations and informations about a feed entry / item
- * @package {@package}
- */
+ * Contains meta-informations and informations about a feed entry / item
+ * @package     Content
+ * @subpackage  Feed
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 02 12
+ * @since       PHPBoost 2.0 - 2008 06 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class FeedItem
 {
 	private $title = '';        // Item Title
@@ -40,40 +22,40 @@ class FeedItem
     private $image_url = '';    // Item Image
     private $enclosure;			// Item Enclosure
     private $auth = null;       // Authorizations
-	
+
     ## Setters ##
     /**
-     * @desc Sets the feed item title
+     * Sets the feed item title
      * @param string $value The title
      */
     public function set_title($value) { $this->title = strip_tags($value); }
     /**
-     * @desc Sets the feed item date
+     * Sets the feed item date
      * @param Date $value a date object representing the item date
      */
     public function set_date($value) { $this->date = $value; }
     /**
-     * @desc Sets the feed item description
+     * Sets the feed item description
      * @param string $value the feed item description
      */
     public function set_desc($value) { $this->desc = $value; }
     /**
-     * @desc Sets the feed item picture
+     * Sets the feed item picture
      * @param string $value the picture url
      */
     public function set_image_url($value) { $this->image_url = $value; }
  	/**
-     * @desc Sets the feed item enclosure
+     * Sets the feed item enclosure
      * @param FeedItemEnclosure $value the enclosure
      */
     public function set_enclosure(FeedItemEnclosure $value) { $this->enclosure = $value; }
     /**
-     * @desc Sets the feed item auth, useful to check authorizations
+     * Sets the feed item auth, useful to check authorizations
      * @param int[string] $value the item authorizations array
      */
     public function set_auth($auth) { $this->auth = $auth; }
     /**
-     * @desc Sets the feed item link
+     * Sets the feed item link
      * @param mixed $value a string url or an Url object
      */
 	public function set_link($value)
@@ -85,7 +67,7 @@ class FeedItem
         $this->link = $value->absolute();
     }
     /**
-     * @desc Sets the feed item guid
+     * Sets the feed item guid
      * @param mixed $value a string url or an Url object
      */
     public function set_guid($value)
@@ -99,7 +81,7 @@ class FeedItem
             $this->guid = $value;
         }
     }
-    
+
     ## Getters ##
     public function get_title() { return TextHelper::htmlspecialchars_decode($this->title); }
     public function get_link() { return $this->link; }

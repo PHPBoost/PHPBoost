@@ -1,59 +1,40 @@
 <?php
-/*##################################################
- *                              CommentsDAO.class.php
- *                            -------------------
- *   begin                : September 25, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     Content
+ * @subpackage  Comments
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2011 09 25
+*/
 
- /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @package {@package}
- */
 class CommentsDAO
 {
 	private static $comments_cache;
 	private static $db_querier;
-	
+
 	public static function __static()
 	{
 		self::$comments_cache = CommentsCache::load();
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	public static function delete_comments_by_topic($id_topic)
 	{
 		$condition = "WHERE id_topic = :id_topic";
 		$parameters = array('id_topic' => $id_topic);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
-	
+
 	public static function delete_comments_topic_module($module_id, $id_in_module)
 	{
 		$condition = "WHERE module_id = :module_id AND id_in_module = :id_in_module";
 		$parameters = array('module_id' => $module_id, 'id_in_module' => $id_in_module);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
-	
+
 	public static function delete_comments_module($id_topics)
 	{
 		if ($id_topics)
@@ -70,13 +51,13 @@ class CommentsDAO
 		$parameters = array('id' => $comment_id);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
-	
+
 	public static function get_user_id_posted_comment($comment_id)
 	{
 		$comment = self::$comments_cache->get_comment($comment_id);
 		return $comment['user_id'];
 	}
-	
+
 	public static function get_last_comment_added($user_id)
 	{
 		if ($user_id !== '-1')
@@ -98,12 +79,12 @@ class CommentsDAO
 		}
 		return 0;
 	}
-	
+
 	public static function comment_exists($comment_id)
 	{
 		return self::$comments_cache->comment_exists($comment_id);
 	}
-	
+
 	public static function add_comment($id_topic, $message, $user_id, $pseudo, $user_ip)
 	{
 		$columns = array(
@@ -117,7 +98,7 @@ class CommentsDAO
 		$result = self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 		return $result->get_last_inserted_id();
 	}
-	
+
 	public static function edit_comment($comment_id, $message)
 	{
 		$columns = array(

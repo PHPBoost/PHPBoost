@@ -1,44 +1,27 @@
 <?php
-/*##################################################
- *                              CommentsService.class.php
- *                            -------------------
- *   begin                : March 31, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
- 
- /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class allows you to use a comments system
- * @package {@package}
- */
+/**
+ * This class allows you to use a comments system
+ * @package     Content
+ * @subpackage  Comments
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 01 04
+ * @since       PHPBoost 3.0 - 2011 03 31
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class CommentsService
-{	
+{
 	private static $user;
 	private static $lang;
 	private static $common_lang;
 	private static $comments_lang;
 	private static $comments_cache;
 	private static $template;
-	
+
 	public static function __static()
 	{
 		self::$user = AppContext::get_current_user();
@@ -49,9 +32,9 @@ class CommentsService
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 		self::$template->add_lang(self::$comments_lang);
 	}
-	
+
 	/**
-	 * @desc This function display the comments
+	 * This function display the comments
 	 * @param class CommentsTopic $topic
 	 * @return Template is a template object
 	 */
@@ -61,7 +44,7 @@ class CommentsService
 		$id_in_module = $topic->get_id_in_module();
 		$topic_identifier = $topic->get_topic_identifier();
 		$authorizations = $topic->get_authorizations();
-		
+
 		if (!$authorizations->is_authorized_read())
 		{
 			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE));
@@ -72,7 +55,7 @@ class CommentsService
 			$delete_comment_id = AppContext::get_request()->get_getint('delete_comment', 0);
 			$return_path = AppContext::get_request()->get_getstring('return_path', '');
 			$return_path = $return_path ? HOST . Url::to_relative($return_path) : '';
-			
+
 			try {
 				$lock = AppContext::get_request()->get_getbool('lock');
 				if ($authorizations->is_authorized_moderation())
@@ -93,7 +76,7 @@ class CommentsService
 				AppContext::get_response()->redirect($topic->get_path());
 			} catch (UnexistingHTTPParameterException $e) {
 			}
-			
+
 			if (!empty($delete_comment_id))
 			{
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
@@ -104,7 +87,7 @@ class CommentsService
 			elseif (!empty($edit_comment_id))
 			{
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
-	
+
 				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id, $topic->get_path());
 				self::$template->put_all(array(
 					'C_DISPLAY_FORM' => true,
@@ -139,10 +122,10 @@ class CommentsService
 					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
 				}
 			}
-			
+
 			$number_comments_display = $topic->get_number_comments_display();
 			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
-			
+
 			self::$template->put_all(array(
 				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations),
 				'MODULE_ID' => $module_id,
@@ -158,9 +141,9 @@ class CommentsService
 
 		return self::$template;
 	}
-	
+
 	/**
-	 * @desc Returns number comments and lang (example : Comments (number_comments)
+	 * Returns number comments and lang (example : Comments (number_comments)
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
@@ -170,12 +153,12 @@ class CommentsService
 	{
 		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
 		$lang = $number_comments > 1 ? self::$lang['com_s'] : self::$lang['com'];
-	
+
 		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
 	}
-	
+
 	/**
-	 * @desc Returns lang (example : "Comments" for several comments, "comment" for one comment and "No comment" if no comment
+	 * Returns lang (example : "Comments" for several comments, "comment" for one comment and "No comment" if no comment
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
@@ -185,12 +168,12 @@ class CommentsService
 	{
 		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
 		$lang = $number_comments > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
-	
+
 		return !empty($number_comments) ? ' ' .$lang : self::$comments_lang['no_comment'];
 	}
 
 	/**
-	 * @desc Delete all comments module
+	 * Delete all comments module
 	 * @param string $module_id the module identifier
 	 */
 	public static function delete_comments_module($module_id)
@@ -200,9 +183,9 @@ class CommentsService
 		} catch (RowNotFoundException $e) {
 		}
 	}
-	
+
 	/**
-	 * @desc Delete comments topic according to module identifier and id in module
+	 * Delete comments topic according to module identifier and id in module
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 */
@@ -213,9 +196,9 @@ class CommentsService
 		} catch (RowNotFoundException $e) {
 		}
 	}
-	
+
 	/**
-	 * @desc Returns number comments
+	 * Returns number comments
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
@@ -227,7 +210,7 @@ class CommentsService
 	}
 
 	/**
-	 * @desc Do not use, this is used for ajax display comments
+	 * Do not use, this is used for ajax display comments
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
@@ -240,12 +223,12 @@ class CommentsService
 		if ($authorizations->is_authorized_read() && $authorizations->is_authorized_access_module())
 		{
 			$user_accounts_config = UserAccountsConfig::load();
-			
+
 			$condition = !$display_from_number_comments ? ' LIMIT '. $number_comments_display : ' LIMIT ' . $number_comments_display . ',18446744073709551615';
 			$result = PersistenceContext::get_querier()->select("
 				SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 				topic.is_locked, topic.path,
-				member.user_id, member.display_name, member.level, member.groups, 
+				member.user_id, member.display_name, member.level, member.groups,
 				ext_field.user_avatar
 				FROM " . DB_TABLE_COMMENTS . " comments
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
@@ -254,18 +237,18 @@ class CommentsService
 				WHERE topic.module_id = '". $module_id ."' AND topic.id_in_module = '". $id_in_module ."' AND topic.topic_identifier = '". $topic_identifier ."'
 				ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
 			);
-			
+
 			while ($row = $result->fetch())
 			{
 				$id = $row['id_comment'];
 				$path = $row['path'];
-				
+
 				//Avatar
 				$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-				
+
 				$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 				$group_color = User::get_group_color($row['groups'], $row['level']);
-				
+
 				$template->assign_block_vars('comments', array_merge(
 					Date::get_array_tpl_vars($timestamp,'date'),
 					array(
@@ -285,7 +268,7 @@ class CommentsService
 					'GROUP_COLOR' => $group_color,
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
 				)));
-				
+
 				$template->put_all(array(
 					'L_UPDATE' => self::$common_lang['edit'],
 					'L_DELETE' => self::$common_lang['delete'],
@@ -303,11 +286,11 @@ class CommentsService
 
 		return $template;
 	}
-	
+
 	private static function verificate_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
 		$is_authorized = self::is_authorized_edit_or_delete_comment($authorizations, $comment_id);
-		
+
 		if (!CommentsManager::comment_exists($comment_id))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
@@ -319,7 +302,7 @@ class CommentsService
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private static function is_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
 		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);

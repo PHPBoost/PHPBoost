@@ -1,29 +1,18 @@
 <?php
-/*##################################################
- *                              CommentsUrlBuilder.class.php
- *                            -------------------
- *   begin                : May 02, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * This class represents the comments topic
+ * <div class="message-helper notice">Do not use this class, but one of its children like for your module</div>
+ * @package     Content
+ * @subpackage  Comments
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 06 23
+ * @since       PHPBoost 3.0 - 2012 05 02
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class CommentsUrlBuilder
 {
@@ -36,7 +25,7 @@ class CommentsUrlBuilder
 	{
 		return self::build_url($comment_path, 'edit_comment=' . $id . '#comments_message');
 	}
-	
+
 	 /**
 	 * @param string $comment_path
 	 * @param integer $id
@@ -46,7 +35,7 @@ class CommentsUrlBuilder
 	{
 		return self::build_url($comment_path, 'delete_comment=' . $id . ($return_path ? '&return_path=' . $return_path : '#comments-list'));
 	}
-	
+
 	/**
 	 * @param string $comment_path
 	 * @param integer $lock
@@ -56,7 +45,7 @@ class CommentsUrlBuilder
 	{
 		return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments-list');
 	}
-	
+
 	/**
 	 * @param string $comment_path
 	 * @param integer $id_comment
@@ -65,7 +54,7 @@ class CommentsUrlBuilder
 	{
 		return new Url($comment_path . '#com' . $id_comment);
 	}
-	
+
 	private static function build_url($comment_path, $parameters)
 	{
 		if (TextHelper::strpos($comment_path, '?') === false)

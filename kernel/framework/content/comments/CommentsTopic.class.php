@@ -1,51 +1,33 @@
 <?php
-/*##################################################
- *                              CommentsTopic.class.php
- *                            -------------------
- *   begin                : March 31, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class represents the comments topic
- * @abstract Do not use this class, but one of its children like for your module
- * @package {@package}
- */
+ * This class represents the comments topic
+ * <div class="message-helper notice">Do not use this class, but one of its children like for your module</div>
+ * @package     Content
+ * @subpackage  Comments
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2015 08 16
+ * @since       PHPBoost 3.0 - 2011 03 31
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class CommentsTopic
 {
 	protected $module_id;
 	protected $topic_identifier = '';
 	protected $id_in_module;
 	protected $url;
-	
+
 	const DEFAULT_TOPIC_IDENTIFIER = 'default';
-	
+
 	public function __construct($module_id, $topic_identifier = self::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$this->module_id = $module_id;
 		$this->topic_identifier = $topic_identifier;
 	}
-	
+
 	/**
 	 * @return class CommentsAuthorizations
 	 */
@@ -53,7 +35,7 @@ class CommentsTopic
 	{
 		return new CommentsAuthorizations();
 	}
-	
+
 	/**
 	 * @return boolean display
 	 */
@@ -61,7 +43,7 @@ class CommentsTopic
 	{
 		return false;
 	}
-	
+
 	/**
 	 * @return int number comments display default
 	 */
@@ -69,7 +51,7 @@ class CommentsTopic
 	{
 		return CommentsConfig::load()->get_number_comments_display();
 	}
-	
+
 	/**
 	 * @return class CommentsTopicEvents
 	 */
@@ -77,12 +59,12 @@ class CommentsTopic
 	{
 		return new CommentsTopicEvents($this);
 	}
-	
+
 	public function display()
 	{
 		return CommentsService::display($this);
 	}
-		
+
 	public function get_topic_identifier()
 	{
 		return $this->topic_identifier;
@@ -92,27 +74,27 @@ class CommentsTopic
 	{
 		return $this->module_id;
 	}
-	
+
 	public function set_id_in_module($id_in_module)
 	{
 		$this->id_in_module = $id_in_module;
 	}
-	
+
 	public function get_id_in_module()
 	{
 		return $this->id_in_module;
 	}
-	
+
 	public function set_url(Url $url)
 	{
 		$this->url = $url;
 	}
-	
+
 	public function get_url()
 	{
 		return $this->url->rel();
 	}
-	
+
 	public function get_path()
 	{
 		return $this->url->relative();

@@ -1,39 +1,21 @@
 <?php
-/*##################################################
- *                            Feed.class.php
- *                         -------------------
- *   begin                : April 21, 2008
- *   copyright            : (C) 2005 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * This class could be used to export feeds
+ * <div classs="message-helper notice">Do not use this class, but one of its children like RSS or ATOM</div>
+ * @package     Content
+ * @subpackage  Feed
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 23
+ * @since       PHPBoost 2.0 - 2008 04 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
-/**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This class could be used to export feeds
- * @abstract  Do not use this class, but one of its children like RSS or ATOM
- * @package {@package}
- */
 class Feed
 {
 	const DEFAULT_FEED_NAME = 'master';
@@ -69,7 +51,7 @@ class Feed
 	private $data = null;
 
 	/**
-	 * @desc Builds a new feed object
+	 * Builds a new feed object
 	 * @param string $module_id its module_id
 	 * @param string $name the feeds name / type. default is DEFAULT_FEED_NAME
 	 * @param int $id_cat the feed category id
@@ -82,18 +64,18 @@ class Feed
 	}
 
 	/**
-	 * @desc Loads a FeedData element
+	 * Loads a FeedData element
 	 * @param FeedData $data the element to load
 	 */
 	public function load_data($data) { $this->data = $data; }
 	/**
-	 * @desc Loads a feed by its url
+	 * Loads a feed by its url
 	 * @param string $url the feed url
 	 */
 	public function load_file($url) { }
 
 	/**
-	 * @desc Exports the feed as a string parsed by the <$tpl> template
+	 * Exports the feed as a string parsed by the <$tpl> template
 	 * @param mixed $template If false, uses de default tpl. If an associative array,
 	 * uses the default tpl but assigns it the array vars first.
 	 * It could also be a Template object
@@ -112,7 +94,7 @@ class Feed
 			$tpl = clone $template;
 		}
 
-		
+
 		if (!empty($this->data))
 		{
 			$tpl->put_all(array(
@@ -156,12 +138,12 @@ class Feed
 				));
 			}
 		}
-		
+
 		return $tpl->render();
 	}
 
 	/**
-	 * @desc Loads the feed data in cache and export it
+	 * Loads the feed data in cache and export it
 	 * @return string the exported feed
 	 */
 	public function read()
@@ -179,7 +161,7 @@ class Feed
 	}
 
 	/**
-	 * @desc Send the feed data in the cache
+	 * Send the feed data in the cache
 	 */
 	public function cache()
 	{
@@ -187,7 +169,7 @@ class Feed
 	}
 
 	/**
-	 * @desc Returns true if the feed data are in the cache
+	 * Returns true if the feed data are in the cache
 	 * @return bool true if the feed data are in the cache
 	 */
 	public function is_in_cache()
@@ -196,7 +178,7 @@ class Feed
 	}
 
 	/**
-	 * @desc Returns the feed data cache filename
+	 * Returns the feed data cache filename
 	 * @return string the feed data cache filename
 	 */
 	public function get_cache_file_name()
@@ -205,7 +187,7 @@ class Feed
 	}
 
 	/**
-	 * @desc Clear the cache of the specified module_id.
+	 * Clear the cache of the specified module_id.
 	 * @param mixed $module_id the module module_id or false. If false,
 	 * Clear all feeds data from the cache
 	 * @static
@@ -230,7 +212,7 @@ class Feed
 
 
 	/**
-	 * @desc Update the cache of the $module_id, $name, $idcat feed with $data
+	 * Update the cache of the $module_id, $name, $idcat feed with $data
 	 * @param string $module_id the module id
 	 * @param string $name the feed name / type
 	 * @param &FeedData $data the data to put in the cache
@@ -250,7 +232,7 @@ class Feed
 	}
 
 	/**
-	 * @desc Export a feed
+	 * Export a feed
 	 * @param string $module_id the module id
 	 * @param string $name the feed name / type
 	 * @param int $idcat the feed data category
@@ -272,7 +254,7 @@ class Feed
 				$template->put_all($template);
 			}
 		}
-		
+
 		$feed_data_cache_file_exists = true;
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
@@ -290,7 +272,7 @@ class Feed
 			$data = $feed_provider->get_feed_data_struct($idcat);
 			$feed_data_cache_file_exists = self::update_cache($module_id, $name, $data, $idcat);
 		}
-		
+
 		if ($feed_data_cache_file_exists)
 		{
 			include $feed_data_cache_file;
@@ -311,7 +293,7 @@ class Feed
 
 	/**
 	 * @static
-	 * @desc Generates the code which shows all the feeds formats.
+	 * Generates the code which shows all the feeds formats.
 	 * @param string $feed_url Feed URL
 	 * @return string The HTML code to display.
 	 */

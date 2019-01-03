@@ -1,71 +1,52 @@
 <?php
-/*##################################################
- *                         FeedItemEnclosure.class.php
- *                         -------------------
- *   begin                : April 16, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc Contains meta-informations and informations about a feed item enclosure
- * @package {@package}
- */
+ * Contains meta-informations and informations about a feed item enclosure
+ * @package     Content
+ * @subpackage  Feed
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 4.0 - 2013 04 16
+*/
+
 class FeedItemEnclosure
 {
 	private $lenght;
 	private $type;
 	private $url;
-	
+
 	/**
-	 * @desc Defines the lenght (in bytes) of the media file
+	 * Defines the lenght (in bytes) of the media file
 	 * @param int $lenght
 	 */
 	public function set_lenght($lenght)
 	{
 		$this->lenght = $lenght;
 	}
-	
+
 	public function get_lenght()
 	{
 		return $this->lenght;
 	}
-	
+
 	/**
-	 * @desc Defines the type of media file
+	 * Defines the type of media file
 	 * @param string $type
 	 */
 	public function set_type($type)
 	{
 		$this->type = $type;
 	}
-	
+
 	public function get_type()
 	{
 		return $this->type;
 	}
-	
+
 	/**
-	 * @desc Defines the URL to the media file
+	 * Defines the URL to the media file
 	 * @param mixed $url a string url or an Url object
 	 */
 	public function set_url($url)
@@ -76,7 +57,7 @@ class FeedItemEnclosure
         }
         $this->url = $url->rel();
 	}
-	
+
 	public function get_url()
 	{
 		return $this->url;

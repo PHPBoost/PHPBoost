@@ -1,39 +1,23 @@
 <?php
-/*##################################################
- *                       ContentFormattingUnparser.class.php
- *                            -------------------
- *   begin                : August 10, 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
- */
+* This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
+ * @package     Content
+ * @subpackage  Formatting\parser
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 06 18
+ * @since       PHPBoost 2.0 - 2008 08 10
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class ContentFormattingUnparser extends AbstractParser
 {
 	/**
-	 * @desc Builds a ContentFormattingUnparser class.
+	 * Builds a ContentFormattingUnparser class.
 	 */
 	public function __construct()
 	{
@@ -41,7 +25,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	}
 
 	/**
-	* @desc Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it.
+	* Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it.
 	* @param bool $action self::PICK_UP if you want to pick up the html tag and self::REIMPLANT to reimplant it.
 	*/
 	protected function unparse_html($action)
@@ -54,7 +38,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 			$content_length = count($content_split);
 			$id_tag = 0;
-				
+
 			if ($content_length > 1)
 			{
 				$this->content = '';
@@ -104,7 +88,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	}
 
 	/**
-	 * @desc Unparses the code tag. In a first time, you pick it up and you reimplant it.
+	 * Unparses the code tag. In a first time, you pick it up and you reimplant it.
 	 * @param bool $action self::PICK_UP to pick the code tag up, self::REIMPLANT to reinsert them.
 	 */
 	protected function unparse_code($action)
@@ -117,7 +101,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 			$content_length = count($content_split);
 			$id_tag = 0;
-				
+
 			if ($content_length > 1)
 			{
 				$this->content = '';
