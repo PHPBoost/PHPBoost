@@ -1,36 +1,17 @@
 <?php
-/*##################################################
- *                     AppContext.class.php
- *                            -------------------
- *   begin                : October 01, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class manages all the environment services.
+ * This class manages all the environment services.
  * It's able to create each of them and return them.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     Core
+ * @subpackage  Environment\context
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2009 10 01
+*/
+
 class AppContext
 {
 	/**
@@ -81,7 +62,7 @@ class AppContext
 	private static $captcha_service;
 
 	/**
-	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
+	 * Returns a unique identifier (useful for example to generate some javascript ids)
 	 * @return int Id
 	 */
 	public static function get_uid()
@@ -91,7 +72,7 @@ class AppContext
 	}
 
 	/**
-	 * @desc set the <code>HTTPRequestCustom</code>
+	 * set the <code>HTTPRequestCustom</code>
 	 * @param HTTPRequestCustom $request
 	 */
 	public static function set_request(HTTPRequestCustom $request)
@@ -100,7 +81,7 @@ class AppContext
 	}
 
 	/**
-	 * @desc Returns the <code>HTTPRequestCustom</code> object
+	 * Returns the <code>HTTPRequestCustom</code> object
 	 * @return HTTPRequestCustom
 	 */
 	public static function get_request()
@@ -113,7 +94,7 @@ class AppContext
 	}
 
 	/**
-	 * @desc set the <code>HTTPResponseCustom</code>
+	 * set the <code>HTTPResponseCustom</code>
 	 * @param HTTPResponseCustom $response
 	 */
 	public static function set_response(HTTPResponseCustom $response)
@@ -122,7 +103,7 @@ class AppContext
 	}
 
 	/**
-	 * @desc Returns the <code>HTTPResponseCustom</code> object
+	 * Returns the <code>HTTPResponseCustom</code> object
 	 * @return HTTPResponseCustom
 	 */
 	public static function get_response()
@@ -264,7 +245,7 @@ class AppContext
 		}
 		return self::$content_formatting_service;
 	}
-	
+
 	/**
 	 * @return CaptchaService
 	 */

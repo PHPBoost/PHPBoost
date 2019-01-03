@@ -1,34 +1,16 @@
 <?php
-/*##################################################
- *                           LangLoader.class.php
- *                            -------------------
- *   begin                : October 29, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc
- * @package {@package}
- */
+ * @package     Core
+ * @subpackage  Lang
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @since       PHPBoost 3.0 - 2009 09 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class LangLoader
 {
 	private static $locale = '';
@@ -39,16 +21,16 @@ class LangLoader
 	private static $ram_cache = null;
 
 	/**
-	 * @desc sets the language locale
+	 * sets the language locale
 	 * @param string $locale the locale
 	 */
 	public static function set_locale($locale)
 	{
 		self::$locale = in_array($locale, self::get_available_langs()) ? $locale : self::get_default_lang();
 	}
-	
+
 	/**
-	 * @desc Returns the current language locale
+	 * Returns the current language locale
 	 * @return string the current language locale
 	 */
 	public static function get_locale()
@@ -60,13 +42,13 @@ class LangLoader
 	{
 		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
 		$langs_list = $langs_folder->get_folders();
-		
+
 		$available_langs = array();
 		foreach ($langs_list as $lang)
 		{
 			$available_langs[] = $lang->get_name();
 		}
-		
+
 		return $available_langs;
 	}
 
@@ -95,7 +77,7 @@ class LangLoader
 	}
 
 	/**
-	 * @desc Retrieves the language file <code>$filename</code> in
+	 * Retrieves the language file <code>$filename</code> in
 	 * <code>/$module/lang/$locale/$filename.php</code>
 	 * If module is empty, the kernel lang folder will be used
 	 * @param string $filename the language filename
@@ -133,7 +115,7 @@ class LangLoader
 	}
 
 	/**
-	 * @desc returns the real language file path, trying first to load the localized language file
+	 * returns the real language file path, trying first to load the localized language file
 	 * and if it's not possible, use the default locale one.
 	 * @param string $folder the folder to look in
 	 * @param string $filename the language filename
@@ -180,7 +162,7 @@ class LangLoader
 	}
 
 	/**
-	 * @desc clear the lang cache (for unit test only)
+	 * clear the lang cache (for unit test only)
 	 */
 	public static function clear_lang_cache()
 	{
