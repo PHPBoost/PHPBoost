@@ -1,59 +1,42 @@
 <?php
-/*##################################################
- *		                   Image.class.php
- *                            -------------------
- *   begin                : July 11, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc This class allows you to obtain informations on an image.
- * @package {@package}
- */
+ * This class allows you to obtain informations on an image.
+ * @package     IO
+ * @subpackage  Image
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 3.0 - 2010 07 11
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Image extends FileSystemElement
 {
 	private $properties;
-	
+
 	public function __construct($path)
 	{
 		$this->path = $path;
 		$this->properties = $this->get_properties();
 	}
-	
+
 	/**
-	 * @desc Return Array value properties of the image 
+	 * Return Array value properties of the image
 	 * @return Array properties
 	 */
 	private function get_properties()
 	{
 		return @getimagesize($this->path);
 	}
-	
+
 	public function get_path()
 	{
 		return $this->path;
 	}
-	
+
 	public function get_width()
 	{
 		return is_array($this->properties) ? $this->properties[0] : 0;
@@ -63,44 +46,44 @@ class Image extends FileSystemElement
 	{
 		return is_array($this->properties) ? $this->properties[1] : 0;
 	}
-	
+
 	public function get_mime_type()
 	{
 		return is_array($this->properties) ? $this->properties['mime'] : null;
 	}
-	
+
 	/**
-	 * @desc Return Size image
+	 * Return Size image
 	 * @return Size image in bytes
 	 */
 	public function get_size()
 	{
 		return filesize($this->path);
 	}
-	
+
 	public function get_name_and_extension()
 	{
 		$explode = explode('/', $this->path);
 		return array_pop($explode);
 	}
-	
+
 	public function get_extension()
 	{
 		$filename = $this->get_name_and_extension();
 		return TextHelper::strtolower(TextHelper::substr(TextHelper::strrchr($filename, '.'), 1));
 	}
-	
+
 	public function get_name()
 	{
 		$filename = $this->get_name_and_extension();
 		return TextHelper::substr($filename, 0, TextHelper::strpos($filename, '.'));
 	}
-	
+
 	public function get_folder_image()
 	{
 		return dirname($this->path);
 	}
-	
+
 	function delete()
 	{
 		$file = new File($this->path);

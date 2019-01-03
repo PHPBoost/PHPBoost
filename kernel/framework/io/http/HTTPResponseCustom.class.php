@@ -1,35 +1,18 @@
 <?php
-/*##################################################
- *                             HTTPResponseCustom.class.php
- *                            -------------------
- *   begin                : Januar 23, 2010
- *   copyright            : (C) 2010 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc Manages response via the HTTP protocol
- * @package {@package}
- */
+ * Manages response via the HTTP protocol
+ * @package     IO
+ * @subpackage  HTTP
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 23
+ * @since       PHPBoost 3.0 - 2010 01 23
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class HTTPResponseCustom
 {
 	const PROTOCOL = 'HTTP/1.1';
@@ -84,7 +67,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Send header to client.
+	 * Send header to client.
 	 * @param string $url
 	 */
 	public function set_header($name, $value)
@@ -93,7 +76,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Set defaut headers for the response.
+	 * Set defaut headers for the response.
 	 * @param string $url
 	 */
 	public function set_default_attributes()
@@ -105,7 +88,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
+	 * Redirects the user to the URL and stops purely the script execution (database deconnexion...).
 	 * @param string $url URL at which you want to redirect the user.
 	 */
 	public function redirect($url, $message = '', $message_type = MessageHelper::SUCCESS, $message_duration = 5)
@@ -115,7 +98,7 @@ class HTTPResponseCustom
 			$url = new Url($url);
 		}
 		$url = $url->absolute();
-		
+
 		if (!empty($message))
 		{
 			$this->set_cookie(new HTTPCookie('message', $message, time() + 3600));
@@ -135,9 +118,9 @@ class HTTPResponseCustom
 	{
 		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(), $cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
 	}
-	
+
 	/**
-	 * @desc Deletes the cookie
+	 * Deletes the cookie
 	 * @param string $cookie_name the name of the cookie to delete
 	 */
 	public function delete_cookie($cookie_name)
@@ -146,7 +129,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Clean the output buffer.
+	 * Clean the output buffer.
 	 */
 	public function clean_output()
 	{
@@ -155,7 +138,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Returns the previous output buffer content.
+	 * Returns the previous output buffer content.
 	 * @return string the previous output buffer content.
 	 */
 	public function get_previous_ob_content()
@@ -164,7 +147,7 @@ class HTTPResponseCustom
 	}
 
 	/**
-	 * @desc Send the status code
+	 * Send the status code
 	 * @param int $status_code
 	 */
 	public function set_status_code($status_code)

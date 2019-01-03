@@ -1,38 +1,16 @@
 <?php
-/*##################################################
- *                           MySQLDBConnection.class.php
- *                            -------------------
- *   begin                : October 1, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
-
-
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- * @desc
- */
+ * @package     IO
+ * @subpackage  DB\driver\mysql
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 09 09
+ * @since       PHPBoost 3.0 - 2009 10 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class MySQLDBConnection implements DBConnection
 {
 	/**
@@ -51,7 +29,7 @@ class MySQLDBConnection implements DBConnection
 		{
 			throw new DBConnectionException('Unable to load mysqli extension');
 		}
-		
+
 		$mysqli_link = @mysqli_connect(
 			$db_connection_data['host'],
 			$db_connection_data['login'],
@@ -59,7 +37,7 @@ class MySQLDBConnection implements DBConnection
 			"",
 			$db_connection_data['port']
 		);
-		
+
 		if ($mysqli_link)
 		{
 			$this->link = $mysqli_link;
@@ -115,7 +93,7 @@ class MySQLDBConnection implements DBConnection
 			throw new MySQLQuerierException('invalid mysql command', $command);
 		}
 	}
-	
+
 	private function select_database($database)
 	{
 		if (!@mysqli_select_db($this->link, $database))

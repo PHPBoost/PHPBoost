@@ -1,11 +1,16 @@
 <?php
-
 /**
  * Type that maps a database BIGINT to a PHP string.
- *
- * @author robo
- * @since 2.0
- */
+ * @package     Doctrine
+ * @subpackage  DBAL\Types
+ * @category    Framework
+ * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
+ * @link        https://www.doctrine-project.org
+ * @author      robo
+ * @version     PHPBoost 5.2 - last update: 2013 01 01
+ * @since       PHPBoost 4.0 - 2013 01 01
+*/
+
 class BigIntType extends Type
 {
     public function getName()

@@ -1,42 +1,27 @@
 <?php
-/*##################################################
- *                               File.class.php
- *                            -------------------
- *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel, Loic Rouchon
- *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
- * @desc This class represents a text file which can be read and written.
- */
+ * This class represents a text file which can be read and written.
+ * @package     IO
+ * @subpackage  Filesystem
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Nicolas Duhamel <akhenathon2@gmail.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 07
+ * @since       PHPBoost 2.0 - 2008 07 06
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class File extends FileSystemElement
 {
 	const READ = 0x1;
 	const WRITE = 0x2;
 	const APPEND = 0x3;
 	private static $BUFFER_SIZE = 8192;
-	
+
 	/**
 	 * @var string Content of the file
 	 */
@@ -51,7 +36,7 @@ class File extends FileSystemElement
 	private $file_descriptor;
 
 	/**
-	 * @desc Builds a File object.
+	 * Builds a File object.
 	 * @param string $path Path of the file you want to work with.
 	 * @param int $mode If you want to open it only to read it, use the flag File::READ, if it's to write it use the File::WRITE flag, you also can use the File::READ_WRITE flag.
 	 * @param bool $whenopen If you want to open the file now, use the File::DIRECT_OPENING constant, if you want to open it only when you will need it, use the File::LAZY_OPENING constant.
@@ -65,9 +50,9 @@ class File extends FileSystemElement
 	{
 		$this->close();
 	}
-	
+
 	/**
-	 * @desc Returns the element name without extension.
+	 * Returns the element name without extension.
 	 * @return string The element name without extension.
 	 */
 	public function get_name_without_extension()
@@ -75,9 +60,9 @@ class File extends FileSystemElement
 		$name = $this->get_name();
 		return mb_substr($name, 0, mb_strpos($name, '.'));
 	}
-	
+
 	/**
-	 * @desc Returns the extension of the element.
+	 * Returns the extension of the element.
 	 * @return string Element extension.
 	 */
 	public function get_extension()
@@ -85,9 +70,9 @@ class File extends FileSystemElement
 		$name = $this->get_name();
 		return mb_substr(mb_strrchr($name,'.'), 1);
 	}
-	
+
 	/**
-	 * @desc Returns the content of the file.
+	 * Returns the content of the file.
 	 * @param int $start Byte from which you want to start. 0 if you want to read the file from its begening, 1 to start with the second etc.
 	 * @param int $len Number of bytes you want to read.
 	 * @return string The read content.
@@ -117,7 +102,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the content of the file grouped by lines.
+	 * Returns the content of the file grouped by lines.
 	 * @return string[] The list of the lines of the file.
 	 */
 	public function read_lines()
@@ -126,7 +111,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Writes some text in the file. Erases the file previous content
+	 * Writes some text in the file. Erases the file previous content
 	 * @param string $data The text you want to write in the file.
 	 * @throws IOException If it's not possible to write the file
 	 */
@@ -141,7 +126,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Appends some text at the end of the file.
+	 * Appends some text at the end of the file.
 	 * @param string $data The text you want to write in the file.
 	 * @throws IOException If it's not possible to write the file
 	 */
@@ -156,7 +141,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc empty the file
+	 * empty the file
 	 */
 	public function erase()
 	{
@@ -169,7 +154,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Closes a file and frees the allocated memory relative to the file.
+	 * Closes a file and frees the allocated memory relative to the file.
 	 */
 	public function close()
 	{
@@ -182,7 +167,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Deletes the file.
+	 * Deletes the file.
 	 * @throws IOException if the file cannot been deleted
 	 */
 	public function delete()
@@ -198,7 +183,7 @@ class File extends FileSystemElement
 
 	/**
 	 * @param bool $blocking if true, block the script, if false, non blocking operation
-	 * @desc Locks the file (it won't be readable by another thread which could try to access it).
+	 * Locks the file (it won't be readable by another thread which could try to access it).
 	 * @throws IOException if the file cannot been locked
 	 */
 	public function lock($blocking = true)
@@ -218,7 +203,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Unlocks a file. The file must have been locked before you call this method.
+	 * Unlocks a file. The file must have been locked before you call this method.
 	 * @throws IOException if the file cannot been unlocked
 	 */
 	public function unlock()
@@ -237,7 +222,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Forces the system to write all the buffered output.
+	 * Forces the system to write all the buffered output.
 	 */
 	public function flush()
 	{
@@ -248,7 +233,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the date of the last modification of the file.
+	 * Returns the date of the last modification of the file.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
 	public function get_last_modification_date()
@@ -257,7 +242,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the last access date of the file.
+	 * Returns the last access date of the file.
 	 * @return int The UNIX timestamp corresponding to the last access date of the file.
 	 */
 	public function get_last_access_date()
@@ -266,7 +251,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the size of the file.
+	 * Returns the size of the file.
 	 * @return int The size of the file in bytes.
 	 */
 	public function get_file_size()
@@ -275,7 +260,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
+	 * Opens the file. You cannot read or write a closed file, use this method to open it.
 	 * @throws IOException If the file can neither been read nor created.
 	 */
 	public function open($mode)
@@ -306,7 +291,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc Allows you to know if the file is already open.
+	 * Allows you to know if the file is already open.
 	 * @return bool true if the file is open, false if it's closed.
 	 */
 	private function is_open()

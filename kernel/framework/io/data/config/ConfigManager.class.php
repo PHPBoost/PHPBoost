@@ -1,33 +1,6 @@
 <?php
-/*##################################################
- *                         ConfigManager.class.php
- *                            -------------------
- *   begin                : September 16, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class manages config loading and saving. It makes a two-level lazy loading:
+ * This class manages config loading and saving. It makes a two-level lazy loading:
  * <ul>
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the
  * beginning of the current page generation. This cache has a short life span: it's flushed
@@ -36,8 +9,17 @@
  * This cache is less powerful than the previous one but it has an infinite life span. Indeed, it's
  * valid until the value changes and the manager is asked to store it</li>
  * </ul>
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     IO
+ * @subpackage  Data\config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 03 13
+ * @since       PHPBoost 3.0 - 2009 09 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class ConfigManager
 {
 	/**
@@ -85,7 +67,7 @@ class ConfigManager
 				$data = new $classname();
                 $data->set_default_values();
 			}
-			
+
 			return $data;
 		}
 	}
@@ -144,7 +126,7 @@ class ConfigManager
 
 		CacheManager::save($data, $module_name, $entry_name);
 	}
-	
+
 	/**
 	 * Delete an configuration in the database and the cache
 	 * @param string $module_name Name of the module owning this entry
@@ -158,10 +140,10 @@ class ConfigManager
 			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', array('name' => $name));
 		} catch (MySQLQuerierException $e) {
 		}
-		
+
 		CacheManager::invalidate($module_name, $entry_name);
 	}
-	
+
 	private static function save_in_db($name, ConfigData $data)
 	{
 		$serialized_data = TextHelper::serialize($data);

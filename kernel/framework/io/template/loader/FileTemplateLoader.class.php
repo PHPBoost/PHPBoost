@@ -1,42 +1,24 @@
 <?php
-/*##################################################
- *                        FileTemplateLoader.class.php
- *                            -------------------
- *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This loader is the most used. It takes a file identifier as input. This identifier corresponds
+ * This loader is the most used. It takes a file identifier as input. This identifier corresponds
  * to a file that can be different from the user's theme. In fact, when it loads a template, its looks for
  * it at several places. For a module template, it can be the default one which is in the /module/templates directory,
  * but if the file is specialized by the theme, it loads it from the theme directory. All that is explained
  * in the {@link FileTemplate} class description.
  * This loader supports caching and stores cache files in the /cache/tpl directory, their name are related to
  * their source's real path.
- * @see FileTemplate
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- */
+ * @package     IO
+ * @subpackage  Template\loader
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 04 25
+ * @since       PHPBoost 3.0 - 2009 06 18
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
@@ -52,7 +34,7 @@ class FileTemplateLoader implements TemplateLoader
 	private $theme_templates_folder;
 
 	/**
-	 * @desc Constructs a {@link FileTemplateLoader} from the file's identifier.
+	 * Constructs a {@link FileTemplateLoader} from the file's identifier.
 	 * @param string $identifier The file's identifier
 	 * @param TemplateData $data The data which is associated to the loader. It is used to assign
 	 * the PICTURES_DATA_PATH variable that corresponds the the module's pictures data path (it depends on
@@ -71,7 +53,7 @@ class FileTemplateLoader implements TemplateLoader
 		$template_folder = new Folder(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
 		if (!$template_folder->exists())
 			mkdir(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
-		
+
 		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme() . '/' . trim(str_replace(
 		array('/', '.', '..', 'tpl', 'templates'),
 		array('_', '', '', '', 'tpl'),
@@ -135,7 +117,7 @@ class FileTemplateLoader implements TemplateLoader
 	}
 
 	/**
-	 * @desc Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
+	 * Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
 	 * @return string The path to load.
 	 */
 	private function compute_real_file_path()
@@ -225,7 +207,7 @@ class FileTemplateLoader implements TemplateLoader
 				break;
 			}
 		}
-		
+
 		foreach ($paths as $path)
 		{
 			if (file_exists($path))
@@ -265,7 +247,7 @@ class FileTemplateLoader implements TemplateLoader
 		}
 		return $this->cache_filepath;
 	}
-	
+
 	public function get_pictures_data_path() {
 		return $this->pictures_data_path;
 	}

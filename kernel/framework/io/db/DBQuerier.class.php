@@ -1,35 +1,16 @@
 <?php
-/*##################################################
- *                           DBQuerier.class.php
- *                            -------------------
- *   begin                : October 5, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- * @desc implements some simple queries
- */
+ * implements some simple queries
+ * @package     IO
+ * @subpackage  DB
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2009 10 05
+*/
+
 class DBQuerier implements SQLQuerier
 {
 	/**
@@ -83,7 +64,7 @@ class DBQuerier implements SQLQuerier
 	}
 
     /**
-     * @desc Removes all table rows
+     * Removes all table rows
      * @param string $table_name the table name
      */
     public function truncate($table_name)
@@ -93,7 +74,7 @@ class DBQuerier implements SQLQuerier
     }
 
 	/**
-	 * @desc insert the values into the <code>$table_name</code> table
+	 * insert the values into the <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
 	 * @return InjectQueryResult the query result set
@@ -107,7 +88,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc update the values of rows matching the <code>$condition</code> into the
+	 * update the values of rows matching the <code>$condition</code> into the
 	 * <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
@@ -130,7 +111,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc delete all the row from the <code>$table_name</code> table matching the
+	 * delete all the row from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the update condition beginning just after the from clause.
@@ -144,7 +125,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc retrieve a single row from the <code>$table_name</code> table matching the
+	 * retrieve a single row from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[] $columns the columns to retrieve.
@@ -170,9 +151,9 @@ class DBQuerier implements SQLQuerier
 		$query_result->dispose();
 		return $result;
 	}
-	
+
 	/**
-	 * @desc retrieve a single row for executes the <code>$query</code> sql request and returns row
+	 * retrieve a single row for executes the <code>$query</code> sql request and returns row
 	 * @param string $query the query to execute
 	 * @param string[string] $parameters the query_var map
 	 * @return mixed the value of the returned row
@@ -180,7 +161,7 @@ class DBQuerier implements SQLQuerier
 	public function select_single_row_query($query, $parameters = array())
 	{
 		$query_result = self::select($query, $parameters, SelectQueryResult::FETCH_ASSOC);
-		
+
 		$query_result->rewind();
 		if (!$query_result->valid())
 		{
@@ -195,9 +176,9 @@ class DBQuerier implements SQLQuerier
 		$query_result->dispose();
 		return $result;
 	}
-	
+
 	/**
-	 * @desc Returns true if a or multiple rows match the given condition.
+	 * Returns true if a or multiple rows match the given condition.
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the condition beginning just after the where clause.
 	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
@@ -210,7 +191,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc retrieve a single value of the <code>$column</code> column of a single row from the
+	 * retrieve a single value of the <code>$column</code> column of a single row from the
 	 * <code>$table_name</code> table matching the <code>$condition</code> condition.
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $column the column to retrieve.
@@ -226,7 +207,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc retrieve rows from the <code>$table_name</code> table matching the
+	 * retrieve rows from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[] $columns the columns to retrieve.
@@ -243,7 +224,7 @@ class DBQuerier implements SQLQuerier
 	}
 
 	/**
-	 * @desc count the number of rows from the <code>$table_name</code> table matching the
+	 * count the number of rows from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the update condition beginning just after the where clause.
@@ -263,7 +244,7 @@ class DBQuerier implements SQLQuerier
 		$row = $this->querier->select($query, $parameters, SelectQueryResult::FETCH_NUM)->fetch();
 		return (int) $row[0];
 	}
-	
+
 	public function get_querier()
 	{
 		return $this->querier;

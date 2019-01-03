@@ -1,36 +1,20 @@
 <?php
-/*##################################################
- *                      file_system_element.class.php
- *                            -------------------
- *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel, Loic Rouchon
- *   email                : akhenathon2@gmail.com, loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @abstract
- * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
- * @desc This class represents any file system element.
- */
+ * This class represents any file system element.
+ * @package     IO
+ * @subpackage  Filesystem
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Nicolas Duhamel <akhenathon2@gmail.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 07
+ * @since       PHPBoost 2.0 - 2008 07 06
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor ph-7 <me@ph7.me>
+*/
+
 abstract class FileSystemElement
 {
 	/**
@@ -39,7 +23,7 @@ abstract class FileSystemElement
 	protected $path;
 
 	/**
-	 * @desc Builds a FileSystemElement object from the path of the element.
+	 * Builds a FileSystemElement object from the path of the element.
 	 * @param string $path Path of the element
 	 */
 	protected function __construct($path)
@@ -48,7 +32,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Allows you to know if the file system element exists.
+	 * Allows you to know if the file system element exists.
 	 * @return bool True if the file exists, else, false.
 	 */
 	public function exists()
@@ -57,7 +41,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the element full path.
+	 * Returns the element full path.
 	 * @return string The element full path.
 	 */
 	public function get_path()
@@ -66,7 +50,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the element path from the phpboost root.
+	 * Returns the element path from the phpboost root.
 	 * @return string The element from the phpboost root.
 	 */
 	public function get_path_from_root()
@@ -80,7 +64,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the element name.
+	 * Returns the element name.
 	 * @return string The element name.
 	 */
 	public function get_name()
@@ -94,7 +78,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Returns true if the file or the folder is writable.
+	 * Returns true if the file or the folder is writable.
 	 * @param bool $force_chmod If true, then, chmod will be forced to 777 if not writable.
 	 * @return true if the file or the folder is writable.
 	 */
@@ -116,7 +100,7 @@ abstract class FileSystemElement
 	}
 
 	/**
-	 * @desc Changes the chmod of the element.
+	 * Changes the chmod of the element.
 	 * @param int $chmod The new chmod of the file. Put a 0 at the begening of the number to indicate to the PHP parser that it's an octal value.
 	 * @return true if the chmod has been successfully changed.
 	 */
@@ -131,7 +115,7 @@ abstract class FileSystemElement
 
 	/**
 	 * @abstract
-	 * @desc Deletes the element
+	 * Deletes the element
 	 */
 	public abstract function delete();
 }

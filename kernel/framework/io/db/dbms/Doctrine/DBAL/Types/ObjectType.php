@@ -1,10 +1,16 @@
 <?php
-
 /**
  * Type that maps a PHP object to a clob SQL type.
- *
- * @since 2.0
- */
+ * @package     Doctrine
+ * @subpackage  DBAL\Types
+ * @category    Framework
+ * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
+ * @link        https://www.doctrine-project.org
+ * @version     PHPBoost 5.2 - last update: 2016 10 30
+ * @since       PHPBoost 4.0 - 2013 01 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class ObjectType extends Type
 {
     public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
