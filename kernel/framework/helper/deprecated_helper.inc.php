@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                             deprecated_helper.inc.php
- *                            -------------------
- *   begin                : Januar 22, 2010
- *   copyright            : (C) 2010 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     Helper
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 26
+ * @since       PHPBoost 3.0 - 2010 01 22
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 ### Variable types ###
 define('GET', 		1);
@@ -48,10 +34,10 @@ define('TUNSIGNED_FLOAT', 	'udouble');
 define('TNONE', 			'none');
 
 define('USE_DEFAULT_IF_EMPTY', 1);
-		
+
 /**
  * @deprecated
- * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
+ * Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
  * @param int $var_type The origin of the variable: GET if it's a parameter in the request URL, POST if the variable was in a formulary,
  * COOKIE if the variables come from a cookie and FILES if it's a file.
  * @param string $var_name Name of a HTTP variable you want to retrieve.
@@ -81,7 +67,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 {
 	$var = null;
 	$request = AppContext::get_request();
-	
+
 	switch ($var_type)
 	{
 		case GET:
@@ -159,7 +145,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 }
 /**
  * @deprecated
- * @desc Adds the session ID to an URL if the user doesn't accepts cookies.
+ * Adds the session ID to an URL if the user doesn't accepts cookies.
  * This functions allows you to generate an URL according to the site configuration concerning the URL rewriting.
  * @param string $url URL if the URL rewriting is disabled
  * @param string $mod_rewrite URL if the URL rewriting is enabled
@@ -180,7 +166,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 
 /**
  * @deprecated
- * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
+ * Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
  * @param string $module_name The identifier of the module for which you want to load the lang file.
  * @param string Path of the folder in which is the file. This path mustn't finish by the / character.
@@ -189,9 +175,9 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
 	global $LANG;
-	
+
 	$user_locale = AppContext::get_current_user()->get_locale();
-	
+
 	$module_lang_file = $path . '/lang/' . $user_locale . '/modules/' . $module_name . '/' . $module_name . '_' . $user_locale . '.php';
 	if (file_exists($module_lang_file))
 	{
@@ -222,7 +208,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 
 /**
  * @deprecated
- * @desc Loads a configuration file. You choose a bases path, and you specify a folder name in which you file should be found, if it doesn't exist, it will take a file in another folder.
+ * Loads a configuration file. You choose a bases path, and you specify a folder name in which you file should be found, if it doesn't exist, it will take a file in another folder.
  * It's very interesting when you want to
  * @param string $dir_path Path of the file (relative from this page).
  * @param string $require_dir The name of the folder in which the configuration file should be. This folder must be in the bases file ($dir_path). If this directory doesn't exist, another will be read.
@@ -247,7 +233,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
 /**
  * @deprecated
- * @desc Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.
+ * Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.
  * If it doesn't exist, you want to choose the file in another language.
  * This function returns the path of an existing file (if the required lang exists, it will be it, otherwise it will be one of the existing files).
  * @param string $dir_path Path of the folder in which you want to search
