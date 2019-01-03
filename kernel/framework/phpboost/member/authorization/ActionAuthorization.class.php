@@ -1,38 +1,21 @@
 <?php
-/*##################################################
- *                         ActionAuthorization.class.php
- *                            -------------------
- *   begin                : March, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class represents the authorizations for an action. It's associated to a label, 
+ * This class represents the authorizations for an action. It's associated to a label,
  * a description, the bit in which flags are saved, and obviously the authorization array which is
  * encapsulated in the RolesAuthorizations class.
- * The bit which is used to store the authorization is 2^n where n is the number of the place you want 
- * to use. It's recommanded to begin with 1 (2^0 = 1) then 2 (2^1 = 2) then 4 (2^2 = 4) etc... 
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * The bit which is used to store the authorization is 2^n where n is the number of the place you want
+ * to use. It's recommanded to begin with 1 (2^0 = 1) then 2 (2^1 = 2) then 4 (2^2 = 4) etc...
+ * @package     PHPBoost
+ * @subpackage  Member\authorization
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 05
+ * @since       PHPBoost 3.0 - 2010 03 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class ActionAuthorization
 {
 	private $label;
@@ -42,11 +25,11 @@ class ActionAuthorization
 	 * @var RolesAuthorizations
 	 */
 	private $roles;
-	
+
 	private $disabled_ranks = array();
 
 	/**
-	 * @desc Builds an ActionAuthorization from its properties
+	 * Builds an ActionAuthorization from its properties
 	 * @param string $label The label
 	 * @param int $bit The bit used to store authorizations (2^number)
 	 * @param string $description The description to use
@@ -70,7 +53,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Returns the label
+	 * Returns the label
 	 * @return string The label
 	 */
 	public function get_label()
@@ -79,7 +62,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets the label
+	 * Sets the label
 	 * @param string $label The label to set
 	 */
 	public function set_label($label)
@@ -88,7 +71,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Returns the bit which is used to store the authorization flags.
+	 * Returns the bit which is used to store the authorization flags.
 	 * @return int The bit (see the {@link #set_bit()} to know how the bit is built
 	 */
 	public function get_bit()
@@ -97,7 +80,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets the bit corresponding to the autorization flags.
+	 * Sets the bit corresponding to the autorization flags.
 	 * @param int $bit The bit to use. It's an integer whose boolean representation is 0 everywhere but 1 where the flag is.
 	 * In fact it's 2^n where n is the number of the bit to use.
 	 */
@@ -107,7 +90,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Returns the action description
+	 * Returns the action description
 	 * @return string the description
 	 */
 	public function get_description()
@@ -116,7 +99,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets the description associated to the action
+	 * Sets the description associated to the action
 	 * @param string $description The description
 	 */
 	public function set_description($description)
@@ -125,7 +108,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Returns the roles authorizations associated to this action
+	 * Returns the roles authorizations associated to this action
 	 * @return RolesAuthorizations
 	 */
 	public function get_roles_auths()
@@ -134,7 +117,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets the roles authorizations
+	 * Sets the roles authorizations
 	 * @param RolesAuthorizations $roles The roles
 	 */
 	public function set_roles_auths(RolesAuthorizations $roles)
@@ -143,7 +126,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Returns the disabled ranks in select associated to this action
+	 * Returns the disabled ranks in select associated to this action
 	 * @return mixed[] The disabled ranks
 	 */
 	public function get_disabled_ranks()
@@ -152,7 +135,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets the disabled ranks in select
+	 * Sets the disabled ranks in select
 	 * @param mixed[] $disabled_ranks The ranks to disable
 	 */
 	public function set_disabled_ranks(Array $disabled_ranks)
@@ -161,7 +144,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Builds the array at the legacy format containing only the action's authorizations.
+	 * Builds the array at the legacy format containing only the action's authorizations.
 	 * @return mixed[] The array at the legacy format.
 	 */
 	public function build_auth_array()
@@ -175,7 +158,7 @@ class ActionAuthorization
 	}
 
 	/**
-	 * @desc Sets authorizations from a array at the legacy format. 
+	 * Sets authorizations from a array at the legacy format.
 	 * @param array $auth_array The array to read
 	 */
 	public function build_from_auth_array(array $auth_array)

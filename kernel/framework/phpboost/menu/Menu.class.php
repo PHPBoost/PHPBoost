@@ -1,36 +1,17 @@
 <?php
-/*##################################################
- *                             Menu.class.php
- *                            -------------------
- *   begin                : November 15, 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This class represents a menu element and is used to build any kind of menu
- * @abstract
- * @package {@package}
- */
+ * This class represents a menu element and is used to build any kind of menu
+ * @package     PHPBoost
+ * @subpackage  Menu
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 07 26
+ * @since       PHPBoost 2.0 - 2008 11 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 abstract class Menu
 {
 	const MENU_AUTH_BIT = 1;
@@ -48,9 +29,9 @@ abstract class Menu
 	const BLOCK_POSITION__LEFT = 7;
 	const BLOCK_POSITION__RIGHT = 8;
 	const BLOCK_POSITION__ALL = 9;
-	
+
 	const MENU__CLASS = 'Menu';
-	
+
 	/**
 	 * @access protected
 	 * @var int the element identifier, only used by the service
@@ -96,10 +77,10 @@ abstract class Menu
 	 * @var Template the template of the menu
 	 */
 	protected $template = null;
-	
-	
+
+
 	/**
-	 * @desc Build a Menu element.
+	 * Build a Menu element.
 	 * @param string $title the Menu title
 	 * @param int $id its id in the database
 	 */
@@ -108,39 +89,39 @@ abstract class Menu
 		$this->title = TextHelper::strprotect($title, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 		$this->filters[] = new MenuStringFilter('/');
 	}
-	
+
 	/**
-	 * @desc Check if the menu needs to be cached
+	 * Check if the menu needs to be cached
 	 * @return bool true if the menu need to be cached
 	 */
 	public function need_cached_string()
 	{
 		return false;
 	}
-	
+
 	/**
-	 * @desc Display the menu
+	 * Display the menu
 	 * @abstract
 	 * @return string the menu parsed in xHTML
 	 */
 	abstract public function display();
-	
+
 	/**
-	 * @desc Display the menu admin gui
+	 * Display the menu admin gui
 	 * @return string the menu parsed in xHTML
 	 */
 	public function admin_display()
 	{
 		return $this->display();
 	}
-	
+
 	/**
 	 * @param int $id Set the Menu database id
 	 */
 	public function id($id) { $this->id = $id; }
-	
+
 	/**
-	 * @desc Assign tpl vars
+	 * Assign tpl vars
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars
 	 */
@@ -148,9 +129,9 @@ abstract class Menu
 	{
 		MenuService::assign_positions_conditions($template, $this->get_block());
 	}
-	
+
 	/**
-	 * @desc Assign default tpl vars
+	 * Assign default tpl vars
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars
 	 */
@@ -161,16 +142,16 @@ abstract class Menu
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
 		));
 	}
-	
+
 	/**
-	 * @desc Check the user authorization to see the LinksMenuElement
+	 * Check the user authorization to see the LinksMenuElement
 	 * @return bool true if the user is authorised, false otherwise
 	 */
 	public function check_auth()
 	{
 		return $this->auth === null || AppContext::get_current_user()->check_auth($this->auth, self::MENU_AUTH_BIT);
 	}
-	
+
 	## Setters ##
 	/**
 	 * @param string $image the value to set
@@ -266,9 +247,9 @@ abstract class Menu
 			return $this->get_default_template();
 		}
 	}
-	
+
 	/**
-	* @desc Get the default template of the menu
+	* Get the default template of the menu
 	* @abstract
 	* @return string the default template of the menu
 	*/

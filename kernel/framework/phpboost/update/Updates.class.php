@@ -1,50 +1,31 @@
 <?php
-/*##################################################
- *                             Updates.class.php
- *                            -------------------
- *   begin                : August 17 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     PHPBoost
+ * @subpackage  Update
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 12 24
+ * @since       PHPBoost 2.0 - 2008 08 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 define('CHECK_KERNEL', 0X01);
 define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
 define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
-/**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc
- * @package {@package}
- */
 class Updates
 {
 	private $repositories = array();
 	private $apps = array();
-	
+
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'https://www.phpboost.com/repository/main.xml';
 	const PHP_MIN_VERSION_UPDATES = '5';
-	
+
 	/**
-	* @desc constructor of the class
+	* constructor of the class
 	* @param $checks
 	*/
 	public function __construct($checks = CHECK_ALL_UPDATES)
@@ -55,7 +36,7 @@ class Updates
 	}
 
 	/**
-	* @desc Load Application Classes
+	* Load Application Classes
 	* @param $checks
 	*/
 	private function load_apps($checks = CHECK_ALL_UPDATES)
@@ -96,7 +77,7 @@ class Updates
 	}
 
 	/**
-	* @desc Load Repository Classes
+	* Load Repository Classes
 	*/
 	private function load_repositories()
 	{
@@ -112,7 +93,7 @@ class Updates
 	}
 
 	/**
-	* @desc Check Repository for Update Notification
+	* Check Repository for Update Notification
 	*/
 	private function check_repositories()
 	{
@@ -130,7 +111,7 @@ class Updates
 	}
 
 	/**
-	* @desc Save an alert for Update Notification
+	* Save an alert for Update Notification
 	*/
 	private function add_update_alert($app)
 	{
@@ -139,7 +120,7 @@ class Updates
 		if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
 		{
 			$alert = new AdministratorAlert();
-			
+
 			if ($app->get_type() == Application::KERNEL_TYPE)
 				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));
 			else

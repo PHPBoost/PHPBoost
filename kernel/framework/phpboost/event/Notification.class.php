@@ -1,35 +1,16 @@
 <?php
-/*##################################################
- *                          Notification.class.php
- *                            -------------------
- *   begin                : August 30, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Kévin MASSY <kevin.massy@phpboost.com>
- * @desc 
- */
+ * @package     PHPBoost
+ * @subpackage  Event
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2013 08 30
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Notification extends Event
 {
 	const NOTIFICATION_AUTH_BIT = 1;
@@ -37,7 +18,7 @@ class Notification extends Event
 	const NOTIFICATION_ALERT_LOW_PRIORITY = 2;
 	const NOTIFICATION_ALERT_MEDIUM_PRIORITY = 3;
 	const NOTIFICATION_ALERT_HIGH_PRIORITY = 4;
-	
+
 	/**
      * @var int Priority of the alert
      */
@@ -54,7 +35,7 @@ class Notification extends Event
 	private $auth = array();
 
 	/**
-	 * @desc Builds a Contribution object.
+	 * Builds a Contribution object.
 	 */
 	public function __construct()
 	{
@@ -63,7 +44,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Sets the module id from which the notification.
+	 * Sets the module id from which the notification.
 	 * @param string $module_id Module identifier (for example the name of the module folder).
 	 */
 	public function set_module_id($module_id)
@@ -72,7 +53,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Sets the fixing date.
+	 * Sets the fixing date.
 	 * @param Date $date Date
 	 */
 	public function set_fixing_date($date)
@@ -84,7 +65,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Sets the authorization of the notification. It will determines who can read notifications.
+	 * Sets the authorization of the notification. It will determines who can read notifications.
 	 * @param mixed[] $auth Auth array.
 	 */
 	public function set_auth($auth)
@@ -96,7 +77,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Gets the module from which the notification.
+	 * Gets the module from which the notification.
 	 * @return string The module identifier (for example the name of its folder).
 	 */
 	public function get_module_id()
@@ -105,7 +86,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Gets permission to read this notification
+	 * Gets permission to read this notification
 	 * @return mixed[] The authorization array.
 	 */
 	public function get_auth()
@@ -114,7 +95,7 @@ class Notification extends Event
 	}
 
 	/**
-	 * @desc Gets the name of the module from which the notification.
+	 * Gets the name of the module from which the notification.
 	 * @return string The module name.
 	 */
 	public function get_module_name()
@@ -122,7 +103,7 @@ class Notification extends Event
 		if (!empty($this->module_id))
 		{
 			$module = ModulesManager::get_module($this->module_id);
-			
+
 			return $module ? $module->get_configuration()->get_name() : '';
 		}
 		else

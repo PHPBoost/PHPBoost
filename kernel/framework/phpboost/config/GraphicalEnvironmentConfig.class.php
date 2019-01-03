@@ -1,33 +1,15 @@
 <?php
-/*##################################################
- *		             GraphicalEnvironmentConfig.class.php
- *                            -------------------
- *   begin                : July 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU GraphicalEnvironment Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU GraphicalEnvironment Public License for more details.
- *
- * You should have received a copy of the GNU GraphicalEnvironment Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 07 08
+*/
+
 class GraphicalEnvironmentConfig extends AbstractConfigData
 {
 	const VISIT_COUNTER_ENABLED = 'visit_counter_enabled';
@@ -43,22 +25,22 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	{
 		$this->set_property(self::VISIT_COUNTER_ENABLED, $enabled);
 	}
-	
+
 	public function get_display_theme_author()
 	{
 		return $this->get_property(self::DISPLAY_THEME_AUTHOR);
 	}
-	
+
 	public function set_display_theme_author($display)
 	{
 		$this->set_property(self::DISPLAY_THEME_AUTHOR, $display);
 	}
-	
+
 	public function is_page_bench_enabled()
 	{
 		return $this->get_property(self::PAGE_BENCH_ENABLED);
 	}
-	
+
 	public function set_page_bench_enabled($enabled)
 	{
 		$this->set_property(self::PAGE_BENCH_ENABLED, $enabled);

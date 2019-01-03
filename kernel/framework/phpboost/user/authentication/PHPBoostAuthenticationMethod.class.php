@@ -1,43 +1,25 @@
 <?php
-/*##################################################
- *                            PHPBoostAuthenticationMethod.class.php
- *                            -------------------
- *   begin                : November 28, 2010
- *   copyright            : (C) 2010 loic rouchon
- *   email                : horn@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <horn@phpboost.com>
- * @desc The AuthenticationMethod interface could be implemented in different ways to enable specifics
+ * The AuthenticationMethod interface could be implemented in different ways to enable specifics
  * authentication mecanisms.
  * PHPBoost comes with a PHPBoostAuthenticationMethod which will be performed on the internal member
  * list. But it is possible to implement external authentication mecanism by providing others
  * implementations of this class to support LDAP authentication, OpenID, Facebook connect and more...
- *
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  User\authentication
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 06 08
+ * @since       PHPBoost 3.0 - 2010 11 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class PHPBoostAuthenticationMethod extends AuthenticationMethod
 {
 	const AUTHENTICATION_METHOD = 'internal';
-	
+
 	private static $MAX_AUTHORIZED_ATTEMPTS = 5;
 	private static $MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY = 600;
 	private static $MAX_AUTHORIZED_ATTEMPTS_RESET_ATTEMPS = 0;
@@ -51,7 +33,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	private $login;
 	private $password;
-	
+
 	private $approved = true;
 	private $registration_pass = '';
 
@@ -70,7 +52,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$this->approved = $approved;
 		$this->registration_pass = $registration_pass;
 	}
-	
+
 	public function get_remaining_attemps()
 	{
 		return self::$MAX_AUTHORIZED_ATTEMPTS - $this->connection_attempts;
@@ -127,10 +109,10 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	{
 		if ($this->login)
 			return $this->try2authenticate();
-		
+
 		return false;
 	}
-	
+
 	private function try2authenticate()
 	{
 		$user_id = 0;
@@ -139,7 +121,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$user_id = $this->find_user_id_by_username();
 		}
 		catch (RowNotFoundException $ex) { }
-		
+
 		if (!empty($user_id))
 		{
 			$this->check_max_authorized_attempts();
@@ -154,31 +136,31 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 				$failure_id = $this->find_failure_login_tried_id_by_username();
 			}
 			catch (RowNotFoundException $ex) { }
-			
+
 			$this->check_max_authorized_attempts();
-			
+
 			$this->connection_attempts++;
 			$this->last_connection_date = time();
-			
+
 			$this->delete_too_old_failure_attemps();
-			
+
 			if (!empty($failure_id))
 				$this->update_failure_info($failure_id);
 			else
 				$this->insert_failure_info();
-			
+
 			$match = false;
 		}
-		
+
 		$auth_infos = array();
 		try {
 			$auth_infos = self::get_auth_infos($user_id);
 		} catch (RowNotFoundException $e) {
 		}
-		
+
 		if (!empty($auth_infos) && !$auth_infos['approved'])
 			$this->error_msg = LangLoader::get_message('registration.not-approved', 'user-common');
-		
+
 		if (!$match)
 		{
 			$remaining_attempts = $this->get_remaining_attemps();
@@ -191,9 +173,9 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 				$this->error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
 			}
 		}
-		
+
 		$this->check_user_bannishment($user_id);
-		
+
 		if ($match && !$this->error_msg)
 		{
 			$this->update_user_last_connection_date($user_id);
@@ -257,7 +239,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$parameters = array('user_id' => $user_id);
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
-	
+
 	public static function get_auth_infos($user_id)
 	{
 		$columns = array('login', 'password', 'approved');
@@ -288,7 +270,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 
 		UserService::regenerate_cache();
-		
+
 		if ($approved !== null && !$approved)
 		{
 			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
@@ -317,14 +299,14 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			return false;
 		}
 	}
-	
+
 	private function delete_too_old_failure_attemps()
 	{
 		$condition = 'WHERE last_connection < :reset_delay';
 		$parameters = array('reset_delay' => time() - self::$MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY);
 		$this->querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $condition, $parameters);
 	}
-	
+
 	private function find_failure_login_tried_id_by_username()
 	{
 		$columns = array('id', 'last_connection', 'connection_attemps');
@@ -335,7 +317,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$this->last_connection_date = $row['last_connection'];
 		return $row['id'];
 	}
-	
+
 	private function insert_failure_info()
 	{
 		$columns = array(
@@ -346,7 +328,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		);
 		$this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns);
 	}
-	
+
 	private function update_failure_info($failure_id)
 	{
 		$columns = array(

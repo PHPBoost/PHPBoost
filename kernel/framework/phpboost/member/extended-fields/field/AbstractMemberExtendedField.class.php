@@ -1,35 +1,19 @@
 <?php
-/*##################################################
- *                               MemberExtendedField.class.php
- *                            -------------------
- *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
- 
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @desc Abstract class that proposes a default implementation for the MemberExtendedFieldType interface.
- * @package {@package}
- */
+ * Abstract class that proposes a default implementation for the MemberExtendedFieldType interface.
+ * @package     PHPBoost
+ * @subpackage  Member\extended-fields\field
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 07 06
+ * @since       PHPBoost 3.0 - 2010 12 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 {
 	protected $lang;
@@ -38,7 +22,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	protected $field_used_phpboost_config;
 	protected $disable_fields_configuration = array();
 	protected $name;
-	
+
 	/**
 	 * @var bool
 	 */
@@ -49,7 +33,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$this->field_used_phpboost_config = false;
 		$this->name = 'ExtendedField';
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -58,7 +42,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$fieldset = $member_extended_field->get_fieldset();
 		return;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -67,12 +51,12 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$fieldset = $member_extended_field->get_fieldset();
 		return;
 	}
-	
+
 	public function delete_field(MemberExtendedField $member_extended_field)
 	{
 		return;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -83,7 +67,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 			return array('name' => $member_extended_field->get_name(), 'value' => $member_extended_field->get_value());
 		}
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -92,7 +76,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$field_name = $member_extended_field->get_field_name();
 		return TextHelper::htmlspecialchars($form->get_value($field_name, ''));
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -158,7 +142,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 			}
 		}
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -166,7 +150,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		return $this->disable_fields_configuration;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -174,7 +158,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		return $this->field_used_once;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -182,7 +166,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		$this->name = $name;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -190,7 +174,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		return $this->name;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -198,12 +182,12 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		return $this->field_used_phpboost_config;
 	}
-	
+
 	public function set_form(HTMLForm $form)
 	{
 		$this->form = $form;
 	}
-	
+
 	public function get_form()
 	{
 		return $this->form;

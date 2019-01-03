@@ -1,37 +1,19 @@
 <?php
-/*##################################################
- *                         ExtensionPointProviderService.class.php
- *                            -------------------
- *   begin                : January 15, 2008
- *   copyright            : (C) 2008 Rouchon Loic
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This class is a ExtensionPointProvider factory providing some services like
+ * This class is a ExtensionPointProvider factory providing some services like
  * mass operations (on several modules at the same time) or identifications
  * methods to get all ExtensionPointProvider that provide a given extension point
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  Extension-provider
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 01 15
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class ExtensionPointProviderService
 {
 	const EXTENSION_POINT_PROVIDER_SUFFIX = 'ExtensionPointProvider';
@@ -43,7 +25,7 @@ class ExtensionPointProviderService
 	private $available_providers_ids = array();
 
 	/**
-	 * @desc Builds a new ExtensionPointProvider factory
+	 * Builds a new ExtensionPointProvider factory
 	 */
 	public function __construct()
 	{
@@ -55,7 +37,7 @@ class ExtensionPointProviderService
 	}
 
     /**
-     * @desc Returns all extension point <code>$extension_point</code> registered implementations
+     * Returns all extension point <code>$extension_point</code> registered implementations
      * @param string $extension_point the requested extension point
      * @param string[] $authorized_providers_ids the extension point providers that are allowed
      * to provide the extension point. If not specified, all providers are allowed
@@ -73,7 +55,7 @@ class ExtensionPointProviderService
     }
 
 	/**
-	 * @desc Returns the ExtensionPointProvider list.
+	 * Returns the ExtensionPointProvider list.
 	 * @param string $extension_point the extension point name. By default, returns
 	 * all availables modules interfaces.
 	 * @param ExtensionPointProvider[] $providersList If specified, only keep modules
@@ -100,7 +82,7 @@ class ExtensionPointProviderService
 	}
 
 	/**
-	 * @desc Returns the ExtensionPointProvider of the provider which id is $provider_id.
+	 * Returns the ExtensionPointProvider of the provider which id is $provider_id.
 	 * @param string $provider_id The provider id.
 	 * @return ExtensionPointProvider The corresponding ExtensionPointProvider.
 	 * @throws UnexistingExtensionPointProviderException
@@ -120,7 +102,7 @@ class ExtensionPointProviderService
 	}
 
 	/**
-	 * @desc Returns true if the provider exists and has all the requested extensions points.
+	 * Returns true if the provider exists and has all the requested extensions points.
 	 * @param string $provider_id the provider id
 	 * @param mixed $extension_points the extension point list that the provider must provides.
 	 *   <ul>

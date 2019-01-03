@@ -1,33 +1,15 @@
 <?php
-/*##################################################
- *                      	 CommentsCache.class.php
- *                            -------------------
- *   begin                : September 24, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Cache
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2011 09 24
+*/
+
 class CommentsCache implements CacheData
 {
 	private $comments = array();
@@ -46,7 +28,7 @@ class CommentsCache implements CacheData
 			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
 			ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments()
 		);
-		
+
 		while ($row = $result->fetch())
 		{
 			$this->comments[$row['id']] = array(
@@ -68,7 +50,7 @@ class CommentsCache implements CacheData
 	{
 		return $this->comments;
 	}
-	
+
 	public function comment_exists($id)
 	{
 		return array_key_exists($id, $this->comments);
@@ -79,7 +61,7 @@ class CommentsCache implements CacheData
 		$comments = $this->get_comments_by_module($module_id, $id_in_module);
 		return !empty($comments);
 	}
-	
+
 	public function get_comment($id)
 	{
 		if ($this->comment_exists($id))
@@ -101,17 +83,17 @@ class CommentsCache implements CacheData
 		}
 		return $comments;
 	}
-	
+
 	public function get_count_comments_by_module($module_id, $id_in_module, $topic_identifier)
 	{
 		return count($this->get_comments_by_module($module_id, $id_in_module, $topic_identifier));
 	}
-	
+
 	public function get_count_comments()
 	{
 		return count($this->comments);
 	}
-	
+
 	/**
 	 * Loads and returns the comments cached data.
 	 * @return CommentsCache The cached data
@@ -120,7 +102,7 @@ class CommentsCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'kernel', 'comments');
 	}
-	
+
 	/**
 	 * Invalidates the current comments cached data.
 	 */
@@ -128,7 +110,7 @@ class CommentsCache implements CacheData
 	{
 		CacheManager::invalidate('kernel', 'comments');
 	}
-	
+
 	private function slice_comments(Array $comments, $offset, $lenght = 0)
 	{
 		if (empty($lenght))

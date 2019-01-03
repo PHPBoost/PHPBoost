@@ -1,33 +1,15 @@
 <?php
-/*##################################################
- *		                   ContentFormattingConfig.class.php
- *                            -------------------
- *   begin                : July 7, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU ContentFormatting Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU ContentFormatting Public License for more details.
- *
- * You should have received a copy of the GNU ContentFormatting Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 07 07
+*/
+
 class ContentFormattingConfig extends AbstractConfigData
 {
 	const DEFAULT_EDITOR = 'default_editor';
@@ -38,32 +20,32 @@ class ContentFormattingConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_EDITOR);
 	}
-	
+
 	public function set_default_editor($editor)
 	{
 		$this->set_property(self::DEFAULT_EDITOR, $editor);
 	}
-	
+
 	public function get_forbidden_tags()
 	{
 		return $this->get_property(self::FORBIDDEN_TAGS);
 	}
-	
+
 	public function set_forbidden_tags(array $forbidden_tags)
 	{
 		$this->set_property(self::FORBIDDEN_TAGS, $forbidden_tags);
 	}
-	
+
 	public function get_html_tag_auth()
 	{
 		return $this->get_property(self::HTML_TAG_AUTH);
 	}
-	
+
 	public function set_html_tag_auth(array $auth)
 	{
 		$this->set_property(self::HTML_TAG_AUTH, $auth);
 	}
-	
+
 	protected function get_default_values()
 	{
 		return array(

@@ -1,35 +1,20 @@
 <?php
-/*##################################################
- *                           HtaccessFileCache.class.php
- *                            -------------------
- *   begin                : October 22, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- ###################################################*/
-
 /**
  * This class contains the cache data of the .htaccess file which is located at the root of the site
  * and is used to change the Apache configuration only in the PHPBoost folder.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
- */
+ * @package     PHPBoost
+ * @subpackage  Cache
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 10
+ * @since       PHPBoost 3.0 - 2009 10 22
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class HtaccessFileCache implements CacheData
 {
 	private $htaccess_file_content = '';
@@ -44,44 +29,44 @@ class HtaccessFileCache implements CacheData
 		$this->htaccess_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		$this->server_environment_config = ServerEnvironmentConfig::load();
-		
+
 		$this->set_default_charset();
-		
+
 		$this->add_free_php56();
-		
+
 		$this->add_hide_directory_listings();
-		
+
 		$this->add_http_headers();
-		
+
 		if ($this->server_environment_config->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
-			
+
 			$this->force_redirection_if_available();
-			
+
 			$this->add_core_rules();
-			
+
 			$this->add_modules_rules();
-			
+
 			$this->add_user_rules();
-			
+
 			$this->add_php_and_http_protections();
-			
+
 			$this->add_file_and_sql_injections_protections();
-			
+
 			$this->add_bandwidth_protection();
 		}
-		
+
 		$this->add_error_redirection();
-		
+
 		$this->add_gzip_compression();
-		
+
 		$this->add_expires_headers();
-		
+
 		$this->disable_file_etags();
-		
+
 		$this->add_manual_content();
-		
+
 		$this->clean_file_content();
 	}
 
@@ -100,13 +85,13 @@ class HtaccessFileCache implements CacheData
 		$this->add_empty_line();
 		$this->add_line('# ' . $name . ' #');
 	}
-	
+
 	private function set_default_charset()
 	{
 		$this->add_section('Charset');
 		$this->add_line('AddDefaultCharset UTF-8');
 	}
-	
+
 	private function add_free_php56()
 	{
 		if(AppContext::get_request()->get_domain_name() == 'free.fr')
@@ -115,7 +100,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('php56 1');
 		}
 	}
-	
+
 	private function add_hide_directory_listings()
 	{
 		$this->add_section('Hide directory listings');
@@ -143,20 +128,20 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('</Files>');
 		}
 	}
-	
+
 	private function add_http_headers()
 	{
 		if(AppContext::get_request()->get_domain_name() != 'free.fr')
 		{
 			$this->add_section('HTTP Headers');
 			$this->add_line('<IfModule mod_headers.c>');
-			
+
 			if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_hsts_security_enabled())
 			{
 				$this->add_line('	# Tell the browser to attempt the HTTPS version first');
 				$this->add_line('	Header always set Strict-Transport-Security "max-age=' . $this->server_environment_config->get_hsts_security_duration() . '; ' . ($this->server_environment_config->is_hsts_security_subdomain_enabled() ? 'includeSubDomains;' : '') . '"');
 			}
-			
+
 			$this->add_line('	# Don\'t allow any pages to be framed externally - Defends against CSRF');
 			$this->add_line('	Header set X-Frame-Options SAMEORIGIN');
 			$this->add_line('	# Control Cross-Domain Policies');
@@ -198,7 +183,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
-		
+
 		// Generate high priority rewriting rules
 		$first_high_priority_mapping = true;
 		foreach ($modules as $module)
@@ -216,16 +201,16 @@ class HtaccessFileCache implements CacheData
 							$this->add_section('High Priority Modules rules');
 							$first_high_priority_mapping = false;
 						}
-						
+
 						$this->add_section($id);
 						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 					}
 				}
 			}
 		}
-		
+
 		$this->add_section('Modules rules');
-		
+
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
@@ -243,7 +228,7 @@ class HtaccessFileCache implements CacheData
 			{
 				$this->add_section($id);
 				$provider = $eps->get_provider($id);
-				
+
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping)
@@ -258,7 +243,7 @@ class HtaccessFileCache implements CacheData
 				}
 			}
 		}
-		
+
 		// Generate low priority rewriting rules
 		$first_low_priority_mapping = true;
 		foreach ($modules as $module)
@@ -276,7 +261,7 @@ class HtaccessFileCache implements CacheData
 							$this->add_section('Low Priority Modules rules');
 							$first_low_priority_mapping = false;
 						}
-						
+
 						$this->add_section($id);
 						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 					}
@@ -284,7 +269,7 @@ class HtaccessFileCache implements CacheData
 			}
 		}
 	}
-	
+
 	private function add_user_rules()
 	{
 		$this->add_section('User');
@@ -308,7 +293,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 		}
 	}
-	
+
 	private function add_php_and_http_protections()
 	{
 		$this->add_section('PHP and HTTP protections');
@@ -323,7 +308,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})');
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
-	
+
 	private function add_file_and_sql_injections_protections()
 	{
 		$this->add_section('File and SQL injections protections');
@@ -332,18 +317,18 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{QUERY_STRING} (<|>|\'|%0A|%0D|%27|%3C|%3E|%00) [NC]');
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
-	
+
 	private function force_redirection_if_available()
 	{
 		$domain = AppContext::get_request()->get_domain_name();
-		
+
 		if ($this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Site redirection to www');
 			$this->add_line('RewriteCond %{HTTP_HOST} ^' . $domain . ' [NC]');
 			$this->add_line('RewriteRule ^/?(.*) http' . ($this->server_environment_config->is_redirection_https_enabled() ? 's' : '') . '://' . ($this->server_environment_config->is_redirection_www_mode_with_www() ? 'www.' . $domain : AppContext::get_request()->get_site_domain_name()) . '/$1 [L,R=301]');
 		}
-		
+
 		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
 		{
 			$this->add_section('Force to use HTTPS if available');
@@ -353,7 +338,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301,L]');
 		}
 	}
-	
+
 	private function add_bandwidth_protection()
 	{
 		//Bandwidth protection. The /upload directory can be forbidden if the request comes from out of PHPBoost
@@ -377,7 +362,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('ErrorDocument 403 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_403()->relative());
 		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_404()->relative());
 	}
-	
+
 	private function add_gzip_compression()
 	{
 		if(AppContext::get_request()->get_domain_name() != 'free.fr')
@@ -423,7 +408,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Gzip compression disabled on ' . $domain . ' hosting');
 		}
 	}
-	
+
 	private function add_expires_headers()
 	{
 		if(AppContext::get_request()->get_domain_name() != 'free.fr')
@@ -495,7 +480,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Expires Headers disabled on ' . $domain . ' hosting');
 		}
 	}
-	
+
 	private function disable_file_etags()
 	{
 		if(AppContext::get_request()->get_domain_name() != 'free.fr')

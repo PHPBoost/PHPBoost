@@ -1,40 +1,23 @@
 <?php
-/*##################################################
- *                            AuthenticationService.class.php
- *                            -------------------
- *   begin                : November 28, 2010
- *   copyright            : (C) 2010 loic rouchon
- *   email                : horn@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <horn@phpboost.com>
- * @desc This class manages the authentication mecanism. Several authentication methods could be used.
+ * This class manages the authentication mecanism. Several authentication methods could be used.
  * If the authentication by the selected method successful, the user session is started.
- *
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  User\authentication
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 04 10
+ * @since       PHPBoost 3.0 - 2010 11 28
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class AuthenticationService
 {
 	/**
-	 * @desc associate the current authentication method with the given user_id.
+	 * associate the current authentication method with the given user_id.
 	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param int $user_id
 	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
@@ -45,7 +28,7 @@ class AuthenticationService
 	}
 
 	/**
-	 * @desc dissociate the current authentication method with the given user_id.
+	 * dissociate the current authentication method with the given user_id.
 	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param int $user_id
 	 * @throws IllegalArgumentException if the user_id is already dissociate with an authentication method
@@ -56,7 +39,7 @@ class AuthenticationService
 	}
 
 	/**
-	 * @desc Tries to authenticate the user using the given authentication method.
+	 * Tries to authenticate the user using the given authentication method.
 	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param bool $autoconnect If true, an autoconnect cookie will be created
 	 * @return int $user_id, if authentication has been performed successfully
@@ -80,18 +63,18 @@ class AuthenticationService
 	public static function get_user_types_authentication($user_id)
 	{
 		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_AUTHENTICATION_METHOD, array('method'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		
+
 		$types = array();
 		foreach ($result as $row) {
 			$types[] = $row['method'];
 		}
 		$result->dispose();
-		
+
 		return $types;
 	}
 
 	private static $external_authentications_actived;
-	
+
 	public static function get_external_auth_activated($identifier)
 	{
 		$external_auths_activated = self::get_external_auths_activated();

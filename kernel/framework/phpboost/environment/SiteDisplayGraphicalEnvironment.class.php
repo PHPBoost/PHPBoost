@@ -1,51 +1,34 @@
 <?php
-/*##################################################
- *                   SiteDisplayGraphicalEnvironment.class.php
- *                            -------------------
- *   begin                : October 01, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Environment
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 12 28
+ * @since       PHPBoost 3.0 - 2009 10 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+*/
+
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	/**
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
-	
+
 	private static $main_lang;
-	
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load_langs();
 		$this->set_breadcrumb(new BreadCrumb());
 	}
-	
+
 	private function load_langs()
 	{
 		self::$main_lang = LangLoader::get('main');
@@ -57,16 +40,16 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	public function display($content)
 	{
 		$template = new FileTemplate('body.tpl');
-		
+
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
-		
+
 		if ($theme)
 		{
 			$customize_interface = $theme->get_customize_interface();
 			$header_logo_path = $customize_interface->get_header_logo_path();
 		}
-		
+
 		$template->put_all(array(
 			'MAINTAIN'         => $this->display_site_maintenance(),
 			'SITE_NAME'        => GeneralConfig::load()->get_site_name(),
@@ -80,7 +63,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
 			'L_PHPBOOST_LINK'  => self::$main_lang['phpboost_link'],
 		));
-		
+
 		$this->display_kernel_message($template);
 		$this->display_counter($template);
 		$this->display_menus($template);
@@ -98,7 +81,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'L_UNIT_SECOND'   => LangLoader::get_message('unit.seconds', 'date-common')
 			));
 		}
-		
+
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author() && $theme)
 		{
 			$theme_configuration = $theme->get_configuration();
@@ -111,18 +94,18 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'U_THEME_AUTHOR_LINK'    => $theme_configuration->get_author_link(),
 			));
 		}
-		
+
 		$this->display_page($template);
 	}
-	
+
 	function display_page(View $body_template)
 	{
 		$template = new FileTemplate('frame.tpl');
-		
+
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
-		
+
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
@@ -135,7 +118,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
 		));
-		
+
 		$seo_meta_data = $this->get_seo_meta_data();
 		$description = $seo_meta_data->get_full_description();
 		$template->put_all(array(
@@ -161,7 +144,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'JS_BOTTOM'           => $js_bottom_tpl,
 			'BODY'                => $body_template
 		));
-		
+
 		foreach ($seo_meta_data->get_additionnal_properties() as $og_id => $og_value)
 		{
 			if (is_array($og_value))
@@ -182,7 +165,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				));
 			}
 		}
-		
+
 		$template->display(true);
 	}
 
@@ -196,7 +179,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			} catch (RowNotFoundException $e) {
 				$visit_counter = array('nbr_ip' => 1, 'total' => 1);
 			}
-			
+
 			$template->put_all(array(
 				'L_VISIT'             => self::$main_lang['guest_s'],
 				'L_TODAY'             => LangLoader::get_message('today', 'date-common'),
@@ -212,7 +195,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$menus = MenusCache::load()->get_menus();
 		$columns_disabled = $theme ? $theme->get_columns_disabled() : new ColumnsDisabled();
-		
+
 		foreach ($menus as $cached_menu)
 		{
 			$menu = $cached_menu->get_menu();
@@ -226,7 +209,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 					if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
 						$display = true;
 				}
-			
+
 				if ($display)
 				{
 					$menu_content = $cached_menu->has_cached_string() ? $cached_menu->get_cached_string() : $menu->display();
@@ -236,37 +219,37 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 							$template->put('C_MENUS_HEADER_CONTENT', true);
 							$template->assign_block_vars('menus_header', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__SUB_HEADER:
 							$template->put('C_MENUS_SUB_HEADER_CONTENT', true);
 							$template->assign_block_vars('menus_sub_header', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__LEFT:
 							$template->put('C_MENUS_LEFT_CONTENT', true);
 							$template->assign_block_vars('menus_left', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__RIGHT:
 							$template->put('C_MENUS_RIGHT_CONTENT', true);
 							$template->assign_block_vars('menus_right', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__TOP_CENTRAL:
 							$template->put('C_MENUS_TOPCENTRAL_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_top_central', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__BOTTOM_CENTRAL:
 							$template->put('C_MENUS_BOTTOM_CENTRAL_CONTENT', $menu_content);
 							$template->assign_block_vars('menus_bottom_central', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__TOP_FOOTER:
 							$template->put('C_MENUS_TOP_FOOTER_CONTENT', true);
 							$template->assign_block_vars('menus_top_footer', array('MENU' => $menu_content));
 						break;
-						
+
 						case Menu::BLOCK_POSITION__FOOTER:
 							$template->put('C_MENUS_FOOTER_CONTENT', true);
 							$template->assign_block_vars('menus_footer', array('MENU' => $menu_content));
@@ -282,7 +265,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		parent::process_site_maintenance();
 
 		$template =  new FileTemplate('maintain.tpl');
-		
+
 		$maintenance_config = MaintenanceConfig::load();
 		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
@@ -322,7 +305,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
 
 				$array_now = array(
-				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), 
+				Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE),
 				(Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1),
 				Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE),
 				Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE),

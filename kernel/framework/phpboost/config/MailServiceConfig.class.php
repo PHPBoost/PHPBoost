@@ -1,67 +1,48 @@
 <?php
-/*##################################################
- *		                  MailServiceConfig.class.php
- *                            -------------------
- *   begin                : April 13, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
  * This class contains the configuration of PHPBoost's mail service.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 04 13
+*/
+
 class MailServiceConfig extends AbstractConfigData
 {
 	public function get_default_mail_sender()
 	{
 		return $this->get_property('default_mail_sender');
 	}
-	
+
 	public function set_default_mail_sender($sender)
 	{
 		$this->set_property('default_mail_sender', $sender);
 	}
-	
+
 	public function get_administrators_mails()
 	{
 		return $this->get_property('administrators_mails');
 	}
-	
+
 	public function set_administrators_mails(array $mails)
 	{
 		$this->set_property('administrators_mails', $mails);
 	}
-	
+
 	public function get_mail_signature()
 	{
 		return $this->get_property('mail_signature');
 	}
-	
+
 	public function set_mail_signature($signature)
 	{
 		$this->set_property('mail_signature', $signature);
 	}
-	
+
 	public function is_smtp_enabled()
 	{
 		return $this->get_property('use_smtp');
@@ -145,7 +126,7 @@ class MailServiceConfig extends AbstractConfigData
 			'mail_signature' => ''
 		);
 	}
-	
+
 	/**
 	 * @return SMTPConfiguration
 	 */

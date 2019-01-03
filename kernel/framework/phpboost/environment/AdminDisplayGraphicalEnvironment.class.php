@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                  AdminDisplayGraphicalEnvironment.class.php
- *                            -------------------
- *   begin                : October 01, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Environment
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 05 31
+ * @since       PHPBoost 3.0 - 2009 10 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	private $theme_properties;
@@ -42,7 +24,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$this->load_lang();
 	}
-	
+
 	private function load_lang()
 	{
 		self::$lang = LangLoader::get('main');
@@ -53,16 +35,16 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		$template = new FileTemplate('admin/body.tpl');
 		$template->add_lang(self::$lang);
-		
+
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
-		
+
 		if ($theme)
 		{
 			$customize_interface = $theme->get_customize_interface();
 			$header_logo_path = $customize_interface->get_header_logo_path();
 		}
-		
+
 		$template->put_all(array(
 			'SITE_NAME'             => GeneralConfig::load()->get_site_name(),
 			'SITE_SLOGAN'           => GeneralConfig::load()->get_site_slogan(),
@@ -83,7 +65,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_ADMIN_MAIN_MENU'     => self::$lang['admin.main_menu'],
 			'L_NEED_HELP'           => self::$lang['admin.need_help'],
 		));
-		
+
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
 			$template->put_all(array(
@@ -96,7 +78,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'L_UNIT_SECOND'   => LangLoader::get_message('unit.seconds', 'date-common')
 			));
 		}
-		
+
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author() && $theme)
 		{
 			$theme_configuration = $theme->get_configuration();
@@ -114,15 +96,15 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$this->display_page($template);
 	}
-	
+
 	private function display_page(View $body_template)
 	{
 		$template = new FileTemplate('admin/frame.tpl');
-		
+
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
-		
+
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED'     => false
@@ -132,7 +114,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => false
 		));
-		
+
 		$template->put_all(array(
 			'C_FAVICON'           => $customization_config->favicon_exists(),
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
@@ -145,10 +127,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_XML_LANGUAGE'      => self::$lang['xml_lang'],
 			'BODY'                => $body_template
 		));
-		
+
 		$template->display();
 	}
-	
+
 	private static function get_subheader_tpl()
 	{
 		$subheader_lang = LangLoader::get('admin-links-common');
@@ -156,7 +138,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$subheader_tpl->add_lang($subheader_lang);
 
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-		
+
 		$modules_number = 0;
 		foreach ($modules as $module)
 		{
@@ -216,14 +198,14 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$array_pos = array(0, 4, 4, 3, 3, 1);
 		$menus_numbers = array(
-			'index' => 1, 
+			'index' => 1,
 			'administration' => 2,
 			'tools' => 3,
 			'members' => 4,
 			'content' => 5,
 			'modules' => 6
 		);
-		
+
 		foreach ($modules as $module)
 		{
 			$module_id = $module->get_id();
@@ -241,7 +223,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				$array_pos[$menu_pos-1]++;
 				$idmenu = $array_pos[$menu_pos - 1];
 				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);
-				
+
 				$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)
 				));

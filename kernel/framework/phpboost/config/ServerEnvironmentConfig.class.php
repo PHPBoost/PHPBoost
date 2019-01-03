@@ -1,33 +1,18 @@
 <?php
-/*##################################################
- *		             ServerEnvironmentConfig.class.php
- *                            -------------------
- *   begin                : July 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU ServerEnvironment Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU ServerEnvironment Public License for more details.
- *
- * You should have received a copy of the GNU ServerEnvironment Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2017 06 11
+ * @since       PHPBoost 3.0 - 2010 07 08
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
+
 class ServerEnvironmentConfig extends AbstractConfigData
 {
 	const URL_REWRITING_ENABLED       = 'url_rewriting_enabled';
@@ -46,7 +31,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::URL_REWRITING_ENABLED);
 	}
-	
+
 	public function set_url_rewriting_enabled($enabled)
 	{
 		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
@@ -116,7 +101,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::HSTS_SECURITY_DURATION);
 	}
-	
+
 	public function set_hsts_security_duration($value)
 	{
 		return $this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60))); // hour, minute, second
@@ -126,12 +111,12 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return ($this->get_property(self::HSTS_SECURITY_DURATION) / (24 * 60 * 60));
 	}
-	
+
 	public function is_hsts_security_subdomain_enabled()
 	{
 		return $this->get_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED);
 	}
-	
+
 	public function enable_hsts_subdomain_security()
 	{
 		return $this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, true);
@@ -152,7 +137,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
 	}
-	
+
 	public function set_htaccess_manual_content($content)
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);

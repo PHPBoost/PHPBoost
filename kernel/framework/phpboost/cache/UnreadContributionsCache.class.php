@@ -1,37 +1,20 @@
 <?php
-/*##################################################
- *                    UnreadContributionsCache.class.php
- *                            -------------------
- *   begin                : November 10, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
  * This cache is used to know if there are unread contributions.
  * If there are, it's able to tell us how much there are for the administrator, and for the other
  * types of users, it's only able to tell if there are unread contributions.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  Cache
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 3.0 - 2009 11 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class UnreadContributionsCache implements CacheData
 {
 	private $admin = 0;
@@ -86,7 +69,7 @@ class UnreadContributionsCache implements CacheData
 	{
 		return $this->moderators;
 	}
-	
+
 	/**
 	 * Tells whether a user has unread contributions (it only deals with user-specific contributions
 	 * and not with rank or group contributions).
@@ -97,7 +80,7 @@ class UnreadContributionsCache implements CacheData
 	{
 		return in_array($user_id, $this->get_users_with_unread_contributions());
 	}
-	
+
 	/**
 	 * Tells whether a group has unread contributions (it only deals with user-specific contributions
 	 * and not with rank or group contributions).

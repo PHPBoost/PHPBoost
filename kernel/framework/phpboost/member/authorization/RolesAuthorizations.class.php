@@ -1,34 +1,18 @@
 <?php
-/*##################################################
- *                      RolesAuthorizations.class.php
- *                            -------------------
- *   begin                : March, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class stores different roles which are authorized for a given action. 
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * This class stores different roles which are authorized for a given action.
+ * @package     PHPBoost
+ * @subpackage  Member\authorization
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 3.0 - 2010 03 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class RolesAuthorizations
 {
 	private $moderators = false;
@@ -43,7 +27,7 @@ class RolesAuthorizations
 	}
 
 	/**
-	 * @desc Returns the array authorization formatted at the legacy format in which all authorizations
+	 * Returns the array authorization formatted at the legacy format in which all authorizations
 	 * are on the first bit.
 	 * @return mixed[]
 	 */
@@ -87,7 +71,7 @@ class RolesAuthorizations
 			$auth_array['m' . $user_id] = 1;
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->moderators = false;
@@ -98,7 +82,7 @@ class RolesAuthorizations
 	}
 
 	/**
-	 * @desc Sets the authorizations from the legacy style formatted array.
+	 * Sets the authorizations from the legacy style formatted array.
 	 * @param array $auth_array The array
 	 */
 	public function build_from_auth_array(array $auth_array)

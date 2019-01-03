@@ -1,37 +1,20 @@
 <?php
-/*##################################################
- *                             MenuService.class.php
- *                            -------------------
- *   begin                : November 13, 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This service manage kernel menus by adding the persistance to menus objects.
+ * This service manage kernel menus by adding the persistance to menus objects.
  * It also provides all moving and disabling methods to change the website appearance.
- * @static
- * @package {@package}
- */
+ * @package     PHPBoost
+ * @subpackage  Menu
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 02 02
+ * @since       PHPBoost 2.0 - 2008 11 13
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class MenuService
 {
 	const MOVE_UP = -1;
@@ -54,7 +37,7 @@ class MenuService
 
 	## Menus ##
 	/**
-	* @desc
+	*
 	* @param $block
 	* @param $enabled
 	* @return Menu[]
@@ -69,12 +52,12 @@ class MenuService
 			$menus[$row['id']] = self::initialize($row);
 		}
 		$results->dispose();
-		
+
 		return $menus;
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @return unknown_type
 	 */
 	public static function get_menus_map()
@@ -93,12 +76,12 @@ class MenuService
 			}
 		}
 		$results->dispose();
-		
+
 		return $menus;
 	}
 
 	/**
-	 * @desc Retrieve a Menu Object from the database by its id
+	 * Retrieve a Menu Object from the database by its id
 	 * @param int $id the id of the Menu to retrieve from the database
 	 * @return Menu the requested Menu if it exists else, null
 	 */
@@ -115,7 +98,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc save a Menu in the database
+	 * save a Menu in the database
 	 * @param Menu $menu The Menu to save
 	 * @return bool true if the save have been correctly done
 	 */
@@ -137,7 +120,7 @@ class MenuService
 			'block' => $block,
 			'position' => $menu->get_block_position()
 		);
-		
+
 		if ($id_menu > 0)
 		{
 			self::$querier->update(DB_TABLE_MENUS, $columns, 'WHERE id=:id', array('id' => $id_menu));
@@ -152,7 +135,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Delete a Menu from the database
+	 * Delete a Menu from the database
 	 * @param mixed $menu The (Menu) Menu or its (int) id to delete from the database
 	 */
 	public static function delete($menu)
@@ -166,7 +149,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Enable a menu
+	 * Enable a menu
 	 * @param Menu $menu the menu to enable
 	 */
 	public static function enable(Menu $menu)
@@ -176,7 +159,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Disable a menu
+	 * Disable a menu
 	 * @param Menu $menu the menu to disable
 	 */
 	public static function disable(Menu $menu)
@@ -186,7 +169,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Move a menu into a block and save it. Enable or disable it according to the destination block
+	 * Move a menu into a block and save it. Enable or disable it according to the destination block
 	 * @param Menu $menu the menu to move
 	 * @param int $block the destination block
 	 * @param int $position the destination block position
@@ -225,22 +208,22 @@ class MenuService
 	}
 
 	/**
-	 * @desc Set the menu position in a block
+	 * Set the menu position in a block
 	 * @param Menu $menu The menu
 	 * @param int $block_position the new position.
 	 */
 	public static function set_position(Menu $menu, $block_position)
 	{
 		if ($block_position != $menu->get_block_position())
-		{   
+		{
 			// Updating the current menu
 			$menu->set_block_position($block_position);
 			self::save($menu);
 		}
 	}
-	
+
 	/**
-	 * @desc Change the menu position in a block
+	 * Change the menu position in a block
 	 * @param Menu $menu The menu to move
 	 * @param int $diff the direction to move it. positives integers move down, negatives, up.
 	*/
@@ -249,16 +232,16 @@ class MenuService
 		$block_position = $menu->get_block_position();
 		$new_block_position = $block_position;
 		$update_query = '';
-		
+
 		if ($direction > 0)
 		{   // Moving the menu down
 			$parameters = array('block' => $menu->get_block());
 			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(position)', 'WHERE block=:block AND enabled=1', $parameters);
-			
+
 			// Getting the max diff
 			if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
 				$new_block_position = $max_position;
-			
+
 			$update_query = "
 				UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
 				WHERE
@@ -268,11 +251,11 @@ class MenuService
 		}
 		else if ($direction < 0)
 		{   // Moving the menu up
-			
+
 			// Getting the max diff
 			if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
 				$new_block_position = 0;
-							
+
 			// Updating other menus
 			$update_query = "
 				UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
@@ -281,19 +264,19 @@ class MenuService
 					position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
 			";
 		}
-		
+
 		if ($block_position != $new_block_position)
 		{   // Updating other menus
 			PersistenceContext::get_querier()->inject($update_query);
-			
+
 			// Updating the current menu
 			$menu->set_block_position($new_block_position);
 			self::save($menu);
 		}
 	}
-	
+
 	/**
-	 * @desc Enables or disables all menus
+	 * Enables or disables all menus
 	 * @param bool $enable if true enables all menus otherwise, disables them
 	 */
 	public static function enable_all($enable = true)
@@ -315,7 +298,7 @@ class MenuService
 	## Cache ##
 
 	/**
-	 * @desc Generate the cache
+	 * Generate the cache
 	 */
 	public static function generate_cache()
 	{
@@ -324,7 +307,7 @@ class MenuService
 
 	## Mini Modules ##
 	/**
-	* @desc Add the module named $module mini modules
+	* Add the module named $module mini modules
 	* @param string $module the module name
 	* @return bool true if the module has been installed, else, false
 	*/
@@ -334,13 +317,13 @@ class MenuService
 	}
 
 	/**
-	 * @desc delete the mini module $module
+	 * delete the mini module $module
 	 * @param string $module the mini module name
 	 */
 	public static function delete_mini_module($module)
 	{
 		$menus_class = array();
-		
+
 		if (MenusProvidersService::module_containing_extension_point($module))
 		{
 			foreach (MenusProvidersService::get_menus($module) as $menu)
@@ -351,7 +334,7 @@ class MenuService
 				}
 			}
 		}
-		
+
 		if (!empty($menus_class))
 		{
 			$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'WHERE class IN :class', array('class' => $menus_class));
@@ -364,7 +347,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Update the mini modules list by adding new ones and delete old ones
+	 * Update the mini modules list by adding new ones and delete old ones
 	 * @param bool $update_cache if true it will also regenerate the cache
 	 */
 	public static function update_mini_modules_list($update_cache = true)
@@ -409,7 +392,7 @@ class MenuService
 			$mini_module->enabled($mini_module->default_is_enabled());
 			self::save($mini_module);
 		}
-		
+
 		if ($update_cache)
 		{
 			self::generate_cache();
@@ -418,7 +401,7 @@ class MenuService
 
 
 	/**
-	 * @desc Delete all the feeds menus with the this module id
+	 * Delete all the feeds menus with the this module id
 	 * @param string $module_id the module id
 	 */
 	public static function delete_module_feeds_menus($module_id)
@@ -434,7 +417,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc Return a menu with links to modules
+	 * Return a menu with links to modules
 	 * @param int $menu_type the menu type
 	 * @return LinksMenu the menu with links to modules
 	 */
@@ -468,7 +451,7 @@ class MenuService
 
 
 	/**
-	 * @desc Assigns the positions conditions for different printing modes
+	 * Assigns the positions conditions for different printing modes
 	 * @param Template $template the template to use
 	 * @param int $position the menu position
 	 */
@@ -491,7 +474,7 @@ class MenuService
 	## Tools ##
 
 	/**
-	 * @desc Convert the string location the int location
+	 * Convert the string location the int location
 	 * @param string $str_location the location
 	 * @return int the corresponding location
 	 */
@@ -521,7 +504,7 @@ class MenuService
 	}
 
 	/**
-	 * @desc
+	 *
 	 * @param int $class
 	 * @param int_type $block
 	 * @param boolean $enabled
@@ -583,7 +566,7 @@ class MenuService
 
 	/**
 	 * @access private
-	 * @desc Build a Menu object from a database result
+	 * Build a Menu object from a database result
 	 * @param string[key] $db_result the map from the database with the Menu id and serialized object
 	 * @return Menu the menu object from the serialized one
 	 */
@@ -594,15 +577,15 @@ class MenuService
 			$menu = new ContentMenu('Unable to load the menu');
 			$menu->set_content('Unable to load the menu with the following class : ' . $db_result['class']);
 		}
-		else 
+		else
 		{
 			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $db_result['object']);
-			
+
 			$menu = TextHelper::unserialize($fixed_object);
 		}
-		
+
 		// Synchronize the object and the database
 		$menu->id($db_result['id']);
 		$menu->enabled($db_result['enabled']);

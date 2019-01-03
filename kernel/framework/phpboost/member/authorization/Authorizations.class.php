@@ -1,43 +1,27 @@
 <?php
-/*##################################################
- *                          Autorizations.class.php
- *                            -------------------
- *   begin                : July 26 2008
- *   copyright            : (C) 2008 Viarre Régis / Sautel Benoit
- *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
- * @desc This class contains only static methods, it souldn't be instantiated.
- * @package {@package}
+ * This class contains only static methods, it souldn't be instantiated.
  * @deprecated
- */
+ * @package     PHPBoost
+ * @subpackage  Member\authorization
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 05
+ * @since       PHPBoost 2.0 - 2008 07 26
+ * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Authorizations
 {
 	const AUTH_PARENT_PRIORITY = 0x01;	// Generally read mode
 	const AUTH_CHILD_PRIORITY = 0x02;	// Generally write mode
 
 	/**
-	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
+	 * Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * This returned array is used to be serialized.
 	 * @return array The array of authorizations.
 	 * @static
@@ -75,7 +59,7 @@ class Authorizations
 	}
 
 	/**
-	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
+	 * Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * @param int $bit_value The bit emplacement in the authorization array.
 	 * @param string $idselect Html id of the html select field of authorizations (in most case the same value as $bit_value).
 	 * @param boolean $admin_auth_default Give authorization for the administrator by default.
@@ -101,7 +85,7 @@ class Authorizations
 	}
 
 	/**
-	 * @desc Generate a multiple select field for the form which create authorization for ranks, groups and members.
+	 * Generate a multiple select field for the form which create authorization for ranks, groups and members.
 	 * @param int $auth_bit The bit emplacement used to set it.
 	 * @param array $array_auth Array of authorization, allow you to select value authorized for this bit.
 	 * @param array $array_ranks_default Array of ranks selected by default.
@@ -239,7 +223,7 @@ class Authorizations
 	}
 
 	/**
-	 * @desc Check authorizations for a member, a group or a rank
+	 * Check authorizations for a member, a group or a rank
 	 * @param int $type Type of check, used RANK_TYPE for ranks, GROUP_TYPE for groups and USER_TYPE for users.
 	 * @param int $value Value int the authorization array to check.
 	 * @param array $array_auth Array of authorization.
@@ -275,7 +259,7 @@ class Authorizations
 	}
 
 	/**
-	 * @desc Merge two authorizations array, first is the parent, second is the inherited child.
+	 * Merge two authorizations array, first is the parent, second is the inherited child.
 	 * @param array $parent Array of authorizations.
 	 * @param array $child Array of authorizations.
 	 * @param int $auth_bit Bit emplacement for the merge.
@@ -297,7 +281,7 @@ class Authorizations
 		{
 			$parent_guest_auth = isset($parent['r-1']) ? $parent['r-1'] : 0;
 			$parent_member_auth = isset($parent['r0']) ? $parent['r0'] : 0;
-			
+
 			foreach ($parent as $key => $value)
 			{
 				if ($bit = ($value & $auth_bit) || $parent_guest_auth || $parent_member_auth)
@@ -344,7 +328,7 @@ class Authorizations
 	}
 
 	/**
-	 * @desc Capture authorizations and shift a particular bit to an another bit (1 is used by default).
+	 * Capture authorizations and shift a particular bit to an another bit (1 is used by default).
 	 * @param array $auth Array of authorizations.
 	 * @param int $original_bit The bit to shift.
 	 * @param int $final_bit Bit distination (1 is used by default).
@@ -390,7 +374,7 @@ class Authorizations
 
 	//Récupération du tableau des autorisations.
 	/**
-	 * @desc Get authorization array from the form.
+	 * Get authorization array from the form.
 	 * @param int $bit_value The bit emplacement in the authorization array used to set it.
 	 * @param string $idselect Html id used for the select.
 	 * @param array $array_auth_all Array where the authorizations collected are stored.

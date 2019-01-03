@@ -1,51 +1,34 @@
 <?php
-/*##################################################
- *                          GroupsService.class.php
- *                            -------------------
- *   begin                : May 18, 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * This class provides methods to manage user in groups.
+ * @package     PHPBoost
+ * @subpackage  Member
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 12 18
+ * @since       PHPBoost 1.6 - 2007 05 18
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
 define('GROUP_DEFAULT_IDSELECT', '');
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
 define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations avancées.
 
-/**
- * @author Régis VIARRE <crowkait@phpboost.com>
- * @desc This class provides methods to manage user in groups.
- * @package {@package}
- */
 class GroupsService
 {
 	private static $db_querier;
-	
+
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	/**
-	 * @desc Adds a member in a group
+	 * Adds a member in a group
 	 * @param int $user_id User id
 	 * @param int $idgroup Group id
 	 * @return boolean True if the member has been succefully added.
@@ -79,12 +62,12 @@ class GroupsService
 		{
 			$return = false;
 		}
-		
+
 		return $return;
 	}
 
 	/**
-	 * @desc Edits the user groups, compute difference between previous and new groups.
+	 * Edits the user groups, compute difference between previous and new groups.
 	 * @param int $user_id The user id
 	 * @param array $array_user_groups The new array of groups.
 	 */
@@ -116,7 +99,7 @@ class GroupsService
 	}
 
 	/**
-	 * @desc Returns the list of the names of the groups, array: id => name
+	 * Returns the list of the names of the groups, array: id => name
 	 * @return  The array groups
 	 */
 	public static function get_groups_names()
@@ -132,10 +115,10 @@ class GroupsService
 			}
 		}
 		return $groups_names;
-	}	
-	
+	}
+
 	/**
-	 * @desc Returns the list of the groups
+	 * Returns the list of the groups
 	 * @return array The array groups
 	 */
 	public static function get_groups()
@@ -150,7 +133,7 @@ class GroupsService
 	}
 
 	/**
-	 * @desc Removes a member in a group.
+	 * Removes a member in a group.
 	 * @param int $user_id The user id
 	 * @param int $idgroup The id group.
 	 */
@@ -158,27 +141,27 @@ class GroupsService
 	{
 		//Suppression dans la table des membres.
 		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'groups', 'WHERE user_id = :user_id', array('user_id' => $user_id));
-		
+
 		$user_groups = explode('|', $user_groups);
-		
+
 		$key = array_search($idgroup, $user_groups);
 		if($key !== false)
 			unset($user_groups[$key]);
-		
+
 		self::$db_querier->update(DB_TABLE_MEMBER, array('groups' => implode('|', $user_groups)), 'WHERE user_id = :user_id', array('user_id' => $user_id));
-		
+
 		//Suppression dans la table des groupes.
 		$members_group = '';
 		try {
 			$members_group = self::$db_querier->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id = :id', array('id' => $idgroup));
 		} catch (RowNotFoundException $e) {}
-		
+
 		$members_group = explode('|', $members_group);
-		
+
 		$key = array_search($user_id, $members_group);
 		if($key !== false)
 			unset($members_group[$key]);
-		
+
 		self::$db_querier->update(DB_TABLE_GROUP, array('members' => implode('|', $members_group)), 'WHERE id = :id', array('id' => $idgroup));
 	}
 }

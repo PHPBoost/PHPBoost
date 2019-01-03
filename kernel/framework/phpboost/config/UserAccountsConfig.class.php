@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *		                 UserAccountsConfig.class.php
- *                            -------------------
- *   begin                : October 28, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
  * This class contains all the data related to the user accounts configuration.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
- */
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 01 13
+ * @since       PHPBoost 3.0 - 2009 10 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class UserAccountsConfig extends AbstractConfigData
 {
 	/**
@@ -64,7 +46,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Name of the property indicating whether avatars' automatic resizing is enabled or not
 	 */
 	const ENABLE_AVATAR_AUTO_RESIZING = 'enable_avatar_auto_resizing';
-	
+
 	/**
 	 * Name of the property indicating if the default avatar is enable (users who don't have a
 	 * specific avatar will have the default one).
@@ -96,20 +78,20 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	const AUTH_READ_MEMBERS = 'auth_read_members';
 	const AUTH_READ_MEMBERS_BIT = 1;
-	
+
 	const DEFAULT_LANG = 'default_lang';
-	
+
 	const DEFAULT_THEME = 'default_theme';
-	
+
 	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
-	
+
 	const ALLOW_USERS_TO_CHANGE_DISPLAY_NAME = 'allow_users_to_change_display_name';
 	const ALLOW_USERS_TO_CHANGE_EMAIL = 'allow_users_to_change_email';
-	
+
 	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
-	
+
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -217,7 +199,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, $enabled);
 	}
-	
+
 	/**
 	 * Tells whether the scaling is enabled avatars
 	 * @return bool true if they can, false otherwise
@@ -226,7 +208,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::ENABLE_AVATAR_AUTO_RESIZING);
 	}
-	
+
 	/**
 	 * Sets the boolean value indicating whether the avatars should be resized automatically
 	 * @param bool $enabled true if enabled, false otherwise
@@ -379,7 +361,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::MAX_AVATAR_WEIGHT_PROPERTY, $weight);
 	}
-	
+
 	/**
 	 * Returns the authorization to read members all
 	 * @return array The array of authorizations.
@@ -397,32 +379,32 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTH_READ_MEMBERS, $auth);
 	}
-	
+
 	public function get_default_lang()
 	{
 		return $this->get_property(self::DEFAULT_LANG);
 	}
-	
+
 	public function set_default_lang($lang)
 	{
 		$this->set_property(self::DEFAULT_LANG, $lang);
 	}
-	
+
 	public function get_default_theme()
 	{
 		return $this->get_property(self::DEFAULT_THEME);
 	}
-	
+
 	public function set_default_theme($theme)
 	{
 		$this->set_property(self::DEFAULT_THEME, $theme);
 	}
-	
+
 	public function get_max_private_messages_number()
 	{
 		return $this->get_property(self::MAX_PRIVATE_MESSAGES_NUMBER);
 	}
-	
+
 	public function set_max_private_messages_number($number)
 	{
 		$this->set_property(self::MAX_PRIVATE_MESSAGES_NUMBER, $number);
@@ -454,7 +436,7 @@ class UserAccountsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		$server_configuration = new ServerConfiguration();
-		
+
 		return array(
 			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
