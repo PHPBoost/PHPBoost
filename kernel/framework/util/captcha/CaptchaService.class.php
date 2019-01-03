@@ -1,34 +1,16 @@
 <?php
-/*##################################################
- *                     CaptchaService.class.php
- *                            -------------------
- *   begin                : September 04, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @package     Util
+ * @subpackage  Captcha
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 30
+ * @since       PHPBoost 3.0 - 2012 09 04
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class CaptchaService
 {
 	private $default_factory;
@@ -47,7 +29,7 @@ class CaptchaService
 		$captcha = $this->get_existing_captcha($identifier);
 		return CaptchaProvidersService::create_factory($captcha);
 	}
-	
+
 	public function get_default_captcha()
 	{
 		return ContentManagementConfig::load()->get_used_captcha_module();
@@ -79,12 +61,12 @@ class CaptchaService
 			return $this->get_default_captcha();
 		}
 	}
-	
+
 	public function get_captchas_identifier()
 	{
 		return array_keys(CaptchaProvidersService::get_captchas());
 	}
-	
+
 	public function get_available_captchas()
 	{
 		$available_captchas = array();
@@ -95,14 +77,14 @@ class CaptchaService
 		}
 		return $available_captchas;
 	}
-	
+
 	/**
 	 * @param string $id_module
 	 */
 	public function uninstall_captcha($id_module)
 	{
 		$captchas = $this->get_available_captchas();
-		
+
 		if (in_array($id_module, $captchas))
 		{
 			if (count($captchas) > 1)

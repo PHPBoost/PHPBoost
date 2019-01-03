@@ -1,34 +1,14 @@
 <?php
-/*##################################################
- *                               KeyGenerator.class.php
- *                            -------------------
- *   begin                : Juny 19, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2011 06 19
+*/
+
 class KeyGenerator
 {
 	public static function generate_key($length = null)
@@ -42,14 +22,14 @@ class KeyGenerator
 			return TextHelper::substr(self::string_hash(uniqid(mt_rand(), true), false), 0, $length);
 		}
 	}
-	
+
 	public static function generate_token()
 	{
 		return self::generate_key(16);
 	}
-	
+
 	/**
-	 * @desc Return a SHA256 hash of the $str string [with a salt]
+	 * Return a SHA256 hash of the $str string [with a salt]
 	 * @param string $string the string to hash
 	 * @param mixed $salt If true, add the default salt : md5($str)
 	 * if a string, use this string as the salt

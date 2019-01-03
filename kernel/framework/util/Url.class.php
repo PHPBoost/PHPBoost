@@ -1,35 +1,6 @@
 <?php
-/*##################################################
- *                             Url.class.php
- *                            -------------------
- *   begin                : January 14, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
-define('SERVER_URL', $_SERVER['PHP_SELF']);
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This class offers a simple way to transform an absolute or relative link
+ * This class offers a simple way to transform an absolute or relative link
  * to a relative one to the website root.
  * It can also deals with absolute url and will convert only those from this
  * site into relatives ones.
@@ -38,8 +9,21 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
  *   <li>In content, get the url with the absolute() method. It will allow content include at multiple level</li>
  *   <li>In forms, get the url with the relative() method. It's a faster way to display url</li>
  * </ul>
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 09 18
+ * @since       PHPBoost 2.0 - 2009 01 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
+
+define('SERVER_URL', $_SERVER['PHP_SELF']);
+
 class Url
 {
 	const FORBID_JS_REGEX = '(?!javascript:)';
@@ -49,7 +33,7 @@ class Url
 	const FOLDERS_REGEX = '/*(?:[A-Za-z0-9~_\.+@,-]+/+)*';
 	const FILE_REGEX = '[A-Za-z0-9-+_,~:/\.\%!=]+';
 	const ARGS_REGEX = '(/([\w/_\.#-]*(\?)?(\S+)?[^\.\s])?)?';
-	
+
 	const STATUS_OK = 200;
 	const STATUS_FOUND = 302;
 
@@ -62,7 +46,7 @@ class Url
 	private $server_url = '';
 
 	/**
-	 * @desc Build a Url object. By default, builds an Url object representing the current path.
+	 * Build a Url object. By default, builds an Url object representing the current path.
 	 * If the url is empty, no computation is done and an empty string will be returned
 	 * when asking for both relative and absolute form of the url.
 	 * @param string $url the url string relative to the current path,
@@ -150,7 +134,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the root relative url if defined, else the absolute one
+	 * Returns the root relative url if defined, else the absolute one
 	 * @return string the root relative url if defined, else the absolute one
 	 */
 	public function relative()
@@ -166,7 +150,7 @@ class Url
 	}
 
 	/**
-     * @desc Returns the relative url if defined, else the absolute one
+     * Returns the relative url if defined, else the absolute one
      * @return string the relative url if defined, else the absolute one
      */
 	public function rel()
@@ -182,7 +166,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the absolute url
+	 * Returns the absolute url
 	 * @return string the absolute url
 	 */
 	public function absolute()
@@ -198,7 +182,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the relative path from the website root to the current path if working on a relative url
+	 * Returns the relative path from the website root to the current path if working on a relative url
 	 * @return string the relative path from the website root to the current path if working on a relative url
 	 */
 	public function root_to_local()
@@ -215,7 +199,7 @@ class Url
 	}
 
 	/**
-	 * @desc Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
+	 * Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
 	 * @param string $string String to encode.
 	 * @return string The encoded string.
 	 */
@@ -227,12 +211,12 @@ class Url
 		$url = str_replace('---', '-', $url);
 		$url = str_replace('--', '-', $url);
 		$url = trim($url,'-');
-		
+
 		return $url;
 	}
-	
+
 	/**
-	 * @desc Checks the status of an url.
+	 * Checks the status of an url.
 	 * @param string $url Url to check.
 	 * @return int The status of the url.
 	 */
@@ -240,25 +224,25 @@ class Url
 	{
 		if (empty($url))
 			return false;
-		
+
 		$status = 0;
-		
+
 		if (!($url instanceof Url))
 		{
 			if ($url[0] == '/' && file_exists(PATH_TO_ROOT . $url))
 				return true;
-			
+
 			$url = new Url($url);
 		}
-		
+
 		$file = new File($url->relative());
 		if ($file->exists())
 			return true;
-		
+
 		$folder = new Folder($url->relative());
 		if ($folder->exists())
 			return true;
-		
+
 		if ($url->absolute())
 		{
 			if (function_exists('stream_context_set_default'))
@@ -267,7 +251,7 @@ class Url
 			if (function_exists('get_headers'))
 			{
 				$file_headers = @get_headers($url->absolute(), true);
-				
+
 				if (isset($file_headers[0]))
 				{
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $file_headers[0], $matches))
@@ -279,31 +263,31 @@ class Url
 			else
 				$status = self::STATUS_OK;
 		}
-		
+
 		return in_array($status, array(self::STATUS_OK, self::STATUS_FOUND));
 	}
-	
+
 	/**
-	 * @desc Retrieves the size of a file in url.
+	 * Retrieves the size of a file in url.
 	 * @param string $url Url to check.
 	 * @return int The size of the url file.
 	 */
 	public static function get_url_file_size($url)
 	{
 		$file_size = 0;
-		
+
 		if (!($url instanceof Url))
 			$url = new Url($url);
-		
+
 		$file = new File($url->rel());
 		if ($file->exists())
 			$file_size = $file->get_file_size();
-		
+
 		if (empty($file_size) && $url->absolute())
 		{
 			if (function_exists('stream_context_set_default'))
 				stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
-			
+
 			if (function_exists('get_headers'))
 			{
 				$file_headers = @get_headers($url->absolute(), true);
@@ -312,18 +296,18 @@ class Url
 					$status = 0;
 					if(preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $file_headers[0], $matches))
 						$status = (int)$matches[1];
-					
+
 					if ($status == self::STATUS_OK && isset($file_headers['Content-Length']))
 						$file_size = $file_headers['Content-Length'];
 				}
 			}
 		}
-		
+
 		return $file_size;
 	}
 
 	/**
-	 * @desc Compress a url by removing all "folder/.." occurrences
+	 * Compress a url by removing all "folder/.." occurrences
 	 * @param string $url the url to compress
 	 * @return string the compressed url
 	 */
@@ -348,7 +332,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the absolute website root Url
+	 * Returns the absolute website root Url
 	 * @return string the absolute website root Url
 	 */
 	public static function get_absolute_root()
@@ -358,7 +342,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the HTML text with only absolutes urls
+	 * Returns the HTML text with only absolutes urls
 	 * @param string $html_text The HTML text in which we gonna search for
 	 * root relatives urls (only those beginning by '/') to convert into absolutes ones.
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
@@ -383,7 +367,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the HTML text with only relatives urls
+	 * Returns the HTML text with only relatives urls
 	 * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
@@ -407,7 +391,7 @@ class Url
 	}
 
 	/**
-	 * @desc Transforms the relative URL whose base is the site root (for instance /images/mypic.png) to the real relative path fited to the current page.
+	 * Transforms the relative URL whose base is the site root (for instance /images/mypic.png) to the real relative path fited to the current page.
 	 * @param string $html_text The HTML text in which you want to replace the paths
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
@@ -443,7 +427,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the regex matching the requested url form
+	 * Returns the regex matching the requested url form
 	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
 	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
 	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
@@ -484,7 +468,7 @@ class Url
 	}
 
 	/**
-	 * @desc Returns true if the url match the requested url form
+	 * Returns true if the url match the requested url form
 	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
 	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
 	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
@@ -510,7 +494,7 @@ class Url
 	}
 
 	/**
-	 * @desc replace a relative url by the corresponding absolute one
+	 * replace a relative url by the corresponding absolute one
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
@@ -522,7 +506,7 @@ class Url
 	}
 
 	/**
-	 * @desc replace an absolute url by the corresponding root relative one if possible
+	 * replace an absolute url by the corresponding root relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
@@ -534,7 +518,7 @@ class Url
 	}
 
 	/**
-	 * @desc replace an absolute url by the corresponding relative one if possible
+	 * replace an absolute url by the corresponding relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
@@ -572,7 +556,7 @@ class Url
 				$a_regex .= '[^"]+)(")`isuU';
 				$regex[] = $a_regex;
 			}
-			
+
 			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isuU';
 
 			// Update regex cache
@@ -597,7 +581,7 @@ class Url
 	}
 
     /**
-     * @desc Returns an url relative from the server root
+     * Returns an url relative from the server root
      * @param mixed $url the url representation. Could be a string or an Url object
      * @return string an url relative from the server root
      */
@@ -611,7 +595,7 @@ class Url
     }
 
     /**
-     * @desc Returns an url relative from PHPBoost root
+     * Returns an url relative from PHPBoost root
      * @param mixed $url the url representation. Could be a string or an Url object
      * @return string an url relative from PHPBoost root
      */
@@ -625,7 +609,7 @@ class Url
     }
 
     /**
-     * @desc Returns an absolute url
+     * Returns an absolute url
      * @param mixed $url the url representation. Could be a string or an Url object
      * @return string an absolute url
      */
@@ -637,22 +621,22 @@ class Url
         }
         return $url->absolute();
     }
-	
+
     /**
-     * @desc Returns true if $check_url is current url
+     * Returns true if $check_url is current url
      * @param string $check_url check url
      * @param bool $real_url true if check real url or false for verificate $check_url is containing in current url
      */
 	public static function is_current_url($check_url, $real_url = false)
 	{
 		$general_config = GeneralConfig::load();
-		
+
 		$site_path = $general_config->get_default_site_path();
 		$current_url = str_replace($site_path, '', REWRITED_SCRIPT);
-		
+
 		$other_home_page = trim($general_config->get_other_home_page(), '/');
 		$path = trim($current_url, '/');
-		
+
 		if (!empty($path) || (!empty($other_home_page) && $path == $other_home_page))
 		{
 			$module_name = explode('/', $path);
@@ -666,9 +650,9 @@ class Url
 			else
 				$running_module_name = '';
 		}
-		
+
 		$current_url = ($current_url == '/' && $running_module_name) ? '/' . $running_module_name . '/' : $current_url;
-		
+
 		if ($real_url)
 		{
 			return $current_url == $check_url;

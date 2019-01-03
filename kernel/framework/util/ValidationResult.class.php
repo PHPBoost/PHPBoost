@@ -1,34 +1,15 @@
 <?php
-/*##################################################
- *                          ValidationResult.class.php
- *                            -------------------
- *   begin                : January 16, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @desc This class is done to time a process easily. You choose when to start and when to stop.
- * @package {@package}
- */
+ * This class is done to time a process easily. You choose when to start and when to stop.
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 01 16
+*/
+
 class ValidationResult
 {
 	/**
@@ -52,7 +33,7 @@ class ValidationResult
 	}
 
 	/**
-	 * @desc Adds an error message
+	 * Adds an error message
 	 * @param string $error_msg the error message to add
 	 */
 	public function add_error($error_msg)
@@ -61,7 +42,7 @@ class ValidationResult
 	}
 
 	/**
-	 * @desc Returns the list of the errors messages
+	 * Returns the list of the errors messages
 	 * @return string[] errors messages
 	 */
 	public function get_errors_messages()
@@ -70,7 +51,7 @@ class ValidationResult
 	}
 
 	/**
-	 * @desc Returns <code>true</code> if there is errors
+	 * Returns <code>true</code> if there is errors
 	 * @return boolean <code>true</code> if there is errors
 	 */
 	public function has_errors()

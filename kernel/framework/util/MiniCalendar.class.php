@@ -1,39 +1,19 @@
 <?php
-/*##################################################
- *                                mini_calendar.class.php
- *                            -------------------
- *   begin                : June 3rd, 2008
- *   copyright            : (C) 2008 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *   Mini_calendar 1.0
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
-
-
 /**
- * @desc This class enables you to retrieve easily a date entered by a user.
+ * This class enables you to retrieve easily a date entered by a user.
  * If the user isn't in the same timezone as the server, the hour will be automatically recomputed.
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 19
+ * @since       PHPBoost 2.0 - 2008 06 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
 class MiniCalendar
 {
     /**
@@ -59,7 +39,7 @@ class MiniCalendar
     private static $js_inclusion_already_done = false;
 
 	/**
-	 * @desc Builds a calendar which will be displayable.
+	 * Builds a calendar which will be displayable.
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
@@ -72,7 +52,7 @@ class MiniCalendar
 	}
 
 	/**
-	 * @desc Sets the date at which will be initialized the calendar.
+	 * Sets the date at which will be initialized the calendar.
 	 * @param Date $date Date
 	 */
 	public function set_date($date)
@@ -81,7 +61,7 @@ class MiniCalendar
 	}
 
 	/**
-	 * @desc Sets the CSS properties of the element.
+	 * Sets the CSS properties of the element.
 	 * You can use it if you want to customize the mini calendar, but the best solution is to redefine the template in your module.
 	 * The template used is framework/mini_calendar.tpl.
 	 * @param string $style The CSS properties
@@ -92,7 +72,7 @@ class MiniCalendar
 	}
 
 	/**
-	 * @desc Returns the date
+	 * Returns the date
 	 * @return Date the date
 	 */
 	public function get_date()
@@ -101,7 +81,7 @@ class MiniCalendar
 	}
 
 	/**
-	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
+	 * Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
 	 * @return string The code to write in the HTML page.
 	 */
 	public function display()
@@ -127,7 +107,7 @@ class MiniCalendar
 	}
 
 	/**
-	 * @desc Retrieves a date entered in a mini calendar.
+	 * Retrieves a date entered in a mini calendar.
 	 * @param string $calendar_name Name of the calendar (HTML identifier).
 	 * @return Date The date of the calendar.
 	 */

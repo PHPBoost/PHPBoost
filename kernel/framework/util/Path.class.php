@@ -1,33 +1,17 @@
 <?php
-/*##################################################
- *                                Path.class.php
- *                            -------------------
- *   begin                : November 8, 2006
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 11 14
+ * @since       PHPBoost 1.6 - 2006 11 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class Path
 {
 	private static $fs_root_directory;
@@ -46,7 +30,7 @@ class Path
 	}
 
 	/**
-	 * @desc Returns the class package
+	 * Returns the class package
 	 * @param string $class_file the class file
 	 * @return string the class package
 	 * The package is under the form </code>'package/subpackage/../sub..subpackage'</code>
@@ -57,7 +41,7 @@ class Path
 	}
 
 	/**
-	 * @desc Returns the path from the phpboost root directory
+	 * Returns the path from the phpboost root directory
 	 * @param string $path the file path
 	 * @return string the path from the phpboost root directory beginning by <code>'/'</code>
 	 */
@@ -72,7 +56,7 @@ class Path
 	}
 
 	/**
-	 * @desc Deduces the classname regarding the filename
+	 * Deduces the classname regarding the filename
 	 * @param string $class_file the class file path or filename
 	 * @return string the classname
 	 */
@@ -91,7 +75,7 @@ class Path
 	}
 
 	/**
-	 * @desc Uniformizes the path getting its real path (absolute one) and replacing all
+	 * Uniformizes the path getting its real path (absolute one) and replacing all
 	 * <code>'\'</code> by <code>'/'</code>
 	 * @param string $path the path to uniformize
 	 * @return string the absolute path
@@ -102,7 +86,7 @@ class Path
 	}
 
 	/**
-	 * @desc Uniformizes the path replacing all <code>'\'</code> by <code>'/'</code>
+	 * Uniformizes the path replacing all <code>'\'</code> by <code>'/'</code>
 	 * @param string $path the path to uniformize
 	 * @return string the uniformized path
 	 */

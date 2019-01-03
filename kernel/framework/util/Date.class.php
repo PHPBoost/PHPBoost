@@ -1,42 +1,24 @@
 <?php
-/*##################################################
- *                               Date.class.php
- *                            -------------------
- *   begin                : June 1st, 2008
- *   copyright            : (C) 2008 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *   Date 1.0
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
+ * This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
  * It supports the most common formats and manages timezones. Here are the definitions of the 3 existing timezones:
  * <ul>
  * 	<li>System timezone: it's the timezone of the server, configured by the hoster. For instance, if your server is in France, it should be GMT+1.</li>
  * 	<li>Site timezone: it's the timezone of the central place of the site. For example, if your site deals with the italian soccer championship, it will be GMT+1.</li>
  * 	<li>User timezone :  each registered user can specify its timezone. It's particulary useful for people who visit some sites from a foreign country.</li>
  * </ul>
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- */
+ * @package     Util
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 03 23
+ * @since       PHPBoost 2.0 - 2008 06 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class Date
 {
 	const DATE_NOW = 'now';
@@ -60,7 +42,7 @@ class Date
 	private $date_time;
 
 	/**
-	 * @desc Builds and initializes a date.
+	 * Builds and initializes a date.
 	 * The first parameter is the date in a standardized format defined in the PHP documentation. To get the current date, use the Date::DATE_NOW
 	 * The second parameter allows us to chose what time referential we use to create the date:
 	 * <ul>
@@ -90,7 +72,7 @@ class Date
 	}
 
 	/**
-	 * @desc Formats the date to a particular format.
+	 * Formats the date to a particular format.
 	 * @param int $format One of the following enumeration:
 	 * <ul>
 	 * 	<li>Date::FORMAT_DAY_MONTH for a tiny formatting (only month and day)</li>
@@ -122,17 +104,17 @@ class Date
 		{
 			return $this->date_time->format($format);
 		}
-		
+
 		switch ($format)
 		{
 			case self::FORMAT_DAY_MONTH:
 				return $this->date_time->format(LangLoader::get_message('date_format_day_month', 'date-common'));
 				break;
-				
+
 			case self::FORMAT_DAY_MONTH_YEAR:
 				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year', 'date-common'));
 				break;
-				
+
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
 				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common'));
 				break;
@@ -140,7 +122,7 @@ class Date
 			case self::FORMAT_TIMESTAMP:
 				return $this->date_time->getTimestamp();
 				break;
-				
+
 			case self::FORMAT_RFC2822:
 				return $this->date_time->format('r');
 				break;
@@ -152,11 +134,11 @@ class Date
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
 				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_long', 'date-common')));
 				break;
-				
+
 			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
 				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_text', 'date-common')));
 				break;
-				
+
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
 				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common')));
 				break;
@@ -164,7 +146,7 @@ class Date
 			case self::FORMAT_RELATIVE:
 				return self::get_date_relative($this->get_timestamp(), $referencial_timezone);
 				break;
-				
+
 			case self::FORMAT_ISO_DAY_MONTH_YEAR:
 				return $this->date_time->format('Y-m-d');
 				break;
@@ -182,7 +164,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the relative time associated to the date
+	 * Returns the relative time associated to the date
 	 * @param int $timestamp
 	 * @param int $referencial_timezone
 	 * @return string The relative time
@@ -190,12 +172,12 @@ class Date
 	public function get_date_relative($timestamp, $referencial_timezone)
 	{
 		$now = new Date(Date::DATE_NOW, $referencial_timezone);
-		
+
 		if ($now->get_timestamp() > $timestamp)
 			$time_diff = $now->get_timestamp() - $timestamp;
-		else 
+		else
 			$time_diff = $timestamp - $now->get_timestamp();
-		
+
 		$secondes = $time_diff;
 		$minutes  = round($time_diff/60);
 		$hours    = round($time_diff/3600);
@@ -223,16 +205,16 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the timestamp associated to the date
+	 * Returns the timestamp associated to the date
 	 * @return int The timestamp
 	 */
 	public function get_timestamp()
 	{
 		return $this->date_time->getTimestamp();
 	}
-	
+
 	/**
-	 * @desc Returns DateTime
+	 * Returns DateTime
 	 * @return DateTime
 	 */
 	public function get_date_time()
@@ -241,7 +223,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the year of the date
+	 * Returns the year of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The year
 	 */
@@ -258,7 +240,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the month of the date
+	 * Returns the month of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The month
 	 */
@@ -273,9 +255,9 @@ class Date
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($this->get_year(), $month, $this->get_day());
 	}
-	
+
 	/**
-	 * @desc Returns first charaters (all per default) of the month name
+	 * Returns first charaters (all per default) of the month name
 	 * @param $characters_number The characters number requested (usually 2 or 3)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the month name
@@ -285,9 +267,9 @@ class Date
 		$this->compute_server_user_difference($timezone);
 		return Texthelper::ucfirst(TextHelper::mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
 	}
-	
+
 	/**
-	 * @desc Returns the week number of the date
+	 * Returns the week number of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The week number
 	 */
@@ -303,7 +285,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the day of the date
+	 * Returns the day of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day
 	 */
@@ -312,7 +294,7 @@ class Date
 		$this->compute_server_user_difference($timezone);
 		return $this->date_time->format('j');
 	}
-	
+
 	public function get_day_two_digits($timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($timezone);
@@ -324,9 +306,9 @@ class Date
 		$this->compute_server_user_difference($referential_timezone);
 		$this->date_time->setDate($this->get_year(), $this->get_month(), $day);
 	}
-	
+
 	/**
-	 * @desc Returns first charaters (all per default) of the day of week name
+	 * Returns first charaters (all per default) of the day of week name
 	 * @param $characters_number The characters number requested (usually 2 or 3)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The first letters of the day name
@@ -336,9 +318,9 @@ class Date
 		$this->compute_server_user_difference($timezone);
 		return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
 	}
-	
+
 	/**
-	 * @desc Returns the day of the week (0 for sunday to 6 for saturday)
+	 * Returns the day of the week (0 for sunday to 6 for saturday)
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day of the year
 	 */
@@ -347,9 +329,9 @@ class Date
 		$this->compute_server_user_difference($timezone);
 		return (int)$this->date_time->format('w');
 	}
-	
+
 	/**
-	 * @desc Returns the day of the year
+	 * Returns the day of the year
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The day of the year
 	 */
@@ -365,7 +347,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the hours of the date
+	 * Returns the hours of the date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The hours
 	 */
@@ -382,7 +364,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the minutes of the date
+	 * Returns the minutes of the date
 	 * @return string The minutes
 	 */
 	public function get_minutes()
@@ -397,7 +379,7 @@ class Date
 	}
 
 	/**
-	 * @desc Returns the seconds of the date
+	 * Returns the seconds of the date
 	 * @return string The seconds
 	 */
 	public function get_seconds()
@@ -412,14 +394,14 @@ class Date
 	}
 
 	/**
-	 * @desc Exports the date according to the format YYYY-mm-dd
+	 * Exports the date according to the format YYYY-mm-dd
 	 * @return string The formatted date
 	 */
 	public function to_date()
 	{
 		return $this->date_time->format('Y-m-d');
 	}
-	
+
 	/**
 	 * Tells whether this date is anterior to the given one
 	 * @param Date $date The date to compare with
@@ -429,7 +411,7 @@ class Date
 	{
 		return $this->get_date_time() < $date->get_date_time();
 	}
-	
+
 	/**
 	 * Tells whether this date is posterior to the given one
 	 * @param Date $date The date to compare with
@@ -478,7 +460,7 @@ class Date
 	}
 
 	/**
-	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
+	 * Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
 	 * @param int $day The day
 	 * @param int $year The year
@@ -502,7 +484,7 @@ class Date
 	}
 
 	/**
-	 * @desc Calculates and return date formats to use many variables in the TPL.
+	 * Calculates and return date formats to use many variables in the TPL.
 	 * @param Date $date The concerned date
 	 * @param string $date_label The purpose of the date
 	 * @return string[] true if the date is correct and false otherwise.
@@ -511,7 +493,7 @@ class Date
 	{
 		if ($date == null || !$date instanceof Date || empty($date_label))
 			return array();
-		
+
 		$date_label = TextHelper::strtoupper($date_label);
 		return array(
 			$date_label                       => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
@@ -539,18 +521,18 @@ class Date
 	}
 
 	/**
-	 * @desc Computes the time difference between the server and the current user
+	 * Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
 	 */
 	private function compute_server_user_difference($referencial_timezone = Timezone::SERVER_TIMEZONE)
 	{
 		$this->date_time->setTimezone(Timezone::get_timezone($referencial_timezone));
 	}
-	
+
 	private static function transform_date($date)
 	{
 		$date_lang = LangLoader::get('date-common');
-		
+
 		$search = array(
 			'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
 			'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
@@ -558,7 +540,7 @@ class Date
 		$replace = array(
 			$date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
 			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december'],
-			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'], 
+			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'],
 		);
 		return str_replace($search, $replace, TextHelper::strtolower($date));
 	}
