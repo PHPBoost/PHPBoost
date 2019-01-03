@@ -1,38 +1,22 @@
 <?php
-/*##################################################
- *                          Environment.class.php
- *                            -------------------
- *   begin                : September 28, 2009
- *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
- *   email                : ben.popeye@phpboost.com, loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
  * This class manages all the environment that PHPBoost need to run.
  * <p>It's able to initialize the environment that contains services (database,
  * users management...) as well as the graphical environment.</p>
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
- */
+ * @package     Core
+ * @subpackage  Environment
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @since       PHPBoost 3.0 - 2009 09 28
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
+
 class Environment
 {
 	private static $running_module_name = '';
@@ -119,7 +103,7 @@ class Environment
 		@error_reporting(ERROR_REPORTING);
 		set_error_handler(array(new ErrorHandler(), 'handle'));
 		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
-		
+
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
@@ -127,7 +111,7 @@ class Environment
 		if (function_exists('mb_http_input')) { mb_http_input('UTF-8'); }
 		if (function_exists('mb_language')) { mb_language('uni'); }
 		ob_start('mb_output_handler');
-		
+
 		@ini_set('open_basedir', NULL);
 	}
 
@@ -208,7 +192,7 @@ class Environment
 		$LANG = array();
 		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/main.php');
 		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/errors.php');
-		
+
 		AppContext::get_current_user()->update_visitor_display_name();
 	}
 
@@ -277,13 +261,13 @@ class Environment
 	{
 		$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 		$time = $now->format('Y-m-d');
-		
+
 		//We truncate the table containing the visitors of today
 		PersistenceContext::get_querier()->delete(DB_TABLE_VISIT_COUNTER, 'WHERE id <> 1');
 
 		//We update the last changeday date
 		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $time, 'total' => 1), 'WHERE id = 1');
-		
+
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $time, 'total' => 0));
 	}
@@ -337,15 +321,15 @@ class Environment
 	{
 		$path = TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(DIR));
 		$path = trim($path, '/');
-		
+
 		$general_config = GeneralConfig::load();
 		$other_home_page = trim($general_config->get_other_home_page(), '/');
-		
+
 		if ((!empty($path) && $path != 'index.php') || (!empty($other_home_page) && $path == $other_home_page))
 		{
 			$module_name = explode('/', $path);
 			self::$running_module_name = $module_name[0];
-			
+
 			if ($path == $other_home_page)
 				self::$home_page_running = true;
 			else
@@ -367,7 +351,7 @@ class Environment
 	}
 
 	/**
-	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
+	 * Retrieves the identifier (name of the folder) of the module which is currently executed.
 	 * @return string The module identifier.
 	 */
 	public static function get_running_module_name()
@@ -387,7 +371,7 @@ class Environment
 	}
 
 	/**
-	 * @desc Redirect to update script when it is present and not installed.
+	 * Redirect to update script when it is present and not installed.
 	 */
 	private static function redirect_to_update_script_if_needed()
 	{
@@ -400,7 +384,7 @@ class Environment
 	}
 
 	/**
-	 * @desc Retrieves the site start page.
+	 * Retrieves the site start page.
 	 * @return The absolute start page URL.
 	 */
 	public static function get_home_page()
@@ -414,7 +398,7 @@ class Environment
 	}
 
 	/**
-	 * @desc Returns the full phpboost version with its build number
+	 * Returns the full phpboost version with its build number
 	 * @return string the full phpboost version with its build number
 	 */
 	public static function get_phpboost_version()
