@@ -1,35 +1,18 @@
 <?php
-/*##################################################
- *                             AbstractCategoriesFormController.class.php
- *                            -------------------
- *   begin                : February 06, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Kévin MASSY
- * @desc
- */
+ * @package     Content
+ * @subpackage  Category\bridges
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 06
+ * @since       PHPBoost 4.0 - 2013 02 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 abstract class AbstractCategoriesFormController extends ModuleController
 {
 	/**
@@ -40,25 +23,25 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	 * @var FormButtonSubmit
 	 */
 	protected $submit_button;
-	
+
 	protected static $lang;
 	protected static $common_lang;
-	
+
 	/**
 	 * @var Category
 	 */
 	private $category;
 	protected $is_new_category;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 		$this->init();
 		$this->build_form($request);
-		
+
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang(self::$lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->set_properties();
@@ -68,80 +51,80 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			else
 				AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return $this->generate_response($tpl);
 	}
-	
+
 	private function init()
 	{
 		self::$lang = LangLoader::get('categories-common');
 		self::$common_lang = LangLoader::get('common');
 	}
-	
+
 	protected function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTML('category', $this->get_title());
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
 		'events' => array('click' => '
 		if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 			HTMLForms.getField("rewrited_name").enable();
-		} else { 
+		} else {
 			HTMLForms.getField("rewrited_name").disable();
 		}'
 		))));
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
-			'description' => self::$common_lang['form.rewrited_name.description'], 
+			'description' => self::$common_lang['form.rewrited_name.description'],
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
-		
+
 		if ($this->get_category()->is_allowed_to_have_childs())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
-			
+
 			if ($this->get_category()->get_id())
 				$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
-				
+
 			$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', self::$common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		}
-		
+
 		$this->build_fieldset_options($form);
-		
+
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
-		
+
 		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
-		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth), 
+
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth),
 		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			jQuery("#' . __CLASS__ . '_authorizations").show();
-		} else { 
+		} else {
 			jQuery("#' . __CLASS__ . '_authorizations").hide();
 		}')
 		)));
-		
+
 		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth))));
-		
+
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	protected function set_properties()
 	{
 		$this->get_category()->set_name($this->form->get_value('name'));
@@ -152,7 +135,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
 		else
 			$this->get_category()->set_id_parent(Category::ROOT_CATEGORY);
-		
+
 		if ($this->form->get_value('special_authorizations'))
 		{
 			$this->get_category()->set_special_authorizations(true);
@@ -163,10 +146,10 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$this->get_category()->set_special_authorizations(false);
 			$autorizations = array();
 		}
-		
+
 		$this->get_category()->set_authorizations($autorizations);
 	}
-	
+
 	private function build_fieldset_options(HTMLForm $form)
 	{
 		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('form.options', 'common'));
@@ -176,12 +159,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$form->add_fieldset($fieldset);
 		}
 	}
-	
+
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Update or add category
 	 */
@@ -197,7 +180,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$this->get_categories_manager()->add($category);
 		}
 	}
-	
+
 	/**
 	 * @return Category
 	 */
@@ -221,7 +204,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 		return $this->category;
 	}
-	
+
 	/**
 	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
 	 */
@@ -234,7 +217,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 	}
-	
+
 	/**
 	 * @return string Page title
 	 */
@@ -242,7 +225,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	{
 		return $this->get_id_category() == 0 ? self::$lang['category.add'] : self::$lang['category.edit'];
 	}
-	
+
 	/**
 	 * @return string the appropriate success message
 	 */
@@ -250,7 +233,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	{
 		return $this->is_new_category ? self::$lang['category.message.success.add'] : self::$lang['category.message.success.edit'];
 	}
-	
+
 	/**
 	 * @param View $view
 	 * @return Response
@@ -262,51 +245,51 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_title(), $this->get_module_home_page_title());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->is_new_category ? $this->get_add_category_url() : $this->get_edit_category_url($this->get_category()));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->get_module_home_page_title(), $this->get_module_home_page_url());
-		
+
 		$breadcrumb->add($this->get_title(), $this->is_new_category ? $this->get_add_category_url() : $this->get_edit_category_url($this->get_category()));
-		
+
 		return $response;
 	}
-	
+
 	/**
 	 * @return string id of the category to edit / delete
 	 */
 	abstract protected function get_id_category();
-	
+
 	/**
 	 * @return CategoriesManager
 	 */
 	abstract protected function get_categories_manager();
-	
+
 	/**
 	 * @return Url
 	 */
 	abstract protected function get_categories_management_url();
-	
+
 	/**
 	 * @return Url
 	 */
 	abstract protected function get_add_category_url();
-	
+
 	/**
 	 * @param int $category Category
 	 * @return Url
 	 */
 	abstract protected function get_edit_category_url(Category $category);
-	
+
 	/**
 	 * @return Url
 	 */
 	abstract protected function get_module_home_page_url();
-	
+
 	/**
 	 * @return string module home page title
 	 */
 	abstract protected function get_module_home_page_title();
-	
+
 	/**
 	 * @return boolean Authorization to manage categories
 	 */

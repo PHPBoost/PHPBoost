@@ -1,39 +1,26 @@
 <?php
-/*##################################################
- *                       ContentSecondParser.class.php
- *                            -------------------
- *   begin                : August 10, 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class ensures the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
- * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
- * which replaces the code by a lot of html code which formats the code.
- * This kind of tag is treated in real time by this class.
- * The content you put in that parser must come from a ContentFormattingParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- */
+* This class ensures the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
+* when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
+* which replaces the code by a lot of html code which formats the code.
+* This kind of tag is treated in real time by this class.
+* The content you put in that parser must come from a ContentFormattingParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
+ * @package     Content
+ * @subpackage  Formatting\parser
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 12 06
+ * @since       PHPBoost 2.0 - 2008 08 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
+*/
+
 class ContentSecondParser extends AbstractParser
 {
 	/**
@@ -41,7 +28,7 @@ class ContentSecondParser extends AbstractParser
 	 */
 	const MAX_CODE_LENGTH = 40000;
 	/**
-	 * @desc Builds a ContentSecondParser object
+	 * Builds a ContentSecondParser object
 	 */
 	public function __construct()
 	{
@@ -49,7 +36,7 @@ class ContentSecondParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Parses the content of the parser. The result will be ready to be displayed.
+	 * Parses the content of the parser. The result will be ready to be displayed.
 	 */
 	public function parse()
 	{
@@ -95,7 +82,7 @@ class ContentSecondParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Transforms a PHPBoost HTML content to make it exportable and usable every where in the web.
+	 * Transforms a PHPBoost HTML content to make it exportable and usable every where in the web.
 	 * @param string $html Content to transform
 	 * @return string The exportable content
 	 */
@@ -120,7 +107,7 @@ class ContentSecondParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
+	 * Highlights a content in a supported language using the appropriate syntax highlighter.
 	 * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
 	 * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
 	 * PHPBoost templates and PHPBoost BBCode.
@@ -188,7 +175,7 @@ class ContentSecondParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Displays the url correctly when PHPBoost is installed in a sub-folder
+	 * Displays the url correctly when PHPBoost is installed in a sub-folder
 	 * @return string the relative url
 	 */
 	private function callbackrelative_url($matches)
@@ -198,7 +185,7 @@ class ContentSecondParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Handler which highlights a string matched by the preg_replace_callback function.
+	 * Handler which highlights a string matched by the preg_replace_callback function.
 	 * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?,
 	 * 3 => multi line?, 4 => the code to highlight.
 	 * @return string the colored content
@@ -264,7 +251,7 @@ class ContentSecondParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Display the content only if it's a connected user.
+	 * Display the content only if it's a connected user.
 	 * @param string[] 1 => the content inside member tag.
 	 * @return string The content if it's a member or a generic message.
 	 */
@@ -279,7 +266,7 @@ class ContentSecondParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Display the content only if it's a moderator user.
+	 * Display the content only if it's a moderator user.
 	 * @param string[] 1 => the content inside moderator tag.
 	 * @return string The content if it's a moderator or a generic message.
 	 */
@@ -294,7 +281,7 @@ class ContentSecondParser extends AbstractParser
 
 	/**
 	 * @static
-	 * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
+	 * Parses the latex code and replaces it by an image containing the mathematic formula.
 	 * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
 	 * @return string The code of the image containing the formula.
 	 */

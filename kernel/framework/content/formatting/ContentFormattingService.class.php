@@ -1,36 +1,18 @@
 <?php
-/*##################################################
- *                     ContentFormattingService.class.php
- *                            -------------------
- *   begin                : December 20, 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class contains the default content formatting factory that must be used if you want
+ * This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
- */
+ * @package     Content
+ * @subpackage  Formatting
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 30
+ * @since       PHPBoost 3.0 - 2009 12 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class ContentFormattingService
 {
 	/**
@@ -39,7 +21,7 @@ class ContentFormattingService
 	private $default_factory;
 
 	/**
-	 * @desc Returns the content formatting factory corresponding to the default configuration 
+	 * Returns the content formatting factory corresponding to the default configuration
 	 * @return ContentFormattingFactory
 	 */
 	public function get_default_factory()
@@ -52,7 +34,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Creates a factory for the given language
+	 * Creates a factory for the given language
 	 * @param string $language
 	 * @return ContentFormattingFactory
 	 */
@@ -63,7 +45,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Returns the name of the editor of the current user (chosen in its profile).
+	 * Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
 	public function get_user_editor()
@@ -72,7 +54,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Returns the parser to use in the default configuration
+	 * Returns the parser to use in the default configuration
 	 * @return FormattingParser
 	 */
 	public function get_default_parser()
@@ -81,7 +63,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Returns the unparser to use in the default configuration
+	 * Returns the unparser to use in the default configuration
 	 * @return FormattingParser
 	 */
 	public function get_default_unparser()
@@ -90,7 +72,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Returns the second parser to use in the default configuration
+	 * Returns the second parser to use in the default configuration
 	 * @return FormattingParser
 	 */
 	public function get_default_second_parser()
@@ -99,7 +81,7 @@ class ContentFormattingService
 	}
 
 	/**
-	 * @desc Returns the editor displayer that you have to display beside the associated HTML textarea
+	 * Returns the editor displayer that you have to display beside the associated HTML textarea
 	 * if you use the default configuration.
 	 * @return ContentEditor
 	 */
@@ -123,12 +105,12 @@ class ContentFormattingService
 			return ContentFormattingConfig::load()->get_default_editor();
 		}
 	}
-	
+
 	public function get_editors_identifier()
 	{
 		return array_keys(ContentFormattingProvidersService::get_editors());
 	}
-	
+
 	public function get_available_editors()
 	{
 		$available_editors = array();
@@ -138,23 +120,23 @@ class ContentFormattingService
 		}
 		return $available_editors;
 	}
-	
+
 	/**
 	 * @param string $id_module
 	 */
 	public function uninstall_editor($id_module)
 	{
 		$editors = $this->get_available_editors();
-		
+
 		if (in_array($id_module, $editors))
 		{
 			if (count($editors) > 1)
 			{
 				$default_editor = ContentFormattingConfig::load()->get_default_editor();
-				
+
 				if ($default_editor !== $id_module)
 				{
-					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor), 
+					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor),
 						'WHERE editor=:old_editor', array('old_editor' => $id_module
 					));
 				}
@@ -165,9 +147,9 @@ class ContentFormattingService
 				return LangLoader::get_message('last_editor_installed', 'editor-common');
 		}
 	}
-	
+
 	/**
-	 * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
+	 * Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
 	 * The keys of the map are the tags identifiers and the values the tags names.
 	 * @return string[] The map
 	 */
@@ -192,7 +174,7 @@ class ContentFormattingService
 			'size' => $editor_lang['format_size'],
 			'align' => $editor_lang['format_align'],
 			'float' => $editor_lang['format_float'],
-			'sup' => $editor_lang['format_sup'], 
+			'sup' => $editor_lang['format_sup'],
 			'sub' => $editor_lang['format_sub'],
 			'indent' => $editor_lang['format_indent'],
 			'pre' => $editor_lang['format_pre'],

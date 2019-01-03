@@ -1,58 +1,44 @@
 <?php
-/*##################################################
- *                          RichCategory.class.php
- *                            -------------------
- *   begin                : January 29, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     Content
+ * @subpackage  Category
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 4.0 - 2013 01 29
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class RichCategory extends Category
 {
 	protected $description;
 	protected $image;
-	
+
 	public function set_description($description)
 	{
 		$this->description = $description;
 	}
-	
+
 	public function get_description()
 	{
 		return $this->description;
 	}
-	
+
 	public function set_image(Url $image)
 	{
 		$this->image = $image;
 	}
-	
+
 	public function get_image()
 	{
 		if (!$this->image instanceof Url)
 			return new Url('/' . Environment::get_running_module_name() . '/' . Environment::get_running_module_name() . '.png');
-		
+
 		return $this->image;
 	}
-	
+
 	public function get_properties()
 	{
 		return array_merge(parent::get_properties(), array(
@@ -60,14 +46,14 @@ class RichCategory extends Category
 			'image' => $this->get_image()->relative()
 		));
 	}
-	
+
 	public function set_properties(array $properties)
 	{
 		parent::set_properties($properties);
 		$this->set_description($properties['description']);
 		$this->set_image(new Url($properties['image']));
 	}
-	
+
 	public static function create_categories_table($table_name)
 	{
 		$fields = array(

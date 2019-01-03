@@ -1,34 +1,19 @@
 <?php
-/*##################################################
- *                        KeywordsCache.class.php
- *                            -------------------
- *   begin                : November 9, 2018
- *   copyright            : (C) 2018 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     Content
+ * @subpackage  Keyword
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @since       PHPBoost 5.1 - 2018 11 09
+*/
 
 abstract class KeywordsCache implements CacheData
 {
 	protected $keywords;
-	
+
 	public function synchronize()
 	{
 		$this->keywords = array();
@@ -47,9 +32,9 @@ abstract class KeywordsCache implements CacheData
 		}
 		$result->dispose();
 	}
-	
+
 	abstract public function get_module_identifier();
-	
+
 	public function get_keywords($id_in_module)
 	{
 		if ($this->has_keywords($id_in_module))
@@ -58,12 +43,12 @@ abstract class KeywordsCache implements CacheData
 		}
 		return array();
 	}
-	
+
 	public function has_keywords($id)
 	{
 		return array_key_exists($id, $this->keywords);
 	}
-	
+
 	/**
 	 * Loads and returns the keywords cached data.
 	 * @return KeywordsCache The cached data
@@ -72,7 +57,7 @@ abstract class KeywordsCache implements CacheData
 	{
 		return CacheManager::load(get_called_class(), self::get_class()->get_module_identifier(), 'keywords');
 	}
-	
+
 	/**
 	 * Invalidates keywords cached data.
 	 */
@@ -80,7 +65,7 @@ abstract class KeywordsCache implements CacheData
 	{
 		CacheManager::invalidate(self::get_class()->get_module_identifier(), 'keywords');
 	}
-	
+
 	public static function get_class()
 	{
 		$class_name = get_called_class();

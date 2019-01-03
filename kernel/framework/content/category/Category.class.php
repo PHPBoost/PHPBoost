@@ -1,29 +1,16 @@
 <?php
-/*##################################################
- *                          Category.class.php
- *                            -------------------
- *   begin                : January 29, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     Content
+ * @subpackage  Category
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 30
+ * @since       PHPBoost 4.0 - 2013 01 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class Category
 {
@@ -36,120 +23,120 @@ class Category
 	protected $id_parent;
 	protected $elements_number;
 	protected $allowed_to_have_childs = true;
-	
+
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
 	const CONTRIBUTION_AUTHORIZATIONS = 4;
 	const MODERATION_AUTHORIZATIONS = 8;
 	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 16;
-	
+
 	const ROOT_CATEGORY = '0';
-	
+
 	public function get_id()
 	{
 		return $this->id;
 	}
-	
+
 	public function set_id($id)
 	{
 		$this->id = $id;
 	}
-	
+
 	public function get_name()
 	{
 		return $this->name;
 	}
-	
+
 	public function set_name($name)
 	{
 		$this->name = $name;
 	}
-	
+
 	public function get_rewrited_name()
 	{
 		return $this->rewrited_name;
 	}
-	
+
 	public function set_rewrited_name($rewrited_name)
 	{
 		$this->rewrited_name = $rewrited_name;
 	}
-	
+
 	public function rewrited_name_is_personalized()
 	{
 		return $this->rewrited_name != Url::encode_rewrite($this->name);
 	}
-	
+
 	public function get_order()
 	{
 		return $this->order;
 	}
-	
+
 	public function set_order($order)
 	{
 		$this->order = $order;
 	}
-	
+
 	public function incremente_order()
 	{
 		$this->order++;
 	}
-	
+
 	public function has_special_authorizations()
 	{
 		return $this->special_authorizations;
 	}
-	
+
 	public function set_special_authorizations($special_authorizations)
 	{
 		$this->special_authorizations = (bool)$special_authorizations;
 	}
-	
+
 	public function get_authorizations()
 	{
 		return $this->auth;
 	}
-	
+
 	public function set_authorizations(array $auth)
 	{
 		$this->auth = $auth;
 	}
-	
+
 	public function auth_is_empty()
 	{
 		return empty($this->auth);
 	}
-	
+
 	public function auth_is_equals(Array $auth)
 	{
 		return $this->auth === $auth;
 	}
-	
+
 	public function get_id_parent()
 	{
 		return $this->id_parent;
 	}
-	
+
 	public function set_id_parent($id_parent)
 	{
 		$this->id_parent = $id_parent;
 	}
-	
+
 	public function get_elements_number()
 	{
 		return $this->elements_number;
 	}
-	
+
 	public function set_elements_number($elements_number)
 	{
 		$this->elements_number = $elements_number;
 	}
-	
+
 	public function is_allowed_to_have_childs()
 	{
 		return $this->allowed_to_have_childs;
 	}
-	
+
 	public function check_auth($bit)
 	{
 		return AppContext::get_current_user()->check_auth($this->auth, $bit);
@@ -167,7 +154,7 @@ class Category
 			'id_parent' => $this->get_id_parent()
 		);
 	}
-	
+
 	public function set_properties(array $properties)
 	{
 		$this->set_id($properties['id']);
@@ -178,7 +165,7 @@ class Category
 		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
 	}
-	
+
 	public static function create_categories_table($table_name)
 	{
 		$fields = array(

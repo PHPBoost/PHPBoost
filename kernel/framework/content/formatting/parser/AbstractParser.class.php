@@ -1,35 +1,20 @@
 <?php
-/*##################################################
- *                         AbstractParser.class.php
- *                            -------------------
- *   begin                : November 29, 2007
- *   copyright            : (C) 2007 Régis Viarre, Benoit Sautel, Loic Rouchon
- *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
- */
+ * This class is the basis of all the formatting processings that exist in PHPBoost.
+ * @package     Content
+ * @subpackage  Formatting\parser
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 2.0 - 2007 11 29
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class AbstractParser implements FormattingParser
 {
 	const PICK_UP = true;
@@ -51,14 +36,14 @@ abstract class AbstractParser implements FormattingParser
 	 * @var string Path of the page in which has been written the content to parse.
 	 */
 	protected $page_path = '';
-	
+
 	/**
 	 * @var string[] List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example
 	 */
 	protected $module_special_tags = array();
 
 	/**
-	 * @desc Builds a Parser object.
+	 * Builds a Parser object.
 	 */
 	public function __construct()
 	{
@@ -113,7 +98,7 @@ abstract class AbstractParser implements FormattingParser
 	{
 		return $this->page_path;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -121,7 +106,7 @@ abstract class AbstractParser implements FormattingParser
 	{
 		$this->module_special_tags[$pattern] = $replacement;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -131,7 +116,7 @@ abstract class AbstractParser implements FormattingParser
 	}
 
 	/**
-	 * @desc Parses a nested tag
+	 * Parses a nested tag
 	 * @param string $match The regular expression which matches the tag to replace
 	 * @param string $regex The regular expression which matches the replacement
 	 * @param string $replace The replacement syntax.

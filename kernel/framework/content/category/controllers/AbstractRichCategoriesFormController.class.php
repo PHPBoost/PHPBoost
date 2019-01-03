@@ -1,44 +1,26 @@
 <?php
-/*##################################################
- *                             AbstractRichCategoriesFormController.class.php
- *                            -------------------
- *   begin                : February 07, 2013
- *   copyright            : (C) 2013 Kévin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Kévin MASSY
- * @desc
- */
+ * @package     Content
+ * @subpackage  Category\bridges
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 05
+ * @since       PHPBoost 4.0 - 2013 02 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFormController
 {
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$common_lang['form.description'], $this->get_category()->get_description()));
-		
+
 		$fieldset->add_field(new FormFieldUploadPictureFile('image', self::$common_lang['form.picture'], $this->get_category()->get_image()->relative()));
 	}
-	
+
 	protected function set_properties()
 	{
 		parent::set_properties();
