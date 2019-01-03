@@ -1,36 +1,21 @@
 <?php
-/*##################################################
- *                        AbstractTemplate.class.php
- *                            -------------------
- *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Loic Rouchon <loic.rouchon@phpboost.com> Régis Viarre <crowkait@phpboost.com>
- * @desc This class is a default implementation of the Template interface using a TemplateLoader,
+ * This class is a default implementation of the Template interface using a TemplateLoader,
  * a TemplateData and a TemplateParser.
- */
+ * @package     IO
+ * @subpackage  Template
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 11 14
+ * @since       PHPBoost 3.0 - 2009 06 18
+ * @contributor Regis VIARRE <crowkait@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 abstract class AbstractTemplate implements Template
 {
 	/**
@@ -47,7 +32,7 @@ abstract class AbstractTemplate implements Template
 	protected $data;
 
 	/**
-	 * @desc Builds an AbstractTemplate from the different services it has to use.
+	 * Builds an AbstractTemplate from the different services it has to use.
 	 * @param TemplateLoader $loader The loader
 	 * @param TemplateRenderer $renderer The renderer
 	 * @param TemplateData $data The data
@@ -163,20 +148,20 @@ abstract class AbstractTemplate implements Template
 	private function render_with_reordered_js()
 	{
 		$generated_page = $this->render();
-		
+
 		$js_variables_definition = $included_js = $all_js = '';
 		$array_match_js = array();
-		
+
 		if (!preg_match('`post\.php|edit`', REWRITED_SCRIPT))
 		{
 			$array_match_js[] = '`<script(?: type="text/javascript")? src="([^"]*)"(?: type="text/javascript")?></script>`isU';
 			$array_match_js[] = '`<script(?: type="text/javascript")?>(?:<!--)?(.*)(?:-->)?</script>`isU';
-			
+
 			preg_match_all($array_match_js[0], $generated_page, $matches);
 			foreach ($matches[1] as $value) {
 				$included_js .= '<script src="' . $value . '"></script>';
 			}
-			
+
 			preg_match_all($array_match_js[1], $generated_page, $matches);
 			foreach ($matches[1] as $key => $value) {
 				if ($key == 0)
@@ -184,16 +169,16 @@ abstract class AbstractTemplate implements Template
 				else
 					$all_js .= $value;
 			}
-			
+
 			$all_js = str_replace(array('<!--', '-->'), '', $all_js);
 		}
-		
+
 		$generated_page = preg_replace($array_match_js, '', $generated_page);
 		$generated_page = str_replace('</body>', '<script>' . $js_variables_definition . '</script>' . $included_js . '<script>' . $all_js . '</script></body>', $generated_page);
-		
+
 		// Minifying html
 		$generated_page = trim(preg_replace(array('`([\t]+|<!-- .*?-->)`s', '`(\r\n)+|(\n)+|\n// .*\n`su'), array('', "\n"), $generated_page));
-		
+
 		echo $generated_page;
 	}
 
@@ -220,7 +205,7 @@ abstract class AbstractTemplate implements Template
 	{
 		return $this->data;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */

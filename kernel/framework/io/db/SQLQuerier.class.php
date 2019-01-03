@@ -1,43 +1,22 @@
 <?php
-/*##################################################
- *                           SQLQuerier.class.php
- *                            -------------------
- *   begin                : October 1, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- * @desc
- *
- */
+ * @package     IO
+ * @subpackage  DB
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2009 10 01
+*/
+
 interface SQLQuerier
 {
 	const ORDER_BY_ASC = 'ASC';
 	const ORDER_BY_DESC = 'DESC';
 
 	/**
-	 * @desc executes the <code>$query</code> sql request and returns the query result.
+	 * executes the <code>$query</code> sql request and returns the query result.
 	 * <p>Query will first be converted into the specific sgbd dialect.</p>
 	 * <p>Next query functions will be converted into the specific sgbd dialect.</p>
 	 * <p>Then query vars ":sample_query_var" will be replaced by the value of
@@ -51,7 +30,7 @@ interface SQLQuerier
 	function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC);
 
 	/**
-	 * @desc executes the <code>$query</code> sql request.
+	 * executes the <code>$query</code> sql request.
 	 * <p>Query will first be converted into the specific sgbd dialect.</p>
 	 * <p>Next query functions will be converted into the specific sgbd dialect.</p>
 	 * <p>Then query vars ":sample_query_var" will be replaced by the value of

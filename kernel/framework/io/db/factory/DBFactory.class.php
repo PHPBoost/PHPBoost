@@ -1,36 +1,17 @@
 <?php
-/*##################################################
- *                           DBFactory.class.php
- *                            -------------------
- *   begin                : October 1, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @package {@package}
- * @desc this factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
+ * This factory provides the <code>DBConnection</code> and the <code>SQLQuerier</code>
  * for the right sgbd.
- */
+ * @package     IO
+ * @subpackage  DB\factory
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2009 10 01
+*/
+
 class DBFactory
 {
 	const MYSQL = 0x01;
@@ -76,7 +57,7 @@ class DBFactory
 	}
 
 	/**
-	 * @desc returns the currently opened <code>DBConnection</code> instance or if none,
+	 * returns the currently opened <code>DBConnection</code> instance or if none,
 	 * creates a new one
 	 * @return DBConnection the currently opened <code>DBConnection</code> instance
 	 */
@@ -111,7 +92,7 @@ class DBFactory
 	}
 
 	/**
-	 * @desc returns a new <code>DBConnection</code> instance
+	 * returns a new <code>DBConnection</code> instance
 	 * @return SQLQuerier a new <code>DBConnection</code> instance
 	 */
 	public static function new_db_connection()
@@ -120,7 +101,7 @@ class DBFactory
 	}
 
 	/**
-	 * @desc returns a new <code>SQLQuerier</code> instance
+	 * returns a new <code>SQLQuerier</code> instance
 	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
 	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
 	 */

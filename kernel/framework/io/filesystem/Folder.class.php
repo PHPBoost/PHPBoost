@@ -1,35 +1,19 @@
 <?php
-/*##################################################
- *                              folder.class.php
- *                            -------------------
- *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel, Loic Rouchon
- *   email                : akhenathon2@gmail.com, loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
- * @desc This class allows you to handle very easily a folder on the serveur.
- */
+ * This class allows you to handle very easily a folder on the server.
+ * @package     IO
+ * @subpackage  Filesystem
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Nicolas Duhamel <akhenathon2@gmail.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 07 06
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Folder extends FileSystemElement
 {
 	private $opened = false;
@@ -44,7 +28,7 @@ class Folder extends FileSystemElement
 	private $folders = array();
 
 	/**
-	 * @desc Builds a Folder object.
+	 * Builds a Folder object.
 	 * @param string $path Path of the folder.
 	 */
 	public function __construct($path)
@@ -53,7 +37,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns true if the folder exists after this call, else, false
+	 * Returns true if the folder exists after this call, else, false
 	 * @return bool true if the folder exists after this call, else, false
 	 */
 	public function create()
@@ -74,7 +58,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Opens the folder.
+	 * Opens the folder.
 	 */
 	private function open()
 	{
@@ -116,7 +100,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Lists the files contained in this folder.
+	 * Lists the files contained in this folder.
 	 * @param string $regex PREG which describes the pattern the files you want to list must match. If you want all of them, don't use this parameter.
 	 * @param bool $regex_exclude_files true if the regex to exclude files
 	 * @return File[] The files list.
@@ -146,13 +130,13 @@ class Folder extends FileSystemElement
 					$files[] = $file;
 				}
 			}
-			
+
 		}
 		return $files;
 	}
 
 	/**
-	 * @desc Lists the folders contained in this folder.
+	 * Lists the folders contained in this folder.
 	 * @param string $regex PREG which describes the pattern the folders you want to list must match. If you want all of them, don't use this parameter.
 	 * @return Folder[] The folders list.
 	 */
@@ -176,7 +160,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the first folder present in this folder
+	 * Returns the first folder present in this folder
 	 * @return Folder The first folder of this folder or null if it doesn't contain any folder.
 	 */
 	public function get_first_folder()
@@ -193,7 +177,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns all the file system elements contained by the folder.
+	 * Returns all the file system elements contained by the folder.
 	 * @return FileSystemElement[] The list of the file system element contained in this folder.
 	 */
 	public function get_all_content()
@@ -202,7 +186,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Deletes the folder and all what it contains.
+	 * Deletes the folder and all what it contains.
 	 * @return True if deleted successfully.
 	 */
 	public function delete()
@@ -221,7 +205,7 @@ class Folder extends FileSystemElement
 	}
 
 	/**
-	 * @desc Returns the date of the last modification of the folder.
+	 * Returns the date of the last modification of the folder.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
 	public function get_last_modification_date()

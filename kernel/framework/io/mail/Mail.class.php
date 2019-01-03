@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *                              Mail.class.php
- *                            -------------------
- *   begin                : March 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class allows you to send mails without having to deal with the mail headers and parameters.
- */
+ * This class allows you to send mails without having to deal with the mail headers and parameters.
+ * @package     IO
+ * @subpackage  Mail
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 3.0 - 2010 03 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Mail
 {
 	const SENDER_ADMIN = 'admin';
-	
+
 	const SENDER_USER = 'user';
 
 	/**
@@ -93,33 +76,33 @@ class Mail
 
 
 	/**
-	 * @desc Builds a Mail subject.
+	 * Builds a Mail subject.
 	 */
 	public function __construct()
 	{
 	}
 
 	/**
-	 * @desc Sets the mail sender.
+	 * Sets the mail sender.
 	 * @param string $sender The mail sender address.
 	 * @param string $sender_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
 	public function set_sender($sender, $sender_name = self::SENDER_ADMIN)
 	{
 		$site_name = GeneralConfig::load()->get_site_name();
-		
+
 		if ($sender_name == self::SENDER_ADMIN || $sender_name == self::SENDER_USER)
 		{
 			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
 		}
-		
+
 		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
 
 		$this->sender_mail = $sender;
 	}
 
 	/**
-	 * @desc Sets the mail to reply to.
+	 * Sets the mail to reply to.
 	 * @param string $reply_to The mail address to reply to.
 	 * @param string $reply_to_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
@@ -129,14 +112,14 @@ class Mail
 		{
 			$reply_to_name = $reply_to_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
 		}
-		
+
 		$this->reply_to_name = $reply_to_name;
 
 		$this->reply_to_mail = $reply_to;
 	}
 
 	/**
-	 * @desc Adds a recipient to the list
+	 * Adds a recipient to the list
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
@@ -154,7 +137,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Adds a cc recipient to the list
+	 * Adds a cc recipient to the list
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
@@ -172,7 +155,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Adds a bcc recipient to the list
+	 * Adds a bcc recipient to the list
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
@@ -195,7 +178,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[string]
 	 */
 	public function get_recipients()
@@ -204,7 +187,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[string]
 	 */
 	public function get_cc_recipients()
@@ -213,7 +196,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns a map associating email addresses to the corresponding names (can be empty).
+	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[string]
 	 */
 	public function get_bcc_recipients()
@@ -222,7 +205,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Sets the mail subject
+	 * Sets the mail subject
 	 * @param string $subject Mail subject
 	 */
 	public function set_subject($subject)
@@ -231,7 +214,7 @@ class Mail
 	}
 
 	/**
-	 * @desc The mail content.
+	 * The mail content.
 	 * @param string $content The mail content
 	 */
 	public function set_content($content)
@@ -241,7 +224,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Sets the headers. Forces them, they won't be generated automatically.
+	 * Sets the headers. Forces them, they won't be generated automatically.
 	 * @param string $headers The mail headers.
 	 */
 	public function set_headers($headers)
@@ -250,7 +233,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail address of the sender.
+	 * Returns the mail address of the sender.
 	 * @return string the sender's mail address
 	 */
 	public function get_sender_mail()
@@ -259,7 +242,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail sender's name.
+	 * Returns the mail sender's name.
 	 * @return string The mail sender's name.
 	 */
 	public function get_sender_name()
@@ -268,7 +251,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail address to reply to.
+	 * Returns the mail address to reply to.
 	 * @return string the reply to mail address
 	 */
 	public function get_reply_to_mail()
@@ -277,7 +260,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the reply to mail sender's name.
+	 * Returns the reply to mail sender's name.
 	 * @return string The reply to mail sender's name.
 	 */
 	public function get_reply_to_name()
@@ -286,7 +269,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail subject.
+	 * Returns the mail subject.
 	 * @return string The mail subject.
 	 */
 	public function get_subject()
@@ -295,7 +278,7 @@ class Mail
 	}
 
 	/**
-	 * @desc Returns the mail content.
+	 * Returns the mail content.
 	 * @return string The mail content.
 	 */
 	public function get_content()

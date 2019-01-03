@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *                        StringTemplate.class.php
- *                            -------------------
- *   begin                : February 6, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc This class enables you to handle a template whose input is not a file but directly a string.
+ * This class enables you to handle a template whose input is not a file but directly a string.
  * To be always as efficient as possible, it uses cache if it evaluates that it could be faster.
  * But when string templates are cached, they are saved on the filesystem and use some disk space. It's the reason
  * why there is an option enabling to forbid it to cache a template if you think that it's not required to have
  * a big efficiency. It will be the case for instance when you know that a string template will be used only once a month.
- */
+ * @package     IO
+ * @subpackage  Template
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @since       PHPBoost 3.0 - 2010 02 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class StringTemplate extends AbstractTemplate
 {
 	/**
@@ -46,7 +29,7 @@ class StringTemplate extends AbstractTemplate
 	const USE_CACHE_IF_FASTER = true;
 
 	/**
-	 * @desc Constructs a StringTemplate
+	 * Constructs a StringTemplate
 	 * @param string $content The content of the template (a string containing PHPBoost's template engine syntax).
 	 * @param bool $use_cache Controls if it has or not to use cache
 	 * @param bool $auto_load_vars Tells whether it has to load or not the most common variables.

@@ -1,50 +1,35 @@
 <?php
-/*##################################################
- *                           MailService.class.php
- *                            -------------------
- *   begin                : March 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     IO
+ * @subpackage  Mail
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @since       PHPBoost 3.0 - 2010 03 08
+*/
 
 interface MailService
 {
 	/**
-	 * @desc Sends the mail. Throws an exception if the mail cannot be sent.
+	 * Sends the mail. Throws an exception if the mail cannot be sent.
 	 * @param Mail $mail The mail to send
 	 * @throws IOException if the mail couldn't be sent
 	 */
 	function send(Mail $mail);
 
 	/**
-	 * @desc Tries to send the mail but doesn't throw any error whether the mail cannot be sent,
+	 * Tries to send the mail but doesn't throw any error whether the mail cannot be sent,
 	 * it only returns false.
 	 * @param Mail $mail The mail to send
 	 * @return boolean True if the mail could be sent, false otherwise.
 	 */
 	function try_to_send(Mail $mail);
-	
+
 	/**
 	 * @deprecated
-	 * @desc Sends the mail.
+	 * Sends the mail.
 	 * @param string $mail_to The mail recipients' address.
 	 * @param string $mail_subject The mail subject.
 	 * @param string $mail_content content of the mail
@@ -55,7 +40,7 @@ interface MailService
 	function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from = '', $sender_name = 'admin');
 
 	/**
-	 * @desc Check whether the mail address is valid, it respects the mail RFC
+	 * Check whether the mail address is valid, it respects the mail RFC
 	 * @param string $mail_address
 	 * @return boolean true if the mail is valid, false otherwise
 	 */

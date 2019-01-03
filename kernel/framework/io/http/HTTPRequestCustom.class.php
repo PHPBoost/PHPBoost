@@ -1,35 +1,20 @@
 <?php
-/*##################################################
- *                           HTTPRequestCustom.class.php
- *                            -------------------
- *   begin                : October 17 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc Provides access to the HTTP request parameters
- * @package {@package}
- */
+ * Provides access to the HTTP request parameters
+ * @package     IO
+ * @subpackage  HTTP
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @since       PHPBoost 3.0 - 2009 10 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class HTTPRequestCustom
 {
 	const bool = 0x00;
@@ -38,11 +23,11 @@ class HTTPRequestCustom
 	const string = 0x03;
 	const t_array = 0x04;
 	const none = 0x05;
-	
+
 	private $_request;
 	private $_get;
 	private $_post;
-	
+
 	public function __construct()
 	{
 		$this->_request = self::sanitize_html($_REQUEST);
@@ -307,7 +292,7 @@ class HTTPRequestCustom
 	{
 		if (is_array($value))
 			$value = implode(',', $value);
-		
+
 		$value = self::sanitize($value);
 		return (string) $value;
 	}
@@ -320,7 +305,7 @@ class HTTPRequestCustom
 	private static function sanitize_html(Array $array)
 	{
 		$proper_array = array();
-		
+
 		foreach ($array as $key => $value)
 		{
 			if (is_array($value))
@@ -328,7 +313,7 @@ class HTTPRequestCustom
 			else
 				$proper_array[$key] = TextHelper::htmlspecialchars($value);
 		}
-		
+
 		return $proper_array;
 	}
 
@@ -369,13 +354,13 @@ class HTTPRequestCustom
 	public function get_is_localhost()
 	{
 		$patterns = array('localhost', 'local.dev', '127.0.0.1', '::1');
-		
+
 		foreach ($patterns as $value)
 		{
 			if (TextHelper::strpos(self::get_http_host(), $value) !== false)
 				return true;
-		} 
-		
+		}
+
 		return false;
 	}
 
@@ -383,13 +368,13 @@ class HTTPRequestCustom
 	{
 		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_http_host();
 	}
-	
+
 	// get full site domain url
 	public function get_site_domain_name()
 	{
 		return self::get_http_host();
 	}
-	
+
 	// get site domain name (without host)
 	public function get_domain_name()
 	{
@@ -397,10 +382,10 @@ class HTTPRequestCustom
 		$domain = isset($pieces['host']) ? $pieces['host'] : '';
 		if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/iu', $domain, $regs))
 			return $regs['domain'];
-		
+
 		return false;
 	}
-	
+
 	public function get_is_subdomain()
 	{
 		return $this->get_site_domain_name() != $this->get_domain_name() && !preg_match('/www./u', $this->get_site_domain_name());
@@ -425,7 +410,7 @@ class HTTPRequestCustom
 	{
 		return Robots::is_robot();
 	}
-	
+
 	public function get_ip_address()
 	{
 		if ($_SERVER)

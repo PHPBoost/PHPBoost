@@ -1,13 +1,17 @@
 <?php
-
 /**
  * The base class for so-called Doctrine mapping types.
- *
  * A Type object is obtained by calling the static {@link getType()} method.
- *
- * @author Roman Borschel <roman@code-factory.org>
- * @since 2.0
- */
+ * @package     Doctrine
+ * @subpackage  DBAL\Types
+ * @category    Framework
+ * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
+ * @link        https://www.doctrine-project.org
+ * @author      Roman Borschel <roman@code-factory.org>
+ * @version     PHPBoost 5.2 - last update: 2013 01 01
+ * @since       PHPBoost 4.0 - 2013 01 01
+*/
+
 abstract class Type
 {
     /* The following constants represent type codes and mirror the PDO::PARAM_X constants

@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                           SMTPMailService.class.php
- *                            -------------------
- *   begin                : March 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @package     IO
+ * @subpackage  Mail
+ * @category    Framework
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2018 06 19
+ * @since       PHPBoost 3.0 - 2010 03 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
 
@@ -46,12 +32,12 @@ class SMTPMailService extends AbstractPHPMailerMailService
 		$mailer->SMTPAuth = true;
 		$mailer->Timeout = 1;
 		$auth_mode = $this->configuration->get_auth_mode();
-		
+
 		if (!empty($auth_mode))
 		{
 			$mailer->SMTPSecure = $this->configuration->get_auth_mode();
 		}
-		
+
 		$mailer->Host = $this->configuration->get_host();
 		$mailer->Port = $this->configuration->get_port();
 		$mailer->Username = $this->configuration->get_login();
