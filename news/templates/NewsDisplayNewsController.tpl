@@ -38,7 +38,7 @@
 					<span class="more-element more-element-category">
 						<i class="fa fa-folder-o" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 					</span>
-					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
+					# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><i class="fa fa-comments-o" aria-hidden="true"></i> <a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 					# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 
 				</div>
