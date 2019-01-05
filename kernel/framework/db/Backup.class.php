@@ -1,36 +1,16 @@
 <?php
-/*##################################################
- *                             Backup.class.php
- *                            -------------------
- *   begin                : July 23, 2006
- *   copyright            : (C) 2005 Benoit Sautel / Régis Viarre
- *   email                : ben.popeye@gmail.com / crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
  * @deprecated
- * @package {@package}
- * @author Benoît Sautel ben.popeye@gmail.com / Régis Viarre crowkait@phpboost.com
- * @desc This class helps you to generate the backup file of your data base.
- */
+ * This class helps you to generate the backup file of your data base.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 14
+ * @since   	PHPBoost 1.5 - 2006 07 23
+ * @contributor Regis VIARRE <crowkait@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class Backup
 {
 	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
@@ -44,7 +24,7 @@ class Backup
 	public $backup_script = '';
 
 	private $db_querier;
-	
+
 	/**
 	 * @desc Builds a Backup object
 	 */
@@ -54,7 +34,7 @@ class Backup
 		//On modifie le temps d'exécution maximal si le serveur le permet
 		//parce que les opérations sont longues
 		Environment::try_to_increase_max_execution_time();
-		
+
 		$this->db_querier = PersistenceContext::get_querier();
 	}
 

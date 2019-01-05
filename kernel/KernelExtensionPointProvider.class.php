@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                          KernelExtensionPointProvider.class.php
- *                            -------------------
- *   begin                : February 06, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 23
+ * @since   	PHPBoost 3.0 - 2010 02 06
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class KernelExtensionPointProvider extends ExtensionPointProvider
 {
@@ -55,7 +40,7 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/syndication/index.php')
 		));
 	}
-	
+
 	public function extended_field()
 	{
 		return new ExtendedFields(array(
@@ -81,12 +66,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 
 		if ($config->is_content_sharing_email_enabled())
 			$links[] = new ContentSharingActionsMenuLink('mail', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('email', 'user-common'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true);
-		
+
 		if (AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_sms_enabled())
 			$links[] = new ContentSharingActionsMenuLink('sms', LangLoader::get_message('share_by', 'user-common') . ' ' . LangLoader::get_message('share.sms', 'user-common'), new Url('sms:?body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_sms_image_render.tpl'))->render(), null, '', true);
 		else if (!AppContext::get_request()->is_mobile_device() && $config->is_content_sharing_print_enabled())
 			$links[] = new ContentSharingActionsMenuLink('print', LangLoader::get_message('printable_version', 'main'), new Url('#'), (new FileTemplate('framework/content/share/share_print_image_render.tpl'))->render(), null, 'javascript:window.print()', true);
-		
+
 		return $links;
 	}
 }
