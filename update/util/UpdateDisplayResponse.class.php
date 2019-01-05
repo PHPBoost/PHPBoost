@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                           UpdateDisplayResponse.class.php
- *                            -------------------
- *   begin                : February 29, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 11
+ * @since   	PHPBoost 3.0 - 2012 02 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UpdateDisplayResponse extends AbstractResponse
 {
@@ -59,7 +43,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
 		));
-		
+
 		parent::__construct($env, $this->full_view);
 	}
 
@@ -106,12 +90,12 @@ class UpdateDisplayResponse extends AbstractResponse
 	private function init_steps($step_number)
 	{
 		$this->current_step = $step_number;
-		
+
 		$steps = array(
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
 			array('name' => $this->lang['step.list.server'], 'img' => 'cog')
 		);
-		
+
 		if (!UpdateServices::database_config_file_checked())
 		{
 			$steps[] = array('name' => $this->lang['step.list.database'], 'img' => 'server');
@@ -121,13 +105,13 @@ class UpdateDisplayResponse extends AbstractResponse
 		{
 			if ($this->current_step > 2)
 				$this->current_step--;
-			
+
 			$hide_database_page = true;
 		}
-		
+
 		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'refresh');
 		$steps[] = array('name' => $this->lang['step.list.end'], 'img' => 'check');
-		
+
 		$this->nb_steps = count($steps) - 1;
 
 		$i = 0;
@@ -160,7 +144,7 @@ class UpdateDisplayResponse extends AbstractResponse
 				'IMG' => $step['img'],
 				'NAME' => $step['name']
 			));
-			
+
 			$i++;
 		}
 	}

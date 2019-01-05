@@ -1,63 +1,45 @@
 <?php
-/*##################################################
- *                       SmalladsModuleUpdateVersion.class.php
- *                            -------------------
- *   begin                : September 20, 2018
- *   copyright            : (C) 2018 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 18
+ * @since   	PHPBoost 5.1 - 2018 09 20
+*/
 
 class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
 	private $db_utils;
-	
+
 	public function __construct()
 	{
 		parent::__construct('smallads');
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
-	
+
 	public function execute()
 	{
 		if (ModulesManager::is_module_installed('smallads'))
 		{
 			$tables = $this->db_utils->list_tables(true);
-			
+
 			if (!in_array(PREFIX . 'smallads_cats', $tables))
 			{
 				$this->create_smallads_cats_table();
 				$this->insert_smallads_cats_data();
 			}
-			
+
 			if (in_array(PREFIX . 'smallads', $tables))
 				$this->update_smallads_table();
-			
+
 			$this->update_content();
-			
+
 			$this->delete_old_mini_menu();
 			self::pics_to_upload();
 		}
-		
+
 		$this->delete_old_files();
 	}
 
@@ -80,11 +62,11 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'image' => '/smallads/smallads.png'
 		));
 	}
-	
+
 	private function update_smallads_table()
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'smallads');
-		
+
 		$rows_change = array(
 			'picture' => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
 			'type' => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
@@ -93,13 +75,13 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
 			'date_updated' => 'updated_date INT(11) NOT NULL DEFAULT 0'
 		);
-		
+
 		foreach ($rows_change as $old_name => $new_name)
 		{
 			if (isset($columns[$old_name]))
 				$this->querier->inject('ALTER TABLE ' . PREFIX . 'download CHANGE ' . $old_name . ' ' . $new_name);
 		}
-		
+
 		if (isset($columns['cat_id']))
 			$this->db_utils->drop_column(PREFIX . 'smallads', 'cat_id');
 		if (isset($columns['links_flag']))
@@ -112,7 +94,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$this->db_utils->drop_column(PREFIX . 'smallads', 'id_updated');
 		if (isset($columns['date_approved']))
 			$this->db_utils->drop_column(PREFIX . 'smallads', 'date_approved');
-		
+
 		if (!isset($columns['id_category']))
 			$this->db_utils->add_column(PREFIX . 'smallads', 'id_category', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		if (!isset($columns['rewrited_title']))
@@ -151,7 +133,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$this->db_utils->add_column(PREFIX . 'smallads', 'sources', array('type' => 'text', 'length' => 65000));
 		if (!isset($columns['carousel']))
 			$this->db_utils->add_column(PREFIX . 'smallads', 'carousel', array('type' => 'text', 'length' => 65000));
-		
+
 		$columns = $this->db_utils->desc_table(PREFIX . 'smallads');
 		if (!isset($columns['title']['key']) || !$columns['title']['key'])
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `title` (`title`)');
@@ -161,7 +143,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `description` (`description`)');
 		if (!isset($columns['id_category']['key']) || !$columns['id_category']['key'])
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `id_category` (`id_category`)');
-		
+
 		$messages = LangLoader::get('install', 'smallads');
 		$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'title'));
 		while ($row = $result->fetch()) {
@@ -173,7 +155,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		}
 		$result->dispose();
 	}
-	
+
 	private function delete_old_mini_menu()
 	{
 		$menu_id = 0;
@@ -225,47 +207,47 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$result->dispose();
 		}
 	}
-	
+
 	public function update_content()
 	{
 		UpdateServices::update_table_content(PREFIX . 'smallads');
 	}
-	
+
 	private function delete_old_files()
 	{
 		$file = new File(PATH_TO_ROOT . '/smallads/controllers/AdminSmalladsConfigController.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/controllers/SmalladsHomeController.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/fields/SmalladsFormFieldSelectSources.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/lang/english/smallads_french.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/lang/french/smallads_french.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/phpboost/SmalladsModuleMiniMenu.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/templates/smallads.tpl');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/templates/SmalladsModuleMiniMenu.tpl');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/templates/fields/SmalladsFormFieldSelectSources.tpl');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/smallads.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/smallads.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/smallads/smallads_begin.php');
 		$file->delete();
 	}
