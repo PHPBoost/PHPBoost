@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                      AdminThemeDeleteController.class.php
- *                            -------------------
- *   begin                : April 21, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 3.0 - 2011 04 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminThemeDeleteController extends AdminController
 {
@@ -33,13 +16,13 @@ class AdminThemeDeleteController extends AdminController
 	private $theme_id;
 	private $multiple = false;
 	private $tpl;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$ids = explode('--', $request->get_value('id', null));
-		
+
 		if (count($ids) > 1)
 		{
 			$theme_ids = array();
@@ -57,7 +40,7 @@ class AdminThemeDeleteController extends AdminController
 		}
 		else
 			$this->theme_id = $request->get_value('id', null);
-		
+
 		if ($this->theme_exists())
 		{
 			$this->build_form();
@@ -68,7 +51,7 @@ class AdminThemeDeleteController extends AdminController
 
 				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), LangLoader::get_message('process.success', 'status-messages-common'));
 			}
-			
+
 			$this->tpl->put('FORM', $this->form->display());
 
 			return new AdminThemesDisplayResponse($this->tpl, $this->multiple ? $this->lang['themes.delete_theme_multiple'] : $this->lang['themes.delete_theme']);
@@ -79,34 +62,34 @@ class AdminThemeDeleteController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
 		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('delete_theme', $this->multiple ? $this->lang['themes.delete_theme_multiple'] : $this->lang['themes.delete_theme']);
 		$form->add_fieldset($fieldset);
-	
+
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['themes.drop_files_multiple'] : $this->lang['themes.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
 				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
 			)
 		));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
 	}
-	
+
 	private function delete_theme($drop_files)
 	{
 		if ($this->multiple)
@@ -119,14 +102,14 @@ class AdminThemeDeleteController extends AdminController
 		else
 			ThemesManager::uninstall($this->theme_id, $drop_files);
 	}
-	
+
 	private function theme_exists()
 	{
 		if ($this->theme_id == null)
 		{
 			return false;
 		}
-		
+
 		if ($this->multiple)
 		{
 			$theme_exists = false;

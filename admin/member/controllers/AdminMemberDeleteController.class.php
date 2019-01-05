@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                      AdminMemberDeleteController.class.php
- *                            -------------------
- *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 06 25
+ * @since   	PHPBoost 3.0 - 2010 02 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminMemberDeleteController extends AdminController
 {
@@ -31,7 +14,7 @@ class AdminMemberDeleteController extends AdminController
 	{
 		$user_id = $request->get_int('id', null);
 		$user = UserService::get_user($user_id);
-		
+
 		if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
 		{
 			try
@@ -42,7 +25,7 @@ class AdminMemberDeleteController extends AdminController
 				$error_controller = PHPBoostErrors::unexisting_element();
 				DispatchManager::redirect($error_controller);
 			}
-			
+
 			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : AdminMembersUrlBuilder::management()), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-common'), array('name' => $user->get_display_name())));
 		}
 		else

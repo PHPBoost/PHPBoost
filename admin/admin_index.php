@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                              admin_index.php
- *                            -------------------
- *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *   
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 26
+ * @since   	PHPBoost 1.2 - 2005 06 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
@@ -34,11 +18,11 @@ $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
 	$content = retrieve(POST, 'writing_pad_content', '', TSTRING_UNCHANGE);
-	
+
 	$writing_pad_content = WritingPadConfig::load();
 	$writing_pad_content->set_content($content);
 	WritingPadConfig::save();
-	
+
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 
@@ -56,7 +40,7 @@ $i = 0;
 while ($row = $result->fetch())
 {
 	$group_color = User::get_group_color($row['groups'], $row['level']);
-	
+
 	$tpl->assign_block_vars('comments_list', array(
 		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
 		'C_GROUP_COLOR' => !empty($group_color),
@@ -162,9 +146,9 @@ while ($row = $result->fetch())
 		$row['level'] = $cached_data['level'];
 		$row['display_name'] = ($cached_data['level'] == User::ROBOT_LEVEL && $cached_data['display_name'] == 'unknow_bot') ? LangLoader::get_message('unknow_bot', 'admin') : $cached_data['display_name'];
 	}
-	
+
 	$group_color = User::get_group_color($row['groups'], $row['level']);
-	
+
 	$tpl->assign_block_vars('user', array(
 		'C_ROBOT' => $row['level'] == User::ROBOT_LEVEL,
 		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL,

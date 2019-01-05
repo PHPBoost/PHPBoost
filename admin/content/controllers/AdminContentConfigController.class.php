@@ -1,29 +1,16 @@
 <?php
-/*##################################################
- *                       AdminContentConfigController.class.php
- *                            -------------------
- *   begin                : July 8, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @since   	PHPBoost 4.0 - 2013 07 08
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 class AdminContentConfigController extends AdminController
 {
@@ -182,7 +169,7 @@ class AdminContentConfigController extends AdminController
 
 		$fieldset = new FormFieldsetHTML('content_config', $this->lang['content']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled(),
 			array(
 				'class' => 'top-field',
@@ -199,13 +186,13 @@ class AdminContentConfigController extends AdminController
 				)
 			)
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['content.config.content-sharing-email-enabled'], $this->content_management_config->is_content_sharing_email_enabled(), array('hidden' => !$this->content_management_config->is_content_sharing_enabled())));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(), array('description' => $this->lang['content.config.content-sharing-print-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['content.config.content-sharing-sms-enabled'], $this->content_management_config->is_content_sharing_sms_enabled(), array('description' => $this->lang['content.config.content-sharing-sms-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
 			array(
 				'description' => $this->lang['content.config.opengraph-enabled.explain'],
@@ -221,7 +208,7 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(), 
+		$fieldset->add_field(new FormFieldUploadPictureFile('site_default_picture_url', $this->lang['content.config.site-default-picture-url'], $this->content_management_config->get_site_default_picture_url()->relative(),
 			array(
 				'class' => 'top-field',
 				'hidden' => !$this->content_management_config->is_opengraph_enabled()
@@ -296,17 +283,17 @@ class AdminContentConfigController extends AdminController
 		if ($this->form->get_value('content_sharing_enabled'))
 		{
 			$this->content_management_config->set_content_sharing_enabled(true);
-			
+
 			if ($this->form->get_value('content_sharing_email_enabled'))
 				$this->content_management_config->set_content_sharing_email_enabled(true);
 			else
 				$this->content_management_config->set_content_sharing_email_enabled(false);
-			
+
 			if ($this->form->get_value('content_sharing_print_enabled'))
 				$this->content_management_config->set_content_sharing_print_enabled(true);
 			else
 				$this->content_management_config->set_content_sharing_print_enabled(false);
-			
+
 			if ($this->form->get_value('content_sharing_sms_enabled'))
 				$this->content_management_config->set_content_sharing_sms_enabled(true);
 			else
@@ -314,7 +301,7 @@ class AdminContentConfigController extends AdminController
 		}
 		else
 			$this->content_management_config->set_content_sharing_enabled(false);
-		
+
 		if ($this->form->get_value('opengraph_enabled'))
 		{
 			$this->content_management_config->set_opengraph_enabled(true);
@@ -322,7 +309,7 @@ class AdminContentConfigController extends AdminController
 		}
 		else
 			$this->content_management_config->set_opengraph_enabled(false);
-		
+
 		ContentManagementConfig::save();
 
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));

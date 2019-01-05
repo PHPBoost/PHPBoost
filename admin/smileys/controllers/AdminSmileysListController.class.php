@@ -1,41 +1,24 @@
 <?php
-/*##################################################
- *                              AdminSmileysListController.class.php
- *                            -------------------
- *   begin                : May 22, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 25
+ * @since   	PHPBoost 4.1 - 2015 05 22
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class AdminSmileysListController extends AdminController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$current_page = $this->build_table();
-		
+
 		return new AdminSmileysDisplayResponse($this->view, $this->lang['smiley_management'], $current_page);
 	}
 
@@ -52,18 +35,18 @@ class AdminSmileysListController extends AdminController
 			new HTMLTableColumn(LangLoader::get_message('code', 'main')),
 			new HTMLTableColumn('')
 		), new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
-		
+
 		$table = new HTMLTable($table_model);
-		
+
 		$table_model->set_caption($this->lang['smiley_management']);
-		
+
 		$results = array();
 		foreach(SmileysCache::load()->get_smileys() as $code => $row)
 		{
 			$edit_link = new LinkHTMLElement(AdminSmileysUrlBuilder::edit($row['idsmiley']), '', array('title' => LangLoader::get_message('edit', 'common')), 'far fa-edit');
-			
+
 			$delete_link = new LinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'far fa-delete');
-			
+
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'title' => $row['idsmiley']))),
 				new HTMLTableRowCell($code),
@@ -71,9 +54,9 @@ class AdminSmileysListController extends AdminController
 			));
 		}
 		$table->set_rows(count($results), $results);
-		
+
 		$this->view->put('table', $table->display());
-		
+
 		return $table->get_page_number();
 	}
 }

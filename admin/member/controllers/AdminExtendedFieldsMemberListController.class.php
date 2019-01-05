@@ -1,44 +1,27 @@
 <?php
-/*##################################################
- *                       AdminExtendedFieldsMemberListController.class.php
- *                            -------------------
- *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 08 22
+ * @since   	PHPBoost 3.0 - 2010 12 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminExtendedFieldsMemberListController extends AdminController
 {
 	private $lang;
-	
+
 	private $view;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->update_fields($request);
-		
+
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
-		
+
 		$fields_number = 0;
 		foreach ($extended_field as $id => $row)
 		{
@@ -55,12 +38,12 @@ class AdminExtendedFieldsMemberListController extends AdminController
 				$fields_number++;
 			}
 		}
-		
+
 		$this->view->put_all(array(
 			'C_FIELDS' => $fields_number,
 			'C_MORE_THAN_ONE_FIELD' => $fields_number > 1
 		));
-		
+
 		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['extended-fields-management']);
 	}
 
@@ -70,7 +53,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function update_fields($request)
 	{
 		if ($request->get_value('submit', false))
@@ -80,14 +63,14 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 	}
-	
+
 	private function update_position($request)
 	{
 		$fields_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($fields_list as $position => $tree)
 		{
 			PersistenceContext::get_querier()->inject(
-				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET 
+				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
 				position = :position
 				WHERE id = :id"
 				, array(

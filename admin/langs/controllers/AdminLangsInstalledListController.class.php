@@ -1,51 +1,36 @@
 <?php
-/*##################################################
- *                      AdminLangsInstalledListController.class.php
- *                            -------------------
- *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @since   	PHPBoost 3.0 - 2011 04 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
+*/
 
 class AdminLangsInstalledListController extends AdminController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_view();
 		$this->save($request);
-		
+
 		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.installed_langs']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-langs-common');
 		$this->view = new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_view()
 	{
 		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
@@ -57,7 +42,7 @@ class AdminLangsInstalledListController extends AdminController
 			$authorizations = $lang->get_authorizations();
 			$author_email = $configuration->get_author_mail();
 			$author_website = $configuration->get_author_link();
-			
+
 			$this->view->assign_block_vars('langs_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
@@ -77,10 +62,10 @@ class AdminLangsInstalledListController extends AdminController
 			));
 			if ($lang->get_id() == LangsManager::get_default_lang())
 				$selected_lang_number = $lang_number;
-			
+
 			$lang_number++;
 		}
-		
+
 		$installed_langs_number = count($installed_langs);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_LANG_INSTALLED' => $installed_langs_number > 1,
@@ -88,11 +73,11 @@ class AdminLangsInstalledListController extends AdminController
 			'DEFAULT_LANG_NUMBER' => $selected_lang_number
 		));
 	}
-	
+
 	public function save(HTTPRequestCustom $request)
 	{
 		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
-		
+
 		if ($request->get_string('delete-selected-langs', false))
 		{
 			$lang_ids = array();
@@ -112,12 +97,12 @@ class AdminLangsInstalledListController extends AdminController
 			$activated = 0;
 			if ($request->get_string('activate-selected-langs', false))
 				$activated = 1;
-			
+
 			$lang_number = 1;
 			foreach ($installed_langs as $lang)
 			{
 				if ($lang->get_id() !== LangsManager::get_default_lang() && ($request->get_value('delete-checkbox-' . $Lang_number, 'off') == 'on') )
-				{	
+				{
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), $activated, $authorizations);
 				}
@@ -137,7 +122,7 @@ class AdminLangsInstalledListController extends AdminController
 					$user_accounts_config = UserAccountsConfig::load();
 					$user_accounts_config->set_default_lang($lang->get_id());
 					UserAccountsConfig::save();
-					
+
 					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
 				}
 				else if ($request->get_string('delete-' . $lang->get_id(), ''))
@@ -160,14 +145,14 @@ class AdminLangsInstalledListController extends AdminController
 				}
 			}
 		}
-		
+
 		if ($request->get_bool('update', false))
 		{
 			foreach ($installed_langs as $lang)
 			{
 				if ($lang->get_id() !== LangsManager::get_default_lang())
 				{
-					
+
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), $lang->is_activated(), $authorizations);
 				}

@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                      AdminSyndicationCacheController.class.php
- *                            -------------------
- *   begin                : August 7 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 2.0 - 2008 08 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminSyndicationCacheController extends AdminController
 {
@@ -35,29 +18,29 @@ class AdminSyndicationCacheController extends AdminController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
-	
+
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->build_form();
-		
+
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_submit();
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['syndication_cache']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
@@ -66,15 +49,15 @@ class AdminSyndicationCacheController extends AdminController
 	protected function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('syndication_cache', $this->lang['syndication_cache']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache']));
-		
+
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
 		$form->add_button($this->submit_button);
-		
+
 		$this->form = $form;
 	}
 

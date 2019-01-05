@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *                       AdminMaintainController.class.php
- *                            -------------------
- *   begin                : September 11 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 4.1 - 2014 09 11
+*/
 
 class AdminMaintainController extends AdminController
 {
@@ -38,14 +20,14 @@ class AdminMaintainController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $maintain_delay_list;
 	private $maintain_type;
-	
+
 	public function __construct()
 	{
 		$date_lang = LangLoader::get('date-common');
-		
+
 		$this->maintain_delay_list = array(
 			60 => '1 ' . $date_lang['minute'],
 			300 => '5 ' . $date_lang['minutes'],
@@ -63,12 +45,12 @@ class AdminMaintainController extends AdminController
 			57600 => '16 ' . $date_lang['hours']
 		);
 	}
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
@@ -77,31 +59,31 @@ class AdminMaintainController extends AdminController
 			$this->form->get_field_by_id('display_duration_for_admin')->set_hidden(!$this->maintenance_config->get_display_duration());
 			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$this->tpl->put('FORM', $this->form->display());
-		
+
 		return new AdminMaintainDisplayResponse($this->tpl, LangLoader::get_message('maintain', 'user-common'));
 	}
-	
+
 	private function init()
 	{
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		
+
 		$this->lang = LangLoader::get('admin-maintain-common');
 		$this->tpl->add_lang($this->lang);
-		
+
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('maintain', LangLoader::get_message('maintain', 'user-common'));
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_type', $this->lang['maintain_type'], $this->get_maintain_type(), $this->build_maintain_select_options(),
-			array('events' => array('change' => 
+			array('events' => array('change' =>
 				'if (HTMLForms.getField("maintain_type").getValue() == "during") {
 					HTMLForms.getField("maintain_during").enable();
 					HTMLForms.getField("maintain_until").disable();
@@ -114,17 +96,17 @@ class AdminMaintainController extends AdminController
 				}'
 			))
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_during', LangLoader::get_message('during', 'main'), $this->get_maintain_during_select_option(), $this->build_maintain_during_select_options(),
 			array('hidden' => $this->get_maintain_type() != 'during')
 		));
-		
+
 		$fieldset->add_field(new FormFieldDate('maintain_until', LangLoader::get_message('until', 'main'), $this->get_maintain_until_date(),
 			array('required' => true, 'hidden' => $this->get_maintain_type() != 'until')
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('display_duration', $this->lang['display_duration'], $this->maintenance_config->get_display_duration(),
-			array('events' => array('click' => 
+			array('events' => array('click' =>
 				'if (HTMLForms.getField("display_duration").getValue()) {
 					HTMLForms.getField("display_duration_for_admin").enable();
 				} else {
@@ -132,35 +114,35 @@ class AdminMaintainController extends AdminController
 				}'
 			))
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('display_duration_for_admin', $this->lang['display_duration_for_admin'], $this->maintenance_config->get_display_duration_for_admin(),
 			array('hidden' => !$this->maintenance_config->get_display_duration())
 		));
-		
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['maintain_text'], $this->maintenance_config->get_message(), 
+
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['maintain_text'], $this->maintenance_config->get_message(),
 			array('rows' => 14, 'cols' => 47)
 		));
-		
+
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['maintain_authorization'], MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS),
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->maintenance_config->get_auth());
 		$fieldset->add_field($auth_setter);
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function get_maintain_type()
 	{
 		if ($this->maintain_type === null)
 		{
 			$maintenance_terminates_after_tomorrow = $this->maintenance_config->get_end_date()->is_posterior_to(new Date(time() + 86400, Timezone::SERVER_TIMEZONE));
-			
+
 			if ($this->maintenance_config->is_maintenance_enabled() && $this->maintenance_config->is_unlimited_maintenance())
 				$this->maintain_type = 'unlimited';
 			else if ($this->maintenance_config->is_maintenance_enabled() && ($this->maintenance_config->is_unlimited_maintenance() || ($this->maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow)))
@@ -170,10 +152,10 @@ class AdminMaintainController extends AdminController
 			else
 				$this->maintain_type = 'disabled';
 		}
-		
+
 		return $this->maintain_type;
 	}
-	
+
 	private function build_maintain_select_options()
 	{
 		$options = array(
@@ -182,18 +164,18 @@ class AdminMaintainController extends AdminController
 			new FormFieldSelectChoiceOption($this->lang['maintain_type.until'], 'until'),
 			new FormFieldSelectChoiceOption($this->lang['maintain_type.unlimited'], 'unlimited')
 		);
-		
+
 		return $options;
 	}
-	
+
 	private function get_maintain_during_select_option()
 	{
 		$option = 0;
-		
+
 		if (!$this->maintenance_config->is_unlimited_maintenance())
 		{
 			$time_until_maintain_end = $this->maintenance_config->get_end_date() !== null ? ($this->maintenance_config->get_end_date()->get_timestamp(Timezone::SERVER_TIMEZONE) - time()) : 0;
-			
+
 			foreach ($this->maintain_delay_list as $value => $label)
 			{
 				if ($time_until_maintain_end > 57600)
@@ -206,38 +188,38 @@ class AdminMaintainController extends AdminController
 				}
 			}
 		}
-		
+
 		return $option;
 	}
-	
+
 	private function build_maintain_during_select_options()
 	{
 		$options = array(new FormFieldSelectChoiceOption('', ''));
-		
+
 		foreach ($this->maintain_delay_list as $key => $value)
 		{
 			$options[] = new FormFieldSelectChoiceOption($value, $key);
 		}
-		
+
 		return $options;
 	}
-	
+
 	private function get_maintain_until_date()
 	{
 		$maintain_until_date = null;
-		
+
 		if ($this->get_maintain_type() == 'until')
 		{
 			$maintain_until_date = new Date($this->maintenance_config->get_end_date()->get_timestamp(Timezone::USER_TIMEZONE), Timezone::SERVER_TIMEZONE);
 		}
-		
+
 		return $maintain_until_date;
 	}
-	
+
 	private function save()
 	{
 		$this->maintain_type = $this->form->get_value('maintain_type')->get_raw_value();
-		switch ($this->maintain_type) 
+		switch ($this->maintain_type)
 		{
 			case 'during':
 				$maintain_during = $this->form->get_value('maintain_during')->get_raw_value();
@@ -258,7 +240,7 @@ class AdminMaintainController extends AdminController
 				$this->maintenance_config->disable_maintenance();
 				$this->maintenance_config->set_end_date(new Date());
 		}
-		
+
 		if ($this->form->get_value('display_duration'))
 		{
 			$this->maintenance_config->set_display_duration(true);
@@ -266,10 +248,10 @@ class AdminMaintainController extends AdminController
 		}
 		else
 			$this->maintenance_config->set_display_duration(false);
-		
+
 		$this->maintenance_config->set_message($this->form->get_value('message'));
 		$this->maintenance_config->set_auth($this->form->get_value('authorizations')->build_auth_array());
-		
+
 		MaintenanceConfig::save();
 	}
 }

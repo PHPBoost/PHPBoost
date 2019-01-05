@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                       AdminModuleDeleteController.class.php
- *                            -------------------
- *   begin                : September 20, 2011
- *   copyright            : (C) 2011 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 3.0 - 2011 09 20
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class AdminModuleDeleteController extends AdminController
 {
@@ -34,13 +18,13 @@ class AdminModuleDeleteController extends AdminController
 	private $multiple = false;
 	private $error = '';
 	private $tpl;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$ids = explode('--', $request->get_value('id', null));
-		
+
 		if (count($ids) > 1)
 		{
 			$module_ids = array();
@@ -58,16 +42,16 @@ class AdminModuleDeleteController extends AdminController
 		}
 		else
 			$this->module_id = $request->get_value('id', null);
-		
+
 		if ($this->module_exists())
 		{
 			$this->build_form();
-			
+
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_module($drop_files);
-				
+
 				if (!$this->error)
 					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
 				else
@@ -82,21 +66,21 @@ class AdminModuleDeleteController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function module_exists()
 	{
 		if ($this->module_id == null)
 		{
 			return false;
 		}
-		
+
 		if ($this->multiple)
 		{
 			$module_exists = false;
@@ -113,27 +97,27 @@ class AdminModuleDeleteController extends AdminController
 		else
 			return ModulesManager::is_module_installed($this->module_id);
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('delete_module', $this->multiple ? $this->lang['modules.delete_module_multiple'] : $this->lang['modules.delete_module']);
 		$form->add_fieldset($fieldset);
-	
+
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['modules.drop_files_multiple'] : $this->lang['modules.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
 				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
 			)
 		));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
 	}
-	
+
 	private function delete_module($drop_files)
 	{
 		if ($this->multiple)
@@ -146,7 +130,7 @@ class AdminModuleDeleteController extends AdminController
 		else
 			$this->error_check(ModulesManager::uninstall_module($this->module_id, $drop_files));
 	}
-	
+
 	private function error_check($error)
 	{
 		if (is_int($error))
@@ -161,7 +145,7 @@ class AdminModuleDeleteController extends AdminController
 					break;
 				case ModulesManager::MODULE_UNINSTALLED:
 					break;
-				default: 
+				default:
 					$this->error = MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10);
 			}
 		}
