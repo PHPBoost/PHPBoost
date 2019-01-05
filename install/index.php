@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                           index.php
- *                            -------------------
- *   begin                : June 13 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 28
+ * @since   	PHPBoost 3.0 - 2009 12 13
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
@@ -45,7 +29,7 @@ if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_wr
 if ($_GET || $_POST)
 {
 	$arguments_list = $_POST ? $_POST : $_GET;
-	
+
 	if (!empty($arguments_list))
 	{
 		$argv = array('phpboost', 'install');
@@ -59,18 +43,18 @@ if ($_GET || $_POST)
 					case '--db-pwd' :
 							$has_db_pwd = true;
 							break;
-					
+
 					case '--ws-locale' :
 							$has_ws_locale = $arg ? true : false;
 							$arg = $has_ws_locale ? ($arg == 'french' ? $arg : 'english') : '';
 							break;
 				}
-				
+
 				$argv[] = $id;
 				$argv[] = $arg;
 			}
 		}
-		
+
 		if (!$has_ws_locale)
 		{
 			$lang = TextHelper::substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -86,7 +70,7 @@ if ($_GET || $_POST)
 			$argv[] = '--ws-locale';
 			$argv[] = $locale;
 		}
-		
+
 		if ($has_db_pwd)
 		{
 			$launcher = new CLILauncher($argv);

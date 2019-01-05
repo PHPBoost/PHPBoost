@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                         InstallWebsiteConfigController.class.php
- *                            -------------------
- *   begin                : October 03 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @since   	PHPBoost 3.0 - 2010 10 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class InstallWebsiteConfigController extends InstallController
 {
@@ -40,7 +26,7 @@ class InstallWebsiteConfigController extends InstallController
 	 * @var HTMLForm
 	 */
 	private $submit_button;
-	
+
 	private $security_config;
 	private $server_configuration;
 
@@ -80,32 +66,32 @@ class InstallWebsiteConfigController extends InstallController
 		array('description' => $this->lang['website.host.explanation'], 'required' => $this->lang['website.host.required']));
 		$host->add_event('change', $this->warning_if_not_equals($host, $this->lang['website.host.warning']));
 		$fieldset->add_field($host);
-		
+
 		$path = new FormFieldTextEditor('path', $this->lang['website.path'], $this->current_server_path(),
 		array('description' => $this->lang['website.path.explanation']));
 		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['website.path.warning']));
 		$fieldset->add_field($path);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => $this->lang['website.name.required'])));
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['website.slogan'], ''));
-		
+
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['website.description'], '',
 			array('description' => $this->lang['website.description.explanation'])
 		));
-		
+
 		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['website.timezone'], 'Europe/Paris',
 			array('description' => $this->lang['website.timezone.explanation'])
 		));
-		
+
 		$fieldset = new FormFieldsetHTML('security_config', $admin_user_lang['members.config-security']);
 		$this->form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $admin_user_lang['security.config.internal-password-min-length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $admin_user_lang['security.config.internal-password-strength'], $this->security_config->get_internal_password_strength(),
 			array(
 				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
@@ -114,14 +100,14 @@ class InstallWebsiteConfigController extends InstallController
 				new FormFieldSelectChoiceOption($admin_user_lang['security.config.internal-password-strength.very-strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
-		
+
 		if ($this->distribution_config['default_captcha'])
 		{
 			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['website.captcha.config']);
 			$this->form->add_fieldset($fieldset);
-			
+
 			$this->distribution_config['default_captcha']::display_config_form_fields($fieldset);
 		}
 
@@ -140,20 +126,20 @@ class InstallWebsiteConfigController extends InstallController
 		$this->form->get_value('host'), $this->form->get_value('path'),
 		$this->form->get_value('name'), $this->form->get_value('slogan'), $this->form->get_value('description'),
 		$this->form->get_value('timezone')->get_raw_value());
-		
+
 		$this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
 		$this->security_config->set_internal_password_strength($this->form->get_value('internal_password_strength')->get_raw_value());
-		
+
 		if ($this->form->get_value('login_and_email_forbidden_in_password'))
 			$this->security_config->forbid_login_and_email_in_password();
 		else
 			$this->security_config->allow_login_and_email_in_password();
-		
+
 		SecurityConfig::save();
-		
+
 		if ($this->distribution_config['default_captcha'])
 			$this->distribution_config['default_captcha']::save_config($this->form);
-		
+
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}
 
