@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                         AdminErrorsController404List.class.php
- *                            -------------------
- *   begin                : December 13 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @since   	PHPBoost 3.0 - 2009 12 13
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class AdminErrorsController404List extends AdminController
 {
@@ -38,13 +22,13 @@ class AdminErrorsController404List extends AdminController
 
 	private $view;
 	private $lang;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$current_page = $this->build_table();
-		
+
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list'], $current_page);
 	}
 
@@ -62,12 +46,12 @@ class AdminErrorsController404List extends AdminController
 			new HTMLTableColumn($this->lang['404_error_times'], 'times', 'col-small'),
 			new HTMLTableColumn(LangLoader::get_message('delete', 'common'), '', 'col-small')
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
-		
+
 		$table = new HTMLTable($table_model, 'table-fixed error-list404');
-		
+
 		$table_model->set_caption($this->lang['404_list']);
 		$table_model->set_footer_css_class('footer-error-list404');
-		
+
 		$results = array();
 		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
@@ -93,20 +77,20 @@ class AdminErrorsController404List extends AdminController
 		}
 		else
 			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('no_item_now', 'common'), MessageHelper::SUCCESS, 0, true));
-		
+
 		return $table->get_page_number();
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__, AdminErrorsUrlBuilder::clear_404_errors()->rel(), false);
-		
+
 		$fieldset = new FormFieldsetHTML('clear_errors', $this->lang['clear_list']);
 		$form->add_fieldset($fieldset);
 
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_list'], 'clear', '', 'submit', $this->lang['logged_errors_clear_confirmation']);
 		$form->add_button($this->submit_button);
-		
+
 		$this->form = $form;
 	}
 }

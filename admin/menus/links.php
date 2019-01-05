@@ -1,30 +1,12 @@
 <?php
-/*##################################################
- *                           admin_link_menus.php
- *                            -------------------
- *   begin                : November, 13 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @since   	PHPBoost 2.0 - 2008 11 13
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
@@ -37,10 +19,10 @@ $action = retrieve(GET, 'action', '');
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
 	$menu_uid = (int)retrieve(POST, 'menu_uid', 0);
-	
+
 	//Properties of the menu we are creating/editing
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);
-	
+
 	function build_menu_from_form($elements_ids, $level = 0)
 	{
 		$menu = null;
@@ -48,9 +30,9 @@ if ($action == 'save')
 		$menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
 		$menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
 		$menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
-		
+
 		$array_size = count($elements_ids);
-		
+
 		if ($array_size == 1 && $level > 0)
 		{   // If it's a menu, there's only one element;
 			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
@@ -58,10 +40,10 @@ if ($action == 'save')
 		else
 		{
 			$menu = new LinksMenu($menu_name, $menu_url, $menu_image);
-			
+
 			// We unset the id key of the array
 			unset($elements_ids['id']);
-			
+
 			$array_size = count($elements_ids);
 			for ($i = 0; $i < $array_size; $i++)
 			{
@@ -69,17 +51,17 @@ if ($action == 'save')
 				$menu->add(build_menu_from_form($elements_ids[$i], $level + 1));
 			}
 		}
-		
+
 		$menu->set_auth(Authorizations::build_auth_array_from_form(
 			Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_element_id . '_auth')
 		);
 		return $menu;
 	}
-	
+
 	function build_menu_children_tree($element)
 	{
 		$menu = array();
-		
+
 		if (isset($element->children))
 		{
 			$children = array();
@@ -96,22 +78,22 @@ if ($action == 'save')
 		}
 		else
 			$menu = array('id' => $element->id);
-		
+
 		return $menu;
 	}
-	
+
 	$menu_tree = array('id' => $menu_uid);
 	$links_list = json_decode(TextHelper::html_entity_decode(AppContext::get_request()->get_value('menu_tree')));
-	
+
 	foreach($links_list as $position => $tree)
 	{
 		$menu_tree[$position] = build_menu_children_tree($tree);
 	}
-	
+
 	// We build the menu
 	$menu = build_menu_from_form($menu_tree);
 	$menu->set_type($type);
-	
+
 	$previous_menu = null;
 	//If we edit the menu
 	if ($menu_id > 0)
@@ -119,7 +101,7 @@ if ($action == 'save')
 		$menu->id($menu_id);
 		$previous_menu = MenuService::load($menu_id);
 	}
-	
+
 	//Menu enabled?
 	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
@@ -127,10 +109,10 @@ if ($action == 'save')
 	$menu->set_auth(Authorizations::build_auth_array_from_form(
 		Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
 	));
-	
+
 	//Filters
 	MenuAdminService::set_retrieved_filters($menu);
-	
+
 	if ($menu->is_enabled())
 	{
 		if ($previous_menu != null && $menu->get_block() == $previous_menu->get_block())
@@ -149,7 +131,7 @@ if ($action == 'save')
 		$block = $menu->get_block();
 		// Disable the menu and move it to the disabled position computing new positions
 		MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
-		
+
 		// Restore its position and save it
 		$menu->set_block($block);
 		MenuService::save($menu);
@@ -231,10 +213,10 @@ $menu = null;
 if ($menu_id > 0)
 {
 	$menu = MenuService::load($menu_id);
-	
+
 	if (!($menu instanceof LinksMenu))
 		AppContext::get_response()->redirect('menus.php');
-	
+
 	$block = $menu->get_block();
 }
 else

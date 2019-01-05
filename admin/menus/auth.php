@@ -1,30 +1,12 @@
 <?php
-/*##################################################
- *                               auth.php
- *                            -------------------
- *   begin                : January 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @since   	PHPBoost 2.0 - 2009 01 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
@@ -38,7 +20,7 @@ $menu = MenuService::load($id);
 
 if ($menu == null)
 	AppContext::get_response()->redirect('auth.php');
-		
+
 if ($post)
 {   // Edit a Menu authorizations
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
@@ -48,13 +30,13 @@ if ($post)
 	}
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
-	
+
 	//Filters
 	MenuAdminService::set_retrieved_filters($menu);
-	
+
 	MenuService::save($menu);
 	MenuService::generate_cache();
-	
+
 	AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
@@ -102,7 +84,7 @@ $array_location = array(
 );
 
 $locations = '';
-foreach ($array_location as $key => $name) 
+foreach ($array_location as $key => $name)
 {
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
@@ -118,7 +100,7 @@ $tpl->put_all(array(
 ));
 
 //Filtres
-MenuAdminService::add_filter_fieldset($menu, $tpl);    
+MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->display();
 

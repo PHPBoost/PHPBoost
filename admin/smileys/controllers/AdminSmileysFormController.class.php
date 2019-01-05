@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                              AdminSmileysFormController.class.php
- *                            -------------------
- *   begin                : May 22, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @since   	PHPBoost 4.1 - 2015 05 22
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class AdminSmileysFormController extends AdminController
 {
@@ -36,37 +19,37 @@ class AdminSmileysFormController extends AdminController
 
 	private $smileys_path;
 	private $smiley;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		if (!$this->smiley['idsmiley'])
 		{
 			$this->build_upload_form();
-			
+
 			if ($this->upload_submit_button->has_been_submited() && $this->upload_form->validate())
 			{
 				$this->upload_smiley();
 			}
-			
+
 			$this->view->put('UPLOAD_FORM', $this->upload_form->display());
 		}
-		
+
 		$this->build_smiley_form();
-		
+
 		if ($this->smiley_submit_button->has_been_submited() && $this->smiley_form->validate())
 		{
 			$this->save_smiley();
 			$this->smiley_form->get_field_by_id('code_smiley')->set_value('');
 			$this->smiley_form->get_field_by_id('url_smiley')->set_options($this->generate_available_smileys_pictures_list());
 		}
-		
+
 		$this->view->put('SMILEY_FORM', $this->smiley_form->display());
 
 		return new AdminSmileysDisplayResponse($this->view, !$this->smiley['idsmiley'] ? $this->lang['add_smiley'] : $this->lang['edit_smiley']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin');
@@ -79,23 +62,23 @@ class AdminSmileysFormController extends AdminController
 	private function build_upload_form()
 	{
 		$form = new HTMLForm('upload_smiley', '', false);
-		
+
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['upload_smiley']);
 		$form->add_fieldset($fieldset);
-	
+
 		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img'],
 			array('authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions())))
 		));
-		
+
 		$this->upload_submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->upload_submit_button);
 		$this->upload_form = $form;
 	}
-	
+
 	private function upload_smiley()
 	{
 		$folder_phpboost_smileys = $this->smileys_path;
-		
+
 		if (!is_writable($folder_phpboost_smileys))
 		{
 			$is_writable = @chmod($folder_phpboost_smileys, 0777);
@@ -104,21 +87,21 @@ class AdminSmileysFormController extends AdminController
 		{
 			$is_writable = true;
 		}
-		
+
 		if ($is_writable)
 		{
 			$uploaded_file = $this->upload_form->get_value('file');
 			if ($uploaded_file !== null)
 			{
 				$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
-				
+
 				if (empty($authorized_pictures_extensions))
 				{
 					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_upload_invalid_format', 'errors'), MessageHelper::NOTICE));
 				}
-				
+
 				$upload = new Upload($this->smileys_path);
-				
+
 				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
 					// TODO : gérer les archives de smileys (possibilité d'uploader un zip + case à cocher si on veut créer directement chaque smiley avec :nom_du_smiley comme code)
@@ -142,11 +125,11 @@ class AdminSmileysFormController extends AdminController
 	private function build_smiley_form()
 	{
 		$form = new HTMLForm('smiley', '', false);
-		
+
 		$fieldset = new FormFieldsetHTML('smiley', !$this->smiley['idsmiley'] ? $this->lang['add_smiley'] : $this->lang['edit_smiley']);
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldTextEditor('code_smiley', $this->lang['smiley_code'], $this->smiley['code_smiley'], 
+
+		$fieldset->add_field(new FormFieldTextEditor('code_smiley', $this->lang['smiley_code'], $this->smiley['code_smiley'],
 			array('maxlength' => 50, 'required' => true)
 		));
 
@@ -161,36 +144,36 @@ class AdminSmileysFormController extends AdminController
 				}'
 			))
 		));
-		
+
 		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => $this->smiley['code_smiley'], 'title' => $this->smiley['code_smiley']));
-		
+
 		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'common'), $img_smiley->display(),
 			array('hidden' => !$this->smiley['idsmiley'])
 		));
-		
+
 		$this->smiley_submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->smiley_submit_button);
 		$this->smiley_form = $form;
 	}
-	
+
 	private function save_smiley()
 	{
 		$code_smiley = $this->smiley_form->get_value('code_smiley');
 		$url_smiley = $this->smiley_form->get_value('url_smiley')->get_raw_value();
-		
+
 		if (!empty($code_smiley) && !empty($url_smiley))
 		{
 			if (!$this->smiley['idsmiley'])
 			{
 				$check_smiley = PersistenceContext::get_querier()->count(DB_TABLE_SMILEYS, 'WHERE code_smiley=:code_smiley', array('code_smiley' => $code_smiley));
-				
+
 				if (empty($check_smiley))
 				{
 					PersistenceContext::get_querier()->insert(DB_TABLE_SMILEYS, array('code_smiley' => $code_smiley, 'url_smiley' => $url_smiley));
-					
+
 					###### Régénération du cache des smileys #######
 					SmileysCache::invalidate();
-					
+
 					$this->view->put('MSG', MessageHelper::display($this->lang['smiley_add_success'], MessageHelper::SUCCESS));
 				}
 				else
@@ -201,10 +184,10 @@ class AdminSmileysFormController extends AdminController
 			else
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_SMILEYS, array('url_smiley' => $url_smiley, 'code_smiley' => $code_smiley), 'WHERE idsmiley = :id', array('id' => $this->smiley['idsmiley']));
-				
+
 				###### Régénération du cache des smileys #######
 				SmileysCache::invalidate();
-				
+
 				AppContext::get_response()->redirect(AdminSmileysUrlBuilder::management());
 			}
 		}
@@ -216,7 +199,7 @@ class AdminSmileysFormController extends AdminController
 		$folder_phpboost_smileys = new Folder($this->smileys_path);
 		foreach ($folder_phpboost_smileys->get_files('`\.(png|jpg|bmp|gif)$`iu') as $smileys)
 			$smileys_array[] = $smileys->get_name();
-		
+
 		if (!$this->smiley['idsmiley'])
 		{
 			$result = PersistenceContext::get_querier()->select("SELECT url_smiley
@@ -229,16 +212,16 @@ class AdminSmileysFormController extends AdminController
 					unset($smileys_array[$key]); //On supprime ces clés du tableau.
 			}
 			$result->dispose();
-			
+
 			$options = array(new FormFieldSelectChoiceOption('--', ''));
 		}
-		
+
 		foreach ($smileys_array as $smiley)
 			$options[] = new FormFieldSelectChoiceOption($smiley, $smiley);
-		
+
 		return $options;
 	}
-	
+
 	private function get_smiley()
 	{
 		if ($this->smiley === null)

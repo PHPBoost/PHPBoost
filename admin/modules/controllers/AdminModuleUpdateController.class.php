@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                       AdminModuleUpdateController.class.php
- *                            -------------------
- *   begin                : September 20, 2011
- *   copyright            : (C) 2011 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 26
+ * @since   	PHPBoost 3.0 - 2011 09 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
+*/
 
 class AdminModuleUpdateController extends AdminController
 {
@@ -44,9 +29,9 @@ class AdminModuleUpdateController extends AdminController
 			if ($request->get_string('upgrade-' . $module->get_id(), false) || ($request->get_string('upgrade-selected-modules', false) && $request->get_value('upgrade-checkbox-' . $module_number, 'off') == 'on'))
 			{
 				$modules_selected++;
-				
+
 				$result = $this->upgrade_module($module->get_id());
-				
+
 				if ($result['type'] == MessageHelper::SUCCESS)
 				{
 					$modules_success++;
@@ -58,7 +43,7 @@ class AdminModuleUpdateController extends AdminController
 
 			$module_number++;
 		}
-		
+
 		if ($modules_selected > 0 && $modules_selected == $modules_success)
 			$this->view->put('MSG_SUCCESS', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 		else
@@ -233,7 +218,7 @@ class AdminModuleUpdateController extends AdminController
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 
 							$result = $this->upgrade_module($module_id);
-							
+
 							if ($result['type'] == MessageHelper::SUCCESS)
 								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
 							else

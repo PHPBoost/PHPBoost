@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                           admin_update_detail.php
- *                            -------------------
- *   begin                  : July 27, 2008
- *   copyright              : (C) 2008 Loic Rouchon
- *   email                  : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @since   	PHPBoost 1.6 - 2008 07 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 
@@ -56,14 +40,14 @@ if ($app instanceof Application && $app->check_compatibility())
 	$improvements = $app->get_improvements();
 	$bug_corrections = $app->get_bug_corrections();
 	$security_improvements = $app->get_security_improvements();
-	
+
 	$nb_authors = count($authors);
 	$has_new_feature = count($new_features) > 0;
 	$has_warning = count($warning) > 0;
 	$has_improvements = count($improvements) > 0;
 	$has_bug_corrections = count($bug_corrections) > 0;
 	$has_security_improvements = count($security_improvements) > 0;
-	
+
 	switch ($update->get_priority())
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
@@ -79,7 +63,7 @@ if ($app instanceof Application && $app->check_compatibility())
 			$priority = 'priority_low';
 			break;
 	}
-	
+
 	$tpl->put_all(array(
 		'APP_NAME' => $app->get_name(),
 		'APP_VERSION' => $app->get_version(),
@@ -108,19 +92,19 @@ if ($app instanceof Application && $app->check_compatibility())
 		'C_SECURITY_IMPROVEMENTS' => $has_security_improvements,
 		'C_NEW' => $has_new_feature || $has_improvements || $has_bug_corrections || $has_security_improvements
 	));
-	
+
 	foreach ($authors as $author)
 		$tpl->assign_block_vars('authors', array('name' => $author['name'], 'email' => $author['email']));
-	
+
 	foreach ($new_features as $new_feature)
 		$tpl->assign_block_vars('new_features', array('description' => $new_feature));
-		
+
 	foreach ($improvements as $improvement)
 		$tpl->assign_block_vars('improvements', array('description' => $improvement));
-	
+
 	foreach ($bug_corrections as $bug_correction)
 		$tpl->assign_block_vars('bugs', array('description' => $bug_correction));
-	
+
 	foreach ($security_improvements as $security_improvement)
 		$tpl->assign_block_vars('security', array('description' => $security_improvement));
 }

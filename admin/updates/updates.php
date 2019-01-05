@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                               admin_updates.php
- *                            -------------------
- *   begin                  : July 27, 2008
- *   copyright              : (C) 2008 Loic Rouchon
- *   email                  : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 03 05
+ * @since   	PHPBoost 1.6 - 2008 07 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 
@@ -48,7 +32,7 @@ $tpl = new FileTemplate('admin/updates/updates.tpl');
 $updates_availables = 0;
 
 if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
-{ 
+{
 	$update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
 	$updates = array();
 	foreach ($update_alerts as $update_alert)
@@ -88,12 +72,12 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 				$priority = 'priority_low';
 				break;
 		}
-		
+
 		$short_description = $update->get_description();
 		$maxlength = 300;
 		$length = TextHelper::strlen($short_description) > $maxlength ?  $maxlength + TextHelper::strpos(TextHelper::substr($short_description, $maxlength), ' ') : 0;
 		$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
-		
+
 		$tpl->assign_block_vars('apps', array(
 			'type' => $update->get_type(),
 			'name' => $update->get_name(),
@@ -125,7 +109,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 			'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
 			'C_ALL' => $update_type == ''
 		));
-		
+
 	}
 	else
 		$tpl->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));

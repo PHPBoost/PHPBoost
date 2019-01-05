@@ -1,30 +1,12 @@
 <?php
-/*##################################################
- *                           content.php
- *                          -------------------
- *   begin                : November 23, 2008
- *   copyright            : (C) 2008 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 03 24
+ * @since   	PHPBoost 2.0 - 2008 11 23
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
@@ -41,9 +23,9 @@ if ($action_post == 'save')
 {
 	// Save a Menu (New / Edit)
 	$menu = null;
-	
+
 	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
-	
+
 	if (!empty($id_post))
 	{   // Edit the Menu
 		$menu = MenuService::load($id_post);
@@ -53,21 +35,21 @@ if ($action_post == 'save')
 	{   // Add the new Menu
 		$menu = new ContentMenu($menu_name);
 	}
-	
+
 	if (!($menu instanceof ContentMenu))
 	{
 		AppContext::get_response()->redirect('menus.php');
 	}
-	
+
 	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 	$menu->set_display_title(retrieve(POST, 'display_title', false));
 	$menu->set_content(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
-	
+
 	//Filters
 	MenuAdminService::set_retrieved_filters($menu);
-	
+
 	if ($menu->is_enabled())
 	{
 		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
@@ -75,7 +57,7 @@ if ($action_post == 'save')
 	if ($menu->is_enabled())
 	{
 		$block = retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED);
-		
+
 		if ($menu->get_block() == $block)
 		{   // Save the menu if enabled
 			$menu->set_block_position($menu->get_block_position());
@@ -93,7 +75,7 @@ if ($action_post == 'save')
 		$block = $menu->get_block();
 		// Disable the menu and move it to the disabled position computing new positions
 		MenuService::move($menu, Menu::BLOCK_POSITION__NOT_ENABLED);
-		
+
 		// Restore its position and save it
 		$menu->set_block($block);
 		MenuService::save($menu);
@@ -154,15 +136,15 @@ $array_location = array(
 if ($edit)
 {
 	$menu = MenuService::load($id);
-	
+
 	if (!($menu instanceof ContentMenu))
 	{
 		AppContext::get_response()->redirect('menus.php');
 	}
-	
+
 	$block = $menu->get_block();
 	$content = $menu->get_content();
-	
+
 	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
@@ -180,20 +162,20 @@ else
 		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'DISPLAY_TITLE_CHECKED' => 'checked="checked"'
 	));
-   
+
 	// Create a new generic menu
 	$menu = new ContentMenu('');
 }
 
 $locations = '';
-foreach ($array_location as $key => $name) 
+foreach ($array_location as $key => $name)
 {
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
 
 //Filtres
-MenuAdminService::add_filter_fieldset($menu, $tpl);    
+MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 
 $tpl->put_all(array('LOCATIONS' => $locations));

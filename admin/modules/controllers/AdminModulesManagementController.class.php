@@ -1,51 +1,37 @@
 <?php
-/*##################################################
- *                       AdminModulesManagementController.class.php
- *                            -------------------
- *   begin                : September 20, 2011
- *   copyright            : (C) 2011 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @since   	PHPBoost 3.0 - 2011 09 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 class AdminModulesManagementController extends AdminController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_view();
 		$this->save($request);
-		
+
 		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.module_management']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
 		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function build_view()
 	{
 		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
@@ -56,7 +42,7 @@ class AdminModulesManagementController extends AdminController
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
-			
+
 			$this->view->assign_block_vars('modules_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
@@ -75,22 +61,22 @@ class AdminModulesManagementController extends AdminController
 				'C_DOCUMENTATION' => !empty($documentation),
 				'L_DOCUMENTATION' => $documentation
 			));
-			
+
 			$module_number++;
 		}
-		
+
 		$installed_modules_number = count($installed_modules);
 		$this->view->put_all(array(
 			'C_MORE_THAN_ONE_MODULE_INSTALLED' => $installed_modules_number > 1,
 			'MODULES_NUMBER' => $installed_modules_number
 		));
 	}
-	
+
 	private function save(HTTPRequestCustom $request)
 	{
 		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		$errors = array();
-		
+
 		if ($request->get_string('delete-selected-modules', false))
 		{
 			$module_ids = array();
@@ -110,10 +96,10 @@ class AdminModulesManagementController extends AdminController
 			$activated = 0;
 			if ($request->get_string('activate-selected-modules', false))
 				$activated = 1;
-			
+
 			$module_number = 1;
 			$modified_modules = 0;
-			
+
 			foreach ($installed_modules as $module)
 			{
 				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
@@ -125,7 +111,7 @@ class AdminModulesManagementController extends AdminController
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
 			}
-			
+
 			if ($modified_modules && empty($errors))
 			{
 				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), LangLoader::get_message('process.success', 'status-messages-common'));
@@ -153,7 +139,7 @@ class AdminModulesManagementController extends AdminController
 				else if ($request->get_string('enable-' . $module->get_id(), ''))
 				{
 					$error = ModulesManager::update_module($module->get_id(), 1);
-					
+
 					if (!empty($error))
 						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else
@@ -162,7 +148,7 @@ class AdminModulesManagementController extends AdminController
 				else if ($request->get_string('disable-' . $module->get_id(), ''))
 				{
 					$error = ModulesManager::update_module($module->get_id(), 0);
-					
+
 					if (!empty($error))
 						$this->view->put('MSG', MessageHelper::display('<b>' . $module->get_configuration()->get_name() . '</b> : ' . $error, MessageHelper::WARNING));
 					else

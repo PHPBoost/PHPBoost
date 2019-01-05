@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                                 menus.php
- *                            -------------------
- *   begin                : March, 05 2007
- *   copyright            : (C) 2009 Régis Viarre, Loic Rouchon
- *   email                : crowkait@phpboost.com, loic.rouchon@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @since   	PHPBoost 1.6 - 2007 03 05
+ * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
@@ -129,7 +113,7 @@ function get_block($position)
 		Menu::BLOCK_POSITION__LEFT => 'mod_left',
 		Menu::BLOCK_POSITION__RIGHT => 'mod_right'
 	);
-	
+
 	return $blocks[$position];
 }
 
@@ -142,7 +126,7 @@ function save_position($block_position)
 	foreach ($menus_tree as $position => $tree)
 	{
 		$id = $tree->id;
-		
+
 		if (array_key_exists($id, $menus))
 		{
 			$menu = $menus[$id];
@@ -174,9 +158,9 @@ if ($action == 'save') //Save menus positions.
 	$columns_disabled->set_disable_left_columns(!AppContext::get_request()->get_bool('left_column_enabled', false));
 	$columns_disabled->set_disable_right_columns(!AppContext::get_request()->get_bool('right_column_enabled', false));
 	ThemesManager::change_columns_disabled($theme_post, $columns_disabled);
-	
+
 	MenuService::generate_cache();
-	
+
 	AppContext::get_response()->redirect('menus.php');
 }
 
@@ -218,7 +202,7 @@ foreach ($menus_blocks as $block_id => $menus)
 
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
 		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
-		
+
 		$menu_tpl->put_all(array(
 			'NAME' => $menu->get_formated_title(),
 			'IDMENU' => $id,
@@ -244,7 +228,7 @@ foreach ($menus_blocks as $block_id => $menus)
 			'U_DOWN' => menu_admin_link($menu, 'down'),
 			'U_MOVE' => menu_admin_link($menu, 'move'),
 		));
-		
+
 		$tpl->assign_block_vars(get_block($block_id), array('MENU' => $menu_tpl->render()));
 		$i++;
 	}
@@ -260,7 +244,7 @@ foreach(ThemesManager::get_activated_themes_map() as $theme => $properties)
 		'SELECTED' => $selected
 	));
 }
-	
+
 $columns_disable = ThemesManager::get_theme($name_theme)->get_columns_disabled();
 
 $tpl->put_all(array(

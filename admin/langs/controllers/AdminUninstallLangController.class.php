@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                      AdminUninstallLangController.class.php
- *                            -------------------
- *   begin                : January 20, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @since   	PHPBoost 3.0 - 2012 01 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
+*/
 
 class AdminUninstallLangController extends AdminController
 {
@@ -33,12 +18,12 @@ class AdminUninstallLangController extends AdminController
 	private $lang_id;
 	private $multiple = false;
 	private $tpl;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$ids = explode('--', $request->get_value('id', null));
-		
+
 		if (count($ids) > 1)
 		{
 			$lang_ids = array();
@@ -56,7 +41,7 @@ class AdminUninstallLangController extends AdminController
 		}
 		else
 			$this->lang_id = $request->get_value('id', null);
-		
+
 		if ($this->lang_exists())
 		{
 			$this->build_form();
@@ -66,7 +51,7 @@ class AdminUninstallLangController extends AdminController
 
 				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs(), LangLoader::get_message('process.success', 'status-messages-common'));
 			}
-			
+
 			$this->tpl->put('FORM', $this->form->display());
 
 			return new AdminLangsDisplayResponse($this->tpl, $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
@@ -77,34 +62,34 @@ class AdminUninstallLangController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-langs-common');
 		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('uninstall_lang', $this->multiple ? $this->lang['langs.delete_lang_multiple'] : $this->lang['langs.delete_lang']);
 		$form->add_fieldset($fieldset);
-	
+
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['langs.drop_files_multiple'] : $this->lang['langs.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
 				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
 			)
 		));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
 	}
-	
+
 	private function uninstall($drop_files)
 	{
 		if ($this->multiple)
@@ -117,7 +102,7 @@ class AdminUninstallLangController extends AdminController
 		else
 			LangsManager::uninstall($this->lang_id, $drop_files);
 	}
-	
+
 	private function lang_exists()
 	{
 		if ($this->lang_id == null)

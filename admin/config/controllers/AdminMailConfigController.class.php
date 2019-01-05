@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                       AdminMailConfigController.class.php
- *                            -------------------
- *   begin                : April 12, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 3.0 - 2010 04 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class AdminMailConfigController extends AdminController
 {
@@ -35,30 +19,30 @@ class AdminMailConfigController extends AdminController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
-	
+
 	private $lang;
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->build_form();
-		
+
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return new AdminConfigDisplayResponse($tpl, $this->lang['mail-config']);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-config-common');
@@ -97,11 +81,11 @@ class AdminMailConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(), array('required' => true, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`iu'))));
-		
+
 		$fieldset->add_field(new FormFieldNumberEditor('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(), array('min' => 1, 'max' => 65535, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(), array('disabled' => !$smtp_enabled), array()));
-		
+
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['mail-config.smtp_password'], $this->config->get_smtp_password(), array('disabled' => !$smtp_enabled)));
 
 		$none_protocol_option = new FormFieldSelectChoiceOption($this->lang['mail-config.smtp_secure_protocol_none'], 'none');
@@ -120,11 +104,11 @@ class AdminMailConfigController extends AdminController
 				$default_protocol_option = $none_protocol_option;
 		}
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('smtp_protocol', $this->lang['mail-config.smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
