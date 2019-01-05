@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                          InstallationServices.class.php
- *                            -------------------
- *   begin                : February 3, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 01 20
+ * @since   	PHPBoost 3.0 - 2010 02 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class InstallationServices
 {
@@ -62,16 +45,16 @@ class InstallationServices
 	{
 		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
 		$langs_list = $langs_folder->get_folders();
-		
+
 		$available_langs = array();
 		foreach ($langs_list as $lang)
 		{
 			$available_langs[] = $lang->get_name();
 		}
-		
+
 		return $available_langs;
 	}
-	
+
 	private function set_default_locale($locale)
 	{
 		$langs = $this->get_langs_not_installed();
@@ -87,7 +70,7 @@ class InstallationServices
 			$distribution_config['default_lang'] = $langs[0];
 		return $distribution_config['default_lang'];
 	}
-	
+
 	public function is_already_installed()
 	{
 		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
@@ -227,7 +210,7 @@ class InstallationServices
 	{
 		$server_configuration = new ServerConfiguration();
 		$server_environment_config = ServerEnvironmentConfig::load();
-		
+
 		try
 		{
 			if ($server_configuration->has_url_rewriting())
@@ -235,21 +218,21 @@ class InstallationServices
 				$server_environment_config->set_url_rewriting_enabled(true);
 			}
 		}
-		catch (UnsupportedOperationException $ex) 
+		catch (UnsupportedOperationException $ex)
 		{
 			$server_environment_config->set_url_rewriting_enabled(false);
 		}
-		
+
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
 			$server_environment_config->set_output_gziping_enabled(true);
 		}
-		
+
 		if (DataStoreFactory::is_apc_available())
 		{
 			DataStoreFactory::set_apc_enabled(true);
 		}
-		
+
 		ServerEnvironmentConfig::save();
 	}
 
@@ -320,7 +303,7 @@ class InstallationServices
 		{
 			ModulesManager::install_module($module->get_id(), true, false);
 		}
-		
+
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
 			HtaccessFileCache::regenerate();
@@ -368,7 +351,7 @@ class InstallationServices
 			ThemesManager::install($theme->get_id());
 		}
 	}
-	
+
 	private function get_langs_not_installed()
 	{
 		$langs_not_installed = array();
@@ -442,7 +425,7 @@ class InstallationServices
 	private function add_extended_fields()
 	{
 		$lang = LangLoader::get('user-common');
-		
+
 		//Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.sex']);
@@ -453,7 +436,7 @@ class InstallationServices
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Mail notofication when receiving PM
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.pmtomail']);
@@ -464,7 +447,7 @@ class InstallationServices
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Date Birth
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.date-birth']);
@@ -475,7 +458,7 @@ class InstallationServices
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.avatar']);
@@ -487,7 +470,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
-	
+
 	public function regenerate_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();

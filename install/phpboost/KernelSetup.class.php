@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                             KernelSetup.class.php
- *                            -------------------
- *   begin                : May 29, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 02 09
+ * @since   	PHPBoost 3.0 - 2010 05 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class KernelSetup
 {
@@ -110,7 +93,7 @@ class KernelSetup
 			self::$events_table,
 			self::$errors_404_table,
 			self::$group_table,
-			self::$keywords_table, 
+			self::$keywords_table,
 			self::$keywords_relations_table,
 			self::$member_table,
 			self::$member_extended_fields_table,
@@ -173,13 +156,13 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$comments_table, $fields, $options);
 	}
-	
+
 	private function create_comments_topic_table()
 	{
 		$fields = array(
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),	
+			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -205,7 +188,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$note_table, $fields, $options);
 	}
-	
+
 	private function create_average_notes_table()
 	{
 		$fields = array(
@@ -318,7 +301,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
 	}
-	
+
 	private function create_keywords_table()
 	{
 		$fields = array(
@@ -334,7 +317,7 @@ class KernelSetup
 		)));
 		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_table, $fields, $options);
 	}
-	
+
 	private function create_keywords_relations_table()
 	{
 		$fields = array(
@@ -499,7 +482,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);
 	}
-	
+
 	private function create_internal_authentication_table()
 	{
 		$fields = array(
@@ -519,7 +502,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
 	}
-	
+
 	private function create_internal_authentication_failures_table()
 	{
 		$fields = array(
@@ -551,7 +534,7 @@ class KernelSetup
 		));
 		self::$db_utils->create_table(self::$authentication_method_table, $fields, $options);
 	}
-	
+
 
 	private function create_smileys_table()
 	{
@@ -603,11 +586,11 @@ class KernelSetup
 		$this->insert_visit_counter_data();
 		$this->insert_smileys_data();
 	}
-	
+
 	private function insert_visit_counter_data()
 	{
 		$now = new Date();
-		
+
 		self::$db_querier->insert(self::$visit_counter_table, array(
 			'id' => 1,
 			'ip' => '',
