@@ -1,35 +1,17 @@
 <?php
-/*##################################################
- *                                update.php
- *                            -------------------
- *   begin                : August 05, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @since   	PHPBoost 3.0 - 2012 08 05
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
-
- ####################################################
-#                      French                      #
- ####################################################
-
+####################################################
+#                      English                     #
+####################################################
 
 $lang = array(
 	//Variables générales
@@ -132,7 +114,7 @@ $lang = array(
 	'step.execute.explanation' => 'This step will convert your site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to ' . UpdateServices::NEW_KERNEL_VERSION . ' PHPBoost.
 	<br /><br />
 	Be careful, this step is irreversible, as a precaution please backup your data first!',
-	
+
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost is now updated and ready to run!</legend>
 							<div class="fielset-inset">
@@ -172,7 +154,7 @@ $lang = array(
 							<legend>Make a donation</legend>
 							<div class="fielset-inset">
 								If you want to support PHPBoost financially you can donate via paypal :
-								
+
 								<div class="center">
 									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">

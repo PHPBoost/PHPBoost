@@ -1,36 +1,16 @@
 <?php
-/*##################################################
- *                          OldBBCodeUnparser.class.php
- *                            -------------------
- *   begin                : July 3 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
+ * BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 25
+ * @since   	PHPBoost 2.0 - 2008 07 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class OldBBCodeUnparser extends ContentFormattingUnparser
 {
 	/**
@@ -51,9 +31,9 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
-		
+
 		$this->content = TextHelper::html_entity_decode($this->content);
-		
+
 		//Smilies
 		$this->unparse_smilies();
 
@@ -62,7 +42,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 		//Remplacement des balises simples
 		$this->unparse_simple_tags();
-		
+
 		//Unparsage de la balise table.
 		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
@@ -74,7 +54,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		{
 			$this->unparse_list();
 		}
-		
+
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
 	}
@@ -104,7 +84,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 	}
-	
+
 	/**
 	 * @desc Unparsed module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
@@ -203,7 +183,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[moderator]$1[/moderator]",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
-		
+
 		$array_str = array(
 			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
 			'<sub>', '</sub>', '<pre>', '</pre>'
@@ -212,7 +192,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
-		
+
 		##Nested tags
 		//Quotes
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
@@ -225,11 +205,11 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		//Block
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
-		
+
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
-		
+
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
@@ -244,7 +224,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
-		
+
 		// Feed
 		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
@@ -366,7 +346,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		{
 			$lang = $matches[1];
 		}
-			
+
 		//L'intitulé du lien est différent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
