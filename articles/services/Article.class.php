@@ -1,33 +1,17 @@
 <?php
-/*##################################################
- *                        Article.class.php
- *                            -------------------
- *   begin                : February 27, 2013
- *   copyright            : (C) 2013 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Patrick DUBEAU <daaxwizeman@gmail.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 07
+ * @since   	PHPBoost 4.0 - 2013 02 27
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
+
 class Article
 {
 	private $id;
@@ -54,14 +38,14 @@ class Article
 
 	private $sources;
 	private $keywords;
-	
+
 	const SORT_ALPHABETIC = 'title';
 	const SORT_DATE = 'date_created';
 	const SORT_AUTHOR = 'display_name';
 	const SORT_NUMBER_VIEWS = 'number_view';
 	const SORT_NOTATION = 'average_notes';
 	const SORT_NUMBER_COMMENTS = 'number_comments';
-	
+
 	const SORT_FIELDS_URL_VALUES = array(
 		self::SORT_ALPHABETIC => 'title',
 		self::SORT_DATE => 'date',
@@ -70,7 +54,7 @@ class Article
 		self::SORT_NOTATION => 'notes',
 		self::SORT_NUMBER_COMMENTS => 'comments'
 	);
-	
+
 	const ASC = 'ASC';
 	const DESC = 'DESC';
 
@@ -102,7 +86,7 @@ class Article
 	{
 		return $this->id_category;
 	}
-	
+
 	public function get_category()
 	{
 		return ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
@@ -132,22 +116,22 @@ class Article
 	{
 		return $this->rewrited_title != Url::encode_rewrite($this->title);
 	}
-	
+
 	public function set_description($description)
 	{
 		$this->description = $description;
 	}
-	
+
 	public function get_description()
 	{
 		return $this->description;
 	}
-	
+
 	public function get_description_enabled()
 	{
 		return !empty($this->description);
 	}
-	
+
 	public function get_real_description()
 	{
 		if ($this->get_description_enabled())
@@ -160,7 +144,7 @@ class Article
 			return TextHelper::cut_string(@strip_tags($clean_contents[0], '<br><br/>'), (int)ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
-	
+
 	public function set_contents($contents)
 	{
 		$this->contents = $contents;
@@ -170,7 +154,7 @@ class Article
 	{
 		return $this->contents;
 	}
-	
+
 	public function set_picture(Url $picture)
 	{
 		$this->picture_url = $picture;
@@ -180,13 +164,13 @@ class Article
 	{
 		return $this->picture_url;
 	}
-	
+
 	public function has_picture()
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
 	}
-	
+
 	public function set_number_view($number_view)
 	{
 		$this->number_view = $number_view;
@@ -211,22 +195,22 @@ class Article
 	{
 		$this->author_user = $user;
 	}
-	
+
 	public function get_author_user()
 	{
 		return $this->author_user;
 	}
-	
+
 	public function get_author_custom_name()
 	{
 		return $this->author_custom_name;
 	}
-	
+
 	public function set_author_custom_name($author_custom_name)
 	{
 		$this->author_custom_name = $author_custom_name;
 	}
-	
+
 	public function is_author_custom_name_enabled()
 	{
 		return $this->author_custom_name_enabled;
@@ -236,12 +220,12 @@ class Article
 	{
 		$this->notation = $notation;
 	}
-	
+
 	public function get_notation()
 	{
 		return $this->notation;
 	}
-	
+
 	public function set_publishing_state($published)
 	{
 		$this->published = $published;
@@ -251,13 +235,13 @@ class Article
 	{
 		return $this->published;
 	}
-	
+
 	public function is_published()
 	{
 		$now = new Date();
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED_NOW || ($this->get_publishing_state() == self::PUBLISHED_DATE && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
-	
+
 	public function get_status()
 	{
 		switch ($this->published) {
@@ -272,7 +256,7 @@ class Article
 			break;
 		}
 	}
-	
+
 	public function set_publishing_start_date(Date $publishing_start_date)
 	{
 		$this->publishing_start_date = $publishing_start_date;
@@ -308,17 +292,17 @@ class Article
 	{
 		return $this->date_created;
 	}
-	
+
 	public function get_date_updated()
 	{
 		return $this->date_updated;
 	}
-	
+
 	public function set_date_updated(Date $date_updated)
 	{
 		$this->date_updated = $date_updated;
 	}
-	
+
 	public function add_source($source)
 	{
 		$this->sources[] = $source;
@@ -342,22 +326,22 @@ class Article
 		}
 		return $this->keywords;
 	}
-	
+
 	public function get_keywords_name()
 	{
 		return array_keys($this->get_keywords());
 	}
-	
+
 	public function is_authorized_to_add()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->write() || ArticlesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
-	
+
 	public function is_authorized_to_edit()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
-	
+
 	public function is_authorized_to_delete()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
@@ -404,18 +388,18 @@ class Article
 		$this->set_date_created(new Date($properties['date_created'], Timezone::SERVER_TIMEZONE));
 		$this->date_updated = !empty($properties['date_updated']) ? new Date($properties['date_updated'], Timezone::SERVER_TIMEZONE) : null;
 		$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array());
-		
+
 		$user = new User();
 		if (!empty($properties['user_id']))
 			$user->set_properties($properties);
 		else
 			$user->init_visitor_user();
-			
+
 		$this->set_author_user($user);
-		
+
 		$this->author_custom_name = !empty($properties['author_custom_name']) ? $properties['author_custom_name'] : $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = !empty($properties['author_custom_name']);
-		
+
 		$notation = new Notation();
 		$notation->set_module_name('articles');
 		$notation->set_id_in_module($properties['id']);
@@ -453,7 +437,7 @@ class Article
 		$this->publishing_end_date = null;
 		$this->end_date_enabled = false;
 	}
-	
+
 	public function get_array_tpl_vars()
 	{
 		$category         = $this->get_category();
@@ -463,7 +447,7 @@ class Article
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$sources          = $this->get_sources();
 		$nbr_sources      = count($sources);
-		
+
 		return array_merge(
 			Date::get_array_tpl_vars($this->date_created, 'date'),
 			Date::get_array_tpl_vars($this->date_updated, 'date_updated'),
@@ -502,7 +486,7 @@ class Article
 			'PICTURE'                       => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS'              => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR'              => $user_group_color,
-			
+
 			//Category
 			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID'          => $category->get_id(),
@@ -510,7 +494,7 @@ class Article
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE'       => $category->get_image()->rel(),
 			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
-			
+
 			//Links
 			'U_COMMENTS'       => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_AUTHOR'         => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
