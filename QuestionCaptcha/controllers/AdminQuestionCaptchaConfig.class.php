@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *		               AdminQuestionCaptchaConfig.class.php
- *                            -------------------
- *   begin                : May 9, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @since   	PHPBoost 4.0 - 2014 05 09
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 class AdminQuestionCaptchaConfig extends AdminModuleController
 {
@@ -75,16 +58,16 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 
 		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['config.title']);
 		$form->add_fieldset($fieldset);
-		
+
 		$this->display_fields($fieldset);
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
-	
+
 	private function display_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new QuestionCaptchaFormFieldQuestions('questions', $this->lang['form.questions'], $this->config->get_questions(), array(
@@ -111,14 +94,14 @@ class AdminQuestionCaptchaConfig extends AdminModuleController
 
 		return $response;
 	}
-	
+
 	public static function get_form_fields(FormFieldset $fieldset)
 	{
 		$object = new self();
 		$object->init();
 		return $object->display_fields($fieldset);
 	}
-	
+
 	public static function save_config(HTMLForm $form)
 	{
 		$object = new self();
