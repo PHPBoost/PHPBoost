@@ -1,33 +1,12 @@
 <?php
-/*##################################################
- *		      GoogleMapsFormFieldSimpleMarker.class.php
- *                            -------------------
- *   begin                : April 3, 2017
- *   copyright            : (C) 2017 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 26
+ * @since   	PHPBoost 5.0 - 2017 04 03
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 {
@@ -35,7 +14,7 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 	 * @var Usefull to know if we have to include all the necessary JS includes
 	 */
 	private $include_api = true;
-	
+
 	/**
 	 * @desc Constructs a GoogleMapsFormFieldSimpleAddress.
 	 * @param string $id Field identifier
@@ -49,7 +28,7 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-map simple-marker');
 	}
-	
+
 	/**
 	 * @return string The html code for the input.
 	 */
@@ -57,15 +36,15 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 	{
 		$template = $this->get_template_to_use();
 		$config   = GoogleMapsConfig::load();
-		
+
 		$field_tpl = new FileTemplate('GoogleMaps/GoogleMapsFormFieldSimpleMarker.tpl');
 		$field_tpl->add_lang(LangLoader::get('common', 'GoogleMaps'));
-		
+
 		$this->assign_common_template_variables($template);
-		
+
 		$unserialized_value = @unserialize($this->get_value());
 		$value = $unserialized_value !== false ? $unserialized_value : $this->get_value();
-		
+
 		if (!($value instanceof GoogleMapsMarker))
 		{
 			$marker = new GoogleMapsMarker();
@@ -79,7 +58,7 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 		}
 		else
 			$marker = $value;
-		
+
 		$field_tpl->put_all(array_merge($marker->get_array_tpl_vars(), array(
 			'C_INCLUDE_API' => $this->include_api,
 			'C_CLASS' => !empty($this->get_css_class()),
@@ -93,14 +72,14 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled()
 		)));
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $field_tpl->render()
 		));
-		
+
 		return $template;
 	}
-	
+
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
@@ -112,19 +91,19 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 			$field_latitude_id = 'latitude-' . $this->get_html_id();
 			$field_longitude_id = 'longitude-' . $this->get_html_id();
 			$field_zoom_id = 'zoom-' . $this->get_html_id();
-			
+
 			$marker->set_properties(array(
-				'name' => $request->get_poststring($field_name_id), 
-				'address' => $request->get_poststring($field_address_id), 
+				'name' => $request->get_poststring($field_name_id),
+				'address' => $request->get_poststring($field_address_id),
 				'latitude' => $request->get_poststring($field_latitude_id),
 				'longitude' => $request->get_poststring($field_longitude_id),
 				'zoom' => $request->get_poststring($field_zoom_id)
 			));
 		}
-		
+
 		$this->set_value(TextHelper::serialize($marker->get_properties()));
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -140,7 +119,7 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-	
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
