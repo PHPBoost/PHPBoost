@@ -1,70 +1,53 @@
-<?php 
-/*##################################################
- *                            ReCaptcha.class.php
- *                            -------------------
- *   begin                : February 27, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+<?php
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @since   	PHPBoost 4.0 - 2013 02 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class ReCaptcha extends Captcha
 {
 	public static $_signupUrl = "https://www.google.com/recaptcha/admin";
 	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
-	
+
 	private $config;
-	
+
 	public function __construct()
 	{
 		$this->config = ReCaptchaConfig::load();
 	}
-	
+
 	public function get_name()
 	{
 		return 'ReCaptcha';
 	}
-	
+
 	public static function display_config_form_fields(FormFieldset $fieldset)
 	{
 		return AdminReCaptchaConfig::get_form_fields($fieldset);
 	}
-	
+
 	public static function save_config(HTMLForm $form)
 	{
 		AdminReCaptchaConfig::save_config($form);
 	}
-	
+
 	public function is_available()
 	{
 		return Url::check_url_validity('www.google.com') && $this->config->get_site_key() && $this->config->get_secret_key();
 	}
-	
+
 	public function is_valid()
 	{
 		$request = AppContext::get_request();
-		
+
 		if ($request->has_postparameter('g-recaptcha-response'))
 		{
 			$validation_url = self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '');
-			
+
 			$server_configuration = new ServerConfiguration();
 			if ($server_configuration->has_curl_library())
 			{
@@ -79,9 +62,9 @@ class ReCaptcha extends Captcha
 			{
 				$response = @file_get_contents($validation_url);
 			}
-			
+
 			$response = json_decode($response, true);
-			
+
 			if (is_array($response) && $response['success'] == true)
 				return true;
 			else
@@ -89,7 +72,7 @@ class ReCaptcha extends Captcha
 		}
 		return false;
 	}
-	
+
 	public function display()
 	{
 		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
@@ -102,7 +85,7 @@ class ReCaptcha extends Captcha
 		));
 		return $tpl->render();
 	}
-	
+
 	public function is_visible()
 	{
 		return !$this->config->is_invisible_mode_enabled();

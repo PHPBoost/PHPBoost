@@ -1,32 +1,12 @@
 <?php
-/*##################################################
- *		                        SocialNetworksList.class.php
- *                            -------------------
- *   begin                : April 10, 2018
- *   copyright            : (C) 2018 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 21
+ * @since   	PHPBoost 5.1 - 2018 04 10
+*/
+
 class SocialNetworksList
 {
 	/**
@@ -36,14 +16,14 @@ class SocialNetworksList
 	{
 		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks/social_networks');
 		$classes = array();
-		
+
 		foreach ($folder->get_files() as $class)
 		{
 			$name = str_replace('.class.php', '', $class->get_name());
 			if (ClassLoader::is_class_registered_and_valid($name) && in_array($interface_name, class_implements($name)))
 				$classes[] = $name;
 		}
-		
+
 		$additional_social_networks = SocialNetworksConfig::load()->get_additional_social_networks();
 		if (is_array($additional_social_networks))
 		{
@@ -53,7 +33,7 @@ class SocialNetworksList
 					$classes[] = $class;
 			}
 		}
-		
+
 		return $classes;
 	}
 
@@ -63,12 +43,12 @@ class SocialNetworksList
 	function get_social_networks_list()
 	{
 		$social_networks = array();
-		
+
 		foreach ($this->get_implementing_classes('SocialNetwork') as $social_network)
 		{
 			$social_networks[$social_network::SOCIAL_NETWORK_ID] = $social_network;
 		}
-		
+
 		return $social_networks;
 	}
 
@@ -87,7 +67,7 @@ class SocialNetworksList
 	{
 		$social_networks = $this->get_social_networks_list();
 		$sorted_social_networks = array();
-		
+
 		foreach (SocialNetworksConfig::load()->get_social_networks_order() as $social_network_id)
 		{
 			if (isset($social_networks[$social_network_id]))
@@ -96,7 +76,7 @@ class SocialNetworksList
 				unset($social_networks[$social_network_id]);
 			}
 		}
-		
+
 		return array_merge($sorted_social_networks, $social_networks);
 	}
 
@@ -107,14 +87,14 @@ class SocialNetworksList
 	{
 		$get_enabled_authentications = SocialNetworksConfig::load()->get_enabled_authentications();
 		$external_authentications = array();
-		
+
 		foreach ($this->get_sorted_social_networks_list() as $id => $social_network)
 		{
 			$sn = new $social_network();
 			if ($sn->has_authentication() && in_array($id, $get_enabled_authentications))
 				$external_authentications[] = $sn->get_external_authentication();
 		}
-		
+
 		return $external_authentications;
 	}
 
@@ -126,13 +106,13 @@ class SocialNetworksList
 		$request = AppContext::get_request();
 		$enabled_content_sharing = SocialNetworksConfig::load()->get_enabled_content_sharing();
 		$sharing_links = array();
-		
+
 		foreach ($this->get_sorted_social_networks_list() as $id => $social_network)
 		{
 			if (in_array($id, $enabled_content_sharing))
 			{
 				$sn = new $social_network();
-				
+
 				$display = false;
 				if ($sn->is_desktop_only() && !$request->is_mobile_device())
 				{
@@ -150,15 +130,15 @@ class SocialNetworksList
 						$content_sharing_url = $sn->get_mobile_content_sharing_url();
 					else
 						$content_sharing_url = $sn->get_content_sharing_url();
-					
+
 					$display = true;
 				}
-				
+
 				if ($display && $content_sharing_url)
 					$sharing_links[] = new ContentSharingActionsMenuLink($sn->get_css_class(), $sn->get_name(), new Url($content_sharing_url), $sn->get_share_image_renderer_html());
 			}
 		}
-		
+
 		return $sharing_links;
 	}
 }

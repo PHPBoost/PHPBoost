@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *                        AbstractSocialNetworkAuthenticationMethod.class.php
- *                            -------------------
- *   begin                : April 16, 2018
- *   copyright            : (C) 2018 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 05 16
+ * @since   	PHPBoost 5.1 - 2018 04 16
+*/
 
 abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationMethod
 {
@@ -31,7 +13,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	 * @return ExternalAuthentication class
 	 */
 	abstract protected function get_external_authentication();
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -39,7 +21,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	{
 		if (!$data)
 			$data = $this->get_user_data();
-		
+
 		if ($data)
 		{
 			$authentication_method_columns = array(
@@ -65,7 +47,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	public function dissociate($user_id)
 	{
 		$querier = PersistenceContext::get_querier();
-		
+
 		if ($querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id)) > 1)
 		{
 			try {
@@ -89,13 +71,13 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 		$querier = PersistenceContext::get_querier();
 		$user_id = 0;
 		$data = $this->get_user_data();
-		
+
 		if ($data)
 		{
 			try {
 				$user_id = $querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => $this->get_external_authentication()->get_authentication_id(), 'identifier' => $data['id']));
 			} catch (RowNotFoundException $e) {
-				
+
 				if (!empty($data['email']))
 				{
 					$email_exists = $querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
@@ -109,7 +91,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 					else
 					{
 						$user = new User();
-						
+
 						if (empty($data['name']))
 						{
 							$mail_split = explode('@', $data['email']);
@@ -118,13 +100,13 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 						}
 						else
 							$user->set_display_name($data['name']);
-						
+
 						$user->set_level(User::MEMBER_LEVEL);
 						$user->set_email($data['email']);
-						
+
 						$auth_method = new static();
 						$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
-						
+
 						return UserService::create($user, $auth_method, $fields_data, $data);
 					}
 				}
@@ -134,16 +116,16 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 		}
 		else
 			$this->error_msg = LangLoader::get_message('external-auth.user-data-not-found', 'user-common');
-		
+
 		$this->check_user_bannishment($user_id);
-		
+
 		if (!$this->error_msg)
 		{
 			$this->update_user_last_connection_date($user_id);
 			return $user_id;
 		}
 	}
-	
+
 	/**
 	 * @desc Retrieves user data from the social network
 	 * @return string[] user data (id, name, email, picture_url)
