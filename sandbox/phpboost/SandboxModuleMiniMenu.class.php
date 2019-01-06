@@ -1,33 +1,13 @@
 <?php
-/*##################################################
- *                               SandboxModuleMiniMenu.class.php
- *                            -------------------
- *   begin                : September 28, 2017
- *   copyright            : (C) 2017 Sebastien LARTIGUE
- *   email                : babsolune@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Sebastien LARTIGUE <babsolune@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 5.1 - 2017 09 28
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class SandboxModuleMiniMenu extends ModuleMiniMenu
 {
@@ -401,7 +381,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$menus_config = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 		$columns_disabled = new ColumnsDisabled();
-		
+
 		if ($column == 'left')
 		{
 			$columns_disabled->set_disable_left_columns($disable);
@@ -412,7 +392,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			$columns_disabled->set_disable_left_columns($menus_config->left_columns_is_disabled());
 			$columns_disabled->set_disable_right_columns($disable);
 		}
-		
+
 		ThemesManager::change_columns_disabled(AppContext::get_current_user()->get_theme(), $columns_disabled);
 		MenuService::generate_cache();
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
