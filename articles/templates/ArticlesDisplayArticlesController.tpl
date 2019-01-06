@@ -15,7 +15,6 @@
 					# IF C_DELETE #
 					<a href="{U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 					# ENDIF #
-					<a href="{U_PRINT_ARTICLE}" aria-label="${LangLoader::get_message('printable_version', 'main')}" target="blank"><i class="fa fa-print" aria-hidden="true" title="${LangLoader::get_message('printable_version', 'main')}"></i></a>
 				</span>
 				<div class="more">
 					# IF C_AUTHOR_DISPLAYED #
