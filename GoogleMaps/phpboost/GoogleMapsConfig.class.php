@@ -1,33 +1,12 @@
 <?php
-/*##################################################
- *		                   GoogleMapsConfig.class.php
- *                            -------------------
- *   begin                : March 26, 2017
- *   copyright            : (C) 2017 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @since   	PHPBoost 5.0 - 2017 03 26
+*/
+
 class GoogleMapsConfig extends AbstractConfigData
 {
 	const API_KEY = 'api_key';
@@ -35,57 +14,57 @@ class GoogleMapsConfig extends AbstractConfigData
 	const DEFAULT_MARKER_LATITUDE = 'default_marker_latitude';
 	const DEFAULT_MARKER_LONGITUDE = 'default_marker_longitude';
 	const DEFAULT_ZOOM = 'default_zoom';
-	
+
 	public function get_api_key()
 	{
 		return $this->get_property(self::API_KEY);
 	}
-	
+
 	public function set_api_key($api_key)
 	{
 		$this->set_property(self::API_KEY, $api_key);
 	}
-	
+
 	public function get_default_marker_address()
 	{
 		return $this->get_property(self::DEFAULT_MARKER_ADDRESS);
 	}
-	
+
 	public function set_default_marker_address($default_marker_address)
 	{
 		$this->set_property(self::DEFAULT_MARKER_ADDRESS, $default_marker_address);
 	}
-	
+
 	public function get_default_marker_latitude()
 	{
 		return $this->get_property(self::DEFAULT_MARKER_LATITUDE);
 	}
-	
+
 	public function set_default_marker_latitude($default_marker_latitude)
 	{
 		$this->set_property(self::DEFAULT_MARKER_LATITUDE, $default_marker_latitude);
 	}
-	
+
 	public function get_default_marker_longitude()
 	{
 		return $this->get_property(self::DEFAULT_MARKER_LONGITUDE);
 	}
-	
+
 	public function set_default_marker_longitude($default_marker_longitude)
 	{
 		$this->set_property(self::DEFAULT_MARKER_LONGITUDE, $default_marker_longitude);
 	}
-	
+
 	public function get_default_zoom()
 	{
 		return $this->get_property(self::DEFAULT_ZOOM);
 	}
-	
+
 	public function set_default_zoom($default_zoom)
 	{
 		$this->set_property(self::DEFAULT_ZOOM, $default_zoom);
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
