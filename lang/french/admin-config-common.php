@@ -1,33 +1,19 @@
 <?php
-/*##################################################
- *                           admin-config-common.php
- *                            -------------------
- *   begin                : April 12, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @since   	PHPBoost 3.0 - 2010 04 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
 
- ####################################################
+####################################################
 #                     French                       #
- ####################################################
+####################################################
 
 $lang = array(
 	'configuration' => 'Configuration',
@@ -43,7 +29,7 @@ $lang = array(
 	'mail-config.mail_signature_explain' => 'La signature sera ajoutée à la fin de chaque mail envoyé par PHPBoost',
 	'mail-config.send_protocol' => 'Protocole d\'envoi',
 	'mail-config.send_protocol_explain' => 'Généralement, les hébergeurs configurent correctement le serveur pour qu\'il soit directement capable d\'envoyer des mails.
-			Cependant, certains utilisateurs souhaitent modifier la façon dont le serveur expédie les mails. Dans ce cas, il faut utiliser une configuration SMTP spécifique 
+			Cependant, certains utilisateurs souhaitent modifier la façon dont le serveur expédie les mails. Dans ce cas, il faut utiliser une configuration SMTP spécifique
 			qui s\'active en cochant la case ci-dessous. Une fois le serveur SMTP configuré, il sera utilisé pour tous les envois de mail de PHPBoost.',
 	'mail-config.use_custom_smtp_configuration' => 'Utiliser une configuration SMTP spécifique',
 	'mail-config.custom_smtp_configuration' => 'Configuration SMTP personnalisée',
@@ -55,7 +41,7 @@ $lang = array(
 	'mail-config.smtp_secure_protocol_none' => 'Aucun',
 	'mail-config.smtp_secure_protocol_tls' => 'TLS',
 	'mail-config.smtp_secure_protocol_ssl' => 'SSL',
-	
+
 	//General config
 	'general-config' => 'Configuration générale',
 	'general-config.site_name' => 'Nom du site',
@@ -74,7 +60,7 @@ $lang = array(
 	'general-config.page_bench-explain' => 'Affiche le temps de rendu de la page et le nombre de requêtes SQL',
 	'general-config.display_theme_author' => 'Info sur le thème',
 	'general-config.display_theme_author-explain' => 'Affiche des informations sur le thème dans le pied de page',
-	
+
 	//Advanced config
 	'advanced-config' => 'Configuration avancée',
 	'advanced-config.site_url' => 'URL du serveur',
@@ -83,7 +69,7 @@ $lang = array(
 	'advanced-config.site_path-explain' => 'Vide par défaut : site à la racine du serveur',
 	'advanced-config.site_timezone' => 'Choix du fuseau horaire',
 	'advanced-config.site_timezone-explain' => 'Permet d\'ajuster l\'heure à votre localisation',
-	
+
 	'advanced-config.redirection_www_enabled' => 'Activation de la redirection de domaine',
 	'advanced-config.redirection_www_enabled.local' => 'La redirection ne peut pas être activée sur les sites en local',
 	'advanced-config.redirection_www_enabled.subdomain' => 'La redirection ne peut pas être activée pour les sites en sous-domaine',
@@ -102,7 +88,7 @@ $lang = array(
 	'advanced-config.hsts_security_subdomain.explain' => 'Activation de HSTS sur les sous-domaines',
 	'advanced-config.url-rewriting' => 'Activation de la réécriture des urls',
 	'advanced-config.url-rewriting.explain' => 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.',
-	
+
 	'advanced-config.config.not-available' => 'Non disponible sur votre serveur',
 	'advanced-config.config.available' => 'Disponible sur votre serveur',
 	'advanced-config.config.unknown' => 'Inconnu sur votre serveur',
@@ -121,7 +107,7 @@ $lang = array(
 	'advanced-config.active-session-duration' => 'Durée utilisateurs actifs',
 	'advanced-config.active-session-duration.explain' => '300 secondes conseillé',
 	'advanced-config.integer-required' => 'La valeur doit être un nombre',
-	
+
 	'advanced-config.miscellaneous' => 'Divers',
 	'advanced-config.output-gziping-enabled' => 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage',
 	'advanced-config.debug-mode' => 'Mode Debug',

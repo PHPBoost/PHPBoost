@@ -1,33 +1,18 @@
 <?php
-/*##################################################
- *                          admin-config-common.php
- *                            -------------------
- *   begin                : April 12, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @since   	PHPBoost 3.0 - 2010 04 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
 
- ####################################################
-#                     English                       #
- ####################################################
+####################################################
+#                     English                      #
+####################################################
 
 $lang = array(
 	'configuration' => 'Configuration',
@@ -42,7 +27,7 @@ $lang = array(
 	'mail-config.mail_signature_explain' => 'This signature will be appended to each mail sent by PHPBoost.',
 	'mail-config.send_protocol' => 'Sending protocol',
 	'mail-config.send_protocol_explain' => 'Generally, website hosting providers configure mail server adequately. However, some users need to change the way
-		it sends mails by using a custom SMTP configuration. To choose a custom configuration, check the box below and fill the configuration fields. 
+		it sends mails by using a custom SMTP configuration. To choose a custom configuration, check the box below and fill the configuration fields.
 		This configuration will be used each time PHPBoost sends a mail.',
 	'mail-config.use_custom_smtp_configuration' => 'Use custom SMTP configuration',
 	'mail-config.custom_smtp_configuration' => 'Custom SMTP Configuration',
@@ -54,7 +39,7 @@ $lang = array(
 	'mail-config.smtp_secure_protocol_none' => 'None',
 	'mail-config.smtp_secure_protocol_tls' => 'TLS',
 	'mail-config.smtp_secure_protocol_ssl' => 'SSL',
-	
+
 	//General config
 	'general-config' => 'General configuration',
 	'general-config.site_name' => 'Site name',
@@ -73,7 +58,7 @@ $lang = array(
 	'general-config.page_bench-explain' => 'Displays page\'s render time and SQL requests',
 	'general-config.display_theme_author' => 'Website\'s theme info',
 	'general-config.display_theme_author-explain' => 'Displays theme info in footer',
-	
+
 	//Advanced config
 	'advanced-config' => 'Advanced configuration',
 	'advanced-config.site_url' => 'Server\'s URL',
@@ -99,21 +84,21 @@ $lang = array(
 	'advanced-config.hsts_security_subdomain' => 'Include subdomain',
 	'advanced-config.hsts_security_subdomain.explain' => 'Set HSTS on subdomain',
 	'advanced-config.url-rewriting' => 'Enable URL rewriting',
-	'advanced-config.url-rewriting.explain' => 'Activation of URL rewriting makes URLs much simpler and clearer on your website. 
+	'advanced-config.url-rewriting.explain' => 'Activation of URL rewriting makes URLs much simpler and clearer on your website.
 		Your referencing will be largely optimized with this option.<br /><br />
-		Unfortunately this option isn\'t available on all servers. This page tests if your server supports URL rewriting. 
+		Unfortunately this option isn\'t available on all servers. This page tests if your server supports URL rewriting.
 		If after the test you get errors or white pages, remove the file <strong>.htaccess</strong> from the root directory of your server.',
-	
+
 	'advanced-config.config.not-available' => 'Not available on your server',
 	'advanced-config.config.available' => 'Available on your server',
 	'advanced-config.config.unknown' => 'Unknown sur votre serveur',
 
 	'advanced-config.htaccess-manual-content' => 'Content of the .htaccess file',
-	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file 
+	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file
 		which is at the root of the website. For instance, you can force special settings on your Apache web server.',
 
 	'advanced-config.robots-content' => 'Content of the robots.txt file',
-	'advanced-config.robots-content.explain' => 'In this field you can put the instructions you would like to integrate into the robots.txt file 
+	'advanced-config.robots-content.explain' => 'In this field you can put the instructions you would like to integrate into the robots.txt file
 		which is at the root of the website. For instance, you can prevent robots from index some parts of the website.',
 
 	'advanced-config.sessions-config' => 'Users connection',
@@ -124,11 +109,11 @@ $lang = array(
 	'advanced-config.active-session-duration' => 'Active users duration',
 	'advanced-config.active-session-duration.explain' => '300 seconds recommended',
 	'advanced-config.integer-required' => 'Value must be numeric',
-	
+
 	'advanced-config.miscellaneous' => 'Miscellaneous',
 	'advanced-config.output-gziping-enabled' => 'Enable page compression for faster display speed',
 	'advanced-config.debug-mode' => 'Debug mode',
-	'advanced-config.debug-mode.explain' => 'This mode is very useful for developers who will more easily see the errors encountered during the page 
+	'advanced-config.debug-mode.explain' => 'This mode is very useful for developers who will more easily see the errors encountered during the page
 		execution. You shouldn\'t use this mode on a published web site.',
 	'advanced-config.debug-mode.type' => 'Debug mode type',
 	'advanced-config.debug-mode.type.normal' => 'Normal',
