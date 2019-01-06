@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                        AdminSitemapController.class.php
- *                            -------------------
- *   begin                : December 09 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 3.0 - 2009 12 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminSitemapController extends AdminModuleController
 {
@@ -36,7 +19,7 @@ class AdminSitemapController extends AdminModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('common', 'sitemap');
@@ -45,19 +28,19 @@ class AdminSitemapController extends AdminModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
-		
+
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
 			$this->form->get_field_by_id('file_life_time')->set_hidden(!SitemapXMLFileService::is_xml_file_generation_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return $this->build_response($tpl);
 	}
 
@@ -73,7 +56,7 @@ class AdminSitemapController extends AdminModuleController
 		$fieldset->add_field(new FormFieldNumberEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
 			array('required' => true, 'min' => 0, 'description' => $this->lang['xml_file_life_time_explain'], 'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 50))));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
 		$this->form->add_button(new FormButtonReset());

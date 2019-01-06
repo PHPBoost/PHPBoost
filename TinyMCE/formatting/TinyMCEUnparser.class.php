@@ -1,40 +1,21 @@
 <?php
-/*##################################################
- *                          TinyMCEUnparser.class.php
- *                            -------------------
- *   begin                : August 10, 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @desc This class enables to translate the content formatting from the PHPBoost standard one to
+ * This class enables to translate the content formatting from the PHPBoost standard one to
  * the TinyMCE one. The PHPBoost one is historically the one corresponding to the BBCode
  * translation in HTML and is now the reference.
  * TinyMCE has a particular syntax and it must be respected if we want to make a formatting which
  * can be edited after having beeing written, enough what using a WYSIWYG editor hasn't any advantage.
- * @author Benoit Sautel ben.popeye@phpboost.com
- * @see the TinyMCEParser class which makes the reverse operation.
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 06
+ * @since   	PHPBoost 2.0 - 2008 08 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
 class TinyMCEUnparser extends ContentFormattingUnparser
 {
 	private static $fonts_array = array(
@@ -474,7 +455,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$fa_code = "";
 		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's'));
 		$options_list = isset($matches[3]) ? $matches[3] : '';
-		
+
 		if ( !empty($options_list) ) {
 			$options = explode(' ', $options_list);
 			foreach ($options as $index => $option) {

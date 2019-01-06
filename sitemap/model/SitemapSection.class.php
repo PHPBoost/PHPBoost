@@ -1,35 +1,14 @@
 <?php
-/*##################################################
- *                           SitemapSection.class.php
- *                            -------------------
- *   begin                : June 16 th 2008
- *   copyright            : (C) 2008 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class represents a section of a site map.
- */
+ * This class represents a section of a site map.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 24
+ * @since   	PHPBoost 2.0 - 2008 06 16
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class SitemapSection extends SitemapElement
 {
 	/**
@@ -49,7 +28,7 @@ class SitemapSection extends SitemapElement
 	{
 		$this->set_link($link);
 	}
-	
+
 	public function get_name()
 	{
 		return $this->link->get_name();
@@ -116,14 +95,14 @@ class SitemapSection extends SitemapElement
 	{
 		//We get the stream in which we are going to write
 		$template = $export_config->get_section_stream();
-		 
+
 		$template->put_all(array(
 			'SECTION_NAME' => TextHelper::htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'C_SECTION' => true
 		));
-		
+
 		if ($this->link != null)
 		{
 			$template->put('LINK', $this->link->export($export_config));
