@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                             ImagesStats.class.php
- *                            -------------------
- *   begin                : August 27, 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * This class provides easy ways to create several type of charts.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 06 14
+ * @since   	PHPBoost 1.6 - 2007 08 27
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 define('NO_ALLOCATE_COLOR', false);
 define('NO_DRAW_PERCENT', false);
@@ -34,12 +20,6 @@ define('DRAW_VALUES', true);
 
 define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
 
-/**
- * @desc This class provides easy ways to create several type of charts.
- * @author regis viarre <crowkait@phpboost.com>
- * @package {@package}
- *
- */
 class ImagesStats
 {
 	public  $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.

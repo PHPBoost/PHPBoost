@@ -1,47 +1,30 @@
 <?php
-/*##################################################
- *                       DisplayRssSyndicationController.class.php
- *                            -------------------
- *   begin                : July 16, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @since   	PHPBoost 3.0 - 2011 07 16
+*/
 
 class DisplayRssSyndicationController extends AbstractController
 {
 	private $tpl;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$module_id = $request->get_getstring('module_id', '');
-		
+
 		if (empty($module_id))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
-		
+
 		$this->init();
-		
+
 		$module_category_id = $request->get_getint('module_category_id', 0);
 		$feed_name = $request->get_getstring('feed_name', Feed::DEFAULT_FEED_NAME);
-		
+
 		$feed = new RSS($module_id, $feed_name, $module_category_id);
 		if ($feed !== null && $feed->is_in_cache())
 		{
@@ -55,7 +38,7 @@ class DisplayRssSyndicationController extends AbstractController
 				$provider = $eps->get_provider($module_id);
 				$feeds = $provider->feeds();
 				$data = $feeds->get_feed_data_struct($module_category_id, $feed_name);
-				
+
 				if ($data === null)
 				{
 					AppContext::get_response()->set_header('content-type', 'text/html');
@@ -65,7 +48,7 @@ class DisplayRssSyndicationController extends AbstractController
 				{
 					$feed->load_data($data);
 					$feed->cache();
-				
+
 					$this->tpl->put('SYNDICATION', $feed->export());
 				}
 			}
@@ -76,12 +59,12 @@ class DisplayRssSyndicationController extends AbstractController
 		}
 		return $this->build_response($this->tpl);
 	}
-	
+
 	private function init()
 	{
 		$this->tpl = new StringTemplate('{SYNDICATION}');
 	}
-	
+
 	private function build_response(View $view)
 	{
 		return new SiteNodisplayResponse($view);
