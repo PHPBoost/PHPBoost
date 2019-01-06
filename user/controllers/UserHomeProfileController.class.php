@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                       UserHomeProfileController.class.php
- *                            -------------------
- *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @since   	PHPBoost 3.0 - 2011 10 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UserHomeProfileController extends AbstractController
 {
@@ -40,7 +24,7 @@ class UserHomeProfileController extends AbstractController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$this->build_form();
 		return $this->build_response($this->tpl);
 	}
@@ -52,7 +36,7 @@ class UserHomeProfileController extends AbstractController
 		$this->lang = LangLoader::get('user-common');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$contribution_number = $this->get_unread_contributions_number();
@@ -79,7 +63,7 @@ class UserHomeProfileController extends AbstractController
 			'U_AVATAR_IMG' => Url::to_rel(AppContext::get_session()->get_cached_data('user_avatar')),
 			'U_VIEW_PROFILE' => UserUrlBuilder::profile($this->user->get_id())->rel()
 		));
-		
+
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		foreach ($modules as $module)
 		{
@@ -93,7 +77,7 @@ class UserHomeProfileController extends AbstractController
 			));
 		}
 	}
-	
+
 	private function get_unread_contributions_number()
 	{
 		$unread_contributions = UnreadContributionsCache::load();
@@ -144,11 +128,11 @@ class UserHomeProfileController extends AbstractController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['dashboard'], $this->lang['user']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home_profile());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['dashboard'], UserUrlBuilder::home_profile()->rel());
-		
+
 		return $response;
 	}
 }

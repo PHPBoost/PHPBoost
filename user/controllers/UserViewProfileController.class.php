@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                       UserViewProfileController.class.php
- *                            -------------------
- *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 3.0 - 2011 10 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UserViewProfileController extends AbstractController
 {
@@ -43,7 +27,7 @@ class UserViewProfileController extends AbstractController
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$this->build_view($this->user_infos['user_id']);
 
 		return $this->build_response($this->tpl, $user_id);
@@ -63,7 +47,7 @@ class UserViewProfileController extends AbstractController
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main');
 		$has_groups = $this->build_groups(explode('|', $this->user_infos['groups']));
 		$extended_fields_number = 0;
-		
+
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
 		{
 			$this->tpl->assign_block_vars('extended_fields', array(
@@ -73,7 +57,7 @@ class UserViewProfileController extends AbstractController
 			));
 			$extended_fields_number++;
 		}
-		
+
 		$this->tpl->put_all(array(
 			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'C_IS_BANNED' => $this->user->is_banned(),
@@ -119,7 +103,7 @@ class UserViewProfileController extends AbstractController
 				$has_groups = true;
 			}
 		}
-		
+
 		return $has_groups;
 	}
 
@@ -130,14 +114,14 @@ class UserViewProfileController extends AbstractController
 		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name']), $this->lang['user']));
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.profile'], array('name' => $this->user_infos['display_name'])));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::profile($user_id));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['profile'] : StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
-		
+
 		return $response;
 	}
-	
+
 	public function get_right_controller_regarding_authorizations()
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))

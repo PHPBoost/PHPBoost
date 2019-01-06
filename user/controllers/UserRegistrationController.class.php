@@ -1,34 +1,18 @@
 <?php
-/*##################################################
- *                       UserRegistrationController.class.php
- *                            -------------------
- *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @since   	PHPBoost 3.0 - 2011 10 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UserRegistrationController extends AbstractController
 {
 	private $tpl;
-	
+
 	private $lang;
 	/**
 	 * @var HTMLForm
@@ -38,7 +22,7 @@ class UserRegistrationController extends AbstractController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $user_accounts_config;
 
 	private $member_extended_fields_service;
@@ -53,7 +37,7 @@ class UserRegistrationController extends AbstractController
 		{
 			$this->save();
 		}
-		
+
 		$this->tpl->put('FORM', $this->form->display());
 		return $this->build_response($this->tpl);
 	}
@@ -65,7 +49,7 @@ class UserRegistrationController extends AbstractController
 		$this->tpl->add_lang($this->lang);
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
-	
+
 	private function build_form()
 	{
 		$security_config = SecurityConfig::load();
@@ -74,9 +58,9 @@ class UserRegistrationController extends AbstractController
 
 		$fieldset = new FormFieldsetHTMLHeading('registration', $this->lang['registration']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
 			array('maxlength' => 100, 'required' => true, 'description'=> $this->lang['display_name.explain'], 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
@@ -90,14 +74,14 @@ class UserRegistrationController extends AbstractController
 			array('required' => true),
 			array(new FormFieldConstraintMailExist())
 		));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
 			array('description'=> $this->lang['login.custom.explain'], 'events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
 					HTMLForms.getField("login").enable();
-				} else { 
+				} else {
 					HTMLForms.getField("login").disable();
 				}')
 			)
@@ -116,20 +100,20 @@ class UserRegistrationController extends AbstractController
 			array('required' => true, 'autocomplete' => false),
 			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
 		));
-		
+
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
-		
+
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
 			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
 			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
 		}
-		
+
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
-		
+
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['timezone.choice'], GeneralConfig::load()->get_site_timezone(), array('description' => $this->lang['timezone.choice.explain'])));
-		
+
 		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
@@ -137,11 +121,11 @@ class UserRegistrationController extends AbstractController
 			));
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" title="' . $this->lang['theme.preview'] . '" alt="' . $this->lang['theme.preview'] . '" class="preview-img" />'));
 		}
-		
+
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
-		
+
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));
-		
+
 		$this->member_extended_fields_service->display_form_fields();
 
     	$agreement_text = FormatingHelper::second_parse($this->user_accounts_config->get_registration_agreement());
@@ -149,26 +133,26 @@ class UserRegistrationController extends AbstractController
     	{
     		$agreement_fieldset = new FormFieldsetHTML('agreement_fieldset', $this->lang['agreement']);
     		$form->add_fieldset($agreement_fieldset);
-    	
+
 			$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
 			$agreement_fieldset->add_field($agreement);
-	
+
 			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="message-helper notice user-agreement">' . $agreement_text . '</div>');
 			$agreement_fieldset->add_field($agreement);
-			
-			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], 
-				FormFieldCheckbox::UNCHECKED, 
+
+			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'],
+				FormFieldCheckbox::UNCHECKED,
 				array('required' => $this->lang['agreement.agree.required'])
 			));
 		}
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
-	
+
 	private function get_accounts_validation_method_explain()
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
@@ -184,11 +168,11 @@ class UserRegistrationController extends AbstractController
 			return '';
 		}
 	}
-	
+
 	private function save()
 	{
 		$has_error = false;
-		
+
 		$registration_pass = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION;
 
@@ -200,12 +184,12 @@ class UserRegistrationController extends AbstractController
 		$user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
-		
+
 		if ($this->form->has_field('theme'))
 		{
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
-		
+
 		$login = $this->form->get_value('email');
 		if ($this->form->get_value('custom_login'))
 		{
@@ -221,15 +205,15 @@ class UserRegistrationController extends AbstractController
 			$has_error = true;
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
-		
+
 		if (!$has_error && $user_id)
 		{
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('display_name'), $login, $this->form->get_value('password'), $registration_pass);
-			
+
 			$this->confirm_registration($user_id);
 		}
 	}
-	
+
 	private function confirm_registration($user_id)
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
@@ -248,7 +232,7 @@ class UserRegistrationController extends AbstractController
 				Session::delete($session);
 			}
 			AppContext::set_session(Session::create($user_id, true));
-		
+
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}
@@ -261,14 +245,14 @@ class UserRegistrationController extends AbstractController
 		$graphical_environment->set_page_title($title, $this->lang['user']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.registration']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::registration());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($title, UserUrlBuilder::registration()->rel());
-		
+
 		return $response;
 	}
-	
+
 	public function get_right_controller_regarding_authorizations()
 	{
 		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
@@ -288,7 +272,7 @@ class UserRegistrationController extends AbstractController
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;
 	}
-	
+
 	private function get_picture_theme()
 	{
 		$theme_id = $this->user_accounts_config->get_default_theme();

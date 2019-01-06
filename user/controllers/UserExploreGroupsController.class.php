@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                      UserExploreGroupsController.class.php
- *                            -------------------
- *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @since   	PHPBoost 3.0 - 2011 10 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UserExploreGroupsController extends AbstractController
 {
@@ -47,11 +31,11 @@ class UserExploreGroupsController extends AbstractController
 
 		return $this->build_response();
 	}
-	
+
 	private function build_view($group_id)
 	{
-		
-		if (!empty($group_id)) 
+
+		if (!empty($group_id))
 		{
 			//Affichage d'un seul groupe sur la page
 			$group = $this->groups_cache->get_group($group_id);
@@ -63,7 +47,7 @@ class UserExploreGroupsController extends AbstractController
 			foreach ($this->get_members_group($group_id) as $user_id)
 			{
 				if (!empty($user_id))
-				{	
+				{
 					if ($number_member != 0)
 						$group_users_id .=  ',' . $user_id;
 					else
@@ -86,11 +70,11 @@ class UserExploreGroupsController extends AbstractController
 			));
 
 		}
-		else 
+		else
 		{
 			//Affichage de tous les groupes + admin + modos sur la même page
 			//Affichages des administrateurs et des modérateurs
-			$users_data = PersistenceContext::get_querier()->select('SELECT 
+			$users_data = PersistenceContext::get_querier()->select('SELECT
 				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
@@ -122,11 +106,11 @@ class UserExploreGroupsController extends AbstractController
 				$users_data = "";
 				$number_member = 0;
 				$group_users_id = "";
-				
+
 				foreach ($this->get_members_group($key) as $user_id)
 				{
 					if (!empty($user_id))
-					{	
+					{
 						if ($number_member != 0)
 							$group_users_id .=  ',' . $user_id;
 						else
@@ -134,7 +118,7 @@ class UserExploreGroupsController extends AbstractController
 						$number_member++;
 					}
 				}
-				
+
 				// Affichage des groupes pour selection
 				$group_color = User::get_group_color($key);
 				$this->view->assign_block_vars('group', array(
@@ -150,8 +134,8 @@ class UserExploreGroupsController extends AbstractController
 					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				));
-	
-				// Affichage des membres des groupes	
+
+				// Affichage des membres des groupes
 				if (!empty($group_users_id))
 					$this->display_group_user($group_users_id, 'group.group_members_list');
 			}
@@ -171,7 +155,7 @@ class UserExploreGroupsController extends AbstractController
 	{
 		if (!empty($group_users_id))
 		{
-			$users_data = PersistenceContext::get_querier()->select('SELECT 
+			$users_data = PersistenceContext::get_querier()->select('SELECT
 				member.user_id, member.display_name, member.level, member.groups, member.warning_percentage, member.delay_banned, ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
@@ -195,7 +179,7 @@ class UserExploreGroupsController extends AbstractController
 
 		//Avatar
 		$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-					
+
 		$group_color = User::get_group_color($user['groups'], $user['level']);
 		$this->view->assign_block_vars($list_name, array(
 			'C_AVATAR'          => $user['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
@@ -235,7 +219,7 @@ class UserExploreGroupsController extends AbstractController
 		$group = $this->groups_cache->get_group($group_id_selected);
 		return $group['members'];
 	}
-		
+
 	private function get_all_members()
 	{
 		$members = array();
@@ -249,7 +233,7 @@ class UserExploreGroupsController extends AbstractController
 		}
 		return $members;
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('user-common');
@@ -265,14 +249,14 @@ class UserExploreGroupsController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['groups'], $this->lang['user']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.groups']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::groups());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['groups'], UserUrlBuilder::groups()->rel());
-		
+
 		return $response;
 	}
-	
+
 	public function get_right_controller_regarding_authorizations()
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))

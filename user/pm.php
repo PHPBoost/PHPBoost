@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                                pm.php
- *                            -------------------
- *   begin                : July 12, 2006
- *   copyright            : (C) 2006 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 05
+ * @since   	PHPBoost 1.5 - 2006 07 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_pm']);
@@ -74,7 +58,7 @@ if ($read)
 	$nbr_waiting_pm = 0;
 	if (!$unlimited_pm && $nbr_pm > $limit_group)
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
-	
+
 	$j = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT pm.last_msg_id, pm.user_view_pm
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
@@ -92,15 +76,15 @@ if ($read)
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE id = :id', array('id' => $row['last_msg_id']));
 	}
 	$result->dispose();
-	
+
 	if ($nbr_waiting_pm < 0)
 		$nbr_waiting_pm = 0;
-	
+
 	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
-	
+
 	if ($nbr_waiting_pm != $nbr_pm)
 		SessionData::recheck_cached_data_from_user_id($current_user->get_id());
-	
+
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
 
@@ -109,12 +93,12 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
-	
+
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
 	if (PrivateMsg::count_conversations($current_user->get_id()) >= $limit_group && (!$current_user->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		AppContext::get_response()->redirect('/user/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#message_helper');
-		
+
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
@@ -122,14 +106,14 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 		try {
 			$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => stripslashes($login)));
 		} catch (RowNotFoundException $ex) {}
-		
+
 		if (!empty($user_id_dest) && $user_id_dest != $current_user->get_id())
 		{
 			$contents = FormatingHelper::strparse($contents, array(), false);
-			
+
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
 			list($pm_convers_id, $pm_msg_id) = PrivateMsg::start_conversation($user_id_dest, $title, $contents, $current_user->get_id());
-			
+
 			//Envoi d'un mail si l'utilisateur a activé l'option
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
@@ -139,19 +123,19 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 				try {
 					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
 				} catch (RowNotFoundException $ex) {}
-				
+
 				if ($send_mail)
 				{
 					$email_dest = '';
 					try {
 						$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
 					} catch (RowNotFoundException $ex) {}
-					
+
 					if ($email_dest)
 						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents, '', Mail::SENDER_USER);
 				}
 			}
-			
+
 			//Succès redirection vers la conversation.
 			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id);
 		}
@@ -181,7 +165,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	$login = '';
 	if (!empty($pm_get))
 	{
@@ -189,12 +173,12 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 			$login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $pm_get));
 		} catch (RowNotFoundException $ex) {}
 	}
-	
+
 	$tpl->assign_block_vars('post_convers', array(
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'LOGIN' => $login
 	));
-	
+
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
 	if (!$current_user->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
@@ -223,10 +207,10 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 		if (!empty($errstr))
 			$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 	}
-	
+
 	$tpl->assign_block_vars('post_convers.user_id_dest', array(
 	));
-	
+
 	$tpl->display();
 }
 elseif ($prw_convers && empty($mp_edit)) //Prévisualisation de la conversation.
@@ -234,9 +218,9 @@ elseif ($prw_convers && empty($mp_edit)) //Prévisualisation de la conversation.
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
-	
+
 	$tpl = new FileTemplate('user/pm.tpl');
-	
+
 	$tpl->put_all(array(
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -252,34 +236,34 @@ elseif ($prw_convers && empty($mp_edit)) //Prévisualisation de la conversation.
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	$tpl->assign_block_vars('post_convers', array(
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'LOGIN' => $login,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => $contents
 	));
-	
+
 	$tpl->assign_block_vars('post_convers.show_convers', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents)))
 	));
-	
+
 	$tpl->assign_block_vars('post_convers.user_id_dest', array(
 	));
-	
+
 	$tpl->display();
 }
 elseif ($prw && empty($pm_edit) && empty($pm_del)) //Prévisualisation du message.
 {
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	
+
 	//On récupère les info de la conversation.
 	$convers_title = '';
 	try {
 		$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
 	} catch (RowNotFoundException $ex) {}
-	
+
 	$tpl = new FileTemplate('user/pm.tpl');
 
 	$tpl->put_all(array(
@@ -291,19 +275,19 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) //Prévisualisation du messag
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	$tpl->assign_block_vars('show_pm', array(
 		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get) . '">' . $convers_title . '</a>'
 	));
-	
+
 	$tpl->assign_block_vars('post_pm', array(
 		'CONTENTS' => $contents,
 		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token())
 	));
-	
+
 	$tpl->display();
 }
 elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //Envoi de messages.
@@ -312,7 +296,7 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 	if (!empty($contents))
 	{
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
-		
+
 		//On récupère les info de la conversation.
 		try {
 			$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id'), 'WHERE id = :id', array('id' => $pm_id_get));
@@ -320,10 +304,10 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//Récupération de l'id du destinataire.
 		$user_id_dest = ($convers['user_id_dest'] == $current_user->get_id()) ? $convers['user_id'] : $convers['user_id_dest'];
-		
+
 		if ($convers['user_convers_status'] == '0' && $user_id_dest > '0') //On vérifie que la conversation n'a pas été supprimée chez le destinataire, et que ce n'est pas un mp automatique du site.
 		{
 			//Vu par exp et pas par dest  => 1
@@ -332,17 +316,17 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 				$status = 1;
 			elseif ($convers['user_id_dest'] == $current_user->get_id()) //Le membre est le destinataire de la conversation.
 				$status = 2;
-			
+
 			$contents = FormatingHelper::strparse($contents, array(), false);
-			
+
 			//Envoi du message privé.
 			$pm_msg_id = PrivateMsg::send($user_id_dest, $pm_id_get, $contents, $current_user->get_id(), $status);
-			
+
 			//Calcul de la page vers laquelle on redirige.
 			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
-			
+
 			//Envoi d'un mail si l'utilisateur a activé l'option
 			$pmtomail_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_pmtomail');
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
@@ -352,19 +336,19 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 				try {
 					$send_email = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
 				} catch (RowNotFoundException $ex) {}
-				
+
 				if ($send_email)
 				{
 					$email_dest = '';
 					try {
 						$email_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id = :id', array('id' => $user_id_dest));
 					} catch (RowNotFoundException $ex) {}
-					
+
 					if ($email_dest)
 						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($convers['title']), $contents);
 				}
 			}
-			
+
 			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite, '&') . '#m' . $pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
@@ -376,7 +360,7 @@ elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //E
 elseif ($pm_del_convers) //Suppression de conversation.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
@@ -399,7 +383,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	ORDER BY last_timestamp DESC", array(
 		'user_id' => $current_user->get_id()
 	));
-	
+
 	while ($row = $result->fetch())
 	{
 		$del_convers = $request->has_postparameter($row['id']) ? trim($request->get_postvalue($row['id'])) : '';
@@ -418,33 +402,33 @@ elseif ($pm_del_convers) //Suppression de conversation.
 				if ($row['user_convers_status'] == 1)
 					$del_convers = true;
 			}
-			
+
 			$view_status = 0;
 			try {
 				$view_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
 			} catch (RowNotFoundException $ex) {}
-			
+
 			$update_nbr_pm = ($view_status == '0');
 			PrivateMsg::delete_conversation($current_user->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
 	$result->dispose();
-	
+
 	SessionData::recheck_cached_data_from_user_id($current_user->get_id());
-	
+
 	AppContext::get_response()->redirect('/user/pm' . url('.php?pm=' . $current_user->get_id(), '-' . $current_user->get_id(), '&'));
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	try {
 		$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_del, 'user_id' => $current_user->get_id()));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
@@ -454,7 +438,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if ($pm_del == $convers['last_msg_id']) //On édite uniquement le dernier message.
 		{
 			if ($convers['user_id'] == $current_user->get_id()) //Expediteur.
@@ -471,7 +455,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 			$view = false;
 			if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
 				$view = true;
-				
+
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if ($view === false)
 			{
@@ -479,7 +463,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 				try {
 					$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
 				} catch (RowNotFoundException $ex) {}
-				
+
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
@@ -493,7 +477,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                     $LANG['e_pm_nodel']);
                 DispatchManager::redirect($controller);
 			}
@@ -518,7 +502,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
@@ -528,11 +512,11 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$view = false;
 		if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
 			$view = true;
-			
+
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if ($view === false)
 		{
@@ -540,12 +524,12 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 			try {
 				$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
 			} catch (RowNotFoundException $ex) {}
-			
+
 			if ($convers XOR $edit_pm)
 			{
 				$contents = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
 				$title = retrieve(POST, 'title', '');
-				
+
 				if ($edit_pm && !empty($contents))
 				{
 					if ($pm_edit > $id_first) //Maj du message.
@@ -571,18 +555,18 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 				}
 				else //Champs manquants.
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                         $LANG['e_incomplete']);
                     DispatchManager::redirect($controller);
 				}
-				
+
 				//Succès redirection vers la conversation.
 				AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'], '&') . '#m' . $pm_edit);
 			}
 			else //Interface d'édition
 			{
 				$tpl = new FileTemplate('user/pm.tpl');
-				
+
 				$tpl->put_all(array(
 					'KERNEL_EDITOR' => $editor->display(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -594,16 +578,16 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 					'L_PREVIEW' => $LANG['preview'],
 					'L_RESET' => $LANG['reset']
 				));
-				
+
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
-				
+
 				$tpl->assign_block_vars('edit_pm', array(
 					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse(addslashes($pm['contents'])),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>'
 				));
-				
+
 				if ($prw_convers XOR $prw)
 				{
 					$tpl->assign_block_vars('edit_pm.show_pm', array(
@@ -618,7 +602,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 						'SUBMIT_NAME' => 'convers',
 						'L_TITLE' => $LANG['title'],
 					));
-					
+
 					$tpl->assign_block_vars('edit_pm.title', array(
 						'TITLE' => ($prw_convers XOR $prw) ? stripslashes($title) : stripslashes($conversation['title'])
 					));
@@ -627,13 +611,13 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 					$tpl->put_all(array(
 						'SUBMIT_NAME' => 'edit_pm',
 					));
-					
+
 				$tpl->display();
 			}
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                 $LANG['e_pm_noedit']);
             DispatchManager::redirect($controller);
 		}
@@ -647,7 +631,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 {
 	$tpl = new FileTemplate('user/pm.tpl');
-	
+
 	//On récupère les info de la conversation.
 	try {
 		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => $current_user->get_id()));
@@ -662,25 +646,25 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != $current_user->get_id()) //Membre n'ayant pas encore lu la conversation.
 	{
 		$user_unread_pm = 0;
 		try {
 			$user_unread_pm = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'unread_pm', 'WHERE user_id=:id', array('id' => $current_user->get_id()));
 		} catch (RowNotFoundException $e) {}
-		
+
 		if (!empty($user_unread_pm))
 		{
 			$unread_pm = max(($user_unread_pm - (int)$convers['user_view_pm']), 0);
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('unread_pm' => $unread_pm), 'WHERE user_id = :id', array('id' => $current_user->get_id()));
 		}
-		
+
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_id_get));
 		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => $current_user->get_id()));
 		SessionData::recheck_cached_data_from_user_id($current_user->get_id());
 	}
-	
+
 	//On crée une pagination si le nombre de MP est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $convers['nbr_msg'], $_NBR_ELEMENTS_PER_PAGE);
@@ -711,7 +695,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_RESET' => $LANG['reset']
 	));
-	
+
 	//Message non lu par autre membre que user_id view_status => 0.
 	//Message lu par autre membre que user_id view_status => 1.
 	$is_guest_in_convers = false;
@@ -734,28 +718,28 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'display_from' => max(($pagination->get_display_from() - $quote_last_msg), 0)
 		)
 	);
-	
+
 	while ($row = $result->fetch())
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$is_admin = ($row['user_id'] === -1);
 		if ($is_admin)
 			$row['level'] = 2;
-		
+
 		if ( !$is_guest_in_convers )
 			$is_guest_in_convers = empty($row['display_name']);
-		
+
 		//Avatar
 		$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . $current_user->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-		
+
 		//Reprise du dernier message de la page précédente.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
-		
+
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		
+
 		$date = new Date($row['timestamp'],Timezone::SERVER_TIMEZONE);
-		
+
 		$tpl->assign_block_vars('pm.msg', array_merge(
 			Date::get_array_tpl_vars($date,'date'),
 			array(
@@ -773,7 +757,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : LangLoader::get_message('banned', 'user-common'))
 			)
 		));
-		
+
 		//Marqueur de suivis du sujet.
 		if (!empty($row['track']))
 			$track = true;
@@ -790,12 +774,12 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$pseudo = '';
 		try {
 			$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
 		} catch (RowNotFoundException $ex) {}
-		
+
 		$contents = '[quote' . ($pseudo ? '=' . $pseudo : '') . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
 	}
 	else
@@ -806,12 +790,12 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$tpl->put_all(array(
 			'KERNEL_EDITOR' => $editor->display(),
 		));
-		
+
 		$tpl->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
 			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get)
 		));
-		
+
 		//Gestion des erreurs
 		$get_error = retrieve(GET, 'error', '');
 		switch ($get_error)
@@ -830,7 +814,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if (!empty($errstr))
 			$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 	}
-	
+
 	$tpl->display();
 }
 else //Liste des conversation, dans la boite du membre.
@@ -838,7 +822,7 @@ else //Liste des conversation, dans la boite du membre.
 	$tpl = new FileTemplate('user/pm.tpl');
 
 	$nbr_pm = PrivateMsg::count_conversations($current_user->get_id());
-	
+
 	//On crée une pagination si le nombre de MP est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_pm, $_NBR_ELEMENTS_PER_PAGE);
@@ -849,11 +833,11 @@ else //Liste des conversation, dans la boite du membre.
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$unlimited_pm = $current_user->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
-	
+
 	$tpl->assign_block_vars('convers', array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
@@ -866,7 +850,7 @@ else //Liste des conversation, dans la boite du membre.
 		'U_POST_NEW_CONVERS' => 'pm' . url('.php?post=1', ''),
 		'L_POST_NEW_CONVERS' => $LANG['post_new_convers']
 	));
-	
+
 	//Aucun message privé.
 	if ($nbr_pm == 0)
 	{
@@ -884,7 +868,7 @@ else //Liste des conversation, dans la boite du membre.
 			$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), MessageHelper::WARNING));
 		}
 	}
-	
+
 	$tpl->put_all(array(
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -945,7 +929,7 @@ else //Liste des conversation, dans la boite du membre.
 			if (!$unlimited_pm && ($nbr_waiting_pm - $j) >= 0)
 				continue;
 		}
-		
+
 		$view = false;
 		$track = false;
 		if ($row['last_user_id'] == $current_user->get_id()) //Le membre est le dernier posteur.
@@ -959,49 +943,49 @@ else //Liste des conversation, dans la boite du membre.
 			if ($row['view_status'] === '1') //Le membre a déjà lu le message.
 				$view = true;
 		}
-	
+
 		$announce = 'message-announce';
 		//Vérifications des messages Lu/non Lus.
 		if ($view === false) //Nouveau message (non lu).
 			$announce = $announce . '-new';
 		if ($track === true) //Marqueur de reception du message
 			$announce = $announce . '-track';
-			
+
 		//Ancre vers vers le dernier message posté.
 		$last_page = ceil( $row['nbr_msg'] / $_NBR_ELEMENTS_PER_PAGE);
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
-		
+
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
-		
+
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];
 		elseif (!empty($row['login']))
 			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
-			
+
 		$participants = ($row['login_dest'] != $current_user->get_display_name()) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $current_user->get_id() ? $row['user_id_dest'] : $row['user_id'];
 		$participants_group_color = ($participants != $LANG['admin'] && $participants != '<strike>' . $LANG['guest'] . '</strike>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
-		
+
 		switch ($author)
 		{
 			case $LANG['admin']:
 				$participants_level_class = UserService::get_level_class(User::ADMIN_LEVEL);
 				break;
-			
+
 			case '<strike>' . $LANG['guest'] . '</strike>':
 				$participants_level_class = '';
 				break;
-			
+
 			default:
 				$participants_level_class = UserService::get_level_class($row['dest_level']);
 				break;
 		}
-		
+
 		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="' . $participants_level_class . '"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
-		
+
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
 		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" title="" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
@@ -1021,7 +1005,7 @@ else //Liste des conversation, dans la boite du membre.
 		$i++;
 	}
 	$result->dispose();
-	
+
 	$tpl->display();
 }
 

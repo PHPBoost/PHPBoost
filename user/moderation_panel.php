@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                            moderation_panel.php
- *                            -------------------
- *   begin                : March 20, 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                :  crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @since   	PHPBoost 1.6 - 2007 03 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 
@@ -57,7 +42,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il
 	DispatchManager::redirect($error_controller);
 }
 
-$moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');	
+$moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');
 
 $moderation_panel_template->put_all(array(
 	'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
@@ -96,10 +81,10 @@ if ($action == 'punish')
 			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents));
 		}
 		SessionData::recheck_cached_data_from_user_id($id_get);
-		
+
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
-	
+
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['punishment_management'],
@@ -108,24 +93,24 @@ if ($action == 'punish')
 		'U_XMLHTTPREQUEST' => 'punish_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
-	
+
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			
+
 			$user_id = 0;
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			} catch (RowNotFoundException $ex) {}
-			
+
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
 		}
-		
+
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -135,8 +120,8 @@ if ($action == 'punish')
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
-		));	
-			
+		));
+
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_readonly
 		FROM " . PREFIX . "member
@@ -147,7 +132,7 @@ if ($action == 'punish')
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['display_name'],
@@ -158,11 +143,11 @@ if ($action == 'punish')
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="fa fa-lock"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
-			
+
 			$i++;
 		}
 		$result->dispose();
-		
+
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -179,23 +164,23 @@ if ($action == 'punish')
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//On crée le formulaire select
 		$select = '';
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years'])); 
+		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . TextHelper::strtolower($date_lang['years']));
 
-		$diff = ($member['delay_readonly'] - time());	
+		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
-			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
+			//Retourne la sanction la plus proche correspondant au temp de bannissement.
 			for ($i = 11; $i > 0; $i--)
 			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if (($diff - $array_time[$i]) > $avg) 
+				if (($diff - $array_time[$i]) > $avg)
 				{
 					$key_sanction = $i + 1;
 					break;
@@ -207,8 +192,8 @@ if ($action == 'punish')
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . TextHelper::strtolower($array_sanction[$key]) . '</option>';
-		}	
-		
+		}
+
 		$group_color = User::get_group_color($member['groups'], $member['level']);
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
@@ -264,7 +249,7 @@ else if ($action == 'warning')
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
@@ -273,7 +258,7 @@ else if ($action == 'warning')
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($id_get != AppContext::get_current_user()->get_id())
 				{
-					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
+					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);
 				}
 				else
 				{
@@ -282,10 +267,10 @@ else if ($action == 'warning')
 				SessionData::recheck_cached_data_from_user_id($id_get);
 			}
 		}
-		
+
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 	}
-	
+
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['warning_management'],
@@ -294,24 +279,24 @@ else if ($action == 'warning')
 		'U_XMLHTTPREQUEST' => 'warning_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
-	
+
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			
+
 			$user_id = 0;
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			} catch (RowNotFoundException $ex) {}
-			
+
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 		}
-		
+
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -322,7 +307,7 @@ else if ($action == 'warning')
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
-		
+
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
 		FROM " . PREFIX . "member
@@ -331,7 +316,7 @@ else if ($action == 'warning')
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['display_name'],
@@ -342,11 +327,11 @@ else if ($action == 'warning')
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
-			
+
 			$i++;
 		}
 		$result->dispose();
-		
+
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -363,20 +348,20 @@ else if ($action == 'warning')
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//On crée le formulaire select
 		$select = '';
 		$j = 0;
 		for ($j = 0; $j <=10; $j++)
 		{
-			if (10 * $j == $member['warning_percentage']) 
+			if (10 * $j == $member['warning_percentage'])
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
-		
+
 		$group_color = User::get_group_color($member['groups'], $member['level']);
-		
+
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -401,7 +386,7 @@ else if ($action == 'warning')
 		));
 	}
 }
-else 
+else
 {
 	$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
@@ -421,10 +406,10 @@ else
 			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
 		SessionData::recheck_cached_data_from_user_id($id_get);
-		
+
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
-	
+
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['ban_management'],
@@ -433,24 +418,24 @@ else
 		'U_XMLHTTPREQUEST' => 'ban_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
 	));
-	
+
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if ($search_member)
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			
+
 			$user_id = 0;
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			} catch (RowNotFoundException $ex) {}
-			
+
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 		}
-		
+
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -460,8 +445,8 @@ else
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
-		));	
-			
+		));
+
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_banned, warning_percentage
 		FROM " . PREFIX . "member
@@ -472,7 +457,7 @@ else
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['display_name'],
@@ -483,11 +468,11 @@ else
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="fa fa-forbidden"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
-			
+
 			$i++;
 		}
 		$result->dispose();
-		
+
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -504,9 +489,9 @@ else
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$group_color = User::get_group_color($member['groups'], $member['level']);
-		
+
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -521,22 +506,22 @@ else
 			'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 			'L_BAN' => $LANG['ban_user'],
 			'L_DELAY_BAN' => $LANG['user_ban_delay'],
-		));	
-		
+		));
+
 		//Temps de bannissement.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']); 
-		
-		$diff = ($member['delay_banned'] - time());	
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']);
+
+		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
-			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
+			//Retourne la sanction la plus proche correspondant au temp de bannissement.
 			for ($i = 11; $i >= 0; $i--)
 			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if (($diff - $array_time[$i]) > $avg)  
+				if (($diff - $array_time[$i]) > $avg)
 				{
 					$key_sanction = $i + 1;
 					break;
@@ -545,7 +530,7 @@ else
 		}
 		if ($member['warning_percentage'] == 100)
 			$key_sanction = 12;
-			
+
 		//Affichge des sanctions
 		foreach ($array_time as $key => $time)
 		{
