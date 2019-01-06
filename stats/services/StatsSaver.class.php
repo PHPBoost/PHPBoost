@@ -1,37 +1,17 @@
 <?php
-/*##################################################
- *                                StatsSaver.class.php
- *                            -------------------
- *   begin                : July 23, 2008
- *   copyright            : (C) 2008 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Viarre Régis crowkait@phpboost.com
- * @desc 
- * @package {@package}
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @since   	PHPBoost 2.0 - 2008 08 23
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 class StatsSaver
-{	
+{
     /**
 	 * @desc Compute Stats of Site Referers
 	 */
@@ -61,7 +41,7 @@ class StatsSaver
 					'baidu'		=> 'wd',
 					'yandex'	=> 'text'
 				);
-				
+
 				foreach ($engines as $engine => $param)
 				{
 					if (TextHelper::strpos($referer['host'], $engine) !== false)
@@ -77,13 +57,13 @@ class StatsSaver
 			if ($is_search_engine)
 			{
 				$query = !empty($referer['query']) ? $referer['query'] . '&' : '';
-				
+
 				if (TextHelper::strpos($query, $query_param . '=') !==  false)
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
 					$keyword = TextHelper::strprotect(utf8_decode(urldecode(TextHelper::strtolower($matches[1]))));
-					
+
 					$check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', array('url' => $search_engine, 'keyword' => $keyword));
 					if (!empty($keyword))
 					{
@@ -103,7 +83,7 @@ class StatsSaver
 				{
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((TextHelper::substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
-					
+
 					$check_url = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :relative_url', array('url' => $url, 'relative_url' => $relative_url));
 					if (!empty($check_url))
 						PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'");
@@ -113,7 +93,7 @@ class StatsSaver
 			}
 		}
 	}
-	
+
     /**
 	 * @desc Compute Stats of Site Users
 	 */
@@ -121,27 +101,27 @@ class StatsSaver
 	{
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-		
+
 		if (TextHelper::strpos($_SERVER['HTTP_USER_AGENT'], 'libwww') !== false) //Evite les bots.
 			return;
-		
+
 		//Suppression des images de statistiques en cache.
 		$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 		foreach ($array_stats_img as $key => $value)
 			@unlink(PATH_TO_ROOT . '/cache/' . $value);
-		
+
 		########### Détection des navigateurs ###########
 		$array_browser = array(
 			'opera' => 'opera',
 			'firefox' => 'firefox',
 			'msie|internet explorer' => 'internetexplorer',
 			'edge' => 'edge',
-			'chrome' => 'chrome', 
+			'chrome' => 'chrome',
 			'safari' => 'safari',
 			'konqueror' => 'konqueror',
 			'netscape' => 'netscape',
 			'seamonkey' => 'seamonkey',
-			'mozilla' => 'mozilla', 
+			'mozilla' => 'mozilla',
 			'aol' => 'aol',
 			'lynx' => 'lynx',
 			'camino' => 'camino',
@@ -174,7 +154,7 @@ class StatsSaver
 			}
 			self::write_stats('browsers', $browser);
 		}
-		
+
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
 			'android' => 'android',
@@ -202,7 +182,7 @@ class StatsSaver
 			'freebsd' => 'freebsd',
 			'aix' => 'aix',
 			'irix' => 'irix',
-			'hp-ux' => 'hp-ux', 
+			'hp-ux' => 'hp-ux',
 			'os2|os/2' => 'os2',
 			'netbsd' => 'netbsd',
 			'samsung|sony|nokia|blackberry|ipod|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
@@ -220,7 +200,7 @@ class StatsSaver
 			}
 			self::write_stats('os', $os);
 		}
-		
+
 		########### Détection de la langue utilisateur ###########
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
@@ -230,7 +210,7 @@ class StatsSaver
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`iu', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
 			$lang = TextHelper::substr($lang, 0, 2);
-			
+
 			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
 			{
 				$wlang = 'other';
@@ -254,7 +234,7 @@ class StatsSaver
 			self::write_stats('robots', $current_robot, false);
 		}
 	}
-	
+
 	/**
 	 * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour.
 	 */
@@ -262,7 +242,7 @@ class StatsSaver
 	{
 		self::write_stats('pages', Date::to_format(Date::DATE_NOW, 'G'));
 	}
-		
+
 	/**
 	 * @desc Retrieve stats from file
 	 * @param string $file_path The path to the stats file.
@@ -273,17 +253,17 @@ class StatsSaver
 		$stats_array = @fgets($file);
 		$stats_array = !empty($stats_array) ? TextHelper::unserialize($stats_array) : array();
 		@fclose($file);
-		
+
 		return $stats_array;
 	}
-	
+
     /**
 	 * @desc Save stats to file
 	 */
 	private static function write_stats($file_path, $stats_item, $strtolower = true)
 	{
 		$file_path = PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt';
-		if (!file_exists($file_path)) 
+		if (!file_exists($file_path))
 		{
 			$file = @fopen($file_path, 'w+');
 			@fwrite($file, TextHelper::serialize(array()));
@@ -297,7 +277,7 @@ class StatsSaver
 				$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item]++;
 			else
 				$stats_array[$strtolower ? TextHelper::strtolower($stats_item) : $stats_item] = 1;
-			
+
 			$file = @fopen($file_path, 'r+');
 			fwrite($file, TextHelper::serialize($stats_array));
 			fclose($file);

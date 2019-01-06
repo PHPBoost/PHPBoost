@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                         StatsScheduledJobs.class.php
- *                            -------------------
- *   begin                : January 06, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 30
+ * @since   	PHPBoost 3.0 - 2013 01 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
@@ -34,8 +17,8 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 				'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
 				'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
 				'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE),
-				'nbr' => 0, 
-				'pages' => 0, 
+				'nbr' => 0,
+				'pages' => 0,
 				'pages_detail' => ''
 			));
 
@@ -50,7 +33,7 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		}
 
 		PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
-		
+
 		//We delete the referer entries older than one week
 		PersistenceContext::get_querier()->delete(StatsSetup::$stats_referer_table, 'WHERE last_update < :last_update', array('last_update' => time() - 604800));
 
@@ -63,24 +46,24 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 		//How much visitors were there today?
 		$total_visit = PersistenceContext::get_querier()->get_column_value(DB_TABLE_VISIT_COUNTER, 'total', 'WHERE id = 1');
-		
+
 		//We update the stats table: the number of visits today
-		PersistenceContext::get_querier()->update(StatsSetup::$stats_table, 
-			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)), 
+		PersistenceContext::get_querier()->update(StatsSetup::$stats_table,
+			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)),
 		'WHERE id=:id', array('id' => $last_stats));
 	}
-	
+
 	public function on_changepage()
 	{
 		StatsSaver::update_pages_displayed();
 		StatsSaver::compute_referer();
 	}
-	
+
 	public function on_new_session($new_visitor, $is_robot)
 	{
 		if ($new_visitor && !$is_robot)
 			StatsSaver::compute_users();
-			
+
 		if ($is_robot)
 			StatsSaver::register_bot();
 	}

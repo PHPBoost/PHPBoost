@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                               admin_stats.php
- *                            -------------------
- *   begin                : July 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * This class provides easy ways to create several type of charts.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @since   	PHPBoost 1.2 - 2005 07 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
@@ -39,7 +24,7 @@ if ($valid)
 	$stats_config = StatsConfig::load();
 	$stats_config->set_authorizations(Authorizations::build_auth_array_from_form(StatsAuthorizationsService::READ_AUTHORIZATIONS));
 	StatsConfig::save();
-	
+
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 //Sinon on remplit le formulaire
@@ -47,9 +32,9 @@ else
 {
 	$_NBR_ELEMENTS_PER_PAGE = 15;
 	$db_querier = PersistenceContext::get_querier();
-	
+
 	$tpl = new FileTemplate('stats/admin_stats_management.tpl');
-	
+
 	$visit = $request->get_getint('visit', 0);
 	$visit_year = $request->get_getint('year', 0);
 	$pages = $request->get_getint('pages', 0);
@@ -103,7 +88,7 @@ else
 		$stats_cache = StatsCache::load();
 		$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 		$user_sex_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_sex');
-		
+
 		$tpl->put_all(array(
 			'C_STATS_USERS' => true,
 			'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
@@ -190,7 +175,7 @@ else
 		while ($row = $result->fetch())
 		{
 			$user_group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$tpl->assign_block_vars('top_poster', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'ID' => $i,
@@ -212,7 +197,7 @@ else
 		try {
 			$visit_counter = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
 		} catch (RowNotFoundException $e) {}
-		
+
 		$visit_counter_total = !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1;
 		$visit_counter_day = !empty($visit_counter['total']) ? $visit_counter['total'] : 1;
 
@@ -251,7 +236,7 @@ else
 			try {
 				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
 			} catch (RowNotFoundException $e) {}
-			
+
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
@@ -271,7 +256,7 @@ else
 			try {
 				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			} catch (RowNotFoundException $e) {}
-			
+
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 			{
@@ -288,7 +273,7 @@ else
 				$tpl->put_all(array(
 					'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
 					));
-					
+
 					//On fait la liste des visites journalières
 					$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
@@ -311,7 +296,7 @@ else
 				$tpl->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
-				
+
 				$i = 1;
 				$last_month = $max_month = 1;
 				$months_not_empty = array();
@@ -324,7 +309,7 @@ else
 				while ($row = $result->fetch())
 				{
 					$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-					
+
 					$diff = 0;
 					if ($row['stats_month'] != $i)
 					{
@@ -351,7 +336,7 @@ else
 
 					$tpl->assign_block_vars('values.head', array(
 					));
-						
+
 					//On affiche les stats numériquement dans un tableau en dessous
 					$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
@@ -399,7 +384,7 @@ else
 			try {
 				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
 			} catch (RowNotFoundException $e) {}
-			
+
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
@@ -447,7 +432,7 @@ else
 					$tpl->put_all(array(
 						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
 					));
-						
+
 					//On fait la liste des visites journalières
 					$result = $db_querier->select("SELECT nbr, stats_day AS day
 					FROM " . StatsSetup::$stats_table . "
@@ -484,7 +469,7 @@ else
 						//On fait la liste des visites journalières
 						$j = 0;
 						$result = $db_querier->select("SELECT nbr, stats_day AS day
-						FROM " . StatsSetup::$stats_table . " 
+						FROM " . StatsSetup::$stats_table . "
 						WHERE stats_year = :year AND stats_month = :month
 						ORDER BY stats_day", array(
 							'year' => $year,
@@ -517,14 +502,14 @@ else
 								}
 							}
 							$i += $diff;
-								
+
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['nbr'] / $info['max_nbr']) * 200;
-								
+
 							$tpl->assign_block_vars('values', array(
 								'HEIGHT' => ceil($height)
 							));
-								
+
 							$tpl->assign_block_vars('values.head', array(
 							));
 
@@ -584,7 +569,7 @@ else
 			$condition = 'WHERE stats_year=:year AND stats_month=:month AND pages_detail <> \'\' GROUP BY stats_month';
 			$year = (int)retrieve(GET, 'y', (int)$current_year);
 		}
-		
+
 		if (empty($pages_year))
 		{
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
@@ -593,7 +578,7 @@ else
 				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
 			} catch (RowNotFoundException $e) {}
 		}
-		
+
 		//On affiche les visiteurs totaux et du jour
 		$pages_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
 		$pages_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
@@ -620,13 +605,13 @@ else
 			//Années précédente et suivante
 			$next_year = $pages_year + 1;
 			$previous_year = $pages_year - 1;
-			
+
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 			$info = array('max_nbr' => 0, 'sum_nbr' => 0, 'nbr_month' => 0);
 			try {
 				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $pages_year));
 			} catch (RowNotFoundException $e) {}
-			
+
 			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
@@ -646,7 +631,7 @@ else
 			try {
 				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			} catch (RowNotFoundException $e) {}
-			
+
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 			{
@@ -663,7 +648,7 @@ else
 				$tpl->put_all(array(
 					'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
 				));
-				
+
 				//On fait la liste des visites journalières
 				$result = $db_querier->select("SELECT stats_month, SUM(pages) AS total
 				FROM " . StatsSetup::$stats_table . "
@@ -686,7 +671,7 @@ else
 				$tpl->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
-				
+
 				$i = 1;
 				$last_month = $max_month = 1;
 				$months_not_empty = array();
@@ -804,7 +789,7 @@ else
 				try {
 					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 				} catch (RowNotFoundException $e) {}
-				
+
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -833,7 +818,7 @@ else
 				while ($row = $result->fetch())
 				{
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
-						
+
 					//On affiche les stats numériquement dans un tableau en dessous
 					$tpl->assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
@@ -882,7 +867,7 @@ else
 				try {
 					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 				} catch (RowNotFoundException $e) {}
-			
+
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -902,7 +887,7 @@ else
 					$tpl->put_all(array(
 					'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
 					));
-					
+
 					//On fait la liste des visites journalières
 					$result = $db_querier->select("SELECT pages, stats_day, stats_month, stats_year
 					FROM " . StatsSetup::$stats_table . "
@@ -972,14 +957,14 @@ else
 								}
 							}
 							$i += $diff;
-								
+
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['pages'] / $info['max_nbr']) * 200;
-								
+
 							$tpl->assign_block_vars('values', array(
 							'HEIGHT' => ceil($height)
 							));
-								
+
 							$tpl->assign_block_vars('values.head', array(
 							));
 
@@ -1018,19 +1003,19 @@ else
 	elseif (!empty($referer))
 	{
 		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
-		
+
 		$nbr_referer = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = 0', array(), 'DISTINCT(url)');
-		
+
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
 		$pagination->set_url(new Url('/stats/admin_stats.php?referer=1&amp;p=%d'));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$result = $db_querier->select("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 0
@@ -1045,7 +1030,7 @@ else
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-			
+
 			$tpl->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
@@ -1074,19 +1059,19 @@ else
 	elseif (!empty($keyword))
 	{
 		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
-		
+
 		$nbr_keyword = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = 1', array(), 'DISTINCT(relative_url)');
-		
+
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
 		$pagination->set_url(new Url('/stats/admin_stats.php?keyword=1&amp;p=%d'));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$result = $db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 1
@@ -1101,7 +1086,7 @@ else
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-			
+
 			$tpl->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
 				'KEYWORD' => $row['relative_url'],
@@ -1227,7 +1212,7 @@ else
 		{
 			$robots_visits_number += $value;
 		}
-		
+
 		if ($robots_visits_number)
 		{
 			$Stats = new ImagesStats();
@@ -1243,7 +1228,7 @@ else
 					));
 			}
 		}
-		
+
 		$tpl->put_all(array(
 			'C_STATS_ROBOTS' => true,
 			'C_ROBOTS_DATA' => $robots_visits_number,

@@ -1,32 +1,12 @@
 <?php
-/*##################################################
- *                          member_xmlhttprequest.php
- *                            -------------------
- *   begin                : January, 25 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
 /**
-* @package ajax
-*
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2019 10 30
+ * @since   	PHPBoost 1.6 - 2007 01 25
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -48,11 +28,11 @@ if (!empty($stats_referer))
 {
 	$idurl = $request->get_getint('id', 0);
 	$url = '';
-	
+
 	try {
 		$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
 	} catch (RowNotFoundException $e) {}
-	
+
 	if ($url)
 	{
 		$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
@@ -64,9 +44,9 @@ if (!empty($stats_referer))
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-			
+
 			$tpl = new FileTemplate('stats/stats_tables.tpl');
-			
+
 			$tpl->put_all(array(
 				'C_REFERER' => true,
 				'FULL_URL' => $row['url'] . $row['relative_url'],
@@ -79,7 +59,7 @@ if (!empty($stats_referer))
 				'SIGN' => $trend_parameters['sign'],
 				'TREND' => $trend_parameters['trend'],
 			));
-			
+
 			echo $tpl->display();
 		}
 		$result->dispose();
@@ -89,11 +69,11 @@ elseif (!empty($stats_keyword))
 {
 	$idkeyword = $request->get_getint('id', 0);
 	$keyword = '';
-	
+
 	try {
 		$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
 	} catch (RowNotFoundException $e) {}
-	
+
 	if ($keyword)
 	{
 		$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
@@ -105,9 +85,9 @@ elseif (!empty($stats_keyword))
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-			
+
 			$tpl = new FileTemplate('stats/stats_tables.tpl');
-			
+
 			$tpl->put_all(array(
 				'FULL_URL' => $row['url'],
 				'TOTAL_VISIT' => $row['total_visit'],
@@ -118,7 +98,7 @@ elseif (!empty($stats_keyword))
 				'SIGN' => $trend_parameters['sign'],
 				'TREND' => $trend_parameters['trend'],
 			));
-			
+
 			echo $tpl->display();
 		}
 		$result->dispose();
