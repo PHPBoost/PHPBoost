@@ -1,36 +1,16 @@
 <?php
-/*##################################################
- *                            Sitemap.class.php
- *                            -------------------
- *   begin                : February 3rd 2009
- *   copyright            : (C) 2009 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc Describes the map of the site. Can be exported according to any text form by using a template configuration.
+ * Describes the map of the site. Can be exported according to any text form by using a template configuration.
  * A site map contains some links, some link sections and some module maps (which also contain links and sections).
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 07 07
+ * @since   	PHPBoost 3.0 - 2009 02 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class Sitemap
 {
 	//Who will see the site map?
@@ -156,7 +136,7 @@ class Sitemap
 				'ELEMENT' => $element->export($export_config)
 			));
 		}
-		
+
 		return $template;
 	}
 
@@ -170,7 +150,7 @@ class Sitemap
 		$this->build_kernel_map($mode, $auth_mode);
 		$this->build_modules_maps($auth_mode);
 	}
-	
+
 	/**
 	 * @desc Adds to the site map all maps of the installed modules
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
@@ -204,13 +184,13 @@ class Sitemap
 	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
 		global $LANG;
-			
+
 		//We consider the kernel as a module
 		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(Environment::get_home_page())));
-			
+
 		//The site description
 		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));
-			
+
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
@@ -218,38 +198,38 @@ class Sitemap
 			{
 				$kernel_map->add(new SitemapLink(LangLoader::get_message('members_list', 'user-common'), UserUrlBuilder::home()));
 			}
-			
+
 			//Member space
 			if ($auth_mode == self::AUTH_USER && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
 				UserUrlBuilder::profile(AppContext::get_current_user()->get_id())));
-					
+
 				//Profile edition
 				$member_space_section->add(new SitemapLink(LangLoader::get_message('profile.edit', 'user-common'),
 				UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())));
-					
+
 				//Private messaging
 				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
 				UserUrlBuilder::personnal_message(AppContext::get_current_user()->get_id())));
-					
+
 				//Contribution panel
-				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], 
+				$member_space_section->add(new SitemapLink($LANG['contribution_panel'],
 				UserUrlBuilder::contribution_panel()));
-					
+
 				//Administration panel
 				if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 				{
-					$member_space_section->add(new SitemapLink($LANG['admin_panel'], 
+					$member_space_section->add(new SitemapLink($LANG['admin_panel'],
 					UserUrlBuilder::administration()));
 				}
-					
+
 				//We add it to the kernel map
 				$kernel_map->add($member_space_section);
 			}
 		}
-			
+
 		//The kernel map is added to the site map
 		$this->add($kernel_map);
 	}

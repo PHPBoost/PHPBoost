@@ -1,37 +1,20 @@
 <?php
-/*##################################################
- *                          BBCodeParser.class.php
- *                            -------------------
- *   begin                : July 3 2008
- *   copyright            : (C) 2008 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @package {@package}
- * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @desc Converts the PHPBoost BBCode language to the XHTML language which is stocked in
+ * Converts the PHPBoost BBCode language to the XHTML language which is stocked in
  * the database and can be displayed nearly directly.
  * It parses only the authorized tags (defined in the parent class which is ContentFormattingParser).
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 06
+ * @since   	PHPBoost 2.0 - 2008 07 03
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
 class BBCodeParser extends ContentFormattingParser
 {
 	/**

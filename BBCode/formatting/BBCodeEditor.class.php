@@ -1,35 +1,15 @@
 <?php
-/*##################################################
- *                          BBCodeEditor.class.php
- *                            -------------------
- *   begin                : July 5 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class provides an interface editor for contents.
- * @package {@package}
- */
+ * This class provides an interface editor for contents.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @since   	PHPBoost 2.0 - 2008 07 05
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 class BBCodeEditor extends ContentEditor
 {
 	/**
@@ -66,7 +46,7 @@ class BBCodeEditor extends ContentEditor
 
 		$bbcode_lang = LangLoader::get('common', 'BBCode');
 		$template->add_lang($bbcode_lang);
-		
+
 		$template->put_all(array(
 			'PAGE_PATH'                     => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
@@ -106,7 +86,7 @@ class BBCodeEditor extends ContentEditor
 		}
 
 		foreach ($this->icon_fa as $key => $value)
-		{ 
+		{
 			$template->assign_block_vars('code_fa', array(
 				'C_CUSTOM_PREFIX' => $value[0] != 'fa',
 				'PREFIX'          => $value[0],
