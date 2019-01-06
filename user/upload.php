@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                               upload.php
- *                            -------------------
- *   begin                : July, 07 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @since   	PHPBoost 1.6 - 2007 07 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
@@ -41,7 +27,7 @@ if (!empty($popup)) //Popup.
 	Environment::set_graphical_environment($env);
 	ob_start();
 	$field = retrieve(GET, 'fd', '');
-	
+
 	$display_close_button = $close_button != '0';
 	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
@@ -86,14 +72,14 @@ if (!empty($parent_folder)) //Changement de dossier
 {
 	if (empty($parent_folder))
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
-	
+
 	try {
 		$info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('id_parent', 'user_id'), 'WHERE id = :id', array('id' => $parent_folder));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
@@ -112,7 +98,7 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 	//Autorisation d'upload aux groupes.
 	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-	
+
 	$member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
 	if ($member_memory_used >= $group_limit && !$unlimited_data)
 		$error = 'e_max_data_reach';
@@ -123,15 +109,15 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 		$dir = PATH_TO_ROOT . '/upload/';
 		if (!is_writable($dir))
 			$is_writable = (@chmod($dir, 0777));
-		
+
 		@clearstatcache();
 		if (is_writable($dir)) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
-			
+
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`\.(' . implode('|', array_map('preg_quote', $files_upload_config->get_authorized_extensions())) . ')+$`iu', Upload::UNIQ_NAME, $weight_max);
-			
+
 			if ($Upload->get_error() != '') //Erreur, on arrête ici
 			{
 				$error = $Upload->get_error();
@@ -148,14 +134,14 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
 		else
 			$error = 'e_upload_failed_unwritable';
 	}
-	
+
 	$anchor = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp . (!empty($id_file) ? '#fi1' . $id_file : '');
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . $anchor, '', '&'));
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		Uploads::Del_folder($del_folder);
 	else
@@ -164,7 +150,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 		try {
 			$check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
 		} catch (RowNotFoundException $ex) {}
-		
+
 		//Suppression du dossier et de tout le contenu
 		if ($check_user_id == AppContext::get_current_user()->get_id())
 		{
@@ -176,13 +162,13 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		Uploads::Del_file($del_file, AppContext::get_current_user()->get_id(), Uploads::ADMIN_NO_CHECK);
@@ -196,18 +182,18 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	$folder_owner = 0;
 	try {
 		$folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
 	} catch (RowNotFoundException $ex) {}
-	
+
 	if ($folder_owner == AppContext::get_current_user()->get_id())
 	{
 		include('upload_functions.php');
@@ -235,14 +221,14 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	try {
 		$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('idcat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
@@ -269,7 +255,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 elseif (!empty($move_folder) || !empty($move_file))
 {
 	$tpl = new FileTemplate('user/upload_move.tpl');
-	
+
 	$tpl->put_all(array(
 		'POPUP' => $popup,
 		'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
@@ -283,14 +269,14 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'L_SUBMIT' => $LANG['submit'],
 		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_display_name() . '</a>/'
 	));
-	
+
 	if ($get_error == 'folder_contains_folder')
 		$tpl->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
-	
+
 	//liste des fichiers disponibles
 	include_once('upload_functions.php');
 	$cats = array();
-	
+
 	$is_folder = !empty($move_folder);
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
@@ -301,7 +287,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
 		$tpl->assign_block_vars('folder', array(
@@ -322,7 +308,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;
@@ -335,18 +321,18 @@ elseif (!empty($move_folder) || !empty($move_file))
 			case 'bmp':
 			list($width_source, $height_source) = @getimagesize('../upload/' . $info_move['path']);
 			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
-			
+
 			//On affiche l'image réelle si elle n'est pas trop grande.
-			if ($width_source < 350 && $height_source < 350) 
+			if ($width_source < 350 && $height_source < 350)
 			{
 				$display_real_img = true;
 			}
 		}
-		
+
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, AppContext::get_current_user()->get_id());
-		
+
 		$tpl->assign_block_vars('file', array(
-			'C_DISPLAY_REAL_IMG' => $display_real_img,	
+			'C_DISPLAY_REAL_IMG' => $display_real_img,
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
@@ -357,18 +343,18 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
 		));
 	}
-	
+
 	$tpl->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
-	
+
 	$tpl->display();
 }
 else
 {
 	$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-	
+
 	$tpl = new FileTemplate('user/upload.tpl');
 
 	//Gestion des erreurs.
@@ -415,7 +401,7 @@ else
 		'L_URL' => $LANG['url'],
 		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_display_name() . '</a>/'
 	));
-	
+
 	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
 	//Affichage des dossiers
 	$result = PersistenceContext::get_querier()->select("SELECT id, name, id_parent, user_id
@@ -428,7 +414,7 @@ else
 	while ($row = $result->fetch())
 	{
 		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-		
+
 		$tpl->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
@@ -454,7 +440,7 @@ else
 	while ($row = $result->fetch())
 	{
 		$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-		
+
 		$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 		$size_img = '';
 		switch ($row['type'])
@@ -508,21 +494,21 @@ else
 			'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1"' : '',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
 		));
-		
+
 		$total_folder_size += $row['size'];
 		$total_files++;
 	}
 	$result->dispose();
-	
+
 	//Autorisation d'uploader sans limite aux groupes.
 	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-	
+
 	$total_size = 0;
 	try {
 		$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 	} catch (RowNotFoundException $ex) {}
-	
+
 	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
 	$tpl->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
@@ -540,7 +526,7 @@ else
 			'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
 		));
 	}
-	
+
 	$tpl->display();
 }
 

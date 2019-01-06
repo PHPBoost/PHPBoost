@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                      UserUsersListController.class.php
- *                            -------------------
- *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @since   	PHPBoost 3.0 - 2011 10 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class UserUsersListController extends AbstractController
 {
@@ -36,10 +19,10 @@ class UserUsersListController extends AbstractController
 		$this->init();
 		$this->build_select_group_form();
 		$current_page = $this->build_table();
-		
+
 		return $this->generate_response($current_page);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('user-common');
@@ -51,7 +34,7 @@ class UserUsersListController extends AbstractController
 	private function build_table()
 	{
 		$number_admins = UserService::count_admin_members();
-		
+
 		$sql_html_table_model = array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
 			new HTMLTableColumn($this->lang['email']),
@@ -60,10 +43,10 @@ class UserUsersListController extends AbstractController
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['private_message'])
 		);
-		
+
 		if (AppContext::get_current_user()->is_admin())
 			$sql_html_table_model[] = new HTMLTableColumn('');
-		
+
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
@@ -76,7 +59,7 @@ class UserUsersListController extends AbstractController
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$author = new LinkHTMLElement(UserUrlBuilder::profile($row['user_id']), $row['display_name'], (!empty($group_color) ? array('style' => 'color: ' . $group_color) : array()), UserService::get_level_class($row['level']));
-			
+
 			$html_table_row = array(
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'basic-button smaller') : ''),
@@ -85,7 +68,7 @@ class UserUsersListController extends AbstractController
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
 				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'basic-button smaller'))
 			);
-			
+
 			if (AppContext::get_current_user()->is_admin())
 			{
 				$user = new User();
@@ -96,27 +79,27 @@ class UserUsersListController extends AbstractController
 					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 				else
 					$delete_link = new LinkHTMLElement('', '', array('title' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
-				
+
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}
-			
+
 			$results[] = new HTMLTableRow($html_table_row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
-		
+
 		return $table->get_page_number();
 	}
-	
+
 	private function build_select_group_form()
 	{
 		$form = new HTMLForm('groups', '', false);
 
 		$fieldset = new FormFieldsetHTML('show_group');
 		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', '', $this->build_select_groups(), 
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', '', $this->build_select_groups(),
 			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
 		)));
 
@@ -126,7 +109,7 @@ class UserUsersListController extends AbstractController
 			'SELECT_GROUP' => $form->display()
 		));
 	}
-	
+
 	private function build_select_groups()
 	{
 		$groups = array();
@@ -146,13 +129,13 @@ class UserUsersListController extends AbstractController
 		$graphical_environment->set_page_title($this->lang['users'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.user.list'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::home());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['users'], UserUrlBuilder::home()->rel());
-		
+
 		return $response;
 	}
-	
+
 	public function get_right_controller_regarding_authorizations()
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))

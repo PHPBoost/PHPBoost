@@ -1,26 +1,13 @@
 <?php
-/*##################################################
- *                                xmlhttprequest.php
- *                            -------------------
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      ??
+ * @version   	PHPBoost 5.2 - last update: 2018 10 30
+ * @since   	PHPBoost 3.0
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
@@ -47,7 +34,7 @@ if ($id_cat != 0)
 		ORDER BY name ASC", array(
 			'id' => $id_cat
 	));
-	
+
 	while ($row = $result->fetch())
 	{
 		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier

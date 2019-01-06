@@ -1,36 +1,18 @@
 <?php
-/*##################################################
- *                          CLIDeleteUserCommand.class.php
- *                            -------------------
- *   begin                : October 11, 2011
- *   copyright            : (C) 2011 K�vin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @since   	PHPBoost 3.0 - 2011 10 11
+*/
 
 class CLIDeleteUserCommand implements CLICommand
 {
 	private $id = '';
 	private $login = '';
 	private $email = '';
-	
+
 	public function short_description()
 	{
 		return 'delete user';
@@ -59,7 +41,7 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->delete_user();
 		}
 	}
-	
+
 	private function delete_user()
 	{
 		if (!empty($this->id))
@@ -110,12 +92,12 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->help(array());
 		}
 	}
-	
+
 	private function write_success_message()
 	{
 		CLIOutput::writeln('User deleted successfull');
 	}
-	
+
 	private function write_user_not_exists_message()
 	{
 		CLIOutput::writeln('User not exists');
@@ -128,7 +110,7 @@ class CLIDeleteUserCommand implements CLICommand
 		$this->login = $this->arg_reader->get('--login', $this->login);
 		$this->email = $this->arg_reader->get('--email', $this->email);
 	}
-	
+
 	private function show_parameter($name, $value)
 	{
 		CLIOutput::writeln("\t" . $name . ' ' . $value);

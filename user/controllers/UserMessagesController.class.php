@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                       UserMessagesController.class.php
- *                            -------------------
- *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 20
+ * @since   	PHPBoost 3.0 - 2011 10 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class UserMessagesController extends AbstractController
 {
@@ -51,7 +35,7 @@ class UserMessagesController extends AbstractController
 				DispatchManager::redirect($error_controller);
 			}
 		}
-		
+
 		$this->build_form();
 		return $this->build_response($this->tpl);
 	}
@@ -63,7 +47,7 @@ class UserMessagesController extends AbstractController
 		$this->lang = LangLoader::get('user-common');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
@@ -77,7 +61,7 @@ class UserMessagesController extends AbstractController
 				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
 			));
 		}
-		
+
 		$this->tpl->put_all(array(
 			'L_MESSAGES' => $this->lang['messages'],
 		));
@@ -91,14 +75,14 @@ class UserMessagesController extends AbstractController
 		$graphical_environment->set_page_title($title);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.user.messages'], array('name' => $this->user->get_display_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::messages($this->user->get_id()));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::home()->rel());
 		$breadcrumb->add($title, UserUrlBuilder::messages($this->user->get_id())->rel());
-		
+
 		return $response;
 	}
-	
+
 	public function get_right_controller_regarding_authorizations()
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))

@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                           UserLoginController.class.php
- *                            -------------------
- *   begin                : April 05, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 3.0 - 2012 04 05
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class UserLoginController extends AbstractController
 {
@@ -42,7 +25,7 @@ class UserLoginController extends AbstractController
 
 	private $has_error;
 	private $maintain_config;
-	
+
 	public function __construct($login_type = self::USER_LOGIN, $redirect = '')
 	{
 		$this->login_type = $login_type;
@@ -54,19 +37,19 @@ class UserLoginController extends AbstractController
 	{
 		$this->init($request);
 		$this->build_form();
-		
+
 		if ($this->request->get_bool('disconnect', false))
 		{
 			AppContext::get_session()->csrf_get_protect();
 			$session = AppContext::get_session();
 			Session::delete($session);
-			
+
 			AppContext::get_response()->redirect($this->get_redirect_url());
 		}
-		
+
 		$authenticate_type = $this->request->get_value('authenticate', false);
 		$was_already_authenticated = $authenticate_type && $authenticate_type != PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
-		
+
 		if ($authenticate_type)
 		{
 			if ($authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)
@@ -87,7 +70,7 @@ class UserLoginController extends AbstractController
 				$this->authenticate(AuthenticationService::get_external_auth_activated($authenticate_type)->get_authentication(), true);
 			}
 		}
-		
+
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
@@ -100,7 +83,7 @@ class UserLoginController extends AbstractController
 					AppContext::get_response()->redirect(Environment::get_home_page());
 			}
 		}
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$login = $this->form->get_value('login');
@@ -108,12 +91,12 @@ class UserLoginController extends AbstractController
 			$autoconnect = $this->form->get_value('autoconnect');
 			$this->phpboost_authenticate($login, $password, $autoconnect);
 		}
-		
+
 		$this->init_vars_template();
-		
+
 		return $this->build_view();
 	}
-	
+
 	private function init(HTTPRequestCustom $request)
 	{
 		$this->request = $request;
@@ -122,7 +105,7 @@ class UserLoginController extends AbstractController
 		$this->view->add_lang($this->lang);
 		$this->maintain_config = MaintenanceConfig::load();
 	}
-	
+
 	private function init_vars_template()
 	{
 		$this->view->put_all(array(
@@ -147,7 +130,7 @@ class UserLoginController extends AbstractController
 				'CSS_CLASS' => $authentication->get_css_class()
 			));
 		}
-		
+
 		if ($this->maintain_config->is_under_maintenance())
 		{
 			$this->init_maintain_delay();
@@ -168,9 +151,9 @@ class UserLoginController extends AbstractController
 	private function authenticate(AuthenticationMethod $authentication, $autoconnect)
 	{
 		$user_id = AuthenticationService::authenticate($authentication, $autoconnect);
-		
+
 		$current_user = CurrentUser::from_session();
-		
+
 		if ($user_id && $this->maintain_config->is_under_maintenance() && !$current_user->check_auth($this->maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
 		{
 			$session = AppContext::get_session();
@@ -215,7 +198,7 @@ class UserLoginController extends AbstractController
 			return $response;
 		}
 	}
-	
+
 	/**
 	 * @return HTMLForm
 	 */
@@ -226,26 +209,26 @@ class UserLoginController extends AbstractController
 
 		$this->fieldset = new FormFieldsetHTMLHeading('loginFieldset', $this->lang['connection']);
 		$this->form->add_fieldset($this->fieldset);
-		
+
 		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '',
 			array('description' => $this->lang['login.explain'], 'required' => true)
 		));
-		
+
 		$this->fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['password'], '',
 			array('required' => true)
 		));
-		
+
 		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], true));
-		
+
 		$this->submit_button = new FormButtonSubmit($this->lang['connection'], 'authenticate');
 		$this->form->add_button($this->submit_button);
 	}
-	
+
 	private function build_target()
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
 		$redirect = $redirect_url !== '/' ? '?redirect=' . str_replace('%2F', '/', urlencode($redirect_url)) : '';
-		
+
 		if ($this->login_type == self::ADMIN_LOGIN)
 		{
 			if ($this->redirect !== null && $this->redirect)
@@ -268,9 +251,9 @@ class UserLoginController extends AbstractController
 	private function init_maintain_delay()
 	{
 		$date_lang = LangLoader::get('date-common');
-		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 
+		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
 		$array_delay = array(0 => LangLoader::get_message('unspecified', 'main'), 1 => '', 2 => '1 ' . $date_lang['minute'], 3 => '5 ' . $date_lang['minutes'], 4 => '15 ' . $date_lang['minutes'], 5 => '30 ' . $date_lang['minutes'], 6 => '1 ' . $date_lang['hour'], 7 => '2 ' . $date_lang['hours'], 8 => '1 ' . $date_lang['day'], 9 => '2 ' . $date_lang['days'], 10 => '1 ' . $date_lang['week']);
-		
+
 		if (!$this->maintain_config->is_unlimited_maintenance())
 		{
 			$key = 0;
@@ -279,16 +262,16 @@ class UserLoginController extends AbstractController
 			for ($i = 10; $i >= 0; $i--)
 			{
 				$delay = ($end_timestamp - $current_time) - $array_time[$i];
-				if ($delay >= $array_time[$i]) 
+				if ($delay >= $array_time[$i])
 				{
 					$key = $i;
 					break;
 				}
 			}
-			
+
 			//Calcul du format de la date
 			$array_release = array(Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
-		
+
 			$array_now = array(Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
 		}
 		else
@@ -297,12 +280,12 @@ class UserLoginController extends AbstractController
 			$array_release = array('0', '0', '0', '0', '0', '0');
 			$array_now = array('0', '0', '0', '0', '0', '0');
 		}
-		
+
 		$this->view->put_all(array(
 			'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release)
 		));
-		
+
 		if ($this->maintain_config->get_display_duration() && !$this->maintain_config->is_unlimited_maintenance())
 		{
 			$this->view->put_all(array(

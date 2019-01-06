@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                           UserErrorController.class.php
- *                            -------------------
- *   begin                : December 09 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 11 23
+ * @since   	PHPBoost 3.0 - 2009 12 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class UserErrorController extends AbstractController
 {
@@ -34,7 +17,7 @@ class UserErrorController extends AbstractController
 	const FATAL = 5;
 
 	const PREVIOUS_PAGE = 'javascript:history.back(1);';
-	
+
 	const SITE_RESPONSE = 'SiteDisplayResponse';
 	const ADMIN_RESPONSE = 'AdminDisplayResponse';
 
@@ -64,12 +47,12 @@ class UserErrorController extends AbstractController
 		$this->link_name = $link_name;
 		$this->link = $link;
 	}
-	
+
 	public function set_error_type($error_type)
 	{
 		$this->error_type = $error_type;
 	}
-	
+
 	public function set_time_redirect($time)
 	{
 		if (is_numeric($time))
@@ -77,24 +60,24 @@ class UserErrorController extends AbstractController
 			$this->time = $time;
 		}
 	}
-	
+
 	public function set_response_classname($response_classname)
 	{
 		$this->response_classname = $response_classname;
 	}
-	
+
 	public function disable_correction_link() {
 		$this->link_name = "";
 		$this->link = "";
 	}
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->create_view();
 		$this->fill_view();
-		
+
 		$maintenance_config = MaintenanceConfig::load();
-		
+
 		if ($maintenance_config->is_under_maintenance() && !$maintenance_config->is_authorized_in_maintenance())
 			return new SiteNodisplayResponse($this->view);
 		else
@@ -129,7 +112,7 @@ class UserErrorController extends AbstractController
 			'HAS_TIME' => !empty($this->time) && !empty($this->link),
 		));
 	}
-	
+
 	private function get_error_type()
 	{
 		$css_class_name = 'question';

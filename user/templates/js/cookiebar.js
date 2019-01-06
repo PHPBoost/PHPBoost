@@ -1,3 +1,13 @@
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 29
+ * @since   	PHPBoost 5.0 - 2016 09 18
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
 $(function(){
 	showCookieBar();
 });
@@ -20,7 +30,7 @@ function showCookieBar() {
 		//On ajoute la cookiebar uniquement si elle n'existe pas. On cherche si une id #cookiebar-container existe.
 		if ($('#cookiebar-container').length < 1 )
 		{
-			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '" title="' + L_COOKIEBAR_MORE_TITLE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>')
+			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '" title="' + L_COOKIEBAR_MORE_TITLE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
 		}
 
 		//Si cookie accepté on sauvegarde le choix
