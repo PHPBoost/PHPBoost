@@ -1,35 +1,18 @@
 <?php
-/*##################################################
-*                                main.php
-*                            -------------------
-*   begin                : November 20, 2005
-*   last modified		: October 3rd, 2009 - JMNaylor
-*   copyright            : (C) 2005 Viarre Régis
-*   email                : mickaelhemri@gmail.com
-*
-*
- ###################################################
-*
-*   This program is a free software; You can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-* This program is distributed in hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program. If not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.3 - 2005 11 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
-
- ####################################################
-#                      English                     #
- ####################################################
+####################################################
+#                     English                      #
+####################################################
 
  // Admin panel
 $LANG['index.support'] = 'Support';

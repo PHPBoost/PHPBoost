@@ -1,34 +1,18 @@
 <?php
-/*##################################################
- *                           admin-cache-common.php
- *                            -------------------
- *   begin                : August 7, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 3.0 - 2010 08 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
- ####################################################
+####################################################
 #                     French                       #
- ####################################################
- 
+####################################################
+
 $lang = array();
 $lang['cache'] = 'Cache';
 $lang['clear_cache'] = 'Vider';
@@ -52,10 +36,10 @@ $lang['apc_available'] = 'Disponibilité de l\'extension APCu';
 $lang['apcu_cache'] = 'Cache APCu';
 $lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement pas profiter des gains de performances qu\'elle permet d\'obtenir.';
 $lang['css_cache'] = 'Cache CSS';
-$lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules. 
+$lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules.
 En temps normal, à l\'affichage du site, un ensemble de fichiers css va être chargé. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé.</p>
 <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache CSS de façon à forcer PHPBoost à recréer les fichiers CSS optimisés. </p>';
-$lang['explain_css_cache_config'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules pour améliorer le temps d\'affichage des pages. 
+$lang['explain_css_cache_config'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules pour améliorer le temps d\'affichage des pages.
 Vous pouvez à travers cette configuration, choisir d\'activer ou non cette fonctionnalité et son niveau d\'intensité. <br/>
 La désactivation de cette option peut vous permettre de personnaliser plus facilement vos thèmes. </p>';
 $lang['enable_css_cache'] = 'Activer le cache CSS';
