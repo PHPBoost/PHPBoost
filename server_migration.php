@@ -1,41 +1,24 @@
 <?php
-/*##################################################
- *                                server_migration.php
-*                            -------------------
-*   begin                : May 14, 2012
-*   copyright            : (C) 2012 Kevin MASSY
-*   email                : kevin.massy@phpboost.com
-*
-*
-###################################################
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
- 
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 30
+ * @since   	PHPBoost 3.0 - 2012 05 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
 define('PATH_TO_ROOT', '.');
- 
+
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/cache/CacheData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/ConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/GeneralConfig.class.php';
 
 require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
- 
+
 $config_file = PATH_TO_ROOT . '/cache/CacheManager-kernel-general-config.data';
- 
+
 if (file_exists($config_file))
 {
 	$general_config = TextHelper::unserialize(file_get_contents($config_file));
@@ -45,20 +28,20 @@ else
 	$general_config = new GeneralConfig();
 	$general_config->set_default_values();
 }
- 
+
 if (isset($_POST['url']) && isset($_POST['path']))
 {
 	$general_config->set_site_url($_POST['url']);
 	$general_config->set_site_path($_POST['path']);
 	file_put_contents($config_file, TextHelper::serialize($general_config));
- 
+
 	echo 'Success';
 }
- 
+
 $site_url = $general_config->get_site_url();
 $site_path = $general_config->get_site_path();
 ?>
- 
+
 <form action="" method="post">
 	<fieldset>
 		<legend>Migration</legend>
@@ -68,7 +51,7 @@ $site_path = $general_config->get_site_path();
 			</div>
 			<div class="form-field">
 				<label>Path :&nbsp;</label><input type="text" size="65" maxlength="100" id="path" name="path" value="<?php echo $site_path ?>">
-			</div>	
+			</div>
 		</div>
 		<div>
 			<button type="submit" name="submit" value="true">Submit</button>
@@ -86,7 +69,7 @@ div {
 	text-align:center;
 }
 input.text{
-	padding:2px;	
+	padding:2px;
 	width:400px;
 	margin-top:5px;
 }
