@@ -1,29 +1,15 @@
 <?php
-/*##################################################
- *                              admin_database.php
- *                            -------------------
- *   begin                : August 06, 2006
- *   copyright            : (C) 2006-2007 Sautel Benoit / Viarre Régis
- *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 26
+ * @since   	PHPBoost 1.5 - 2006 08 06
+ * @contributor Regis VIARRE <crowkait@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 
@@ -35,7 +21,7 @@ if (!empty($read_file) && TextHelper::substr($read_file, -4) == '.sql')
 	if (is_file(PATH_TO_ROOT .'/cache/backup/' . $read_file))
 	{
 		ini_set('memory_limit', '500M');
-		
+
 		header('Content-Type: text/sql');
 		header('Content-Disposition: attachment; filename="' . $read_file . '"');
 		header('Expires: 0');
@@ -96,11 +82,11 @@ if (!empty($query))
 	if (!empty($query)) //On exécute une requête
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
-		
+
 		$tpl->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
-		
+
 		foreach (explode(';', $query) as $q)
 		{
 			$lower_query = TextHelper::strtolower($q);
@@ -117,7 +103,7 @@ if (!empty($query))
 						if ($i == 1)
 						{
 							$tpl->put('C_HEAD', true);
-							
+
 							foreach ($row as $field_name => $field_value)
 								$tpl->assign_block_vars('head', array(
 									'FIELD_NAME' => $field_name
@@ -129,7 +115,7 @@ if (!empty($query))
 							'FIELD_NAME' => TextHelper::strprotect($field_value),
 							'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 						));
-						
+
 						$i++;
 					}
 					$result->dispose();
@@ -140,7 +126,7 @@ if (!empty($query))
 						'STYLE' => ''
 					));
 				}
-				
+
 			}
 			elseif (TextHelper::substr($lower_query, 0, 11) == 'insert into' || TextHelper::substr($lower_query, 0, 6) == 'update' || TextHelper::substr($lower_query, 0, 11) == 'delete from' || TextHelper::substr($lower_query, 0, 11) == 'alter table'  || TextHelper::substr($lower_query, 0, 8) == 'truncate' || TextHelper::substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 			{
@@ -157,7 +143,7 @@ if (!empty($query))
 			}
 		}
 	}
-	
+
 	$tpl->put_all(array(
 		'QUERY' => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query(str_replace('phpboost_', PREFIX, $query)),
@@ -175,7 +161,7 @@ elseif ($action == 'restore')
 	if (!empty($del))
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
-		
+
 		$file = TextHelper::strprotect($del);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		//Si le fichier existe
@@ -189,13 +175,13 @@ elseif ($action == 'restore')
 		else
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
 	}
-	
+
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
-	
+
 	if (!empty($file)) //Restauration d'un fichier sur le ftp
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
-		
+
 		$file = TextHelper::strprotect($file);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`u', $file) && is_file($file_path))
@@ -207,7 +193,7 @@ elseif ($action == 'restore')
 			$db_utils->optimize($tables_list);
 			$db_utils->repair($tables_list);
 			AppContext::get_cache_service()->clear_cache();
-			
+
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
 	}
@@ -226,7 +212,7 @@ elseif ($action == 'restore')
 				$db_utils->optimize($tables_list);
 				$db_utils->repair($tables_list);
 				AppContext::get_cache_service()->clear_cache();
-				
+
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif (is_file($file_path))//Le fichier existe déjà, on ne peut pas le copier
@@ -237,7 +223,7 @@ elseif ($action == 'restore')
 		else
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=failure', '', '&'));
 	}
-	
+
 	$tpl->put_all(array(
 		'C_DATABASE_FILES' => true,
 		'L_LIST_FILES' => $LANG['db_file_list'],
@@ -250,7 +236,7 @@ elseif ($action == 'restore')
 		'L_RESTORE' => $LANG['db_restore'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common')
 	));
-	
+
 	if (!empty($error))
 	{
 		switch ($error)
@@ -259,12 +245,12 @@ elseif ($action == 'restore')
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
 				break;
 			case 'failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 					$LANG['db_restore_failure'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
 			case 'upload_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 					$LANG['db_upload_failure'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
@@ -275,7 +261,7 @@ elseif ($action == 'restore')
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));
 				break;
 			case 'unlink_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
 					$LANG['db_unlink_failure'], UserErrorController::FATAL);
 				DispatchManager::redirect($controller);
 				break;
@@ -284,7 +270,7 @@ elseif ($action == 'restore')
 				break;
 		}
 	}
-		
+
 	$dir = PATH_TO_ROOT .'/cache/backup';
 	$i = 0;
 	$filelist = array();
@@ -303,11 +289,11 @@ elseif ($action == 'restore')
 		   closedir($dh);
 		}
 	}
-	
+
 	if (count($filelist) > 0) {
 		krsort($filelist);
 	}
-	
+
 	if ($i == 0)
 	{
 		$tpl->put_all(array(
@@ -320,7 +306,7 @@ elseif ($action == 'restore')
 			'C_FILES' => true,
 			'L_INFO' => $LANG['db_restore_file']
 		));
-		
+
 		foreach ($filelist as $file)
 		{
 			$tpl->assign_block_vars('file', array(
@@ -337,9 +323,9 @@ else
 	if ($action == 'backup')
 	{
 		$backup_type = ($request->has_postparameter('backup_type') && $request->get_postvalue('backup_type') != 'all') ? ($request->get_postvalue('backup_type') == 'data' ? DBMSUtils::DUMP_DATA : DBMSUtils::DUMP_STRUCTURE) : DBMSUtils::DUMP_STRUCTURE_AND_DATA;
-		
+
 		$selected_tables = $request->get_postarray('table_list');
-		
+
 		if (empty($selected_tables))
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
@@ -348,7 +334,7 @@ else
 
 		Environment::try_to_increase_max_execution_time();
 		PersistenceContext::get_dbms_utils()->dump_tables(new BufferedFileWriter(new File($file_path)), $selected_tables, $backup_type);
-		
+
 		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
 	}
 
@@ -369,14 +355,14 @@ else
 			'L_BACKUP_DATA' => $LANG['db_backup_data'],
 			'L_BACKUP' => $LANG['db_backup']
 		));
-		
+
 		$selected_tables = array();
 		$i = 0;
 		foreach ($tables as $table)
 		{
 			if (($table == $get_table) || ($request->has_postparameter('table_' . $table) && $request->get_postvalue('table_' . $table) == 'on'))
 				$selected_tables[] = $table;
-			
+
 			$tpl->assign_block_vars('table_list', array(
 				'NAME' => $table,
 				'SELECTED' => in_array($table, $selected_tables) ? 'selected="selected"' : '',
@@ -410,24 +396,24 @@ else
 				}
 			}
 		}
-		
+
 		if (!empty($error))
 		{
 			if (trim($error) == 'backup_success' && !empty($file))
 				$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $file, $file), MessageHelper::SUCCESS));
 		}
-		
+
 		//liste des tables
 		$i = 0;
-		
+
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
 		foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
-		{	
+		{
 			$free = NumberHelper::round($table_info['data_free']/1024, 1);
 			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
 			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
 			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-			
+
 			$tpl->assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
 				'TABLE_ENGINE' => $table_info['engine'],
@@ -437,18 +423,18 @@ else
 				'TABLE_COLLATION' => $table_info['collation'],
 				'I' => $i
 			));
-			
+
 			$nbr_rows += $table_info['rows'];
 			$nbr_free += $table_info['data_free'];
 			$nbr_data += ($table_info['data_length'] + $table_info['index_length']);
 			$i++;
-		} 
-		
+		}
+
 		$nbr_free = NumberHelper::round($nbr_free/1024, 1);
 		$nbr_data = NumberHelper::round($nbr_data/1024, 1);
 		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
 		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-		
+
 		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),

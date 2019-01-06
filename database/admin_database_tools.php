@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                              admin_database_tools.php
- *                            -------------------
- *   begin                : August 06, 2008
- *   copyright            : (C) 2008 SViarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 26
+ * @since   	PHPBoost 2.0 - 2008 08 06
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 $LANG = LangLoader::get('common', 'database');
@@ -58,28 +42,28 @@ $tpl->put_all(array(
 if (!empty($table) && $action == 'data')
 {
 	$_NBR_ELEMENTS_PER_PAGE = 30;
-	
+
 	$nbr_lines = PersistenceContext::get_querier()->count($table);
-	
+
 	//On crée une pagination (si activé) si le nombre de news est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_lines, $_NBR_ELEMENTS_PER_PAGE);
 	$pagination->set_url(new Url('/database/admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d'));
-	
+
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	
+
 	//Détection de la clée primaire.
 	$primary_key = '';
 	foreach ($table_structure['fields'] as $fields_info)
 	{
 		$check_primary_key = false;
-		foreach ($table_structure['index'] as $index_info) 
+		foreach ($table_structure['index'] as $index_info)
 		{
 			if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 			{
@@ -106,7 +90,7 @@ if (!empty($table) && $action == 'data')
 				));
 			}
 		}
-		
+
 		//On parse les valeurs de sortie
 		$j = 0;
 		foreach ($row as $field_name => $field_value)
@@ -118,7 +102,7 @@ if (!empty($table) && $action == 'data')
 					'STYLE' => ''
 				));
 			}
-			
+
 			$tpl->assign_block_vars('line.field', array(
 				'FIELD_NAME' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
@@ -128,7 +112,7 @@ if (!empty($table) && $action == 'data')
 		$i++;
 	}
 	$result->dispose();
-	
+
 	$tpl->put_all(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
@@ -148,21 +132,21 @@ if (!empty($table) && $action == 'data')
 elseif (!empty($table) && $action == 'delete')
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	$field = retrieve(GET, 'field', '');
 	$value = retrieve(GET, 'value', '');
-	
+
 	if (!empty($value) && !empty($field))
 		PersistenceContext::get_querier()->delete($table, 'WHERE '.$field.'=:value', array('value' => $value));
-		
+
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	
+
 	$value = retrieve(GET, 'value', '');
 	$field = retrieve(GET, 'field', '');
 	$submit = retrieve(POST, 'submit', '');
@@ -171,7 +155,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
 			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
-		
+
 		PersistenceContext::get_querier()->update($table, $infos, 'WHERE ' . $field . ' = :value', array('value' => $value));
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
@@ -189,7 +173,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 			'L_FIELD_VALUE' => $LANG['db_table_value'],
 			'L_EXECUTE' => $LANG['db_submit_query']
 		));
-		
+
 		//On éxécute la requête
 		$row = PersistenceContext::get_querier()->select_single_row($table, array('*'), 'WHERE '. $field .'=:value', array('value' => $value));
 
@@ -211,17 +195,17 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 elseif (!empty($table) && $action == 'insert') //Mise à jour.
 {
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	
+
 	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
-		
+
 		//Détection de la clée primaire.
 		$primary_key = '';
 		foreach ($table_structure['fields'] as $fields_info)
 		{
-			foreach ($table_structure['index'] as $index_info) 
+			foreach ($table_structure['index'] as $index_info)
 			{
 				if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 				{
@@ -230,7 +214,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 				}
 			}
 		}
-		
+
 		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
 		{
@@ -238,7 +222,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 				continue;
 			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
 		}
-		
+
 		PersistenceContext::get_querier()->insert($table, $infos);
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
@@ -256,7 +240,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 			'L_FIELD_VALUE' => $LANG['db_table_value'],
 			'L_EXECUTE' => $LANG['db_submit_query']
 		));
-		
+
 		foreach ($table_structure['fields'] as $fields_info)
 		{
 			$tpl->assign_block_vars('fields', array(
@@ -278,7 +262,7 @@ elseif (!empty($table) && $action == 'optimize')
 elseif (!empty($table) && $action == 'truncate')
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	PersistenceContext::get_dbms_utils()->truncate(array($table));
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
@@ -286,7 +270,7 @@ elseif (!empty($table) && $action == 'truncate')
 elseif (!empty($table) && $action == 'drop')
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	PersistenceContext::get_dbms_utils()->drop(array($table));
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
@@ -302,11 +286,11 @@ elseif (!empty($table) && $action == 'query')
 	if (!empty($query)) //On exécute une requête
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
-		
+
 		$tpl->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
-		
+
 		$lower_query = TextHelper::strtolower($query);
 		if (TextHelper::strtolower(TextHelper::substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
@@ -330,7 +314,7 @@ elseif (!empty($table) && $action == 'query')
 					'FIELD_NAME' => TextHelper::strprotect($field_value),
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));
-				
+
 				$i++;
 			}
 			$result->dispose();
@@ -340,10 +324,10 @@ elseif (!empty($table) && $action == 'query')
 			$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
 			$affected_rows = $result->get_affected_rows();
 		}
-	}	
+	}
 	elseif (!empty($table))
 		$query = "SELECT * FROM " . $table . " WHERE 1";
-		
+
 	$tpl->put_all(array(
 		'QUERY' => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query),
@@ -360,7 +344,7 @@ elseif (!empty($table))
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	if (!isset($backup->tables[$table])) //Table non existante.
 		AppContext::get_response()->redirect('/database/admin_database.php');
-		
+
 	foreach ($table_structure['fields'] as $fields_info)
 	{
 		$primary_key = false;
@@ -372,7 +356,7 @@ elseif (!empty($table))
 				break;
 			}
 		}
-		
+
 		//Champs.
 		$tpl->assign_block_vars('field', array(
 			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
@@ -383,7 +367,7 @@ elseif (!empty($table))
 			'FIELD_EXTRA' => $fields_info['extra']
 		));
 	}
-	
+
 	//index
 	foreach ($table_structure['index'] as $index_info)
 	{
@@ -393,7 +377,7 @@ elseif (!empty($table))
 			'INDEX_FIELDS' => str_replace(',', '<br />', $index_info['fields'])
 		));
 	}
-	
+
 	//Infos sur la table.
 	$free = NumberHelper::round($backup->tables[$table]['data_free']/1024, 1);
 	$data = NumberHelper::round($backup->tables[$table]['data_length']/1024, 1);
@@ -403,7 +387,7 @@ elseif (!empty($table))
 	$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' MB' : $free . ' kB';
 	$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 	$index = ($index > 1024) ? NumberHelper::round($index/1024, 1) . ' MB' : $index . ' kB';
-	
+
 	$tpl->put_all(array(
 		'C_DATABASE_TABLE_STRUCTURE' => true,
 		'C_DATABASE_TABLE_DATA' => false,
