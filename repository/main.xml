@@ -2,169 +2,388 @@
 <!DOCTYPE repository SYSTEM "https://www.phpboost.com/repository/repository.dtd">
 <repository>
 	<header />
-	<app id="kernel" type="kernel">
-		<version num="5.0.9" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/08/04">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.9</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/442-pack-de-mise-a-jour-5-0-8-vers-5-0-9/">5.0.8 vers 5.0.9</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.8" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/26">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.8</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/436-pack-de-mise-a-jour-5-0-7-vers-5-0-8/">5.0.7 vers 5.0.8</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.7" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/22">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.7</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/435-pack-de-mise-a-jour-5-0-6-vers-5-0-7/">5.0.6 vers 5.0.7</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.6" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/01">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.6</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/433-pack-de-mise-a-jour-5-0-5-vers-5-0-6/">5.0.5 vers 5.0.6</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.5" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/06/04">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.5</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/426-pack-de-mise-a-jour-5-0-4-vers-5-0-5/">5.0.4 vers 5.0.5</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.4" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/04/28">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.4</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/423-pack-de-mise-a-jour-5-0-3-vers-5-0-4/">5.0.3 vers 5.0.4</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.3" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/03/24">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.3</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/411-pack-de-mise-jour-5-0-2-vers-5-0-3/">5.0.2 vers 5.0.3</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.2" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/03/10">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.2</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/409-pack-de-mise-jour-5-0-1-vers-5-0-2/">5.0.1 vers 5.0.2</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.1" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/25">
-			<compatibility min="5.0" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.1</download>
-			<update url="https://phpboost.com/download/45-mises-a-jour-phpboost-5-0/408-pack-de-mise-a-jour-5-0-0-vers-5-0-1/">5.0.0 vers 5.0.1</update>
-			<authors>
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
-			</description>
-			<whatsnew>
-				<new type="bug">Plusieurs corrections de bugs.</new>
-			</whatsnew>
-		</version>
-		<version num="5.0.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/11">
-			<compatibility min="4.1" />
-			<download url="https://www.phpboost.com/download/">PHPBoost 5.0.0</download>
-			<authors>
-				<author name="Kévin Massy" email="reidlos@phpboost.com" />
-				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
-			</authors>
-			<description>
-				Plus performante, plus sécurisée, PHPBoost 5.0 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautées.
-				Pour plus d'informations : https://www.phpboost.com/news/12-phpboost-5-0/210-phpboost-5-0-est-disponible-en-version-finale/
-			</description>
-			<whatsnew>
-				<new type="feature">Refonte du module discussion</new>
-				<new type="feature">Refonte du module F.A.Q.</new>
-				<new type="feature">Refonte du module Liens Web</new>
-				<new type="feature">Refonte du module Téléchargements</new>
-				<new type="feature">Framework javascript jQuery</new>
-				<new type="improvement">Optimisation du kernel et du thème pour affichage plus rapide</new>
-				<new type="improvement">Thème de base responsive, il s'adapte automatiquement à tout type d'écran</new>
-				<new type="improvement">Amélioration du référencement</new>
-				<new type="improvement">Amélioration de la sécurité</new>
-			</whatsnew>
-		</version>
+		<app id="kernel" type="kernel">
+			<version num="5.1.3" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2018/07/20">
+				<compatibility min="5.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.1.3</download>
+				<update url="https://www.phpboost.com/download/61-mises-a-jour-phpboost-5-1/643-pack-de-mise-a-jour-5-1-2-vers-5-1-3/">5.1.2 vers 5.1.3</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Elle permet également d'améliorer la compatibilité avec la dernière version de PHP 7.2.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.1.2" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2018/02/15">
+				<compatibility min="5.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.1.2</download>
+				<update url="https://www.phpboost.com/download/61-mises-a-jour-phpboost-5-1/641-pack-de-mise-a-jour-5-1-1-vers-5-1-2/">5.1.1 vers 5.1.2</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.1.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2017/07/18">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.1.0</download>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Plus performante, plus sécurisée, PHPBoost 5.1 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautés.
+					Pour plus d'informations : https://www.phpboost.com/news/15-phpboost-5-1/226-la-version-5-1-finale/
+				</description>
+				<whatsnew>
+						<new type="feature">Passage de l'encodage des caractères en UTF-8</new>
+						<new type="improvment">Mise à jour du framework javascript jQuery</new>
+						<new type="improvment">Optimisation du kernel et du thème pour un affichage plus rapide</new>
+						<new type="improvment">Amélioration de la sécurité</new>
+						<new type="improvment">Bien d'autres améliorations a découvrir sur cette page : https://www.phpboost.com/wiki/phpboost-5-1</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.18" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2017/07/11">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.18</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/515-pack-de-mise-a-jour-5-0-17-vers-5-0-18/">5.0.17 vers 5.0.18</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.17" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2017/04/19">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.17</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/494-pack-de-mise-a-jour-5-0-16-vers-5-0-17/">5.0.16 vers 5.0.17</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.16" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2017/02/23">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.16</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/484-pack-de-mise-a-jour-5-0-15-vers-5-0-16/">5.0.15 vers 5.0.16</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.15" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2017/02/11">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.15</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/482-pack-de-mise-a-jour-5-0-14-vers-5-0-15/">5.0.14 vers 5.0.15</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Il s'agit d'une mise à jour de sécurité, elle corrige une faille détectée récemment (CVE-2017-5223) dans le script d'envoi de mail (phpmailer) qui affecte tous les CMS qui l'utilisent. Il est vivement conseillé d'effectuer cette mise à jour rapidement.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.14" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2017/01/01">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.14</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/476-pack-de-mise-a-jour-5-0-13-vers-5-0-14/">5.0.13 vers 5.0.14</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Il s'agit d'une mise à jour de sécurité, elle corrige deux failles detectées récemment (CVE-2016-10033 et CVE-2016-10045) dans le script d'envoi de mail (phpmailer) qui affecte tous les CMS qui l'utilisent. Il est vivement conseillé d'effectuer cette mise à jour rapidement.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.13" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2016/12/29">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.13</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/475-pack-de-mise-a-jour-5-0-12-vers-5-0-13/">5.0.12 vers 5.0.13</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Il s'agit d'une mise à jour de sécurité, elle corrige une faille détectée récemment dans le script d'envoi de mail (phpmailer) qui affecte tous les CMS qui l'utilisent. Il est vivement conseillé d'effectuer cette mise à jour rapidement.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.12" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/12/13">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.12</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/473-pack-de-mise-a-jour-5-0-11-vers-5-0-12/">5.0.11 vers 5.0.12</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.11" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/12/01">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.11</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/472-pack-de-mise-a-jour-5-0-10-vers-5-0-11/">5.0.10 vers 5.0.11</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.10" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/09/29">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.10</download>
+				<update url="https://www.phpboost.com/download/45-mises-a-jour-phpboost-5-0/463-pack-de-mise-a-jour-5-0-9-vers-5-0-10/">5.0.9 vers 5.0.10</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.9" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/08/04">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.9</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/442-pack-de-mise-a-jour-5-0-8-vers-5-0-9/">5.0.8 vers 5.0.9</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.8" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/26">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.8</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/436-pack-de-mise-a-jour-5-0-7-vers-5-0-8/">5.0.7 vers 5.0.8</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.7" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/22">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.7</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/435-pack-de-mise-a-jour-5-0-6-vers-5-0-7/">5.0.6 vers 5.0.7</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.6" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/07/01">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.6</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/433-pack-de-mise-a-jour-5-0-5-vers-5-0-6/">5.0.5 vers 5.0.6</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.5" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/06/04">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.5</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/426-pack-de-mise-a-jour-5-0-4-vers-5-0-5/">5.0.4 vers 5.0.5</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.4" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/04/28">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.4</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/423-pack-de-mise-a-jour-5-0-3-vers-5-0-4/">5.0.3 vers 5.0.4</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.3" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/03/24">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.3</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/411-pack-de-mise-jour-5-0-2-vers-5-0-3/">5.0.2 vers 5.0.3</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.2" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/03/10">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.2</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/409-pack-de-mise-jour-5-0-1-vers-5-0-2/">5.0.1 vers 5.0.2</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.1" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/25">
+				<compatibility min="5.0" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.1</download>
+				<update url="http://phpboost.com/download/45-mises-a-jour-phpboost-5-0/408-pack-de-mise-a-jour-5-0-0-vers-5-0-1/">5.0.0 vers 5.0.1</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="5.0.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/02/11">
+				<compatibility min="4.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.0.0</download>
+				<authors>
+					<author name="Kévin Massy" email="reidlos@phpboost.com" />
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Plus performante, plus sécurisée PHPBoost 5.0 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautés.
+					Pour plus d'informations : https://www.phpboost.com/news/12-phpboost-5-0/210-phpboost-5-0-est-disponible-en-version-finale/
+				</description>
+				<whatsnew>
+					<new type="feature">Refonte du module discussion</new>
+					<new type="feature">Refonte du module F.A.Q.</new>
+					<new type="feature">Refonte du module Liens Web</new>
+					<new type="feature">Refonte du module Téléchargements</new>
+					<new type="feature">Framework javascript jQuery</new>
+					<new type="improvment">Optimisation du kernel et du thème pour un affichage plus rapide</new>
+					<new type="improvment">Thème de base responsive, il s'adapte automatiquement à tout type d'écran</new>
+					<new type="improvment">Amélioration du référencement</new>
+					<new type="improvment">Amélioration de la sécurité</new>
+				</whatsnew>
+			</version>
+			<version num="4.1.9" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2017/02/23">
+				<compatibility min="4.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 4.1.9</download>
+				<update url="http://phpboost.com/download/41-mises-a-jour-phpboost-4-1/485-pack-de-mise-a-jour-4-1-8-vers-4-1-9/">4.1.8 vers 4.1.9</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise à jour contient quelques correctifs de PHPBoost 4.1 ainsi que la mise à jour de la librairie phpmailer pour corriger la faille de sécurité détectées récemment CVE-2017-5223.
+					Il est vivement recommandé d'effectuer cette mise à jour pour ceux qui ont gardé leur site en version 4.1.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
+			<version num="4.1.8" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2017/01/02">
+				<compatibility min="4.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 4.1.8</download>
+				<update url="http://phpboost.com/download/41-mises-a-jour-phpboost-4-1/477-pack-de-mise-a-jour-4-1-7-vers-4-1-8/">4.1.7 vers 4.1.8</update>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Cette mise a jour contient quelques correctifs de PHPBoost 4.1 ainsi que la mise a jour de la librairie phpmailer pour corriger les failles de sécurité détectées récemment : CVE-2008-5619, CVE-2015-8476, CVE-2016-10033 et CVE-2016-1
+					Il est vivement recommandé d'effectuer cette misea jour pour ceux qui ont gardé leur site en version 41.
+					Pour mettre votre site a jour, telechargez le pack de mise a jour, decompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en ecrasant les fichiers existants.
+				</description>
+				<whatsnew>
+					<new type="bug">Plusieurs corrections de bugs.</new>
+				</whatsnew>
+			</version>
 		<version num="4.1.7" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2016/01/08">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.7</download>
-			<update url="https://phpboost.com/download/41-mises-a-jour-phpboost-4-1/366-pack-de-mise-a-jour-4-1-6-vers-4-1-7/">4.1.6 vers 4.1.7</update>
+			<update url="http://phpboost.com/download/41-mises-a-jour-phpboost-4-1/366-pack-de-mise-a-jour-4-1-6-vers-4-1-7/">4.1.6 vers 4.1.7</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
@@ -180,7 +399,7 @@
 		<version num="4.1.6" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2015/10/15">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.6</download>
-			<update url="https://phpboost.com/download/download-362+pack-de-mise-jour-4-1-5-vers-4-1-6.php">4.1.5 vers 4.1.6</update>
+			<update url="http://phpboost.com/download/download-362+pack-de-mise-jour-4-1-5-vers-4-1-6.php">4.1.5 vers 4.1.6</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
@@ -196,13 +415,13 @@
 		<version num="4.1.5" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2015/05/02">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.5</download>
-			<update url="https://phpboost.com/download/download-360+pack-de-mise-jour-4-1-4-vers-4-1-5.php">4.1.4 vers 4.1.5</update>
+			<update url="http://phpboost.com/download/download-360+pack-de-mise-jour-4-1-4-vers-4-1-5.php">4.1.4 vers 4.1.5</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
-				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
+				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -212,13 +431,13 @@
 		<version num="4.1.4" language="french" localized_language="Français" name="Noyau" priority="high" security-update="true" pubdate="2015/02/11">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.4</download>
-			<update url="https://phpboost.com/download/download-359+pack-de-mise-jour-4-1-3-vers-4-1-4.php">4.1.3 vers 4.1.4</update>
+			<update url="http://phpboost.com/download/download-359+pack-de-mise-jour-4-1-3-vers-4-1-4.php">4.1.3 vers 4.1.4</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
-				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
+				Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -229,14 +448,14 @@
 		<version num="4.1.3" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2014/12/16">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.3</download>
-					<update url="https://phpboost.com/download/download-358+pack-de-mise-jour-4-1-2-vers-4-1-3.php">4.1.2 vers 4.1.3</update>
+					<update url="http://phpboost.com/download/download-358+pack-de-mise-jour-4-1-2-vers-4-1-3.php">4.1.2 vers 4.1.3</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
-					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Plusieurs corrections de bugs.</new>
@@ -245,37 +464,37 @@
 		<version num="4.1.2" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2014/09/10">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.2</download>
-					<update url="https://phpboost.com/download/download-348+pack-de-mise-a-jour-4-1-1-vers-4-1-2.php">4.1.1 vers 4.1.2</update>
+					<update url="http://phpboost.com/download/download-348+pack-de-mise-a-jour-4-1-1-vers-4-1-2.php">4.1.1 vers 4.1.2</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
-					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Plusieurs corrections de bugs.</new>
-				<new type="security">Plusieurs corrections de sécurités.</new>
+				<new type="security">Plusieurs corrections de sécurité.</new>
 			</whatsnew>
 		</version>
 		<version num="4.1.1" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2014/07/31">
 			<compatibility min="4.1" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.1.1</download>
-					<update url="https://phpboost.com/download/download-340+pack-de-mise-a-jour-4-1-0-vers-4-1-1.php">4.1.0 vers 4.1.1</update>
+			<update url="http://phpboost.com/download/download-340+pack-de-mise-a-jour-4-1-0-vers-4-1-1.php">4.1.0 vers 4.1.1</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 					</authors>
 					<description>
-					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+					Cette mise à jour contient quelques corrections de bugs et offre une meilleure stabilité de PHPBoost.
+					Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Plusieurs corrections de bugs.</new>
-				<new type="improvement">Amélioration du module statistique</new>
-				<new type="improvement">Ajout de la possibilité de ne pas afficher l'auteur dans les news</new>
-				<new type="improvement">Amélioration du référencement</new>
+				<new type="improvment">Amélioration du module statistique</new>
+				<new type="improvment">Ajout de la possibilité de ne pas afficher l'auteur dans les news</new>
+				<new type="improvment">Amélioration du référencement</new>
 			</whatsnew>
 		</version>
 		<version num="4.1.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2014/07/15">
@@ -286,7 +505,7 @@
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
-				Plus lègère et plus performante, PHPBoost 4.1 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautées.
+				Plus légère et plus performante, PHPBoost 4.1 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautés.
 				Pour plus d'informations : https://www.phpboost.com/news/0-root/195-sortie-de-phpboost-4-1-finale/
 			</description>
 			<whatsnew>
@@ -294,22 +513,22 @@
 				<new type="feature">Refonte du module contact</new>
 				<new type="feature">Refonte du module news</new>
 				<new type="feature">Refonte du module articles</new>
-				<new type="improvement">Optimisation du kernel et du thème pour affichage plus rapide</new>
+				<new type="improvment">Optimisation du kernel et du thème pour affichage plus rapide</new>
 				<new type="feature">Un nouveau script de migration, il est maintenant beaucoup plus facile de migrer d'une version à une autre !</new>
-				<new type="improvement">Amélioration du référencement</new>
+				<new type="improvment">Amélioration du référencement</new>
 			</whatsnew>
 		</version>
 		<version num="4.0.6" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2013/11/04">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.6</download>
-					<update url="https://phpboost.com/download/file-294+pack-de-mise-a-jour-4-0-5-vers-4-0-6.php">4.0.5 vers 4.0.6</update>
+			<update url="http://phpboost.com/download/file-294+pack-de-mise-a-jour-4-0-5-vers-4-0-6.php">4.0.5 vers 4.0.6</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 			</authors>
 			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Vous pouvez voir les modifications et corrections sur cette adresse : https://phpboost.com/bugtracker/roadmap/4-0-6/
+				Vous pouvez voir les modifications et corrections sur cette adresse : https://www.phpboost.com/bugtracker/roadmap/4-0-6/
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -319,17 +538,17 @@
 		<version num="4.0.5" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2013/07/12">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.5</download>
-					<update url="https://phpboost.com/download/file-288+pack-de-mise-a-jour-4-0-4-vers-4-0-5.php">4.0.4 vers 4.0.5</update>
+			<update url="http://phpboost.com/download/file-288+pack-de-mise-a-jour-4-0-4-vers-4-0-5.php">4.0.4 vers 4.0.5</update>
 			<authors>
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-						<author name="Régis Viarre" email="crowkait@phpboost.com" />
-						<author name="Loïc Rouchon" email="horn@phpboost.com" />
-					</authors>
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
 			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Vous pouvez voir les modifications et corrections sur cette adresse : https://phpboost.com/bugtracker/roadmap/4-0-5/
+				Vous pouvez voir les modifications et corrections sur cette adresse : https://www.phpboost.com/bugtracker/roadmap/4-0-5/
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -339,16 +558,16 @@
 		<version num="4.0.4" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2013/05/03">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.4</download>
-					<update url="https://phpboost.com/download/file-284+pack-de-mise-a-jour-4-0-3-vers-4-0-4.php">4.0.3 vers 4.0.4</update>
+			<update url="http://phpboost.com/download/file-284+pack-de-mise-a-jour-4-0-3-vers-4-0-4.php">4.0.3 vers 4.0.4</update>
 			<authors>
-				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-							<author name="Régis Viarre" email="crowkait@phpboost.com" />
-							<author name="Loïc Rouchon" email="horn@phpboost.com" />
-					</authors>
-					<description>
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
+			</authors>
+			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
-				Vous pouvez voir les modifications et corrections sur cette adresse : https://phpboost.com/bugtracker/roadmap/4-0-4/
+				Vous pouvez voir les modifications et corrections sur cette adresse : https://www.phpboost.com/bugtracker/roadmap/4-0-4/
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -358,14 +577,14 @@
 		<version num="4.0.3" language="french" localized_language="Français" name="Noyau" priority="medium" security-update="false" pubdate="2013/04/09">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.3</download>
-					<update url="https://phpboost.com/download/file-281+pack-de-mise-a-jour-4-0-2-vers-4-0-3.php">4.0.2 vers 4.0.3</update>
+			<update url="http://phpboost.com/download/file-281+pack-de-mise-a-jour-4-0-2-vers-4-0-3.php">4.0.2 vers 4.0.3</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-							<author name="Régis Viarre" email="crowkait@phpboost.com" />
-							<author name="Loïc Rouchon" email="horn@phpboost.com" />
-							<author name="Kévin Massy" email="reidlos@phpboost.com" />
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 			</authors>
-					<description>
+			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
@@ -376,14 +595,14 @@
 		<version num="4.0.2" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2013/02/21">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.2</download>
-					<update url="https://phpboost.com/download/file-274+pack-de-mise-a-jour-4-0-1-vers-4-0-2.php">4.0.1 vers 4.0.2</update>
+			<update url="http://phpboost.com/download/file-274+pack-de-mise-a-jour-4-0-1-vers-4-0-2.php">4.0.1 vers 4.0.2</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-							<author name="Régis Viarre" email="crowkait@phpboost.com" />
-							<author name="Loïc Rouchon" email="horn@phpboost.com" />
-							<author name="Kévin Massy" email="reidlos@phpboost.com" />
-					</authors>
-					<description>
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
+			</authors>
+			<description>
 					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
@@ -394,15 +613,15 @@
 		<version num="4.0.1" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2013/01/30">
 			<compatibility min="4.0" />
 			<download url="https://www.phpboost.com/download/">PHPBoost 4.0.1</download>
-					<update url="https://dl.phpboost.com/fr/4.0/diff/diff-phpboost-4.0.0-to-phpboost-4.0.1-optimized.zip">4.0.0 vers 4.0.1</update>
+			<update url="http://dl.phpboost.com/fr/4.0/diff/diff-phpboost-4.0.0-to-phpboost-4.0.1-optimized.zip">4.0.0 vers 4.0.1</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-							<author name="Régis Viarre" email="crowkait@phpboost.com" />
-							<author name="Loïc Rouchon" email="horn@phpboost.com" />
-							<author name="Kévin Massy" email="reidlos@phpboost.com" />
-					</authors>
-					<description>
-					Cette mise à jour contient un grand nombre de corrections de bugs et permet une meilleure compatibilité avec certaines configurations.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
+			</authors>
+			<description>
+					Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
 				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
@@ -419,7 +638,7 @@
 				<author name="Kévin Massy" email="reidlos@phpboost.com" />
 			</authors>
 			<description>
-				Plus stable, plus performante, la version 4.0 de PHPBoost pose de nouvelles bases solides en apportant également son lot de nouveautés.
+				Plus stable, plus performante, la version 4.0 de PHPBoost pose de nouvelles bases solides en apportant son lot de nouveautés
 			</description>
 			<whatsnew>
 				<new type="feature">Système de champs étendus évolué</new>
@@ -432,15 +651,16 @@
 		<version num="3.0.11" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2012/06/11">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.10-to-phpboost-3.0.11.zip">3.0.10 vers 3.0.11</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.10-to-phpboost-3.0.11.zip">3.0.10 vers 3.0.11</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-							<author name="Régis Viarre" email="crowkait@phpboost.com" />
-							<author name="Loïc Rouchon" email="horn@phpboost.com" />
-							<author name="Kévin Massy" email="reidlos@phpboost.com" />
-					</authors>
-					<description>
-				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
+			</authors>
+			<description>
+				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
+				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Pleine compatibilité avec la version 5.4 de PHP.</new>
@@ -450,15 +670,16 @@
 		<version num="3.0.10" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2011/11/06">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.9-to-phpboost-3.0.10.zip">3.0.9 vers 3.0.10</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.9-to-phpboost-3.0.10.zip">3.0.9 vers 3.0.10</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-								<author name="Kévin Massy" email="reidlos@phpboost.com" />
-						 </authors>
-						 <description>
-				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+				<author name="Kévin Massy" email="reidlos@phpboost.com" />
+			</authors>
+			<description>
+				Cette mise à jour contient un grand nombre de corrections de bugs et offre une meilleure stabilité de PHPBoost.
+				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Correction d'un problème de vérifications d'autorisations dans le module galerie.</new>
@@ -467,29 +688,29 @@
 		<version num="3.0.9" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2011/04/07">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.8-to-phpboost-3.0.9.zip">3.0.8 vers 3.0.9</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.8-to-phpboost-3.0.9.zip">3.0.8 vers 3.0.9</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-						 </authors>
-						 <description>
-								Correction de plusieurs bugs ainsi que d'une potentielle faille de sécurité.
-				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
+			<description>
+				Correction de plusieurs bugs ainsi que d'une potentielle faille de sécurité.
+				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 		</version>
 		<version num="3.0.8" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2010/06/26">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.7-to-phpboost-3.0.8.zip">3.0.7 vers 3.0.8</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.7-to-phpboost-3.0.8.zip">3.0.7 vers 3.0.8</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-						 </authors>
-						 <description>
-								Correction d'un bug introduit lors de la précédente mise à jour concernant le moteur de template qui ne fonctionne pas dans certaines conditions.
-				 Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
+			<description>
+					Correction d'un bug introduit lors de la précédente mise à jour concernant le moteur de template qui ne fonctionne pas dans certaines conditions. 
+				Pour mettre votre site à jour, téléchargez le pack de mise à jour, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Correction d'un bug empêchant le fonctionnement normal du moteur de template.</new>
@@ -498,15 +719,15 @@
 		<version num="3.0.7" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2010/06/24">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.6-to-phpboost-3.0.7.zip">3.0.6 vers 3.0.7</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.6-to-phpboost-3.0.7.zip">3.0.6 vers 3.0.7</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-						 </authors>
-						 <description>
-								 Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.6.
-				 Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
+			<description>
+				Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.6.
+				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Correction d'un bug empêchant les statistiques de fonctionner chez l'hébergeur free.fr.</new>
@@ -516,38 +737,38 @@
 		<version num="3.0.6" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2010/01/21">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.5-to-phpboost-3.0.6.zip">3.0.5 vers 3.0.6</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.5-to-phpboost-3.0.6.zip">3.0.5 vers 3.0.6</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-						 </authors>
-						 <description>
-								 Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.5.
-				 Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
+			<description>
+				Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.5.
+				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
-				<new type="bug">Correction d'un bug empêchant les mises à jour de module se faire correctement lorsqu'il y a des modifications à faire en base de données</new>
+				<new type="bug">Correction d'un bug empêchant les mises à jour de module se faire correctement lorsqu'il y a des modifications à faire en base de donnée</new>
 				<new type="bug">Correction d'un bug dans l'éditeur de texte risquant de causer quelques problèmes d'affichage dans des cas très particuliers</new>
 			</whatsnew>
 		</version>
 		<version num="3.0.5" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2009/10/26">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-					<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.4-to-phpboost-3.0.5.zip">3.0.4 vers 3.0.5</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.4-to-phpboost-3.0.5.zip">3.0.4 vers 3.0.5</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
-								<author name="Régis Viarre" email="crowkait@phpboost.com" />
-								<author name="Loïc Rouchon" email="horn@phpboost.com" />
-						 </authors>
-						 <description>
-								 Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.4.
-				 Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
+				<author name="Régis Viarre" email="crowkait@phpboost.com" />
+				<author name="Loïc Rouchon" email="horn@phpboost.com" />
+			</authors>
+			<description>
+				Diverses corrections venant régler tous les problèmes signalés depuis la 3.0.4.
+				Pour mettre votre site à jour, téléchargez le fichier contenant les nouveaux fichiers, décompressez-le et envoyez les fichiers obtenus sur votre serveur via FTP en écrasant les fichiers existants.
 			</description>
 			<whatsnew>
 				<new type="bug">Correction sur la vérification de validité des adresses mail (les domaines avec un tiret sont acceptés)</new>
-								<new type="bug">Correction sur l'acceptation des URL (des liens corrects étaient refusés)</new>
-				<new type="bug">Correction de la langue anglaise dans certains modules grâce à l'équipe de traduction</new>
+				<new type="bug">Correction sur l'acceptation des URL (des liens corrects étaient refusés)</new>
+				<new type="bug">Correction de la langue anglaise dans certains modules</new>
 				<new type="bug">Le fichier CSS du forum n'était pas complet et le forum s'affichait mal</new>
 				<new type="bug">Correction d'une erreur sur l'archivage de la newsletter</new>
 				<new type="bug">Correction d'un bug qui empêchait d'installer PHPBoost en anglais</new>
@@ -556,19 +777,19 @@
 		<version num="3.0.4" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2009/08/23">
 			<compatibility min="3.0" />
 			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
-			<update url="https://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.3-to-phpboost-3.0.4.zip">3.0.3 vers 3.0.4</update>
+			<update url="http://dl.phpboost.com/fr/phpboost/3.0/diff/diff-phpboost-3.0.3-to-phpboost-3.0.4.zip">3.0.3 vers 3.0.4</update>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
 				<author name="Régis Viarre" email="crowkait@phpboost.com" />
 				<author name="Loïc Rouchon" email="horn@phpboost.com" />
 			</authors>
 			<description>
-				Corrections portant sur l'url rewriting du module search entraînant des erreurs 500 et le positionnement
+				Corrections portant sur l'url rewriting du module search entraînait des erreurs 500 et le positionnement
 				horizontal / vertical des mini-modules
 			</description>
 			<whatsnew>
 				<new type="bug">Erreur 500 avec le module search</new>
-				<new type="bug">Mise à jour des templates des mini-modules pour pouvoir être placés horinzontalement / verticalement</new>
+				<new type="bug">Mise à jour des templates des mini-modules pour pouvoir être placé horizontalement / verticalement</new>
 			</whatsnew>
 		</version>
 		<version num="3.0.3" language="french" localized_language="Français" name="Noyau" priority="low" security-update="false" pubdate="2009/08/23">
@@ -594,26 +815,24 @@
 		</version>
 		<version num="3.0" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2009/07/28">
 			<compatibility min="3.0" />
-			<download
-				url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
+			<download url="https://www.phpboost.com/download/category-31+distributions.php">PHPBoost 3.0</download>
 			<authors>
 				<author name="Benoît Sautel" email="ben.popeye@phpboost.com" />
 				<author name="Régis Viarre" email="crowkait@phpboost.com" />
 				<author name="Loïc Rouchon" email="horn@phpboost.com" />
 			</authors>
 			<description>
-				PHPBoost 3.0 marque une profonde différence avec ses prédécesseurs, c'est le fruit de plus d'un an et demi intensif
+				PHPBoost 3.0 marque une profonde différence avec ses prédecesseurs, c'est le fruit de plus d'un an et demi intensif
 				de développement.
-				Ce n'était au début qu'une évolution d'une partie du code, au final c'est la quasi totalité qui a été reprise!
+				Ce n'était au début qu'une évolution d'une partie du code, au final c'est la quasi totalité qui a été reprise !
 				L'architecture du système a été repensée entièrement, elle offre désormais une modularité totale.
-				Le nombre de modifications est tel qu'un article lui est dédié.
-			</description>
+				Le nombre de modifications est tel qu'un article lui est dédié</description>
 			<whatsnew>
 				<new type="feature">Panneau de contribution</new>
 				<new type="feature">Système de menus puissant</new>
 				<new type="feature">Système d'alertes</new>
 				<new type="security">Amélioration de la sécurité</new>
-				<new type="improvement">Système de flux RSS entièrement remanié supportant désormais l'ATOM pouvant être utilisé via les Templates</new>
+				<new type="improvment">Système de flux RSS entièrement remanié supportant désormais l'ATOM pouvant être utilisé via les Templates</new>
 				<new type="bug">Nombreux bugs corrigés</new>
 			</whatsnew>
 		</version>
