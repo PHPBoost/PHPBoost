@@ -1,53 +1,35 @@
 <?php
-/*##################################################
- *                      CalendarUnsuscribeController.class.php
- *                            -------------------
- *   begin                : November 08, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.0 - 2013 11 08
+*/
 
 class CalendarUnsuscribeController extends ModuleController
 {
 	private $event;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$event_id = $request->get_getint('event_id', 0);
 		$current_user_id = AppContext::get_current_user()->get_id();
-		
+
 		if (!empty($event_id))
 		{
 			$this->get_event($event_id);
-			
+
 			$this->check_authorizations();
-			
+
 			if (in_array($current_user_id, array_keys($this->event->get_participants())))
 			{
 				CalendarService::delete_participant($event_id, $current_user_id);
 				CalendarCurrentMonthEventsCache::invalidate();
 			}
-			
+
 			$category = $this->event->get_content()->get_category();
-			
+
 			AppContext::get_response()->redirect($request->get_url_referrer() ? $request->get_url_referrer() : CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_id, $this->event->get_content()->get_rewrited_title()));
 		}
 		else
@@ -56,7 +38,7 @@ class CalendarUnsuscribeController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function get_event($event_id)
 	{
 		try {
@@ -66,7 +48,7 @@ class CalendarUnsuscribeController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!$this->event->get_content()->is_registration_authorized())

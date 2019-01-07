@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                          CalendarSetup.class.php
- *                            -------------------
- *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 10 20
+ * @since   	PHPBoost 3.0 - 2010 01 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class CalendarSetup extends DefaultModuleSetup
 {
@@ -31,7 +14,7 @@ class CalendarSetup extends DefaultModuleSetup
 	public static $calendar_events_content_table;
 	public static $calendar_cats_table;
 	public static $calendar_users_relation_table;
-	
+
 	public static function __static()
 	{
 		self::$calendar_events_table = PREFIX . 'calendar_events';
@@ -39,24 +22,24 @@ class CalendarSetup extends DefaultModuleSetup
 		self::$calendar_cats_table = PREFIX . 'calendar_cats';
 		self::$calendar_users_relation_table = PREFIX . 'calendar_users_relation';
 	}
-	
+
 	public function install()
 	{
 		$this->drop_tables();
 		$this->create_tables();
 	}
-	
+
 	public function uninstall()
 	{
 		$this->drop_tables();
 		ConfigManager::delete('calendar', 'config');
 	}
-	
+
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$calendar_events_table, self::$calendar_events_content_table, self::$calendar_cats_table, self::$calendar_users_relation_table));
 	}
-	
+
 	private function create_tables()
 	{
 		$this->create_calendar_events_table();
@@ -64,7 +47,7 @@ class CalendarSetup extends DefaultModuleSetup
 		$this->create_calendar_cats_table();
 		$this->create_calendar_users_relation_table();
 	}
-	
+
 	private function create_calendar_events_table()
 	{
 		$fields = array(
@@ -83,7 +66,7 @@ class CalendarSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_events_table, $fields, $options);
 	}
-	
+
 	private function create_calendar_events_content_table()
 	{
 		$fields = array(
@@ -115,12 +98,12 @@ class CalendarSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_events_content_table, $fields, $options);
 	}
-	
+
 	private function create_calendar_cats_table()
 	{
 		CalendarCategory::create_categories_table(self::$calendar_cats_table);
 	}
-	
+
 	private function create_calendar_users_relation_table()
 	{
 		$fields = array(

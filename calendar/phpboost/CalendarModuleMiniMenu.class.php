@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *                          CalendarModuleMiniMenu.class.php
- *                            -------------------
- *   begin                : November 22, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @since   	PHPBoost 3.0 - 2012 11 22
+*/
 
 class CalendarModuleMiniMenu extends ModuleMiniMenu
 {
@@ -31,30 +13,30 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 	{
 		return self::BLOCK_POSITION__LEFT;
 	}
-	
+
 	public function get_menu_id()
 	{
 		return 'module-mini-calendar';
 	}
-	
+
 	public function get_menu_title()
 	{
 		return LangLoader::get_message('module_title', 'common', 'calendar');
 	}
-	
+
 	public function is_displayed()
 	{
 		return !Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read();
 	}
-	
+
 	public function get_menu_content()
 	{
 		$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
 		$tpl->add_lang(LangLoader::get('common', 'calendar'));
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		
+
 		$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view(true));
-		
+
 		return $tpl->render();
 	}
 }

@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *		             CalendarFeedProvider.class.php
- *                            -------------------
- *   begin                : February 25, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU Comments Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Comments Public License for more details.
- *
- * You should have received a copy of the GNU Comments Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 03 29
+ * @since   	PHPBoost 4.0 - 2013 02 25
+*/
 
 class CalendarFeedProvider implements FeedProvider
 {
@@ -31,7 +13,7 @@ class CalendarFeedProvider implements FeedProvider
 	{
 		return CalendarService::get_categories_manager()->get_feeds_categories_module()->get_feed_list();
 	}
-	
+
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		if (CalendarService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
@@ -39,12 +21,12 @@ class CalendarFeedProvider implements FeedProvider
 			$now = new Date();
 			$lang = LangLoader::get('common', 'calendar');
 			$querier = PersistenceContext::get_querier();
-			
+
 			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($idcat);
-			
+
 			$site_name = GeneralConfig::load()->get_site_name();
 			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
-			
+
 			$feed_module_name = $lang['calendar.feed.name'];
 			$data = new FeedData();
 			$data->set_title($feed_module_name . ' - ' . $site_name);
@@ -54,10 +36,10 @@ class CalendarFeedProvider implements FeedProvider
 			$data->set_desc($feed_module_name . ' - ' . $site_name);
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
-			
+
 			$categories = CalendarService::get_categories_manager()->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
-			
+
 			$result = $querier->select('SELECT *
 			FROM ' . CalendarSetup::$calendar_events_table . ' event
 			LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
@@ -70,16 +52,16 @@ class CalendarFeedProvider implements FeedProvider
 				'cats_ids' => $ids_categories,
 				'timestamp_now' => $now->get_timestamp()
 			));
-			
+
 			while ($row = $result->fetch())
 			{
 				$event = new CalendarEvent();
 				$event->set_properties($row);
-				
+
 				$category = $categories[$event->get_content()->get_category_id()];
-				
+
 				$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_content()->get_rewrited_title());
-				
+
 				$item = new FeedItem();
 				$item->set_title($event->get_content()->get_title());
 				$item->set_link($link);
@@ -91,7 +73,7 @@ class CalendarFeedProvider implements FeedProvider
 				$data->add_item($item);
 			}
 			$result->dispose();
-			
+
 			return $data;
 		}
 	}

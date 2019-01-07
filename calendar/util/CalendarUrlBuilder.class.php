@@ -1,41 +1,19 @@
 <?php
-/*##################################################
- *                          CalendarUrlBuilder.class.php
- *                            -------------------
- *   begin                : November 20, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc Url builder of the calendar module
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 07 19
+ * @since   	PHPBoost 3.0 - 2012 11 20
+*/
+
 class CalendarUrlBuilder
 {
 	const DEFAULT_SORT_FIELD = 'date';
 	const DEFAULT_SORT_MODE = 'desc';
-	
+
 	private static $dispatcher = '/calendar';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -43,7 +21,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -51,7 +29,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -59,7 +37,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -67,7 +45,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -75,7 +53,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -83,7 +61,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -91,7 +69,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title . '/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -99,7 +77,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title . '/#comments-list');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -108,7 +86,7 @@ class CalendarUrlBuilder
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -119,7 +97,7 @@ class CalendarUrlBuilder
 		$day = $day !== null ? $day . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $year . $month . $day);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -127,7 +105,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -135,7 +113,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . 'token=' . AppContext::get_session()->get_token());
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -143,7 +121,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/suscribe/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -151,7 +129,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/unsuscribe/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -159,7 +137,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -167,7 +145,7 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_events/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -177,7 +155,7 @@ class CalendarUrlBuilder
 		$date = $year !== null && $month !== null && $day !== null ? sprintf("%04d", $year) . '-' . sprintf("%02d", $month) . '-' . sprintf("%02d", $day) : $now->format(Date::FORMAT_DAY_MONTH_YEAR);
 		return DispatchManager::get_url(self::$dispatcher, '/events_list/?table=,filters:{filter1:' . $date . '}');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
