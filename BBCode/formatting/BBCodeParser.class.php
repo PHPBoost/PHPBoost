@@ -13,6 +13,7 @@
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela13 <xela@phpboost.com>
 */
 
 class BBCodeParser extends ContentFormattingParser
@@ -262,6 +263,9 @@ class BBCodeParser extends ContentFormattingParser
 					$this->forbidden_tags[] = 'url2';
 					$this->forbidden_tags[] = 'url3';
 					$this->forbidden_tags[] = 'url4';
+					$this->forbidden_tags[] = 'url5';
+					$this->forbidden_tags[] = 'url6';
+					$this->forbidden_tags[] = 'url7';
 				}
 				if (in_array('mail', $this->forbidden_tags))
 				{
