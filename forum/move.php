@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                               move.php
- *                            -------------------
- *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 1.2 - 2005 10 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
@@ -51,7 +35,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -64,7 +48,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -85,7 +69,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY || $option_cat->get_id() == $topic['idcat'])
 				$option->set_disable(true);
-			
+
 			if (!$option_cat->get_url())
 				$cat_list .= $option->display()->render();
 		}
@@ -117,7 +101,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'U_FORUM_CAT'      => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'FORUM_CAT'        => $cat['name'],
 		'U_TITLE_T'        => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
-		'TITLE_T'          => stripslashes($topic['title']),	
+		'TITLE_T'          => stripslashes($topic['title']),
 		'L_SELECT_SUBCAT'  => $LANG['require_subcat'],
 		'L_MOVE_SUBJECT'   => $LANG['forum_move_subject'],
 		'L_CAT'            => $LANG['category'],
@@ -128,10 +112,10 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-		
+
 	$tpl->display();
 }
 elseif (!empty($id_post)) //Déplacement du topic
@@ -147,18 +131,18 @@ elseif (!empty($id_post)) //Déplacement du topic
 			$Forumfct = new Forum();
 
 			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
-			
+
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                 $LANG['e_incomplete']);
             DispatchManager::redirect($controller);
 		}
 	}
 	else
-	{ 
+	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
@@ -168,21 +152,21 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$tpl = new FileTemplate('forum/forum_post.tpl');
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
-	
+
 	try {
 		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'contents'), 'WHERE id=:id', array('id' => $idm));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -203,7 +187,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$to = (int)retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
@@ -226,10 +210,10 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY)
 				$option->set_disable(true);
-			
+
 			if ($option_cat->get_id() == $topic['idcat'])
 				$option->set_active(true);
-			
+
 			if (!$option_cat->get_url())
 				$cat_list .= $option->display()->render();
 		}
@@ -237,7 +221,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
-		
+
 	$vars_tpl = array(
 		'C_FORUM_CUT_CAT'  => true,
 		'CATEGORIES'       => $cat_list,
@@ -247,7 +231,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'U_FORUM_CAT'      => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'FORUM_CAT'        => $cat['name'],
 		'U_TITLE_T'        => 'topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php'),
-		'TITLE_T'          => stripslashes($topic['title']),	
+		'TITLE_T'          => stripslashes($topic['title']),
 		'L_ACTION'         => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
 		'L_FORUM_INDEX'    => $LANG['forum_index'],
 		'L_CAT'            => $LANG['category'],
@@ -321,10 +305,10 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-		
+
 	$tpl->display();
 }
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
@@ -335,14 +319,14 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$to = (int)retrieve(POST, 'to', 0); //Catégorie cible.
 
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
@@ -355,11 +339,11 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
             $LANG['e_unable_cut_forum']);
         DispatchManager::redirect($controller);
 	}
-	
+
 	$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
 	if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY)
 	{
@@ -404,7 +388,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
             $LANG['e_incomplete']);
         DispatchManager::redirect($controller);
 	}

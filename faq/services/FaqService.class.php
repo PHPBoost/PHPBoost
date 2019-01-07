@@ -1,45 +1,23 @@
 <?php
-/*##################################################
- *                               FaqService.class.php
- *                            -------------------
- *   begin                : September 2, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.0 - 2014 09 02
+*/
 
 class FaqService
 {
 	private static $db_querier;
-	
+
 	private static $categories_manager;
-	
+
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	 /**
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
@@ -48,7 +26,7 @@ class FaqService
 	{
 		return self::$db_querier->count(FaqSetup::$faq_table, $condition, $parameters);
 	}
-	
+
 	 /**
 	 * @desc Create a new entry in the database table.
 	 * @param string[] $faq_question : new FaqQuestion
@@ -56,10 +34,10 @@ class FaqService
 	public static function add(FaqQuestion $faq_question)
 	{
 		$result = self::$db_querier->insert(FaqSetup::$faq_table, $faq_question->get_properties());
-		
+
 		return $result->get_last_inserted_id();
 	}
-	
+
 	 /**
 	 * @desc Update an entry.
 	 * @param string[] $faq_question : FaqQuestion to update
@@ -68,7 +46,7 @@ class FaqService
 	{
 		self::$db_querier->update(FaqSetup::$faq_table, $faq_question->get_properties(), 'WHERE id=:id', array('id' => $faq_question->get_id()));
 	}
-	
+
 	 /**
 	 * @desc Delete an entry.
 	 * @param string $condition : Restriction to apply to the list
@@ -78,7 +56,7 @@ class FaqService
 	{
 		self::$db_querier->delete(FaqSetup::$faq_table, $condition, $parameters);
 	}
-	
+
 	 /**
 	 * @desc Return the properties of a faq question.
 	 * @param string $condition : Restriction to apply to the list
@@ -90,12 +68,12 @@ class FaqService
 		FROM ' . FaqSetup::$faq_table . ' faq
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id
 		' . $condition, $parameters);
-		
+
 		$faq_question = new FaqQuestion();
 		$faq_question->set_properties($row);
 		return $faq_question;
 	}
-	
+
 	 /**
 	 * @desc Update the position of a question.
 	 * @param string[] $id_question : id of the question to update
@@ -105,7 +83,7 @@ class FaqService
 	{
 		self::$db_querier->update(FaqSetup::$faq_table, array('q_order' => $position), 'WHERE id=:id', array('id' => $id_question));
 	}
-	
+
 	 /**
 	 * @desc Return the authorized categories.
 	 */
@@ -116,7 +94,7 @@ class FaqService
 		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
-	
+
 	 /**
 	 * @desc Return the categories manager.
 	 */

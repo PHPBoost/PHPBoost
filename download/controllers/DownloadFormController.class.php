@@ -1,33 +1,12 @@
 <?php
-/*##################################################
- *                               DownloadFormController.class.php
- *                            -------------------
- *   begin                : August 24, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 28
+ * @since   	PHPBoost 4.0 - 2014 08 24
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class DownloadFormController extends ModuleController
 {
@@ -39,26 +18,26 @@ class DownloadFormController extends ModuleController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
-	
+
 	private $lang;
 	private $common_lang;
-	
+
 	private $config;
-	
+
 	private $downloadfile;
 	private $is_new_downloadfile;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->check_authorizations();
-		
+
 		$this->build_form($request);
-		
+
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->form->get_field_by_id('file_size')->set_hidden($this->is_file_size_automatic());
@@ -66,28 +45,28 @@ class DownloadFormController extends ModuleController
 			$this->save();
 			$this->redirect();
 		}
-		
+
 		$tpl->put('FORM', $this->form->display());
-		
+
 		return $this->generate_response($tpl);
 	}
-	
+
 	private function init()
 	{
 		$this->config = DownloadConfig::load();
 		$this->lang = LangLoader::get('common', 'download');
 		$this->common_lang = LangLoader::get('common');
 	}
-	
+
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$fieldset = new FormFieldsetHTMLHeading('download',  $this->get_downloadfile()->get_id() === null ? $this->lang['download.add'] : $this->lang['download.edit']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_downloadfile()->get_name(), array('required' => true)));
-		
+
 		if (DownloadService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -95,10 +74,10 @@ class DownloadFormController extends ModuleController
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 			$fieldset->add_field(DownloadService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_downloadfile()->get_id_category(), $search_category_children_options));
 		}
-		
+
 		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_downloadfile()->get_url()->relative(), array('required' => true)));
-		
-		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine_file_size_automatically'], $this->is_file_size_automatic(), 
+
+		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine_file_size_automatically'], $this->is_file_size_automatic(),
 			array('events' => array('click' => '
 			if (HTMLForms.getField("determine_file_size_automatically_enabled").getValue()) {
 				HTMLForms.getField("file_size").disable();
@@ -108,7 +87,7 @@ class DownloadFormController extends ModuleController
 				HTMLForms.getField("file_size_unit").enable();
 			}'))
 		));
-		
+
 		if (!empty($this->get_downloadfile()->get_size()))
 		{
 			$formated_file_size = explode(' ', $this->get_downloadfile()->get_formated_size());
@@ -117,11 +96,11 @@ class DownloadFormController extends ModuleController
 		}
 		else
 			$file_size = $file_size_unit = 0;
-		
+
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file_size'], $file_size,
 			array('min' => 0, 'step' => 0.01, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file_size_unit'], $file_size_unit,
 			array(
 				new FormFieldSelectChoiceOption('', ''),
@@ -131,15 +110,15 @@ class DownloadFormController extends ModuleController
 			),
 			array('hidden' => $this->is_file_size_automatic(), 'required' => true)
 		));
-		
+
 		if ($this->get_downloadfile()->get_id() !== null && $this->get_downloadfile()->get_number_downloads() > 0)
 		{
 			$fieldset->add_field(new FormFieldCheckbox('reset_number_downloads', $this->lang['download.form.reset_number_downloads']));
 		}
-		
+
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_contents(), array('rows' => 15, 'required' => true)));
-		
-		$fieldset->add_field(new FormFieldCheckbox('short_contents_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_downloadfile()->is_short_contents_enabled(), 
+
+		$fieldset->add_field(new FormFieldCheckbox('short_contents_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_downloadfile()->is_short_contents_enabled(),
 			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
 			if (HTMLForms.getField("short_contents_enabled").getValue()) {
 				HTMLForms.getField("short_contents").enable();
@@ -147,14 +126,14 @@ class DownloadFormController extends ModuleController
 				HTMLForms.getField("short_contents").disable();
 			}'))
 		));
-		
+
 		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_short_contents(), array(
 			'hidden' => !$this->get_downloadfile()->is_short_contents_enabled(),
 		)));
-		
+
 		if ($this->config->is_author_displayed())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_downloadfile()->is_author_custom_name_enabled(), 
+			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_downloadfile()->is_author_custom_name_enabled(),
 				array('events' => array('click' => '
 				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 					HTMLForms.getField("author_custom_name").enable();
@@ -162,26 +141,26 @@ class DownloadFormController extends ModuleController
 					HTMLForms.getField("author_custom_name").disable();
 				}'))
 			));
-			
+
 			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_downloadfile()->get_author_custom_name(), array(
 				'hidden' => !$this->get_downloadfile()->is_author_custom_name_enabled(),
 			)));
 		}
-		
+
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
-		
+
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_downloadfile()->get_picture()->relative()));
-		
+
 		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software_version'], $this->get_downloadfile()->get_software_version()));
-		
+
 		$other_fieldset->add_field(DownloadService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
-		
+
 		if (DownloadAuthorizationsService::check_authorizations($this->get_downloadfile()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
-			
+
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_downloadfile()->get_creation_date(),
 				array('required' => true)
 			));
@@ -207,9 +186,9 @@ class DownloadFormController extends ModuleController
 					HTMLForms.getField("end_date_enabled").disable();
 				}'))
 			));
-			
+
 			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_downloadfile()->get_start_date() === null ? new Date() : $this->get_downloadfile()->get_start_date()), array('hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE))));
-			
+
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_downloadfile()->is_end_date_enabled(), array(
 			'hidden' => ($this->get_downloadfile()->get_approbation_type() != DownloadFile::APPROVAL_DATE),
 			'events' => array('click' => '
@@ -219,21 +198,21 @@ class DownloadFormController extends ModuleController
 				HTMLForms.getField("end_date").disable();
 			}'
 			))));
-			
+
 			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_downloadfile()->get_end_date() === null ? new Date() : $this->get_downloadfile()->get_end_date()), array('hidden' => !$this->get_downloadfile()->is_end_date_enabled())));
 		}
-		
+
 		$this->build_contribution_fieldset($form);
-		
+
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
-	
+
 	private function build_contribution_fieldset($form)
 	{
 		if ($this->is_contributor_member())
@@ -241,21 +220,21 @@ class DownloadFormController extends ModuleController
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
 			$fieldset->set_description(MessageHelper::display($this->lang['download.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
-			
+
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
 	}
-	
+
 	private function is_contributor_member()
 	{
 		return (!DownloadAuthorizationsService::check_authorizations()->write() && DownloadAuthorizationsService::check_authorizations()->contribution());
 	}
-	
+
 	private function is_file_size_automatic()
 	{
 		return $this->get_downloadfile()->get_id() === null || $this->get_downloadfile()->get_size() == 0 || ($this->get_downloadfile()->get_size() ==  Url::get_url_file_size($this->get_downloadfile()->get_url()));
 	}
-	
+
 	private function get_downloadfile()
 	{
 		if ($this->downloadfile === null)
@@ -279,11 +258,11 @@ class DownloadFormController extends ModuleController
 		}
 		return $this->downloadfile;
 	}
-	
+
 	private function check_authorizations()
 	{
 		$downloadfile = $this->get_downloadfile();
-		
+
 		if ($downloadfile->get_id() === null)
 		{
 			if (!$downloadfile->is_authorized_to_add())
@@ -306,26 +285,26 @@ class DownloadFormController extends ModuleController
 			DispatchManager::redirect($controller);
 		}
 	}
-	
+
 	private function save()
 	{
 		$downloadfile = $this->get_downloadfile();
-		
+
 		$downloadfile->set_name($this->form->get_value('name'));
 		$downloadfile->set_rewrited_name(Url::encode_rewrite($downloadfile->get_name()));
-		
+
 		if (DownloadService::get_categories_manager()->get_categories_cache()->has_categories())
 			$downloadfile->set_id_category($this->form->get_value('id_category')->get_raw_value());
-		
+
 		$downloadfile->set_url(new Url($this->form->get_value('url')));
 		$downloadfile->set_contents($this->form->get_value('contents'));
 		$downloadfile->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
 		$downloadfile->set_picture(new Url($this->form->get_value('picture')));
 		$downloadfile->set_software_version($this->form->get_value('software_version'));
-		
+
 		if ($this->config->is_author_displayed())
 			$downloadfile->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $downloadfile->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
-		
+
 		if ($this->form->get_value('determine_file_size_automatically_enabled'))
 		{
 			$file_size = Url::get_url_file_size($downloadfile->get_url());
@@ -337,24 +316,24 @@ class DownloadFormController extends ModuleController
 			$power = array_search($this->form->get_value('file_size_unit')->get_raw_value(), $units);
 			$file_size = (int)($this->form->get_value('file_size') * pow(1024, $power));
 		}
-		
+
 		$downloadfile->set_size($file_size);
-		
+
 		if ($downloadfile->get_id() !== null && $downloadfile->get_number_downloads() > 0 && $this->form->get_value('reset_number_downloads'))
 		{
 			$downloadfile->set_number_downloads(0);
 		}
-		
+
 		if (!DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->moderation())
 		{
 			$downloadfile->clean_start_and_end_date();
-			
+
 			if (DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->contribution() && !DownloadAuthorizationsService::check_authorizations($downloadfile->get_id_category())->write())
 				$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
 		}
 		else
 		{
-			
+
 			if ($this->form->get_value('update_creation_date'))
 			{
 				$downloadfile->set_creation_date(new Date());
@@ -363,37 +342,37 @@ class DownloadFormController extends ModuleController
 			{
 				$downloadfile->set_creation_date($this->form->get_value('creation_date'));
 			}
-			
+
 			$downloadfile->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($downloadfile->get_approbation_type() == DownloadFile::APPROVAL_DATE)
 			{
 				$deferred_operations = $this->config->get_deferred_operations();
-				
+
 				$old_start_date = $downloadfile->get_start_date();
 				$start_date = $this->form->get_value('start_date');
 				$downloadfile->set_start_date($start_date);
-				
+
 				if ($old_start_date !== null && $old_start_date->get_timestamp() != $start_date->get_timestamp() && in_array($old_start_date->get_timestamp(), $deferred_operations))
 				{
 					$key = array_search($old_start_date->get_timestamp(), $deferred_operations);
 					unset($deferred_operations[$key]);
 				}
-				
+
 				if (!in_array($start_date->get_timestamp(), $deferred_operations))
 					$deferred_operations[] = $start_date->get_timestamp();
-				
+
 				if ($this->form->get_value('end_date_enabled'))
 				{
 					$old_end_date = $downloadfile->get_end_date();
 					$end_date = $this->form->get_value('end_date');
 					$downloadfile->set_end_date($end_date);
-					
+
 					if ($old_end_date !== null && $old_end_date->get_timestamp() != $end_date->get_timestamp() && in_array($old_end_date->get_timestamp(), $deferred_operations))
 					{
 						$key = array_search($old_end_date->get_timestamp(), $deferred_operations);
 						unset($deferred_operations[$key]);
 					}
-					
+
 					if (!in_array($end_date->get_timestamp(), $deferred_operations))
 						$deferred_operations[] = $end_date->get_timestamp();
 				}
@@ -401,7 +380,7 @@ class DownloadFormController extends ModuleController
 				{
 					$downloadfile->clean_end_date();
 				}
-				
+
 				$this->config->set_deferred_operations($deferred_operations);
 				DownloadConfig::save();
 			}
@@ -410,7 +389,7 @@ class DownloadFormController extends ModuleController
 				$downloadfile->clean_start_and_end_date();
 			}
 		}
-		
+
 		if ($this->is_new_downloadfile)
 		{
 			$id = DownloadService::add($downloadfile);
@@ -421,17 +400,17 @@ class DownloadFormController extends ModuleController
 			$id = $downloadfile->get_id();
 			DownloadService::update($downloadfile);
 		}
-		
+
 		$this->contribution_actions($downloadfile, $id);
-		
+
 		DownloadService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
-		
+
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
 		DownloadCategoriesCache::invalidate();
 		DownloadKeywordsCache::invalidate();
 	}
-	
+
 	private function contribution_actions(DownloadFile $downloadfile, $id)
 	{
 		if ($downloadfile->get_id() === null)
@@ -468,12 +447,12 @@ class DownloadFormController extends ModuleController
 		}
 		$downloadfile->set_id($id);
 	}
-	
+
 	private function redirect()
 	{
 		$downloadfile = $this->get_downloadfile();
 		$category = $downloadfile->get_category();
-		
+
 		if ($this->is_new_downloadfile && $this->is_contributor_member() && !$downloadfile->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
@@ -493,19 +472,19 @@ class DownloadFormController extends ModuleController
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['download.message.success.edit'], array('name' => $downloadfile->get_name())));
 		}
 	}
-	
+
 	private function generate_response(View $tpl)
 	{
 		$downloadfile = $this->get_downloadfile();
-		
+
 		$location_id = $downloadfile->get_id() ? 'download-edit-'. $downloadfile->get_id() : '';
-		
+
 		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], DownloadUrlBuilder::home());
-		
+
 		if ($downloadfile->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['download.add'], $this->lang['module_title']);
@@ -517,11 +496,11 @@ class DownloadFormController extends ModuleController
 		{
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
-			
+
 			$graphical_environment->set_page_title($this->lang['download.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($downloadfile->get_id()));
-			
+
 			$categories = array_reverse(DownloadService::get_categories_manager()->get_parents($downloadfile->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
@@ -532,7 +511,7 @@ class DownloadFormController extends ModuleController
 			$breadcrumb->add($downloadfile->get_name(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
 			$breadcrumb->add($this->lang['download.edit'], DownloadUrlBuilder::edit($downloadfile->get_id()));
 		}
-		
+
 		return $response;
 	}
 }

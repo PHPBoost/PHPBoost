@@ -1,57 +1,35 @@
 <?php
-/*##################################################
- *                               DownloadSetup.class.php
- *                            -------------------
- *   begin                : August 24, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @since   	PHPBoost 4.0 - 2014 08 24
+*/
 
 class DownloadSetup extends DefaultModuleSetup
 {
 	public static $download_table;
 	public static $download_cats_table;
-	
+
 	/**
 	 * @var string[string] localized messages
 	 */
 	private $messages;
-	
+
 	public static function __static()
 	{
 		self::$download_table = PREFIX . 'download';
 		self::$download_cats_table = PREFIX . 'download_cats';
 	}
-	
+
 	public function install()
 	{
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
-	
+
 	public function uninstall()
 	{
 		$this->drop_tables();
@@ -59,18 +37,18 @@ class DownloadSetup extends DefaultModuleSetup
 		CacheManager::invalidate('module', 'download');
 		DownloadService::get_keywords_manager()->delete_module_relations();
 	}
-	
+
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$download_table, self::$download_cats_table));
 	}
-	
+
 	private function create_tables()
 	{
 		$this->create_download_table();
 		$this->create_download_cats_table();
 	}
-	
+
 	private function create_download_table()
 	{
 		$fields = array(
@@ -105,19 +83,19 @@ class DownloadSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
 	}
-	
+
 	private function create_download_cats_table()
 	{
 		RichCategory::create_categories_table(self::$download_cats_table);
 	}
-	
+
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'download');
 		$this->insert_download_cats_data();
 		$this->insert_download_data();
 	}
-	
+
 	private function insert_download_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$download_cats_table, array(
@@ -131,7 +109,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'image' => '/download/download.png'
 		));
 	}
-	
+
 	private function insert_download_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$download_table, array(

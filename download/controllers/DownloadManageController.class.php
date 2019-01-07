@@ -1,60 +1,39 @@
 <?php
-/*##################################################
- *                      DownloadManageController.class.php
- *                            -------------------
- *   begin                : August 24, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @since   	PHPBoost 4.0 - 2014 08 24
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class DownloadManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$current_page = $this->build_table();
-		
+
 		return $this->generate_response($current_page);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'download');
 		$this->view = new StringTemplate('# INCLUDE table #');
 	}
-	
+
 	private function build_table()
 	{
 		$display_categories = DownloadService::get_categories_manager()->get_categories_cache()->has_categories();
-		
+
 		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
@@ -63,16 +42,16 @@ class DownloadManageController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
 			new HTMLTableColumn('')
 		);
-		
+
 		if (!$display_categories)
 			unset($columns[1]);
-		
+
 		$table_model = new SQLHTMLTableModel(DownloadSetup::$download_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
-		
+
 		$table_model->set_caption($this->lang['download.management']);
-		
+
 		$table = new HTMLTable($table_model);
-		
+
 		$results = array();
 		$result = $table_model->get_sql_results('download
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = download.id AND com.module_id = \'download\'
@@ -102,19 +81,19 @@ class DownloadManageController extends AdminModuleController
 				new HTMLTableRowCell($downloadfile->get_status()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			);
-		
+
 			if (!$display_categories)
 				unset($row[1]);
-			
+
 			$results[] = new HTMLTableRow($row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
-		
+
 		return $table->get_page_number();
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!DownloadAuthorizationsService::check_authorizations()->moderation())
@@ -123,7 +102,7 @@ class DownloadManageController extends AdminModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response($page = 1)
 	{
 		$response = new SiteDisplayResponse($this->view);
@@ -131,12 +110,12 @@ class DownloadManageController extends AdminModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['download.management'], $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::manage());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], DownloadUrlBuilder::home());
-		
+
 		$breadcrumb->add($this->lang['download.management'], DownloadUrlBuilder::manage());
-		
+
 		return $response;
 	}
 }

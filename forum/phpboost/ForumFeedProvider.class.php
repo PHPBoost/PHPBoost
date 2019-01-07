@@ -1,30 +1,12 @@
 <?php
-/*##################################################
- *                          ForumFeedProvider.class.php
- *                            -------------------
- *   begin                : February 07, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 02
+ * @since   	PHPBoost 3.0 - 2010 02 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class ForumFeedProvider implements FeedProvider
 {
@@ -48,10 +30,10 @@ class ForumFeedProvider implements FeedProvider
 			$data->set_desc(LangLoader::get_message('xml_forum_desc', 'common', 'forum'));
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
-			
+
 			$categories = ForumService::get_categories_manager()->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
-			
+
 			$results = PersistenceContext::get_querier()->select('SELECT t.id, t.idcat, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents
 				FROM ' . PREFIX . 'forum_topics t
 				LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id

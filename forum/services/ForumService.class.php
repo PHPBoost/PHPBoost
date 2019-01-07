@@ -1,45 +1,23 @@
 <?php
-/*##################################################
- *                        ForumService.class.php
- *                            -------------------
- *   begin                : May 15, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc Services of the forum module
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.1 - 2015 02 25
+*/
+
 class ForumService
 {
 	private static $db_querier;
-	
+
 	private static $categories_manager;
-	
+
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	 /**
 	 * @desc Count topics number.
 	 * @param string $condition (optional) : Restriction to apply to the list of topics
@@ -48,7 +26,7 @@ class ForumService
 	{
 		return self::$db_querier->count(ForumSetup::$forum_topics_table, $condition, $parameters);
 	}
-	
+
 	 /**
 	 * @desc Count messages number.
 	 * @param string $condition (optional) : Restriction to apply to the list of messages
@@ -59,10 +37,10 @@ class ForumService
 		try {
 			$messages_number = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'SUM(nbr_msg)', $condition, $parameters);
 		} catch (RowNotFoundException $e) {}
-		
+
 		return $messages_number;
 	}
-	
+
 	 /**
 	 * @desc Return the authorized categories.
 	 */
@@ -73,7 +51,7 @@ class ForumService
 		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
-	
+
 	 /**
 	 * @desc Return the categories manager.
 	 */

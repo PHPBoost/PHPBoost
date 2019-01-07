@@ -1,34 +1,18 @@
 <?php
-/*##################################################
- *                              forum_french.php
- *                            -------------------
- *   begin                : November 21, 2006
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 1.6 - 2006 11 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
-
- ####################################################
-#                                                           French                                                                 #
- ####################################################
+####################################################
+#                    French                        #
+####################################################
 
 //Admin
 $LANG['forum_management'] = 'Gestion du forum';
@@ -100,7 +84,7 @@ $LANG['untrack_topic_pm'] = 'Arrêter le suivi par message privé';
 $LANG['track_topic_mail'] = 'Suivre par mail';
 $LANG['untrack_topic_mail'] = 'Arrêter le suivi par mail';
 $LANG['alert_topic'] = 'Alerter les modérateurs';
-$LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateurs. Vous aidez l\'équipe modératrice en lui signalant des topics qui ne respectent pas certaines règles, mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré, il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet. 
+$LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateurs. Vous aidez l\'équipe modératrice en lui signalant des topics qui ne respectent pas certaines règles, mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré, il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet.
 
 Vous désirez alerter les modérateurs d\'un problème sur le sujet suivant';
 $LANG['alert_title'] = 'Brève description';
@@ -182,10 +166,10 @@ $LANG['forum_mail_title_new_post'] = 'Nouveau message sur le forum';
 $LANG['forum_mail_new_post'] = 'Cher %s
 
 Vous suivez le sujet: %s
- 
+
 Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 
-%s a répondu sur le sujet: 
+%s a répondu sur le sujet:
 %s
 
 [Suite du message : %s]
@@ -193,7 +177,7 @@ Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 
 
 
-Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
+Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous.
 %s
 
 ' . MailServiceConfig::load()->get_mail_signature();

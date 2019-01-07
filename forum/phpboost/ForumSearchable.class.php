@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *		                    ForumSearchable.class.php
- *                            -------------------
- *   begin                : February 21, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @since   	PHPBoost 3.0 - 2012 02 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class ForumSearchable extends AbstractSearchableExtensionPoint
 {
@@ -34,7 +18,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct(true, true);
 	}
-	
+
 	public function get_search_form($args)
 	/**
 	 *  Renvoie le formulaire de recherche du forum
@@ -52,7 +36,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
-		
+
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -70,7 +54,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 					$cat_list .= $option->display()->render();
 			}
 		}
-		
+
 		$date_lang = LangLoader::get('date-common');
 		$tpl->put_all(Array(
 			'L_DATE'               => $date_lang['date'],

@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                               moderation_forum.php
- *                            -------------------
- *   begin                : August 8, 2006
- *   copyright            : (C) 2006 Sautel Benoît / Viarre Régis
- *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @since   	PHPBoost 1.5 - 2006 08 08
+ * @contributor Regis VIARRE <crowkait@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
@@ -96,7 +81,7 @@ if ($action == 'alert') //Gestion des alertes
 			$hist = false;
 			$result = PersistenceContext::get_querier()->select("SELECT id
 			FROM " . PREFIX . "forum_alerts");
-			
+
 			while ($row = $result->fetch())
 			{
 				if ($request->has_postparameter('a' . $row['id']) && $request->get_postvalue('a' . $row['id']) == 'on' && is_numeric($row['id']))
@@ -203,7 +188,7 @@ if ($action == 'alert') //Gestion des alertes
 	{
 		//Vérification des autorisations.
 		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
-		
+
 		$result = PersistenceContext::get_querier()->select("
 		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM " . PREFIX . "forum_alerts ta
@@ -233,7 +218,7 @@ if ($action == 'alert') //Gestion des alertes
 			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
-			
+
 			$tpl->put_all(array_merge(
 				Date::get_array_tpl_vars($time, 'TIME'), array(
 				'ID'                 => $id_get,
@@ -381,7 +366,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$i++;
 		}
 		$result->dispose();
-		
+
 		if ($i === 0)
 		{
 			$tpl->put_all( array(
@@ -429,12 +414,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		}
 
 		array_pop($array_sanction);
-		
+
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
-		
+
 		$group_color = User::get_group_color($member['groups'], $member['level']);
-		
+
 		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR'     => $editor->display(),
@@ -497,7 +482,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
-				
+
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 				{
@@ -515,7 +500,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => 100), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', array('id' => $info_mbr['user_id']));
-				
+
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 
@@ -549,7 +534,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
 			} catch (RowNotFoundException $e) {}
-			
+
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
@@ -575,7 +560,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$tpl->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN'         => $row['display_name'],
@@ -590,7 +575,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$i++;
 		}
 		$result->dispose();
-		
+
 		if ($i === 0)
 		{
 			$tpl->put_all( array(
@@ -620,9 +605,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
-		
+
 		$group_color = User::get_group_color($member['groups'], $member['level']);
-		
+
 		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR'     => $editor->display(),
@@ -705,7 +690,7 @@ else //Panneau de modération
 		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
 		$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
-		
+
 		$tpl->assign_block_vars('action_list', array_merge(
 			Date::get_array_tpl_vars($date, 'DATE'), array(
 			'C_GROUP_COLOR'              => !empty($group_color),
@@ -781,10 +766,10 @@ $vars_tpl = array_merge($vars_tpl, array(
 $tpl->put_all($vars_tpl);
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
-	
+
 $tpl->put('forum_top', $tpl_top);
 $tpl->put('forum_bottom', $tpl_bottom);
-	
+
 $tpl->display();
 
 include('../kernel/footer.php');

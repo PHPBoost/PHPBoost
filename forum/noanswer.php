@@ -1,31 +1,15 @@
 <?php
-/*##################################################
- *                                noanwser.php
- *                            -------------------
- *   begin                : September 18, 2016
- *   copyright            : (C) 2016 Genet Arnaud
- *   email                : elenwii@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @since   	PHPBoost 5.0 - 2016 09 18
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -51,16 +35,16 @@ if (!empty($change_cat))
 if (ForumAuthorizationsService::check_authorizations()->read())
 {
 	$tpl = new FileTemplate('forum/forum_forum.tpl');
-	
+
 	$nbr_topics = 0;
-	
+
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 		FROM " . PREFIX . "forum_topics
 		WHERE nbr_msg = 1");
 		$nbr_topics = $row['nbr_topics'];
 	} catch (RowNotFoundException $e) {}
-	
+
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/noanswer.php?p=%d'));
@@ -70,11 +54,11 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$result = PersistenceContext::get_querier()->select("SELECT DISTINCT t.id, m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat 
+	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
@@ -88,45 +72,45 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 	while ($row = $result->fetch())
 	{
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
-		
+
 		//On définit un array pour l'appelation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
-			
+
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
 		$img_announce .= ($row['type'] == '1') ? '-post' : '';
 		$img_announce .= ($row['type'] == '2') ? '-top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
-		
+
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 		{
-			$last_msg_id = $row['last_view_id']; 
+			$last_msg_id = $row['last_view_id'];
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
 			$last_page_rewrite = '-0-' . $row['last_view_id'];
 		}
 		else
 		{
-			$last_msg_id = $row['last_msg_id']; 
+			$last_msg_id = $row['last_msg_id'];
 			$last_page = ceil( $row['nbr_msg'] / $config->get_number_messages_per_page() );
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
-		
+
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-		
+
 		//Ancre ajoutée aux messages non lus.
 		$new_ancre = 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id ;
-		
+
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title . '.php')));
-		
+
 		$group_color      = User::get_group_color($row['groups'], $row['user_level']);
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
-		
+
 		$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 		$tpl->assign_block_vars('topics', array_merge(
@@ -152,7 +136,7 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 			'MSG'                         => ($row['nbr_msg'] - 1),
 			'VUS'                         => $row['nbr_views'],
 			'U_TOPIC_VARS'                => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
-			'L_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',	
+			'L_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
 			'LAST_MSG_URL'                => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id,
 			'C_LAST_MSG_GUEST'            => !empty($row['last_login']),
 			'LAST_MSG_USER_PROFIL'        => UserUrlBuilder::profile($row['last_user_id'])->rel(),
@@ -163,10 +147,10 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 		)));
 	}
 	$result->dispose();
-	
+
 	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/lastread.php%'");
-	
+
 	//Liste des catégories.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -220,14 +204,14 @@ if (ForumAuthorizationsService::check_authorizations()->read())
 		'L_VIEW'             => $LANG['views'],
 		'L_LAST_MESSAGE'     => $LANG['last_message'],
 	);
-	
+
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-	
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-	
+
 	$tpl->display();
 }
 else

@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                                track.php
- *                            -------------------
- *   begin                : October 26, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @since   	PHPBoost 1.2 - 2005 10 26
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
@@ -69,15 +54,15 @@ if ($request->get_postvalue('valid', false))
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));
 	}
 	$result->dispose();
-	
+
 	AppContext::get_response()->redirect('/forum/track.php');
 }
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$tpl = new FileTemplate('forum/forum_track.tpl');
-	
+
 	$nbr_topics = 0;
-	
+
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 		FROM " . PREFIX . "forum_topics t
@@ -87,7 +72,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		));
 		$nbr_topics = $row['nbr_topics'];
 	} catch (RowNotFoundException $e) {}
-	
+
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/track.php?p=%d'));
@@ -100,7 +85,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
-	
+
 	$TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 	$module_data_path = $TmpTemplate->get_pictures_data_path();
 
@@ -124,7 +109,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
-		
+
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
 		$new_msg = false;
@@ -141,7 +126,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$img_announce .= ($row['type'] == '1') ? '-post' : '';
 		$img_announce .= ($row['type'] == '2') ? '-top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
-		
+
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
 		if (!empty($row['last_view_id']))
@@ -157,18 +142,18 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
-		
+
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-		
+
 		//Ancre ajoutée aux messages non lus.
 		$new_ancre = ($new_msg === true && AppContext::get_current_user()->get_id() !== -1) ? 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id : '';
-		
+
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title . '.php')));
-		
+
 		$group_color      = User::get_group_color($row['user_groups'], $row['user_level']);
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 
@@ -216,7 +201,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		$nbr_topics_compt++;
 	}
 	$result->dispose();
-	
+
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
@@ -227,7 +212,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	}
 
 	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
-	
+
 	$vars_tpl = array(
 		'C_PAGINATION'       => $pagination->has_several_pages(),
 		'NBR_TOPICS'         => $nbr_topics,
@@ -253,7 +238,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_LAST_MESSAGE'     => $LANG['last_message'],
 		'L_SUBMIT'           => $LANG['submit']
 	);
-	
+
 	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/track.php%'");
 
@@ -293,14 +278,14 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_AND'            => $LANG['and'],
 		'L_ONLINE'         => TextHelper::strtolower($LANG['online'])
 	));
-	
+
 	$tpl->put_all($vars_tpl);
 	$tpl_top->put_all($vars_tpl);
 	$tpl_bottom->put_all($vars_tpl);
-		
+
 	$tpl->put('forum_top', $tpl_top);
 	$tpl->put('forum_bottom', $tpl_bottom);
-	
+
 	$tpl->display();
 }
 else

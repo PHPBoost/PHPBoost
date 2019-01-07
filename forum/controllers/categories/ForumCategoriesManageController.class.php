@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *                              ForumCategoriesManageController.class.php
- *                            -------------------
- *   begin                : May 15, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 07 15
+ * @since   	PHPBoost 4.1 - 2015 05 15
+*/
 
 class ForumCategoriesManageController extends AbstractCategoriesManageController
 {
@@ -31,7 +13,7 @@ class ForumCategoriesManageController extends AbstractCategoriesManageController
 	{
 		return ForumService::get_categories_manager();
 	}
-	
+
 	protected function get_display_category_url(Category $category)
 	{
 		switch ($category->get_type())
@@ -39,16 +21,16 @@ class ForumCategoriesManageController extends AbstractCategoriesManageController
 			case ForumCategory::TYPE_URL :
 				$url = new Url($category->get_url());
 				break;
-			
+
 			case ForumCategory::TYPE_FORUM :
 				$url = ForumUrlBuilder::display_forum($category->get_id(), $category->get_rewrited_name());
 				break;
-			
+
 			default :
 				$url = ForumUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
 				break;
 		}
-		
+
 		return $url;
 	}
 
@@ -61,22 +43,22 @@ class ForumCategoriesManageController extends AbstractCategoriesManageController
 	{
 		return ForumUrlBuilder::delete_category($category->get_id());
 	}
-	
+
 	protected function get_categories_management_url()
 	{
 		return ForumUrlBuilder::manage_categories();
 	}
-	
+
 	protected function get_module_home_page_url()
 	{
 		return ForumUrlBuilder::home();
 	}
-	
+
 	protected function get_module_home_page_title()
 	{
 		return LangLoader::get_message('module_title', 'common', 'forum');
 	}
-	
+
 	protected function check_authorizations()
 	{
 		if (!ForumAuthorizationsService::check_authorizations()->manage_categories())
