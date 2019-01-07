@@ -502,8 +502,7 @@ class Article
 			'U_ARTICLE'        => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_EDIT_ARTICLE'   => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
-			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
-			'U_PRINT_ARTICLE'  => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
+			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
 			)
 		);
 	}
