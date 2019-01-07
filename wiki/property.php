@@ -1,32 +1,16 @@
 <?php
-/*##################################################
- *                              property.php
- *                            -------------------
- *   begin                : May 07, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 20
+ * @since   	PHPBoost 1.6 - 2007 05 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
-include_once('../wiki/wiki_functions.php'); 
+require_once('../kernel/begin.php');
+include_once('../wiki/wiki_functions.php');
 load_module_lang('wiki');
 $config = WikiConfig::load();
 
@@ -47,79 +31,79 @@ $categories = WikiCategoriesCache::load()->get_categories();
 if ($id_auth > 0) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
-	
+
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat'), 'WHERE id = :id', array('id' => $id_auth));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
-	
+
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $wiki_status));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_STATUS))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif ($move > 0) //Déplacement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
-	
+
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $move));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_MOVE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif ($rename > 0) //Renommer l'article
 {
 	define('TITLE', $LANG['wiki_renaming_article']);
-	
+
 	try {
 		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $rename));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 {
@@ -141,17 +125,17 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	define('TITLE', $LANG['wiki_redirections_management']);
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 {
@@ -161,17 +145,17 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0)
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	define('TITLE', sprintf($LANG['wiki_article_com'], stripslashes($article_infos['title'])));
 	define('DESCRIPTION', sprintf($LANG['wiki_article_com_seo'], stripslashes($article_infos['title'])));
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_COM))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {
@@ -181,16 +165,16 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	define('TITLE', $LANG['wiki_remove_cat']);
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 }
 else
 	define('TITLE', '');
@@ -207,7 +191,7 @@ if ($random)//Recherche d'une page aléatoire
 	try {
 		$page = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE redirect = 0 ORDER BY rand() LIMIT 1 OFFSET 0');
 	} catch (Exception $e) {}
-	
+
 	if (!empty($page)) //On redirige
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $page, $page));
 	else
@@ -216,12 +200,12 @@ if ($random)//Recherche d'une page aléatoire
 elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
 	$array_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
-	
+
 	$tpl->assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], stripslashes($article_infos['title'])),
 		'ID' => $id_auth
 	));
-	
+
 	//On assigne les variables pour le POST en précisant l'idurl.
 	$tpl->put_all(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
@@ -250,7 +234,7 @@ elseif ($wiki_status > 0)
 		'UNDEFINED' => ($article_infos['defined_status'] < 0  ? 'checked="checked"' : ''),
 		'DEFINED' => ($article_infos['defined_status'] >= 0  ? 'checked="checked"' : ''),
 	));
-	
+
 	//On fait une liste des statuts définis
 	$tpl->assign_block_vars('status.list', array(
 		'L_STATUS' => $LANG['wiki_no_status'],
@@ -289,7 +273,7 @@ elseif ($move > 0) //On déplace l'article
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$article_infos['id_cat']]['title']);
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
-			
+
 	$tpl->assign_block_vars('move', array(
 		'L_TITLE' => sprintf($LANG['wiki_moving_this_article'], stripslashes($article_infos['title'])),
 		'ID_ARTICLE' => $move,
@@ -298,8 +282,8 @@ elseif ($move > 0) //On déplace l'article
 		'SELECTED_CAT' => $article_infos['id_cat'],
 		'CAT_0' => ($article_infos['id_cat'] == 0 ? 'wiki_selected_cat' : ''),
 		'ID_CAT' => $article_infos['id_cat']
-	));	
-	
+	));
+
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
 	if ($error == 'e_cat_contains_cat')
@@ -318,7 +302,7 @@ elseif ($rename > 0)//On renomme un article
 		'ID_ARTICLE' => $rename,
 		'FORMER_NAME' => stripslashes($article_infos['title']),
 	));
-	
+
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
 	if ($error == 'title_already_exists')
@@ -347,7 +331,7 @@ elseif ($redirect > 0) //Redirections de l'article
 			'REDIRECTION_NAME' => stripslashes($row['title']),
 		));
 	}
-	
+
 	$tpl->put_all(array(
 		'NO_REDIRECTION' => $result->get_rows_count() == 0,
 		'L_NO_REDIRECTION' => $LANG['wiki_no_redirection'],
@@ -369,7 +353,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 		'L_TITLE' => sprintf($LANG['wiki_create_redirection_to_this'], stripslashes($article_infos['title'])),
 		'ID_ARTICLE' => $create_redirection
 	));
-	
+
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
 	if ($error == 'title_already_exists')
@@ -384,7 +368,7 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0) //Affi
 	$comments_topic = new WikiCommentsTopic();
 	$comments_topic->set_id_in_module($idcom);
 	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&com=0'));
-	
+
 	$tpl->put_all(array(
 		'C_COMMENTS' => true,
 		'TITLE' => sprintf($LANG['wiki_article_com'], stripslashes($article_infos['title'])),
@@ -392,10 +376,10 @@ elseif (AppContext::get_request()->has_getparameter('com') && $idcom > 0) //Affi
 	));
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
-{	
+{
 	if (empty($article_infos['title']))//Si l'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
-	
+
 	if ($article_infos['is_cat'] == 0)//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 	else //Catégorie
@@ -417,7 +401,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . stripslashes($categories[$article_infos['id_cat']]['title']);
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
-				
+
 		$tpl->assign_block_vars('remove', array(
 			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], stripslashes($article_infos['title'])),
 			'L_REMOVE_ALL_CONTENTS' => $LANG['wiki_remove_all_contents'],
@@ -428,8 +412,8 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 			'SELECTED_CAT' => $article_infos['id_cat'],
 			'CAT_0' => ($article_infos['id_cat'] == 0 ? 'wiki_selected_cat' : ''),
 			'ID_CAT' => $article_infos['id_cat']
-		));	
-		
+		));
+
 		//Gestion des erreurs
 		$error = retrieve(GET, 'error', '');
 		if ($error == 'e_cat_contains_cat')
@@ -449,7 +433,7 @@ else
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
-	
+
 $tpl->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],

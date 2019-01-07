@@ -1,38 +1,17 @@
 <?php
-/*##################################################
- *                               WebUrlBuilder.class.php
- *                            -------------------
- *   begin                : August 21, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 01 25
+ * @since   	PHPBoost 4.1 - 2014 08 21
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class WebUrlBuilder
 {
 	private static $dispatcher = '/web';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -40,7 +19,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -49,7 +28,7 @@ class WebUrlBuilder
 		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -57,7 +36,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -65,7 +44,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/delete/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -73,7 +52,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -81,7 +60,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -95,7 +74,7 @@ class WebUrlBuilder
 		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $sort_field . $sort_mode . $page . $subcategories_page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -107,7 +86,7 @@ class WebUrlBuilder
 		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -119,7 +98,7 @@ class WebUrlBuilder
 		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -128,7 +107,7 @@ class WebUrlBuilder
 		$id_category = !empty($id_category) ? $id_category . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -136,7 +115,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -144,7 +123,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -152,7 +131,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -160,7 +139,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/#comments-list');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -168,7 +147,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/visit/' . $id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -176,7 +155,7 @@ class WebUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/dead_link/' . $id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */

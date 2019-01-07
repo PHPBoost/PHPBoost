@@ -1,49 +1,29 @@
 <?php
-/*##################################################
- *                      ShoutboxHomeController.class.php
- *                            -------------------
- *   begin                : October 14, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @since   	PHPBoost 4.1 - 2014 10 14
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
 class ShoutboxHomeController extends ModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function build_view()
 	{
 		$user_accounts_config = UserAccountsConfig::load();
@@ -51,7 +31,7 @@ class ShoutboxHomeController extends ModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = $this->get_pagination($messages_number, $page);
 		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
-		
+
 		$result = PersistenceContext::get_querier()->select('SELECT member.*, shoutbox.*, ext_field.user_avatar
 		FROM ' . ShoutboxSetup::$shoutbox_table . ' shoutbox
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = shoutbox.user_id
@@ -63,21 +43,21 @@ class ShoutboxHomeController extends ModuleController
 				'display_from' => $pagination->get_display_from()
 			)
 		);
-		
+
 		while ($row = $result->fetch())
 		{
 			$message = new ShoutboxMessage();
 			$message->set_properties($row);
-			
+
 			//Avatar
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
-			
+
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'C_USER_GROUPS' => $message->get_author_user()->get_groups(),
 				'U_AVATAR' => $user_avatar
 			)));
-			
+
 			//user's groups
 			if ($message->get_author_user()->get_groups())
 			{
@@ -99,13 +79,13 @@ class ShoutboxHomeController extends ModuleController
 			}
 		}
 		$result->dispose();
-		
+
 		$this->view->put_all(array(
 			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $messages_number > ShoutboxConfig::load()->get_items_number_per_page(),
 			'PAGINATION' => $pagination->display()
 		));
-		
+
 		if (ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
 		{
 			$this->view->put('FORM', ShoutboxFormController::get_view());
@@ -115,19 +95,19 @@ class ShoutboxHomeController extends ModuleController
 			if (ShoutboxConfig::load()->is_no_write_authorization_message_displayed())
 				$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
 		}
-		
+
 		return $this->view;
 	}
-	
+
 	private function init()
 	{
 		$this->current_user = AppContext::get_current_user();
-		
+
 		$this->lang = LangLoader::get('common', 'shoutbox');
 		$this->view = new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!ShoutboxAuthorizationsService::check_authorizations()->read())
@@ -136,37 +116,37 @@ class ShoutboxHomeController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function get_pagination($messages_number, $page)
 	{
 		$pagination = new ModulePagination($page, $messages_number, (int)ShoutboxConfig::load()->get_items_number_per_page());
 		$pagination->set_url(ShoutboxUrlBuilder::home('%d'));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		return $pagination;
 	}
-	
+
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
-		
+
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['shoutbox.seo.description'], array('site' => GeneralConfig::load()->get_site_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::home($page));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], ShoutboxUrlBuilder::home($page));
-		
+
 		return $response;
 	}
-	
+
 	public static function get_view()
 	{
 		$object = new self();

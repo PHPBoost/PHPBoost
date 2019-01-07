@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                              pages_functions.php
- *                            -------------------
- *   begin                : August 15, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @since   	PHPBoost 1.6 - 2007 08 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 if (defined('PHPBOOST') !== true)	exit;
 
@@ -31,7 +16,7 @@ if (defined('PHPBOOST') !== true)	exit;
 function display_pages_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	$categories = PagesCategoriesCache::load()->get_categories();
-	
+
 	if ($id > 0)
 	{
 		$id_cat = $id;
@@ -43,11 +28,11 @@ function display_pages_cat_explorer($id, &$cats, $display_select_link = 1)
 		}
 		while ($id_cat > 0);
 	}
-	
+
 
 	//Maintenant qu'on connait l'arborescence on part du début
 	$cats_list = '<ul>' . show_pages_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
-	
+
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
 	foreach ($cats as $key => $value)
@@ -61,7 +46,7 @@ function display_pages_cat_explorer($id, &$cats, $display_select_link = 1)
 	-->
 	</script>
 	' . $cats_list;
-	
+
 }
 
 //Fonction récursive pour l'affichage des catégories
@@ -114,12 +99,12 @@ function pages_parse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
-	
+
 	//Parse la balise link
 	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isuU', '<a href="/pages/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
-	
+
 	return $parser->get_content();
 }
 
@@ -128,12 +113,12 @@ function pages_unparse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
-	
+
 	//Unparse la balise link
 	$unparser->add_module_special_tag('`<a href="/pages/([a-z0-9+#-_]+)">(.*)</a>`sU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
-	
+
 	return $unparser->get_content();
 }
 
@@ -144,12 +129,12 @@ function pages_second_parse($contents)
 	{
 		$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`suU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
 	}
-	
+
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$second_parser = $content_manager->get_second_parser();
 	$second_parser->set_content($contents);
 	$second_parser->parse();
-	
+
 	return $second_parser->get_content();
 }
 

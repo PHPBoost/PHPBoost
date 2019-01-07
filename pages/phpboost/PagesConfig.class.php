@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *		                  PagesConfig.class.php
- *                            -------------------
- *   begin                : March 2, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 08 23
+ * @since   	PHPBoost 3.0 - 2012 03 02
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class PagesConfig extends AbstractConfigData
 {
@@ -37,27 +20,27 @@ class PagesConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::COUNT_HITS_ACTIVATED);
 	}
-	
-	public function set_count_hits_activated($value) 
+
+	public function set_count_hits_activated($value)
 	{
 		$this->set_property(self::COUNT_HITS_ACTIVATED, $value);
 	}
-	
+
 	public function get_comments_activated()
 	{
 		return $this->get_property(self::COMMENTS_ACTIVATED);
 	}
-	
-	public function set_comments_activated($value) 
+
+	public function set_comments_activated($value)
 	{
 		$this->set_property(self::COMMENTS_ACTIVATED, $value);
 	}
-	
+
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
-	
+
 	public function set_authorizations(Array $array)
 	{
 		$this->set_property(self::AUTHORIZATIONS, $array);
@@ -67,7 +50,7 @@ class PagesConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::LEFT_COLUMN_DISABLED);
 	}
-	
+
 	public function set_left_column_disabled($value)
 	{
 		$this->set_property(self::LEFT_COLUMN_DISABLED, $value);
@@ -77,12 +60,12 @@ class PagesConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::RIGHT_COLUMN_DISABLED);
 	}
-	
+
 	public function set_right_column_disabled($value)
 	{
 		$this->set_property(self::RIGHT_COLUMN_DISABLED, $value);
 	}
-	
+
 	public function get_default_values()
 	{
 		return array(
@@ -93,7 +76,7 @@ class PagesConfig extends AbstractConfigData
 			self::RIGHT_COLUMN_DISABLED => false,
 		);
 	}
-	
+
 	/**
 	 * Returns the configuration.
 	 * @return PagesConfig

@@ -1,37 +1,21 @@
 <?php
-/*##################################################
- *                          PollModuleMiniMenu.class.php
- *                            -------------------
- *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @since   	PHPBoost 3.0 - 2011 10 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class PollModuleMiniMenu extends ModuleMiniMenu
-{    
+{
 	public function get_default_block()
 	{
 		return self::BLOCK_POSITION__RIGHT;
 	}
-	
+
 	public function admin_display()
 	{
 		return '';
@@ -41,36 +25,36 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 	{
 		return 'module-mini-poll';
 	}
-	
+
 	public function get_menu_title()
 	{
 		global $LANG;
 		load_module_lang('poll');
 		return $LANG['mini_poll'];
 	}
-	
+
 	public function is_displayed()
 	{
 		$polls = PollMiniMenuCache::load()->get_polls();
 		return !empty($polls) && !Url::is_current_url('/poll/') && PollAuthorizationsService::check_authorizations()->read();
 	}
-	
+
 	public function get_menu_content()
 	{
 		global $LANG;
 		$poll_config = PollConfig::load();
 		$config_cookie_name = $poll_config->get_cookie_name();
-		
+
 		$polls = PollMiniMenuCache::load()->get_polls();
-		
+
 		//Chargement de la langue du module.
 		load_module_lang('poll');
 		$rand = array_rand($polls);
 		$poll_mini = $polls[$rand]; //Sondage aléatoire.
-		
+
 		$tpl = new FileTemplate('poll/poll_mini.tpl');
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		
+
 		#####################Résultats######################
 		//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 		$array_cookie = array();

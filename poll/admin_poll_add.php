@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                               admin_poll_add.php
- *                            -------------------
- *   begin                : June 22, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.2 - 2005 06 22
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
@@ -39,7 +24,7 @@ $tpl = new FileTemplate('poll/admin_poll_add.tpl');
 if ($valid)
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	$question = retrieve(POST, 'question', '');
 	$type = (int)retrieve(POST, 'type', 1);
 	$archive = (int)retrieve(POST, 'archive', 0);
@@ -47,19 +32,19 @@ if ($valid)
 	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
 	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);
 	$get_visible = (int)retrieve(POST, 'visible', 0);
 	$poll_type = (int)retrieve(POST, 'poll_type', 0);
-	
+
 	//On verifie les conditions!
 	if (!empty($question))
 	{
 		$start_date = new Date($start);
 		$end_date = new Date($end);
-		
+
 		$start_timestamp = $start_date->get_timestamp();
 		$end_timestamp = $end_date->get_timestamp();
-		
+
 		$visible = 1;
 		if ($get_visible == 2)
 		{
@@ -86,14 +71,14 @@ if ($valid)
 			$start_timestamp = 0;
 			$end_timestamp = 0;
 		}
-		
+
 		$date = new Date($current_date);
 		$timestamp = $date->get_timestamp();
 		if ($timestamp > 0)
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
-			
+
 		$poll_type = NumberHelper::numeric($poll_type);
 		$answers = '';
 		$votes = '';
@@ -110,7 +95,7 @@ if ($valid)
 		}
 
 		PersistenceContext::get_querier()->insert(PREFIX . "poll", array('question' => $question, 'answers' => TextHelper::substr($answers, 0, TextHelper::strlen($answers) - 1), 'votes' => TextHelper::substr($votes, 0, TextHelper::strlen($votes) - 1), 'type' => $type, 'archive' => $archive, 'timestamp' => $timestamp, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'user_id' => AppContext::get_current_user()->get_id()));
-		
+
 		AppContext::get_response()->redirect('/poll/admin_poll.php');
 	}
 	else

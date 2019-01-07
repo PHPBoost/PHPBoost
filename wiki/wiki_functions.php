@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                              wiki_functions.php
- *                            -------------------
- *   begin                : May 6, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @since   	PHPBoost 1.6 - 2006 05 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 if (defined('PHPBOOST') !== true)	exit;
 
@@ -34,12 +19,12 @@ function wiki_parse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
-	
+
 	//Parse la balise link
 	$parser->add_module_special_tag('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isuU', '<a href="/wiki/$1">$2</a>');
 	$parser->set_content($contents);
 	$parser->parse();
-	
+
 	return $parser->get_content();
 }
 
@@ -48,12 +33,12 @@ function wiki_unparse($contents)
 {
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
-	
+
 	//Unparse la balise link
 	$unparser->add_module_special_tag('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`suU', '[link=$1]$2[/link]');
 	$unparser->set_content($contents);
 	$unparser->parse();
-	
+
 	return $unparser->get_content();
 }
 
@@ -64,7 +49,7 @@ function wiki_second_parse($contents)
 	$second_parser = $content_manager->get_second_parser();
 	$second_parser->set_content(wiki_unparse($contents));
 	$second_parser->parse();
-	
+
 	return $second_parser->get_content();
 }
 
@@ -88,34 +73,34 @@ function wiki_explode_menu(&$content)
 	$lines = explode("\n", $content);
 	$num_lines = count($lines);
 	$max_level_expected = 2;
-	
+
 	$list = array();
-	
+
 	//We read the text line by line
 	foreach ($lines as $id => &$line)
 	{
 		for ($level = 2; $level <= $max_level_expected; $level++)
 		{
 			$matches = array();
-			
+
 			//If the line contains a title
 			if (preg_match('`^(?:<br />)?\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`u', $line, $matches))
 			{
 				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
-				
+
 				//We add it to the list
 				$list[] = array($level - 1, $title_name);
 				//Now we wait one of its children or its brother
 				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
-				
+
 				//Réinsertion
 				$line = '<h' . $level . ' class="formatter-title wiki-paragraph-' .  $level . '" id="paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $level . '><br />' . "\n";
 			}
 		}
 	}
-	
+
 	$content = implode("\n", $lines);
-	
+
 	return $list;
 }
 
@@ -126,17 +111,17 @@ function wiki_display_menu($menu_list)
 	{
 		return '';
 	}
-	
+
 	$menu = '';
 	$last_level = 0;
-		
+
 	foreach ($menu_list as $title)
 	{
 		$current_level = $title[0];
-		
+
 		$title_name = stripslashes($title[1]);
 		$title_link = '<a href="#paragraph-' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
-		
+
 		if ($current_level > $last_level)
 		{
 			$menu .= '<ol class="wiki-list wiki-list-' . $current_level . '"><li>' . $title_link;
@@ -155,14 +140,14 @@ function wiki_display_menu($menu_list)
 		}
 		$last_level = $title[0];
 	}
-	
+
 	//End
 	if (TextHelper::substr($menu, TextHelper::strlen($menu) - 4, 4) == '<li>')
 	{
 		$menu = TextHelper::substr($menu, 0, TextHelper::strlen($menu) - 4);
 	}
 	$menu .= str_repeat('</li></ol>', $last_level);
-	
+
 	return $menu;
 }
 
@@ -170,7 +155,7 @@ function wiki_display_menu($menu_list)
 function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	$categories = WikiCategoriesCache::load()->get_categories();
-	
+
 	if ($id > 0)
 	{
 		$id_cat = $id;
@@ -179,14 +164,14 @@ function display_wiki_cat_explorer($id, &$cats, $display_select_link = 1)
 		{
 			$cats[] = (int)$categories[$id_cat]['id_parent'];
 			$id_cat = (int)$categories[$id_cat]['id_parent'];
-		}	
+		}
 		while ($id_cat > 0);
 	}
-	
+
 
 	//Maintenant qu'on connait l'arborescence on part du début
 	$cats_list = '<ul class="no-list">' . show_wiki_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
-	
+
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
 	foreach ($cats as $key => $value)

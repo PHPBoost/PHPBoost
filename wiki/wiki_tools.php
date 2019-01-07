@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                              wiki_tools.php
- *                            -------------------
- *   begin                : October 29, 2006
- *   copyright            : (C) 2006 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 29
+ * @since   	PHPBoost 1.6 - 2006 10 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 if (defined('PHPBOOST') !== true)	exit;
 
@@ -43,10 +27,10 @@ else
 	$general_auth = true;
 	$article_auth = array();
 }
-	
+
 $tools_tpl->put_all(array(
 	'C_INDEX_PAGE' => $page_type == 'index',
-	
+
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
 
 	'L_EDIT_INDEX' => $LANG['wiki_update_index'],
@@ -82,7 +66,7 @@ $tools_tpl->put_all(array(
 	'C_RESTRICTION' => AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION),
 	'L_RESTRICTION' => $LANG['wiki_restriction_level'],
 	'U_RESTRICTION' => PATH_TO_ROOT . '/wiki/' . url('property.php?auth=' . $article_infos['id']),
-	
+
 	'L_RANDOM' => $LANG['wiki_random_page'],
 	'U_RANDOM' => PATH_TO_ROOT . '/wiki/' . url('property.php?random=1'),
 

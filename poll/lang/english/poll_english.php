@@ -1,35 +1,16 @@
 <?php
-/*##################################################
- *                             poll_english.php
- *                            -------------------
- *   begin                : July 14, 2005
- *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- *   This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 05
+ * @since   	PHPBoost 1.2 - 2005 07 04
+*/
 
-#####################################################
-#						English						#
-#####################################################
- 
+####################################################
+#                    English                       #
+####################################################
+
 //Admin
 $LANG['confirm_del_poll'] = 'Delete this poll ?';
 $LANG['poll_add'] = 'Add a poll';
@@ -38,8 +19,8 @@ $LANG['poll.manage'] = 'Manage polls';
 $LANG['poll_config'] = 'Poll configuration';
 $LANG['poll_config_mini'] = 'Mini-poll configuration';
 $LANG['poll_config_advanced'] = 'Advanced configurations';
-$LANG['poll_entry'] = 'Number of pool entries'; 
-$LANG['answer_type'] = 'Answer type'; 
+$LANG['poll_entry'] = 'Number of pool entries';
+$LANG['answer_type'] = 'Answer type';
 $LANG['polls'] = 'Polls';
 $LANG['single'] = 'Single';
 $LANG['multiple'] = 'Multiple';
@@ -71,7 +52,7 @@ $LANG['e_already_vote'] = 'You have already voted';
 $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote!';
 $LANG['e_no_vote'] = 'Please answer the poll before displaying the results!';
 $LANG['e_results_not_displayed_yet'] = 'Results will be available at the end of the poll on :end_date';
- 
+
 //Poll
 $LANG['poll'] = 'Polls';
 $LANG['mini_poll'] = 'Poll';

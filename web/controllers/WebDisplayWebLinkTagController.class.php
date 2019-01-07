@@ -1,56 +1,36 @@
 <?php
-/*##################################################
- *                               WebDisplayWebLinkTagController.class.php
- *                            -------------------
- *   begin                : August 21, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @since   	PHPBoost 4.1 - 2014 08 21
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class WebDisplayWebLinkTagController extends ModuleController
 {
 	private $tpl;
 	private $lang;
-	
+
 	private $keyword;
 
 	private $config;
 	private $comments_config;
 	private $content_management_config;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->build_view($request);
-		
+
 		return $this->generate_response($request);
 	}
-	
+
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
@@ -60,15 +40,15 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 	}
-	
+
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		
+
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
-		
+
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
@@ -77,21 +57,21 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
 		);
-		
+
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
-		
+
 		$sort_mode = TextHelper::strtoupper($mode);
 		$sort_mode = (in_array($sort_mode, array(WebLink::ASC, WebLink::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
-		
+
 		if (in_array($field, WebLink::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, WebLink::SORT_FIELDS_URL_VALUES);
 		else
 			$sort_field = $this->config->get_items_default_sort_field();
-		
+
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . WebSetup::$web_table . ' web
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
@@ -103,7 +83,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
-		
+
 		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
 
 		$this->tpl->put_all(array(
@@ -120,33 +100,33 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->module_comments_is_enabled('web') + (int)$this->content_management_config->module_notation_is_enabled('web'),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$weblink = new WebLink();
 			$weblink->set_properties($row);
-			
+
 			$keywords = $weblink->get_keywords();
 			$has_keywords = count($keywords) > 0;
-			
+
 			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
-			
+
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 	}
-	
+
 	private function build_sorting_form($field, $mode)
 	{
 		$common_lang = LangLoader::get('common');
-		
+
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
-		
+
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
 
@@ -158,25 +138,25 @@ class WebDisplayWebLinkTagController extends ModuleController
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_COMMENTS]);
-		
+
 		if ($this->content_management_config->module_notation_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NOTATION]);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options, 
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
 				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
-			), 
+			),
 			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
-		
+
 		$this->tpl->put('SORT_FORM', $form->display());
 	}
-	
+
 	private function get_keyword()
 	{
 		if ($this->keyword === null)
@@ -199,30 +179,30 @@ class WebDisplayWebLinkTagController extends ModuleController
 		}
 		return $this->keyword;
 	}
-	
+
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
 		FROM '. WebSetup::$web_table .' web
-		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
+		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id
 		' . $condition, $parameters);
-		
+
 		$pagination = new ModulePagination($page, $result['weblinks_number'], (int)WebConfig::load()->get_items_number_per_page());
 		$pagination->set_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		return $pagination;
 	}
-	
+
 	private function build_keywords_view($keywords)
 	{
 		$nbr_keywords = count($keywords);
-		
+
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
@@ -234,7 +214,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			$i++;
 		}
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!WebAuthorizationsService::check_authorizations()->read())
@@ -243,23 +223,23 @@ class WebDisplayWebLinkTagController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response(HTTPRequestCustom $request)
 	{
 		$sort_field = $request->get_getstring('field', WebLink::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
 		$response = new SiteDisplayResponse($this->tpl);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
 		$breadcrumb->add($this->get_keyword()->get_name(), WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
-		
+
 		return $response;
 	}
 }

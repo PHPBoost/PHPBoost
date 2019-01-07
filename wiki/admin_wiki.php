@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                               admin_wiki.php
- *                            -------------------
- *   begin                : November 11, 2006
- *   copyright            : (C) 2006 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.6 - 2006 11 11
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('wiki');
@@ -66,7 +50,7 @@ if ($update) //Mise à jour
 
 	//Régénération du cache
 	WikiCategoriesCache::invalidate();
-	
+
 	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
@@ -93,7 +77,7 @@ $tpl->put_all(array(
 	'L_WHOLE_WIKI' => $LANG['wiki_config_whole'],
 	'L_INDEX_WIKI' => $LANG['wiki_index'],
 	'L_HITS_COUNTER' => $LANG['wiki_count_hits'],
-	'L_STICKY_MENU' => $LANG['wiki_sticky_menu'], 
+	'L_STICKY_MENU' => $LANG['wiki_sticky_menu'],
 	'L_WIKI_NAME' => $LANG['wiki_name'],
 	'L_DISPLAY_CATEGORIES_ON_INDEX' => $LANG['wiki_display_cats'],
 	'L_NOT_DISPLAY' => $LANG['wiki_no_display'],
