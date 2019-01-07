@@ -1,59 +1,39 @@
 <?php
-/*##################################################
- *		               ContactFormFieldObjectPossibleValues.class.php
- *                            -------------------
- *   begin                : October 7, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 18
+ * @since   	PHPBoost 4.0 - 2013 10 07
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class ContactFormFieldObjectPossibleValues extends AbstractFormField
 {
 	private $max_input = 50;
-	
+
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
-	
+
 	function display()
 	{
 		$template = $this->get_template_to_use();
 		$lang = LangLoader::get('common', 'contact');
 		$config = ContactConfig::load();
-		
+
 		$tpl = new FileTemplate('contact/ContactFormFieldObjectPossibleValues.tpl');
 		$tpl->add_lang($lang);
-		
+
 		$this->assign_common_template_variables($template);
-		
+
 		$fields = $config->get_fields();
 		$recipients_field_id = $config->get_field_id_by_name('f_recipients');
 		$recipients_field = new ContactField();
 		$recipients_field->set_properties($fields[$recipients_field_id]);
-		
+
 		foreach ($recipients_field->get_possible_values() as $id => $options)
 		{
 			if (!empty($options))
@@ -64,7 +44,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				));
 			}
 		}
-		
+
 		$has_default = false;
 		$i = 0;
 		foreach ($this->get_value() as $name => $options)
@@ -91,7 +71,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				$i++;
 			}
 		}
-		
+
 		if ($i == 0)
 		{
 			$tpl->assign_block_vars('fieldelements', array(
@@ -111,7 +91,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 			}
 			$i++;
 		}
-		
+
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
@@ -120,14 +100,14 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		 	'NBR_FIELDS' => $i,
 			'C_HAS_DEFAULT_VALUE' => $has_default
 		));
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $tpl->render()
 		));
-		
+
 		return $template;
 	}
-	
+
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
@@ -152,7 +132,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		}
 		$this->set_value($values);
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -168,7 +148,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-	
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');

@@ -1,38 +1,23 @@
 <?php
-/*##################################################
- *                                forum.php
- *                            -------------------
- *   begin                : October 26, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @since   	PHPBoost 1.2 - 2005 10 26
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_not_reads'], '');
 define('TITLE', $LANG['show_not_reads']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 $request = AppContext::get_request();
 
 //Redirection changement de catégorie.
@@ -48,7 +33,7 @@ if (!empty($change_cat))
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 {
-	AppContext::get_response()->redirect(UserUrlBuilder::connect()); 
+	AppContext::get_response()->redirect(UserUrlBuilder::connect());
 }
 
 $tpl = new FileTemplate('forum/forum_forum.tpl');
@@ -111,41 +96,41 @@ while ($row = $result->fetch())
 {
 	//On définit un array pour l'appelation correspondant au type de champ
 	$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
-		
+
 	$img_announce = 'fa-announce-new'; //Forcement non lu.
 	$img_announce .= ($row['type'] == '1') ? '-post' : '';
 	$img_announce .= ($row['type'] == '2') ? '-top' : '';
 	$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
-	
-	//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.		
+
+	//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 	if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 	{
-		$last_msg_id = $row['last_view_id']; 
+		$last_msg_id = $row['last_view_id'];
 		$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
 		$last_page_rewrite = '-0-' . $row['last_view_id'];
 	}
 	else
 	{
-		$last_msg_id = $row['last_msg_id']; 
+		$last_msg_id = $row['last_msg_id'];
 		$last_page = ceil( $row['nbr_msg'] / $config->get_number_messages_per_page() );
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
-	}	
-	
+	}
+
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
-	
-	//Ancre ajoutée aux messages non lus.	
+
+	//Ancre ajoutée aux messages non lus.
 	$new_ancre = 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id ;
-	
+
 	//On crée une pagination (si activé) si le nombre de topics est trop important.
 	$page = AppContext::get_request()->get_getint('pt', 1);
 	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 	$topic_pagination->set_url(new Url('/forum/topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d' . $rewrited_title . '.php')));
-	
+
 	$group_color      = User::get_group_color($row['groups'], $row['user_level']);
 	$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
-	
+
 	$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 	$tpl->assign_block_vars('topics', array_merge(
@@ -256,10 +241,10 @@ $vars_tpl = array(
 $tpl->put_all($vars_tpl);
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
-	
+
 $tpl->put('forum_top', $tpl_top);
 $tpl->put('forum_bottom', $tpl_bottom);
-	
+
 $tpl->display();
 
 require_once('../kernel/footer.php');

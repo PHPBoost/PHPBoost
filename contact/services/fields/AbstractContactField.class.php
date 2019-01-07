@@ -1,41 +1,21 @@
 <?php
-/*##################################################
- *                               AbstractContactField.class.php
- *                            -------------------
- *   begin                : July 31, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
- 
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc Abstract class that proposes a default implementation for the ContactFieldType interface.
- * @package {@package}
- */
+ * Abstract class that proposes a default implementation for the ContactFieldType interface.
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 15
+ * @since   	PHPBoost 4.0 - 2013 07 31
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
+
 abstract class AbstractContactField implements ContactFieldType
 {
 	protected $form;
 	protected $disable_fields_configuration = array();
 	protected $name;
-	
+
 	/**
 	 * @var bool
 	 */
@@ -43,7 +23,7 @@ abstract class AbstractContactField implements ContactFieldType
 	{
 		$this->name = 'ContactField';
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -52,7 +32,7 @@ abstract class AbstractContactField implements ContactFieldType
 		$fieldset = $field->get_fieldset();
 		return;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -61,7 +41,7 @@ abstract class AbstractContactField implements ContactFieldType
 		$field_name = $field->get_field_name();
 		return $form->get_value($field_name, '');
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -87,7 +67,7 @@ abstract class AbstractContactField implements ContactFieldType
 			return new FormFieldConstraintRegex($value);
 		}
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -127,7 +107,7 @@ abstract class AbstractContactField implements ContactFieldType
 			}
 		}
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -135,7 +115,7 @@ abstract class AbstractContactField implements ContactFieldType
 	{
 		return $this->disable_fields_configuration;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -143,7 +123,7 @@ abstract class AbstractContactField implements ContactFieldType
 	{
 		$this->name = $name;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -151,12 +131,12 @@ abstract class AbstractContactField implements ContactFieldType
 	{
 		return $this->name;
 	}
-	
+
 	public function set_form(HTMLForm $form)
 	{
 		$this->form = $form;
 	}
-	
+
 	public function get_form()
 	{
 		return $this->form;

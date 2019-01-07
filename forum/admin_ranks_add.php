@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                               admin_forum_config.php
- *                            -------------------
- *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- * 
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.2 - 2005 10 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('forum'); //Chargement de la langue du module.
@@ -43,15 +27,15 @@ if ($add)
 	$name = $request->get_poststring('name', '');
 	$msg_number = $request->get_postint('msg', 0);
 	$icon = $request->get_poststring('icon', '');
-	
+
 	if (!empty($name) && $msg_number >= 0)
 	{
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon, 'special' => 0));
-		
+
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
-		
+
 		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 	}
 	else
@@ -64,12 +48,12 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	$dir = PATH_TO_ROOT . '/forum/templates/images/ranks/';
 	if (!is_writable($dir))
 		$is_writable = @chmod($dir, 0777);
-	
+
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
-		
+
 		if (!empty($authorized_pictures_extensions))
 		{
 			$Upload = new Upload($dir);
@@ -82,7 +66,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
-	
+
 	if (!empty($error))
 		$template->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 	else

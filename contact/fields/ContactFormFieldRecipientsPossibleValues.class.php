@@ -1,53 +1,33 @@
 <?php
-/*##################################################
- *		               ContactFormFieldRecipientsPossibleValues.class.php
- *                            -------------------
- *   begin                : September 29, 2013
- *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 09 18
+ * @since   	PHPBoost 4.0 - 2013 09 29
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 {
 	private $max_input = 50;
-	
+
 	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
-	
+
 	function display()
 	{
 		$template = $this->get_template_to_use();
 		$lang = LangLoader::get('admin-user-common');
-		
+
 		$tpl = new FileTemplate('contact/ContactFormFieldRecipientsPossibleValues.tpl');
 		$tpl->add_lang($lang);
-		
+
 		$this->assign_common_template_variables($template);
-		
+
 		$has_default = false;
 		$i = 0;
 		foreach ($this->get_value() as $name => $options)
@@ -65,7 +45,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 				$i++;
 			}
 		}
-		
+
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
@@ -74,18 +54,18 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		 	'NBR_FIELDS' => $i,
 			'C_HAS_DEFAULT_VALUE' => $has_default
 		));
-		
+
 		$template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $tpl->render()
 		));
-		
+
 		return $template;
 	}
-	
+
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		
+
 		$config = ContactConfig::load();
 		$fields = $config->get_fields();
 		$recipients_field_id = $config->get_field_id_by_name('f_recipients');
@@ -94,7 +74,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		$recipients = $recipients_field->get_possible_values();
 		$nb_recipients = count($recipients);
 		$recipients_keys = array_keys($recipients);
-		
+
 		$values = array();
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
@@ -104,9 +84,9 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 				$field_is_default = 'field_is_default_' . $this->get_html_id() . '_' . $i;
 				$field_title = 'field_name_' . $this->get_html_id() . '_' . $i;
 				$field_email = 'field_email_' . $this->get_html_id() . '_' . $i;
-				
+
 				$email = $i > 0 ? $request->get_poststring($field_email) : true;
-				
+
 				if ($request->get_poststring($field_title) && $email)
 				{
 					$id = $i < $nb_recipients ? $recipients_keys[$i] : preg_replace('/\s+/u', '', $request->get_poststring($field_name));
@@ -120,7 +100,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		}
 		$this->set_value($values);
 	}
-	
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -136,7 +116,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		}
 		parent::compute_options($field_options);
 	}
-	
+
 	protected function get_default_template()
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');

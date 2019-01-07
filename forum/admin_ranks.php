@@ -1,30 +1,13 @@
 <?php
-/*##################################################
- *                               admin_ranks.php
- *                            -------------------
- *   begin                : October 30, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- * 
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.2 - 2005 10 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('forum'); //Chargement de la langue du module.
@@ -43,13 +26,13 @@ $template = new FileTemplate('forum/admin_ranks.tpl');
 //Si c'est confirmé on execute
 if ($valid)
 {
-	$result = PersistenceContext::get_querier()->select("SELECT id, special 
+	$result = PersistenceContext::get_querier()->select("SELECT id, special
 	FROM " . PREFIX . "forum_ranks");
 	while ($row = $result->fetch())
 	{
 		$name = $request->get_poststring($row['id'] . 'name', '');
-		$msg_number = $request->get_postint($row['id'] . 'msg', 0);    
-		$icon = $request->get_poststring($row['id'] . 'icon', ''); 
+		$msg_number = $request->get_postint($row['id'] . 'msg', 0);
+		$icon = $request->get_poststring($row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
 			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
@@ -59,7 +42,7 @@ if ($valid)
 	$result->dispose();
 
 	ForumRanksCache::invalidate();
-	
+
 	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
@@ -69,7 +52,7 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
-	
+
 	$template->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
@@ -109,7 +92,7 @@ foreach($ranks_cache as $msg => $row)
 		$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
 		$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 	}
-	
+
 	$template->assign_block_vars('rank', array(
 		'ID'             => $row['id'],
 		'RANK'           => $row['name'],

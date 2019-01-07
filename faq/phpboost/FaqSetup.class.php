@@ -1,75 +1,53 @@
 <?php
-/*##################################################
- *                               FaqSetup.class.php
- *                            -------------------
- *   begin                : September 2, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.0 - 2014 09 02
+*/
 
 class FaqSetup extends DefaultModuleSetup
 {
 	public static $faq_table;
 	public static $faq_cats_table;
-	
+
 	/**
 	 * @var string[string] localized messages
 	 */
 	private $messages;
-	
+
 	public static function __static()
 	{
 		self::$faq_table = PREFIX . 'faq';
 		self::$faq_cats_table = PREFIX . 'faq_cats';
 	}
-	
+
 	public function install()
 	{
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
-	
+
 	public function uninstall()
 	{
 		$this->drop_tables();
 		ConfigManager::delete('faq', 'config');
 		CacheManager::invalidate('module', 'faq');
 	}
-	
+
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$faq_table, self::$faq_cats_table));
 	}
-	
+
 	private function create_tables()
 	{
 		$this->create_faq_table();
 		$this->create_faq_cats_table();
 	}
-	
+
 	private function create_faq_table()
 	{
 		$fields = array(
@@ -92,19 +70,19 @@ class FaqSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
 	}
-	
+
 	private function create_faq_cats_table()
 	{
 		RichCategory::create_categories_table(self::$faq_cats_table);
 	}
-	
+
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'faq');
 		$this->insert_faq_cats_data();
 		$this->insert_faq_data();
 	}
-	
+
 	private function insert_faq_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
@@ -117,7 +95,7 @@ class FaqSetup extends DefaultModuleSetup
 			'description' => $this->messages['default.cat.phpboost.description'],
 			'image' => '/faq/faq.png'
 		));
-		
+
 		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
 			'id' => 2,
 			'id_parent' => 0,
@@ -129,7 +107,7 @@ class FaqSetup extends DefaultModuleSetup
 			'image' => '/faq/faq.png'
 		));
 	}
-	
+
 	private function insert_faq_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$faq_table, array(
@@ -142,7 +120,7 @@ class FaqSetup extends DefaultModuleSetup
 			'author_user_id' => 1,
 			'approved' => 1
 		));
-		
+
 		PersistenceContext::get_querier()->insert(self::$faq_table, array(
 			'id' => 2,
 			'id_category' => 2,

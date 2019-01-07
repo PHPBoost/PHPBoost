@@ -1,49 +1,27 @@
 <?php
-/*##################################################
- *                               DownloadCache.class.php
- *                            -------------------
- *   begin                : August 24, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.0 - 2014 08 24
+*/
 
 class DownloadCache implements CacheData
 {
 	private $downloadfiles = array();
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
 		$this->downloadfiles = array();
-		
+
 		$now = new Date();
 		$config = DownloadConfig::load();
 		$oldest_file_date = new Date(date('Y-m-d', strtotime('-' . $config->get_oldest_file_day_in_menu() . ' day')));
-		
+
 		$result = PersistenceContext::get_querier()->select('
 			SELECT download.*, notes.average_notes, notes.number_notes
 			FROM ' . DownloadSetup::$download_table . ' download
@@ -56,24 +34,24 @@ class DownloadCache implements CacheData
 				'files_number_in_menu' => (int)$config->get_files_number_in_menu(),
 				'oldest_file_date' => $oldest_file_date->get_timestamp()
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$this->downloadfiles[$row['id']] = $row;
 		}
 		$result->dispose();
 	}
-	
+
 	public function get_downloadfiles()
 	{
 		return $this->downloadfiles;
 	}
-	
+
 	public function downloadfile_exists($id)
 	{
 		return array_key_exists($id, $this->downloadfiles);
 	}
-	
+
 	public function get_downloadfile_item($id)
 	{
 		if ($this->downloadfile_exists($id))
@@ -82,12 +60,12 @@ class DownloadCache implements CacheData
 		}
 		return null;
 	}
-	
+
 	public function get_number_downloadfiles()
 	{
 		return count($this->downloadfiles);
 	}
-	
+
 	/**
 	 * Loads and returns the download cached data.
 	 * @return DownloadCache The cached data
@@ -96,7 +74,7 @@ class DownloadCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'download', 'minimenu');
 	}
-	
+
 	/**
 	 * Invalidates the current download cached data.
 	 */

@@ -1,31 +1,15 @@
 <?php
-/*##################################################
- *                                topic.php
- *                            -------------------
- *   begin                : October 26, 2005
- *   copyright            : (C) 2005 Viarre Régis / Sautel Benoît
- *   email                : mickaelhemri@gmail.com / ben.popeye@gmail.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @since   	PHPBoost 1.2 - 2005 10 26
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -80,7 +64,7 @@ $Bread_crumb->add($topic['title'], '');
 
 define('TITLE', $topic['title']);
 define('DESCRIPTION', StringVars::replace_vars($LANG['topic_title_seo'], array('title' => $topic['title'], 'forum' => ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() : ''))));
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
@@ -138,15 +122,15 @@ if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
 	$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $id_get, 'id' => $idm)); //Nombre de message avant le message de destination.
-	
+
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
-	if (is_int(($nbr_msg_before + 1) / $config->get_number_messages_per_page())) 
+	if (is_int(($nbr_msg_before + 1) / $config->get_number_messages_per_page()))
 	{
 		//On redirige vers la page suivante, seulement si ce n'est pas la dernière.
 		if ($topic['nbr_msg'] != ($nbr_msg_before + 1))
 			$nbr_msg_before++;
 	}
-	
+
 	$page = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichée.
 }
 
@@ -232,7 +216,7 @@ LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id
 LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = :idtopic AND tr.user_id = :user_id
 LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp AND s.user_id != -1
 WHERE msg.idtopic = :idtopic
-ORDER BY msg.timestamp 
+ORDER BY msg.timestamp
 LIMIT :number_items_per_page OFFSET :display_from", array(
 	'idtopic' => $id_get,
 	'user_id' => AppContext::get_current_user()->get_id(),
@@ -259,7 +243,7 @@ while ( $row = $result->fetch() )
 	}
 	elseif (AppContext::get_current_user()->get_id() == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = true;
-	
+
 	//Gestion des sondages => executé une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
@@ -268,24 +252,24 @@ while ( $row = $result->fetch() )
 			'QUESTION'      => stripslashes($row['question']),
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
 			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
-			'L_POLL'        => $LANG['poll'], 
+			'L_POLL'        => $LANG['poll'],
 			'L_VOTE'        => $LANG['poll_vote'],
 			'L_RESULT'      => $LANG['poll_result']
 		));
-		
+
 		$array_voter = explode('|', $row['voter_id']);
 		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || $request->get_getvalue('r', 0) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
-			
-			$sum_vote = array_sum($array_vote);	
+
+			$sum_vote = array_sum($array_vote);
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
 			foreach ($array_answer as $key => $answer)
 			{
 				$tpl->assign_block_vars('poll_result', array(
-					'ANSWERS' => stripslashes($answer), 
+					'ANSWERS' => stripslashes($answer),
 					'NBRVOTE' => $array_vote[$key],
 					'WIDTH'   => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
 					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
@@ -297,7 +281,7 @@ while ( $row = $result->fetch() )
 			$tpl->put_all(array(
 				'C_POLL_QUESTION' => true
 			));
-			
+
 			$z = 0;
 			$array_answer = explode('|', $row['answers']);
 			if ($row['type'] == 0)
@@ -312,7 +296,7 @@ while ( $row = $result->fetch() )
 					$z++;
 				}
 			}
-			elseif ($row['type'] == 1) 
+			elseif ($row['type'] == 1)
 			{
 				foreach ($array_answer as $answer)
 				{
@@ -327,7 +311,7 @@ while ( $row = $result->fetch() )
 		}
 		$poll_done = true;
 	}
-	
+
 	//Rang de l'utilisateur.
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
@@ -349,13 +333,13 @@ while ( $row = $result->fetch() )
 		foreach ($ranks_cache as $msg => $ranks_info)
 		{
 			if ($msg >= 0 && $msg <= $row['posted_msg'])
-			{ 
+			{
 				$user_rank = $ranks_info['name'];
 				$user_rank_icon = $ranks_info['icon'];
 			}
 		}
 	}
-	
+
 	$theme = AppContext::get_current_user()->get_theme();
 	//Image associée au rang.
 	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
@@ -366,12 +350,12 @@ while ( $row = $result->fetch() )
 	{
 		$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
 	}
-	
+
 	$user_accounts_config = UserAccountsConfig::load();
 	$user_group_color     = User::get_group_color($row['groups'], $row['level']);
 
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
-	
+
 	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 	$topic_edit_date      = new Date($row['timestamp_edit'], Timezone::SERVER_TIMEZONE);
 	$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);
@@ -429,14 +413,14 @@ while ( $row = $result->fetch() )
 	)));
 
 	//Affichage des groupes du membre.
-	if (!empty($row['groups'])) 
-	{	
+	if (!empty($row['groups']))
+	{
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['groups']);
 		foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 		{
 			$group_color = User::get_group_color($idgroup);
-			
+
 			if (is_numeric(array_search($idgroup, $array_user_groups)))
 			{
 				$tpl->assign_block_vars('msg.usergroups', array(
@@ -456,14 +440,14 @@ while ( $row = $result->fetch() )
 	foreach ($displayed_extended_fields as $field_type)
 	{
 		$field = $extended_fields_cache->get_extended_field_by_field_name($field_type);
-		
+
 		if (!empty($row[$field_type]) && !empty($field) && $field['display'])
 		{
 			$button = '';
 			$icon_fa = '';
 			$title = '';
 			$unknown_field = true;
-			
+
 			if ($field['regex'] == 4)
 			{
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
@@ -502,7 +486,7 @@ while ( $row = $result->fetch() )
 					$icon_fa = 'fa-website';
 				}
 			}
-			
+
 			$tpl->assign_block_vars('msg.ext_fields', array(
 				'BUTTON'     => $button,
 				'U_URL'      => $row[$field_type],
@@ -515,9 +499,9 @@ while ( $row = $result->fetch() )
 			));
 		}
 	}
-	
+
 	//Marqueur de suivis du sujet.
-	if (!empty($row['trackid'])) 
+	if (!empty($row['trackid']))
 	{
 		$track = ($row['track']);
 		$track_pm = ($row['trackpm']);
@@ -593,12 +577,12 @@ if (!empty($quote_get))
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$pseudo = '';
 	try {
 		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
 	} catch (RowNotFoundException $e) {}
-	
+
 	$contents = '[quote' . (!empty($pseudo) ? '=' . $pseudo : '') . ']' . FormatingHelper::unparse(stripslashes($quote_msg['contents'])) . '[/quote]';
 }
 
@@ -609,7 +593,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
-}	
+}
 elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$tpl->put_all(array(
@@ -622,10 +606,10 @@ else
 	$img_track_display = $track ? 'msg-not-track' : 'msg-track';
 	$img_track_pm_display = $track_pm ? 'pm-not-track' : 'pm-track';
 	$img_track_mail_display = $track_mail ? 'mail-not-track' : 'mail-track';
-	
+
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
-	
+
 	$vars_tpl = array_merge($vars_tpl, array(
 		'C_AUTH_POST'         => true,
 		'CONTENTS'            => $contents,

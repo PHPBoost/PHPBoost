@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                             ForumSetup.class.php
- *                            -------------------
- *   begin                : May 27, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 12 20
+ * @since   	PHPBoost 3.0 - 2010 05 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class ForumSetup extends DefaultModuleSetup
 {
@@ -211,7 +194,7 @@ class ForumSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
 				'title' => array('type' => 'fulltext', 'fields' => 'title')
-			
+
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_topics_table, $fields, $options);
 	}
@@ -248,7 +231,7 @@ class ForumSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_view_table, $fields, $options);
 	}
-	
+
 	private function create_forum_ranks_table()
 	{
 		$fields = array(
@@ -285,7 +268,7 @@ class ForumSetup extends DefaultModuleSetup
 	private function create_member_extended_field()
 	{
 		$lang = LangLoader::get('common', 'forum');
-		
+
 		$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
@@ -294,7 +277,7 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Website
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.website']);
@@ -306,7 +289,7 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(5);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Skype
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.skype']);
@@ -318,7 +301,7 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
-		
+
 		//Sign
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.signing']);
@@ -391,11 +374,11 @@ class ForumSetup extends DefaultModuleSetup
 			'user_id_edit' => 0,
 			'user_ip' => AppContext::get_request()->get_ip_address()
 		));
-		
+
 		//Mise à jour du nombre de messages du membre.
 		$this->querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '1'");
 	}
-	
+
 	private function insert_forum_ranks_data()
 	{
 		$this->querier->insert(self::$forum_ranks_table, array(

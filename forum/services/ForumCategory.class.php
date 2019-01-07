@@ -1,29 +1,11 @@
 <?php
-/*##################################################
- *                        ForumCategory.class.php
- *                            -------------------
- *   begin                : May 15, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.1 - 2015 02 25
+*/
 
 class ForumCategory extends Category
 {
@@ -32,71 +14,71 @@ class ForumCategory extends Category
 	private $description;
 	private $last_topic_id;
 	private $url;
-	
+
 	const TYPE_CATEGORY = 0;
 	const TYPE_FORUM = 1;
 	const TYPE_URL = 2;
-	
+
 	const STATUS_UNLOCKED = 0;
 	const STATUS_LOCKED = 1;
-	
+
 	public function __construct()
 	{
 		$this->type = self::TYPE_CATEGORY;
 		$this->status = self::STATUS_UNLOCKED;
 		$this->last_topic_id = 0;
 	}
-	
+
 	public function set_type($type)
 	{
 		$this->type = $type;
 	}
-	
+
 	public function get_type()
 	{
 		return $this->type;
 	}
-	
+
 	public function set_status($status)
 	{
 		$this->status = $status;
 	}
-	
+
 	public function get_status()
 	{
 		return $this->status;
 	}
-	
+
 	public function set_description($description)
 	{
 		$this->description = $description;
 	}
-	
+
 	public function get_description()
 	{
 		return $this->description;
 	}
-	
+
 	public function set_last_topic_id($last_topic_id)
 	{
 		$this->last_topic_id = $last_topic_id;
 	}
-	
+
 	public function get_last_topic_id()
 	{
 		return $this->last_topic_id;
 	}
-	
+
 	public function set_url($url)
 	{
 		$this->url = $url;
 	}
-	
+
 	public function get_url()
 	{
 		return $this->url;
 	}
-	
+
 	public function get_properties()
 	{
 		return array_merge(parent::get_properties(), array(
@@ -106,7 +88,7 @@ class ForumCategory extends Category
 			'url' => $this->get_url()
 		));
 	}
- 
+
 	public function set_properties(array $properties)
 	{
 		if (!empty($properties['url']))
@@ -115,14 +97,14 @@ class ForumCategory extends Category
 			$this->set_type(self::TYPE_FORUM);
 		else
 			$this->set_type(self::TYPE_CATEGORY);
-		
+
 		parent::set_properties($properties);
 		$this->set_status($properties['status']);
 		$this->set_description($properties['description']);
 		$this->set_last_topic_id($properties['last_topic_id']);
 		$this->set_url($properties['url']);
 	}
-	
+
 	public static function create_categories_table($table_name)
 	{
 		$fields = array(

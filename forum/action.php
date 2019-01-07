@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                                action.php
- *                            -------------------
- *   begin                : August 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 08 09
+ * @since   	PHPBoost 1.2 - 2005 08 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
@@ -63,7 +46,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	//On va chercher les infos sur le topic
 	try {
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
@@ -71,7 +54,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
@@ -129,7 +112,7 @@ elseif (!empty($idt_get))
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read())
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -156,7 +139,7 @@ elseif (!empty($idt_get))
 		try {
 			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {}
-		
+
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
@@ -177,7 +160,7 @@ elseif (!empty($idt_get))
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
 		$voter_id = explode('|', $info_poll['voter_id']);
 		if (!in_array(AppContext::get_current_user()->get_id(), $voter_id))
@@ -301,9 +284,9 @@ elseif ($read) //Marquer comme lu.
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('last_view_forum' => time()), 'WHERE user_id=:id', array('id' => AppContext::get_current_user()->get_id()));
 	else
 		PersistenceContext::get_querier()->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_id' => AppContext::get_current_user()->get_id(), 'last_view_forum' =>  time()));
-	
+
 	AppContext::get_session()->recheck_cached_data();
-	
+
 	AppContext::get_response()->redirect('/forum/index.php');
 }
 else

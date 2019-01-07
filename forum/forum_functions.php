@@ -1,37 +1,20 @@
 <?php
-/*##################################################
- *                              forum_functions.php
- *                            -------------------
- *   begin                : December 11, 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 12 10
+ * @since   	PHPBoost 2.0 - 2007 12 11
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 //Listes les utilisateurs en ligne.
 function forum_list_user_online($condition)
 {
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = PersistenceContext::get_querier()->select("SELECT s.user_id, m.level, m.display_name, m.groups
-	FROM " . DB_TABLE_SESSIONS . " s 
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
+	FROM " . DB_TABLE_SESSIONS . " s
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	WHERE s.timestamp > :timestamp " . $condition . "
 	ORDER BY s.timestamp DESC", array(
 		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
@@ -39,7 +22,7 @@ function forum_list_user_online($condition)
 	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
+		switch ($row['level']) //Coloration du membre suivant son level d'autorisation.
 		{
 			case -1:
 			case '':
@@ -48,47 +31,47 @@ function forum_list_user_online($condition)
 			case 0:
 			$total_member++;
 			break;
-			case 1: 
+			case 1:
 			$total_modo++;
 			break;
-			case 2: 
+			case 2:
 			$total_admin++;
 			break;
-		} 
+		}
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['display_name']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : '';
 	}
 	$result->dispose();
-	
+
 	$total = $total_admin + $total_modo + $total_member + $total_visit;
-	
+
 	if (empty($total))
 	{
 		$current_user = AppContext::get_current_user();
-		
+
 		if ($current_user->get_level() != User::VISITOR_LEVEL)
 		{
 			$group_color = User::get_group_color($current_user->get_groups(), $current_user->get_level(), true);
-			switch ($current_user->get_level()) //Coloration du membre suivant son level d'autorisation. 
+			switch ($current_user->get_level()) //Coloration du membre suivant son level d'autorisation.
 			{
 				case 0:
 				$total_member++;
 				break;
-				case 1: 
+				case 1:
 				$total_modo++;
 				break;
-				case 2: 
+				case 2:
 				$total_admin++;
 				break;
-			} 
+			}
 			$users_list .= '<a href="'. UserUrlBuilder::profile($current_user->get_id())->rel() .'" class="' . UserService::get_level_class($current_user->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $current_user->get_display_name() . '</a>';
 		}
 		else
 			$total_visit++;
-		
+
 		$total++;
 	}
-	
+
 	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total);
 }
 
@@ -98,7 +81,7 @@ function forum_limit_time_msg()
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum');
 	$max_time = (time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24));
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	
+
 	return $max_time_msg;
 }
 
@@ -115,8 +98,8 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 		try {
 			$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
 		} catch (RowNotFoundException $e) {}
-		
-		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
+
+		if (!empty($check_view_id) && $check_view_id != $last_msg_id)
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
 			PersistenceContext::get_querier()->update(PREFIX . "forum_view", array('last_view_id' => $last_msg_id, 'timestamp' => time()), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
@@ -161,7 +144,7 @@ function parentChildSort_r($idField, $parentField, $els, $parentID = 0, &$result
 			$value['depth'] = $depth;
 			array_push($result, $value);
 			unset($els[$key]);
-			$oldParent = $parentID; 
+			$oldParent = $parentID;
 			$parentID = $value[$idField];
 			$depth++;
 			parentChildSort_r($idField,$parentField, $els, $parentID, $result, $depth);
