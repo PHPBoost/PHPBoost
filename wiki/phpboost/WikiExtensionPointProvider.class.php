@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                              wikiExtensionPointProvider.class.php
- *                            -------------------
- *   begin                : Februar 24, 2008
- *   copyright            : (C) 2008 Loïc ROUCHON
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @since   	PHPBoost 2.0 - 2008 02 24
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class WikiExtensionPointProvider extends ExtensionPointProvider
 {
@@ -31,19 +16,19 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('wiki');
 	}
-	
+
 	public function comments()
 	{
 		return new CommentsTopics(array(new WikiCommentsTopic()));
 	}
-	
+
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('wiki.css');
 		return $module_css_files;
 	}
-	
+
 	public function feeds()
 	{
 		return new WikiFeedProvider();
@@ -53,7 +38,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiHomePageExtensionPoint();
 	}
-	
+
 	public function search()
 	{
 		return new WikiSearchable();
@@ -63,7 +48,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiSitemapExtensionPoint();
 	}
-	
+
 	public function tree_links()
 	{
 		return new WikiTreeLinks();

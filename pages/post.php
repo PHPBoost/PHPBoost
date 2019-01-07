@@ -1,32 +1,15 @@
 <?php
-/*##################################################
-*                               post.php
-*                            -------------------
-*   begin                : August 12, 2007
-*   copyright            : (C) 2007 Sautel Benoit
-*   email                : ben.popeye@phpboost.com
-*
-*
- ###################################################
-*
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-* 
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 0918
+ * @since   	PHPBoost 1.6 - 2007 08 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
-require_once('../pages/pages_begin.php'); 
+require_once('../kernel/begin.php');
+require_once('../pages/pages_begin.php');
 include_once('pages_functions.php');
 
 if (AppContext::get_current_user()->is_readonly())
@@ -63,7 +46,7 @@ if ($id_edit > 0)
 	define('TITLE', $LANG['pages_edition']);
 else
 	define('TITLE', $LANG['pages_creation']);
-	
+
 if ($id_edit > 0)
 {
 	try {
@@ -72,7 +55,7 @@ if ($id_edit > 0)
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
@@ -86,7 +69,7 @@ if ($id_edit > 0)
 }
 else
 	$Bread_crumb->add($LANG['pages'], url('pages.php'));
-	
+
 $location_id = $id_edit ? 'pages-edit-'. $id_edit : '';
 
 require_once('../kernel/header.php');
@@ -102,7 +85,7 @@ if (!empty($contents))
 	}
 	else
 		$page_auth = '';
-	
+
 	//on ne prévisualise pas, donc on poste le message ou on l'édite
 	if (!$preview)
 	{
@@ -115,14 +98,14 @@ if (!empty($contents))
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
-			
+
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
 			$array_auth = TextHelper::unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
-			
+
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
 			if ($page_infos['is_cat'] == 1)
 			{
@@ -132,10 +115,10 @@ if (!empty($contents))
 				if (in_array($id_cat, $sub_cats)) //Si l'ancienne catégorie ne contient pas la nouvelle (sinon boucle infinie)
 					$error = 'cat_contains_cat';
 			}
-			
+
 			//Articles (on édite l'entrée de l'article pour la catégorie donc aucun problème)
 			if ($page_infos['is_cat'] == 0)
-			{		
+			{
 				//On met à jour la table
 				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'id_cat' => $id_cat, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
 				//On redirige vers la page mise à jour
@@ -162,10 +145,10 @@ if (!empty($contents))
 		{
 			if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
-			
+
 			$encoded_title = Url::encode_rewrite($title);
 			$is_already_page = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE encoded_title=:encoded_title', array('encoded_title' => $encoded_title));
-			
+
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)
 			{
@@ -173,7 +156,7 @@ if (!empty($contents))
 				//Si c'est une catégorie
 				if ($is_cat > 0)
 				{
-					$last_id_page = $result->get_last_inserted_id();  
+					$last_id_page = $result->get_last_inserted_id();
 					$result = PersistenceContext::get_querier()->insert(PREFIX . 'pages_cats', array('id_parent' => $id_cat, 'id_page' => $last_id_page));
 					$last_id_pages_cat = $result->get_last_inserted_id();
 					PersistenceContext::get_querier()->update(PREFIX . 'pages', array('id_cat' => $last_id_pages_cat), 'WHERE id = :id', array('id' => $last_id_page));
@@ -198,20 +181,20 @@ elseif ($del_article > 0)
 {
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
-    
+
 	try {
 		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $del_article));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = TextHelper::unserialize($page_infos['auth']);
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
-		
+
 	//la page existe bien, on supprime
 	if (!empty($page_infos['title']))
 	{
@@ -234,7 +217,7 @@ if ($id_edit > 0)
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
-	
+
 	//Erreur d'enregistrement ?
 	if ($error == 'cat_contains_cat')
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_cat_contains_cat'], MessageHelper::WARNING));
@@ -253,7 +236,7 @@ if ($id_edit > 0)
 	//numéro de la catégorie de la page ou de la catégorie
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $categories[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_pages_cat_explorer($id_cat_display, $cats, 1);
-	
+
 	$tpl->put_all(array(
 		'CONTENTS' => !empty($error) ? pages_unparse(stripslashes($contents_preview)) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
@@ -271,7 +254,7 @@ else
 	//Autorisations
 	if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
-		
+
 	//La page existe déjà !
 	if ($error == 'page_already_exists')
 		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
@@ -289,14 +272,14 @@ else
 			'CONTENTS' => pages_unparse(stripslashes($contents_preview)),
 			'PAGE_TITLE' => stripslashes($title)
 		));
-	
+
 	$tpl->assign_block_vars('create', array());
-	
+
 	//Génération de l'arborescence des catégories
 	$cats = array();
 	$cat_list = display_pages_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
-	
+
 	$tpl->put_all(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($pages_config->get_count_hits_activated() == true ? 'checked="checked"' : ''),
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($pages_config->get_comments_activated() == true ? 'checked="checked"' : ''),
@@ -355,6 +338,6 @@ $tpl->put_all(array(
 
 $tpl->display();
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

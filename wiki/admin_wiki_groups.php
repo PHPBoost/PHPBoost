@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                              admin_wiki_groups.php
- *                            -------------------
- *   begin                : May 25, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.5 - 2007 05 25
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('wiki'); //Chargement de la langue du module.
@@ -44,9 +28,9 @@ if ($valid)
 {
 	//Génération du tableau des droits.
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION, WIKI_READ));
-	
+
 	WikiConfig::save();
-	
+
 	###### Regénération du cache des catégories #######
 	WikiCategoriesCache::invalidate();
 

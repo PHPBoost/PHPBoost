@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                     WikiHomePageExtensionPoint.class.php
- *                            -------------------
- *   begin                : January 27, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 08 24
+ * @since   	PHPBoost 3.0 - 2012 01 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 {
@@ -31,16 +16,16 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
 	}
-	
+
 	private function get_title()
 	{
 		global $LANG;
-		
+
 		load_module_lang('wiki');
-		
+
 		return $LANG['wiki'];
 	}
-	
+
 	private function get_view()
 	{
 		global $Bread_crumb, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
@@ -50,15 +35,15 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		$bread_crumb_key = 'wiki';
 		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
 		require_once(PATH_TO_ROOT . '/wiki/wiki_auth.php');
-		
+
 		$config = WikiConfig::load();
-		
+
 		if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_READ))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$tpl = new FileTemplate('wiki/index.tpl');
 
 		if ($config->get_number_articles_on_index() > 1)

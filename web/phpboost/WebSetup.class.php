@@ -1,57 +1,35 @@
 <?php
-/*##################################################
- *                               WebSetup.class.php
- *                            -------------------
- *   begin                : August 21, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @since   	PHPBoost 4.1 - 2014 08 21
+*/
 
 class WebSetup extends DefaultModuleSetup
 {
 	public static $web_table;
 	public static $web_cats_table;
-	
+
 	/**
 	 * @var string[string] localized messages
 	 */
 	private $messages;
-	
+
 	public static function __static()
 	{
 		self::$web_table = PREFIX . 'web';
 		self::$web_cats_table = PREFIX . 'web_cats';
 	}
-	
+
 	public function install()
 	{
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
-	
+
 	public function uninstall()
 	{
 		$this->drop_tables();
@@ -59,18 +37,18 @@ class WebSetup extends DefaultModuleSetup
 		CacheManager::invalidate('module', 'web');
 		WebService::get_keywords_manager()->delete_module_relations();
 	}
-	
+
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$web_table, self::$web_cats_table));
 	}
-	
+
 	private function create_tables()
 	{
 		$this->create_web_table();
 		$this->create_web_cats_table();
 	}
-	
+
 	private function create_web_table()
 	{
 		$fields = array(
@@ -103,19 +81,19 @@ class WebSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$web_table, $fields, $options);
 	}
-	
+
 	private function create_web_cats_table()
 	{
 		RichCategory::create_categories_table(self::$web_cats_table);
 	}
-	
+
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'web');
 		$this->insert_web_cats_data();
 		$this->insert_web_data();
 	}
-	
+
 	private function insert_web_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$web_cats_table, array(
@@ -129,7 +107,7 @@ class WebSetup extends DefaultModuleSetup
 			'image' => '/web/web.png'
 		));
 	}
-	
+
 	private function insert_web_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$web_table, array(

@@ -1,48 +1,26 @@
 <?php
-/*##################################################
- *                               WebCache.class.php
- *                            -------------------
- *   begin                : August 21, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 01 25
+ * @since   	PHPBoost 4.1 - 2014 08 21
+*/
 
 class WebCache implements CacheData
 {
 	private $partners_weblinks = array();
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
 		$this->partners_weblinks = array();
-		
+
 		$now = new Date();
 		$config = WebConfig::load();
-		
+
 		$result = PersistenceContext::get_querier()->select('
 			SELECT web.id, web.name, web.partner_picture
 			FROM ' . WebSetup::$web_table . ' web
@@ -54,24 +32,24 @@ class WebCache implements CacheData
 				'timestamp_now' => $now->get_timestamp(),
 				'partners_number_in_menu' => (int)$config->get_partners_number_in_menu()
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$this->partners_weblinks[$row['id']] = $row;
 		}
 		$result->dispose();
 	}
-	
+
 	public function get_partners_weblinks()
 	{
 		return $this->partners_weblinks;
 	}
-	
+
 	public function partner_weblink_exists($id)
 	{
 		return array_key_exists($id, $this->partners_weblinks);
 	}
-	
+
 	public function get_partner_weblink_item($id)
 	{
 		if ($this->partner_weblink_exists($id))
@@ -80,12 +58,12 @@ class WebCache implements CacheData
 		}
 		return null;
 	}
-	
+
 	public function get_number_partners_weblinks()
 	{
 		return count($this->partners_weblinks);
 	}
-	
+
 	/**
 	 * Loads and returns the web cached data.
 	 * @return WebCache The cached data
@@ -94,7 +72,7 @@ class WebCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'web', 'minimenu');
 	}
-	
+
 	/**
 	 * Invalidates the current web cached data.
 	 */

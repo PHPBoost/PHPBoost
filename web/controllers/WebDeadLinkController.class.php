@@ -1,42 +1,20 @@
 <?php
-/*##################################################
- *                          WebDeadLinkController.class.php
- *                            -------------------
- *   begin                : August 21, 2014
- *   copyright            : (C) 2014 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.1 - 2014 08 21
+*/
 
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
- 
 class WebDeadLinkController extends AbstractController
 {
 	private $weblink;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
-		
+
 		if (!empty($id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			try {
@@ -46,7 +24,7 @@ class WebDeadLinkController extends AbstractController
 				DispatchManager::redirect($error_controller);
 			}
 		}
-		
+
 		if ($this->weblink !== null && $this->weblink->is_visible())
 		{
 			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', array('id_in_module' => $this->weblink->get_id())))
@@ -65,10 +43,10 @@ class WebDeadLinkController extends AbstractController
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
-				
+
 				ContributionService::save_contribution($contribution);
 			}
-			
+
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		else

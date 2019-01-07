@@ -1,4 +1,13 @@
 <?php
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 30
+ * @since   	PHPBoost 1.6 - 2007 08 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
@@ -21,7 +30,7 @@ $categories = PagesCategoriesCache::load()->get_categories();
 
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
-{	
+{
 	echo '<ul>';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = PersistenceContext::get_querier()->select("SELECT c.id, p.title, p.encoded_title, p.auth
@@ -61,7 +70,7 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 		{
 			$localisation[] = stripslashes($categories[$id]['title']);
 			$id = (int)$categories[$id]['id_parent'];
-		}	
+		}
 		while ($id > 0);
 		$localisation = array_reverse($localisation);
 		echo implode(' / ', $localisation);

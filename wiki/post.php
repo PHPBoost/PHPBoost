@@ -1,32 +1,17 @@
 <?php
-/*##################################################
- *                               post.php
- *                            -------------------
- *   begin                : October 09, 2006
- *   copyright            : (C) 2006 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 25
+ * @since   	PHPBoost 1.6 - 2006 10 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
-include_once('../wiki/wiki_functions.php'); 
+require_once('../kernel/begin.php');
+include_once('../wiki/wiki_functions.php');
 load_module_lang('wiki');
 $config = WikiConfig::load();
 
@@ -60,7 +45,7 @@ $id_edit = $id_edit > 0 ? $id_edit : $id_edit_get;
 
 $location_id = $id_edit ? 'wiki-edit-'. $id_edit : '';
 
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $categories = WikiCategoriesCache::load()->get_categories();
 
@@ -72,17 +57,17 @@ $tpl = new FileTemplate('wiki/post.tpl');
 $captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
 {
-	include_once('../wiki/wiki_functions.php');	
+	include_once('../wiki/wiki_functions.php');
 	//On crée le menu des paragraphes et on enregistre le menu
 	$menu = '';
-	
+
 	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
 	if (preg_match('`[\-]{2,6}`isuU', $contents))
 	{
 		$menu_list = wiki_explode_menu($contents); //On éclate le menu en tableaux
 		$menu = wiki_display_menu($menu_list); //On affiche le menu
 	}
-	
+
 	if ($preview)//Prévisualisation
 	{
 		$preview_contents = preg_replace('`action="(.*)"`suU', '', $contents); // suppression des actions des formulaires HTML pour eviter les problemes de parsing
@@ -108,7 +93,7 @@ if (!empty($contents)) //On enregistre un article
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
-			
+
 			//Autorisations
 			$general_auth = empty($article_infos['auth']);
 			$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
@@ -116,8 +101,8 @@ if (!empty($contents)) //On enregistre un article
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
-			} 
-			
+			}
+
 			$previous_id_contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'id_contents', 'WHERE id = :id', array('id' => $id_edit));
 			//On met à jour l'ancien contenu (comme archive)
 			PersistenceContext::get_querier()->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $previous_id_contents));
@@ -125,14 +110,14 @@ if (!empty($contents)) //On enregistre un article
 			$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_edit, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time(), 'change_reason' => $change_reason));
 			//Dernier id enregistré
 			$id_contents = $result->get_last_inserted_id();
-            
+
 	 		//On donne le nouveau id de contenu
 			PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents), 'WHERE id = :id', array('id' => $id_edit));
-        
+
             // Feeds Regeneration
-            
+
             Feed::clear_cache('wiki');
-			
+
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
 			AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
@@ -144,12 +129,12 @@ if (!empty($contents)) //On enregistre un article
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
-			} 
+			}
 			elseif (!$is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
-			} 
+			}
 			elseif (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				$error_controller = new UserErrorController(
@@ -159,10 +144,10 @@ if (!empty($contents)) //On enregistre un article
 				);
 				DispatchManager::redirect($error_controller);
 			}
-			
+
 			//On vérifie que le titre n'existe pas
 			$article_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($title)));
-			
+
 			//Si il existe: message d'erreur
 			if ($article_exists > 0)
 				$errstr = $LANG['wiki_title_already_exists'];
@@ -186,10 +171,10 @@ if (!empty($contents)) //On enregistre un article
 				}
 				else
 					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents), 'WHERE id = :id', array('id' => $id_article));
-				
+
 				// Feeds Regeneration
 				Feed::clear_cache('wiki');
-				
+
 				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
@@ -205,7 +190,7 @@ if ($id_edit > 0)//On édite
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	//Autorisations
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
@@ -213,15 +198,15 @@ if ($id_edit > 0)//On édite
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	try {
 		$article_contents = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_contents', array('*'), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$contents = $article_contents['content'];
 	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
@@ -233,9 +218,9 @@ if ($id_edit > 0)//On édite
 		}
 		$contents = trim($contents);
 	}
-	
+
 	$l_action_submit = $LANG['update'];
-	
+
 	$tpl->put_all(array(
 		'SELECTED_CAT' => $id_edit,
 	));
@@ -247,16 +232,16 @@ else
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 	elseif (!$is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (!empty($encoded_title))
 		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));
-	
+
 	if ($id_cat > 0 && array_key_exists($id_cat, $categories)) //Catégorie préselectionnée
 	{
 		$tpl->assign_block_vars('create', array());

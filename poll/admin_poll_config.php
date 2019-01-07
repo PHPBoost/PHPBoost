@@ -1,29 +1,13 @@
 <?php
-/*##################################################
- *                           admin_poll_config.php
- *                            -------------------
- *   begin                : June 21, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.2 - 2005 06 21
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
@@ -40,22 +24,22 @@ $tpl = new FileTemplate('poll/admin_poll_config.tpl');
 if ($valid)
 {
 	$displayed_in_mini_module_list = explode(',', retrieve(POST, 'displayed_in_mini_module_list', ''));
-	
+
 	$poll_config->set_authorizations(Authorizations::build_auth_array_from_form(PollAuthorizationsService::READ_AUTHORIZATIONS, PollAuthorizationsService::WRITE_AUTHORIZATIONS));
 	$poll_config->set_displayed_in_mini_module_list($displayed_in_mini_module_list);
 	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
 	$poll_config->set_cookie_lenght(retrieve(POST, 'cookie_lenght', 30));
-	
+
 	if (retrieve(POST, 'display_results_before_polls_end', false))
 		$poll_config->display_results_before_polls_end();
 	else
 		$poll_config->hide_results_before_polls_end();
-	
+
 	PollConfig::save();
-	
+
 	###### Régénération du cache des sondages #######
 	PollMiniMenuCache::invalidate();
-	
+
 	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
@@ -64,7 +48,7 @@ $config_authorizations = $poll_config->get_authorizations();
 $i = 0;
 //Liste des sondages
 $poll_list = '';
-$result = PersistenceContext::get_querier()->select("SELECT id, question 
+$result = PersistenceContext::get_querier()->select("SELECT id, question
 FROM " . PREFIX . "poll
 WHERE archive = 0 AND visible = 1
 ORDER BY timestamp");
@@ -73,7 +57,7 @@ while ($row = $result->fetch())
 	$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
 	$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . stripslashes($row['question']) . '</option>';
 }
-$result->dispose(); 
+$result->dispose();
 
 $tpl->put_all(array(
 	'COOKIE_NAME'                             => $poll_config->get_cookie_name(),
@@ -103,7 +87,7 @@ $tpl->put_all(array(
 	'L_UPDATE'                                => $LANG['update'],
 	'L_RESET'                                 => $LANG['reset']
 ));
- 
+
 $tpl->display();
 
 require_once('../admin/admin_footer.php');

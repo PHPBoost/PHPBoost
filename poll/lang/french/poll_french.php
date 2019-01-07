@@ -1,33 +1,16 @@
 <?php
-/*##################################################
- *                              poll_french.php
- *                            -------------------
- *   begin                : July 14, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *  
- ###################################################
- *
- *   This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 05
+ * @since   	PHPBoost 1.2 - 2005 07 04
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
-#####################################################
-#						French						#
-#####################################################
+####################################################
+#                    French                       #
+####################################################
 
 //Admin
 $LANG['confirm_del_poll'] = 'Supprimer ce sondage ?';
@@ -38,7 +21,7 @@ $LANG['poll_config'] = 'Configuration des sondages';
 $LANG['poll_config_mini'] = 'Configuration des mini-sondages';
 $LANG['poll_config_advanced'] = 'Configurations avancées';
 $LANG['poll_entry'] = 'Nombre d\'entrées du sondage';
-$LANG['answer_type'] = 'Type des réponses'; 
+$LANG['answer_type'] = 'Type des réponses';
 $LANG['polls'] = 'Sondage(s)';
 $LANG['single'] = 'Unique';
 $LANG['multiple'] = 'Multiple';

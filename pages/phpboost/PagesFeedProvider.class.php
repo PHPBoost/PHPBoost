@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *   PagesFeedProvider.class.php
- *   ---------------------------
- *   begin                : August 08, 2011
- *   copyright            : (C) 2011 Alain091
- *   email                : alain091@gmail.com
- *
- *
- *###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- *###################################################
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Alain091 <alain091@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 06 29
+ * @since   	PHPBoost 3.0 - 2011 08 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class PagesFeedProvider implements FeedProvider
 {
 	function get_feeds_list()
 	{
 		global $LANG;
-		
+
 		require_once(PATH_TO_ROOT.'/pages/pages_functions.php');
-		
+
 		$cats_tree = new FeedsCat('pages', 0, $LANG['root']);
 		$categories = PagesCategoriesCache::load()->get_categories();
 		build_pages_cat_children($cats_tree, array_values($categories));
@@ -45,14 +28,14 @@ class PagesFeedProvider implements FeedProvider
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		global $LANG;
-		
+
 		$querier = PersistenceContext::get_querier();
 		$pages_config = PagesConfig::load();
-		
+
 		if (!defined('READ_PAGE'))
 			require_once(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
-		
+
 		$data = new FeedData();
 
 		$data->set_title($LANG['pages_rss_desc']);

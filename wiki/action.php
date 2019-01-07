@@ -1,32 +1,15 @@
 <?php
-/*##################################################
- *                              action.php
- *                            -------------------
- *   begin                : May 07, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 07 10
+ * @since   	PHPBoost 1.5 - 2007 05 07
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
-require_once('../kernel/begin.php'); 
-include_once('../wiki/wiki_functions.php'); 
+require_once('../kernel/begin.php');
+include_once('../wiki/wiki_functions.php');
 
 load_module_lang('wiki');
 $config = WikiConfig::load();
@@ -66,14 +49,14 @@ if ($id_auth > 0)
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 
 	$encoded_title = $db_querier->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_auth));
 	if (empty($encoded_title))
 	{
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	}
-	
+
 	if ($default) //Configuration par défaut
 	{
 		$db_querier->update(PREFIX . "wiki_articles", array('auth' => ''), 'WHERE id = :id', array('id' => $id_auth));
@@ -91,7 +74,7 @@ if ($id_auth > 0)
 if ($id_change_status > 0)
 {
 	$type_status = ($type_status == 'radio_undefined') ? 'radio_undefined' : 'radio_defined';
-	
+
 	//Si il s'agit d'un statut personnalisé
 	if ($type_status == 'radio_undefined' && $contents != '')
 	{
@@ -103,22 +86,22 @@ if ($id_change_status > 0)
 	}
 	else
 		$id_status = 0;
-		
+
 	try {
 		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_STATUS))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
+	}
 
 	if (!empty($article_infos['encoded_title']))//Si l'article existe
 	{
@@ -136,19 +119,19 @@ elseif ($move > 0) //Déplacement d'un article
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if ( empty($article_infos['encoded_title']))//Ce n'est pas un article ou une catégorie
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
-		
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_MOVE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	if ($article_infos['is_cat'] == 0)//Article: il ne peut pas y avoir de problème
 	{
 		if (array_key_exists($new_cat, $categories) || $new_cat == 0)//Si la nouvelle catégorie existe
@@ -185,7 +168,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
@@ -194,8 +177,8 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	$already_exists = $db_querier->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($new_title)));
 
 	if (empty($article_infos['encoded_title']))//L'article n'existe pas
@@ -203,10 +186,10 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	elseif (Url::encode_rewrite($new_title) == $article_infos['encoded_title'])//Si seul le titre change mais pas le titre encodé
 	{
 		$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title), 'WHERE id = :id', array('id' => $id_to_rename));
-		
+
 		WikiCategoriesCache::invalidate();
 		Feed::clear_cache('wiki');
-		
+
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	elseif ($already_exists > 0) //Si le titre existe déjà erreur, on le signale
@@ -218,7 +201,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			//On ajoute un article
 			$result = $db_querier->insert(PREFIX . "wiki_articles", array('id_contents' => $article_infos['id_contents'], 'title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title), 'hits' => $article_infos['hits'], 'id_cat' => $article_infos['id_cat'], 'is_cat' => $article_infos['is_cat'], 'defined_status' => $article_infos['defined_status'], 'undefined_status' => $article_infos['undefined_status'], 'redirect' => 0, 'auth' => $article_infos['auth']));
 			$new_id_article = $result->get_last_inserted_id();
-			
+
 			//On met à jour la table contents
 			$db_querier->update(PREFIX . "wiki_contents", array('id_article' => $new_id_article), 'WHERE id_article = :id', array('id' => $id_to_rename));
 			//On inscrit la redirection à l'ancien article
@@ -238,11 +221,11 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		else //On met à jour l'article
 		{
 			$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title)), 'WHERE id = :id', array('id' => $id_to_rename));
-			
+
 			//Cache Regeneration
 			WikiCategoriesCache::invalidate();
 			Feed::clear_cache('wiki');
-			
+
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
 	}
@@ -251,7 +234,7 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 {
 	//Vérification de la validité du jeton
 	AppContext::get_session()->csrf_get_protect();
-	
+
 	$is_redirection = $db_querier->get_column_value(PREFIX . "wiki_articles", 'redirect', 'WHERE id = :id', array('id' => $del_redirection));
 	if ($is_redirection > 0)
 	{
@@ -261,16 +244,16 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$general_auth = empty($article_infos['auth']);
 		$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
-		} 
-		
+		}
+
 		$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_redirection));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
@@ -283,7 +266,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
@@ -291,8 +274,8 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	$num_title = $db_querier->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($redirection_title)));
 
 	if (!empty($article_infos['encoded_title']))
@@ -320,16 +303,16 @@ elseif (!empty($restore)) //on restaure un ancien article
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$general_auth = empty($article_infos['auth']);
 		$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
-	
+
 		if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RESTORE_ARCHIVE))))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
-		} 
-		
+		}
+
 		//On met à jour la table articles avec le nouvel id
 		$db_querier->update(PREFIX . "wiki_articles", array('id_contents' => $restore), 'WHERE id = :id', array('id' => $id_article));
 		//On met le nouvel id comme actif
@@ -337,7 +320,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 		//L'ancien id devient archive
 		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
 	}
-	
+
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
 }
 //Suppression d'une archive
@@ -345,21 +328,21 @@ elseif ($del_archive > 0)
 {
 	//Vérification de la validité du jeton
 	AppContext::get_session()->csrf_get_protect();
-	
+
 	try {
 		$contents_infos = $db_querier->select_single_row(PREFIX . "wiki_contents", array('activ', 'id_article'), 'WHERE id_contents = :id', array('id' => $del_archive));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	try {
 		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
@@ -367,8 +350,8 @@ elseif ($del_archive > 0)
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	if ($contents_infos['activ'] == 0) //C'est une archive -> on peut supprimer
 		$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_contents=:id', array('id' => $del_archive));
 	if (!empty($article_infos['encoded_title'])) //on redirige vers l'article
@@ -378,14 +361,14 @@ elseif ($del_article > 0) //Suppression d'un article
 {
 	//Vérification de la validité du jeton
 	AppContext::get_session()->csrf_get_protect();
-	
+
 	try {
 		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
@@ -393,20 +376,20 @@ elseif ($del_article > 0) //Suppression d'un article
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	//On rippe l'article
 	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_article));
 	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE redirect=:id', array('id' => $del_article));
 	$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_article));
 	$db_querier->delete(PREFIX . 'wiki_favorites', 'WHERE id_article=:id', array('id' => $del_article));
-	
+
 	CommentsService::delete_comments_topic_module('wiki', $del_article);
 
 	 // Feeds Regeneration
-	 
+
 	 Feed::clear_cache('wiki');
-	
+
 	if (array_key_exists($article_infos['id_cat'], $categories))//Si elle  a une catégorie parente
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), Url::encode_rewrite($categories[$article_infos['id_cat']]['title']), '&'));
 	else
@@ -415,14 +398,14 @@ elseif ($del_article > 0) //Suppression d'un article
 elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
-	
+
 	try {
 		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? TextHelper::unserialize($article_infos['auth']) : array();
 
@@ -430,22 +413,22 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
-	} 
-	
+	}
+
 	$sub_cats = array();
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
 	wiki_find_subcats($sub_cats, $article_infos['id_cat']);
 	$sub_cats[] = $article_infos['id_cat']; //On rajoute la catégorie que l'on supprime
-	
+
 	if (empty($article_infos['encoded_title'])) //si l'article n'existe pas on redirige vers l'index
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
-	
+
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
-	{	
+	{
 		//Si la nouvelle catégorie n'est pas une catégorie
 		if (!array_key_exists($report_cat, $categories) && $report_cat > 0)
 			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#message_helper', '', '&'));
-			
+
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $article_infos['id_cat'])//Si on veut reporter dans une catégorie parente
 			AppContext::get_response()->redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_cat_contains_cat#message_helper', '','&'));
@@ -458,7 +441,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$db_querier->delete(PREFIX . 'wiki_favorites', 'WHERE id_article=:id', array('id' => $del_to_remove));
 
 	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
-	
+
 	if ($remove_action == 'remove_all' || count($sub_cats) <= 1) //On supprime le contenu de la catégorie
 	{
 		foreach ($sub_cats as $id) //Chaque sous-catégorie
@@ -468,23 +451,23 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 				WHERE id_cat = :id", array(
 					'id' => $id
 			));
-			
+
 			while ($row = $result->fetch()) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
 			{
 				$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $row['id']));
 				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
 			$result->dispose();
-			
+
 			$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
 			$db_querier->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));
 		}
 		WikiCategoriesCache::invalidate();
 
 		// Feeds Regeneration
-		
+
 		Feed::clear_cache('wiki');
-		
+
 		//On redirige soit vers l'article parent soit vers la catégorie
 		if (array_key_exists($article_infos['id_cat'], $categories) && $categories[$article_infos['id_cat']]['id_parent'] > 0)
 		{
@@ -499,7 +482,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $report_cat), 'WHERE id_cat = :id', array('id' => $article_infos['id_cat']));
 		$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $report_cat), 'WHERE id_parent = :id', array('id' => $article_infos['id_cat']));
 		WikiCategoriesCache::invalidate();
-		
+
 		if (array_key_exists($report_cat, $categories))
 		{
 			$title = stripslashes($categories[$report_cat]['title']);

@@ -1,50 +1,32 @@
 <?php
-/*##################################################
- *                        OnlineService.class.php
- *                            -------------------
- *   begin                : February 1, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 3.0 - 2012 02 01
+*/
 
 class OnlineService
 {
 	private static $querier;
-	
+
 	public static function __static()
 	{
 		self::$querier = PersistenceContext::get_querier();
 	}
-	
+
 	public static function get_number_users_connected($condition, $parameters, $hide_visitors = false)
 	{
 		if ($hide_visitors)
 		{
 			$number_users = 0;
-			
+
 			$result = self::$querier->select("SELECT s.user_id, s.cached_data, m.level
 			FROM " . DB_TABLE_SESSIONS . " s
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id "
 			. $condition, $parameters);
-			
+
 			while ($row = $result->fetch())
 			{
 				if ($row['user_id'] == Session::VISITOR_SESSION_ID)
@@ -52,30 +34,30 @@ class OnlineService
 					$cached_data = TextHelper::unserialize($row['cached_data']);
 					$row['level'] = $cached_data['level'];
 				}
-				
+
 				if ($row['level'] != User::VISITOR_LEVEL)
 					$number_users++;
 			}
-			
+
 			return $number_users;
 		}
 		else
 			return self::$querier->count(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
-	
+
 	public static function get_online_users($condition, $parameters, $hide_visitors = false)
 	{
 		$users = array();
-		
-		$result = self::$querier->select("SELECT 
+
+		$result = self::$querier->select("SELECT
 		s.user_id, s.timestamp, s.location_script, s.location_title, s.cached_data,
 		m.display_name, m.level, m.groups,
 		f.user_avatar
 		FROM " . DB_TABLE_SESSIONS . " s
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " f ON f.user_id = s.user_id "
 		. $condition, $parameters);
-		
+
 		while ($row = $result->fetch())
 		{
 			if ($row['user_id'] == Session::VISITOR_SESSION_ID)
@@ -84,7 +66,7 @@ class OnlineService
 				$row['level'] = $cached_data['level'];
 				$row['display_name'] = $cached_data['display_name'];
 			}
-			
+
 			if (!$hide_visitors || ($row['level'] != User::VISITOR_LEVEL))
 			{
 				$user = new OnlineUser();
@@ -100,7 +82,7 @@ class OnlineService
 			}
 		}
 		$result->dispose();
-		
+
 		return $users;
 	}
 }
