@@ -1,60 +1,41 @@
 <?php
-/*##################################################
- *		               NewsDisplayNewsController.class.php
- *                            -------------------
- *   begin                : February 15, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @since   	PHPBoost 4.0 - 2013 02 15
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class NewsDisplayNewsController extends ModuleController
-{	
+{
 	private $lang;
 	private $tpl;
-	
+
 	private $news;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->count_number_view($request);
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
 		$this->tpl = new FileTemplate('news/NewsDisplayNewsController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function get_news()
 	{
 		if ($this->news === null)
@@ -74,7 +55,7 @@ class NewsDisplayNewsController extends ModuleController
 		}
 		return $this->news;
 	}
-	
+
 	private function count_number_view(HTTPRequestCustom $request)
 	{
 		if (!$this->news->is_visible())
@@ -90,45 +71,45 @@ class NewsDisplayNewsController extends ModuleController
 			}
 		}
 	}
-	
+
 	private function build_view()
 	{
 		$news = $this->get_news();
 		$news_config = NewsConfig::load();
 		$comments_config = CommentsConfig::load();
 		$category = $news->get_category();
-		
+
 		$this->tpl->put_all(array_merge($news->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('news'),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
 		)));
-		
+
 		if ($comments_config->module_comments_is_enabled('news'))
 		{
 			$comments_topic = new NewsCommentsTopic($news);
 			$comments_topic->set_id_in_module($news->get_id());
 			$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
-			
+
 			$this->tpl->put_all(array(
 				'COMMENTS' => $comments_topic->display()
 			));
 		}
-		
+
 		$this->build_sources_view($news);
 		$this->build_keywords_view($news);
 		$this->build_suggested_news($news);
 		$this->build_navigation_links($news);
 	}
-	
+
 	private function build_sources_view(News $news)
 	{
 		$sources = $news->get_sources();
 		$nbr_sources = count($sources);
 		$this->tpl->put('C_SOURCES', $nbr_sources > 0);
-		
+
 		$i = 1;
 		foreach ($sources as $name => $url)
-		{	
+		{
 			$this->tpl->assign_block_vars('sources', array(
 				'C_SEPARATOR' => $i < $nbr_sources,
 				'NAME' => $name,
@@ -137,7 +118,7 @@ class NewsDisplayNewsController extends ModuleController
 			$i++;
 		}
 	}
-	
+
 	private function build_keywords_view(News $news)
 	{
 		$keywords = $news->get_keywords();
@@ -146,7 +127,7 @@ class NewsDisplayNewsController extends ModuleController
 
 		$i = 1;
 		foreach ($keywords as $keyword)
-		{	
+		{
 			$this->tpl->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
@@ -155,14 +136,14 @@ class NewsDisplayNewsController extends ModuleController
 			$i++;
 		}
 	}
-	
-	
+
+
 	private function build_suggested_news(News $news)
 	{
 		$now = new Date();
-		
+
 		$result = PersistenceContext::get_querier()->select('
-		SELECT id, name, id_category, rewrited_name, 
+		SELECT id, name, id_category, rewrited_name,
 		(2 * FT_SEARCH_RELEVANCE(name, :search_content) + FT_SEARCH_RELEVANCE(contents, :search_content) / 3) AS relevance
 		FROM ' . NewsSetup::$news_table . '
 		WHERE (FT_SEARCH(name, :search_content) OR FT_SEARCH(contents, :search_content)) AND id <> :excluded_id
@@ -172,9 +153,9 @@ class NewsDisplayNewsController extends ModuleController
 			'search_content' => $news->get_name() .','. $news->get_contents(),
 			'timestamp_now' => $now->get_timestamp()
 		));
-		
+
 		$this->tpl->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_news_suggestions_enabled()));
-		
+
 		while ($row = $result->fetch())
 		{
 			$this->tpl->assign_block_vars('suggested', array(
@@ -184,7 +165,7 @@ class NewsDisplayNewsController extends ModuleController
 		}
 		$result->dispose();
 	}
-	
+
 	private function build_navigation_links(News $news)
 	{
 		$now = new Date();
@@ -203,7 +184,7 @@ class NewsDisplayNewsController extends ModuleController
 			'timestamp_news' => $timestamp_news,
 			'authorized_categories' => array($news->get_id_cat())
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$this->tpl->put_all(array(
@@ -215,14 +196,14 @@ class NewsDisplayNewsController extends ModuleController
 		}
 		$result->dispose();
 	}
-	
+
 	private function check_authorizations()
 	{
 		$news = $this->get_news();
-		
+
 		$current_user = AppContext::get_current_user();
 		$not_authorized = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() || $news->get_author_user()->get_id() != $current_user->get_id());
-		
+
 		switch ($news->get_approbation_type()) {
 			case News::APPROVAL_NOW:
 				if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
@@ -251,23 +232,23 @@ class NewsDisplayNewsController extends ModuleController
 			break;
 		}
 	}
-	
+
 	private function generate_response()
 	{
 		$category = $this->get_news()->get_category();
 		$response = new SiteDisplayResponse($this->tpl);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_news()->get_name(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['news']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_news()->get_real_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
-		
+
 		if ($this->get_news()->has_picture())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_news()->get_picture());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
-		
+
 		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 		foreach ($categories as $id => $category)
 		{
@@ -275,7 +256,7 @@ class NewsDisplayNewsController extends ModuleController
 				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
 		$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
-		
+
 		return $response;
 	}
 }

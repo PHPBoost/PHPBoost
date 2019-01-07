@@ -1,39 +1,22 @@
 <?php
-/*##################################################
- *                             install.php
- *                            -------------------
- *   begin                : April 09, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- *   This program is free software, you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY, without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program, if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 01 31
+ * @since   	PHPBoost 4.0 - 2012 04 09
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+*/
 
-
- ####################################################
- #						English						#
- ####################################################
+####################################################
+#                     English                      #
+####################################################
 
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
 $lang['news.title'] = 'Your site within PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Your PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' website is now installed and running. To help you build your website, 
+$lang['news.content'] = 'Your PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' website is now installed and running. To help you build your website,
 each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <h2 class="formatter-title">Delete the "install" folder</h2><br />

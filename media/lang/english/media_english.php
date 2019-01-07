@@ -1,36 +1,17 @@
 <?php
-/*##################################################
- *                              media_english.php
- *                            -------------------
- *   begin               	: October 20, 2008
- *   last modified		: October 3rd, 2009 - JMNaylor
- *   copyright        	    : (C) 2007 
- *   email               	: sgtforensic@gmail.com
- *
- *
- *
- ###################################################
- *
- *   This program is a free software. You can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Geoffrey ROGUELON <liaght@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 31
+ * @since   	PHPBoost 2.0 - 2008 10 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
-
- ####################################################
-#                     English                      #
- ####################################################
+####################################################
+#                      English                     #
+####################################################
 
 global $MEDIA_LANG;
 

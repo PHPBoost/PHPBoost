@@ -1,30 +1,12 @@
 <?php
-
-/*##################################################
- *                              MediaSearchable.class.php
- *                            -------------------
- *   begin                : May 29, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2015 02 08
+ * @since   	PHPBoost 3.0 - 2010 05 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class MediaSearchable extends AbstractSearchableExtensionPoint
 {
@@ -32,7 +14,7 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 	{
 		$authorized_categories = MediaService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-		
+
 		$request = "SELECT " . $args['id_search'] . " AS id_search,
 			f.id AS id_content,
 			f.name AS title,
@@ -43,7 +25,7 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 			AND idcat IN (" . implode(", ", $authorized_categories) . ")
 			ORDER BY relevance DESC
 			LIMIT " . MEDIA_MAX_SEARCH_RESULTS . " OFFSET 0";
-		
+
 		return $request;
 	}
 }

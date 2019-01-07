@@ -1,45 +1,23 @@
 <?php
-/*##################################################
- *                               MediaService.class.php
- *                            -------------------
- *   begin                : February 4, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 4.0 - 2015 02 04
+*/
 
 class MediaService
 {
 	private static $db_querier;
-	
+
 	private static $categories_manager;
-	
+
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-	
+
 	 /**
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
@@ -48,7 +26,7 @@ class MediaService
 	{
 		return self::$db_querier->count(MediaSetup::$media_table, $condition, $parameters);
 	}
-	
+
 	 /**
 	 * @desc Return the authorized categories.
 	 */
@@ -59,7 +37,7 @@ class MediaService
 		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
-	
+
 	 /**
 	 * @desc Return the categories manager.
 	 */

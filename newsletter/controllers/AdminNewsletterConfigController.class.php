@@ -1,28 +1,12 @@
 <?php
-/*##################################################
- *		                   AdminNewsletterConfigController.class.php
- *                            -------------------
- *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 18
+ * @since   	PHPBoost 3.0 - 2011 02 01
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class AdminNewsletterConfigController extends AdminModuleController
 {
@@ -67,18 +51,18 @@ class AdminNewsletterConfigController extends AdminModuleController
 
 		$fieldset_config = new FormFieldsetHTMLHeading('configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset_config);
-		
+
 		$fieldset_config->add_field(new FormFieldMailEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(),
 			array('description' => $this->lang['admin.mail-sender-explain'], 'required' => true)
 		));
-		
+
 		$fieldset_config->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['admin.newsletter-name'], $newsletter_config->get_newsletter_name(),
 			array('maxlength' => 255, 'description' => $this->lang['admin.newsletter-name-explain'], 'required' => true)
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
-		
+
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['auth.read'], NewsletterAuthorizationsService::AUTH_READ),
 			new ActionAuthorization($this->lang['auth.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
@@ -89,11 +73,11 @@ class AdminNewsletterConfigController extends AdminModuleController
 			new MemberDisabledActionAuthorization($this->lang['auth.archives-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES),
 			new MemberDisabledActionAuthorization($this->lang['auth.manage-streams'], NewsletterAuthorizationsService::AUTH_MANAGE_STREAMS)
 		));
-		
+
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset_authorizations->add_field($auth_setter);
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());

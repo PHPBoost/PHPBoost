@@ -1,28 +1,12 @@
 <?php
-/*##################################################
- *		                   NewsletterEditSubscriberController.class.php
- *                            -------------------
- *   begin                : March 16, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @since   	PHPBoost 3.0 - 2011 03 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class NewsletterEditSubscriberController extends ModuleController
 {
@@ -42,10 +26,10 @@ class NewsletterEditSubscriberController extends ModuleController
 		{
 			NewsletterAuthorizationsService::get_errors()->moderation_subscribers();
 		}
-		
+
 		$id = $request->get_getint('id', 0);
 		$this->init();
-		
+
 		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
@@ -57,7 +41,7 @@ class NewsletterEditSubscriberController extends ModuleController
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
+
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -77,14 +61,14 @@ class NewsletterEditSubscriberController extends ModuleController
 	private function build_form($id)
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+
 		$columns = array('*');
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
 		$fieldset = new FormFieldsetHTMLHeading('edit-subscriber', $this->lang['subscriber.edit']);
 		$form->add_fieldset($fieldset);
-		
+
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['subscribe.mail'], $row['mail'],
 			array('required' => true)
 		));
@@ -92,7 +76,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-		
+
 		$this->form = $form;
 	}
 
@@ -102,7 +86,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$columns = array('mail' => $this->form->get_value('mail'));
 		$parameters = array('id' => $id);
 		PersistenceContext::get_querier()->update(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition, $parameters);
-		
+
 		NewsletterStreamsCache::invalidate();
 	}
 
@@ -115,14 +99,14 @@ class NewsletterEditSubscriberController extends ModuleController
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['subscriber.edit'], '');
-		
+
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['subscriber.edit'], $this->lang['newsletter']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::edit_subscriber($request->get_getint('id', 0)));
-		
+
 		return $response;
 	}
-	
+
 	private static function subscriber_exist($id)
 	{
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0;

@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                               xmlhttprequest.php
- *                            -------------------
- *   begin                : August 30, 2007
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @since   	PHPBoost 1.6 - 2007 08 30
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
@@ -50,7 +34,7 @@ if (!empty($increment_view))
 	$g_idcat = $request->get_getint('cat', 0);
 	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
 		exit;
-	
+
 	//Niveau d'autorisation de la catégorie
 	if (!GalleryAuthorizationsService::check_authorizations($g_idcat)->read())
 		exit;
@@ -61,7 +45,7 @@ if (!empty($increment_view))
 else
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
+
 	if (!empty($rename_pics)) //Renomme une image.
 	{
 		try {
@@ -70,19 +54,19 @@ else
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{
 			//Initialisation  de la class de gestion des fichiers.
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
-			
+
 			$name = $request->get_postvalue('name', '');
 			$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
-			
+
 			if (!empty($id_file))
 				echo $Gallery->Rename_pics($id_file, $name, $previous_name);
-			else 
+			else
 				echo -1;
 		}
 	}
@@ -94,11 +78,11 @@ else
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 		{
 			$Gallery = new Gallery();
-			
+
 			if (!empty($id_file))
 			{
 				echo $Gallery->Aprob_pics($id_file);
@@ -106,7 +90,7 @@ else
 				GalleryMiniMenuCache::invalidate();
 				GalleryCategoriesCache::invalidate();
 			}
-			else 
+			else
 				echo 0;
 		}
 	}

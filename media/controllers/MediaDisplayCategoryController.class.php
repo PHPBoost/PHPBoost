@@ -1,58 +1,42 @@
 <?php
-/*##################################################
- *                         MediaDisplayCategoryController.class.php
- *                            -------------------
- *   begin                : February 4, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @since   	PHPBoost 4.1 - 2015 02 04
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class MediaDisplayCategoryController extends ModuleController
 {
 	private $lang;
 	private $tpl;
-	
+
 	private $category;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$this->build_view();
-		
+
 		return $this->generate_response();
 	}
-	
+
 	private function build_view()
 	{
 		global $LANG, $MEDIA_LANG;
-		
+
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
 		load_module_lang('media');
 		$config = MediaConfig::load();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
-		
+
 		//Contenu de la catégorie
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
@@ -60,9 +44,9 @@ class MediaDisplayCategoryController extends ModuleController
 		$get_mode = retrieve(GET, 'mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
-		
+
 		$subcategories = MediaService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), MediaService::get_authorized_categories($this->get_category()->get_id()));
-		
+
 		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_number_per_page());
 		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
 
@@ -71,16 +55,16 @@ class MediaDisplayCategoryController extends ModuleController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$nbr_cat_displayed = 0;
 		foreach ($subcategories as $id => $category)
 		{
 			$nbr_cat_displayed++;
-			
+
 			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
 				$category_image = $category->get_image()->rel();
-				
+
 				$this->tpl->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_IMAGE' => !empty($category_image),
 					'CATEGORY_ID' => $category->get_id(),
@@ -91,12 +75,12 @@ class MediaDisplayCategoryController extends ModuleController
 				));
 			}
 		}
-		
+
 		$nbr_column_cats_per_line = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
 		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
-		
+
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
-		
+
 		$this->tpl->put_all(array(
 			'C_CATEGORIES' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
@@ -114,7 +98,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			'ID_CAT' => $this->get_category()->get_id()
 		));
-		
+
 		$selected_fields = array('alpha' => '', 'date' => '', 'nbr' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
 
 		switch ($get_sort)
@@ -170,13 +154,13 @@ class MediaDisplayCategoryController extends ModuleController
 			'SELECTED_ASC' => $selected_fields['asc'],
 			'SELECTED_DESC' => $selected_fields['desc']
 		));
-		
+
 		$condition = 'WHERE idcat = :idcat AND infos = :status';
 		$parameters = array(
 			'idcat' => $this->get_category()->get_id(),
 			'status' => MEDIA_STATUS_APROBED
 		);
-		
+
 		//On crée une pagination si le nombre de fichiers est trop important.
 		$mediafiles_number = MediaService::count($condition, $parameters);
 		$pagination = new ModulePagination($page, $mediafiles_number, $config->get_items_number_per_page());
@@ -187,7 +171,7 @@ class MediaDisplayCategoryController extends ModuleController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
@@ -199,7 +183,7 @@ class MediaDisplayCategoryController extends ModuleController
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
 		)));
-		
+
 		$number_columns_display_per_line = $config->get_columns_number_per_line();
 
 		$this->tpl->put_all(array(
@@ -211,13 +195,13 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_per_line
 		));
-		
+
 		while ($row = $result->fetch())
 		{
 			$notation = new Notation();
 			$notation->set_module_name('media');
 			$notation->set_id_in_module($row['id']);
-			
+
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$poster_infos = array();
@@ -225,13 +209,13 @@ class MediaDisplayCategoryController extends ModuleController
 			{
 				$poster_type = new FileType(new File($row['poster']));
 				$picture_url = new Url($row['poster']);
-				
+
 				$poster_infos = array(
 					'C_HAS_PICTURE' => $poster_type->is_picture(),
 					'PICTURE' => $picture_url->rel()
 				);
 			}
-			
+
 			$this->tpl->assign_block_vars('file', array_merge($poster_infos, array(
 				'ID' => $row['id'],
 				'NAME' => $row['name'],
@@ -252,14 +236,14 @@ class MediaDisplayCategoryController extends ModuleController
 		}
 		$result->dispose();
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'media');
 		$this->tpl = new FileTemplate('media/media.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function get_category()
 	{
 		if ($this->category === null)
@@ -281,7 +265,7 @@ class MediaDisplayCategoryController extends ModuleController
 		}
 		return $this->category;
 	}
-	
+
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
@@ -291,38 +275,38 @@ class MediaDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$response = new SiteDisplayResponse($this->tpl);
-		
+
 		$graphical_environment = $response->get_graphical_environment();
-		
+
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
 			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
 		else
 			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
-		
+
 		$description = $this->get_category()->get_description();
 		if (empty($description))
 			$description = StringVars::replace_vars($this->lang['media.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], MediaUrlBuilder::home());
-		
+
 		$categories = array_reverse(MediaService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), ($category->get_id() == $this->get_category()->get_id() ? $page : 1)));
 		}
-		
+
 		return $response;
 	}
-	
+
 	public static function get_view()
 	{
 		$object = new self();

@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                               admin_gallery_add.php
- *                            -------------------
- *   begin                : August 17, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 04
+ * @since   	PHPBoost 1.2 - 2005 08 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
@@ -50,7 +34,7 @@ if (isset($_FILES['gallery'])) //Upload
 	$dir = 'pics/';
 	$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 	$error = '';
-	
+
 	if (!empty($authorized_pictures_extensions))
 	{
 		$Upload = new Upload($dir);
@@ -62,7 +46,7 @@ if (isset($_FILES['gallery'])) //Upload
 	}
 	else
 		$error = 'e_upload_invalid_format';
-	
+
 	if ($error != '') //Erreur, on arrête ici
 		$tpl->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 	else
@@ -88,7 +72,7 @@ if (isset($_FILES['gallery'])) //Upload
 			GalleryCategoriesCache::invalidate();
 		}
 	}
-	
+
 	if (empty($error) && !$Gallery->get_error())
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
@@ -111,7 +95,7 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 			}
 			else
 				$Gallery->Add_pics($cat, $name, $uniq, AppContext::get_current_user()->get_id());
-	
+
 		}
 	}
 
@@ -126,14 +110,14 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 if (!empty($add_pic))
 {
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
-	
+
 	try {
 		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$tpl->assign_block_vars('image_up', array(
 		'NAME' => stripslashes($imageup['name']),
 		'PATH' => $imageup['path'],
@@ -201,7 +185,7 @@ if (is_dir($dir)) //Si le dossier existe
 		$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 		$column_width_pics = floor(100/$nbr_column_pics);
 		$selectbox_width = floor(100-(10*$nbr_column_pics));
-		
+
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -215,7 +199,7 @@ if (is_dir($dir)) //Si le dossier existe
 		{
 			$categories_list .= $option->display()->render();
 		}
-		
+
 		$root_categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field('root_cat', '', $idcat, $search_category_children_options);
 		$root_categories_tree_options = $method->invoke($root_categories_tree);
 		$root_categories_list = '';
@@ -223,7 +207,7 @@ if (is_dir($dir)) //Si le dossier existe
 		{
 			$root_categories_list .= $option->display()->render();
 		}
-		
+
 		$tpl->put_all(array(
 			'NBR_PICS' => $nbr_pics,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
@@ -231,7 +215,7 @@ if (is_dir($dir)) //Si le dossier existe
 			'CATEGORIES' => $categories_list,
 			'ROOT_CATEGORIES' => $root_categories_list,
 		));
-		
+
 		$j = 0;
 		foreach ($array_pics as  $key => $pics)
 		{
@@ -278,7 +262,7 @@ if (is_dir($dir)) //Si le dossier existe
 			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 			if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
 				$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
-			
+
 			$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
@@ -288,7 +272,7 @@ if (is_dir($dir)) //Si le dossier existe
 			{
 				$categories_list .= $option->display()->render();
 			}
-			
+
 			$tpl->assign_block_vars('list', array(
 				'ID' => $j,
 				'NAME' => $pics,
