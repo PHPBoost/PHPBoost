@@ -1,50 +1,35 @@
 <?php
-/*##################################################
- *                               gallery.class.php
- *                            -------------------
- *   begin                : August 16, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 20
+ * @since   	PHPBoost 1.2 - 2005 08 16
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 class Gallery
-{	
+{
 	private $error = ''; //Gestion des erreurs.
-	
+
 	//Constructeur
-	public function __construct() 
+	public function __construct()
 	{
 	}
-	
+
 	//Redimensionnement
 	public function Resize_pics($path, $width_max = 0, $height_max = 0)
 	{
 		global $LANG;
-			
+
 		if (file_exists($path))
-		{	
+		{
 			list($width_s, $height_s, $weight, $ext) = $this->Arg_pics($path);
 			//Calcul des dimensions avec respect des proportions.
 			list($width, $height) = $this->get_resize_properties($width_s, $height_s, $width_max, $height_max);
-			
+
 			$source = false;
 			switch ($ext) //Création de l'image suivant l'extension.
 			{
@@ -58,51 +43,51 @@ class Gallery
 				case 'png':
 					$source = @imagecreatefrompng($path);
 					break;
-				default: 
+				default:
 					$this->error = 'e_unsupported_format';
 					$source = false;
 			}
-			
+
 			if (!$source)
 			{
 				$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-				$this->_create_pics_error($path_mini, $width, $height);	
+				$this->_create_pics_error($path_mini, $width, $height);
 				$this->error = 'e_unabled_create_pics';
 			}
 			else
 			{
 				//Préparation de l'image redimensionnée.
 				if (!function_exists('imagecreatetruecolor'))
-				{	
+				{
 					$thumbnail = @imagecreate($width, $height);
-					if ($thumbnail === false)				
+					if ($thumbnail === false)
 						$this->error = 'e_unabled_create_pics';
 				}
 				else
-				{	
+				{
 					$thumbnail = @imagecreatetruecolor($width, $height);
-					if ($thumbnail === false)				
+					if ($thumbnail === false)
 						$this->error = 'e_unabled_create_pics';
 				}
-				
+
 				// Make the background transparent
 				imagecolortransparent($thumbnail, imagecolorallocate($thumbnail, 0, 0, 0));
 				imagealphablending($thumbnail, false);
 				imagesavealpha($thumbnail, true);
-				
+
 				//Redimensionnement.
 				if (!function_exists('imagecopyresampled'))
-				{	
-					if (@imagecopyresized($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)				
+				{
+					if (@imagecopyresized($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)
 						$this->error = 'e_error_resize';
 				}
 				else
-				{	
-					if (@imagecopyresampled($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)				
+				{
+					if (@imagecopyresampled($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)
 						$this->error = 'e_error_resize';
 				}
 			}
-			
+
 			//Création de l'image.
 			if (empty($this->error))
 				$this->create_pics($thumbnail, $source, $path, $ext);
@@ -110,11 +95,11 @@ class Gallery
 		else
 		{
 			$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-			$this->_create_pics_error($path_mini, $width_max, $height_max);	
+			$this->_create_pics_error($path_mini, $width_max, $height_max);
 			$this->error = 'e_unabled_create_pics';
 		}
 	}
-	
+
 	//Création de l'image.
 	public function Create_pics($thumbnail, $source, $path, $ext)
 	{
@@ -122,15 +107,15 @@ class Gallery
 		imagecolortransparent($source, imagecolorallocate($source, 0, 0, 0));
 		imagealphablending($source, false); // turn off the alpha blending to keep the alpha channel
 		imagesavealpha($source, true);
-		
+
 		$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-		if (function_exists('imagegif') && $ext === 'gif') 
+		if (function_exists('imagegif') && $ext === 'gif')
 			imagegif ($thumbnail, $path_mini);
-		elseif (function_exists('imagejpeg') && ($ext === 'jpg' || $ext === 'jpeg')) 
+		elseif (function_exists('imagejpeg') && ($ext === 'jpg' || $ext === 'jpeg'))
 			imagejpeg($thumbnail, $path_mini, GalleryConfig::load()->get_quality());
-		elseif (function_exists('imagepng')  && $ext === 'png') 
+		elseif (function_exists('imagepng')  && $ext === 'png')
 			imagepng($thumbnail, $path_mini);
-		else 
+		else
 			$this->error = 'e_no_graphic_support';
 
 		switch ($ext) //Création de l'image suivant l'extension.
@@ -145,7 +130,7 @@ class Gallery
 			case 'png':
 				@imagepng($source, $path);
 				break;
-			default: 
+			default:
 				$this->error = 'e_no_graphic_support';
 		}
 	}
@@ -155,12 +140,12 @@ class Gallery
 	{
 		global $LANG;
 		$config = GalleryConfig::load();
-		
+
 		if ($config->is_logo_enabled() && is_file($config->get_logo())) //Incrustation du logo.
 		{
 			list($width_s, $height_s, $weight_s, $ext_s) = $this->Arg_pics($config->get_logo());
 			list($width, $height, $weight, $ext) = $this->Arg_pics($path);
-			
+
 			if ($width_s <= $width && $height_s <= $height)
 			{
 				switch ($ext_s) //Création de l'image suivant l'extension.
@@ -175,16 +160,16 @@ class Gallery
 					case 'png':
 						$source = @imagecreatefrompng($config->get_logo());
 						break;
-					default: 
+					default:
 						$this->error = 'e_unsupported_format';
 						$source = false;
 				}
-				
+
 				if (!$source)
 				{
 					$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 					list($width_mini, $height_mini, $weight_mini, $ext_mini) = $this->Arg_pics($path_mini);
-					$this->_create_pics_error($path_mini, $width_mini, $height_mini);	
+					$this->_create_pics_error($path_mini, $width_mini, $height_mini);
 					$this->error = 'e_unabled_create_pics';
 				}
 				else
@@ -201,7 +186,7 @@ class Gallery
 						case 'png':
 							$destination = @imagecreatefrompng($path);
 							break;
-						default: 
+						default:
 							$this->error = 'e_unsupported_format';
 					}
 
@@ -226,7 +211,7 @@ class Gallery
 
 					//On ajoute le logo sur l'image final
 					//Si le logo est au format png ou gif, la gestion de transparence est faite dans le logo lui meme. Sinon elle est fait selon la configuration du module.
-					if ($ext_s == 'png' || $ext_s == 'gif') 
+					if ($ext_s == 'png' || $ext_s == 'gif')
 					{
 						if (@imagecopy($image_with_logo, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s) === false)
 							$this->error = 'e_unabled_incrust_logo';
@@ -249,7 +234,7 @@ class Gallery
 						case 'png':
 							imagepng($image_with_logo);
 							break;
-						default: 
+						default:
 							$this->error = 'e_unabled_create_pics';
 					}
 
@@ -261,7 +246,7 @@ class Gallery
 		else
 			readfile($path); //On affiche simplement.
 	}
-	
+
 	//Insertion base de donnée
 	public function Add_pics($idcat, $name, $path, $user_id)
 	{
@@ -269,7 +254,7 @@ class Gallery
 		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
 		return $result->get_last_inserted_id();
 	}
-	
+
 	//Supprime une image
 	public function Del_pics($id_pics)
 	{
@@ -279,31 +264,31 @@ class Gallery
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (!empty($info_pics['path']))
 		{
 			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));
-			
+
 			//Suppression physique.
 			$file = new File(PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']);
 			$file->delete();
-			
+
 			$file = new File(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $info_pics['path']);
 			$file->delete();
 
 			NotationService::delete_notes_id_in_module('gallery', $id_pics);
-			
+
 			CommentsService::delete_comments_topic_module('gallery', $id_pics);
 		}
 	}
-	
+
 	//Renomme une image.
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
 		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
 		return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
-	
+
 	//Approuve une image.
 	public function Aprob_pics($id_pics)
 	{
@@ -313,7 +298,7 @@ class Gallery
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if ($aprob)
 		{
 			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
@@ -322,21 +307,21 @@ class Gallery
 		{
 			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
 		}
-		
+
 		return $aprob;
 	}
-	
+
 	//Déplacement d'une image.
 	public function Move_pics($id_pics, $id_move)
 	{
 		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
 	}
-	
+
 	//Vérifie si le membre peut uploader une image
 	public function Auth_upload_pics($user_id, $level)
 	{
 		$config = GalleryConfig::load();
-		
+
 		switch ($level)
 		{
 			case 2:
@@ -351,29 +336,29 @@ class Gallery
 
 		if ($this->get_nbr_upload_pics($user_id) >= $pics_quota)
 			return false;
-			
+
 		return true;
 	}
-	
+
 	//Arguments de l'image, hauteur, largeur, extension.
 	public function Arg_pics($path)
 	{
 		global $LANG;
-		
+
 		//Vérification du chargement de la librairie GD.
-		if (!@extension_loaded('gd')) 
+		if (!@extension_loaded('gd'))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                 $LANG['e_no_gd'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
-		
-		if (function_exists('getimagesize')) 
+
+		if (function_exists('getimagesize'))
 		{
 			list($width, $height, $type) = @getimagesize($path);
 			$weight = @filesize($path);
 			$weight = !empty($weight) ? $weight : 0;
-			
+
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
 			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg');
 			if (isset($array_type[$type]))
@@ -387,21 +372,21 @@ class Gallery
 			DispatchManager::redirect($controller);
 		}
 	}
-	
+
 	//Compte le nombre d'images uploadée par un membre.
 	public function get_nbr_upload_pics($user_id)
 	{
 		return PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
-	
+
 	//Calcul des dimensions avec respect des proportions.
 	public function get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
 	{
 		$config = GalleryConfig::load();
-		
+
 		$width_max = ($width_max == 0) ? $config->get_mini_max_width() : $width_max;
 		$height_max = ($height_max == 0) ? $config->get_mini_max_height() : $height_max;
-		if ($width_s > $width_max || $height_s > $height_max) 
+		if ($width_s > $width_max || $height_s > $height_max)
 		{
 			if ($width_s > $height_s)
 			{
@@ -421,15 +406,15 @@ class Gallery
 			$width = $width_s;
 			$height = $height_s;
 		}
-		
+
 		return array($width, $height);
 	}
-	
+
 	//Header image.
 	public function Send_header($ext)
 	{
 		global $LANG;
-		
+
 		switch ($ext)
 		{
 			case 'png':
@@ -448,7 +433,7 @@ class Gallery
 		}
 		return $header;
 	}
-	
+
 	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..
 	public function Clear_cache()
 	{
@@ -457,7 +442,7 @@ class Gallery
 		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`iu') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
-	
+
 	//Suppression d'une image.
 	public function delete_file($path)
 	{
@@ -469,16 +454,16 @@ class Gallery
 			return false;
 		}
 	}
-	
+
 	//Création de l'image d'erreur
 	private function _create_pics_error($path, $width, $height)
 	{
-		global $LANG; 
+		global $LANG;
 		$config = GalleryConfig::load();
-		
+
 		$width = ($width == 0) ? $config->get_mini_max_width() : $width;
 		$height = ($height == 0) ? $config->get_mini_max_height() : $height;
-			
+
 		$font = PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf';
 		$font_size = 12;
 
@@ -499,7 +484,7 @@ class Gallery
 		imagettftext($thumbnail, $font_size, 0, $text_x, $text_y, $text_color, $font, $LANG['e_error_img']);
 		@imagejpeg($thumbnail, $path, 75);
 	}
-	
+
 	public function get_error() { return $this->error; }
 }
 ?>

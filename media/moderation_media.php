@@ -1,30 +1,13 @@
 <?php
-/*##################################################
- *              	 media_action.php
- *              	-------------------
- * begin        	: October 20, 2008
- * copyright    	: (C) 2007 Geoffrey ROGUELON
- * email        	: liaght@gmail.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Geoffrey ROGUELON <liaght@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 03 19
+ * @since   	PHPBoost 2.0 - 2008 10 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 
@@ -85,7 +68,7 @@ if ($submit)
 				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_APROBED), 'WHERE id=:id', array('id' => $key));
 			}
 		}
-		
+
 		if (!empty($hide))
 		{
 			foreach ($hide as $key)
@@ -93,7 +76,7 @@ if ($submit)
 				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNVISIBLE), 'WHERE id=:id', array('id' => $key));
 			}
 		}
-		
+
 		if (!empty($unaprobed))
 		{
 			foreach ($unaprobed as $key)
@@ -116,7 +99,7 @@ if ($submit)
 		Feed::clear_cache('media');
 
 		MediaCategoriesCache::invalidate();
-		
+
 		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 	else
@@ -129,13 +112,13 @@ else
 	// Filtre pour le panneau de modération.
 	$js_array = array();
 	$authorized_categories = MediaService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
-	
+
 	if ($filter)
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
 		$cat = (int)retrieve(POST, 'idcat', 0, TINTEGER);
 		$sub_cats = (bool)retrieve(POST, 'sub_cats', false, TBOOL);
-		
+
 		if ($state == "visible")
 		{
 			$db_where = MEDIA_STATUS_APROBED;
@@ -159,11 +142,11 @@ else
 		$db_where = null;
 		$sub_cats = true;
 	}
-	
+
 	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
-	
+
 	$categories_cache = MediaService::get_categories_manager()->get_categories_cache();
-	
+
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_media, $NUMBER_ELEMENTS_PER_PAGE);
@@ -174,7 +157,7 @@ else
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$result = PersistenceContext::get_querier()->select("SELECT media.*, media_cats.name AS cat_name
 		FROM " . MediaSetup::$media_table . " media
 		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.idcat
@@ -206,7 +189,7 @@ else
 		));
 	}
 	$result->dispose();
-	
+
 	$tpl->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),

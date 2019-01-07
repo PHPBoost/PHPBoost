@@ -1,33 +1,11 @@
 <?php
-/*##################################################
- *                               MediaCategoriesManageController.class.php
- *                            -------------------
- *   begin                : February 4, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 07 15
+ * @since   	PHPBoost 4.1 - 2015 02 04
+*/
 
 class MediaCategoriesManageController extends AbstractCategoriesManageController
 {
@@ -35,37 +13,37 @@ class MediaCategoriesManageController extends AbstractCategoriesManageController
 	{
 		return MediaService::get_categories_manager();
 	}
-	
+
 	protected function get_display_category_url(Category $category)
 	{
 		return MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
 	}
-	
+
 	protected function get_edit_category_url(Category $category)
 	{
 		return MediaUrlBuilder::edit_category($category->get_id());
 	}
-	
+
 	protected function get_delete_category_url(Category $category)
 	{
 		return MediaUrlBuilder::delete_category($category->get_id());
 	}
-	
+
 	protected function get_categories_management_url()
 	{
 		return MediaUrlBuilder::manage_categories();
 	}
-	
+
 	protected function get_module_home_page_url()
 	{
 		return MediaUrlBuilder::home();
 	}
-	
+
 	protected function get_module_home_page_title()
 	{
 		return LangLoader::get_message('module_title', 'common', 'media');
 	}
-	
+
 	protected function check_authorizations()
 	{
 		if (!MediaAuthorizationsService::check_authorizations()->manage_categories())

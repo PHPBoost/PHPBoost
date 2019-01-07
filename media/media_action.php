@@ -1,30 +1,13 @@
 <?php
-/*##################################################
- *              	 media_action.php
- *              	-------------------
- * begin        	: October 20, 2008
- * copyright    	: (C) 2007 Geoffrey ROGUELON
- * email        	: liaght@gmail.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Geoffrey ROGUELON <liaght@gmail.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 31
+ * @since   	PHPBoost 2.0 - 2008 10 20
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('media_begin.php');
@@ -58,7 +41,7 @@ if ($unvisible > 0)
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	// Gestion des erreurs.
 	if (empty($media))
 	{
@@ -94,7 +77,7 @@ elseif ($delete > 0)
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	if (empty($media))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
@@ -109,14 +92,14 @@ elseif ($delete > 0)
 	PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', array('id' => $delete));
 
 	NotationService::delete_notes_id_in_module('media', $delete);
-	
+
 	CommentsService::delete_comments_topic_module('media', $delete);
-	
+
 	// Feeds Regeneration
 	Feed::clear_cache('media');
-	
+
 	MediaCategoriesCache::invalidate();
-	
+
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
@@ -131,7 +114,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
-	
+
 	$tpl->put_all(array(
 		'C_ADD_MEDIA' => true,
 		'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
@@ -166,13 +149,13 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			$js_id_music[] = $cat->get_id();
 		}
 	}
-	
+
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-	
+
 	$media = '';
-	
+
 	// Édition.
 	if ($edit > 0)
 	{
@@ -182,15 +165,15 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		bread_crumb($media['idcat']);
-		
+
 		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', $media['idcat'], $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
@@ -200,7 +183,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		{
 			$categories_list .= $option->display()->render();
 		}
-		
+
 		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
@@ -218,7 +201,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
 			'C_MUSIC' => in_array($media['mime_type'], $mime_type['audio'])
 		));
-		
+
 		$location_id = 'media-edit-'. $edit;
 	}
 	// Ajout.
@@ -228,7 +211,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('counterpart');
-		
+
 		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
@@ -238,7 +221,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		{
 			$categories_list .= $option->display()->render();
 		}
-		
+
 		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
@@ -282,7 +265,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 elseif ($submit)
 {
 	AppContext::get_session()->csrf_get_protect();
-	
+
 	$media = array(
 		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => stripslashes(retrieve(POST, 'name', '', TSTRING)),
@@ -296,7 +279,7 @@ elseif ($submit)
 		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
 	);
-	
+
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 
@@ -313,7 +296,7 @@ elseif ($submit)
 	}
 
 	require_once('../kernel/header.php');
-	
+
 	if (!empty($media['url']) && Url::check_url_validity($media['url']))
 	{
 		if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_MUSIC)
@@ -333,7 +316,7 @@ elseif ($submit)
 		}
 
 		$url_media = preg_replace('`\?.*`u', '', $media['url']->relative());
-		
+
 		if (($pathinfo = pathinfo($url_media)) && !empty($pathinfo['extension']))
 		{
 			if (array_key_exists($pathinfo['extension'], $mime_type))
@@ -361,7 +344,7 @@ elseif ($submit)
 						$media['mime_type'] = $type;
 					}
 				}
-				
+
 				if (empty($media['mime_type']))
 				{
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_mime_disable_media']);
@@ -411,9 +394,9 @@ elseif ($submit)
 
 		// Feeds Regeneration
 		Feed::clear_cache('media');
-		
+
 		MediaCategoriesCache::invalidate();
-		
+
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
@@ -424,9 +407,9 @@ elseif ($submit)
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration
 		Feed::clear_cache('media');
-		
+
 		MediaCategoriesCache::invalidate();
-		
+
 		if (!$auth_write)
 		{
 			$media_contribution = new Contribution();

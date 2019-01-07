@@ -1,38 +1,16 @@
 <?php
-/*##################################################
- *                               MediaUrlBuilder.class.php
- *                            -------------------
- *   begin                : February 2, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is a free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
- /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- */
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 06 08
+ * @since   	PHPBoost 4.0 - 2015 02 02
+*/
 
 class MediaUrlBuilder
 {
 	private static $dispatcher = '/media';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -40,7 +18,7 @@ class MediaUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -48,7 +26,7 @@ class MediaUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -56,7 +34,7 @@ class MediaUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -64,7 +42,7 @@ class MediaUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -72,7 +50,7 @@ class MediaUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -80,7 +58,7 @@ class MediaUrlBuilder
 	{
 		return new Url(PATH_TO_ROOT. '/media/moderation_media.php');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -89,7 +67,7 @@ class MediaUrlBuilder
 		$page = $page !== 1 || $subcategories_page !== 1 ? '&p=' . $page : '';
 		return new Url(PATH_TO_ROOT. '/media/' . url('media.php?cat=' . $id . $page, 'media-0-' . $id . ($page > 1 ? '-' . $page : '') . '+' . $rewrited_name . '.php'));
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -97,7 +75,7 @@ class MediaUrlBuilder
 	{
 		return new Url(PATH_TO_ROOT. '/media/media_action.php');
 	}
-	
+
 	/**
 	 * @return Url
 	 */

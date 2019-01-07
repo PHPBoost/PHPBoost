@@ -1,29 +1,14 @@
 <?php
-/*##################################################
- *                          GalleryModuleMiniMenu.class.php
- *                            -------------------
- *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @since   	PHPBoost 3.0 - 2011 10 08
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Pierre Pelisset <ppelisset@hotmail.fr>
+*/
 
 class GalleryModuleMiniMenu extends ModuleMiniMenu
 {
@@ -36,34 +21,34 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	{
 		return 'module-mini-gallery';
 	}
-	
+
 	public function get_menu_title()
 	{
 		global $LANG;
 		load_module_lang('gallery');
 		return $LANG['random_img'];
 	}
-	
+
 	public function is_displayed()
 	{
 		return GalleryAuthorizationsService::check_authorizations()->read();
 	}
-	
+
 	public function get_menu_content()
 	{
 		global $LANG;
 		$tpl = new FileTemplate('gallery/gallery_mini.tpl');
-		
+
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		
+
 		//Chargement de la langue du module.
 		load_module_lang('gallery');
 		$config = GalleryConfig::load();
-		
+
 		$array_random_pics = GalleryMiniMenuCache::load()->get_pictures();
-		
+
 		$i = 0;
-		
+
 		//Affichage des miniatures disponibles
 		$array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
 		list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
@@ -71,7 +56,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		{
 			$gallery_mini = array();
 			shuffle($array_random_pics); //On mélange les éléments du tableau.
-	
+
 			//Vérification des autorisations.
 			$break = 0;
 			foreach ($array_random_pics as $array_pics_info)
@@ -84,7 +69,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				if ($break == $config->get_pics_number_in_mini())
 					break;
 			}
-	
+
 			//Aucune photo ne correspond, on fait une requête pour vérifier.
 			if (count($gallery_mini) == 0)
 			{
@@ -99,7 +84,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				{
 					$array_random_pics[] = $row;
 				}
-	
+
 				//Vérification des autorisations.
 				$break = 0;
 				foreach ($array_random_pics as $key => $array_pics_info)
@@ -134,21 +119,21 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$tpl->put('C_STATIC', true);
 				break;
 			}
-	
+
 			$Gallery = new Gallery();
-	
+
 			foreach ($gallery_mini as $key => $row)
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
-	
+
 				// On recupère la hauteur et la largeur de l'image.
 				if ($row['width'] == 0 || $row['height'] == 0)
 					list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
 				if ($row['width'] == 0 || $row['height'] == 0)
 					list($row['width'], $row['height']) = array(142, 142);
-	
+
 				$tpl->assign_block_vars('pics_mini', array(
 					'ID' => $row['id'],
 					'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
@@ -157,17 +142,17 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					'WIDTH' => $row['width'],
 					'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
 				));
-	
+
 				$sum_height += $row['height'] + 5;
 				$sum_width += $row['width'] + 5;
-	
+
 				if ($config->get_scroll_type() == GalleryConfig::NO_SCROLL)
 					break;
-					
+
 				$i++;
 			}
 		}
-	
+
 		$tpl->put_all(array(
 			'C_NO_RANDOM_PICS' => ($i == 0),
 			'ARRAY_PICS' => $array_pics_mini,
@@ -181,7 +166,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			'L_NO_RANDOM_PICS' => $LANG['no_random_img'],
 			'L_GALLERY' => $LANG['gallery']
 		));
-		
+
 		return $tpl->render();
 	}
 }

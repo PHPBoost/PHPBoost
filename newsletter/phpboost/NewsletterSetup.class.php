@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                             NewsletterSetup.class.php
- *                            -------------------
- *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @since   	PHPBoost 3.0 - 2010 01 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
 
 class NewsletterSetup extends DefaultModuleSetup
 {
@@ -59,7 +42,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscriptions));
 	}
-	
+
 	private function delete_configuration()
 	{
 		ConfigManager::delete('newsletter', 'config');
@@ -85,7 +68,7 @@ class NewsletterSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribers, $fields, $options);
 	}
-	
+
 	private function create_newsletter_streams_table()
 	{
 		RichCategory::create_categories_table(self::$newsletter_table_streams);
@@ -107,7 +90,7 @@ class NewsletterSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_archives, $fields, $options);
 	}
-	
+
 	private function create_newsletter_subscriptions_table()
 	{
 		$fields = array(
@@ -115,18 +98,18 @@ class NewsletterSetup extends DefaultModuleSetup
 			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'subscriber_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
-		
+
 		$options = array(
 			'primary' => array('id')
 		);
-		
+
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscriptions, $fields, $options);
 	}
-	
+
 	private function create_field_member()
 	{
 		$lang = LangLoader::get('common', 'newsletter');
-		
+
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended_fields.newsletter.name']);
 		$extended_field->set_field_name('register_newsletter');
@@ -135,12 +118,12 @@ class NewsletterSetup extends DefaultModuleSetup
 		$extended_field->set_display(true);
 		ExtendedFieldsService::add($extended_field);
 	}
-	
+
 	private function delete_field_member()
 	{
 		ExtendedFieldsService::delete_by_field_name('register_newsletter');
 	}
-	
+
 	private function insert_data()
 	{
 		$this->insert_newsletter_streams_data();

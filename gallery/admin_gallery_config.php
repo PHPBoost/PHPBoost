@@ -1,30 +1,13 @@
 <?php
-/*##################################################
- *                               admin_gallery_config.php
- *                            -------------------
- *   begin                : August,17 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @since   	PHPBoost 1.2 - 2005 08 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
@@ -83,13 +66,13 @@ if ($valid)
 	$config->set_pics_number_in_mini(retrieve(POST, 'pics_number_in_mini', 8));
 	$config->set_mini_pics_speed(retrieve(POST, 'mini_pics_speed', 6));
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS, Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS));
-	
+
 	GalleryConfig::save();
 	GalleryService::get_categories_manager()->regenerate_cache();
-	
+
 	###### Régénération du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
-	
+
 	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 elseif ($gallery_cache) //Suppression des miniatures.
@@ -97,7 +80,7 @@ elseif ($gallery_cache) //Suppression des miniatures.
 	//Recréaction miniatures, et inscrustation du logo sur image.
 	$Gallery = new Gallery();
 	$Gallery->Clear_cache();
-	
+
 	GalleryMiniMenuCache::invalidate();
 
 	$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));

@@ -1,30 +1,13 @@
 <?php
-/*##################################################
- *                               admin_gallery.php
- *                            -------------------
- *   begin                : August 17, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 12 04
+ * @since   	PHPBoost 1.2 - 2005 08 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
@@ -149,12 +132,12 @@ if ($total_cat > 0)
 {
 	$tpl->assign_block_vars('cat', array(
 	));
-	
+
 	$i = 0;
 	foreach ($subcategories as $id => $cat)
 	{
 		$nbr_cat_displayed++;
-		
+
 		if ($nbr_cat_displayed > $pagination->get_display_from() && $nbr_cat_displayed <= ($pagination->get_display_from() + $pagination->get_number_items_per_page()))
 		{
 			//On genère le tableau pour $config->get_columns_number() colonnes
@@ -163,10 +146,10 @@ if ($total_cat > 0)
 			$i++;
 			$multiple_x = $i / $nbr_column_cats;
 			$display_tr_end = is_int($multiple_x);
-			
+
 			$category_image = $cat->get_image()->rel();
 			$elements_number = $cat->get_elements_number();
-			
+
 			$tpl->assign_block_vars('cat.list', array(
 				'C_IMG' => !empty($category_image),
 				'IDCAT' => $cat->get_id(),
@@ -212,13 +195,13 @@ if ($nbr_pics > 0)
 	$page = AppContext::get_request()->get_getint('pp', 1);
 	$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
 	$pagination->set_url(new Url('/gallery/admin_gallery.php?cat=' . $id_category . '&amp;pp=%d'));
-	
+
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$tpl->put_all(array(
 		'L_BY' => $LANG['by'],
 		'L_PREVIOUS' => $LANG['previous'],
@@ -239,7 +222,7 @@ if ($nbr_pics > 0)
 				'id' => $idpics
 			));
 		} catch (RowNotFoundException $e) {}
-		
+
 		if ($info_pics && !empty($info_pics['id']))
 		{
 			//Affichage miniatures.
@@ -270,7 +253,7 @@ if ($nbr_pics > 0)
 					'NAME' => stripslashes($row['name']),
 					'PATH' => $row['path']
 				);
-				
+
 				if ($row['id'] == $idpics)
 				{
 					$reach_pics_pos = true;
@@ -336,9 +319,9 @@ if ($nbr_pics > 0)
 			{
 				$cat_list .= $option->display()->render();
 			}
-			
+
 			$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
-			
+
 			$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			//Affichage de l'image et de ses informations.
@@ -435,9 +418,9 @@ if ($nbr_pics > 0)
 			{
 				$cat_list .= $option->display()->render();
 			}
-			
+
 			$group_color = User::get_group_color($row['groups'], $row['level']);
-			
+
 			$tpl->assign_block_vars('pics.list', array(
 				'C_APPROVED' => $row['aprob'],
 				'ID' => $row['id'],

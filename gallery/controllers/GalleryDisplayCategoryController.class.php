@@ -1,29 +1,16 @@
 <?php
-/*##################################################
- *                         GalleryDisplayCategoryController.class.php
- *                            -------------------
- *   begin                : February 4, 2015
- *   copyright            : (C) 2015 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @since   	PHPBoost 4.1 - 2015 02 04
+ * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
 
 class GalleryDisplayCategoryController extends ModuleController
 {
@@ -76,10 +63,10 @@ class GalleryDisplayCategoryController extends ModuleController
 		$category = $this->get_category();
 
 		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
-		
+
 		$elements_number = $category->get_elements_number();
 		$nbr_pics = $elements_number['pics_aprob'];
-		
+
 		if ($category->get_id() == Category::ROOT_CATEGORY)
 		{
 			foreach ($subcategories as $cat)
@@ -301,7 +288,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							'NAME' => stripslashes($row['name']),
 							'PATH' => $row['path']
 						);
-						
+
 						if ($row['id'] == $g_idpics)
 						{
 							$reach_pics_pos = true;
@@ -367,7 +354,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 
 					$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
-					
+
 					$info = new SplFileInfo($info_pics['path']);
 					$extension = $info->getExtension();
 
@@ -500,7 +487,7 @@ class GalleryDisplayCategoryController extends ModuleController
 
 					$info = new SplFileInfo($row['path']);
 					$extension = $info->getExtension();
-					
+
 					$onclick = '';
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
@@ -549,7 +536,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$comments_topic->set_id_in_module($row['id']);
 
 					$html_protected_name = $row['name'];
-					
+
 					$this->tpl->assign_block_vars('pics_list', array(
 						'C_IMG_APROB' => $row['aprob'] == 1,
 						'C_OPEN_TR' => is_int($j++/$nbr_column_pics),

@@ -1,46 +1,30 @@
 <?php
-/*##################################################
- *                      NewsManageController.class.php
- *                            -------------------
- *   begin                : June 24, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @since   	PHPBoost 4.0 - 2013 06 24
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class NewsManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		
+
 		$this->init();
-		
+
 		$current_page = $this->build_table();
-		
+
 		return $this->generate_response($current_page);
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
@@ -50,7 +34,7 @@ class NewsManageController extends AdminModuleController
 	private function build_table()
 	{
 		$display_categories = NewsService::get_categories_manager()->get_categories_cache()->has_categories();
-		
+
 		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.name', 'common'), 'name'),
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
@@ -59,16 +43,16 @@ class NewsManageController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('status', 'common'), 'approbation_type'),
 			new HTMLTableColumn('')
 		);
-		
+
 		if (!$display_categories)
 			unset($columns[1]);
-		
+
 		$table_model = new SQLHTMLTableModel(NewsSetup::$news_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
-		
+
 		$table_model->set_caption($this->lang['news.management']);
 
         $table = new HTMLTable($table_model);
-		
+
 		$results = array();
 		$result = $table_model->get_sql_results('news LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = news.author_user_id');
 		foreach ($result as $row)
@@ -92,19 +76,19 @@ class NewsManageController extends AdminModuleController
 				new HTMLTableRowCell($news->get_status()),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			);
-		
+
 			if (!$display_categories)
 				unset($row[1]);
-			
+
 			$results[] = new HTMLTableRow($row);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
-		
+
 		return $table->get_page_number();
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!NewsAuthorizationsService::check_authorizations()->moderation())
@@ -113,7 +97,7 @@ class NewsManageController extends AdminModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function generate_response($page = 1)
 	{
 		$response = new SiteDisplayResponse($this->view);
@@ -121,12 +105,12 @@ class NewsManageController extends AdminModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['news.management'], $this->lang['news'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::manage_news());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
-		
+
 		$breadcrumb->add($this->lang['news.management'], NewsUrlBuilder::manage_news());
-		
+
 		return $response;
 	}
 }
