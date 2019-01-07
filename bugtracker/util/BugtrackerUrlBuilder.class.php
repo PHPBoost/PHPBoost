@@ -1,41 +1,19 @@
 <?php
-/*##################################################
- *                          BugtrackerUrlBuilder.class.php
- *                            -------------------
- *   begin                : October 20, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc Url builder of the bugtracker module
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 04 10
+ * @since   	PHPBoost 3.0 - 2012 10 20
+*/
+
 class BugtrackerUrlBuilder
 {
 	const DEFAULT_SORT_FIELD = 'date';
 	const DEFAULT_SORT_MODE = 'desc';
-	
+
 	private static $dispatcher = '/bugtracker';
-	
+
 	/**
 	 * @return Url
 	 */
@@ -43,7 +21,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -51,7 +29,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/authorizations');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -59,7 +37,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/' . $parameter . '/' . $id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -67,7 +45,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/default/' . $parameter . '/?token=' . AppContext::get_session()->get_token());
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -75,7 +53,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -83,7 +61,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/detail/' . $param);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -91,7 +69,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/detail/' . $param, true);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -99,7 +77,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -107,7 +85,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -116,7 +94,7 @@ class BugtrackerUrlBuilder
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/history/' . $id . '/' . $page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -130,7 +108,7 @@ class BugtrackerUrlBuilder
 		$page = $page !== 1 ? $page . '/': '';
 		return DispatchManager::get_url(self::$dispatcher, '/roadmap/' . $version . $version_name . $status . $sort_field . $sort_mode . $page);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -138,7 +116,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/stats/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -146,7 +124,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -157,7 +135,7 @@ class BugtrackerUrlBuilder
 		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add_filter/' . $page . $filter . $filter_id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -165,7 +143,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/delete_filter/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -173,7 +151,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/change_status/' . $id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -181,7 +159,7 @@ class BugtrackerUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/check_status_changed/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */
@@ -194,7 +172,7 @@ class BugtrackerUrlBuilder
 		$filter_id = $filter !== null && $filter_id !== 0 ? $filter_id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/unsolved/' . $sort_field . $sort_mode . $page . $filter . $filter_id);
 	}
-	
+
 	/**
 	 * @return Url
 	 */

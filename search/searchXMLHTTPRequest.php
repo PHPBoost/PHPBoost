@@ -1,29 +1,13 @@
 <?php
-/*##################################################
-*                         searchXMLHTTPRequest.php
-*                            -------------------
-*   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
-*   email                : horn@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 28
+ * @since   	PHPBoost 2.0 - 2008 01 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
@@ -47,7 +31,7 @@ $modules_args = array();
 if (($id_search >= 0) && ($module_id != ''))
 {
 	echo 'var syncErr = false;';
-	
+
 	$search = new Search();
 	if (!$search->is_search_id_in_cache($id_search))
 	{   // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
@@ -59,11 +43,11 @@ if (($id_search >= 0) && ($module_id != ''))
 			if (in_array($id, $selected_modules))
 				$search_modules[] = $extension_point;
 		}
-		
+
 		// Ajout du paramètre search à tous les modules
 		foreach ($search_modules as $id => $extension_point)
 			$modules_args[$id] = array('search' => $search_txt);
-		
+
 		// Ajout de la liste des paramètres de recherches spécifiques à chaque module
 		foreach ($search_modules as $id => $extension_point)
 		{
@@ -80,17 +64,17 @@ if (($id_search >= 0) && ($module_id != ''))
 				}
 			}
 		}
-		
+
 		$results = array();
 		$ids_search = array();
-		
+
 		get_search_results($search_txt, $search_modules, $modules_args, $results, $ids_search, true);
-		
+
 		if (empty($ids_search[$module_id]))
 		{
 			$ids_search[$module_id] = 0;
 		}
-		
+
 		// Propagation des nouveaux id_search
 		foreach ( $ids_search as $module_name => $id_search )
 		{
@@ -109,7 +93,7 @@ if (($id_search >= 0) && ($module_id != ''))
 		//$module = $modules->get_module($module_id);
 		$html_results = '';
 		get_html_results($results, $html_results, $module_id);
-	
+
 		echo   'nbResults[\'' . $module_id . '\'] = ' . $nb_results . ';
 				resultsAJAX[\'nbResults\'] = \'' . $nb_results . ' '.addslashes($nb_results > 1 ? $LANG['nb_results_found'] : $LANG['one_result_found']) . '\';
 				resultsAJAX[\'results\'] = \''.str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $html_results) . '\';';

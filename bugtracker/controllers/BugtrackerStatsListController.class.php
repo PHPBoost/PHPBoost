@@ -1,58 +1,40 @@
 <?php
-/*##################################################
- *                      BugtrackerStatsListController.class.php
- *                            -------------------
- *   begin                : November 13, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @since   	PHPBoost 3.0 - 2012 11 13
+*/
 
 class BugtrackerStatsListController extends ModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->check_page_exists();
-		
+
 		$this->check_authorizations();
-		
+
 		$this->build_view($request);
-		
+
 		return $this->build_response($this->view);
 	}
-	
+
 	private function build_view($request)
 	{
 		$config = BugtrackerConfig::load();
 		$versions = $config->get_versions();
 		$display_versions = count($versions);
-		
+
 		$stats_cache = BugtrackerStatsCache::load();
 		$bugs_number_per_version = $stats_cache->get_bugs_number_per_version_list();
 		$top_posters = $stats_cache->get_top_posters_list();
-		
+
 		$this->view->put_all(array(
 			'C_BUGS'				=> $stats_cache->get_bugs_number('total'),
 			'C_FIXED_BUGS'			=> !empty($bugs_number_per_version),
@@ -61,7 +43,7 @@ class BugtrackerStatsListController extends ModuleController
 			'C_DISPLAY_TOP_POSTERS'	=> $config->are_stats_top_posters_enabled(),
 			'C_ROADMAP_ENABLED'		=> $config->is_roadmap_enabled()
 		));
-		
+
 		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
 		{
 			if ($status != 'total')
@@ -70,11 +52,11 @@ class BugtrackerStatsListController extends ModuleController
 					'NUMBER'=> $bugs_number
 				));
 		}
-		
+
 		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
 			$release_date = !empty($versions[$version_id]['release_date']) && is_numeric($versions[$version_id]['release_date']) ? new Date($versions[$version_id]['release_date'], Timezone::SERVER_TIMEZONE) : null;
-			
+
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
 				'RELEASE_DATE'			=> !empty($release_date) ? $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['notice.not_defined_e_date'],
@@ -82,13 +64,13 @@ class BugtrackerStatsListController extends ModuleController
 				'NUMBER'				=> $bugs_number['all']
 			));
 		}
-		
+
 		foreach ($top_posters as $id => $poster)
 		{
 			if (isset($poster['user']))
 			{
 				$author_group_color = User::get_group_color($poster['user']->get_groups(), $poster['user']->get_level(), true);
-				
+
 				$this->view->assign_block_vars('top_poster', array(
 					'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
 					'ID' 					=> $id,
@@ -100,17 +82,17 @@ class BugtrackerStatsListController extends ModuleController
 				));
 			}
 		}
-		
+
 		return $this->view;
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerStatsListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-	
+
 	private function check_page_exists()
 	{
 		if (!BugtrackerConfig::load()->are_stats_enabled())
@@ -119,7 +101,7 @@ class BugtrackerStatsListController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!BugtrackerAuthorizationsService::check_authorizations()->read())
@@ -128,21 +110,21 @@ class BugtrackerStatsListController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function build_response(View $view)
 	{
 		$body_view = BugtrackerViews::build_body_view($view, 'stats');
-		
+
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.stats'], $this->lang['module_title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.stats']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats());
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats());
-		
+
 		return $response;
 	}
 }

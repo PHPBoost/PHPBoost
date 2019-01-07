@@ -1,34 +1,14 @@
 <?php
-/*##################################################
- *		                    SearchConfig.class.php
- *                            -------------------
- *   begin                : April 10, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @desc This class represents the search module's configuration.
- * @author Loic Rouchon <loic.rouchon@phpboost.com>
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 10 28
+ * @since   	PHPBoost 3.0 - 2010 04 10
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
+
 class SearchConfig extends AbstractConfigData
 {
 	const weightings = 'weightings';
@@ -36,7 +16,7 @@ class SearchConfig extends AbstractConfigData
 	const cache_lifetime = 'cache_lifetime';
 	const cache_max_uses = 'cache_max_uses';
 	const unauthorized_providers = 'unauthorized_providers';
-	
+
 	const AUTHORIZATIONS = 'authorizations';
 
 	/**
@@ -65,13 +45,13 @@ class SearchConfig extends AbstractConfigData
 	{
 		$modules_weighting = self::get_weightings()->get_modules_weighting();
 		$weightings_sorted_by_localized_name = array();
-		
+
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			if (in_array($module->get_id(), array_keys($modules_weighting)))
 				$weightings_sorted_by_localized_name[$module->get_id()] = $modules_weighting[$module->get_id()];
 		}
-		
+
 		return $weightings_sorted_by_localized_name;
 	}
 
@@ -154,17 +134,17 @@ class SearchConfig extends AbstractConfigData
 	public function get_all_unauthorized_providers()
 	{
 		$modules_without_read_authorization[] = array();
-		
+
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			$authorizations_class = TextHelper::ucfirst($module->get_id()) . 'AuthorizationsService';
 			if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
 				$modules_without_read_authorization[] = $module->get_id();
 		}
-		
+
 		return array_merge($this->get_property(self::unauthorized_providers), $modules_without_read_authorization);
 	}
-	
+
 	/**
 	 * Returns the authorizations of the module
 	 * @return string[] The authorizations
