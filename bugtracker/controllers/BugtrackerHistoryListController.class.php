@@ -1,29 +1,12 @@
 <?php
-/*##################################################
- *                      BugtrackerHistoryListController.class.php
- *                            -------------------
- *   begin                : November 11, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @since   	PHPBoost 3.0 - 2012 11 11
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 class BugtrackerHistoryListController extends ModuleController
 {
@@ -31,39 +14,39 @@ class BugtrackerHistoryListController extends ModuleController
 	private $view;
 	private $bug;
 	private $config;
-	
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
-		
+
 		$this->check_authorizations();
-		
+
 		$this->build_view($request);
-		
+
 		return $this->build_response($this->view);
 	}
 
 	private function build_view($request)
 	{
 		$current_page = $request->get_getint('page', 1);
-		
+
 		//Configuration load
 		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
 		$versions = $this->config->get_versions();
-		
+
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
 		$common_lang = LangLoader::get('common');
-		
+
 		$this->view->put_all(array(
 			'C_PAGINATION'	=> $pagination->has_several_pages(),
 			'C_HISTORY'		=> $history_lines_number,
 			'PAGINATION'	=> $pagination->display()
 		));
-		
+
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		JOIN " . BugtrackerSetup::$bugtracker_history_table . " bh ON (bh.bug_id = b.id)
@@ -76,62 +59,62 @@ class BugtrackerHistoryListController extends ModuleController
 				'display_from' => $pagination->get_display_from()
 			)
 		);
-		
+
 		while ($row = $result->fetch())
 		{
 			switch ($row['updated_field'])
 			{
-				case 'type': 
+				case 'type':
 					$old_value = !empty($row['old_value']) && isset($types[$row['old_value']]) ? stripslashes($types[$row['old_value']]) : $this->lang['notice.none'];
 					$new_value = !empty($row['new_value']) && isset($types[$row['new_value']]) ? stripslashes($types[$row['new_value']]) : $this->lang['notice.none'];
 					break;
-				
-				case 'category': 
+
+				case 'category':
 					$old_value = !empty($row['old_value']) && isset($categories[$row['old_value']]) ? stripslashes($categories[$row['old_value']]) : $this->lang['notice.none_e'];
 					$new_value = !empty($row['new_value']) && isset($categories[$row['new_value']]) ? stripslashes($categories[$row['new_value']]) : $this->lang['notice.none_e'];
 					break;
-				
-				case 'severity': 
+
+				case 'severity':
 					$old_value = !empty($row['old_value']) ? stripslashes($severities[$row['old_value']]['name']) : $this->lang['notice.none'];
 					$new_value = !empty($row['new_value']) ? stripslashes($severities[$row['new_value']]['name']) : $this->lang['notice.none'];
 					break;
-				
-				case 'priority': 
+
+				case 'priority':
 					$old_value = !empty($row['old_value']) ? stripslashes($priorities[$row['old_value']]) : $this->lang['notice.none_e'];
 					$new_value = !empty($row['new_value']) ? stripslashes($priorities[$row['new_value']]) : $this->lang['notice.none_e'];
 					break;
-				
-				case 'detected_in': 
-				case 'fixed_in': 
+
+				case 'detected_in':
+				case 'fixed_in':
 					$old_value = !empty($row['old_value']) && isset($versions[$row['old_value']]) ? stripslashes($versions[$row['old_value']]['name']) : $this->lang['notice.none_e'];
 					$new_value = !empty($row['new_value']) && isset($versions[$row['new_value']]) ? stripslashes($versions[$row['new_value']]['name']) : $this->lang['notice.none_e'];
 					break;
-				
-				case 'status': 
+
+				case 'status':
 					$old_value = $this->lang['status.' . $row['old_value']];
 					$new_value = $this->lang['status.' . $row['new_value']];
 					break;
-				
-				case 'reproductible': 
+
+				case 'reproductible':
 					$old_value = ($row['old_value']) ? $common_lang['yes'] : $common_lang['no'];
 					$new_value = ($row['new_value']) ? $common_lang['yes'] : $common_lang['no'];
 					break;
-				
+
 				default:
 					$old_value = $row['old_value'];
 					$new_value = $row['new_value'];
 			}
-			
+
 			$update_date = new Date($row['update_date'], Timezone::SERVER_TIMEZONE);
-			
+
 			$user = new User();
 			if (!empty($row['user_id']))
 				$user->set_properties($row);
 			else
 				$user->init_visitor_user();
-			
+
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			
+
 			$this->view->assign_block_vars('history', array_merge(
 				Date::get_array_tpl_vars($update_date,'update_date'),
 				array(
@@ -150,24 +133,24 @@ class BugtrackerHistoryListController extends ModuleController
 		}
 		$result->dispose();
 	}
-	
+
 	private function init($request)
 	{
 		$this->lang = LangLoader::get('common', 'bugtracker');
 		$id = $request->get_int('id', 0);
-		
+
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
 		}
-		
+
 		$this->view = new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = BugtrackerConfig::load();
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!BugtrackerAuthorizationsService::check_authorizations()->read() || ($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && $this->bug->get_author_user()->get_id() != AppContext::get_current_user()->get_id() && !$this->bug->is_fixed()))
@@ -176,39 +159,39 @@ class BugtrackerHistoryListController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function get_pagination($history_lines_number, $page)
 	{
 		$pagination = new ModulePagination($page, $history_lines_number, (int)$this->config->get_items_per_page());
 		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id(), '%d'));
-		
+
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		return $pagination;
 	}
-	
+
 	private function build_response(View $view)
 	{
 		$request = AppContext::get_request();
 		$page = $request->get_int('page', 1);
-		
+
 		$body_view = BugtrackerViews::build_body_view($view, 'history', $this->bug->get_id(), $this->bug->get_type());
-		
+
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id(), $this->lang['module_title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.history'], array('id' => $this->bug->get_id())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
-		
+
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 		$breadcrumb->add($this->lang['titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
-		
+
 		return $response;
 	}
 }

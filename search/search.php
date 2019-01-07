@@ -1,29 +1,13 @@
 <?php
-/*##################################################
-*                               search.php
-*                            -------------------
-*   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
-*   email                : horn@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @since   	PHPBoost 2.0 - 2008 01 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
@@ -157,7 +141,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			{
 				$selected = '';
 			}
-			
+
 			$tpl->assign_block_vars('searched_modules', array(
 				'MODULE' => $module->get_id(),
 				'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
@@ -172,10 +156,10 @@ $tpl->display();
 if (!empty($search))
 {
 	$tpl = new FileTemplate('search/search_results.tpl');
-	
+
 	$results = array();
 	$idsSearch = array();
-	
+
 	if ( $search_in != 'all' ) // If we are searching in only one module
 	{
 		if (isset($used_modules[$search_in]) && isset($modules_args[$search_in]))
@@ -212,11 +196,11 @@ if (!empty($search))
 			'ID_SEARCH' => $idsSearch[$module_id]
 		));
 	}
-	
+
 	$all_html_result = '';
 	if ( $nbResults > 0 )
 		get_html_results($results, $all_html_result, $search_in);
-	
+
 	$tpl->assign_vars(Array(
 		'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
 		'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
@@ -230,7 +214,7 @@ if (!empty($search))
 		'SEARCH_IN' => $search_in,
 		'C_SIMPLE_SEARCH' => ($search_in == 'all')
 	));
-	
+
 	$tpl->display();
 }
 

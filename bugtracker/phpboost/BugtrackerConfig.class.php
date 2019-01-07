@@ -1,34 +1,12 @@
 <?php
-/*##################################################
- *		                  BugtrackerConfig.class.php
- *                            -------------------
- *   begin                : September 06, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
-
 /**
- * @author Julien BRISWALTER <j1.seth@phpboost.com>
- * @desc Configuration of the bugtracker module
- */
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @since   	PHPBoost 3.0 - 2012 09 06
+*/
+
 class BugtrackerConfig extends AbstractConfigData
 {
 	const ITEMS_PER_PAGE = 'items_per_page';
@@ -75,13 +53,13 @@ class BugtrackerConfig extends AbstractConfigData
 	const DISPLAY_DETECTED_IN_COLUMN = 'display_detected_in_column';
 	const AUTHORIZATIONS = 'authorizations';
 	const STATUS_LIST = 'status_list';
-	
+
 	const NUMBER_CARACTERS_BEFORE_CUT = 150;
-	
+
 	//Admin alerts fix type
 	const FIX = 'fix';
 	const DELETE = 'delete';
-	
+
 	 /**
 	 * @method Get items per page
 	 */
@@ -89,16 +67,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
-	
+
 	 /**
 	 * @method Set items per page
 	 * @params int $value Number of items to display per page
 	 */
-	public function set_items_per_page($value) 
+	public function set_items_per_page($value)
 	{
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
-	
+
 	 /**
 	 * @method Get the color of a rejected bug
 	 */
@@ -106,16 +84,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::REJECTED_BUG_COLOR);
 	}
-	
+
 	 /**
 	 * @method Set the color of a rejected bug
 	 * @params string $value Rejected bug color
 	 */
-	public function set_rejected_bug_color($value) 
+	public function set_rejected_bug_color($value)
 	{
 		$this->set_property(self::REJECTED_BUG_COLOR, $value);
 	}
-	
+
 	 /**
 	 * @method Get the color of a fixed bug
 	 */
@@ -123,81 +101,81 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::FIXED_BUG_COLOR);
 	}
-	
+
 	 /**
 	 * @method Set the color of a fixed bug
 	 * @params string $value Fixed bug color
 	 */
-	public function set_fixed_bug_color($value) 
+	public function set_fixed_bug_color($value)
 	{
 		$this->set_property(self::FIXED_BUG_COLOR, $value);
 	}
-	
+
 	public function enable_roadmap()
 	{
 		$this->set_property(self::ROADMAP_ENABLED, true);
 	}
-	
+
 	public function disable_roadmap()
 	{
 		$this->set_property(self::ROADMAP_ENABLED, false);
 	}
-	
+
 	public function is_roadmap_enabled()
 	{
 		return $this->get_property(self::ROADMAP_ENABLED);
 	}
-	
+
 	public function enable_restrict_display_to_own_elements()
 	{
 		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, true);
 	}
-	
+
 	public function disable_restrict_display_to_own_elements()
 	{
 		$this->set_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED, false);
 	}
-	
+
 	public function is_restrict_display_to_own_elements_enabled()
 	{
 		return $this->get_property(self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED);
 	}
-	
+
 	public function is_roadmap_displayed()
 	{
 		return $this->get_property(self::ROADMAP_ENABLED) && $this->get_property(self::VERSIONS);
 	}
-	
+
 	public function enable_stats()
 	{
 		$this->set_property(self::STATS_ENABLED, true);
 	}
-	
+
 	public function disable_stats()
 	{
 		$this->set_property(self::STATS_ENABLED, false);
 	}
-	
+
 	public function are_stats_enabled()
 	{
 		return $this->get_property(self::STATS_ENABLED);
 	}
-	
+
 	public function enable_stats_top_posters()
 	{
 		$this->set_property(self::STATS_TOP_POSTERS_ENABLED, true);
 	}
-	
+
 	public function disable_stats_top_posters()
 	{
 		$this->set_property(self::STATS_TOP_POSTERS_ENABLED, false);
 	}
-	
+
 	public function are_stats_top_posters_enabled()
 	{
 		return $this->get_property(self::STATS_TOP_POSTERS_ENABLED);
 	}
-	
+
 	 /**
 	 * @method Get number of posters displayed in the stats list
 	 */
@@ -205,56 +183,56 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::STATS_TOP_POSTERS_NUMBER);
 	}
-	
+
 	 /**
 	 * @method Set number of posters displayed in the stats list
 	 * @params int $value Number of posters
 	 */
-	public function set_stats_top_posters_number($value) 
+	public function set_stats_top_posters_number($value)
 	{
 		$this->set_property(self::STATS_TOP_POSTERS_NUMBER, $value);
 	}
-	
+
 	public function display_progress_bar()
 	{
 		$this->set_property(self::PROGRESS_BAR_ENABLED, true);
 	}
-	
+
 	public function hide_progress_bar()
 	{
 		$this->set_property(self::PROGRESS_BAR_ENABLED, false);
 	}
-	
+
 	public function is_progress_bar_displayed()
 	{
 		return $this->get_property(self::PROGRESS_BAR_ENABLED);
 	}
-	
+
 	public function enable_admin_alerts()
 	{
 		$this->set_property(self::ADMIN_ALERTS_ENABLED, true);
 	}
-	
+
 	public function disable_admin_alerts()
 	{
 		$this->set_property(self::ADMIN_ALERTS_ENABLED, false);
 	}
-	
+
 	public function are_admin_alerts_enabled()
 	{
 		return $this->get_property(self::ADMIN_ALERTS_ENABLED);
 	}
-	
+
 	public function get_admin_alerts_levels()
 	{
 		return $this->get_property(self::ADMIN_ALERTS_LEVELS);
 	}
-	
-	public function set_admin_alerts_levels(Array $array) 
+
+	public function set_admin_alerts_levels(Array $array)
 	{
 		$this->set_property(self::ADMIN_ALERTS_LEVELS, $array);
 	}
-	
+
 	 /**
 	 * @method Check the action when closing the admin alert (delete or fix)
 	 */
@@ -262,16 +240,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::ADMIN_ALERTS_FIX_ACTION);
 	}
-	
+
 	 /**
 	 * @method Set the action when closing the admin alert
 	 * @params string $value Admin alerts fix action
 	 */
-	public function set_admin_alerts_fix_action($value) 
+	public function set_admin_alerts_fix_action($value)
 	{
 		$this->set_property(self::ADMIN_ALERTS_FIX_ACTION, $value);
 	}
-	
+
 	 /**
 	 * @method Check if the action when closing the admin alert is fix
 	 */
@@ -279,157 +257,157 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::ADMIN_ALERTS_FIX_ACTION) == self::FIX;
 	}
-	
+
 	public function enable_pm()
 	{
 		$this->set_property(self::PM_ENABLED, true);
 	}
-	
+
 	public function disable_pm()
 	{
 		$this->set_property(self::PM_ENABLED, false);
 	}
-	
+
 	public function are_pm_enabled()
 	{
 		return $this->get_property(self::PM_ENABLED);
 	}
-	
+
 	public function enable_pm_comment()
 	{
 		$this->set_property(self::PM_COMMENT_ENABLED, true);
 	}
-	
+
 	public function disable_pm_comment()
 	{
 		$this->set_property(self::PM_COMMENT_ENABLED, false);
 	}
-	
+
 	public function are_pm_comment_enabled()
 	{
 		return $this->get_property(self::PM_COMMENT_ENABLED);
 	}
-	
+
 	public function enable_pm_fix()
 	{
 		$this->set_property(self::PM_FIX_ENABLED, true);
 	}
-	
+
 	public function disable_pm_fix()
 	{
 		$this->set_property(self::PM_FIX_ENABLED, false);
 	}
-	
+
 	public function are_pm_fix_enabled()
 	{
 		return $this->get_property(self::PM_FIX_ENABLED);
 	}
-	
+
 	public function enable_pm_in_progress()
 	{
 		$this->set_property(self::PM_IN_PROGRESS_ENABLED, true);
 	}
-	
+
 	public function disable_pm_in_progress()
 	{
 		$this->set_property(self::PM_IN_PROGRESS_ENABLED, false);
 	}
-	
+
 	public function are_pm_in_progress_enabled()
 	{
 		return $this->get_property(self::PM_IN_PROGRESS_ENABLED);
 	}
-	
+
 	public function enable_pm_pending()
 	{
 		$this->set_property(self::PM_PENDING_ENABLED, true);
 	}
-	
+
 	public function disable_pm_pending()
 	{
 		$this->set_property(self::PM_PENDING_ENABLED, false);
 	}
-	
+
 	public function are_pm_pending_enabled()
 	{
 		return $this->get_property(self::PM_PENDING_ENABLED);
 	}
-	
+
 	public function enable_pm_assign()
 	{
 		$this->set_property(self::PM_ASSIGN_ENABLED, true);
 	}
-	
+
 	public function disable_pm_assign()
 	{
 		$this->set_property(self::PM_ASSIGN_ENABLED, false);
 	}
-	
+
 	public function are_pm_assign_enabled()
 	{
 		return $this->get_property(self::PM_ASSIGN_ENABLED);
 	}
-	
+
 	public function enable_pm_edit()
 	{
 		$this->set_property(self::PM_EDIT_ENABLED, true);
 	}
-	
+
 	public function disable_pm_edit()
 	{
 		$this->set_property(self::PM_EDIT_ENABLED, false);
 	}
-	
+
 	public function are_pm_edit_enabled()
 	{
 		return $this->get_property(self::PM_EDIT_ENABLED);
 	}
-	
+
 	public function enable_pm_reject()
 	{
 		$this->set_property(self::PM_REJECT_ENABLED, true);
 	}
-	
+
 	public function disable_pm_reject()
 	{
 		$this->set_property(self::PM_REJECT_ENABLED, false);
 	}
-	
+
 	public function are_pm_reject_enabled()
 	{
 		return $this->get_property(self::PM_REJECT_ENABLED);
 	}
-	
+
 	public function enable_pm_reopen()
 	{
 		$this->set_property(self::PM_REOPEN_ENABLED, true);
 	}
-	
+
 	public function disable_pm_reopen()
 	{
 		$this->set_property(self::PM_REOPEN_ENABLED, false);
 	}
-	
+
 	public function are_pm_reopen_enabled()
 	{
 		return $this->get_property(self::PM_REOPEN_ENABLED);
 	}
-	
+
 	public function enable_pm_delete()
 	{
 		$this->set_property(self::PM_DELETE_ENABLED, true);
 	}
-	
+
 	public function disable_pm_delete()
 	{
 		$this->set_property(self::PM_DELETE_ENABLED, false);
 	}
-	
+
 	public function are_pm_delete_enabled()
 	{
 		return $this->get_property(self::PM_DELETE_ENABLED);
 	}
-	
+
 	 /**
 	 * @method Get the default content of a bug
 	 */
@@ -437,16 +415,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CONTENTS_VALUE);
 	}
-	
+
 	 /**
 	 * @method Set the default content of a bug
 	 * @params string $value Default content
 	 */
-	public function set_contents_value($value) 
+	public function set_contents_value($value)
 	{
 		$this->set_property(self::CONTENTS_VALUE, $value);
 	}
-	
+
 	 /**
 	 * @method Get types
 	 */
@@ -454,7 +432,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::TYPES);
 	}
-	
+
 	 /**
 	 * @method Set types
 	 * @params string[] $array Array of types
@@ -463,7 +441,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::TYPES, $array);
 	}
-	
+
 	 /**
 	 * @method Get categories
 	 */
@@ -471,7 +449,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::CATEGORIES);
 	}
-	
+
 	 /**
 	 * @method Set categories
 	 * @params string[] $array Array of categories
@@ -480,7 +458,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::CATEGORIES, $array);
 	}
-	
+
 	 /**
 	 * @method Get severities
 	 */
@@ -488,7 +466,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::SEVERITIES);
 	}
-	
+
 	 /**
 	 * @method Set severities
 	 * @params string[] $array Array of severities
@@ -497,7 +475,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::SEVERITIES, $array);
 	}
-	
+
 	 /**
 	 * @method Get priorities
 	 */
@@ -505,7 +483,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::PRIORITIES);
 	}
-	
+
 	 /**
 	 * @method Set priorities
 	 * @params string[] $array Array of priorities
@@ -514,7 +492,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::PRIORITIES, $array);
 	}
-	
+
 	 /**
 	 * @method Get detected versions
 	 */
@@ -529,7 +507,7 @@ class BugtrackerConfig extends AbstractConfigData
 		}
 		return $versions_detected_in;
 	}
-	
+
 	 /**
 	 * @method Get fix versions
 	 */
@@ -541,13 +519,13 @@ class BugtrackerConfig extends AbstractConfigData
 		foreach ($versions as $key => $version)
 		{
 			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date($version['release_date'], Timezone::SERVER_TIMEZONE) : null;
-			
+
 			if (empty($release_date) || $release_date->get_timestamp() >= $now->get_timestamp())
 				$versions_fix[$key] = $version;
 		}
 		return $versions_fix;
 	}
-	
+
 	 /**
 	 * @method Get versions
 	 */
@@ -555,7 +533,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::VERSIONS);
 	}
-	
+
 	 /**
 	 * @method Set versions
 	 * @params string[] $array Array of versions
@@ -564,7 +542,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::VERSIONS, $array);
 	}
-	
+
 	 /**
 	 * @method Get default type
 	 */
@@ -572,16 +550,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_TYPE);
 	}
-	
+
 	 /**
 	 * @method Set default type
 	 * @params int $value Default type id
 	 */
-	public function set_default_type($value) 
+	public function set_default_type($value)
 	{
 		$this->set_property(self::DEFAULT_TYPE, $value);
 	}
-	
+
 	 /**
 	 * @method Get default category
 	 */
@@ -589,16 +567,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_CATEGORY);
 	}
-	
+
 	 /**
 	 * @method Set default category
 	 * @params int $value Default category id
 	 */
-	public function set_default_category($value) 
+	public function set_default_category($value)
 	{
 		$this->set_property(self::DEFAULT_CATEGORY, $value);
 	}
-	
+
 	 /**
 	 * @method Get default severity
 	 */
@@ -606,16 +584,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_SEVERITY);
 	}
-	
+
 	 /**
 	 * @method Set default severity
 	 * @params int $value Default severity id
 	 */
-	public function set_default_severity($value) 
+	public function set_default_severity($value)
 	{
 		$this->set_property(self::DEFAULT_SEVERITY, $value);
 	}
-	
+
 	 /**
 	 * @method Get default priority
 	 */
@@ -623,16 +601,16 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_PRIORITY);
 	}
-	
+
 	 /**
 	 * @method Set default priority
 	 * @params int $value Default priority id
 	 */
-	public function set_default_priority($value) 
+	public function set_default_priority($value)
 	{
 		$this->set_property(self::DEFAULT_PRIORITY, $value);
 	}
-	
+
 	 /**
 	 * @method Get default version
 	 */
@@ -640,151 +618,151 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_VERSION);
 	}
-	
+
 	 /**
 	 * @method Set default version
 	 * @params int $value Default version id
 	 */
-	public function set_default_version($value) 
+	public function set_default_version($value)
 	{
 		$this->set_property(self::DEFAULT_VERSION, $value);
 	}
-	
+
 	public function type_mandatory()
 	{
 		$this->set_property(self::TYPE_MANDATORY, true);
 	}
-	
+
 	public function type_not_mandatory()
 	{
 		$this->set_property(self::TYPE_MANDATORY, false);
 	}
-	
+
 	public function is_type_mandatory()
 	{
 		return $this->get_property(self::TYPE_MANDATORY);
 	}
-	
+
 	public function category_mandatory()
 	{
 		$this->set_property(self::CATEGORY_MANDATORY, true);
 	}
-	
+
 	public function category_not_mandatory()
 	{
 		$this->set_property(self::CATEGORY_MANDATORY, false);
 	}
-	
+
 	public function is_category_mandatory()
 	{
 		return $this->get_property(self::CATEGORY_MANDATORY);
 	}
-	
+
 	public function severity_mandatory()
 	{
 		$this->set_property(self::SEVERITY_MANDATORY, true);
 	}
-	
+
 	public function severity_not_mandatory()
 	{
 		$this->set_property(self::SEVERITY_MANDATORY, false);
 	}
-	
+
 	public function is_severity_mandatory()
 	{
 		return $this->get_property(self::SEVERITY_MANDATORY);
 	}
-	
+
 	public function priority_mandatory()
 	{
 		$this->set_property(self::PRIORITY_MANDATORY, true);
 	}
-	
+
 	public function priority_not_mandatory()
 	{
 		$this->set_property(self::PRIORITY_MANDATORY, false);
 	}
-	
+
 	public function is_priority_mandatory()
 	{
 		return $this->get_property(self::PRIORITY_MANDATORY);
 	}
-	
+
 	public function detected_in_version_mandatory()
 	{
 		$this->set_property(self::DETECTED_IN_VERSION_MANDATORY, true);
 	}
-	
+
 	public function detected_in_version_not_mandatory()
 	{
 		$this->set_property(self::DETECTED_IN_VERSION_MANDATORY, false);
 	}
-	
+
 	public function is_detected_in_version_mandatory()
 	{
 		return $this->get_property(self::DETECTED_IN_VERSION_MANDATORY);
 	}
-	
+
 	public function display_type_column()
 	{
 		$this->set_property(self::DISPLAY_TYPE_COLUMN, true);
 	}
-	
+
 	public function hide_type_column()
 	{
 		$this->set_property(self::DISPLAY_TYPE_COLUMN, false);
 	}
-	
+
 	public function is_type_column_displayed()
 	{
 		return $this->get_property(self::DISPLAY_TYPE_COLUMN);
 	}
-	
+
 	public function display_category_column()
 	{
 		$this->set_property(self::DISPLAY_CATEGORY_COLUMN, true);
 	}
-	
+
 	public function hide_category_column()
 	{
 		$this->set_property(self::DISPLAY_CATEGORY_COLUMN, false);
 	}
-	
+
 	public function is_category_column_displayed()
 	{
 		return $this->get_property(self::DISPLAY_CATEGORY_COLUMN);
 	}
-	
+
 	public function display_priority_column()
 	{
 		$this->set_property(self::DISPLAY_PRIORITY_COLUMN, true);
 	}
-	
+
 	public function hide_priority_column()
 	{
 		$this->set_property(self::DISPLAY_PRIORITY_COLUMN, false);
 	}
-	
+
 	public function is_priority_column_displayed()
 	{
 		return $this->get_property(self::DISPLAY_PRIORITY_COLUMN);
 	}
-	
+
 	public function display_detected_in_column()
 	{
 		$this->set_property(self::DISPLAY_DETECTED_IN_COLUMN, true);
 	}
-	
+
 	public function hide_detected_in_column()
 	{
 		$this->set_property(self::DISPLAY_DETECTED_IN_COLUMN, false);
 	}
-	
+
 	public function is_detected_in_column_displayed()
 	{
 		return $this->get_property(self::DISPLAY_DETECTED_IN_COLUMN);
 	}
-	
+
 	 /**
 	 * @method Get authorizations
 	 */
@@ -792,7 +770,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
-	
+
 	 /**
 	 * @method Set authorizations
 	 * @params string[] $array Array of authorizations
@@ -801,7 +779,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
-	
+
 	 /**
 	 * @method Get the status list
 	 */
@@ -809,7 +787,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::STATUS_LIST);
 	}
-	
+
 	 /**
 	 * @method Set the status list
 	 * @params string[] $array Array of status
@@ -818,14 +796,14 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$this->set_property(self::STATUS_LIST, $array);
 	}
-	
+
 	/**
 	 * @method Get default values.
 	 */
 	public function get_default_values()
 	{
 		$lang = LangLoader::get('config', 'bugtracker');
-		
+
 		return array(
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
@@ -873,7 +851,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
 		);
 	}
-	
+
 	/**
 	 * @method Load the bugtracker configuration.
 	 * @return BugtrackerConfig
@@ -882,7 +860,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return ConfigManager::load(__CLASS__, 'bugtracker', 'config');
 	}
-	
+
 	/**
 	 * @method Saves the bugtracker configuration in the database. It becomes persistent.
 	 */

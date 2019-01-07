@@ -1,29 +1,13 @@
 <?php
-/*##################################################
-*                               search.inc.php
-*                            -------------------
-*   begin                : february 5, 2008
-*   copyright            : (C) 2008 Rouchon Loïc
-*   email                : horn@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @since   	PHPBoost 2.0 - 2008 02 05
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+*/
 
 if (defined('PHPBOOST') !== true) exit;
 
@@ -37,7 +21,7 @@ define ('NB_RESULTS_PER_PAGE', $config->get_nb_results_per_page());
 function execute_search($search, &$search_modules, &$modules_args, &$results)
 {
 	$requests = array();
-	
+
 	$config = SearchConfig::load();
 	foreach ($search_modules as $module_id => $module)
 	{
@@ -60,12 +44,12 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
 function get_search_results($search_string, &$search_modules, &$modules_args, &$results, &$ids_search, $just_insert = false)
 {
 	$modules_options = array();
-	
+
 	$search = new Search($search_string, $modules_args);
 	execute_search($search, $search_modules, $modules_args, $results);
-	
+
 	$ids_search = $search->get_ids();
-	
+
 	if (!$just_insert)
 	{
 		$modules_ids = array();
@@ -86,16 +70,16 @@ function get_html_results(&$results, &$html_results, &$results_name)
 {
 	$provider_service = AppContext::get_extension_provider_service();
 	$display_all_results = ($results_name == 'all');
-	
+
 	$tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
 	$tpl_results->assign_vars(Array(
 		'RESULTS_NAME' => $results_name,
 		'C_ALL_RESULTS' => $display_all_results
 	));
-	
+
 	$nb_pages = round(count($results) / NB_RESULTS_PER_PAGE) + 1;
 	$nb_results = count($results);
-	
+
 	if (!$display_all_results)
 	{
 		$provider = $provider_service->get_provider(TextHelper::strtolower($results_name));
@@ -108,7 +92,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 			$nb_results = min($nb_results, count($results_data));
 		}
 	}
-	
+
 	for ($num_page = 0; $num_page < $nb_pages; $num_page++)
 	{
 		$tpl_results->assign_block_vars('page', array(
@@ -121,7 +105,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 			$num_item = $num_page * NB_RESULTS_PER_PAGE + $i;
 			if (($num_item) >= $nb_results)
 				break;
-			
+
 			if ($display_all_results || !$personnal_parse_results)
 			{
 				$tpl_result = new FileTemplate('search/search_generic_results.tpl');
@@ -144,7 +128,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
 					'TITLE' => stripslashes($results[$num_item]['title']),
 					'U_LINK' => url($results[$num_item]['link'])
 				));
-				
+
 				$tpl_results->assign_block_vars('page.results', array(
 					'result' => $tpl_result->render()
 				));

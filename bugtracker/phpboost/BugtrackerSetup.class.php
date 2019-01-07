@@ -1,68 +1,50 @@
 <?php
-/*##################################################
- *                              BugtrackerSetup.class.php
- *                            -------------------
- *   begin                : April 16, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : j1.seth@phpboost.com
- *
- *  
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @since   	PHPBoost 3.0 - 2012 04 16
+*/
 
 class BugtrackerSetup extends DefaultModuleSetup
 {
 	public static $bugtracker_table;
 	public static $bugtracker_history_table;
 	public static $bugtracker_users_filters_table;
-	
+
 	public static function __static()
 	{
 		self::$bugtracker_table = PREFIX . 'bugtracker';
 		self::$bugtracker_history_table = PREFIX . 'bugtracker_history';
 		self::$bugtracker_users_filters_table = PREFIX . 'bugtracker_users_filters';
 	}
-	
+
 	public function install()
 	{
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
-	
+
 	public function uninstall()
 	{
 		$this->drop_tables();
 		ConfigManager::delete('bugtracker', 'config');
 	}
-	
+
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$bugtracker_table, self::$bugtracker_history_table, self::$bugtracker_users_filters_table));
 	}
-	
+
 	private function create_tables()
 	{
 		$this->create_bugtracker_table();
 		$this->create_bugtracker_history_table();
 		$this->create_bugtracker_users_filters_table();
 	}
-	
+
 	private function create_bugtracker_table()
 	{
 		$fields = array(
@@ -92,7 +74,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_table, $fields, $options);
 	}
-	
+
 	private function create_bugtracker_history_table()
 	{
 		$fields = array(
@@ -111,7 +93,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_history_table, $fields, $options);
 	}
-	
+
 	private function create_bugtracker_users_filters_table()
 	{
 		$fields = array(
@@ -127,11 +109,11 @@ class BugtrackerSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_users_filters_table, $fields, $options);
 	}
-	
+
 	private function insert_data()
 	{
 		$lang = LangLoader::get('install', 'bugtracker');
-		
+
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 1,
 			'title' => $lang['bug.1.title'],
@@ -150,7 +132,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'fixed_in' => 0,
 			'assigned_to_id' => 0
 		));
-		
+
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 2,
 			'title' => $lang['bug.2.title'],
@@ -169,7 +151,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'fixed_in' => 0,
 			'assigned_to_id' => 0
 		));
-		
+
 		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
 			'id' => 3,
 			'title' => $lang['bug.3.title'],
