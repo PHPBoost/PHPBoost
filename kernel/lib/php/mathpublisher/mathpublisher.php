@@ -1636,7 +1636,7 @@ if ($v==0)
 	ImagePNG($formula->image,PHP_MATH_PUBLISHER_CACHE_DIR."/math_".$v."_".$nameimg);
 	}
 $valign=$v-1000;
-return '<img src="'.PATH_TO_ROOT.$pathtoimg."math_".$v."_".$nameimg.'" style="vertical-align:'.$valign.'px;'.' display: inline-block ;" alt="'.$text.'" title="'.$text.'"/>';
+return '<img src="'.Url::to_rel($pathtoimg).$pathtoimg."math_".$v."_".$nameimg.'" style="vertical-align:'.$valign.'px;'.' display: inline-block ;" alt="'.$text.'" title="'.$text.'"/>';
 }
 
 
