@@ -4,7 +4,6 @@
  * It supplies the highlighted code written in XHTML.
  * @package     Content
  * @subpackage  Formatting\parser
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

@@ -7,7 +7,6 @@
  * validated when it looses the focus and the whole form is validated when the user submits it).
  * @package     Builder
  * @subpackage  Form
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>

@@ -3,7 +3,6 @@
  * Type that maps a database BIGINT to a PHP string.
  * @package     Doctrine
  * @subpackage  DBAL\Types
- * @category    Framework
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      robo

@@ -3,7 +3,6 @@
  * This class is responsible a punish member
  * @package     PHPBoost
  * @subpackage  Member
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>

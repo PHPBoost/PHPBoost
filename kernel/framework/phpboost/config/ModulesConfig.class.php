@@ -3,7 +3,6 @@
  * This class contains the cache data of the modules which module users having common criteria.
  * @package     PHPBoost
  * @subpackage  Config
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>

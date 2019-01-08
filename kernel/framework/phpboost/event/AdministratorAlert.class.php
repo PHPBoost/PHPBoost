@@ -5,7 +5,6 @@
  * The administrator alerts can be in the administration panel and can be used when you want to signal an important event to the administrator(s).
  * @package     PHPBoost
  * @subpackage  Event
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

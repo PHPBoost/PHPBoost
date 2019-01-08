@@ -3,7 +3,6 @@
  * var
  * @package     Doctrine
  * @subpackage  Common
- * @category    Framework
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Guilherme BLANCO <guilhermeblanco@hotmail.com>
@@ -19,7 +18,6 @@ function string_var_export($var) { return var_export($var, true); }
  * Base Exception class of Doctrine
  * @package     Doctrine
  * @subpackage  Common
- * @category    Framework
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Guilherme BLANCO <guilhermeblanco@hotmail.com>

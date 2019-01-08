@@ -6,7 +6,6 @@
  * This is very efficient and has an infinite life span (in fact it's the Web server's one).
  * @package     IO
  * @subpackage  Data\store
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

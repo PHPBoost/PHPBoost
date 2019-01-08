@@ -3,7 +3,6 @@
  * This class contains all the data related to the user accounts configuration.
  * @package     PHPBoost
  * @subpackage  Config
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

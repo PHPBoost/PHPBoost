@@ -3,7 +3,6 @@
  * Type that maps an SQL DATE to a PHP Date object.
  * @package     Doctrine
  * @subpackage  DBAL\Types
- * @category    Framework
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @version     PHPBoost 5.2 - last update: 2013 01 01

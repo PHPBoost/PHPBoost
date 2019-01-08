@@ -4,7 +4,6 @@
  * You will be able to manage one or more permission bits, exclude certain categories disable recursive search of one, several or all categories
  * @package     Content
  * @subpackage  Category
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
