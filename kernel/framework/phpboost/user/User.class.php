@@ -3,7 +3,6 @@
  * This class represente a user
  * @package     PHPBoost
  * @subpackage  User
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>

@@ -3,7 +3,6 @@
  * This is an abstract implementation of the {@link TemplateParser} interface.
  * @package     IO
  * @subpackage  Template\parser
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>

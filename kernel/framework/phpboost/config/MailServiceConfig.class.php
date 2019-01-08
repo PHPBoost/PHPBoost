@@ -3,7 +3,6 @@
  * This class contains the configuration of PHPBoost's mail service.
  * @package     PHPBoost
  * @subpackage  Config
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

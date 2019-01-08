@@ -3,7 +3,6 @@
  * This class represents an abstract filter
  * @package     PHPBoost
  * @subpackage  Menu
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>

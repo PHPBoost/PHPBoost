@@ -3,7 +3,6 @@
  * This static class allows you to handler easily the administrator alerts which can be made in PHPBoost.
  * @package     PHPBoost
  * @subpackage  Event
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

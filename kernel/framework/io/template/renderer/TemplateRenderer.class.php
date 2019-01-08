@@ -5,7 +5,6 @@
  * contains the data to assign in the template.
  * @package     IO
  * @subpackage  Template\renderer
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>

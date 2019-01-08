@@ -3,7 +3,6 @@
  * This class allows you to inquire the table that stores the items and the database field that contains the ID of the category in which it is located
  * @package     Content
  * @subpackage  Category
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>

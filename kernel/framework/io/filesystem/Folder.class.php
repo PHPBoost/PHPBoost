@@ -3,7 +3,6 @@
  * This class allows you to handle very easily a folder on the server.
  * @package     IO
  * @subpackage  Filesystem
- * @category    Framework
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>

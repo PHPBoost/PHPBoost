@@ -4,7 +4,6 @@
  * A Type object is obtained by calling the static {@link getType()} method.
  * @package     Doctrine
  * @subpackage  DBAL\Types
- * @category    Framework
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Roman Borschel <roman@code-factory.org>
