@@ -144,7 +144,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['id_category']['key']) || !$columns['id_category']['key'])
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `id_category` (`id_category`)');
 
-		$folder = new Folder(PATH_TO_ROOT . '/smallads/pics/';
+		$folder = new Folder(PATH_TO_ROOT . '/smallads/pics/');
 		if ($folder->exists())
 		{
 			$messages = LangLoader::get('install', 'smallads');
