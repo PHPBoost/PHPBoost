@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 01 09
  * @since   	PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -238,7 +238,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, title, nbr_msg, last_user_id, last_msg_id, status
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, idcat, title, nbr_msg, last_user_id, last_msg_id, status
 			FROM ' . PREFIX . 'forum_topics
 			WHERE id=:id', array(
 				'id' => $idt_get
