@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2019 01 09
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -24,7 +24,7 @@ class UserService
 	 * Create a user
 	 * @param UserAuthentification $user_authentification
 	 * @param User $user
-	 * @return InjectQueryResult
+	 * @return int Id of the user if new user, false otherwise
 	 */
 	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array(), $auth_method_data = array())
 	{
@@ -156,28 +156,68 @@ class UserService
 	}
 
 	/**
-	 * Returns a user
-	 * @param string $condition
-	 * @param array $parameters
-	 * @return User
+	 * Get user from his id
+	 * @param int $user_id Id of the user concerned
+	 * @return User The requested user if exists, false otherwise
 	 */
 	public static function get_user($user_id)
 	{
-		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		try
+		{
+			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		}
+		catch (RowNotFoundException $e) 
+		{
+			return false;
+		}
 		$user = new User();
 		$user->set_properties($row);
 		return $user;
 	}
 
+	/**
+	 * Get user from his display name
+	 * @param string $display_name Display name of the user concerned
+	 * @return User The requested user if exists, false otherwise
+	 */
+	public static function get_user_by_display_name($display_name)
+	{
+		try
+		{
+			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE display_name=:display_name', array('display_name' => $display_name));
+		}
+		catch (RowNotFoundException $e) 
+		{
+			return false;
+		}
+		$user = new User();
+		$user->set_properties($row);
+		return $user;
+	}
+
+	/**
+	 * Check if a user exists
+	 * @param string $condition Condition of the request
+	 * @param array $parameters Parameters contained in the condition
+	 * @return bool true if the user exists
+	 */
 	public static function user_exists($condition, Array $parameters)
 	{
-		try {
+		try
+		{
 			return self::$querier->get_column_value(DB_TABLE_MEMBER, 'user_id', $condition, $parameters);
-		} catch (RowNotFoundException $e) {
+		}
+		catch (RowNotFoundException $e)
+		{
 			return false;
 		}
 	}
 
+	/**
+	 * Get localized user level
+	 * @param string $level Level of the user
+	 * @return string The localized level
+	 */
 	public static function get_level_lang($level)
 	{
 		$lang = LangLoader::get('user-common');
@@ -201,6 +241,11 @@ class UserService
 		}
 	}
 
+	/**
+	 * Get CSS class of the user level
+	 * @param string $level Level of the user
+	 * @return string The CSS class
+	 */
 	public static function get_level_class($level)
 	{
 		switch ($level)
