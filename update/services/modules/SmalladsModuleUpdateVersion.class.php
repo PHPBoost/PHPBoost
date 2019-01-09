@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 18
+ * @version   	PHPBoost 5.2 - last update: 2019 01 09
  * @since   	PHPBoost 5.1 - 2018 09 20
 */
 
@@ -144,16 +144,20 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['id_category']['key']) || !$columns['id_category']['key'])
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `id_category` (`id_category`)');
 
-		$messages = LangLoader::get('install', 'smallads');
-		$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'title'));
-		while ($row = $result->fetch()) {
-			$this->querier->update(PREFIX . 'smallads', array(
-				'rewrited_title' => Url::encode_rewrite($row['title']),
-				'smallad_type' => Url::encode_rewrite($messages['default.smallad.type']),
-				'id_category' => 1,
-			), 'WHERE id = :id', array('id' => $row['id']));
+		$folder = new Folder(PATH_TO_ROOT . '/smallads/pics/';
+		if ($folder->exists())
+		{
+			$messages = LangLoader::get('install', 'smallads');
+			$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'title'));
+			while ($row = $result->fetch()) {
+				$this->querier->update(PREFIX . 'smallads', array(
+					'rewrited_title' => Url::encode_rewrite($row['title']),
+					'smallad_type' => Url::encode_rewrite($messages['default.smallad.type']),
+					'id_category' => 1,
+				), 'WHERE id = :id', array('id' => $row['id']));
+			}
+			$result->dispose();
 		}
-		$result->dispose();
 	}
 
 	private function delete_old_mini_menu()
