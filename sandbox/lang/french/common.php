@@ -344,6 +344,8 @@ $lang['css.message.question'] = 'Ceci est une question:<br /> est-ce que l\'affi
 $lang['css.message.member'] = 'Ceci est un message dont l\'affichage est limité aux membres';
 $lang['css.message.modo'] = 'Ceci est un message dont l\'affichage est limité aux modérateurs';
 $lang['css.message.admin'] = 'Ceci est un message dont l\'affichage est limité aux administrateurs';
+$lang['css.message.float-unlimited'] = 'Ceci est un message flottant sans limite de temps';
+$lang['css.message.float-limited'] = 'Ceci est un message flottant avec une limite de temps';
 
 //Blocs
 $lang['css.blocks'] = 'Blocs';
