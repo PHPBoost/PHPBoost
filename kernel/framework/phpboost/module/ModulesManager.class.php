@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 10 10
+ * @version     PHPBoost 5.2 - last update: 2019 01 10
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -451,6 +451,14 @@ class ModulesManager
 		}
 
 		return $error;
+	}
+
+	private static function set_module_activation($module_id, bool $activated)
+	{
+		$module = self::get_module($module_id);
+		$module->set_activated($activated);
+		ModulesConfig::load()->update($module);
+		ModulesConfig::save();
 	}
 
 	private static function execute_module_installation($module_id)

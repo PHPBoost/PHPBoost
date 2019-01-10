@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @version   	PHPBoost 5.2 - last update: 2019 01 10
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,6 +29,7 @@ $lang['modules.available_modules'] = 'Modules disponibles';
 //Warnings
 $lang['modules.warning_before_install'] = '<span class="message-helper warning">Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
 $lang['modules.add.warning_before_install'] = '<span class="message-helper warning">Un module doit être installé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
+$lang['modules.update.warning_before_update'] = '<span class="message-helper warning">Un module doit être mis à jour uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules mis à jour sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';
