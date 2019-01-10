@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 11
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,7 +30,7 @@ $lang['is.not.admin'] = 'Le membre choisi n\'est pas un administrateur ou n\'exi
 
 $lang['mini.close'] = 'Fermer le menu';
 $lang['mini.version.pbt'] = 'Version de PHPBoost';
-$lang['mini.version.php'] = 'Version du serveur PHP';
+$lang['mini.version.php'] = 'Version PHP du serveur';
 $lang['mini.version.sql'] = 'Version de MySql';
 $lang['mini.version.date'] = 'Date d\'installation du site';
 $lang['mini.viewport.v'] = 'Hauteur de la fenêtre';

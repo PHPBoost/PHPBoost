@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -209,9 +209,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->enable_css_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fab fa-css3 icon-main"></i>
-				<i class="fa fa-plus icon-sup"></i>
-			</span>
+				<i class="fab fa-css3 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-plus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.enable.css.cache}</span>
 		', 'enable_css_cache');
 		$enable_css_cache->add_button($this->enable_css_button);
 
@@ -232,9 +232,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->disable_css_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fab fa-css3 icon-main"></i>
-				<i class="fa fa-minus icon-sup"></i>
-			</span>
+				<i class="fab fa-css3 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-minus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.disable.css.cache}</span>
 		', 'disable_css_cache');
 		$disable_css_cache->add_button($this->disable_css_button);
 
@@ -255,9 +255,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->clean_css_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fab fa-css3 icon-main"></i>
-				<i class="fa fa-refresh icon-sup"></i>
-			</span>
+				<i class="fab fa-css3 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.clean.css.cache}</span>
 		', 'clean_css_cache');
 		$clean_css_cache->add_button($this->clean_css_button);
 
@@ -277,9 +277,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->clean_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fab fa-html5 icon-main"></i>
-				<i class="fa fa-refresh icon-sup"></i>
-			</span>
+				<i class="fab fa-html5 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.clean.tpl.cache}</span>
 		', 'clean_cache');
 		$clean_cache->add_button($this->clean_button);
 
@@ -299,9 +299,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->clean_syndication_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fa fa-rss icon-main"></i>
-				<i class="fa fa-refresh icon-sup"></i>
-			</span>
+				<i class="fa fa-rss icon-main" aria-hidden="true"></i>
+				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.clean.rss.cache}</span>
 		', 'clean_syndication_cache');
 		$clean_syndication_cache->add_button($this->clean_syndication_button);
 
@@ -320,9 +320,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->disable_left_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fa fa-th-list icon-main"></i>
-				<i class="fa fa-minus icon-sup"></i>
-			</span>
+				<i class="fa fa-th-list icon-main" aria-hidden="true"></i>
+				<i class="fa fa-minus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.disable.left.col}</span>
 		', 'disable_left_menu');
 		$disable_left_menu->add_button($this->disable_left_button);
 
@@ -336,9 +336,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->enable_left_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fa fa-th-list icon-main"></i>
-				<i class="fa fa-plus icon-sup"></i>
-			</span>
+				<i class="fa fa-th-list icon-main" aria-hidden="true"></i>
+				<i class="fa fa-plus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.enable.left.col}</span>
 		', 'enable_left_menu');
 		$enable_left_menu->add_button($this->enable_left_button);
 
@@ -352,9 +352,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->disable_right_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fa fa-th-list fa-rotate-180 icon-main"></i>
-				<i class="fa fa-minus icon-sup"></i>
-			</span>
+				<i class="fa fa-th-list fa-rotate-180 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-minus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.disable.right.col}</span>
 		', 'disable_right_menu');
 		$disable_right_menu->add_button($this->disable_right_button);
 
@@ -368,9 +368,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->enable_right_button = new FormButtonSubmit('
 			<span class="icon-stack">
-				<i class="fa fa-th-list fa-rotate-180 icon-main"></i>
-				<i class="fa fa-plus icon-sup"></i>
-			</span>
+				<i class="fa fa-th-list fa-rotate-180 icon-main" aria-hidden="true"></i>
+				<i class="fa fa-plus icon-sup" aria-hidden="true"></i>
+			</span> <span class="sr-only">{@mini.enable.right.col}</span>
 		', 'enable_right_menu');
 		$enable_right_menu->add_button($this->enable_right_button);
 
