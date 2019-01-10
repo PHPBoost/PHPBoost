@@ -43,7 +43,11 @@ class SandboxGraphicsCSSController extends ModuleController
 			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION),
 			MessageHelper::display($this->lang['css.message.member'], MessageHelper::MEMBER_ONLY),
 			MessageHelper::display($this->lang['css.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['css.message.admin'], MessageHelper::ADMIN_ONLY)
+			MessageHelper::display($this->lang['css.message.admin'], MessageHelper::ADMIN_ONLY),
+			MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::SUCCESS, -1),
+			MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::NOTICE, 3),
+			MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
+			MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::ERROR, 6)
 		);
 
 		foreach ($messages as $message)

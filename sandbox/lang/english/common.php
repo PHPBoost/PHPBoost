@@ -338,6 +338,8 @@ $lang['css.message.question'] = 'This is a question:<br /> is the two-lines disp
 $lang['css.message.member'] = 'This is a message limited to members';
 $lang['css.message.modo'] = 'This is a message limited to moderators';
 $lang['css.message.admin'] = 'This is a message limited to administrators';
+$lang['css.message.float-unlimited'] = 'This is a floating message without time limit';
+$lang['css.message.float-limited'] = 'This is a floating message with time limit';
 
 //Blocs
 $lang['css.blocks'] = 'Blocks';
