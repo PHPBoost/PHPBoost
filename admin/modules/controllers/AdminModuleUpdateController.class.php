@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 26
+ * @version   	PHPBoost 5.2 - last update: 2019 01 10
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -82,7 +82,7 @@ class AdminModuleUpdateController extends AdminController
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.update_module']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install'], array('class' => 'full-field')));
+		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.update.warning_before_update'], array('class' => 'full-field')));
         $fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description'], array('class' => 'half-field', 'authorized_extensions' => 'gz|zip')));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -150,6 +150,7 @@ class AdminModuleUpdateController extends AdminController
 				break;
 			case ModulesManager::MODULE_UPDATED:
 			default:
+				ModulesManager::set_module_activation($module_id, true);
 				return array('msg' => LangLoader::get_message('process.success', 'status-messages-common'), 'type' => MessageHelper::SUCCESS);
 		}
 	}
