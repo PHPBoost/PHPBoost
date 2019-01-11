@@ -566,8 +566,12 @@ li.small-block .fa-stack {
 	position: fixed;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 3;
+	z-index: -1;
 	top: 0.618em;
+}
+
+.floating-message-container.active {
+	z-index: 100;
 }
 
 .floating-message-container .message-helper {
