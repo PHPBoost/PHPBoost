@@ -257,7 +257,7 @@
 									# IF msg.C_FORUM_MSG_DEL #
 										# IF msg.C_FORUM_MSG_DEL_MSG #
 									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}"><i class="fa fa-delete del-msg" aria-hidden="true" title="{L_DELETE}"></i></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="del-msg"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
 									<script>
 									<!--
 										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
