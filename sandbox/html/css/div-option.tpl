@@ -1,36 +1,36 @@
 <pre>
-<span><</span>div class="options infos">
-    <span><</span>div class="center">
-        <span><</span>span>
-            <span><</span>img src="link-to-picture.ext" alt="Lorem" itemprop="image">
-        <span><</span>/span>
-        <span><</span>div class="spacer"><span><</span>/div>
-        <span><</span>a href="#" class="basic-button">
-            <span><</span>i class="fa fa-globe"><span><</span>/i> link
-        <span><</span>/a>
-        <span><</span>a href="#" class="basic-button alt" title="{@css.options.link}">
-            <span><</span>i class="fa fa-unlink"><span><</span>/i>
-        <span><</span>/a>
-    <span><</span>/div>
-    <span><</span>h6>File info<span><</span>/h6>
-    <span><</span>span class="text-strong">Module option : <span><</span>/span><span><</span>span>0<span><</span>/span><span><</span>br />
-    <span><</span>span class="text-strong">Module option : <span><</span>/span><span><</span>span><span><</span>a itemprop="about" class="small" href="#">link<span><</span>/a><span><</span>/span><span><</span>br />
-    <span><</span>span>12 coms<span><</span>/span>
-    <span><</span>div class="spacer"><span><</span>/div>
-    <span><</span>div class="center">
-        <span><</span>div class="notation" id="notation-1">
-            <span><</span>span class="stars">
-                <span><</span>a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1"><span><</span>/a>
-                <span><</span>a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-2"><span><</span>/a>
-                <span><</span>a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-3"><span><</span>/a>
-                <span><</span>a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-4"><span><</span>/a>
-                <span><</span>a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-5"><span><</span>/a>
-            <span><</span>/span>
-            <span><</span>span class="notes">
-                <span><</span>span class="number-notes">0<span><</span>/span>
-                <span><</span>span title="0 {@css.options.sort_by.note}">note<span><</span>/span>
-            <span><</span>/span>
-        <span><</span>/div>
-    <span><</span>/div>
-<span><</span>/div>
+&lt;div class="options infos">
+    &lt;div class="center">
+        &lt;span>
+            &lt;img src="link-to-picture.ext" alt="Lorem" itemprop="image">
+        &lt;/span>
+        &lt;div class="spacer">&lt;/div>
+        &lt;a href="#" class="basic-button">
+            &lt;i class="fa fa-globe">&lt;/i> link
+        &lt;/a>
+        &lt;a href="#" class="basic-button alt" title="{@css.options.link}">
+            &lt;i class="fa fa-unlink">&lt;/i>
+        &lt;/a>
+    &lt;/div>
+    &lt;h6>File info&lt;/h6>
+    &lt;span class="text-strong">Module option : &lt;/span>&lt;span>0&lt;/span>&lt;br />
+    &lt;span class="text-strong">Module option : &lt;/span>&lt;span>&lt;a itemprop="about" class="small" href="#">link&lt;/a>&lt;/span>&lt;br />
+    &lt;span>12 coms&lt;/span>
+    &lt;div class="spacer">&lt;/div>
+    &lt;div class="center">
+        &lt;div class="notation" id="notation-1">
+            &lt;span class="stars">
+                &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1">&lt;/a>
+                &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-2">&lt;/a>
+                &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-3">&lt;/a>
+                &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-4">&lt;/a>
+                &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-5">&lt;/a>
+            &lt;/span>
+            &lt;span class="notes">
+                &lt;span class="number-notes">0&lt;/span>
+                &lt;span title="0 {@css.options.sort_by.note}">note&lt;/span>
+            &lt;/span>
+        &lt;/div>
+    &lt;/div>
+&lt;/div>
 </pre>

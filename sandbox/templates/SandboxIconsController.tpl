@@ -68,11 +68,11 @@
 			<h3>{@iconfa.howto.html}</h3>
 			<p>{@iconfa.howto.html.class}</p>
 			<div class="code">
-				<pre><span><</span><span>i class="fa fa-edit"><</span>/i> Edition</pre>
+				<pre>&lt;<span>i class="fa fa-edit"><</span>/i> Edition</pre>
 			</div>
 			<p>{@iconfa.howto.html.class.result.i}<i class="fa fa-edit"></i> Edition</p>
 			<div class="code">
-				<pre><span><</span>a class="fa fa-globe" href="https://www.phpboost.com">PHPBoost<<span>/a></span></pre>
+				<pre>&lt;a class="fa fa-globe" href="https://www.phpboost.com">PHPBoost<<span>/a></span></pre>
 			</div>
 			<p>{@iconfa.howto.html.class.result.a}<a href="https://www.phpboost.com"><i class="fa fa-globe"></i>PHPBoost</a></p>
 			<p>{@iconfa.howto.html.class.result.all}</p>

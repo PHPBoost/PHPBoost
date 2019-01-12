@@ -6,7 +6,7 @@
 	</header>
 	<div class="sandbox-summary">
       <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
-        <i class="fa fa-arrow-circle-left" arria-hidden="true"></i>
+        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
       </div>
       <ul>
         <li>
@@ -48,7 +48,7 @@
       </ul>
     </div>
 	<div class="open-summary">
-        <i class="fa fa-arrow-circle-right" arria-hidden="true"></i> {@sandbox.summary}
+        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {@sandbox.summary}
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
 
@@ -63,8 +63,8 @@
 					<span>{@css.page.title}</span>
 				</h2>
 				<span class="actions">
-					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" arria-hidden="true" title="{@css.edit}"></i></a>
-					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" arria-hidden="true" title="{@css.delete}"></i></a>
+					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" title="{@css.edit}"></i></a>
+					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" aria-hidden="true" title="{@css.delete}"></i></a>
 				</span>
 				<div class="more">{@css.more}</div>
 			</header>
@@ -144,10 +144,10 @@
 						</span>
 						<div class="spacer"></div>
 						<a href="#" class="basic-button">
-							<i class="fa fa-globe" arria-hidden="true"></i> {@css.options.link}
+							<i class="fa fa-globe" aria-hidden="true"></i> {@css.options.link}
 						</a>
 						<a href="#" class="basic-button alt" aria-label="{@css.options.link}">
-							<i class="fa fa-unlink" arria-hidden="true" title="{@css.options.link}"></i>
+							<i class="fa fa-unlink" aria-hidden="true" title="{@css.options.link}"></i>
 						</a>
 					</div>
 					<h6>{@css.options.file.title}</h6>

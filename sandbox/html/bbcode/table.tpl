@@ -1,21 +1,21 @@
 <pre>
-<span><</span>table class="formatter-table">
-    <span><</span>tbody>
-        <span><</span>tr class="formatter-table-row">
-            <span><</span>th class="formatter-table-head" colspan="2">Lorem Ipsum<span><</span>/th>
-        <span><</span>/tr>
-        <span><</span>tr class="formatter-table-row">
-            <span><</span>td class="formatter-table-col">Lorem<span><</span>/td>
-            <span><</span>td class="formatter-table-col">Ipsum<span><</span>/td>
-        <span><</span>/tr>
-        <span><</span>tr class="formatter-table-row">
-            <span><</span>td class="formatter-table-col">Lorem<span><</span>/td>
-            <span><</span>td class="formatter-table-col">Ipsum<span><</span>/td>
-        <span><</span>/tr>
-        <span><</span>tr class="formatter-table-row">
-            <span><</span>td class="formatter-table-col">Lorem<span><</span>/td>
-            <span><</span>td class="formatter-table-col">Ipsum<span><</span>/td>
-        <span><</span>/tr>
-    <span><</span>/tbody>
-<span><</span>/table>
+&lt;table class="formatter-table">
+    &lt;tbody>
+        &lt;tr class="formatter-table-row">
+            &lt;th class="formatter-table-head" colspan="2">Lorem Ipsum&lt;/th>
+        &lt;/tr>
+        &lt;tr class="formatter-table-row">
+            &lt;td class="formatter-table-col">Lorem&lt;/td>
+            &lt;td class="formatter-table-col">Ipsum&lt;/td>
+        &lt;/tr>
+        &lt;tr class="formatter-table-row">
+            &lt;td class="formatter-table-col">Lorem&lt;/td>
+            &lt;td class="formatter-table-col">Ipsum&lt;/td>
+        &lt;/tr>
+        &lt;tr class="formatter-table-row">
+            &lt;td class="formatter-table-col">Lorem&lt;/td>
+            &lt;td class="formatter-table-col">Ipsum&lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table>
 </pre>
