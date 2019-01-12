@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 10
+ * @version     PHPBoost 5.2 - last update: 2019 01 12
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -461,7 +461,7 @@ class ModulesManager
 		ModulesConfig::save();
 	}
 
-	private static function execute_module_installation($module_id)
+	public static function execute_module_installation($module_id)
 	{
 		$module_setup = self::get_module_setup($module_id);
 		$environment_check = $module_setup->check_environment();
