@@ -7,7 +7,7 @@
 
 	<div class="sandbox-summary">
 	  <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
-        <i class="fa fa-arrow-circle-left" arria-hidden="true"></i>
+        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
 	  </div>
 	  <ul>
 		<li>
@@ -48,7 +48,7 @@
 	  </ul>
 	</div>
 	<div class="open-summary">
-		<i class="fa fa-arrow-circle-right" arria-hidden="true"></i> {@sandbox.summary}
+		<i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {@sandbox.summary}
 	</div>
 
 	<div id="typography" class="sandbox-title">

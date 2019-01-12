@@ -1,25 +1,25 @@
 <pre>
-<span><</span>h6>25%<span><</span>/h6>
-<span><</span>div class="progressbar-container">
-    <span><</span>div class="progressbar-infos">25%<span><</span>/div>
-    <span><</span>div class="progressbar" style="width:25%;"><span><</span>/div>
-<span><</span>/div>
+&lt;h6>25%&lt;/h6>
+&lt;div class="progressbar-container">
+    &lt;div class="progressbar-infos">25%&lt;/div>
+    &lt;div class="progressbar" style="width:25%;">&lt;/div>
+&lt;/div>
 
-<span><</span>h6>50%<span><</span>/h6>
-<span><</span>div class="progressbar-container">
-    <span><</span>div class="progressbar-infos">50%<span><</span>/div>
-    <span><</span>div class="progressbar" style="width:50%"><span><</span>/div>
-<span><</span>/div>
+&lt;h6>50%&lt;/h6>
+&lt;div class="progressbar-container">
+    &lt;div class="progressbar-infos">50%&lt;/div>
+    &lt;div class="progressbar" style="width:50%">&lt;/div>
+&lt;/div>
 
-<span><</span>h6>75%<span><</span>/h6>
-<span><</span>div class="progressbar-container">
-    <span><</span>div class="progressbar-infos">75%<span><</span>/div>
-    <span><</span>div class="progressbar" style="width:75%"><span><</span>/div>
-<span><</span>/div>
+&lt;h6>75%&lt;/h6>
+&lt;div class="progressbar-container">
+    &lt;div class="progressbar-infos">75%&lt;/div>
+    &lt;div class="progressbar" style="width:75%">&lt;/div>
+&lt;/div>
 
-<span><</span>h6>100%<span><</span>/h6>
-<span><</span>div class="progressbar-container">
-    <span><</span>div class="progressbar-infos">100%<span><</span>/div>
-    <span><</span>div class="progressbar" style="width:100%"><span><</span>/div>
-<span><</span>/div>
+&lt;h6>100%&lt;/h6>
+&lt;div class="progressbar-container">
+    &lt;div class="progressbar-infos">100%&lt;/div>
+    &lt;div class="progressbar" style="width:100%">&lt;/div>
+&lt;/div>
 </pre>
