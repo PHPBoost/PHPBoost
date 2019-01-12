@@ -1,3 +1,4 @@
+<pre>
 &lt;article>
     &lt;header>
         &lt;h2>
@@ -14,3 +15,4 @@
         &lt;div>Lorem ipsum&lt;/div>
     &lt;/div>
 &lt;/article>
+</pre>

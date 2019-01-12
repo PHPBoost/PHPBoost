@@ -261,7 +261,7 @@
 				<h5>{@bbcode.youtube}</h5>
 			</header>
 			<div class="media-content">
-				<iframe class="youtube-player" type="text/html" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen="" width="100%" height="185" frameborder="0"></iframe>
+				<iframe class="youtube-player" src="https://www.youtube.com/embed/YE7VzlLtp-4" allowfullscreen="" width="100%" height="185"></iframe>
 				<!-- <video class="youtube-player" controls="" src="http://www.youtubeinmp4.com/redirect.php?video=YE7VzlLtp-4">
 					<source src="https://youtu.be/YE7VzlLtp-4" type="video/mp4" />
 				</video> -->
@@ -334,14 +334,13 @@
 		</div>
 	</div>
 
-
 	<div id="wiki" class="sandbox-title">
 		<h2>{@wiki.module}</h2>
 	</div>
 	# IF C_WIKI #
 	<div class="no-style">
 		<article class="block">
-				<p class="message-helper notice">{@wiki.conditions}</p>
+			<p class="message-helper notice">{@wiki.conditions}</p>
 			<div class="content">
 				# START wikimenu #
 					<div class="wiki-summary">
