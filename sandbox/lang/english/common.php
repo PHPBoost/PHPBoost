@@ -238,6 +238,9 @@ $lang['css.options.sort_by.size'] = 'Size';
 $lang['css.options.sort_by.date'] = 'Date';
 $lang['css.options.sort_by.popularity'] = 'Views';
 $lang['css.options.sort_by.note'] = 'Note';
+$lang['css.options.link'] = 'Link';
+$lang['css.options.option.title'] = 'Module option';
+$lang['css.options.option.com'] = 'No comment';
 $lang['css.modules_menus.direction.up'] = 'Up';
 $lang['css.modules_menus.direction.down'] = 'Down';
 
@@ -295,6 +298,8 @@ $lang['css.button'] = 'Buttons';
 $lang['css.button.other'] = 'Other buttons';
 
 $lang['css.notation'] = 'Notation';
+$lang['css.notation.possible.values'] = 'Possible values';
+$lang['css.notation.example'] = 'Example for a rating of 2.4 on 5';
 
 $lang['css.sortable'] = 'Drag & Drop Sortable';
 $lang['css.static.sortable'] = 'Spoted sortable';
@@ -439,9 +444,9 @@ $lang['cssmenu.h2'] = 'All the cssmenu menus';
 $lang['cssmenu.long.element'] = 'Menu item very large to refine the cssmenu design';
 $lang['cssmenu.element'] = 'Menu item';
 $lang['cssmenu.sub.element'] = 'Submenu';
+$lang['cssmenu.horizontal.top'] = 'Horizontal header menu';
 $lang['cssmenu.horizontal.sub.header'] = 'Menu in sub-header';
 $lang['cssmenu.sub.admin'] = 'Administration';
-$lang['cssmenu.horizontal.top'] = 'Menu horizontal Header';
 $lang['cssmenu.horizontal.scrolling'] = 'Scrolling horizontal menu';
 $lang['cssmenu.vertical.scrolling'] = 'Scrolling vertical menu';
 $lang['cssmenu.vertical.img'] = 'Menu avec images';
@@ -462,7 +467,8 @@ $lang['cssmenu.group'] = 'Group menu';
 $lang['cssmenu.static'] = 'Static menu';
 $lang['cssmenu.static.footer'] = 'Footer static menu';
 
-$lang['cssmenu.warning'] = 'This page has a specific structure to display all kind of menus regarding to all places they can be setted. It could be ugly if you don\'t use the rules of the Base template.';
+$lang['cssmenu.warning'] = 'This page has a specific structure to display all kind of menus regarding to all places they can be setted.
+It could be ugly if you don\'t use the rules of the Base template.';
 
 
 // --- Mail
