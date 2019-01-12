@@ -225,7 +225,7 @@
 				<strong>{@css.text_bold}</strong><br />
 				<em>{@css.text_italic}</em><br />
 				<span style="text-decoration: underline;">{@css.text_underline}</span><br />
-				<strike>{@css.text_strike}</strike><br />
+				<s>{@css.text_strike}</s><br />
 				<a href="#">{@css.link}</a>
 			</div>
 		</article>
@@ -319,12 +319,11 @@
 												<span class="far fa-minus-square" id="img2_2"></span><span class="fa fa-folder-open" id="img_2"></span>
 											</a>
 											<a class="selected" id="class_2" href="#">{@css.cat} 2</a>
-											<span id="cat_2">
-												<ul>
-													<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
-													<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
-												</ul>
-											</span>
+											<ul>
+												<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
+												<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
+											</ul>
+											<span id="cat_2"></span>
 										</li>
 									</ul>
 								</li>
@@ -512,7 +511,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="5"># INCLUDE PAGINATION #</td>
+							<td colspan="3"># INCLUDE PAGINATION #</td>
 						</tr>
 					</tfoot>
 				</table>
