@@ -18,7 +18,7 @@
     &lt;div class="formatter-content">
         &lt;pre style="display:inline;">
             &lt;pre class="php" style="font-family:monospace;"> <em>// class="php" => html, css, bbcode, txt ...</em>
-                < code/ >
+                &lt;code/>
             &lt;/pre>
         &lt;/pre>
     &lt;/div>
