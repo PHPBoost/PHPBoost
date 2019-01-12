@@ -52,8 +52,6 @@ $lang['mini.enable.left.col'] = 'Activer la colonne gauche';
 $lang['mini.disable.left.col'] = 'Désactiver la colonne gauche';
 $lang['mini.enable.right.col'] = 'Activer la colonne droite';
 $lang['mini.disable.right.col'] = 'Désactiver la colonne droite';
-$lang['mini.active.left.col'] = 'Activer la colonne gauche';
-$lang['mini.active.right.col'] = 'Activer la colonne droite';
 $lang['mini.general.config'] = 'Générale';
 $lang['mini.advanced.config'] = 'Avancée';
 $lang['mini.user'] = 'Utilisateurs';
@@ -91,8 +89,7 @@ $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
 <ul class="sandbox-home-list">
 <li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '" title="formulaires">constructeur de formulaires</a></li>
 <li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '" title="Classes CSS">classes CSS</a></li>
-<li><i class="far fa-fw fa-file-code
-"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '" title="Styles BBCode">BBCode</a></li>
+<li><i class="far fa-fw fa-file-code"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '" title="Styles BBCode">BBCode</a></li>
 <li><i class="fab fa-fw fa-font-awesome-flag"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '" title="Icônes Font-Awesome">Font Awesome</a></li>
 <li><i class="fa fa-fw fa-list"></i> Le rendu des <a href="' . SandboxUrlBuilder::menu()->absolute() . '" title="Menus de navigation">menus de navigation cssmenu</a></li>
 <li><i class="fa fa-fw fa-table"></i> La génération de <a href="' . SandboxUrlBuilder::table()->absolute() . '" title="Tableaux">tableaux dynamiques</a></li>
@@ -301,6 +298,8 @@ $lang['css.button'] = 'Boutons';
 $lang['css.button.other'] = 'Autres boutons';
 
 $lang['css.notation'] = 'Notation';
+$lang['css.notation.possible.values'] = 'Valeurs possibles';
+$lang['css.notation.example'] = 'Exemple pour une note de 2.4 sur 5';
 
 $lang['css.sortable'] = 'Sortable Drag & Drop';
 $lang['css.static.sortable'] = 'Sortable positionné';

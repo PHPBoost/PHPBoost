@@ -210,11 +210,11 @@
 				<h5>{@css.title.sizes}</h5>
 			</header>
 			<div class="content">
-				<span href="#" class="smaller">{@css.text.smaller}</span> <br />
-				<span href="#" class="small">{@css.text.small}</span> <br />
-				<span href="#" class="big">{@css.text.big}</span> <br />
-				<span href="#" class="bigger">{@css.text.bigger}</span> <br />
-				<span href="#" class="biggest">{@css.text.biggest}</span>
+				<span class="smaller">{@css.text.smaller}</span> <br />
+				<span class="small">{@css.text.small}</span> <br />
+				<span class="big">{@css.text.big}</span> <br />
+				<span class="bigger">{@css.text.bigger}</span> <br />
+				<span class="biggest">{@css.text.biggest}</span>
 			</div>
 		</article>
 		<article id="styles" class="block">
@@ -409,22 +409,22 @@
 			<header>
 				<h5>{@css.notation}</h5>
 			</header>
-			<div class="content">Valeurs possibles
+			<div class="content">{@css.notation.possible.values}
 				<div class="notation">
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-1"><span class="star-width star-width-100"></span></a> <!-- 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-2"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-3"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a> <!-- 1 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
 				</div>
 			</div>
-			<div class="content">Exemple pour une note de 2.4 sur 5
+			<div class="content">{@css.notation.example}
 				<div class="notation">
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-1"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-1"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-25"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-2-5"><span class="star-width star-width-0"></span></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-25"></span></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>
+					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>
 				</div>
 			</div>
 		</article>

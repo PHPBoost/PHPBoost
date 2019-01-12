@@ -1,17 +1,16 @@
-<xmp><article>
-    <header>
-        <h2>
-            <span>Lorem Ipsum</span>
-        </h2>
-        <span class="actions">
-            <a href="#" class="fa fa-edit" title="edit"></a>
-            <a href="#" class="fa fa-delete" title="delete"></a>
-        </span>
-        <div class="more">John Doe | 01/01/1970 | 12 coms</div>
-    </header>
-    <div class="content">
-        <img src="link-to-picture-1.ext" alt="lorem" class="thumbnail-item" />
-        <div>Lorem ipsum</div>
-    </div>
-</article>
-</xmp>
+&lt;article>
+    &lt;header>
+        &lt;h2>
+            &lt;span>Lorem Ipsum&lt;/span>
+        &lt;/h2>
+        &lt;span class="actions">
+            &lt;a href="#" class="fa fa-edit" title="edit">&lt;/a>
+            &lt;a href="#" class="fa fa-delete" title="delete">&lt;/a>
+        &lt;/span>
+        &lt;div class="more">John Doe | 01/01/1970 | 12 coms&lt;/div>
+    &lt;/header>
+    &lt;div class="content">
+        &lt;img src="link-to-picture-1.ext" alt="lorem" class="thumbnail-item" />
+        &lt;div>Lorem ipsum&lt;/div>
+    &lt;/div>
+&lt;/article>
