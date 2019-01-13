@@ -72,7 +72,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa', 'container');
+		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa');
 
 		foreach ($tags_with_simple_property as $tag)
 		{
@@ -83,7 +83,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia');
+		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia', 'container');
 
 		foreach ($tags_with_many_parameters as $tag)
 		{
