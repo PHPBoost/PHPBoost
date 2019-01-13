@@ -221,7 +221,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'U_CHANGE_CAT'       => 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT'        => PATH_TO_ROOT . '/forum/lastread.php',
+		'U_FORUM_CAT'        => '<a href="' . PATH_TO_ROOT . '/forum/lastread.php' . '">' . $LANG['show_not_reads'] . '</a>',
 		'FORUM_CAT'          => $LANG['show_last_read'],
 		'U_POST_NEW_SUBJECT' => '',
 		'L_FORUM_INDEX'      => $LANG['forum_index'],
