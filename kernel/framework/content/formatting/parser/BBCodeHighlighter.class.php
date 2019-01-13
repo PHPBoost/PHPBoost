@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 02 23
+ * @version     PHPBoost 5.2 - last update: 2019 01 13
  * @since       PHPBoost 2.0 - 2008 08 29
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+  * @contributor xela <xela@phpboost.com>
 */
 
 class BBCodeHighlighter extends AbstractParser
@@ -60,7 +61,7 @@ class BBCodeHighlighter extends AbstractParser
 		$this->content = str_replace('[*]', '<span style="color:' . self::$bbcode_list_item_color . ';">[*]</span>', $this->content);
 
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'member', 'moderator');
+		$simple_tags = array('b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'member', 'moderator', 'container');
 
 		foreach ($simple_tags as $tag)
 		{
@@ -71,7 +72,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa');
+		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa', 'container');
 
 		foreach ($tags_with_simple_property as $tag)
 		{
