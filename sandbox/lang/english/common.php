@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 11
+ * @version   	PHPBoost 5.2 - last update: 2019 01 14
  * @since   	PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -244,7 +244,6 @@ $lang['css.options.option.com'] = 'No comment';
 $lang['css.modules_menus.direction.up'] = 'Up';
 $lang['css.modules_menus.direction.down'] = 'Down';
 
-
 // Typogrphie
 $lang['css.title.framework'] = 'Layout';
 $lang['css.title.typography'] = 'Typography';
@@ -345,6 +344,7 @@ $lang['css.message.modo'] = 'This is a message limited to moderators';
 $lang['css.message.admin'] = 'This is a message limited to administrators';
 $lang['css.message.float-unlimited'] = 'This is a floating message without time limit';
 $lang['css.message.float-limited'] = 'This is a floating message with time limit';
+$lang['css.message.float-display'] = 'Display floating messages';
 
 //Blocs
 $lang['css.blocks'] = 'Blocks';
