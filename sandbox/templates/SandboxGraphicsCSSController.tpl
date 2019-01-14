@@ -576,6 +576,7 @@
 			</header>
 			<div class="content">
 				# START messages # # INCLUDE messages.VIEW # # END messages #
+				# INCLUDE FLOATING_MESSAGES # # INCLUDE FLOATING_SUCCESS # # INCLUDE FLOATING_NOTICE # # INCLUDE FLOATING_WARNING # # INCLUDE FLOATING_ERROR #
 			</div>
 		</article>
 	</div>

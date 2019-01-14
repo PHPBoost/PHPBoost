@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 01
+ * @version   	PHPBoost 5.2 - last update: 2019 01 14
  * @since   	PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,11 +53,11 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$this->build_enable_css_cache();
 		if ($this->enable_css_button->has_been_submited() && $this->enable_css_cache->validate())
-			 $this->enable_css_cache();
+			$this->enable_css_cache();
 
 		$this->build_disable_css_cache();
 		if ($this->disable_css_button->has_been_submited() && $this->disable_css_cache->validate())
-			 $this->disable_css_cache();
+			$this->disable_css_cache();
 
 		$this->build_clean_css_cache();
 		if ($this->clean_css_button->has_been_submited() && $this->clean_css_cache->validate())
@@ -127,31 +127,32 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		$tpl->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'C_LEFT_ENABLED' => !$menus_status->left_columns_is_disabled(),
-			'C_RIGHT_ENABLED' => !$menus_status->right_columns_is_disabled(),
-			'C_SLIDE_RIGHT' => $config->get_open_menu() == SandboxConfig::RIGHT_MENU,
-			'C_IS_LOCALHOST' => AppContext::get_request()->get_is_localhost(),
-			'C_IS_SUPERADMIN' => $is_superadmin,
-			'C_LOGGED_ERRORS' => ((bool)count($this->get_logged_errors_nb())),
-			'C_404_ERRORS' => (bool)$nb_404,
+			'C_LEFT_ENABLED'      => !$menus_status->left_columns_is_disabled(),
+			'C_RIGHT_ENABLED'     => !$menus_status->right_columns_is_disabled(),
+			'C_SLIDE_RIGHT'       => $config->get_open_menu() == SandboxConfig::RIGHT_MENU,
+			'C_IS_LOCALHOST'      => AppContext::get_request()->get_is_localhost(),
+			'C_IS_SUPERADMIN'     => $is_superadmin,
+			'C_LOGGED_ERRORS'     => ((bool)count($this->get_logged_errors_nb())),
+			'C_404_ERRORS'        => (bool)$nb_404,
 
-			'PBT_VERSION' => Environment::get_phpboost_version(),
-			'PHP_VERSION' => ServerConfiguration::get_phpversion(),
+			'PBT_VERSION'  => Environment::get_phpboost_version(),
+			'PHP_VERSION'  => ServerConfiguration::get_phpversion(),
 			'DBMS_VERSION' => PersistenceContext::get_dbms_utils()->get_dbms_version(),
 			'INSTALL_DATE' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'COMMENTS_NB' => count(CommentsCache::load()->get_comments()),
-			'ERRORS_NB' => count($this->get_logged_errors_nb()),
-			'404_NB' => $nb_404,
-			'ENABLE_CSS_CACHE' => $this->enable_css_cache->display(),
+			'COMMENTS_NB'  => count(CommentsCache::load()->get_comments()),
+			'ERRORS_NB'    => count($this->get_logged_errors_nb()),
+			'404_NB'       => $nb_404,
+
+			'ENABLE_CSS_CACHE'  => $this->enable_css_cache->display(),
 			'DISABLE_CSS_CACHE' => $this->disable_css_cache->display(),
-			'CLEAN_CSS_CACHE' => $this->clean_css_cache->display(),
-			'CLEAN_TPL_CACHE' => $this->clean_cache->display(),
-			'CLEAN_SYNDICATION_CACHE' => $this->clean_syndication_cache->display(),
-			'ENABLE_LEFT_COL' => $this->enable_left_menu->display(),
-			'DISABLE_LEFT_COL' => $this->disable_left_menu->display(),
-			'ENABLE_RIGHT_COL' => $this->enable_right_menu->display(),
+			'CLEAN_CSS_CACHE'   => $this->clean_css_cache->display(),
+			'CLEAN_TPL_CACHE'   => $this->clean_cache->display(),
+			'CLEAN_RSS_CACHE'   => $this->clean_syndication_cache->display(),
+			'ENABLE_LEFT_COL'   => $this->enable_left_menu->display(),
+			'DISABLE_LEFT_COL'  => $this->disable_left_menu->display(),
+			'ENABLE_RIGHT_COL'  => $this->enable_right_menu->display(),
 			'DISABLE_RIGHT_COL' => $this->disable_right_menu->display(),
-			'DEFAULT_THEME'=> UserAccountsConfig::load()->get_default_theme()
+			'DEFAULT_THEME'     => UserAccountsConfig::load()->get_default_theme()
 		));
 
 		return $tpl->render();

@@ -47,7 +47,7 @@
 					# ENDIF #
 					<div class="item-form item-2x" title="{@mini.clean.css.cache}"># INCLUDE CLEAN_CSS_CACHE #</div>
 					<div class="item-form item-2x" title="{@mini.clean.tpl.cache}"># INCLUDE CLEAN_TPL_CACHE #</div>
-					<div class="item-form item-2x" title="{@mini.clean.rss.cache}"># INCLUDE CLEAN_SYNDICATION_CACHE #</div>
+					<div class="item-form item-2x" title="{@mini.clean.rss.cache}"># INCLUDE CLEAN_RSS_CACHE #</div>
 					<div class="item-2x# IF C_LOGGED_ERRORS # blink# ENDIF #" title="{@mini.errors}">
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
 							<span class="icon-stack">

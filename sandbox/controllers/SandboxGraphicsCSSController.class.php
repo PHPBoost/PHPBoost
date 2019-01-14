@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 01 14
  * @since   	PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,11 @@ class SandboxGraphicsCSSController extends ModuleController
 {
 	private $view;
 	private $lang;
+
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $floating_messages_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -43,11 +48,7 @@ class SandboxGraphicsCSSController extends ModuleController
 			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION),
 			MessageHelper::display($this->lang['css.message.member'], MessageHelper::MEMBER_ONLY),
 			MessageHelper::display($this->lang['css.message.modo'], MessageHelper::MODERATOR_ONLY),
-			MessageHelper::display($this->lang['css.message.admin'], MessageHelper::ADMIN_ONLY),
-			MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-			MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::NOTICE, 3),
-			MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
-			MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::ERROR, 6)
+			MessageHelper::display($this->lang['css.message.admin'], MessageHelper::ADMIN_ONLY)
 		);
 
 		foreach ($messages as $message)
@@ -73,6 +74,25 @@ class SandboxGraphicsCSSController extends ModuleController
 			'ALERT' => file_get_contents('html/css/alert.tpl'),
 			'BLOCK' => file_get_contents('html/css/block.tpl')
 		));
+
+		$this->build_floating_messages();
+		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
+			$this->view->put_all(array(
+				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::SUCCESS, -1),
+				'FLOATING_NOTICE'  => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper  ::NOTICE, 3),
+				'FLOATING_WARNING' => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'   => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper  ::ERROR, 6)
+			));
+		}
+		$this->view->put('FLOATING_MESSAGES', $this->floating_messages->display());
+	}
+
+	private function build_floating_messages()
+	{
+		$floating_messages = new HTMLForm('floating_messages', '', false);
+		$this->floating_messages_button = new FormButtonDefaultSubmit($this->lang['css.message.float-display'], 'floating_messages');
+		$floating_messages->add_button($this->floating_messages_button);
+		$this->floating_messages = $floating_messages;
 	}
 
 	private function check_authorizations()

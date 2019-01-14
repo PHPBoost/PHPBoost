@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 01
+ * @version   	PHPBoost 5.2 - last update: 2019 01 14
  * @since   	PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -244,7 +244,6 @@ $lang['css.options.option.com'] = 'Aucun commentaire';
 $lang['css.modules_menus.direction.up'] = 'Croissant';
 $lang['css.modules_menus.direction.down'] = 'Décroissant';
 
-
 // Typogrphie
 $lang['css.title.framework'] = 'Mise en page';
 $lang['css.title.typography'] = 'Typographie';
@@ -345,6 +344,7 @@ $lang['css.message.modo'] = 'Ceci est un message dont l\'affichage est limité a
 $lang['css.message.admin'] = 'Ceci est un message dont l\'affichage est limité aux administrateurs';
 $lang['css.message.float-unlimited'] = 'Ceci est un message flottant sans limite de temps';
 $lang['css.message.float-limited'] = 'Ceci est un message flottant avec une limite de temps';
+$lang['css.message.float-display'] = 'Afficher les messages éphémères';
 
 //Blocs
 $lang['css.blocks'] = 'Blocs';
