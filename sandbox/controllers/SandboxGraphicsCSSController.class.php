@@ -79,9 +79,9 @@ class SandboxGraphicsCSSController extends ModuleController
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
 			$this->view->put_all(array(
 				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::SUCCESS, -1),
-				'FLOATING_NOTICE'  => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper  ::NOTICE, 3),
-				'FLOATING_WARNING' => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
-				'FLOATING_ERROR'   => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper  ::ERROR, 6)
+				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::NOTICE, 3),
+				'FLOATING_WARNING'  => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
+				'FLOATING_ERROR'    => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::ERROR, 6)
 			));
 		}
 		$this->view->put('FLOATING_MESSAGES', $this->floating_messages->display());
