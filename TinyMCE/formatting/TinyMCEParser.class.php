@@ -7,12 +7,13 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 06
+ * @version   	PHPBoost 5.2 - last update: 2019 01 14
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela13 <xela@phpboost.com>
 */
 
 class TinyMCEParser extends ContentFormattingParser
@@ -423,6 +424,8 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
 			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -639,6 +642,10 @@ class TinyMCEParser extends ContentFormattingParser
 			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isuU',
 			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/url\]`isuU',
 			'url3' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]\[/url\]`isuU',
+			'url4' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')<`isuU',
+			'url5' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isuU',
+			'url6' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')\)(\s|<+)`isuU',
+			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`iu',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
@@ -666,6 +673,10 @@ class TinyMCEParser extends ContentFormattingParser
 			'url1' => '<a href="$1">$1</a>',
 			'url2' => '<a href="$1">$6</a>',
 			'url3' => '<a href="$1">$1</a>',
+			'url4' => '$1<a href="$2">$2</a><',
+			'url5' => '$1<a href="$2">$2</a> ',
+			'url6' => '$1(<a href="$2">$2</a>) ',
+			'url7' => '$1(<a href="$2">$2</a> ) ',
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
 			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
@@ -678,7 +689,13 @@ class TinyMCEParser extends ContentFormattingParser
 			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
 			if (in_array('url', $this->forbidden_tags))
 			{
+				$this->forbidden_tags[] = 'url1';
 				$this->forbidden_tags[] = 'url2';
+				$this->forbidden_tags[] = 'url3';
+				$this->forbidden_tags[] = 'url4';
+				$this->forbidden_tags[] = 'url5';
+				$this->forbidden_tags[] = 'url6';
+				$this->forbidden_tags[] = 'url7';
 			}
 
 			$other_tags = array('table', 'quote', 'hide', 'indent', 'list');
