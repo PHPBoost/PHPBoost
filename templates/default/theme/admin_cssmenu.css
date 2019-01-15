@@ -58,7 +58,6 @@ Contient les elements associes aux menus
 .cssmenu-title {
 	padding: 0.456em 1.618em 0.456em 0.618em;
 	font-size: 1.482rem;
-	white-space: nowrap;
 	font-weight: 400;
 	text-align: left;
 }
