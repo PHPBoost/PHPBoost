@@ -14,51 +14,50 @@
      #   #  #          #    #    #   #  #  ##
      ####   #####  #####  #####  #####  #   #
  ----------------------------------------------------------------------------- */
- body {
- 	background-color: #F1F2F3 ;
- 	color: #555555;
- }
+body {
+	background-color: #F1F2F3 ;
+	color: #555555;
+}
 
- header#header-admin {
- 	background-color: #404040;
- }
+header#header-admin {
+	background-color: #404040;
+}
 
- a#site-name {
- 	color: #F9FCFF;
- 	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255),2px 0 1px rgba(0,0,0,0.1),2px 0 1px rgba(0,0,0,0.2),0 0 1px rgba(0,0,0,.1);
- }
+a#site-name {
+	color: #F9FCFF;
+	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255),2px 0 1px rgba(0,0,0,0.1),2px 0 1px rgba(0,0,0,0.2),0 0 1px rgba(0,0,0,.1);
+}
 
- .robot {
- 	color: #FF6600;
- }
+.robot {
+	color: #FF6600;
+}
 
- footer#footer {
- 	background-color: #404040;
- 	border-color: #366393;
- }
+footer#footer {
+	background-color: #404040;
+	border-color: #366393;
+}
 
- footer#footer span {
- 	color: #FFFFFF;
- 	font-size: 0.8em;
- }
+footer#footer span {
+	color: #FFFFFF;
+}
 
- .cookiebar-container {
- 	background-color: #F2F2F2;
- 	border-color: #E2E2E2;
- }
+.cookiebar-container {
+	background-color: #F2F2F2;
+	border-color: #E2E2E2;
+}
 
- .cookiebar-button {
- 	color: #FEFEFE;
- }
+.cookiebar-button {
+	color: #FEFEFE;
+}
 
- .cookiebar-button-understand 		{ background-color: #337AB7; border-color: #2E6DA4; }
- .cookiebar-button-understand:hover { background-color: #2E6DA4; }
+.cookiebar-button-understand 		{ background-color: #337AB7; border-color: #2E6DA4; }
+.cookiebar-button-understand:hover	{ background-color: #2E6DA4; }
 
- .cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
- .cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
+.cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
+.cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
 
- .cookiebar-button-declined 		{ background-color: #E84E40; border-color: #CE271A; }
- .cookiebar-button-declined:hover 	{ background-color: #CE271A; }
+.cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
+.cookiebar-button-declined:hover 	{ background-color: #CE271A; }
 
 
 /* -- Content
