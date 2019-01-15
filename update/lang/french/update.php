@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 14
+ * @version   	PHPBoost 5.2 - last update: 2019 01 15
  * @since   	PHPBoost 3.0 - 2012 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -115,6 +115,16 @@ $lang = array(
 	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
 	<br /><br />
 	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
+	'step.execute.incompatible_modules' => 'Les modules suivants vont être désactivés car ils ne sont pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' : :modules.
+	<br />Pour les réactiver, téléchargez leur version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe et rendez-vous sur la page mise à jour de module de votre site pour les mettre à jour (ils seront alors réactivés automatiquement).',
+	'step.execute.incompatible_module' => 'Le module :modules va être désactivé car il n\'est pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
+	<br />Pour le réactiver, téléchargez sa version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe et rendez-vous sur la page mise à jour de module de votre site pour le mettre à jour (il sera alors réactivé automatiquement).',
+	'step.execute.incompatible_module.default' => '<br /><br />Le module <b>:old_default</b> placé en démarrage du site a été remplacé par le module <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du module <b>:old_default</b> pensez à reconfigurer la page de démarrage de votre site dans la configuration générale.',
+	'step.execute.incompatible_themes' => 'Les thèmes suivants vont être désactivés car ils ne sont pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' : :themes.
+	<br />Pour les réactiver, téléchargez leur version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour les thèmes sur le FTP de votre site puis rendez-vous sur la page de gestion des thèmes de votre site pour les réactiver.',
+	'step.execute.incompatible_theme' => 'Le thème :themes va être désactivé car il n\'est pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
+	<br />Pour le réactiver, téléchargez sa version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour le thème sur le FTP de votre site puis rendez-vous sur la page de gestion des thèmes de votre site pour le réactiver.',
+	'step.execute.incompatible_theme.default' => '<br /><br />Le thème <b>:old_default</b> par défaut du site a été remplacé par le thème <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du thème <b>:old_default</b> pensez à reconfigurer le thème par défaut de votre site dans la configuration générale (si c\'était le seul thème désinstallez ensuite le thème <b>:new_default</b> pour que les utilisateurs du site aient bien ce thème actif).',
 
 //Finish update
 	'finish.message' => '<fieldset>
