@@ -1,30 +1,14 @@
 <?php
-/*##################################################
- *                               gallery.php
- *                            -------------------
- *   begin                : August 12, 2005
- *   copyright            : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
- *
- *
- *
- ###################################################
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- ###################################################*/
+/**
+ * @copyright 	&copy; 2005-2019 PHPBoost
+ * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2018 03 05
+ * @since   	PHPBoost 1.2 - 2005 08 12
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
+*/
 
 require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
@@ -60,7 +44,7 @@ if (!empty($g_del)) //Suppression d'une image.
 		$controller = PHPBoostErrors::user_in_read_only();
 		DispatchManager::redirect($controller);
 	}
-	
+
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Del_pics($g_del);
@@ -68,7 +52,7 @@ if (!empty($g_del)) //Suppression d'une image.
 	//Régénération du cache des photos aléatoires.
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
-	
+
 	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?cat=' . $id_category, '-' . $id_category . '.php', '&'));
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
@@ -78,7 +62,7 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 		$controller = PHPBoostErrors::user_in_read_only();
 		DispatchManager::redirect($controller);
 	}
-	
+
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$g_move = max($g_move, 0);
@@ -97,7 +81,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$controller = PHPBoostErrors::user_in_read_only();
 		DispatchManager::redirect($controller);
 	}
-	
+
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
 	{
@@ -113,7 +97,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 	$error = '';
-	
+
 	if (!empty($authorized_pictures_extensions))
 	{
 		$Upload = new Upload($dir);
@@ -127,7 +111,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 	else
 		$error = 'e_upload_invalid_format';
-		
+
 	if ($error != '') //Erreur, on arrête ici
 	{
 		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category, $error) . '#message_helper');
@@ -164,7 +148,7 @@ elseif ($g_add)
 		$controller = PHPBoostErrors::user_in_read_only();
 		DispatchManager::redirect($controller);
 	}
-	
+
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
 	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
@@ -174,7 +158,7 @@ elseif ($g_add)
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
-	
+
 	$cat_links = '';
 	foreach ($categories as $category)
 	{
@@ -199,7 +183,7 @@ elseif ($g_add)
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		$tpl->assign_block_vars('image_up', array(
 			'NAME' => stripslashes($imageup['name']),
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -232,10 +216,10 @@ elseif ($g_add)
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
 		));
 	}
-	
+
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-	
+
 	$tpl->put_all(array(
 		'CAT_ID' => $id_category,
 		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
