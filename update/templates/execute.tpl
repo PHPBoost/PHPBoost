@@ -4,6 +4,9 @@
 	
 	<div class="content">
 		{@H|step.execute.explanation}
+		# INCLUDE INCOMPATIBLE_MODULES #
+		# INCLUDE INCOMPATIBLE_THEMES #
+		# INCLUDE INCOMPATIBLE_LANGS #
 	</div>
 	
 	<footer>
