@@ -59,7 +59,7 @@ class UpdateVersionExecuteController extends UpdateController
 				else
 					$new_default = 'forum';
 				
-				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_module.default'], array('old_default' => $this->general_config->get_module_home_page(), 'new_default' => $new_default));
+				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_module.default'], array('old_default' => ModulesManager::get_module($this->general_config->get_module_home_page())->get_configuration()->get_name(), 'new_default' => ModulesManager::get_module($new_default)->get_configuration()->get_name()));
 			}
 			
 			$view->put('INCOMPATIBLE_MODULES', MessageHelper::display($message, MessageHelper::WARNING));
@@ -73,7 +73,7 @@ class UpdateVersionExecuteController extends UpdateController
 			
 			if ($this->default_theme_changed)
 			{
-				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], array('old_default' => $this->user_accounts_config->get_default_theme(), 'new_default' => 'base'));
+				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], array('old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => ThemesManager::get_theme('base')->get_configuration()->get_name()));
 			}
 			
 			$view->put('INCOMPATIBLE_THEMES', MessageHelper::display($message, MessageHelper::WARNING));
@@ -87,7 +87,7 @@ class UpdateVersionExecuteController extends UpdateController
 			
 			if ($this->default_lang_changed)
 			{
-				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_lang.default'], array('old_default' => $this->user_accounts_config->get_default_lang(), 'new_default' => LangLoader::get_locale()));
+				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_lang.default'], array('old_default' => LangsManager::get_lang($this->user_accounts_config->get_default_lang())->get_configuration()->get_name(), 'new_default' => LangsManager::get_lang(LangLoader::get_locale())->get_configuration()->get_name()));
 			}
 			
 			$view->put('INCOMPATIBLE_LANGS', MessageHelper::display($message, MessageHelper::WARNING));
