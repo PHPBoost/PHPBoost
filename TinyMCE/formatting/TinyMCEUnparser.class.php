@@ -8,7 +8,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 06
+ * @version   	PHPBoost 5.2 - last update: 2019 01 16
  * @since   	PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -295,7 +295,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
 			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
 			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
-			"<iframe width=\"$2\" height=\"$3\" src=\"$1\" frameborder=\"0\" allowfullscreen></iframe>",
+			"<iframe src=\"$1\" width=\"$2\" height=\"$3\" allowfullscreen=\"allowfullscreen\"></iframe>",
 			"[html]$1[/html]",
 			"[math]$1[/math]",
 			"[float=$1]$2[/float]",
