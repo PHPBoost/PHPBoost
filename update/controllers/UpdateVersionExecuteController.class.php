@@ -102,7 +102,7 @@ class UpdateVersionExecuteController extends UpdateController
 		
 		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
-			if ($module->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
+			if ($module->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
 			{
 				$list[] = $module->get_configuration()->get_name();
 				if ($this->general_config->get_module_home_page() == $module->get_id())
@@ -119,7 +119,7 @@ class UpdateVersionExecuteController extends UpdateController
 		
 		foreach (ThemesManager::get_installed_themes_map() as $theme)
 		{
-			if ($theme->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
+			if ($theme->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
 			{
 				$list[] = $theme->get_configuration()->get_name();
 				if ($this->user_accounts_config->get_default_theme() == $theme->get_id())
@@ -136,7 +136,7 @@ class UpdateVersionExecuteController extends UpdateController
 		
 		foreach (LangsManager::get_installed_langs_map() as $lang)
 		{
-			if ($lang->get_configuration()->get_compatibility() != self::NEW_KERNEL_VERSION)
+			if ($lang->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
 			{
 				$list[] = $lang->get_configuration()->get_name();
 				if ($this->user_accounts_config->get_default_lang() == $lang->get_id())
