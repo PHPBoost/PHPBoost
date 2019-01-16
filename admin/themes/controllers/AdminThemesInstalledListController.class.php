@@ -32,6 +32,7 @@ class AdminThemesInstalledListController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
 		$selected_theme_number = 0;
 		$theme_number = 1;
@@ -46,6 +47,7 @@ class AdminThemesInstalledListController extends AdminController
 			$this->view->assign_block_vars('themes_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
 				'C_IS_ACTIVATED' => $theme->is_activated(),
 				'C_PICTURES' => count($pictures) > 0,

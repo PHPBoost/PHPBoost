@@ -34,6 +34,7 @@ class AdminModulesManagementController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 		$module_number = 1;
 		foreach ($installed_modules as $module)
@@ -46,6 +47,7 @@ class AdminModulesManagementController extends AdminController
 			$this->view->assign_block_vars('modules_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_ACTIVATED' => $module->is_activated(),
 				'MODULE_NUMBER' => $module_number,
 				'ID' => $module->get_id(),
