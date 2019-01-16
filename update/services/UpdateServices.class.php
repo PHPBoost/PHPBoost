@@ -358,6 +358,7 @@ class UpdateServices
 			
 			$general_config = GeneralConfig::load();
 			$general_config->set_module_home_page($new_default);
+			$general_config->set_other_home_page('');
 			GeneralConfig::save();
 
 			$this->add_information_to_file('module ' . $new_default, 'has been set to default home page because the old one (' . $home_page . ') was incompatible');
