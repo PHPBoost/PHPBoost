@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 19
+ * @version   	PHPBoost 5.2 - last update: 2019 01 16
  * @since   	PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -307,6 +307,9 @@ class UpdateServices
 		}
 
 		$modules_config = ModulesConfig::load();
+		$general_config = GeneralConfig::load();
+		$default_module_changed = false;
+		
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
 			if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
@@ -334,11 +337,33 @@ class UpdateServices
 			{
 				ModulesManager::update_module($id, false, false);
 				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
+				
+				if ($general_config->get_module_home_page() == $id)
+				{
+					$default_module_changed = true;
+				}
 			}
 
 			$modules_config->update($module);
 		}
 		ModulesConfig::save();
+		
+		if ($default_module_changed)
+		{
+			$old_default = $general_config->get_module_home_page();
+			
+			if (ModulesManager::is_module_installed('news'))
+				$new_default = 'news';
+			else if (ModulesManager::is_module_installed('articles'))
+				$new_default = 'articles';
+			else
+				$new_default = 'forum';
+			
+			$general_config->set_module_home_page($new_default);
+			GeneralConfig::save();
+
+			$this->add_information_to_file('module ' . $new_default, 'has been set to default home page because the old one (' . $old_default . ') was incompatible');
+		}
 	}
 
 	private function update_themes()
