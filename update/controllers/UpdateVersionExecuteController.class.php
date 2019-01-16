@@ -52,9 +52,9 @@ class UpdateVersionExecuteController extends UpdateController
 			
 			if ($this->default_module_changed)
 			{
-				if (ModulesManager::module_is_upgradable('news'))
+				if (ModulesManager::is_module_installed('news') && ModulesManager::get_module('news')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION)
 					$new_default = 'news';
-				else if (ModulesManager::module_is_upgradable('articles'))
+				else if (ModulesManager::is_module_installed('articles') && ModulesManager::get_module('articles')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION)
 					$new_default = 'articles';
 				else
 					$new_default = 'forum';
