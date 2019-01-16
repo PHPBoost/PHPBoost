@@ -93,6 +93,7 @@ class AdminModuleUpdateController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$modules_upgradable = 0;
 		$module_number = 1;
 		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
@@ -106,6 +107,7 @@ class AdminModuleUpdateController extends AdminController
 				$this->view->assign_block_vars('modules_upgradable', array(
 					'C_AUTHOR_EMAIL' => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
+					'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 					'MODULE_NUMBER' => $module_number,
 					'ID' => $module->get_id(),
 					'NAME' => TextHelper::ucfirst($configuration->get_name()),

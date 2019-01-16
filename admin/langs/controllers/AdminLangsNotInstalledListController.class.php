@@ -40,6 +40,7 @@ class AdminLangsNotInstalledListController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$not_installed_langs = $this->get_not_installed_langs();
 		$lang_number = 1;
 		foreach($not_installed_langs as $lang)
@@ -51,6 +52,7 @@ class AdminLangsNotInstalledListController extends AdminController
 			$this->view->assign_block_vars('langs_not_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 				'C_HAS_PICTURE' => $configuration->has_picture(),
 				'LANG_NUMBER' => $lang_number,
 				'ID' => $lang->get_id(),

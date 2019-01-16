@@ -50,6 +50,7 @@ class AdminThemesNotInstalledListController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$not_installed_themes = $this->get_not_installed_themes();
 		$theme_number = 1;
 		foreach($not_installed_themes as $theme)
@@ -62,6 +63,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			$this->view->assign_block_vars('themes_not_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 				'C_PICTURES' => count($pictures) > 0,
 				'THEME_NUMBER' => $theme_number,
 				'ID' => $theme->get_id(),

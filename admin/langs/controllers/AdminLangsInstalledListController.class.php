@@ -33,6 +33,7 @@ class AdminLangsInstalledListController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$installed_langs = LangsManager::get_installed_langs_map_sorted_by_localized_name();
 		$selected_lang_number = 0;
 		$lang_number = 1;
@@ -46,6 +47,7 @@ class AdminLangsInstalledListController extends AdminController
 			$this->view->assign_block_vars('langs_installed', array(
 				'C_AUTHOR_EMAIL' => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
+				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_DEFAULT_LANG' => $lang->get_id() == LangsManager::get_default_lang(),
 				'C_IS_ACTIVATED' => $lang->is_activated(),
 				'C_HAS_PICTURE' => $configuration->has_picture(),

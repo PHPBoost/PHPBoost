@@ -96,6 +96,7 @@ class AdminModuleAddController extends AdminController
 
 	private function build_view()
 	{
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$modules_not_installed = $this->get_modules_not_installed();
 		$module_number = 1;
 		foreach ($modules_not_installed as $id => $module)
@@ -107,6 +108,7 @@ class AdminModuleAddController extends AdminController
 			$this->view->assign_block_vars('modules_not_installed', array(
 				'C_AUTHOR_EMAIL'    => !empty($author_email),
 				'C_AUTHOR_WEBSITE'  => !empty($author_website),
+				'C_COMPATIBLE'      => $configuration->get_compatibility() == $phpboost_version,
 				'MODULE_NUMBER'     => $module_number,
 				'ID'                => $module->get_id(),
 				'NAME'              => TextHelper::ucfirst($configuration->get_name()),
