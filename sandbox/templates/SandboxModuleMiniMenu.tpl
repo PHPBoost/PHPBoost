@@ -4,7 +4,7 @@
 			<i class="fa fa-wrench" aria-hidden="true"></i> {@module.title}
 		</span>
 		<div class="sbx-menu bkgd-main">
-			<span class="close-btn bkgd-color-unvisible"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
+			<span class="close-btn bkgd-color-sub"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
 			<div class="sbx-inset">
 				<div class="sbx-menu-item sbx-text">
 					<div class="item-2x small" title="{@mini.version.pbt}">
