@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 15
+ * @version   	PHPBoost 5.2 - last update: 2019 01 16
  * @since   	PHPBoost 3.0 - 2012 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,10 +120,15 @@ $lang = array(
 	<br />To reactivate it, download its compatible version from the <a href="https://www.phpboost.com/download">PHPBoost</a> website if it exists and go to the module update page of your site to update it (it will then be reactivated automatically).',
 	'step.execute.incompatible_module.default' => '<br /><br /><b>:old_default</b> module placed at site startup has been replaced by <b>:new_default</b> module. When you install the new compatible version of <b>:old_default</b> module, remember to reconfigure your site\'s start page in the general configuration.',
 	'step.execute.incompatible_themes' => 'The following themes will be disabled because they are not compatible with PHPBoost '. UpdateServices::NEW_KERNEL_VERSION. ': :themes.
-	<br />To reactivate them, download their compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the themes on your site FTP and then go to the themes management page of your site to reactivate them.',
+	<br />To reactivate them, download their compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the themes on your site FTP in templates folder and then go to the themes management page of your site to reactivate them.',
 	'step.execute.incompatible_theme' => 'The theme :themes will be disabled because it is not compatible with PHPBoost '. UpdateServices::NEW_KERNEL_VERSION. '.
-	<br /> To reactivate it, download its compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the theme on you site FTP then go to the theme management page of your site to reactivate it.',
+	<br /> To reactivate it, download its compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the theme on you site FTP in templates folder then go to the theme management page of your site to reactivate it.',
 	'step.execute.incompatible_theme.default' => '<br /><br /><b>:old_default</b> default theme for the site has been replaced by <b>:new_default</b> theme. When you have installed the new compatible version of <b>:old_default</b> theme, remember to reconfigure your site\'s default theme in the general configuration (if that was the only theme then uninstall <b>:new_default</b> theme so that users of the site have this theme active).',
+	'step.execute.incompatible_langs' => 'The following langs will be disabled because they are not compatible with PHPBoost '. UpdateServices::NEW_KERNEL_VERSION. ': :langs.
+	<br />To reactivate them, download their compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the langs on your site FTP in lang folder and then go to the langs management page of your site to reactivate them.',
+	'step.execute.incompatible_lang' => 'The lang :langs will be disabled because it is not compatible with PHPBoost '. UpdateServices::NEW_KERNEL_VERSION. '.
+	<br /> To reactivate it, download its compatible version from <a href="https://www.phpboost.com/download">PHPBoost</a> if it exists, update the lang on you site FTP in lang folder then go to the lang management page of your site to reactivate it.',
+	'step.execute.incompatible_lang.default' => '<br /><br /><b>:old_default</b> default lang for the site has been replaced by <b>:new_default</b> lang. When you have installed the new compatible version of <b>:old_default</b> lang, remember to reconfigure your site\'s default lang in the general configuration (if that was the only lang then uninstall <b>:new_default</b> lang so that users of the site have this lang active).',
 
 //Finish update
 	'finish.message' => '<fieldset>

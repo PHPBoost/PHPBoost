@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 15
+ * @version   	PHPBoost 5.2 - last update: 2019 01 16
  * @since   	PHPBoost 3.0 - 2012 03 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,7 +64,7 @@ class UpdateVersionExecuteController extends UpdateController
 				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_module.default'], array('old_default' => $this->general_config->get_module_home_page(), 'new_default' => $new_default));
 			}
 			
-			$view->put('INCOMPATIBLE_MODULES', MessageHelper::display($message, MessageHelper::SUCCESS));
+			$view->put('INCOMPATIBLE_MODULES', MessageHelper::display($message, MessageHelper::WARNING));
 		}
 		
 		$incompatible_themes = $this->get_incompatible_themes_list();
@@ -78,7 +78,7 @@ class UpdateVersionExecuteController extends UpdateController
 				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], array('old_default' => $this->user_accounts_config->get_default_theme(), 'new_default' => 'base'));
 			}
 			
-			$view->put('INCOMPATIBLE_THEMES', MessageHelper::display($message, MessageHelper::SUCCESS));
+			$view->put('INCOMPATIBLE_THEMES', MessageHelper::display($message, MessageHelper::WARNING));
 		}
 		
 		$incompatible_langs = $this->get_incompatible_langs_list();
@@ -92,7 +92,7 @@ class UpdateVersionExecuteController extends UpdateController
 				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_lang.default'], array('old_default' => $this->user_accounts_config->get_default_lang(), 'new_default' => LangLoader::get_locale()));
 			}
 			
-			$view->put('INCOMPATIBLE_LANGS', MessageHelper::display($message, MessageHelper::SUCCESS));
+			$view->put('INCOMPATIBLE_LANGS', MessageHelper::display($message, MessageHelper::WARNING));
 		}
 	}
 
