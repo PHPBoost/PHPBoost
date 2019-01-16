@@ -11,7 +11,6 @@
 
 class UpdateVersionExecuteController extends UpdateController
 {
-	private $lang;
 	private $submit;
 	
 	private $general_config;
@@ -39,7 +38,6 @@ class UpdateVersionExecuteController extends UpdateController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('update', 'update');
 		$this->general_config = GeneralConfig::load();
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
