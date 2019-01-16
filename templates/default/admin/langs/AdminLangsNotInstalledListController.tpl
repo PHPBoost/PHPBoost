@@ -7,16 +7,22 @@
 		# IF C_LANG_AVAILABLE #
 		<div class="content elements-container columns-3">
 			# START langs_not_installed #
-			<article class="block admin-element lang-element not-installed-element">
+			<article class="block admin-element lang-element not-installed-element# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header>
 					<div class="admin-element-menu-container">
+						# IF langs_not_installed.C_COMPATIBLE #
 						<button type="submit" class="submit admin-element-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+						# ELSE #
+						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_LANG_AVAILABLE #
+					# IF langs_not_installed.C_COMPATIBLE #
 					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
 						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{langs_not_installed.LANG_NUMBER}" name="add-checkbox-{langs_not_installed.LANG_NUMBER}"/>
 						<label for="multiple-checkbox-{langs_not_installed.LANG_NUMBER}"></label>
 					</div>
+					# ENDIF #
 					# ENDIF #
 
 					<h2 class="not-installed-lang-name">
@@ -29,7 +35,7 @@
 				<div class="content admin-element-content">
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span#><br />
 					</div>
 				</div>
 

@@ -253,13 +253,25 @@ article .admin-element-menu-title,
 	color: #FFFFFF;
 }
 
-.admin-element-menu-title                     { background-color: #366493; border-color: #366493; }
+.admin-element-menu-title,
+.submit.admin-element-menu-title              { background-color: #366493; border-color: #366493; }
 .default-element .admin-element-menu-title    { background-color: #2F9674; border-color: #2F9674; }
 .deactivate-element .admin-element-menu-title { background-color: #AAAAAA; border-color: #AAAAAA; }
+.not-compatible .admin-element-menu-title     { background-color: #E84E40; border-color: #E84E40; }
+
+.admin-element.not-compatible {
+	border-color: #E84E40 #F1F1F1 #F1F1F1 #F1F1F1;
+}
+
+span.not-compatible { 
+	color: #E84E40;
+}
 
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container.opened .admin-element-menu-title,
 .admin-element-menu-title.opened { background-color: #FFFFFF; }
+
+.not-compatible span.admin-element-menu-title:hover { background-color: #E84E40; color: #FFFFFF; }
 
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container:hover .admin-element-menu-title a,

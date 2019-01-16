@@ -28,6 +28,7 @@ $lang['multiple.upgrade_selection'] = 'Upgrade selection';
 
 $lang['author'] = 'Author';
 $lang['compatibility'] = 'Compatibility';
+$lang['not_compatible'] = 'Not compatible';
 
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.categories_number_per_page'] = 'Categories number per page';

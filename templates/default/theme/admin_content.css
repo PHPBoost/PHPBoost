@@ -366,6 +366,14 @@ header.legend .admin-element-menu-container {
 	transition: color 0.1s, background-color 0.1s;
 }
 
+span.not-compatible { 
+	font-weight: 900;
+}
+
+.not-compatible span.admin-element-menu-title {
+	cursor: not-allowed;
+}
+
 .admin-element-menu-title i {
 	margin: 0 0 0 0.456em;
 }
