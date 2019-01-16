@@ -307,7 +307,8 @@ class UpdateServices
 		}
 
 		$modules_config = ModulesConfig::load();
-		$general_config = GeneralConfig::load();
+		$home_page = GeneralConfig::load()->get_module_home_page();
+		
 		$default_module_changed = false;
 		
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
@@ -338,10 +339,8 @@ class UpdateServices
 				ModulesManager::update_module($id, false, false);
 				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
 				
-				if ($general_config->get_module_home_page() == $id)
-				{
+				if ($home_page == $id)
 					$default_module_changed = true;
-				}
 			}
 
 			$modules_config->update($module);
@@ -350,8 +349,6 @@ class UpdateServices
 		
 		if ($default_module_changed)
 		{
-			$old_default = $general_config->get_module_home_page();
-			
 			if (ModulesManager::is_module_installed('news'))
 				$new_default = 'news';
 			else if (ModulesManager::is_module_installed('articles'))
@@ -359,10 +356,11 @@ class UpdateServices
 			else
 				$new_default = 'forum';
 			
+			$general_config = GeneralConfig::load();
 			$general_config->set_module_home_page($new_default);
 			GeneralConfig::save();
 
-			$this->add_information_to_file('module ' . $new_default, 'has been set to default home page because the old one (' . $old_default . ') was incompatible');
+			$this->add_information_to_file('module ' . $new_default, 'has been set to default home page because the old one (' . $home_page . ') was incompatible');
 		}
 	}
 
