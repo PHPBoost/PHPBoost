@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 01 17
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -203,6 +203,11 @@ foreach ($categories_tree_options as $option)
 	}
 }
 
+$tpl->assign_block_vars('syndication_cats', array(
+	'LINK'  => PATH_TO_ROOT . '/forum/unread.php',
+	'LABEL' => $LANG['show_not_reads']
+));
+
 $vars_tpl = array(
 	'C_USER_CONNECTED'   => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'TOTAL_ONLINE'       => $total_online,
@@ -226,7 +231,6 @@ $vars_tpl = array(
 	'U_CHANGE_CAT'       => 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 	'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-	'U_FORUM_CAT'        => '<a href="' . PATH_TO_ROOT . '/forum/unread.php' . '">' . $LANG['show_not_reads'] . '</a>',
 	'U_POST_NEW_SUBJECT' => '',
 	'L_FORUM_INDEX'      => $LANG['forum_index'],
 	'L_FORUM'            => $LANG['forum'],

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 01 17
  * @since   	PHPBoost 1.6 - 2007 04 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -197,7 +197,12 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 				$cat_list .= $option->display()->render();
 		}
 	}
-
+	
+	$tpl->assign_block_vars('syndication_cats', array(
+		'LINK'  => PATH_TO_ROOT . '/forum/lastread.php',
+		'LABEL' => $LANG['show_last_read']
+	));
+	
 	$vars_tpl = array(
 		'C_USER_CONNECTED'   => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE'       => $total_online,
@@ -218,10 +223,9 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'C_PAGINATION'       => $pagination->has_several_pages(),
 		'FORUM_NAME'         => $config->get_forum_name(),
 		'PAGINATION'         => $pagination->display(),
-		'U_CHANGE_CAT'       => 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
+		'U_CHANGE_CAT'       => 'lastread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT'        => '<a href="' . PATH_TO_ROOT . '/forum/lastread.php' . '">' . $LANG['show_not_reads'] . '</a>',
 		'FORUM_CAT'          => $LANG['show_last_read'],
 		'U_POST_NEW_SUBJECT' => '',
 		'L_FORUM_INDEX'      => $LANG['forum_index'],
