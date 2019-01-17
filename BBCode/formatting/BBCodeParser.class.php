@@ -6,13 +6,14 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 06
+ * @version   	PHPBoost 5.2 - last update: 2019 01 07
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela13 <xela@phpboost.com>
 */
 
 class BBCodeParser extends ContentFormattingParser
@@ -262,6 +263,9 @@ class BBCodeParser extends ContentFormattingParser
 					$this->forbidden_tags[] = 'url2';
 					$this->forbidden_tags[] = 'url3';
 					$this->forbidden_tags[] = 'url4';
+					$this->forbidden_tags[] = 'url5';
+					$this->forbidden_tags[] = 'url6';
+					$this->forbidden_tags[] = 'url7';
 				}
 				if (in_array('mail', $this->forbidden_tags))
 				{
