@@ -7,16 +7,22 @@
 		# IF C_THEME_AVAILABLE #
 		<div class="content elements-container">
 			# START themes_not_installed #
-			<article class="block admin-element theme-element not-installed-element">
+			<article class="block admin-element theme-element not-installed-element# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header>
 					<div class="admin-element-menu-container">
+						# IF themes_not_installed.C_COMPATIBLE #
 						<button type="submit" class="submit admin-element-menu-title" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+						# ELSE #
+						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
+					# IF themes_not_installed.C_COMPATIBLE #
 					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
 						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}"/>
 						<label for="multiple-checkbox-{themes_not_installed.THEME_NUMBER}"></label>
 					</div>
+					# ENDIF #
 					# ENDIF #
 
 					<h2 class="not-installed-theme-name">{themes_not_installed.NAME}<em> ({themes_not_installed.VERSION})</em></h2>
@@ -37,7 +43,7 @@
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {themes_not_installed.DESCRIPTION}<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT themes_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_not_installed.COMPATIBILITY}</span><br />
 						<span class="text-strong">{@themes.html_version} :</span> {themes_not_installed.HTML_VERSION}<br />
 						<span class="text-strong">{@themes.css_version} :</span> {themes_not_installed.CSS_VERSION}<br />
 						<span class="text-strong">{@themes.main_color} :</span> {themes_not_installed.MAIN_COLOR}<br />
@@ -46,6 +52,7 @@
 				</div>
 
 				<footer>
+					# IF themes_not_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"></i></a>
 						<div class="admin-element-auth-content">
@@ -53,6 +60,7 @@
 							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
 						</div>
 					</div>
+					# ENDIF #
 				</footer>
 			</article>
 			# END themes_not_installed #

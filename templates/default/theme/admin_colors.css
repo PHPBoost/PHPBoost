@@ -253,13 +253,25 @@ article .admin-element-menu-title,
 	color: #FFFFFF;
 }
 
-.admin-element-menu-title                     { background-color: #366493; border-color: #366493; }
+.admin-element-menu-title,
+.submit.admin-element-menu-title              { background-color: #366493; border-color: #366493; }
 .default-element .admin-element-menu-title    { background-color: #2F9674; border-color: #2F9674; }
 .deactivate-element .admin-element-menu-title { background-color: #AAAAAA; border-color: #AAAAAA; }
+.not-compatible .admin-element-menu-title     { background-color: #E84E40; border-color: #E84E40; }
+
+.admin-element.not-compatible {
+	border-color: #E84E40 #F1F1F1 #F1F1F1 #F1F1F1;
+}
+
+span.not-compatible { 
+	color: #E84E40;
+}
 
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container.opened .admin-element-menu-title,
 .admin-element-menu-title.opened { background-color: #FFFFFF; }
+
+.not-compatible span.admin-element-menu-title:hover { background-color: #E84E40; color: #FFFFFF; }
 
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container:hover .admin-element-menu-title a,
@@ -270,6 +282,9 @@ article .admin-element-menu-title,
 
 .deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
 .deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
+
+.not-compatible .admin-element-menu-container:hover .admin-element-menu-title,
+.not-compatible .admin-element-menu-container.opened .admin-element-menu-title { color: #E84E40; }
 
 .default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #2F9674; }
 
@@ -283,8 +298,9 @@ article .admin-element-menu-title,
 	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.admin-menu-elements-content { border-color: #366493; }
+.admin-menu-elements-content                     { border-color: #366493; }
 .deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
+.not-compatible .admin-menu-elements-content     { border-color: #E84E40; }
 
 .admin-menu-element > * {
 	background-color: transparent;
@@ -294,8 +310,10 @@ article .admin-element-menu-title,
 .deactivate-element .admin-menu-element > * { background-color: #AAAAAA; }
 
 .admin-menu-element:hover > *,
-.admin-menu-element > button.submit:hover         { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
-.deactivate-element .admin-menu-element:hover > * { background-color: rgba(128, 128, 128, 0.2); color: #AAAAAA; }
+.admin-menu-element > button.submit:hover                 { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
+.deactivate-element .admin-menu-element:hover > *         { background-color: rgba(128, 128, 128, 0.2); color: #AAAAAA; }
+.not-compatible .admin-menu-element:hover > *,
+.not-compatible .admin-menu-element > button.submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
 
 .admin-element-auth-content {
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
