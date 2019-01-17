@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 01 17
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -222,9 +222,10 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'U_CHANGE_CAT'       => 'track.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE'         => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'     => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT'        => '<a href="' . PATH_TO_ROOT . '/forum/track.php' . '">' . $LANG['show_topic_track'] . '</a>',
+		'U_FORUM_CAT'        => PATH_TO_ROOT . '/forum/track.php',
 		'U_POST_NEW_SUBJECT' => '',
 		'U_TRACK_ACTION'     => url('.php?p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
+		'FORUM_CAT'          => $LANG['show_topic_track'],
 		'L_FORUM_INDEX'      => $LANG['forum_index'],
 		'L_AUTHOR'           => $LANG['author'],
 		'L_FORUM'            => $LANG['forum'],

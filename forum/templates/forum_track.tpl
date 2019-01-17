@@ -14,7 +14,7 @@
 			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-track">
 				<header>
 					<h2>
-						{U_FORUM_CAT}
+						<a href="{U_FORUM_CAT}">{FORUM_CAT}</a>
 						# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 					</h2>
 				</header>
@@ -107,9 +107,6 @@
 					</div>
 				</div>
 				<footer>
-					<span class="float-left">
-						{U_FORUM_CAT}
-					</span>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
 				</footer>
 			</article
