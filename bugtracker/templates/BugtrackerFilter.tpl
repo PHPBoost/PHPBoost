@@ -20,7 +20,7 @@ function toggle_filters_table() {
 }
 -->
 </script>
-<div class="cssmenu-group bugtracker-filter">
+<div class="bugtracker-filter">
 	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 </div>
 <table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
