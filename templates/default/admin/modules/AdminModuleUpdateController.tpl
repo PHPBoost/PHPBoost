@@ -11,13 +11,19 @@
 			<article class="block admin-element module-element upgrade-element">
 				<header>
 					<div class="admin-element-menu-container">
+						# IF modules_upgradable.C_COMPATIBLE #
 						<button type="submit" class="submit admin-element-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
+						# ELSE #
+						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
+					# IF modules_upgradable.C_COMPATIBLE #
 					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
 						<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
 						<label for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}"></label>
 					</div>
+					# ENDIF #
 					# ENDIF #
 
 					<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
@@ -30,7 +36,7 @@
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_upgradable.DESCRIPTION}<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span><br />
 					</div>
 				</div>
 

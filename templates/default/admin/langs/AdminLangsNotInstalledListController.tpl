@@ -40,6 +40,7 @@
 				</div>
 
 				<footer>
+					# IF langs_not_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"></i></a>
 						<div class="admin-element-auth-content">
@@ -47,6 +48,7 @@
 							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
 						</div>
 					</div>
+					# ENDIF #
 				</footer>
 			</article>
 			# END langs_not_installed #

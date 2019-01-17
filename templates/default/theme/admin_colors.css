@@ -283,6 +283,9 @@ span.not-compatible {
 .deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
 .deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
 
+.not-compatible .admin-element-menu-container:hover .admin-element-menu-title,
+.not-compatible .admin-element-menu-container.opened .admin-element-menu-title { color: #E84E40; }
+
 .default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #2F9674; }
 
 .admin-menu-elements-content {
@@ -295,8 +298,9 @@ span.not-compatible {
 	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.admin-menu-elements-content { border-color: #366493; }
+.admin-menu-elements-content                     { border-color: #366493; }
 .deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
+.not-compatible .admin-menu-elements-content     { border-color: #E84E40; }
 
 .admin-menu-element > * {
 	background-color: transparent;
@@ -306,8 +310,10 @@ span.not-compatible {
 .deactivate-element .admin-menu-element > * { background-color: #AAAAAA; }
 
 .admin-menu-element:hover > *,
-.admin-menu-element > button.submit:hover         { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
-.deactivate-element .admin-menu-element:hover > * { background-color: rgba(128, 128, 128, 0.2); color: #AAAAAA; }
+.admin-menu-element > button.submit:hover                 { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
+.deactivate-element .admin-menu-element:hover > *         { background-color: rgba(128, 128, 128, 0.2); color: #AAAAAA; }
+.not-compatible .admin-menu-element:hover > *,
+.not-compatible .admin-menu-element > button.submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
 
 .admin-element-auth-content {
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);

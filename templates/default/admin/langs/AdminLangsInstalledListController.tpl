@@ -4,19 +4,21 @@
 		<header class="legend">{@langs.installed_langs}</header>
 		<div class="content elements-container">
 			# START langs_installed #
-			<article class="block admin-element lang-element installed-element# IF langs_installed.C_IS_DEFAULT_LANG # default-element# ENDIF ## IF langs_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF #">
+			<article class="block admin-element lang-element installed-element# IF langs_installed.C_IS_DEFAULT_LANG # default-element# ENDIF ## IF langs_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header>
 					<div class="admin-element-menu-container">
 						# IF langs_installed.C_IS_DEFAULT_LANG #
 						<a href="#" class="admin-element-menu-title">{@langs.default}</a>
 						# ELSE #
-						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_COMPATIBLE ## IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
 						<ul class="admin-menu-elements-content">
+							# IF langs_installed.C_COMPATIBLE #
 							<li class="admin-menu-element"><button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
 							# IF langs_installed.C_IS_ACTIVATED #
 							<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{langs_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
 							# ELSE #
 							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{langs_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+							# ENDIF #
 							# ENDIF #
 							<li class="admin-menu-element"><button type="submit" class="submit alt" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 						</ul>
@@ -24,10 +26,12 @@
 					</div>
 
 					# IF C_MORE_THAN_ONE_LANG_INSTALLED #
+					# IF langs_installed.C_COMPATIBLE #
 					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
 						<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
 						<label for="multiple-checkbox-{langs_installed.LANG_NUMBER}"></label>
 					</div>
+					# ENDIF #
 					# ENDIF #
 
 					<h2 class="installed-theme-name">
@@ -39,10 +43,11 @@
 				<div class="content admin-element-content">
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
+						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_installed.COMPATIBILITY}</span><br />
 					</div>
 				</div>
 				<footer>
+					# IF langs_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						# IF langs_installed.C_IS_DEFAULT_LANG #
 						<span class="admin-element-auth default-element" aria-label="{@langs.default_lang_visibility}"><i class="fa fa-user-shield" aria-hidden="true" title="{@langs.default_lang_visibility}"></i></span>
@@ -54,6 +59,7 @@
 						</div>
 						# ENDIF #
 					</div>
+					# ENDIF #
 				</footer>
 			</article>
 			<script>
