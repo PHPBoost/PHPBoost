@@ -271,8 +271,6 @@ span.not-compatible {
 .admin-element-menu-container.opened .admin-element-menu-title,
 .admin-element-menu-title.opened { background-color: #FFFFFF; }
 
-.not-compatible span.admin-element-menu-title:hover { background-color: #E84E40; color: #FFFFFF; }
-
 .admin-element-menu-container:hover .admin-element-menu-title,
 .admin-element-menu-container:hover .admin-element-menu-title a,
 .admin-element-menu-container.opened .admin-element-menu-title,
