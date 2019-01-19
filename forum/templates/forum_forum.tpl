@@ -11,7 +11,7 @@
 			<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-subforum" class="forum-contents">
 				<header>
 					<h2>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication"></i></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}"><i class="fa fa-syndication" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('syndication', 'common')}</span></a>
 						&nbsp;<strong>{L_SUBFORUMS}</strong>
 					</h2>
 				</header>
@@ -89,7 +89,7 @@
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</span>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}"><i class="fa fa-syndication"></i><span class="sr-only">${LangLoader::get_message('syndication', 'common')}</span></a>
 					# START syndication_cats #
 					<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 					# END syndication_cats #
