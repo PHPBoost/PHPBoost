@@ -135,7 +135,7 @@
 				# ENDIF #
 				</span>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" ari-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 					{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				</h2>
 
