@@ -1,3 +1,5 @@
+*You are currently on the **5.2** branch*
+***
 # PHPBoost CMS
 This web application allows everybody without any particular knowledge required in webmastering to create his own website.
 
@@ -9,20 +11,6 @@ Visit the project page [PHPBoost CMS](https://www.phpboost.com "link to PHPBoost
 # How can I download PHPBoost CMS ?
 To download PHPBoost CMS, please follow this link : [Download](https://www.phpboost.com/download "link to PHPBoost CMS Download").
 You will find the latest official package, and several modules and templates, to customize your website.
-
-
-# Organisation of github branch
-We create one branch per version. 
-
-| Branch | Description | Maintenance |
-| --- | --- | --- |
-| master | developpement branch | no |
-| **5.1** | **latest stable version** | **fully** |
-| 5.0 | previous stable version | fully |
-| 4.1 | older stable version | no | 
-| 4.0 | older stable version | no |
-| 3.0 | older stable version | no |
-| other | branchs for tests | - |
 
 
 # How it works ?
