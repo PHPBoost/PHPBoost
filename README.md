@@ -17,6 +17,7 @@ We create one branch per version.
 | Branch | Description | Maintenance |
 | --- | --- | --- |
 | master | developpement branch | no |
+| 5.2 | RC version | no |
 | **5.1** | **latest stable version** | **fully** |
 | 5.0 | previous stable version | fully |
 | 4.1 | older stable version | no | 
