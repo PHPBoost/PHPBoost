@@ -1,9 +1,9 @@
 		<script>
 		<!--
-			function img_change(id, url)
+			function img_change(id, url, img)
 			{
 				if (document.getElementById(id))
-					document.getElementById(id).src = "{PATH_TO_ROOT}/forum/templates/images/ranks/" + url;
+					document.getElementById(id).src = url + img;
 			}
 		-->
 		</script>
@@ -63,12 +63,12 @@
 										# IF rank.C_SPECIAL_RANK #<input type="number" min="0" name="{rank.ID}msg" value="{rank.MSG}"># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
 									</td>
 									<td>
-										<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
+										<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', '{rank.JS_PATH_RANKS}', this.options[selectedIndex].value)">
 											{rank.RANK_OPTIONS}
 										</select>
 										# IF rank.IMG_RANK #
 											<span class="field-description">
-												<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" title="{rank.IMG_RANK}" />
+												<img src="{rank.U_IMG_RANK}" id="icon{rank.ID}" alt="{rank.IMG_RANK}" title="{rank.IMG_RANK}" />
 											</span>
 										# ENDIF #
 									</td>
