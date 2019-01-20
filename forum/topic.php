@@ -342,14 +342,13 @@ while ( $row = $result->fetch() )
 
 	$theme = AppContext::get_current_user()->get_theme();
 	//Image associée au rang.
-	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon))
-	{
-		$rank_img = TPL_PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;
-	}
+	
+	//Chemin relatif pour faire fonctionner file_exists
+	$img = PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;
+	if ( file_exists($img) )
+		$rank_img = $img;
 	else
-	{
 		$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
-	}
 
 	$user_accounts_config = UserAccountsConfig::load();
 	$user_group_color     = User::get_group_color($row['groups'], $row['level']);

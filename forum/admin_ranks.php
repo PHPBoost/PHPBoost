@@ -73,9 +73,15 @@ $template->put_all(array(
 ));
 
 //On recupère les images des groupes
-
 $rank_options_array = array();
-$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
+
+//On regarde s'il existe un repertoire d'image de rank dans le "thème par défaut" templates/{THEME}/modules/forum/images/ranks
+$rank_folder = PATH_TO_ROOT . '/templates/' . ThemesManager::get_default_theme() . '/modules/forum/images/ranks';
+if ( is_dir($rank_folder) )
+	$image_folder_path = new Folder($rank_folder);
+else
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
+
 foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 {
 	$file = $image->get_name();
@@ -99,6 +105,8 @@ foreach($ranks_cache as $msg => $row)
 		'MSG'            => $msg,
 		'RANK_OPTIONS'   => $rank_options,
 		'IMG_RANK'       => $row['icon'],
+		'U_IMG_RANK'     => $rank_folder . '/' . $row['icon'],
+		'JS_PATH_RANKS'  => $rank_folder . '/',
 		'U_DELETE'       => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
 		'C_SPECIAL_RANK' => $row['special'] == 0,
 		'L_SPECIAL_RANK' => $LANG['special_rank']
