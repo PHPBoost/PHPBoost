@@ -77,10 +77,11 @@ $rank_options_array = array();
 
 //On regarde s'il existe un repertoire d'image de rank dans le "thème par défaut" templates/{THEME}/modules/forum/images/ranks
 $rank_folder = PATH_TO_ROOT . '/templates/' . ThemesManager::get_default_theme() . '/modules/forum/images/ranks';
-if ( is_dir($rank_folder) )
-	$image_folder_path = new Folder($rank_folder);
-else
-	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
+
+if ( !is_dir($rank_folder) )
+	$rank_folder = (PATH_TO_ROOT . '/forum/templates/images/ranks');
+
+$image_folder_path = new Folder($rank_folder);
 
 foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 {
