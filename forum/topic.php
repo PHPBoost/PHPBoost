@@ -375,6 +375,7 @@ while ( $row = $result->fetch() )
 		'C_USER_RANK'                 => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
 		'USER_RANK'                   => $user_rank,
 		'USER_IMG_ASSOC'              => $rank_img,
+		'C_USER_IMG_ASSOC'            => !empty($rank_img),
 		'C_USER_AVATAR'               => !empty($row['user_avatar']),
 		'U_USER_AVATAR'               => Url::to_rel($row['user_avatar']),
 		'U_DEFAULT_AVATAR'            => '../templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name(),
