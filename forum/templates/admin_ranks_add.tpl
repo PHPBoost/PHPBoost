@@ -80,11 +80,11 @@
 					<fieldset>
 						<legend>{L_ADD_RANKS}</legend>
 						<div class="fieldset-inset">
-							<div class="form-element">
+							<div class="form-element top-field">
 								<label for="name">* {L_RANK_NAME}</label>
 								<div class="form-field"><label><input type="text" maxlength="30" id="name" name="name"></label></div>
 							</div>
-							<div class="form-element">
+							<div class="form-element top-field">
 								<label for="msg">* {L_NBR_MSG}</label>
 								<div class="form-field"><label><input type="number" min="0" id="msg" name="msg"></label></div>
 							</div>
