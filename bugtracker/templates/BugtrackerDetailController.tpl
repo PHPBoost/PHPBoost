@@ -8,7 +8,7 @@
 			<li><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}" class="cssmenu-title"><i class="far fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></li>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<li><a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" class="cssmenu-title"><i class="far fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a></li>
+			<li><a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" class="cssmenu-title"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a></li>
 		# ENDIF #
 	</ul>
 </nav>
