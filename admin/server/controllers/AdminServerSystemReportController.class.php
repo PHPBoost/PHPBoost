@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.2 - last update: 2019 01 23
  * @since   	PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -195,7 +195,7 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		if ($security_config->get_internal_password_min_length() == 6 && $security_config->get_internal_password_strength() == SecurityConfig::PASSWORD_STRENGTH_WEAK && !$security_config->are_login_and_email_forbidden_in_password())
 			$fieldset->add_field(new FormFieldFree('password_security', '', MessageHelper::display($lang['advises.password_security'], MessageHelper::NOTICE)->render()));
 
-		if (ServerConfiguration::get_phpversion() < ServerConfiguration::MIN_PHP_VERSION)
+		if (version_compare(ServerConfiguration::get_phpversion(), ServerConfiguration::RECOMMENDED_PHP_VERSION, '<'))
 			$fieldset->add_field(new FormFieldFree('upgrade_php_version', '', MessageHelper::display($lang['advises.upgrade_php_version'], MessageHelper::NOTICE)->render()));
 
 		if (count($fieldset->get_fields()))
