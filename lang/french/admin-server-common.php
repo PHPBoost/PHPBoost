@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.2 - last update: 2019 01 23
  * @since   	PHPBoost 4.1 - 2015 07 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -21,7 +21,8 @@ $lang['advises.disable_maintenance'] = '<a title="Désactivez la maintenance" hr
 $lang['advises.enable_url_rewriting'] = '<a title="Activez la réécriture des URL" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez la réécriture des URL</a> pour que les URL de votre site soient plus lisibles (très utile pour le référencement).';
 $lang['advises.enable_output_gz'] = '<a title="Activez la compression des pages" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez la compression des pages</a> pour gagner en performance.';
 $lang['advises.enable_apcu_cache'] = '<a title="Activez le cache APCu" href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Activez le cache APCu</a> pour permettre de charger le cache en RAM sur le serveur et non sur le disque-dur et ainsi gagner d\'avantage en performance.';
-$lang['advises.upgrade_php_version'] = 'Mettez à jour votre version PHP pour passer en 5.6 (qui est la dernière version stable) si votre hébergeur le permet.';
+$lang['advises.upgrade_php_version'] = 'La version PHP ' . ServerConfiguration::get_phpversion() . ' configurée sur votre serveur est obsolète, elle ne reçoit plus de mise à jour de sécurité et peut potentiellement contenir des vulnérabilités permettant à une personne mal intentionnée d\'attaquer votre site.
+<br />Mettez à jour votre version PHP pour passer en ' . ServerConfiguration::RECOMMENDED_PHP_VERSION . ' minimum si votre hébergeur le permet, les nouvelles versions sont plus rapides et sécurisées.';
 $lang['advises.save_database'] = 'Pensez à sauvegarder votre base de données régulièrement.';
 $lang['advises.optimize_database_tables'] = '<a title="Activez l\'optimisation automatique des tables" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez l\'optimisation automatique des tables</a> ou optimisez de temps en temps vos tables dans le module <strong>Base de données</strong> (s\'il est installé) ou dans votre outil de gestion de base de données pour récupérer de la place perdue en base.';
 $lang['advises.password_security'] = 'Augmentez la complexité et la longueur des mots de passe dans la <a title="Augmentez la complexité et la longueur des mots de passe" href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';

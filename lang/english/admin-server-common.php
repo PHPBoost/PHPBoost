@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.2 - last update: 2019 01 23
  * @since   	PHPBoost 4.1 - 2015 07 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -21,7 +21,8 @@ $lang['advises.disable_maintenance'] = '<a title="Disable maintenance" href="' .
 $lang['advises.enable_url_rewriting'] = '<a title="Enable URL rewriting" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable URL rewriting</a> to have more readable urls (usefull for SEO).';
 $lang['advises.enable_output_gz'] = '<a title="Enable Output pages compression" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable Output pages compression</a> to gain performance.';
 $lang['advises.enable_apcu_cache'] = '<a title="Enable APCu cache" href="' . AdminCacheUrlBuilder::configuration()->rel() . '">Enable APCu cache</a> to allow loading the cache in RAM on the server and not on the hard-drive and win a performance advantage.';
-$lang['advises.upgrade_php_version'] = 'Upgrade your PHP version in 5.6 (last stable release) if your host allows it.';
+$lang['advises.upgrade_php_version'] = 'PHP version ' . ServerConfiguration::get_phpversion() . ' of your server is deprecated, there are no more security updates and it potentially contains vulnerabilities allowing a malicious person to attack your website.
+<br />Update your PHP version to ' . ServerConfiguration::RECOMMENDED_PHP_VERSION . ' minimum if your host allows it, the new versions are faster and more secure.';
 $lang['advises.save_database'] = 'Save your database frequently.';
 $lang['advises.optimize_database_tables'] = '<a title="Enable auto tables optimization" href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable auto tables optimization</a> or optimize occasionally your tables in the module <strong>Database</strong> (if it is installed) or in your database management tool to recover the wasted base space.';
 $lang['advises.password_security'] = 'Increase strength and length of passwords in <a title="Increase strength and length of passwords" href="' . AdminMembersUrlBuilder::configuration()->rel() . '">members configuration</a> to strengthen security.';
