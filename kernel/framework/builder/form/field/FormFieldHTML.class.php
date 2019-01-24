@@ -11,16 +11,17 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @version     PHPBoost 5.2 - last update: 2019 01 24
  * @since       PHPBoost 3.0 - 2010 04 10
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldHTML extends AbstractFormField
 {
-	public function __construct($id, $value)
+	public function __construct($id, $value, array $properties = array())
 	{
-		parent::__construct($id, '', $value, array(), array());
+		parent::__construct($id, '', $value, $properties, array(), array());
 	}
 
 	/**
@@ -29,6 +30,8 @@ class FormFieldHTML extends AbstractFormField
 	public function display()
 	{
 		$template = $this->get_template_to_use();
+
+		$this->assign_common_template_variables($template);
 
 		$template->put_all(array(
 			'HTML' => $this->get_value()
@@ -39,7 +42,7 @@ class FormFieldHTML extends AbstractFormField
 
 	protected function get_default_template()
 	{
-		return new StringTemplate('{HTML}');
+		return new FileTemplate('framework/builder/form/FormFieldHTML.tpl');
 	}
 }
 ?>
