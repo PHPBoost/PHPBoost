@@ -21,7 +21,7 @@ class FormFieldHTML extends AbstractFormField
 {
 	public function __construct($id, $value, array $properties = array())
 	{
-		parent::__construct($id, '', $value, $properties, array());
+		parent::__construct($id, '', $value, $properties);
 	}
 
 	/**
