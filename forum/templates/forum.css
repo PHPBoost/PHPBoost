@@ -5,12 +5,11 @@
 
 /* -- header
 ============================================================================= */
-header#forum-top {
-	margin: 0.228em 0 0.809em 0;
+#forum-top {
 	padding: 0.456em;
 }
 
-header#forum-top h1 {
+#forum-top h1 {
 	font-size: 1.618em;
 	text-align: left;
 }
