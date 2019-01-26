@@ -104,16 +104,10 @@ header h2 .actions {
 	position: absolute;
 	list-style: none;
 	padding: 0;
-	top: 25px;
+	top: 100%;
 	left: -9999px;
 	width: 250px;
 	z-index: 1;
-}
-
-@media (max-width: 768px) {
-	.actions-submenu {
-		top: 45px;
-	}
 }
 
 .opened .actions-submenu {
