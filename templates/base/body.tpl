@@ -46,7 +46,7 @@
 
 <div id="global" role="main">
 	# IF C_MENUS_LEFT_CONTENT #
-	<aside id="menu-left">
+	<aside id="menu-left"# IF C_MENUS_RIGHT_CONTENT # class="narrow-menu-left"# ENDIF #>
 		# START menus_left #
 		{menus_left.MENU}
 		# END menus_left #
@@ -95,7 +95,7 @@
 	</div>
 
 	# IF C_MENUS_RIGHT_CONTENT #
-	<aside id="menu-right">
+	<aside id="menu-right"# IF C_MENUS_LEFT_CONTENT # class="narrow-menu-right"# ENDIF #>
 		# START menus_right #
 		{menus_right.MENU}
 		# END menus_right #
