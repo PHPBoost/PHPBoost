@@ -1,7 +1,10 @@
 	# IF C_POLL_MAIN #
 		<section id="module-poll-main">
 			<header>
-				<h1>{L_POLL}# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #</h1>
+				<div class="cat-actions">
+					# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
+				</div>
+				<h1>{L_POLL}</h1>
 			</header>
 
 			<div class="content center">
@@ -26,67 +29,62 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<section id="module-poll">
 				<header>
-					<h1>{L_MINI_POLL}</h1>
+					<div class="cat-actions">{L_MINI_POLL}</div>
+					<h1>{QUESTION}</h1>
 				</header>
-				<div class="content">
 					# INCLUDE message_helper #
 
-					<article id="article-poll-{IDPOLL}" class="article-poll block">
-						<header>
-							<h2>
-							{QUESTION}
-							# IF C_IS_ADMIN #
-							<span class="actions">
-								<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-								<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
-							</span>
-							# ENDIF #
-							</h2>
-						</header>
-						<div class="content">
-							# IF C_POLL_QUESTION #
-							<div>
-								# START radio #
-								<p class="poll-question-select"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
-								# END radio #
 
-								# START checkbox #
-								<p class="poll-question-select"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
-								# END checkbox #
+				<div id="article-poll-{IDPOLL}" class="article-poll">
+					# IF C_IS_ADMIN #
+					<span class="actions">
+						<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+						<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+					</span>
+					# ENDIF #
+					<div class="content">
+						# IF C_POLL_QUESTION #
+						<div>
+							# START radio #
+							<p class="poll-question-select"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
+							# END radio #
 
-								<p class="center">
-									<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</p>
-								<p class="center">
-									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
-								</p>
-							</div>
-							# ENDIF #
+							# START checkbox #
+							<p class="poll-question-select"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
+							# END checkbox #
 
-							# IF C_POLL_RESULTS #
-								# IF C_DISPLAY_RESULTS #
-									# START result #
-									<div>
-										<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
-										<div class="progressbar-container" title="{result.PERCENT}%">
-											<div class="progressbar-infos">{result.PERCENT}%</div>
-											<div class="progressbar" style="width:{result.PERCENT}%;"></div>
-										</div>
-									</div>
-									# END result #
-									<div>
-										<span class="smaller left">{VOTES} {L_VOTE}</span>
-										<span class="smaller right">${LangLoader::get_message('on', 'main')} : {DATE} </span>
-										&nbsp;
-									</div>
-								# ELSE #
-									<div class="message-helper notice"># IF C_NO_VOTE #{L_NO_VOTE}# ELSE #{L_RESULTS_NOT_DISPLAYED_YET}# ENDIF #</div>
-								# ENDIF #
-							# ENDIF #
+							<p class="center">
+								<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
+							</p>
+							<p class="center">
+								<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
+							</p>
 						</div>
-						<footer></footer>
-					</article>
+						# ENDIF #
+
+						# IF C_POLL_RESULTS #
+							# IF C_DISPLAY_RESULTS #
+								# START result #
+								<div>
+									<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
+									<div class="progressbar-container" title="{result.PERCENT}%">
+										<div class="progressbar-infos">{result.PERCENT}%</div>
+										<div class="progressbar" style="width:{result.PERCENT}%;"></div>
+									</div>
+								</div>
+								# END result #
+								<div>
+									<span class="smaller left">{VOTES} {L_VOTE}</span>
+									<span class="smaller right">${LangLoader::get_message('on', 'main')} : {DATE} </span>
+									&nbsp;
+								</div>
+							# ELSE #
+								<div class="message-helper notice"># IF C_NO_VOTE #{L_NO_VOTE}# ELSE #{L_RESULTS_NOT_DISPLAYED_YET}# ENDIF #</div>
+							# ENDIF #
+						# ENDIF #
+					</div>
+					<footer></footer>
 				</div>
 				<footer></footer>
 			</section>

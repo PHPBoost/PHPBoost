@@ -93,7 +93,7 @@
 								<span class="form-field-radio-span">{L_NO}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element full-field">
 							<label for="a0">* {L_ANSWERS}</label>
 							<div class="form-field">
 								<table id="table" class="admin-poll">
