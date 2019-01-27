@@ -10,11 +10,11 @@
 
 	<div class="elements-container">
 		# IF NOT C_PENDING_PAGE #
-		<div id="calendar">
-			# INCLUDE CALENDAR #
-		</div>
+			<div id="calendar">
+				# INCLUDE CALENDAR #
+			</div>
 
-		<div class="spacer"></div>
+			<div class="spacer"></div>
 		# ENDIF #
 
 		<div id="events">

@@ -97,29 +97,31 @@
 # INCLUDE MSG #
 <section id="module-faq">
 	<header>
+		<div class="cat-actions">
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+		</div>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
 		</h1>
-		# IF C_CATEGORY_DESCRIPTION #
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
-			</div>
-		# ENDIF #
 	</header>
+	# IF C_CATEGORY_DESCRIPTION #
+		<div class="cat-description">
+			{CATEGORY_DESCRIPTION}
+		</div>
+	# ENDIF #
 
 	# IF C_QUESTIONS #
 		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 		<div id="questions-titles-list">
-				<ol>
-				# START questions #
-					<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
-						<a href="#question{questions.ID}">{questions.QUESTION}</a>
-					</li>
-				# END questions #
-				</ol>
-				<hr />
+			<ol>
+			# START questions #
+				<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
+					<a href="#question{questions.ID}">{questions.QUESTION}</a>
+				</li>
+			# END questions #
+			</ol>
+			<hr />
 		</div>
 		# ENDIF #
 

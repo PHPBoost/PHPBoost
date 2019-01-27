@@ -45,8 +45,12 @@ section header a:hover {
 	text-decoration: none;
 }
 
-.cat-title {
+.cat-actions {
 	text-align: right;
+}
+
+.elements-container {
+	padding: 1.618em 0 0
 }
 
 /* --- Titre d'un bas de page --- */

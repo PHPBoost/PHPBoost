@@ -1,12 +1,12 @@
 <section id="module-wiki">
 	<header>
-		<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication smaller" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-		{CATEGORY_TITLE}
+		<div class="cat-actions">
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			{CATEGORY_TITLE}
+		</div>
+		<h1 itemprop="name">{TITLE}</h1>
 	</header>
-	<article id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
-		<header>
-			<h1 itemprop="name">{TITLE}</h1>
-		</header>
+	<div id="article-wiki-{ID}" class="article-wiki# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 		<div class="elements-container columns-2">
 			# START cat #
@@ -47,53 +47,51 @@
 			# END cat #
 			<div class="spacer"></div>
 		</div>
+		
 		# INCLUDE wiki_tools #
-		<article>
-			<div class="content">
-				# START warning #
-				<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
-				# END warning #
 
-				# START redirect #
-					<div style="width:30%;">
-					{redirect.REDIRECTED}
-						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"></i></a>
-						# END redirect.remove_redirection #
+		<div class="content">
+			# START warning #
+			<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
+			# END warning #
+
+			# START redirect #
+				<div style="width:30%;">
+				{redirect.REDIRECTED}
+					# START redirect.remove_redirection #
+						<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"></i></a>
+					# END redirect.remove_redirection #
+				</div>
+				<div class="spacer"></div>
+			# END redirect #
+
+			# START status #
+				<div class="spacer"></div>
+				<div class="blockquote">{status.ARTICLE_STATUS}</div>
+				<div class="spacer"></div>
+			# END status #
+
+			# START menu #
+				# IF C_STICKY_MENU #
+					<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
+					<div class="wiki-sticky">
+						{menu.MENU}
 					</div>
-					<div class="spacer"></div>
-				# END redirect #
+				# ELSE #
+					<div class="wiki-summary">
+						<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
+						{menu.MENU}
+					</div>
+				# ENDIF #
+			# END menu #
+			<div class="spacer"></div>
+			{CONTENTS}
+			<div class="spacer"></div>
+			${ContentSharingActionsMenuService::display()}
+		</div>
 
-				# START status #
-					<div class="spacer"></div>
-					<div class="blockquote">{status.ARTICLE_STATUS}</div>
-					<div class="spacer"></div>
-				# END status #
-
-				# START menu #
-					# IF C_STICKY_MENU #
-						<span class="wiki-sticky-title blink">{L_TABLE_OF_CONTENTS}</span>
-						<div class="wiki-sticky">
-							{menu.MENU}
-						</div>
-					# ELSE #
-						<div class="wiki-summary">
-							<div class="wiki-summary-title">{L_TABLE_OF_CONTENTS}</div>
-							{menu.MENU}
-						</div>
-					# ENDIF #
-				# END menu #
-				<div class="spacer"></div>
-				{CONTENTS}
-				<div class="spacer"></div>
-				${ContentSharingActionsMenuService::display()}
-			</div>
-		</article>
-		<footer>
-			<div class="wiki-hits">{HITS}</div>
-		</footer>
-	</article>
-	<footer></footer>
+	</div>
+	<footer><div class="wiki-hits">{HITS}</div></footer>
 </section>
 
 # IF C_STICKY_MENU #

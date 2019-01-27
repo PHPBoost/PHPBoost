@@ -1,10 +1,13 @@
 <section id="module-wiki">
 	<header>
-		<h1>
+		<div class="cat-actions">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+		</div>
+		<h1>
 			{TITLE}
 		</h1>
 	</header>
+	
 	# INCLUDE wiki_tools #
 
 	<article>

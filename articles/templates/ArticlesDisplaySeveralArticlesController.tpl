@@ -1,6 +1,6 @@
 <section id="module-articles">
 	<header>
-		<div class="cat-title">
+		<div class="cat-actions">
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i> </a># ENDIF ## ENDIF #
 		</div>
 		<h1>
@@ -56,38 +56,38 @@
 			<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
-		<div class="content elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF#">
+		<div class="elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF#">
 			# START articles #
 				<article id="article-articles-{articles.ID}" class="article-articles article-several# IF C_MOSAIC # block# ENDIF ## IF articles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
 						<h2><a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a></h2>
-						<span class="actions">
-							# IF articles.C_EDIT #
-							<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-							# ENDIF #
-							# IF articles.C_DELETE #
-							<a href="{articles.U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
-							# ENDIF #
-						</span>
-						<div class="more">
-							# IF articles.C_AUTHOR_DISPLAYED #
-								<i class="fa fa-user-o"></i>
-								# IF articles.C_AUTHOR_CUSTOM_NAME #
-									{articles.AUTHOR_CUSTOM_NAME}
-								# ELSE #
-									# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a> | # ELSE #{articles.PSEUDO} | # ENDIF #
-								# ENDIF #
-							# ENDIF #
-							<i class="fa fa-calendar"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
-							<i class="fa fa-folder-o"></i> <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
-						</div>
-
-						<meta itemprop="url" content="{articles.U_ARTICLE}">
-						<meta itemprop="description" content="${escape(articles.DESCRIPTION)}"/>
-						<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
-						<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
-
 					</header>
+
+					<div class="actions">
+						# IF articles.C_EDIT #
+						<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+						# ENDIF #
+						# IF articles.C_DELETE #
+						<a href="{articles.U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+						# ENDIF #
+					</div>
+					<div class="more">
+						# IF articles.C_AUTHOR_DISPLAYED #
+							<i class="fa fa-user-o"></i>
+							# IF articles.C_AUTHOR_CUSTOM_NAME #
+								{articles.AUTHOR_CUSTOM_NAME}
+							# ELSE #
+								# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a> | # ELSE #{articles.PSEUDO} | # ENDIF #
+							# ENDIF #
+						# ENDIF #
+						<i class="fa fa-calendar"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
+						<i class="fa fa-folder-o"></i> <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
+					</div>
+
+					<meta itemprop="url" content="{articles.U_ARTICLE}">
+					<meta itemprop="description" content="${escape(articles.DESCRIPTION)}"/>
+					<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
+					<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
 
 					<div class="content">
 						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" title="{articles.TITLE}" /></a># ENDIF #

@@ -1,6 +1,6 @@
 <section id="module-news">
 	<header>
-		<div class="cat-title">
+		<div class="cat-actions">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
 		</div>
@@ -54,26 +54,27 @@
 			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="thumbnail-item" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
-
-			${ContentSharingActionsMenuService::display()}
 		</div>
+
 		<aside>
+			${ContentSharingActionsMenuService::display()}
+
 			# IF C_SOURCES #
-			<div id="news-sources-container">
-				<span class="news-sources-title"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
-				# START sources #
-				<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small news-sources-item" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
-				# END sources #
-			</div>
+				<div id="news-sources-container">
+					<span class="news-sources-title"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+					# START sources #
+					<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small news-sources-item" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
+					# END sources #
+				</div>
 			# ENDIF #
 
 			# IF C_KEYWORDS #
-			<div id="news-tags-container">
-				<span class="news-tags-title"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
-					# START keywords #
-						<a itemprop="keywords" rel="tag" href="{keywords.URL}" class="news-tags-item">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
-					# END keywords #
-			</div>
+				<div id="news-tags-container">
+					<span class="news-tags-title"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
+						# START keywords #
+							<a itemprop="keywords" rel="tag" href="{keywords.URL}" class="news-tags-item">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
+						# END keywords #
+				</div>
 			# ENDIF #
 
 			# IF C_SUGGESTED_NEWS #
@@ -90,19 +91,19 @@
 			<hr class="news-separator">
 
 			# IF C_NEWS_NAVIGATION_LINKS #
-			<div class="navigation-link">
-				# IF C_PREVIOUS_NEWS #
-				<span class="navigation-link-previous">
-					<a href="{U_PREVIOUS_NEWS}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>{PREVIOUS_NEWS}</a>
-				</span>
-				# ENDIF #
-				# IF C_NEXT_NEWS #
-				<span class="navigation-link-next">
-					<a href="{U_NEXT_NEWS}">{NEXT_NEWS}<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-				</span>
-				# ENDIF #
-				<div class="spacer"></div>
-			</div>
+				<div class="navigation-link">
+					# IF C_PREVIOUS_NEWS #
+					<span class="navigation-link-previous">
+						<a href="{U_PREVIOUS_NEWS}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i>{PREVIOUS_NEWS}</a>
+					</span>
+					# ENDIF #
+					# IF C_NEXT_NEWS #
+					<span class="navigation-link-next">
+						<a href="{U_NEXT_NEWS}">{NEXT_NEWS}<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+					</span>
+					# ENDIF #
+					<div class="spacer"></div>
+				</div>
 			# ENDIF #
 
 			# INCLUDE COMMENTS #
