@@ -7,7 +7,9 @@
 		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 <section id="module-wiki-explorer" class="explorer">
-	<h1>{TITLE}</h1>
+	<header>
+		<h1>{TITLE}</h1>
+	</header>
 	<div class="cats">
 		<h2>{L_CATS}</h2>
 		<div class="content">
@@ -48,4 +50,5 @@
 			</ul>
 		</div>
 	</div>
+	<footer></footer>
 </section>

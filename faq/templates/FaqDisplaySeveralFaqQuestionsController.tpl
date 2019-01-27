@@ -65,28 +65,30 @@
 # INCLUDE MSG #
 <section id="module-faq">
 	<header>
-		<h1>
+		<div class="cat-actions">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			# IF C_CATEGORY #
+				# IF C_DISPLAY_REORDER_LINK #
+					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw" aria-hidden="true" title="{@faq.reorder_questions}"></i></a>
+				# ENDIF #
+				# IF IS_ADMIN #
+					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+				# ENDIF #
+			# ENDIF #
+		</div>
+		<h1>
 			# IF C_PENDING #
 				{@faq.pending}
 			# ELSE #
 				{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# ENDIF #
-			# IF C_CATEGORY #
-				# IF IS_ADMIN #
-					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-				# ENDIF #
-				# IF C_DISPLAY_REORDER_LINK #
-					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw" aria-hidden="true" title="{@faq.reorder_questions}"></i></a>
-				# ENDIF #
-			# ENDIF #
 		</h1>
-		# IF C_CATEGORY_DESCRIPTION #
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
-			</div>
-		# ENDIF #
 	</header>
+	# IF C_CATEGORY_DESCRIPTION #
+		<div class="cat-description">
+			{CATEGORY_DESCRIPTION}
+		</div>
+	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
 	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
@@ -130,7 +132,7 @@
 		</div>
 		# ENDIF #
 
-		<div class="content elements-container">
+		<div class="elements-container">
 			# START questions #
 			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 				<header class="faq-question-element">

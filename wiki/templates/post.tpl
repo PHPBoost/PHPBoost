@@ -18,7 +18,7 @@
 		</script>
 
 		# START preview #
-		<article>
+		<section>
 			<header>
 				<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
 			</header>
@@ -33,7 +33,7 @@
 				{preview.CONTENTS}
 			</div>
 			<footer></footer>
-		</article>
+		</section>
 		# END preview #
 
 		# INCLUDE message_helper #

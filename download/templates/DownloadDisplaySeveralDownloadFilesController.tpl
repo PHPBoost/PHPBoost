@@ -1,16 +1,18 @@
 <section id="module-download">
 	<header>
-		 # IF C_CATEGORY ## IF IS_ADMIN #<span class="actions"><a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF ## ENDIF #
-		<h1>
+		<div class="cat-actions">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF ## ENDIF #
+		</div>
+		<h1>
 			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
-		# IF C_CATEGORY_DESCRIPTION #
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
-			</div>
-		# ENDIF #
 	</header>
+	# IF C_CATEGORY_DESCRIPTION #
+		<div class="cat-description">
+			{CATEGORY_DESCRIPTION}
+		</div>
+	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
 	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
@@ -108,19 +110,19 @@
 			# START downloadfiles #
 			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
-					<span class="actions">
-						# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
-						# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"></i></a># ENDIF #
-					</span>
 					<h2><a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a></h2>
-					<meta itemprop="url" content="{downloadfiles.U_LINK}">
-					<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
-					# IF C_COMMENTS_ENABLED #
+				</header>
+				<div class="actions">
+					# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+					# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"></i></a># ENDIF #
+				</div>
+
+				<meta itemprop="url" content="{downloadfiles.U_LINK}">
+				<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
+				# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
-					# ENDIF #
-					<div class="spacer"></div>
-				</header>
+				# ENDIF #
 
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
 					<div class="more">
