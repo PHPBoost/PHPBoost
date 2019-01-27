@@ -47,19 +47,6 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: normal;
 }
 
-section header h1 {
-	font-size: 1em;
-}
-
-section > header,
-section > header h1 {
-	text-align: right;
-}
-
-article > header > h1 {
-	font-size: 1.482em;
-}
-
 /* --- Les Titres bbcode --- */
 .formatter-title {
 	display: inline-block;

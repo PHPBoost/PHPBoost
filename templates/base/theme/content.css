@@ -45,6 +45,10 @@ section header a:hover {
 	text-decoration: none;
 }
 
+.cat-title {
+	text-align: right;
+}
+
 /* --- Titre d'un bas de page --- */
 @media (min-width: 769px) {
 	section footer,
