@@ -53,7 +53,7 @@ class AdminCSSCacheController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('css_cache', $this->lang['css_cache']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_css_cache']));
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_css_cache'], array('class' => 'full-field')));
 
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
 		$form->add_button($this->submit_button);
