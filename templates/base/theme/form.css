@@ -193,16 +193,6 @@ select:focus {
 .field-large   	{ width: 200px; }
 .field-xlarge 	{ width: 250px; }
 
-/* .input-date 	{ width: calc(100% - 1.618em); }
-.input-hours,
-.input-minutes 	{ width: 3.618em;  }
-@media (min-width:769px) {
-	.input-date { width: 110px; }
-}
-
-[name$="_hours"],
-[name$="_minutes"] { width: 3.618em; } */
-
 .form-field-date,
 .form-field-datetime {
     display: -ms-flexbox;
