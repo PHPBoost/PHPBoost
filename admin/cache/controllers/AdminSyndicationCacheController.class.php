@@ -53,7 +53,7 @@ class AdminSyndicationCacheController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('syndication_cache', $this->lang['syndication_cache']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache']));
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache'], array('class' => 'full-field')));
 
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
 		$form->add_button($this->submit_button);

@@ -53,7 +53,7 @@ class AdminCacheController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('cache', $this->lang['cache']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_data_cache']));
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_data_cache'], array('class' => 'full-field')));
 
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
 		$form->add_button($this->submit_button);
