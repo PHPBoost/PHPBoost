@@ -45,14 +45,21 @@ class InstallLicenseController extends InstallController
 
 		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
 		$this->form->add_fieldset($fieldset);
-		$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
+
+		$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />', array(
+			'class' => 'full-field'
+		));
 		$fieldset->add_field($agreement);
+
 		$license_content = file_get_contents('gpl-license.txt');
 		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
-		$license = new FormFieldHTML('licenseContent', $license_block);
+		$license = new FormFieldHTML('licenseContent', $license_block, array(
+			'class' => 'full-field'
+		));
 		$fieldset->add_field($license);
+
 		$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
-		array('class' => 'half-field', 'required' => $this->lang['step.license.submit.alert']));
+		array('class' => 'full-field', 'required' => $this->lang['step.license.submit.alert']));
 		$fieldset->add_field($agree_checkbox);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
