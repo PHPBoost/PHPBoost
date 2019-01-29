@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 01 29
  * @since   	PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -156,9 +156,9 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		$this->urls_mappings[] = new UrlMapping('^user/login/?$', '/login/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/aboutcookie/?$', '/aboutcookie/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/registration/?$', '/registration/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^registration/confirm/?([a-z0-9]+)?/?$', '/registration/confirm/$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^user/registration/confirm/?([a-z0-9]+)?/?$', '/registration/confirm/$1', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/password/lost/?$', '/password/lost/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^password/change/?([a-z0-9]+)?/?$', '/password/change/$1', 'L,R=301');
+		$this->urls_mappings[] = new UrlMapping('^user/password/change/?([a-z0-9]+)?/?$', '/password/change/$1', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/error/403/?$', '/error/403/', 'L,R=301');
 		$this->urls_mappings[] = new UrlMapping('^user/error/404/?$', '/error/404/', 'L,R=301');
 
