@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.2 - last update: 2019 01 29
  * @since   	PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -107,8 +107,9 @@ class InstallWebsiteConfigController extends InstallController
 		{
 			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['website.captcha.config']);
 			$this->form->add_fieldset($fieldset);
-
-			$this->distribution_config['default_captcha']::display_config_form_fields($fieldset);
+			
+			$default_captcha = $this->distribution_config['default_captcha'];
+			$default_captcha::display_config_form_fields($fieldset);
 		}
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
@@ -137,8 +138,9 @@ class InstallWebsiteConfigController extends InstallController
 
 		SecurityConfig::save();
 
-		if ($this->distribution_config['default_captcha'])
-			$this->distribution_config['default_captcha']::save_config($this->form);
+		$default_captcha = $this->distribution_config['default_captcha'];
+		if ($default_captcha)
+			$default_captcha::save_config($this->form);
 
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}
@@ -179,7 +181,8 @@ if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(va
 		$this->view = new FileTemplate('install/website.tpl');
 		$this->view->put('WEBSITE_FORM', $this->form->display());
 		$step_title = $this->lang['step.websiteConfig.title'];
-		$additional_stylesheet = $this->distribution_config['default_captcha'] ? $this->distribution_config['default_captcha']::get_css_stylesheet() : '';
+		$default_captcha = $this->distribution_config['default_captcha'];
+		$additional_stylesheet = $default_captcha ? $default_captcha::get_css_stylesheet() : '';
 		$response = new InstallDisplayResponse(4, $step_title, $this->view, $additional_stylesheet);
 		return $response;
 	}
