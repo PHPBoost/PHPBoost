@@ -87,7 +87,7 @@
 		<ul class="admin-menu-elements-content">
 			<li class="admin-menu-checkbox">
 				<div class="form-field form-field-checkbox-mini select-all-checkbox">
-					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@langs.select_all_langs}" />
+					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
 					<label for="delete-all-checkbox"></label>
 				</div>
 			</li>
