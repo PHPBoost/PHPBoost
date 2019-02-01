@@ -37,6 +37,6 @@ $lang['langs.upload_lang'] = 'Uploader une langue';
 $lang['langs.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 //Avertissements
-$lang['langs.warning_before_install'] = '<span class="message-helper warning">Une langue doit être activée, désactivée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les langues ajoutées sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
-$lang['langs.add.warning_before_install'] = '<span class="message-helper warning">Une langue doit être installée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les langues ajoutées sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
+$lang['langs.warning_before_install'] = '<span class="message-helper warning">Une langue doit être activée, désactivée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les langues ajoutées sont automatiquements activées. Pensez à les désactiver si besoin.</span>';
+$lang['langs.add.warning_before_install'] = '<span class="message-helper warning">Une langue doit être installée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les langues ajoutées sont automatiquements activées. Pensez à les désactiver si besoin.</span>';
 ?>
