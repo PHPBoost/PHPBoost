@@ -183,14 +183,9 @@ function display_default_version_radio(version_id)
 	</tbody>
 	<tfoot>
 		<tr>
-			<td>
+			<td colspan="5">
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true" title="{@titles.add_version}"></i></a>
-			</td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</td>
 		</tr>
 	</tfoot>
