@@ -277,7 +277,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed()));
 
-		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render()));
+		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render(), array('class' => 'full-field')));
 
 		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['titles.categories']);
 		$fieldset->set_description($this->lang['explain.category'] . '<br /><br />' . $this->lang['explain.remarks']);
@@ -287,7 +287,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed()));
 
-		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render()));
+		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render(), array('class' => 'full-field')));
 
 		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['titles.severities']);
 		$fieldset->set_description($this->lang['explain.severity'] . '<br /><br />' . $this->lang['explain.remarks']);
@@ -295,7 +295,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory()));
 
-		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render()));
+		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render(), array('class' => 'full-field')));
 
 		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['titles.priorities']);
 		$fieldset->set_description($this->lang['explain.priority'] . '<br /><br />' . $this->lang['explain.remarks']);
@@ -305,7 +305,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed()));
 
-		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render()));
+		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render(), array('class' => 'full-field')));
 
 		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['titles.versions']);
 		$fieldset->set_description($this->lang['explain.version'] . '<br /><br />' . $this->lang['explain.remarks']);
@@ -315,7 +315,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed()));
 
-		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render()));
+		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render(), array('class' => 'full-field')));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
