@@ -237,6 +237,7 @@ table.bt tbody td {
 	width: 100%;
 	vertical-align: top;
 	text-align: left;
+	border-width: 0 1px;
 }
 
 table.bt tbody td:before {
