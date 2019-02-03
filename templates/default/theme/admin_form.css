@@ -274,7 +274,7 @@ optgroup {
 .form-field-checkbox-mini [type="checkbox"]:checked {
 	position: absolute;
 	margin: 0;
-	display: none;
+	opacity: 0;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:not(:checked) + label,
@@ -361,7 +361,7 @@ optgroup {
 }
 .form-field-checkbox [type="checkbox"]:not(:checked),
 .form-field-checkbox [type="checkbox"]:checked {
-	display: none;
+	opacity: 0;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label,
