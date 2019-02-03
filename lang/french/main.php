@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 02 03
  * @since   	PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -201,6 +201,8 @@ $LANG['select_all'] = 'Tout sélectionner';
 $LANG['select_none'] = 'Tout désélectionner';
 $LANG['add_member'] = 'Ajouter un membre';
 $LANG['alert_member_already_auth'] = 'Le membre est déjà dans la liste';
+$LANG['select_by_group'] = 'Selection par groupe et rang';
+$LANG['select_by_member'] = 'Selection par membre';
 
 //Membres
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';
@@ -321,7 +323,6 @@ S\'il s\'agit d\'une erreur veuillez contacter l\'administrateur du site.
 
 
 %s';
-
 
 //Panneau de contribution
 $LANG['contribution_panel'] = 'Panneau de contribution';

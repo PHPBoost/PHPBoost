@@ -36,9 +36,11 @@ jQuery(document).ready(function() {
 		# IF C_HOUR #
 			<label for="${escape(HTML_ID)}_hours" class="label-time" data-time="{L_H}">
 				<input type="number" min="0" max="23" id="${escape(HTML_ID)}_hours" class="input-hours" name="${escape(HTML_ID)}_hours" value="{HOURS}" # IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+				<span class="sr-only">${LangLoader::get_message('hours', 'date-common')}</span>
 			</label>
 			<label for="${escape(HTML_ID)}_minutes" class="label-time" data-time="{L_MN}">
 				<input type="number" min="0" max="59"# IF C_FIVE_MINUTES_STEP # step="5"# ENDIF # id="${escape(HTML_ID)}_minutes" class="input-minutes" name="${escape(HTML_ID)}_minutes" value="{MINUTES}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+				<span class="sr-only">${LangLoader::get_message('minutes', 'date-common')}</span>
 			</label>
 		# ENDIF #
 	</div>

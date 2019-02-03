@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 02 03
  * @since   	PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -200,6 +201,8 @@ $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
 $LANG['add_member'] = 'Add a member';
 $LANG['alert_member_already_auth'] = 'The member is already in the list';
+$LANG['select_by_group'] = 'Select by group or rank';
+$LANG['select_by_member'] = 'Select by member';
 
 //Members
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
