@@ -5,52 +5,52 @@
 		</header>
 
 		<nav id="menustats">
-			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
+			<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('categories', 'categories-common')}">
 				<i class="fa fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
 			</a>
 			<ul>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats" aria-label="{L_SITE}">
 						<i class="fa fa-home" aria-hidden="true"></i> <span>{L_SITE}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats" aria-label="{L_USERS}">
 						<i class="fa fa-users" aria-hidden="true"></i> <span>{L_USERS}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats" aria-label="{L_VISITS}">
 						<i class="fa fa-eye" aria-hidden="true"></i> <span>{L_VISITS}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats" aria-label="{L_PAGES}">
 						<i class="far fa-file" aria-hidden="true"></i> <span>{L_PAGES}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats" aria-label="{L_BROWSERS}">
 						<i class="fa fa-globe" aria-hidden="true"></i> <span>{L_BROWSERS}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats" aria-label="{L_OS}">
 						<i class="fa fa-laptop" aria-hidden="true"></i> <span>{L_OS}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats" aria-label="{L_LANG}">
 						<i class="fa fa-flag" aria-hidden="true"></i> <span>{L_LANG}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats" aria-label="{L_REFERER}">
 						<i class="fa fa-share-square" aria-hidden="true"></i> <span>{L_REFERER}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats">
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats" aria-label="{L_KEYWORD}">
 						<i class="fa fa-key" aria-hidden="true"></i> <span>{L_KEYWORD}</span>
 					</a>
 				</li>

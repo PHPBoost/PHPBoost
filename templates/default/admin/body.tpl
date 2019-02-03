@@ -3,22 +3,22 @@
 		<nav class="admin-index">
 			<ul>
 				<li>
-					<a href="{PATH_TO_ROOT}/" title="{L_INDEX_SITE}">
+					<a href="{PATH_TO_ROOT}/" aria-label="{L_INDEX_SITE}">
 						<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{L_INDEX_SITE}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/admin_index.php" title="{L_ADMINISTRATION}">
+					<a href="{PATH_TO_ROOT}/admin/admin_index.php" aria-label="{L_ADMINISTRATION}">
 						<i class="fa fa-fw fa-cogs" aria-hidden="true"></i> <span>{L_ADMINISTRATION}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" title="{L_EXTEND_MENU}">
+					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" aria-label="{L_EXTEND_MENU}">
 						<i class="fa fa-fw fa-th" aria-hidden="true"></i> <span>{L_EXTEND_MENU}</span>
 					</a>
 				</li>
 				<li>
-					<a href="${relative_url(UserUrlBuilder::disconnect())}" title="{L_DISCONNECT}">
+					<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}">
 						<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> <span>{L_DISCONNECT}</span>
 					</a>
 				</li>
@@ -27,7 +27,7 @@
 		<div class="header-admin-container">
 			<div id="top-header-admin">
 				<div id="site-name-container">
-					<a id="site-name" href="{PATH_TO_ROOT}/" title="{SITE_NAME}">{SITE_NAME}</a>
+					<a id="site-name" href="{PATH_TO_ROOT}/" aria-label="{SITE_NAME}">{SITE_NAME}</a>
 				</div>
 			</div>
 			<div id="sub-header-admin">
@@ -47,17 +47,17 @@
 						</h3>
 						<ul>
 							<li>
-								<a href="https://www.phpboost.com/forum" title="{L_INDEX_SUPPORT}">
+								<a href="https://www.phpboost.com/forum" aria-label="{L_INDEX_SUPPORT}">
 									<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
 								</a>
 							</li>
 							<li>
-								<a href="https://www.phpboost.com/faq" title="{L_INDEX_FAQ}">
+								<a href="https://www.phpboost.com/faq" aria-label="{L_INDEX_FAQ}">
 									<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
 							<li>
-								<a href="https://www.phpboost.com/wiki" title="{L_INDEX_DOCUMENTATION}">
+								<a href="https://www.phpboost.com/wiki" aria-label="{L_INDEX_DOCUMENTATION}">
 									<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
 								</a>
 							</li>
@@ -77,7 +77,7 @@
 
 		<footer id="footer">
 			<span>
-				{L_POWERED_BY} <a class="powered-by" href="https://www.phpboost.com" title="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
+				{L_POWERED_BY} <a class="powered-by" href="https://www.phpboost.com" aria-label="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 			</span>
 			# IF C_DISPLAY_BENCH #
 				<span>

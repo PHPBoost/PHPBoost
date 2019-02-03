@@ -13,57 +13,57 @@
 			<legend>{L_STATS}</legend>
 			<div class="fieldset-inset">
 				<nav id="menustats">
-					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" title="${LangLoader::get_message('categories', 'categories-common')}">
+					<a href="" class="js-menu-button" onclick="open_submenu('menustats');return false;" aria-label="${LangLoader::get_message('categories', 'categories-common')}">
 						<i class="fa fa-bars" aria-hidden="true"></i> ${LangLoader::get_message('categories', 'categories-common')}
 					</a>
 					<ul>
 						<li>
-							<a href="admin_stats.php?site=1#stats">
+							<a href="admin_stats.php?site=1#stats" aria-label="{L_SITE}">
 								<i class="fa fa-home" aria-hidden="true"></i> <span>{L_SITE}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?members=1#stats">
+							<a href="admin_stats.php?members=1#stats" aria-label="{L_USERS}">
 								<i class="fa fa-users" aria-hidden="true"></i> <span>{L_USERS}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?visit=1#stats">
+							<a href="admin_stats.php?visit=1#stats" aria-label="{L_VISITS}">
 								<i class="fa fa-eye" aria-hidden="true"></i> <span>{L_VISITS}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?pages=1#stats">
+							<a href="admin_stats.php?pages=1#stats" aria-label="{L_PAGES}">
 								<i class="far fa-file" aria-hidden="true"></i> <span>{L_PAGES}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?browser=1#stats">
+							<a href="admin_stats.php?browser=1#stats" aria-label="{L_BROWSERS}">
 								<i class="fa fa-globe" aria-hidden="true"></i> <span>{L_BROWSERS}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?os=1#stats">
+							<a href="admin_stats.php?os=1#stats" aria-label="{L_OS}">
 								<i class="fa fa-laptop" aria-hidden="true"></i> <span>{L_OS}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?lang=1#stats">
+							<a href="admin_stats.php?lang=1#stats" aria-label="{L_LANG}">
 								<i class="fa fa-flag" aria-hidden="true"></i> <span>{L_LANG}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?referer=1#stats">
+							<a href="admin_stats.php?referer=1#stats" aria-label="{L_REFERER}">
 								<i class="fa fa-share-square" aria-hidden="true"></i> <span>{L_REFERER}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?keyword=1#stats">
+							<a href="admin_stats.php?keyword=1#stats" aria-label="{L_KEYWORD}">
 								<i class="fa fa-key" aria-hidden="true"></i> <span>{L_KEYWORD}</span>
 							</a>
 						</li>
 						<li>
-							<a href="admin_stats.php?bot=1#stats">
+							<a href="admin_stats.php?bot=1#stats" aria-label="{L_ROBOTS}">
 								<i class="fa fa-search" aria-hidden="true"></i> <span>{L_ROBOTS}</span>
 							</a>
 						</li>
