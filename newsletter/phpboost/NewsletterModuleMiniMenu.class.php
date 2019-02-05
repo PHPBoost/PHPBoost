@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 02 05
  * @since   	PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterModuleMiniMenu extends ModuleMiniMenu
@@ -42,6 +43,7 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 		$tpl->add_lang(LangLoader::get('common', 'newsletter'));
 
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		Menu::assign_common_template_variables($tpl);
 
 		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
 
