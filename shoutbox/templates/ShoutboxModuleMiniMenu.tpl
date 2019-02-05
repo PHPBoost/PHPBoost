@@ -122,10 +122,10 @@ function shoutbox_refresh_messages_box() {
 	<div id="shoutbox-bbcode-container" class="shout-spacing">
 		# IF C_DISPLAY_SHOUT_BBCODE #
 		<ul>
-			<li class="bbcode-elements">
+			<li class="bbcode-elements bbcode-block-shoutbox">
 				<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);"> <i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}</span></a>
 				<div class="bbcode-block-container" style="display: none;" id="bb-block1shout-contents">
-					<ul class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
+					<ul class="bbcode-block bbcode-block-smileys bkgd-main" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
 						# START smileys #
 						<li>
 							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}" /></a>

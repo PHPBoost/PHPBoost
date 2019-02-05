@@ -19,6 +19,23 @@
 
 .shout-spacing {
 	margin: 0.618em 0;
+	position: relative;
+}
+
+.bbcode-elements.bbcode-block-shoutbox {
+	position: static !important;
+}
+
+.shout-spacing .bbcode-block-container {
+	top: 100%;
+}
+
+.shout-spacing .bbcode-block-smileys {
+	width: 100%;
+}
+.shout-spacing
+.bbcode-block-container::after {
+    border-color: transparent;
 }
 
 .shout-pseudo.not-connected {
