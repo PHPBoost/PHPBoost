@@ -1,4 +1,4 @@
-<div role="search" id="module-mini-search"# IF C_HIDDEN_WITH_SMALL_SCREENS # class="hidden-small-screens"# ENDIF #>
+<div role="search" id="module-mini-search"# IF C_HORIZONTAL # class="float-right# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #"# ENDIF #>
 	<script>
 	<!--
 		function check_search_mini_form_post()
