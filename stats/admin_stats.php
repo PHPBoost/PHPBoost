@@ -4,7 +4,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 02 05
  * @since   	PHPBoost 1.2 - 2005 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -131,10 +131,10 @@ else
 		}
 
 		$stats_array = array();
-		$result = $db_querier->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+		$result = $db_querier->select("SELECT count(ext_field.user_sex) as compt, ext_field.user_sex
 		FROM " . PREFIX . "member member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
-		GROUP BY ext_field.user_sex, member.user_id
+		GROUP BY ext_field.user_sex
 		ORDER BY compt");
 		while ($row = $result->fetch())
 		{
