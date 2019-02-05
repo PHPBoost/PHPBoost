@@ -1,5 +1,6 @@
 <div class="advanced-auth-container">
 	<div class="advanced-auth advanced-auth-group">
+		<label for="groups_auth{IDSELECT}"><span class="sr-only">${LangLoader::get_message('select_by_group', 'main')}</span></label>
 		<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 			<optgroup label="{L_RANKS}">
 			# START ranks_list #
@@ -17,6 +18,7 @@
 
 	# IF C_ADVANCED_AUTH #
 	<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
+		<label for="members_auth{IDSELECT}"><span class="sr-only">${LangLoader::get_message('select_by_member', 'main')}</span></label>
 		<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
 			<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 				# START members_list #
@@ -27,8 +29,7 @@
 	</div>
 
 	<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-		<strong>{L_ADD_USER}</strong>
-		<br />
+		<label for="login{IDSELECT}"><strong>{L_ADD_USER}</strong></label>
 		<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
 		<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" class="small">{L_GO}</button>
 		<br />

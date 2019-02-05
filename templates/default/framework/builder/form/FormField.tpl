@@ -1,6 +1,6 @@
 <div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display: none;" # ENDIF # class="form-element# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF ## IF C_HAS_CSS_CLASS # {CLASS}# ENDIF #">
 	# IF C_HAS_LABEL #
-		<label# IF NOT C_HIDE_FOR_ATTRIBUTE # for="${escape(HTML_ID)}"# ENDIF #>
+		<label# IF NOT C_HIDE_FOR_ATTRIBUTE # for="${escape(HTML_ID)}"# ELSE # for="onblurContainerResponse${escape(HTML_ID)}"# ENDIF #>
 			{LABEL}
 			# IF C_DESCRIPTION #
 			<span class="field-description">{DESCRIPTION}</span>

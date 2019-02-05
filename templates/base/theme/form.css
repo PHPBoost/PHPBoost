@@ -356,6 +356,10 @@ select[readonly=readonly]:focus {
 	display: inline-block;
 }
 
+.form-field-checkbox-mini > label {
+	display: inline-block;
+}
+
 /* --- Textarea --- */
 .form-field-textarea {
 	position: relative;

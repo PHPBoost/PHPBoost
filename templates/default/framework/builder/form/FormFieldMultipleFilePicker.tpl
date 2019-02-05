@@ -8,7 +8,9 @@ MultipleFilePicker.prototype = {
 	add_file_input : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
-
+			var label = ${escapejs(LangLoader::get_message('form.source.name', 'common'))} + " " + this.integer;
+			
+			jQuery('<label for="${escape(HTML_ID)}_' + this.integer + '"><span class="sr-only">' + label + '</span></label>').appendTo('#input_files_list_' + this.id_input);
 			jQuery('<input/>', {'type' : 'file', 'id' : id, 'name' : id}).appendTo('#input_files_list_' + this.id_input);
 
 			jQuery('<br/>').appendTo('#input_files_list_' + this.id_input);
@@ -25,6 +27,7 @@ var MultipleFilePicker = new MultipleFilePicker();
 
 </script>
 <div id="input_files_list_${escape(HTML_ID)}">
+	<label for="${escape(HTML_ID)}_1"><span class="sr-only">${LangLoader::get_message('form.source.name', 'common')} 1</span></label>
 	<input type="file" name="${escape(HTML_ID)}_1" id="${escape(HTML_ID)}_1"# IF C_DISABLED # disabled="disabled"# ENDIF #><br />
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
