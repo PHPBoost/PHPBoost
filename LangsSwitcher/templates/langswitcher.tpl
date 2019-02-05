@@ -1,4 +1,4 @@
-<div class="langs-switcher">
+<div class="langs-switcher# IF C_HORIZONTAL ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## ENDIF #">
 	<form action="{REWRITED_SCRIPT}" method="get">
 		<div class="selected-lang# IF C_VERTICAL # langs-switcher-vertical# ENDIF #">
 			<label for="switchlang">

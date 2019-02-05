@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 19
+ * @version   	PHPBoost 5.2 - last update: 2019 02 05
  * @since   	PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
@@ -58,6 +59,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		$tpl = new FileTemplate('ThemesSwitcher/themeswitcher.tpl');
 		$tpl->add_lang(LangLoader::get('themeswitcher_common', 'ThemesSwitcher'));
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		Menu::assign_common_template_variables($tpl);
 
 		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $theme)
 		{
