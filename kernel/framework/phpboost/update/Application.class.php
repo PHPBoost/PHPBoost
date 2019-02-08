@@ -39,8 +39,8 @@ class Application
 	private $bug_corrections = array();
 	private $security_improvements = array();
 
-	private $warning_level = null;
-	private $warning = null;
+	private $warning_level = '';
+	private $warning = '';
 
 	const KERNEL_TYPE = 'kernel';
 	const MODULE_TYPE = 'module';
@@ -299,9 +299,9 @@ class Application
 		if (count($elements) > 0)
 		{
 			$attributes = $elements[0]->attributes();
-			return isset($attributes[$attibute_name]) ? (string) $attributes[$attibute_name] : null;
+			return isset($attributes[$attibute_name]) ? (string) $attributes[$attibute_name] : '';
 		}
-		return null;
+		return '';
 	}
 
 	/**
