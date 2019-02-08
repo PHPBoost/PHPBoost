@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @version   	PHPBoost 5.2 - last update: 2019 02 08
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -43,7 +43,7 @@ if ($app instanceof Application && $app->check_compatibility())
 
 	$nb_authors = count($authors);
 	$has_new_feature = count($new_features) > 0;
-	$has_warning = count($warning) > 0;
+	$has_warning = !empty($warning);
 	$has_improvements = count($improvements) > 0;
 	$has_bug_corrections = count($bug_corrections) > 0;
 	$has_security_improvements = count($security_improvements) > 0;
