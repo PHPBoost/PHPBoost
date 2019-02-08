@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2019 02 08
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,16 +146,16 @@ class Application
 			switch ($type)
 			{
 				case 'improvement':
-					$this->improvements[] = utf8_decode((string) $novelty);
+					$this->improvements[] = (string) $novelty;
 					break;
 				case 'bug':
-					$this->bug_corrections[] = utf8_decode((string) $novelty);
+					$this->bug_corrections[] = (string) $novelty;
 					break;
 				case 'security':
-					$this->security_improvements[] = utf8_decode((string) $novelty);
+					$this->security_improvements[] = (string) $novelty;
 					break;
 				default:
-					$this->new_features[] = utf8_decode((string) $novelty);
+					$this->new_features[] = (string) $novelty;
 					break;
 			}
 		}
@@ -164,7 +164,7 @@ class Application
 		if (!empty($this->warning_level))
 		{
 			$this->warning = $xml_desc->xpath('warning');
-			$this->warning = utf8_decode((string) $this->warning[0]);
+			$this->warning = (string) $this->warning[0];
 		}
 	}
 	/**
@@ -299,7 +299,7 @@ class Application
 		if (count($elements) > 0)
 		{
 			$attributes = $elements[0]->attributes();
-			return isset($attributes[$attibute_name]) ? utf8_decode((string) $attributes[$attibute_name]) : null;
+			return isset($attributes[$attibute_name]) ? (string) $attributes[$attibute_name] : null;
 		}
 		return null;
 	}
