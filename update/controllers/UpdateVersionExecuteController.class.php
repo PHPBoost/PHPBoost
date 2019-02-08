@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 16
+ * @version   	PHPBoost 5.2 - last update: 2019 02 08
  * @since   	PHPBoost 3.0 - 2012 03 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -73,7 +73,7 @@ class UpdateVersionExecuteController extends UpdateController
 			
 			if ($this->default_theme_changed)
 			{
-				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], array('old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => ThemesManager::get_theme('base')->get_configuration()->get_name()));
+				$message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], array('old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => 'Base'));
 			}
 			
 			$view->put('INCOMPATIBLE_THEMES', MessageHelper::display($message, MessageHelper::WARNING));
