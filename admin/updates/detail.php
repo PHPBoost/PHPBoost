@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 08
+ * @version   	PHPBoost 5.2 - last update: 2019 02 09
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -51,16 +52,16 @@ if ($app instanceof Application && $app->check_compatibility())
 	switch ($update->get_priority())
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$priority = 'priority_very_high';
+			$priority = 'error';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$priority = 'priority_high';
+			$priority = 'warning';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-			$priority = 'priority_medium';
+			$priority = 'success';
 			break;
 		default:
-			$priority = 'priority_low';
+			$priority = 'question';
 			break;
 	}
 
@@ -74,7 +75,7 @@ if ($app instanceof Application && $app->check_compatibility())
 		'APP_WARNING' => $warning,
 		'U_APP_DOWNLOAD' => $app->get_download_url(),
 		'U_APP_UPDATE' => $app->get_update_url(),
-		'PRIORITY_CSS_CLASS' => 'row_' . $priority,
+		'PRIORITY_CSS_CLASS' => $priority,
 		'L_AUTHORS' => $nb_authors > 1 ? $LANG['authors'] : $LANG['author'],
 		'L_NEW_FEATURES' => $LANG['new_features'],
 		'L_IMPROVEMENTS' => $LANG['improvements'],
