@@ -20,110 +20,61 @@
 
 <div id="admin-contents">
 	<fieldset>
-		<legend>{L_APP_UPDATE_MESSAGE}</legend>
+		<legend><h1>{L_APP_UPDATE_MESSAGE}</h1></legend>
 		<div class="fieldset-inset">
-			<div style="clear:right;"></div>
 			# IF C_UNEXISTING_UPDATE #
 				<div class="message-helper warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
 			# ELSE #
-				<table id="table">
-					<caption>{L_APP_UPDATE_MESSAGE}</caption>
-					<thead>
-						<tr>
-							<th
-								# IF C_NEW_FEATURES #class="tdw50"# ENDIF #
-								# IF C_BUG_CORRECTIONS #class="tdw50"# ENDIF #
-								# IF C_NEW_FEATURES ## IF C_BUG_CORRECTIONS #class="tdw25"# ENDIF ## ENDIF #>
-								${LangLoader::get_message('last_update', 'admin')}
-							</th>
-							# IF C_NEW_FEATURES #
-								<th>{L_NEW_FEATURES}</th>
-							# ENDIF #
-							# IF C_BUG_CORRECTIONS #
-								<th>{L_FIXED_BUGS}</th>
-							# ENDIF #
-							<th class="td150">{L_AUTHORS}</th>
-							<th class="td200">{L_DOWNLOAD}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="valign-top">
-								<div class="block-container">
-									<div class="block-top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
-									<div class="block-contents">
-										{APP_DESCRIPTION}
-										<p class="smaller">{APP_PUBDATE}</p>
-									</div>
-								</div>
-								# IF C_IMPROVMENTS #
-									<div class="block-container">
-										<div class="block-top"><span>{L_IMPROVMENTS}</span></div>
-										<div class="block-contents">
-											<ul class="list"># START improvments #<li>{improvments.description}</li># END improvments #</ul>
-										</div>
-									</div>
-								# ENDIF #
-								# IF C_APP_WARNING #
-								<div class="block-container">
-									<div class="block-top"><span class="{PRIORITY_CSS_CLASS}">{L_WARNING} - {APP_WARNING_LEVEL}</span></div>
-									<div class="block-contents">
-										{APP_WARNING}
-									</div>
-								</div>
-								# ENDIF #
-							</td>
-							# IF C_NEW_FEATURES #
-								<td class="valign-top">
-									<div class="block-container">
-										<div class="block-top"><span></span></div>
-										<div class="block-contents">
-											<ul class="list"># START new_features #<li>{new_features.description}</li># END new_features #</ul>
-										</div>
-									</div>
-								</td>
-							# ENDIF #
-							# IF C_BUG_CORRECTIONS #
-								<td class="valign-top">
-									<div class="block-container">
-										<div class="block-contents">
-											<ul class="list"># START bugs #<li>{bugs.description}</li># END bugs #</ul>
-										</div>
-									</div>
-								</td>
-							# ENDIF #
-							<td class="valign-top">
-								<div class="block-container">
-									<div class="block-contents">
-										<ul class="list"># START authors #<li><a href="mailto:{authors.email}">{authors.name}</a></li># END authors #</ul>
-									</div>
-								</div>
-							</td>
-							<td class="valign-top">
-								<div class="block-container">
-									<div class="block-contents">
-										<ul class="list">
-											<li><a href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a></li>
-											# IF U_APP_UPDATE #
-												<li><a href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a></li>
-											# ENDIF #
-										</ul>
-									</div>
-								</div>
-								# IF C_SECURITY_IMPROVMENTS #
-									<div class="block-container">
-										<div class="block-top"><span>{L_SECURITY_IMPROVMENTS}</span></div>
-										<div class="block-contents">
-											<ul class="list">
-												# START security #<li>{security.description}</li># END security #
-											</ul>
-										</div>
-									</div>
-								# ENDIF #
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<article>
+					<header>
+						<h2>{APP_NAME} - {APP_VERSION}</h2>
+						# IF C_APP_WARNING #
+						<div class="{PRIORITY_CSS_CLASS}">
+							<p class="center">{L_WARNING} - {APP_WARNING_LEVEL}</p>
+							<p>{APP_WARNING}</p>
+						</div>
+						# ENDIF #
+					</header>
+					<div class="float-right">
+						<a href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a>
+						# IF U_APP_UPDATE #
+							<br />
+							<a href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
+						# ENDIF #
+					</div>
+					<div class="more">
+						{APP_PUBDATE} | # START authors #<a href="mailto:{authors.email}">{authors.name}</a> | # END authors #
+					</div>
+					<div class="content">
+						<p>{APP_DESCRIPTION}</p>
+					</div>
+					<aside>
+						# IF C_IMPROVMENTS #
+							<h5>{L_IMPROVMENTS}</h5>
+							<ul>
+								# START improvments #<li>{improvments.description}</li># END improvments #
+							</ul>
+						# ENDIF #
+						# IF C_SECURITY_IMPROVMENTS #
+							<h5>{L_SECURITY_IMPROVMENTS}</h5>
+							<ul>
+								# START security #<li>{security.description}</li># END security #
+							</ul>
+						# ENDIF #
+						# IF C_NEW_FEATURES #
+							<h5>{L_NEW_FEATURES}</h5>
+							<ul>
+								# START new_features #<li>{new_features.description}</li># END new_features #
+							</ul>
+						# ENDIF #
+						# IF C_BUG_CORRECTIONS #
+							<h5>{L_FIXED_BUGS}</h5>
+							<ul>
+								# START bugs #<li>{bugs.description}</li># END bugs #
+							</ul>
+						# ENDIF #
+					</aside>
+				</article>
 			# ENDIF #
 		</div>
 	</fieldset>

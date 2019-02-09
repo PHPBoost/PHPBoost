@@ -20,51 +20,26 @@
 
 <div id="admin-contents">
 	<fieldset>
-		<legend>{L_WEBSITE_UPDATES}</legend>
+		<legend><h1>{L_WEBSITE_UPDATES}</h1></legend>
 		<div class="fieldset-inset">
 		# IF C_INCOMPATIBLE_PHP_VERSION #
 			<div class="message-helper warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
 		# ELSE #
 			# IF C_UPDATES #
-			<table id="table">
-				<caption>{L_WEBSITE_UPDATES}</caption>
-				<div class="message-helper warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>
-				<thead>
-					<tr>
-						# IF C_ALL #
-						<th class="td100">{L_TYPE}</th>
-						# ENDIF #
-						<th>{L_NAME}</th>
-						<th>{L_VERSION}</th>
-						<th class="tdw50">{L_DESCRIPTION}</th>
-						<th>{L_PRIORITY}</th>
-						<th>{L_UPDATE_DOWNLOAD}</th>
-					</tr>
-				</thead>
-				<tbody>
-					# START apps #
-					<tr>
-						# IF C_ALL #
-						<td class="center">{apps.type}</td>
-						# ENDIF #
-						<td>{apps.name}</td>
-						<td>{apps.version}</td>
-						<td>
-							<div class="update-desc">{apps.short_description}</div>
-							<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
-						</td>
-						<td>{apps.L_PRIORITY}</td>
-						<td class="center">
-							<a href="{apps.download_url}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a><br />
-							# IF apps.update_url #
-							/<br />
-							<a href="{apps.update_url}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
-							# ENDIF #
-						</td>
-					</tr>
-					# END apps #
-				</tbody>
-			</table>
+				# START apps #
+				<article>
+					<header>
+						<h2>{apps.name} {apps.version}</h2>
+					</header>
+					<div class="infos options error">
+						{apps.L_PRIORITY}
+					</div>
+					<div class="content">
+						<p>{apps.short_description}</p>
+						<a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}">[ {L_MORE_DETAILS} ]</a>
+					</div>
+				</article>
+				# END apps #
 			# ELSE #
 				<div class="message-helper success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 			# ENDIF #
