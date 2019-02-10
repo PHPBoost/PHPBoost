@@ -56,6 +56,7 @@ $lang['db_autoincrement'] = 'Auto increment';
 $lang['db_table_free'] = 'Overhead';
 $lang['db_selected_tables'] = 'Select';
 $lang['db_select_all'] = 'Select all tables';
+$lang['db_select_db_for_restore'] = 'Select the database for restore';
 $lang['db_for_selected_tables'] = 'Actions to execute on selected tables';
 $lang['db_optimize'] = 'Optimize';
 $lang['db_repair'] = 'Repair';

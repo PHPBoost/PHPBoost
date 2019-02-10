@@ -56,6 +56,7 @@ $lang['db_autoincrement'] = 'Suivant autoindex';
 $lang['db_table_free'] = 'Perte';
 $lang['db_selected_tables'] = 'Sélectionner';
 $lang['db_select_all'] = 'Sélectionner toutes les tables';
+$lang['db_select_db_for_restore'] = 'Sélectionner la base de donnée à restaurer';
 $lang['db_for_selected_tables'] = 'Actions à réaliser sur la sélection de tables';
 $lang['db_optimize'] = 'Optimiser';
 $lang['db_repair'] = 'Réparer';
