@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 22
+ * @version     PHPBoost 5.2 - last update: 2019 02 10
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,7 +16,14 @@ class CurrentUser extends User
 {
 	public static function from_session()
 	{
+		if (AppContext::get_session() === null)
+		{
+			Environment::load_imports();
+			Environment::init();
+		}
+		
 		$session = AppContext::get_session();
+		
 		return new self($session);
 	}
 
