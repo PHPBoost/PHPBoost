@@ -45,8 +45,11 @@
 								<div class="db-restore block">
 										{L_RESTORE_FROM_UPLOADED_FILE}
 										<br /><br />
-										<input type="file" class="file" name="file_sql">
-										<input type="hidden" name="max_file_size" value="500000000">
+										<label for="select-file-for-backup">
+											<input id="select-file-for-backup" type="file" class="file" name="file_sql">
+											<input type="hidden" name="max_file_size" value="500000000">
+											<span class="sr-only">${LangLoader::get_message('db_select_db_for_restore', 'common', 'database')}</span>
+										</label>
 										<br /><br />
 										<div class="center">
 											<button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
@@ -91,11 +94,11 @@
 							<td>
 								<div class="form-field-checkbox-mini" style="margin: auto;">
 										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
-										<label for="id{table_list.I}"></label>
+										<label for="id{table_list.I}"><span class="sr-only">{L_SELECTED_TABLES}</span></label>
 								</div>
 							</td>
 							<td>
-								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
+								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME} {table_list.TABLE_NAME}</a>
 							</td>
 							<td>
 								{table_list.TABLE_ROWS}
@@ -116,9 +119,9 @@
 						# END table_list #
 						<tr class="center">
 							<td>
-								<div class="form-field-checkbox-mini" style="display: inline-block">
+								<div class="form-field-checkbox-mini" style="display: inline-block;">
 										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
-										<label for="check-all"></label>
+										<label for="check-all"><span class="sr-only">{L_ALL}</span></label>
 								</div>
 								<span class="valign-bottom">{L_ALL}</span>
 							</td>
@@ -260,13 +263,15 @@
 								{L_SELECTION}
 							</th>
 							<th>
+								${LangLoader::get_message('db_backup', 'common', 'database')}
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>
-								<select name="table_list[]" size="8" multiple="multiple">
+								<label for="table_list[]">${LangLoader::get_message('db_table_list', 'common', 'database')}</label>
+								<select id="table_list[]" name="table_list[]" size="8" multiple="multiple">
 								# START table_list #
 									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
 								# END table_list #
@@ -277,25 +282,25 @@
 							<td>
 								<p>{L_EXPLAIN_BACKUP}</p>
 								<p class="center"><i class="fa fa-2x fa-save" aria-hidden="true"></i></p>
-								<p>
+								<fieldset>
 									<div class="form-field-radio">
-											<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
-											<label for="backup_all"></label>
+										<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
+										<label for="backup_all"><span class="sr-only">{L_BACKUP_ALL}</span></label>
 									</div>
 									<span class="form-field-radio-span">{L_BACKUP_ALL}</span>
 									<div class="form-field-radio">
-											<input type="radio" id="backup_struct" name="backup_type" value="struct">
-											<label for="backup_struct"></label>
+										<input type="radio" id="backup_struct" name="backup_type" value="struct">
+										<label for="backup_struct"><span class="sr-only">{L_BACKUP_STRUCT}</span></label>
 									</div>
 									<span class="form-field-radio-span">{L_BACKUP_STRUCT}</span>
 									<div class="form-field-radio">
-											<input type="radio" id="backup_data" name="backup_type" value="data"/>
-											<label for="backup_data"></label>
+										<input type="radio" id="backup_data" name="backup_type" value="data"/>
+										<label for="backup_data"><span class="sr-only">{L_BACKUP_DATA}</span></label>
 									</div>
 									<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
-								</p>
-								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
+									<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
+								</fieldset>
 							</td>
 						</tr>
 					</tbody>
