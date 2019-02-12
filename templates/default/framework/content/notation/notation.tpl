@@ -24,17 +24,17 @@
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/notation.js"></script>
 	# ENDIF #
-	
+
 	<script>
 	<!--
 		jQuery(document).ready(function() { new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', '{AVERAGE_NOTES}', '{ALREADY_NOTE}'); });
 	-->
 	</script>
-		
+
 	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
-				<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
+				<a aria-label="${LangLoader::get_message('add_note', 'common')}" href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
 		</span>
 		<span class="notes">
