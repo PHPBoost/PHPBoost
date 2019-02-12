@@ -486,11 +486,11 @@ else
 			'URL' => PATH_TO_ROOT . $link,
 			'TITLE' => str_replace('"', '\"', $row['name']),
 			'NAME' => $name_cut,
-			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="fa fa-edit"></i></a></span>',
+			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="fa fa-edit" aria-hidden="true" title="' . LangLoader::get_message('edit', 'common') . '"></i></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'BBCODE' => '<input type="text" readonly="readonly" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" class="upload-input-bbcode" value="' . $displayed_code . '">',
 			'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" aria-label="' . $LANG['popup_insert'] . '"><i class="fa fa-clipboard"></i></a>' : '',
+			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" aria-label="' . $LANG['popup_insert'] . '"><i class="fa fa-clipboard" aria-hidden="true" title="' . $LANG['popup_insert'] . '"></i></a>' : '',
 			'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1"' : '',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
 		));
