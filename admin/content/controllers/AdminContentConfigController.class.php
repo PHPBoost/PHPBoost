@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @version   	PHPBoost 5.2 - last update: 2019 02 13
  * @since   	PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -263,7 +263,7 @@ class AdminContentConfigController extends AdminController
 			$this->content_management_config->set_notation_enabled(true);
 			if ($this->form->get_value('notation_scale') != $this->content_management_config->get_notation_scale())
 			{
-				foreach (AppContext::get_extension_provider_service()->get_extension_point(NotationExtensionPoint::EXTENSION_POINT) as $module_id => $module_notation)
+				foreach (ModulesManager::get_activated_feature_modules('notation') as $module_id => $module)
 				{
 					NotationService::update_notation_scale($module_id, $this->content_management_config->get_notation_scale(), $this->form->get_value('notation_scale'));
 				}
