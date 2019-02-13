@@ -2,7 +2,7 @@
 	# IF C_NOTES #
 		<div class="static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 			# START star #
-				<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
+				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/{NOTATION_SCALE}" href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
 			<meta itemprop="ratingCount" content="{NUMBER_NOTES}">
 			<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
@@ -34,7 +34,7 @@
 	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
-				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/5" href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
+				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/{NOTATION_SCALE}" href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
 		</span>
 		<span class="notes">
