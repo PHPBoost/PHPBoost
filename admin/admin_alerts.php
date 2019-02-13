@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 05 05
+ * @version   	PHPBoost 5.2 - last update: 2019 02 13
  * @since   	PHPBoost 2.0 - 2008 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,25 +43,20 @@ foreach ($alerts_list as $alert)
 
 	switch ($alert->get_priority())
 	{
-		case AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY:
-			$color = 'FFFFFF';
-			break;
-		case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
-			$color = 'ECDBB7';
-			break;
-		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-			$color = 'F5D5C6';
+		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
+			$img_class = 'fa fa-warning';
+			$priority_css_class = 'error';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 			$img_class = 'fa fa-warning';
-			$color = 'FFD5D1';
+			$priority_css_class = 'warning';
 			break;
-		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$img_class = 'fa fa-warning';
-			$color = 'F3A29B';
+		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
+			$priority_css_class = 'question';
 			break;
 		default:
-		$color = 'FFFFFF';
+			$priority_css_class = 'success';
+			break;
 	}
 
 	$creation_date = $alert->get_creation_date();
@@ -71,7 +66,7 @@ foreach ($alerts_list as $alert)
 		'FIXING_URL' => Url::to_rel($alert->get_fixing_url()),
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
-		'STYLE' => 'background:#' . $color . ';',
+		'PRIORITY_CSS_CLASS' => $priority_css_class,
 		'IMG' => !empty($img_class) ? '<i class="' . $img_class . '"></i>' : '',
 		'DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'ID' => $alert->get_id(),

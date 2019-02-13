@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 03 05
+ * @version   	PHPBoost 5.2 - last update: 2019 02 13
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -61,15 +61,19 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		{
 			case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 				$priority = 'priority_very_high';
+				$priority_css_class = 'error';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 				$priority = 'priority_high';
+				$priority_css_class = 'warning';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
 				$priority = 'priority_medium';
+				$priority_css_class = 'question';
 				break;
 			default:
 				$priority = 'priority_low';
+				$priority_css_class = 'success';
 				break;
 		}
 
@@ -84,7 +88,8 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 			'version' => $update->get_version(),
 			'short_description' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
 			'identifier' => $update->get_identifier(),
-			'L_PRIORITY' => $LANG[$priority],
+			'priority' => $LANG[$priority],
+			'priority_css_class' => $priority_css_class,
 			'download_url' => $update->get_download_url(),
 			'update_url' => $update->get_update_url()
 		));
