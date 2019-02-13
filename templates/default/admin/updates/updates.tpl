@@ -31,8 +31,8 @@
 					<header>
 						<h2>{apps.name} {apps.version}</h2>
 					</header>
-					<div class="infos options error">
-						{apps.L_PRIORITY}
+					<div class="infos options {apps.priority_css_class}">
+						{apps.priority}
 					</div>
 					<div class="content">
 						<p>{apps.short_description}</p>
