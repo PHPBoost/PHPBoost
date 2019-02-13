@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 02 13
  * @since   	PHPBoost 4.0 - 2013 03 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -29,6 +29,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			WHERE ( FT_SEARCH(articles.title, '" . $args['search'] . "') OR FT_SEARCH(articles.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "') ) OR keyword.rewrited_name = '" . Url::encode_rewrite($args['search']) . "'
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			AND (published = 1 OR (published = 2 AND publishing_start_date < '" . $now->get_timestamp() . "' AND (publishing_end_date > '" . $now->get_timestamp() . "' OR publishing_end_date = 0)))
+			GROUP BY id_content
 			ORDER BY relevance DESC
 			LIMIT 100 OFFSET 0";
 	}
