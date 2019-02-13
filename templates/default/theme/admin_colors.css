@@ -788,6 +788,12 @@ tr td.bkgd-color-processing { background-color: #FFD86F; }
 .bkgd-color-unknown 		{ background-color: #FF796F; }
 tr td.bkgd-color-unknown 	{ background-color: #FF796F; }
 
+.alert-very-low-priority  { background-color: #9AC4F8 !important; border-color: #A3C9F8; color: #546B88; }
+.alert-low-priority       { background-color: #7FFF9C !important; border-color: #74E88E; color: #468C56; }
+.alert-medium-priority    { background-color: #FFD86F !important; border-color: #FFDB7C; color: #8C7844; }
+.alert-high-priority      { background-color: #FFAF87 !important; border-color: #FFAF87; color: #8C604A; }
+.alert-very-high-priority { background-color: #FF796F !important; border-color: #E86E65; color: #944641; }
+
 h3.title1, h3.title2 {
 	border-color: #366393;
 }
