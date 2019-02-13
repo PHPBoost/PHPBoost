@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 02 13
  * @since   	PHPBoost 4.0 - 2013 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -29,6 +29,7 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') ) OR keyword.rewrited_name = '" . Url::encode_rewrite($args['search']) . "'
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
+			GROUP BY id_content
 			ORDER BY relevance DESC
 			LIMIT 100 OFFSET 0";
 	}
