@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 02 08
+ * @version     PHPBoost 5.2 - last update: 2019 02 14
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,6 +30,7 @@ class Application
 
 	private $download_url = '';
 	private $update_url = '';
+	private $autoupdate_url = '';
 
 	private $authors = array();
 
@@ -119,6 +120,7 @@ class Application
 
 		$this->download_url = self::get_attribute($xml_desc, 'url', 'download');
 		$this->update_url = self::get_attribute($xml_desc, 'url', 'update');
+		$this->autoupdate_url = self::get_attribute($xml_desc, 'url', 'autoupdate');
 
 		$this->authors = array();
 		$authors_elts = $xml_desc->xpath('authors/author');
@@ -252,6 +254,10 @@ class Application
 	 * Accessor of Update URL
 	 */
 	public function get_update_url() { return $this->update_url; }
+	/**
+	 * Accessor of Auto Update URL
+	 */
+	public function get_autoupdate_url() { return $this->autoupdate_url; }
 	/**
 	 * Accessor of Authors
 	 */

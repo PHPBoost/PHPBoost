@@ -22,6 +22,7 @@
 	<fieldset>
 		<legend><h1>{L_APP_UPDATE_MESSAGE}</h1></legend>
 		<div class="fieldset-inset">
+			# INCLUDE MSG #
 			# IF C_UNEXISTING_UPDATE #
 				<div class="message-helper warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
 			# ELSE #
@@ -29,34 +30,43 @@
 					<header>
 						<h2>{APP_NAME} - {APP_VERSION}</h2>
 						# IF C_APP_WARNING #
-						<div class="{PRIORITY_CSS_CLASS}">
-							<p class="center">{L_WARNING} - {APP_WARNING_LEVEL}</p>
+						<div class="{WARNING_CSS_CLASS}">
+							<p class="center">{L_WARNING}</p>
 							<p>{APP_WARNING}</p>
 						</div>
 						# ENDIF #
 					</header>
+					# IF C_DISPLAY_LINKS_AND_PRIORITY #
 					<div class="float-right">
-						<a href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a>
-						# IF U_APP_UPDATE #
-							<br />
-							<a href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
-						# ENDIF #
+							# IF C_DISPLAY_UPDATE_BUTTON #
+								<form action="/admin/updates/detail.php?identifier={IDENTIFIER}" method="post">
+									<button type="submit" name="execute_update" class="submit" onclick="" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+									<input type="hidden" name="token" value="{TOKEN}">
+								</form>
+							# ELSE #
+								<a href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a>
+								# IF U_APP_UPDATE #
+									<br />
+									<a href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
+								# ENDIF #
+							# ENDIF #
 					</div>
+					# ENDIF #
 					<div class="more">
-						{APP_PUBDATE} | # START authors #<a href="mailto:{authors.email}">{authors.name}</a> | # END authors #
+						{APP_PUBDATE} | # START authors #<a href="mailto:{authors.email}">{authors.name}</a> | # END authors ## IF C_DISPLAY_LINKS_AND_PRIORITY #<div class="infos options center"><p class="alert-priority {PRIORITY_CSS_CLASS}">{PRIORITY}</p></div># ENDIF #
 					</div>
 					<div class="content">
 						<p>{APP_DESCRIPTION}</p>
 					</div>
 					<aside>
-						# IF C_IMPROVMENTS #
-							<h5>{L_IMPROVMENTS}</h5>
+						# IF C_IMPROVEMENTS #
+							<h5>{L_IMPROVEMENTS}</h5>
 							<ul>
-								# START improvments #<li>{improvments.description}</li># END improvments #
+								# START improvements #<li>{improvements.description}</li># END improvements #
 							</ul>
 						# ENDIF #
-						# IF C_SECURITY_IMPROVMENTS #
-							<h5>{L_SECURITY_IMPROVMENTS}</h5>
+						# IF C_SECURITY_IMPROVEMENTS #
+							<h5>{L_SECURITY_IMPROVEMENTS}</h5>
 							<ul>
 								# START security #<li>{security.description}</li># END security #
 							</ul>
