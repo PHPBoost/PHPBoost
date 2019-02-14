@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 13
+ * @version   	PHPBoost 5.2 - last update: 2019 02 14
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -61,19 +61,23 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		{
 			case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 				$priority = 'priority_very_high';
-				$priority_css_class = 'error';
+				$priority_css_class = 'alert-very-high-priority';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 				$priority = 'priority_high';
-				$priority_css_class = 'warning';
+				$priority_css_class = 'alert-high-priority';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
 				$priority = 'priority_medium';
-				$priority_css_class = 'question';
+				$priority_css_class = 'alert-medium-priority';
+				break;
+			case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
+				$priority = 'priority_low';
+				$priority_css_class = 'alert-low-priority';
 				break;
 			default:
-				$priority = 'priority_low';
-				$priority_css_class = 'success';
+				$priority = 'priority_very_low';
+				$priority_css_class = 'alert-very-low-priority';
 				break;
 		}
 
