@@ -2,7 +2,11 @@
 <section id="module-bugtracker">
 	<header>
 		<div class="cat-actions">
-			# IF C_SYNDICATION #<a href="# IF C_UNSOLVED #{U_SYNDICATION_UNSOLVED}# ELSE #{U_SYNDICATION_SOLVED}# ENDIF #" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa-pbt fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a># ENDIF #
+			# IF C_SYNDICATION #
+				<a href="# IF C_UNSOLVED #{U_SYNDICATION_UNSOLVED}# ELSE #{U_SYNDICATION_SOLVED}# ENDIF #" aria-label="${LangLoader::get_message('syndication', 'common')}">
+					<i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i>
+				</a>
+			# ENDIF #
 		</div>
 		<h1>
 			{TITLE}
