@@ -3,6 +3,31 @@
 <repository>
 	<header />
 		<app id="kernel" type="kernel">
+			<version num="5.2.0" language="french" localized_language="Francais" name="Noyau" priority="high" security-update="false" pubdate="2019/01/28">
+				<compatibility min="5.1" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.2.0</download>
+				<authors>
+					<author name="Julien Briswalter" email="j1.seth@phpboost.com" />
+				</authors>
+				<description>
+					Plus performante, plus sécurisée, PHPBoost 5.2 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautés.
+					Pour plus d'informations : &lt;a href="https://www.phpboost.com/news/17-phpboost-5-2/242-phpboost-5-2-est-disponible-en-version-finale/"&gt;PHPBoost 5.2 est disponible en version finale&lt;/a&gt;
+				</description>
+				<whatsnew>
+					<new type="feature">Mise en place d'un module Reseaux Sociaux pour permettre le partage des news, articles etc. directement</new>
+					<new type="feature">Possibilite de mettre en place l'authentification avec son compte Facebook, Google+, LinkedIn ou Twitter</new>
+					<new type="feature">Integration de la librairie d'icones FontAwesome 5</new>
+					<new type="improvment">Amelioration du SEO des differentes pages du site, pour faciliter le referencement</new>
+					<new type="improvment">Installation/suppression de plusieurs themes, langues, modules en meme temps grace a une interface d'administration plus moderne</new>
+					<new type="improvment">Mise a jour du framework javascript jQuery</new>
+					<new type="improvment">Adaptation du code pour le rendre compatible avec php 7.2 et 7.3</new>
+					<new type="improvment">Mise en place d'un nouveau theme "Base" epure et amelioration de l'accessibilite</new>
+					<new type="improvment">Mise a jour du captcha ReCaptcha de Google avec la possibilite de mettre en place invisible ReCaptcha</new>
+					<new type="improvment">Optimisation du kernel et du theme pour un affichage plus rapide</new>
+					<new type="improvment">Amelioration de la securite</new>
+					<new type="improvment">Bien d'autres ameliorations a decouvrir sur cette page : &lt;a href="https://www.phpboost.com/wiki/phpboost-5-2"&gt;PHPBoost 5.2&lt;/a&gt;</new>
+				</whatsnew>
+			</version>
 			<version num="5.1.3" language="french" localized_language="Français" name="Noyau" priority="high" security-update="false" pubdate="2018/07/20">
 				<compatibility min="5.1" />
 				<download url="https://www.phpboost.com/download/">PHPBoost 5.1.3</download>

@@ -28,6 +28,9 @@
 <!ELEMENT update (#PCDATA)>
 <!ATTLIST update url CDATA #REQUIRED>
 
+<!ELEMENT autoupdate (#PCDATA)>
+<!ATTLIST autoupdate url CDATA #REQUIRED>
+
 <!ELEMENT authors (author+)>
 <!ELEMENT author EMPTY>
 <!ATTLIST author
