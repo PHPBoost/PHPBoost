@@ -87,13 +87,13 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
 
 		$tpl->assign_block_vars('apps', array(
-			'type' => $update->get_type(),
-			'name' => $update->get_name(),
-			'version' => $update->get_version(),
-			'short_description' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
-			'identifier' => $update->get_identifier(),
-			'priority' => $LANG[$priority],
-			'priority_css_class' => $priority_css_class
+			'TYPE' => $update->get_type(),
+			'NAME' => $update->get_name(),
+			'VERSION' => $update->get_version(),
+			'SHORT_DESCRIPTION' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
+			'IDENTIFIER' => $update->get_identifier(),
+			'PRIORITY' => $LANG[$priority],
+			'PRIORITY_CSS_CLASS' => $priority_css_class
 		));
 		
 		$updates_availables++;
@@ -113,7 +113,7 @@ $tpl->put_all(array(
 	'L_MODULES' => $LANG['modules'],
 	'L_THEMES' => $LANG['themes'],
 	'L_MORE_DETAILS' => $LANG['more_details'],
-	'L_NO_AVAILABLES_UPDATES' => $updates_availables ? $LANG['no_available_update'] : '',
+	'L_NO_AVAILABLES_UPDATES' => !$updates_availables ? $LANG['no_available_update'] : '',
 	'C_UPDATES' => $updates_availables,
 	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
 	'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
