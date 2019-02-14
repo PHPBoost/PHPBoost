@@ -7,6 +7,10 @@
 	margin-bottom: 10px;
 }
 
+.cssmenu-group .cssmenu-title-rss {
+	border-width: 1px 0 1px 0;
+}
+
 .legend-line {
 	padding: 0 0 8px 0;
 }
