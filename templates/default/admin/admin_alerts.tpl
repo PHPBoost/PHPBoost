@@ -139,7 +139,7 @@ function delete_alert(id)
 					<td>
 						{alerts.DATE}
 					</td>
-					<td class="{alerts.PRIORITY_CSS_CLASS}">
+					<td class="alert-priority {alerts.PRIORITY_CSS_CLASS}">
 						{alerts.PRIORITY}
 					</td>
 					<td>

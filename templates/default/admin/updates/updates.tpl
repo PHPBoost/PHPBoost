@@ -31,7 +31,7 @@
 					<header>
 						<h2>{apps.name} {apps.version}</h2>
 					</header>
-					<div class="infos options {apps.priority_css_class}">
+					<div class="infos options alert-priority {apps.priority_css_class}">
 						{apps.priority}
 					</div>
 					<div class="content">

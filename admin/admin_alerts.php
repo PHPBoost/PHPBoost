@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 13
+ * @version   	PHPBoost 5.2 - last update: 2019 02 14
  * @since   	PHPBoost 2.0 - 2008 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,17 +45,20 @@ foreach ($alerts_list as $alert)
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 			$img_class = 'fa fa-warning';
-			$priority_css_class = 'error';
+			$priority_css_class = 'alert-very-high-priority';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 			$img_class = 'fa fa-warning';
-			$priority_css_class = 'warning';
+			$priority_css_class = 'alert-high-priority';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-			$priority_css_class = 'question';
+			$priority_css_class = 'alert-medium-priority';
+			break;
+		case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
+			$priority_css_class = 'alert-low-priority';
 			break;
 		default:
-			$priority_css_class = 'success';
+			$priority_css_class = 'alert-very-low-priority';
 			break;
 	}
 
