@@ -263,7 +263,7 @@ article .admin-element-menu-title,
 	border-color: #E84E40 #F1F1F1 #F1F1F1 #F1F1F1;
 }
 
-span.not-compatible { 
+span.not-compatible {
 	color: #E84E40;
 }
 
@@ -767,9 +767,9 @@ a:hover {
 }
 
 /* --- Les liens des utilisateurs --- */
-a.admin 	{ color: #C72125; }
-a.modo 		{ color: #E27B47; }
-a.member 	{ color: #22A31B; }
+.admin 	{ color: #C72125; }
+.modo 		{ color: #E27B47; }
+.member 	{ color: #22A31B; }
 
 /* --- Couleur de texte --- */
 .color-alert 		{ color: #B22222; }
@@ -788,11 +788,13 @@ tr td.bkgd-color-processing { background-color: #FFD86F; }
 .bkgd-color-unknown 		{ background-color: #FF796F; }
 tr td.bkgd-color-unknown 	{ background-color: #FF796F; }
 
-.alert-very-low-priority  { background-color: #9AC4F8 !important; border-color: #A3C9F8; color: #546B88; }
-.alert-low-priority       { background-color: #7FFF9C !important; border-color: #74E88E; color: #468C56; }
-.alert-medium-priority    { background-color: #FFD86F !important; border-color: #FFDB7C; color: #8C7844; }
-.alert-high-priority      { background-color: #FFAF87 !important; border-color: #FFAF87; color: #8C604A; }
-.alert-very-high-priority { background-color: #FF796F !important; border-color: #E86E65; color: #944641; }
+.alert-very-low-priority  { background-color: #9AC4F8; border-color: #A3C9F8; color: #546B88; }
+.alert-low-priority       { background-color: #7FFF9C; border-color: #74E88E; color: #468C56; }
+.alert-medium-priority    { background-color: #FFD86F; border-color: #FFDB7C; color: #8C7844; }
+.alert-high-priority      { background-color: #FFAF87; border-color: #FFAF87; color: #8C604A; }
+.alert-very-high-priority { background-color: #FF796F; border-color: #E86E65; color: #944641; }
+td.alert-priority         { border-color: #D1D2D4;}
+
 
 h3.title1, h3.title2 {
 	border-color: #366393;
