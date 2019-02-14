@@ -129,8 +129,6 @@ class WebDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
-			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->module_comments_is_enabled('web') + (int)$this->content_management_config->module_notation_is_enabled('web'),
 			'ID_CAT' => $this->get_category()->get_id(),
