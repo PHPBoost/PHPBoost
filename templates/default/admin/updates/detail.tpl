@@ -30,7 +30,7 @@
 					<header>
 						<h2>{APP_NAME} - {APP_VERSION}</h2>
 						# IF C_APP_WARNING #
-							<div class="message-helper {WARNING_CSS_CLASS}">
+							<div class="message-helper message-update {WARNING_CSS_CLASS}">
 								<p class="center">{L_WARNING}</p>
 								<p>{APP_WARNING}</p>
 							</div>
