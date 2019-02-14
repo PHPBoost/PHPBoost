@@ -454,6 +454,10 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 4rem; }
 	text-decoration: none;
 }
 
+.static-notation .star {
+	cursor: default;
+}
+
 .notation .star-width {
 	position: absolute;
 	display: inline-block;
