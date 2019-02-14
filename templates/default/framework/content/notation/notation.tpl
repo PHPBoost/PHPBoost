@@ -1,8 +1,8 @@
 # IF C_STATIC_DISPLAY #
 	# IF C_NOTES #
-		<div class="static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
+		<div aria-label="${LangLoader::get_message('note', 'common')}: {AVERAGE_NOTES}/{NOTATION_SCALE}" class="notation static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 			# START star #
-				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/{NOTATION_SCALE}" href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
+				<a href="" onclick="return false;" class="fa star fa-star-empty" id="star-{ID_IN_MODULE}-{star.I}" aria-hidden="true"><span class="star-width {star.STAR_WIDTH}"></span></a>
 			# END star #
 			<meta itemprop="ratingCount" content="{NUMBER_NOTES}">
 			<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
