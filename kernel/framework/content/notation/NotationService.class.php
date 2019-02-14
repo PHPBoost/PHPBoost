@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 06 19
+ * @version     PHPBoost 5.2 - last update: 2019 02 14
  * @since       PHPBoost 3.0 - 2010 02 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,11 +50,15 @@ class NotationService
 				$star_empty = false;
 				$width = 0;
 
-				if ($int >= $i || ($int+1 == $i && $decimal == 0)) {
+				if ($int >= $i || ($int+1 == $i && $decimal == 1)) {
 					$star_full = true;
 					$star_width = 'star-width-100';
 				}
-				else if ($int+1 == $i && $decimal >= 0.75) {
+				else if ($int+1 == $i && $decimal >= 0.90) {
+					$star_full = true;
+					$star_width = 'star-width-90';
+				}
+				else if ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9) {
 					$star_full = true;
 					$star_width = 'star-width-75';
 				}
@@ -62,9 +66,13 @@ class NotationService
 					$star_half = true;
 					$star_width = 'star-width-50';
 				}
-				else if ($int+1 == $i && $decimal >= 0.05 && $decimal < 0.5) {
+				else if ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5) {
 					$star_half = true;
 					$star_width = 'star-width-25';
+				}
+				else if ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25) {
+					$star_empty = true;
+					$star_width = 'star-width-10';
 				}
 				else {
 					$star_empty = true;
@@ -83,7 +91,8 @@ class NotationService
 			$count_notes = $notation->get_number_notes();
 			$template->put_all(array(
 				'C_STATIC_DISPLAY' => true,
-				'C_NOTES' => $count_notes > 0 ? true : false,
+				'C_NOTES' => $count_notes > 0,
+				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NUMBER_NOTES' => $notation->get_number_notes(),
 				'AVERAGE_NOTES' => $average_notes,
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
@@ -169,8 +178,8 @@ class NotationService
 			$count_notes = $notation->get_number_notes();
 			$template->put_all(array(
 				'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
-				'C_NOTES' => $count_notes > 0 ? true : false,
-				'C_MORE_1_NOTES' => $count_notes > 1 ? true : false,
+				'C_NOTES' => $count_notes > 0,
+				'C_MORE_1_NOTES' => $count_notes > 1,
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
