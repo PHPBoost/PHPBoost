@@ -36,12 +36,13 @@
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
 
+	# IF C_MORE_THAN_ONE_FILE #
+		# INCLUDE SORT_FORM #
+		<div class="spacer"></div>
+	# ENDIF #
+
 	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{NUMBER_COLUMNS}# ENDIF #">
 	# IF C_FILES #
-		# IF C_MORE_THAN_ONE_FILE #
-			# INCLUDE SORT_FORM #
-			<div class="spacer"></div>
-		# ENDIF #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table id="table">
 				<thead>
