@@ -654,16 +654,15 @@ span.not-compatible {
 	}
 }
 
-.options > * {
-	padding: 10px ;
-}
-
 .options h6 {
 	font-size: 1.1em;
 }
 
 .infos-options {
 	display: block;
+	padding: 10px 15px;
+	margin: 0;
+	width: 100%;
 }
 
 /* --- Gestion des Categories --- */
