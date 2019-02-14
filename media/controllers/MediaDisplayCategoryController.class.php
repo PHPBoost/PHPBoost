@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 02 14
  * @since   	PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -172,7 +172,7 @@ class MediaDisplayCategoryController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 
-		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
+		$result = PersistenceContext::get_querier()->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.poster, v.contents, mb.display_name, mb.groups, mb.level, notes.number_notes, notes.average_notes, com.number_comments
 			FROM " . PREFIX . "media AS v
 			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
@@ -201,6 +201,8 @@ class MediaDisplayCategoryController extends ModuleController
 			$notation = new Notation();
 			$notation->set_module_name('media');
 			$notation->set_id_in_module($row['id']);
+			$notation->set_number_notes($row['number_notes']);
+			$notation->set_average_notes($row['average_notes']);
 
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
