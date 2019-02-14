@@ -507,6 +507,14 @@ li.block .fa-stack {
 .message-helper.success:before  { content: "\f00c"; }
 .message-helper.question:before { content: "\f128"; }
 
+.message-update.error:before,
+.message-update.notice:before,
+.message-update.warning:before,
+.message-update.success:before,
+.message-update.question:before {
+	content: "";
+}
+
 .floating-message-container {
 	position: fixed;
 	left: 50%;
