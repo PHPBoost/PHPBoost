@@ -100,8 +100,14 @@ span.actions a {
 .content {
 	margin: 0 15px;
 	word-wrap: break-word;
-	overflow: hidden;
 	text-align: justify;
+}
+
+.content::after,
+.content::before {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 /* Pagination */
@@ -366,7 +372,7 @@ header.legend .admin-element-menu-container {
 	transition: color 0.1s, background-color 0.1s;
 }
 
-span.not-compatible { 
+span.not-compatible {
 	font-weight: 900;
 }
 
@@ -635,18 +641,29 @@ span.not-compatible {
 }
 
 .options {
-	float: right;
-	margin: 5px;
-	padding: 6px 12px;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
-	border-radius: 3px;
+}
+
+@media (min-width: 769px) {
+	.options {
+		float: right;
+		margin: 0 0 15px 15px;
+		border-radius: 3px;
+	}
+}
+
+.options > * {
+	padding: 10px ;
 }
 
 .options h6 {
-	margin: 10px 3px;
 	font-size: 1.1em;
+}
+
+.infos-options {
+	display: block;
 }
 
 /* --- Gestion des Categories --- */

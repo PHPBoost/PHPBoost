@@ -27,24 +27,24 @@
 		# ELSE #
 			# IF C_UPDATES #
 				# START apps #
-				<article>
-					<header>
-						<h2>{apps.name} {apps.version}</h2>
-					</header>
-					<div class="infos options alert-priority {apps.priority_css_class}">
-						{apps.priority}
-					</div>
-					<div class="content">
-						<p>{apps.short_description}</p>
-						<a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}">[ {L_MORE_DETAILS} ]</a>
-					</div>
-				</article>
+					<article>
+						<header>
+							<h2>{apps.name} {apps.version}</h2>
+						</header>
+						<div class="content">
+							<div class="infos options center">
+								<p class="alert-priority {apps.priority_css_class}">{apps.priority}</p>
+								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}">[ {L_MORE_DETAILS} ]</a></p>
+							</div>
+							<p>{apps.short_description}</p>
+						</div>
+					</article>
 				# END apps #
 			# ELSE #
 				<div class="message-helper success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 			# ENDIF #
-			<p class="center">
-				<a href="{U_CHECK}"><i class="fa fa-download"></i></a> <a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
+			<p class="center question">
+				<a href="{U_CHECK}"><i class="fa fa-download" aria-hidden="true"></i> {L_CHECK_FOR_UPDATES_NOW}</a>
 			</p>
 		# ENDIF #
 		</div>
