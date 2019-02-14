@@ -93,35 +93,11 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 			'short_description' => ($length > 0 ? TextHelper::substr($short_description, 0, $length) . '...' : $short_description),
 			'identifier' => $update->get_identifier(),
 			'priority' => $LANG[$priority],
-			'priority_css_class' => $priority_css_class,
-			'download_url' => $update->get_download_url(),
-			'update_url' => $update->get_update_url()
+			'priority_css_class' => $priority_css_class
 		));
+		
+		$updates_availables++;
 	}
-
-	if ($updates_availables = (count($updates) > 0))
-	{
-		$tpl->put_all(array(
-			'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
-			'L_AVAILABLES_UPDATES' => $LANG['availables_updates'],
-			'L_TYPE' => $LANG['type'],
-			'L_DESCRIPTION' => $LANG['description'],
-			'L_PRIORITY' => $LANG['priority'],
-			'L_UPDATE_DOWNLOAD' => $LANG['app_update__download'],
-			'L_NAME' => $LANG['name'],
-			'L_VERSION' => $LANG['version'],
-			'L_MORE_DETAILS' => $LANG['more_details'],
-			'L_DETAILS' => $LANG['details'],
-			'L_DOWNLOAD_PACK' => $LANG['app_update__download_pack'],
-			'L_DOWNLOAD_THE_COMPLETE_PACK' => $LANG['download_the_complete_pack'],
-			'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
-			'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
-			'C_ALL' => $update_type == ''
-		));
-
-	}
-	else
-		$tpl->put_all(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
 }
 else
 {
@@ -136,6 +112,8 @@ $tpl->put_all(array(
 	'L_KERNEL' => $LANG['kernel'],
 	'L_MODULES' => $LANG['modules'],
 	'L_THEMES' => $LANG['themes'],
+	'L_MORE_DETAILS' => $LANG['more_details'],
+	'L_NO_AVAILABLES_UPDATES' => $updates_availables ? $LANG['no_available_update'] : '',
 	'C_UPDATES' => $updates_availables,
 	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
 	'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
