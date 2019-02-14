@@ -130,8 +130,6 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'C_SEVERAL_CATS_COLUMNS' => $number_columns_cats_display_per_line_cats > 1,
-			'NUMBER_CATS_COLUMNS' => $number_columns_cats_display_per_line_cats,
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
 			'ID_CAT' => $this->get_category()->get_id(),
