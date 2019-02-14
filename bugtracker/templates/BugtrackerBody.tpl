@@ -1,13 +1,6 @@
 # INCLUDE MSG #
 <section id="module-bugtracker">
 	<header>
-		<div class="cat-actions">
-			# IF C_SYNDICATION #
-				<a href="# IF C_UNSOLVED #{U_SYNDICATION_UNSOLVED}# ELSE #{U_SYNDICATION_SOLVED}# ENDIF #" aria-label="${LangLoader::get_message('syndication', 'common')}">
-					<i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i>
-				</a>
-			# ENDIF #
-		</div>
 		<h1>
 			{TITLE}
 		</h1>
@@ -19,9 +12,27 @@
 					<li# IF C_UNSOLVED # class="current"# ENDIF #>
 						<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" class="cssmenu-title">{@titles.unsolved}</a>
 					</li>
+					# IF C_SYNDICATION #
+						# IF C_UNSOLVED #
+							<li# IF C_UNSOLVED # class="current"# ENDIF #>
+								<a class="cssmenu-title cssmenu-title-rss" href="{U_SYNDICATION_UNSOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+									<i class="fa fa-syndication" aria-hidden="true"></i>
+								</a>
+							</li>
+						# ENDIF #
+					# ENDIF #
 					<li# IF C_SOLVED # class="current"# ENDIF #>
 						<a href="${relative_url(BugtrackerUrlBuilder::solved())}" class="cssmenu-title">{@titles.solved}</a>
 					</li>
+					# IF C_SYNDICATION #
+						# IF C_SOLVED #
+							<li# IF C_SOLVED # class="current"# ENDIF #>
+								<a class="cssmenu-title cssmenu-title-rss" href="{U_SYNDICATION_SOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
+									<i class="fa fa-syndication" aria-hidden="true"></i>
+								</a>
+							</li>
+						# ENDIF #
+					# ENDIF #
 					# IF C_ROADMAP_ENABLED #
 					<li# IF C_ROADMAP # class="current"# ENDIF #>
 						<a href="${relative_url(BugtrackerUrlBuilder::roadmap())}" class="cssmenu-title">{@titles.roadmap}</a>
