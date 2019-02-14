@@ -29,14 +29,14 @@
 				# START apps #
 					<article>
 						<header>
-							<h2>{apps.name} {apps.version}</h2>
+							<h2>{apps.NAME} {apps.VERSION}</h2>
 						</header>
 						<div class="content">
 							<div class="infos options center">
-								<p class="alert-priority {apps.priority_css_class}">{apps.priority}</p>
-								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.identifier}">[ {L_MORE_DETAILS} ]</a></p>
+								<p class="alert-priority {apps.PRIORITY_CSS_CLASS}">{apps.PRIORITY}</p>
+								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.IDENTIFIER}">[ {L_MORE_DETAILS} ]</a></p>
 							</div>
-							<p>{apps.short_description}</p>
+							<p>{apps.SHORT_DESCRIPTION}</p>
 						</div>
 					</article>
 				# END apps #
