@@ -13,7 +13,7 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{NUMBER_CATS_COLUMNS}# ENDIF #">
+	<div class="subcat-container elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF #">
 		# START sub_categories_list #
 		<div class="subcat-element block">
 			<div class="subcat-content">
@@ -40,7 +40,7 @@
 		# INCLUDE SORT_FORM #
 		<div class="spacer"></div>
 		# ENDIF #
-	<div class="content elements-container">
+	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{NUMBER_COLUMNS}# ENDIF #">
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table id="table">
 				<thead>
