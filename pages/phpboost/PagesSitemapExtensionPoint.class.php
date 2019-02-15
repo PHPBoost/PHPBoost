@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2015 06 29
+ * @version   	PHPBoost 5.2 - last update: 2018 02 15
  * @since   	PHPBoost 3.0 - 2010 06 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -75,8 +75,9 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 		//Configuration des authorisations
 		$config_authorizations = $pages_config->get_authorizations();
-
-		$this_category = new SitemapLink($categories[$id_cat]['title'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($categories[$id_cat]['title']), Url::encode_rewrite($categories[$id_cat]['title']))));
+		
+		$title = stripslashes($categories[$id_cat]['title']);
+		$this_category = new SitemapLink($title, new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($title), Url::encode_rewrite($title))));
 
 		$category = new SitemapSection($this_category);
 
