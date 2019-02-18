@@ -72,7 +72,7 @@ $LANG['printable_version'] = 'Printable version';
 
 //Share
 $LANG['share.print'] = 'Print';
-$LANG['share.mail'] = 'Share by email';
+$LANG['share.email'] = 'Share by email';
 $LANG['share.sms'] = 'Share by sms';
 
 //Connection
