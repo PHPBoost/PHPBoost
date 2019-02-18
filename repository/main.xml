@@ -3,6 +3,39 @@
 <repository>
 	<header />
 		<app id="kernel" type="kernel">
+			<version num="5.2.1" language="french" localized_language="Francais" name="Noyau" priority="high" security-update="true" pubdate="2019/02/15">
+				<compatibility min="5.2" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.2.1</download>
+				<update url="https://www.phpboost.com/download/70-mises-a-jour-phpboost-5-2/">Mise à jour</update>
+				<autoupdate url="https://dl.phpboost.com/5.2/diff/diff-phpboost-5.2.0-to-phpboost-5.2.1-optimized.zip">Mise à jour automatique</autoupdate>
+				<authors>
+					<author name="Equipe PHPBoost" email="contact@phpboost.com" />
+				</authors>
+				<description>
+					Plus performante, plus sécurisée, la version PHPBoost 5.2.1 améliorera nettement le référencement de votre site et vous fera profiter de nombreuses améliorations et nouveautés.
+				</description>
+				<whatsnew>
+					<new type="new">Possibilité d'installer les mises à jour mineures directement pour ceux qui disposent de la librairie Curl (fonctionnel à partir de la prochaine mise à jour)</new>
+					<new type="improvement">Amélioration de l'affichage des pages de mise à jour du site</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1884-accessibilite-aux-reseaux-sociaux-avec-une-revue-d-ecran"&gt;#1884&lt;/a&gt;&lt;/s&gt; Accessibilité aux réseaux sociaux avec une revue d'écran</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1885-accessibilite-au-module-statistiques-avec-une-revue-d-ecran"&gt;#1885&lt;/a&gt;&lt;/s&gt; Accessibilité au module Statistiques avec une revue d'écran</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1887-probleme-d-accessibilite-au-formulaire-de-configuration-d-envoi-de-mail"&gt;#1887&lt;/a&gt;&lt;/s&gt; Problème d'accessibilité au formulaire de configuration d'envoi de mail</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1888-la-case-qui-permet-d-autoriser-ou-non-l-affichage-sur-un-mobile-n-est-plus-accessible-aux-revues-d-ecran"&gt;#1888&lt;/a&gt;&lt;/s&gt; La case qui permet d'autoriser ou non l'affichage sur un mobile n'est plus accessible aux revues d'écran</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1889-affichage-des-smileys-dans-la-shoutbox"&gt;#1889&lt;/a&gt;&lt;/s&gt; Affichage des smileys dans la shoutbox</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1891-impossible-de-mettre-a-jour-5-1-vers-5-2"&gt;#1891&lt;/a&gt;&lt;/s&gt; Impossible de mettre à jour 5.1 vers 5.2</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1892-message-a-la-fin-de-l-installation"&gt;#1892&lt;/a&gt;&lt;/s&gt; Message d'erreur à la fin de l'installation</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1893-ecriture-de-formule-mathematique-impossible"&gt;#1893&lt;/a&gt;&lt;/s&gt; Ecriture de formule mathématique impossible</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1894-plus-possible-de-choisir-toutes-les-tables-avec-une-revue-d-ecran-au-moment-de-la-sauvegarde-de-la-bdd"&gt;#1894&lt;/a&gt;&lt;/s&gt; Plus possible de choisir toutes les tables avec une revue d'écran au moment de la sauvegarde de la BDD</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1895-fatal-error-lors-du-premier-acces-au-site"&gt;#1895&lt;/a&gt;&lt;/s&gt; Fatal error lors du premier accès au site</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1896-wiki-erreur-404-si-underscore-utilise-dans-nom-categorie"&gt;#1896&lt;/a&gt;&lt;/s&gt; Wiki - erreur 404 si underscore utilisé dans nom catégorie</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1897-le-module-recherches-ne-fonctionne-pas"&gt;#1897&lt;/a&gt;&lt;/s&gt; Le module Recherche ne fonctionne pas</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1898-plus-d-acces-aux-notes-et-a-une-partie-de-l-insertion-des-fichiers"&gt;#1898&lt;/a&gt;&lt;/s&gt; Plus d'accès aux notes et à une partie de l'insertion des fichiers</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1899-echelle-de-notation"&gt;#1899&lt;/a&gt;&lt;/s&gt; Echelle de notation</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1900-notation-non-visible"&gt;#1900&lt;/a&gt;&lt;/s&gt; Notation non visible</new>
+					<new type="security">Mise à jour de la librairie PHPMailer. Correction d'une vulnérabilité potentielle d'injection d'objets. &lt;a href="https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-19296"&gt;CVE-2018-19296&lt;/a&gt;</new>
+				</whatsnew>
+				<warning level="high">Cette mise à jour contient des correctifs pour améliorer la sécurité du site.</warning>
+			</version>
 			<version num="5.2.0" language="french" localized_language="Francais" name="Noyau" priority="high" security-update="false" pubdate="2019/01/28">
 				<compatibility min="5.1" />
 				<download url="https://www.phpboost.com/download/">PHPBoost 5.2.0</download>
