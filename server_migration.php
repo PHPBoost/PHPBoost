@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 30
+ * @version   	PHPBoost 5.2 - last update: 2019 02 19
  * @since   	PHPBoost 3.0 - 2012 05 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '.');
@@ -14,6 +15,7 @@ require_once PATH_TO_ROOT . '/kernel/framework/io/data/cache/CacheData.class.php
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/ConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/GeneralConfig.class.php';
+require_once PATH_TO_ROOT . '/kernel/framework/helper/TextHelper.class.php';
 
 require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
 
@@ -42,72 +44,40 @@ $site_url = $general_config->get_site_url();
 $site_path = $general_config->get_site_path();
 ?>
 
-<form action="" method="post">
-	<fieldset>
-		<legend>Migration</legend>
-		<div class="form-element">
-			<div class="form-field">
-				<label>Url :&nbsp;</label><input type="text" size="65" maxlength="100" id="url" name="url" value="<?php echo $site_url ?>">
-			</div>
-			<div class="form-field">
-				<label>Path :&nbsp;</label><input type="text" size="65" maxlength="100" id="path" name="path" value="<?php echo $site_path ?>">
-			</div>
-		</div>
-		<div>
-			<button type="submit" name="submit" value="true">Submit</button>
-		</div>
-	</fieldset>
-</form>
-<style>
-<!--
-textarea {
-	display:block;
-	width:94%;
-	margin:auto;
-}
-div {
-	text-align:center;
-}
-input.text{
-	padding:2px;
-	width:400px;
-	margin-top:5px;
-}
- label {
-	width:50px;
-	margin-top:5px;
-	text-align:right;
-	display:inline;
-	float:left;
-}
-input.submit, button.submit{
-	padding:1px 2px;
-	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	border:1px solid #515C68;
-	border-top:1px solid #8498ae;
-	color:#515C68;
-	font-weight:bold;
-	font-size:10px;
-	border-radius:5px;
-	cursor:pointer;
-	margin:7px auto;
-}
-fieldset{
-	width: 500px;
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
-	margin:20px auto;
-	padding:6px;
-	border:1px solid #CCCCCC;
-	color:#445766;
-	background:#eceeef;
-	position:relative;
-}
-legend {
-	background:#7191AA;
-	color:#FFF;
-	border-radius:5px;
-	padding:3px 5px;
-	border: 1px solid #CCC;
-}
--->
-</style>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Server migration</title>
+		<meta charset="UTF-8" />
+		<meta name="generator" content="PHPBoost" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="templates/default/theme/default.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="templates/default/theme/admin_design.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="templates/default/theme/admin_colors.css" type="text/css" media="screen, print" />
+	</head>
+
+	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+		<form action="" method="post" class="fieldset-content">
+			<fieldset>
+				<legend><h1>Migration</h1></legend>
+				<div class="fieldset-inset">
+					<div class="form-element half-field">
+						<label for="url">Url :&nbsp;</label>
+						<input type="text" size="55" maxlength="100" id="url" name="url" value="<?php echo $site_url ?>">
+					</div>
+					<div class="form-element half-field">
+						<label for="path">Path :&nbsp;</label>
+						<input type="text" size="55" maxlength="100" id="path" name="path" value="<?php echo $site_path ?>">
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="fieldset-submit">
+				<div class="fieldset-inset">
+					<button class="submit" type="submit" name="submit" value="true">Submit</button>
+				</div>
+			</fieldset>
+		</form>
+	</body>
+</html>
