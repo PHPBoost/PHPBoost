@@ -164,8 +164,14 @@
 								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
-							<a href="{weblinks.U_DEADLINK}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+							<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 								<i class="fa fa-unlink" aria-hidden="true" title="${LangLoader::get_message('deadlink', 'common')}"></i>
+							</a>
+							# ENDIF #
+						# ELSE #
+							# IF C_PENDING #
+							<a href="{weblinks.U_VISIT}" class="basic-button">
+								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 							</a>
 							# ENDIF #
 						# ENDIF #

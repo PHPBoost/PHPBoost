@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 02 25
  * @since   	PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -153,6 +153,7 @@ $lang['suggestions'] = 'Suggestions';
 
 //Dead links
 $lang['deadlink'] = 'Signaler un lien mort';
+$lang['deadlink.confirmation'] = 'Etes-vous sûr de vouloir signaler ce lien comme étant mort ?';
 $lang['contribution.deadlink'] = 'Lien mort : :link_name';
 $lang['contribution.deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
