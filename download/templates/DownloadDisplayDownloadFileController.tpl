@@ -44,7 +44,7 @@
 							</a>
 
 							# IF IS_USER_CONNECTED #
-							<a href="{U_DEADLINK}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+							<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 								<i class="fa fa-unlink" aria-hidden="true" title="${LangLoader::get_message('deadlink', 'common')}"></i>
 							</a>
 							# ENDIF #

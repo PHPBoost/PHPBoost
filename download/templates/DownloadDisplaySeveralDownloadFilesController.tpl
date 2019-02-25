@@ -168,8 +168,14 @@
 										<i class="fa fa-download" aria-hidden="true"></i> {@download}
 									</a>
 									# IF IS_USER_CONNECTED #
-									<a href="{downloadfiles.U_DEADLINK}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+									<a href="{downloadfiles.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 										<i class="fa fa-unlink" aria-hidden="true" title="${LangLoader::get_message('deadlink', 'common')}"></i>
+									</a>
+									# ENDIF #
+								# ELSE #
+									# IF C_PENDING #
+									<a href="{downloadfiles.U_DOWNLOAD}" class="basic-button">
+										<i class="fa fa-download" aria-hidden="true"></i> {@download}
 									</a>
 									# ENDIF #
 								# ENDIF #
