@@ -93,12 +93,12 @@
 						<tr class="center">
 							<td>
 								<div class="form-field-checkbox-mini" style="margin: auto;">
-										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
-										<label for="id{table_list.I}"><span class="sr-only">{L_SELECTED_TABLES}</span></label>
+									<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
+									<label for="id{table_list.I}"><span class="sr-only">{L_SELECTED_TABLES}</span></label>
 								</div>
 							</td>
 							<td>
-								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME} {table_list.TABLE_NAME}</a>
+								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
 							</td>
 							<td>
 								{table_list.TABLE_ROWS}
@@ -120,8 +120,8 @@
 						<tr class="center">
 							<td>
 								<div class="form-field-checkbox-mini" style="display: inline-block;">
-										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
-										<label for="check-all"><span class="sr-only">{L_ALL}</span></label>
+									<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
+									<label for="check-all"><span class="sr-only">{L_ALL}</span></label>
 								</div>
 								<span class="valign-bottom">{L_ALL}</span>
 							</td>
@@ -321,9 +321,9 @@
 					if( query == "" ) {
 						alert("{L_REQUIRE}");
 						return false;
-				    }
+					}
 
-					//V�rification de la requ�te => alerte si elle contient un des mots cl�s DELETE, DROP ou TRUNCATE.
+					//Verification de la requete => alerte si elle contient un des mots cles DELETE, DROP ou TRUNCATE.
 					for(i = 0; i < keyword.length; i++)
 					{
 						if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
