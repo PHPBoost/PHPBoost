@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2019 02 28
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -329,9 +329,7 @@ class SessionData
 	{
 		$data = AppContext::get_session();
 
-		$columns = array(
-			'timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT,
-			'location_id' => $location_id);
+		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => TextHelper::cut_string(REWRITED_SCRIPT, 200), 'location_id' => $location_id);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
