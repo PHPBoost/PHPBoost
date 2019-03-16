@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 05
+ * @version   	PHPBoost 5.2 - last update: 2019 03 16
  * @since   	PHPBoost 1.6 - 2007 08 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -319,8 +319,11 @@ elseif ($get_sex)
 elseif ($get_bot)
 {
 	$array_robot = StatsSaver::retrieve_stats('robots');
-	$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
-	unset($array_robot['unknow_bot']);
+	if (isset($array_robot['unknow_bot']))
+	{
+		$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+		unset($array_robot['unknow_bot']);
+	}
 
 	$Stats->load_data($array_robot, 'ellipse', 5);
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/stats/cache/bot.png');
