@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 03 18
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -263,16 +263,19 @@ while ( $row = $result->fetch() )
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
 
-			$sum_vote = array_sum($array_vote);
+			$sum_vote = (int)array_sum($array_vote);
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
 			foreach ($array_answer as $key => $answer)
 			{
+				$total = (int)$array_vote[$key];
+				$percent = NumberHelper::round(($total * 100 / $sum_vote), 1);
+				
 				$tpl->assign_block_vars('poll_result', array(
 					'ANSWERS' => stripslashes($answer),
-					'NBRVOTE' => $array_vote[$key],
-					'WIDTH'   => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.
-					'PERCENT' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1)
+					'NBRVOTE' => $total,
+					'WIDTH'   => $percent * 4, //x 4 Pour agrandir la barre de vote.
+					'PERCENT' => $percent
 				));
 			}
 		}
