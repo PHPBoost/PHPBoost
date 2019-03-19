@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2015 11 27
+ * @version     PHPBoost 5.2 - last update: 2019 03 19
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -114,6 +114,11 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 	{
 		echo $LANG['no_result'];
 	}
+}
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
