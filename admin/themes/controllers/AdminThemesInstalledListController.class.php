@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -105,11 +105,24 @@ class AdminThemesInstalledListController extends AdminController
 			{
 				if ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on')
 				{
-					$theme_ids[] = $theme_number;
+					$theme_ids[] = $theme->get_id();
 				}
 				$theme_number++;
 			}
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme(implode('--', $theme_ids)));
+			
+			$number_ids = count($theme_ids);
+			if ($number_ids > 1)
+			{
+				$temporary_file = PATH_TO_ROOT . '/cache/themes_to_delete.txt';
+				$file = new File($temporary_file);
+				$file->write(implode(',', $theme_ids));
+				$id = 'delete_multiple';
+			}
+			else
+				$id = $number_ids ? $theme_ids[0] : '';
+			
+			if ($number_ids)
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($id));
 		}
 		elseif ($request->get_string('activate-selected-themes', false) || $request->get_string('deactivate-selected-themes', false))
 		{

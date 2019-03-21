@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -87,11 +87,24 @@ class AdminModulesManagementController extends AdminController
 			{
 				if ($request->get_value('delete-checkbox-' . $module_number, 'off') == 'on')
 				{
-					$module_ids[] = $module_number;
+					$module_ids[] = $module->get_id();
 				}
 				$module_number++;
 			}
-			AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module(implode('--', $module_ids)));
+			
+			$number_ids = count($module_ids);
+			if ($number_ids > 1)
+			{
+				$temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
+				$file = new File($temporary_file);
+				$file->write(implode(',', $module_ids));
+				$id = 'delete_multiple';
+			}
+			else
+				$id = $number_ids ? $module_ids[0] : '';
+			
+			if ($number_ids)
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($id));
 		}
 		elseif ($request->get_string('activate-selected-modules', false) || $request->get_string('deactivate-selected-modules', false))
 		{
