@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2012 01 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,29 +18,24 @@ class AdminUninstallLangController extends AdminController
 	private $lang_id;
 	private $multiple = false;
 	private $tpl;
+	private $file;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$ids = explode('--', $request->get_value('id', null));
+		
+		$this->lang_id = $request->get_value('id', null);
 
-		if (count($ids) > 1)
+		if ($this->lang_id == 'delete_multiple')
 		{
-			$lang_ids = array();
-			$lang_number = 1;
-			foreach (LangsManager::get_installed_langs_map_sorted_by_localized_name() as $lang)
+			$temporary_file = PATH_TO_ROOT . '/cache/langs_to_delete.txt';
+			$this->file = new File($temporary_file);
+			if ($this->file->exists())
 			{
-				if (in_array($lang_number, $ids))
-				{
-					$lang_ids[] = $lang->get_id();
-				}
-				$lang_number++;
+				$this->lang_id  = explode(',', $this->file->read());
+				$this->multiple = true;
 			}
-			$this->lang_id = $lang_ids;
-			$this->multiple = true;
 		}
-		else
-			$this->lang_id = $request->get_value('id', null);
 
 		if ($this->lang_exists())
 		{
@@ -98,6 +93,7 @@ class AdminUninstallLangController extends AdminController
 			{
 				LangsManager::uninstall($id, $drop_files);
 			}
+			$this->file->delete();
 		}
 		else
 			LangsManager::uninstall($this->lang_id, $drop_files);

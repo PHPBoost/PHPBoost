@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2011 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -16,31 +16,25 @@ class AdminThemeDeleteController extends AdminController
 	private $theme_id;
 	private $multiple = false;
 	private $tpl;
+	private $file;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
-		$ids = explode('--', $request->get_value('id', null));
+		$this->theme_id = $request->get_value('id', null);
 
-		if (count($ids) > 1)
+		if ($this->theme_id == 'delete_multiple')
 		{
-			$theme_ids = array();
-			$theme_number = 1;
-			foreach (ThemesManager::get_installed_themes_map_sorted_by_localized_name() as $theme)
+			$temporary_file = PATH_TO_ROOT . '/cache/themes_to_delete.txt';
+			$this->file = new File($temporary_file);
+			if ($this->file->exists())
 			{
-				if (in_array($theme_number, $ids))
-				{
-					$theme_ids[] = $theme->get_id();
-				}
-				$theme_number++;
+				$this->theme_id  = explode(',', $this->file->read());
+				$this->multiple = true;
 			}
-			$this->theme_id = $theme_ids;
-			$this->multiple = true;
 		}
-		else
-			$this->theme_id = $request->get_value('id', null);
-
+		
 		if ($this->theme_exists())
 		{
 			$this->build_form();
@@ -98,6 +92,7 @@ class AdminThemeDeleteController extends AdminController
 			{
 				ThemesManager::uninstall($id, $drop_files);
 			}
+			$this->file->delete();
 		}
 		else
 			ThemesManager::uninstall($this->theme_id, $drop_files);

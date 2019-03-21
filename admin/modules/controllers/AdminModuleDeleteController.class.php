@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -18,30 +18,24 @@ class AdminModuleDeleteController extends AdminController
 	private $multiple = false;
 	private $error = '';
 	private $tpl;
+	private $file;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
-		$ids = explode('--', $request->get_value('id', null));
+		$this->module_id = $request->get_value('id', null);
 
-		if (count($ids) > 1)
+		if ($this->module_id == 'delete_multiple')
 		{
-			$module_ids = array();
-			$module_number = 1;
-			foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $module)
+			$temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
+			$this->file = new File($temporary_file);
+			if ($this->file->exists())
 			{
-				if (in_array($module_number, $ids))
-				{
-					$module_ids[] = $module->get_id();
-				}
-				$module_number++;
+				$this->module_id  = explode(',', $this->file->read());
+				$this->multiple = true;
 			}
-			$this->module_id = $module_ids;
-			$this->multiple = true;
 		}
-		else
-			$this->module_id = $request->get_value('id', null);
 
 		if ($this->module_exists())
 		{
@@ -126,6 +120,7 @@ class AdminModuleDeleteController extends AdminController
 			{
 				$this->error_check(ModulesManager::uninstall_module($id, $drop_files));
 			}
+			$this->file->delete();
 		}
 		else
 			$this->error_check(ModulesManager::uninstall_module($this->module_id, $drop_files));
