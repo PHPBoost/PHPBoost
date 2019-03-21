@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
- * @version     PHPBoost 5.2 - last update: 2018 01 14
+ * @version     PHPBoost 5.2 - last update: 2019 03 21
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -92,8 +92,8 @@ class LangConfiguration
 		$this->compatibility = $config['compatibility'];
 		$this->identifier = $config['identifier'];
 
-		$url = PATH_TO_ROOT . '/images/stats/countries/' . $this->identifier . '.png';
-		$picture = new File($url);
+		$url = '/images/stats/countries/' . $this->identifier . '.png';
+		$picture = new File(PATH_TO_ROOT . $url);
 		if (!$picture->exists())
 			$url = '';
 

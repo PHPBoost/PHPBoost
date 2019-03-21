@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 05
+ * @version   	PHPBoost 5.2 - last update: 2019 03 21
  * @since   	PHPBoost 3.0 - 2012 02 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -42,6 +42,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 		$user = AppContext::get_current_user();
 
 		$theme_id = AppContext::get_request()->get_string('switchtheme', '');
+		$query_string = preg_replace('`switchtheme=[^&]+`u', '', QUERY_STRING);
 		if (!empty($theme_id))
 		{
 			$theme = ThemesManager::get_theme($theme_id);
@@ -52,7 +53,6 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 					$user->update_theme($theme->get_id());
 				}
 			}
-			$query_string = preg_replace('`switchtheme=[^&]+`u', '', QUERY_STRING);
 			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
 		}
 
@@ -69,8 +69,13 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 				'IDNAME' => $theme->get_id()
 			));
 		}
-
-		$tpl->put('DEFAULT_THEME', UserAccountsConfig::load()->get_default_theme());
+		
+		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
+		
+		$tpl->put_all(array(
+			'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
+			'URL' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
+		));
 
 		return $tpl->render();
 	}
