@@ -505,7 +505,7 @@ span.not-compatible {
 }
 
 @media (min-width: 769px) {
-	.opened > .admin-element-auth-content {
+	.theme-element .opened > .admin-element-auth-content {
 		bottom: 0.309em;
 	}
 }
