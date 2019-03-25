@@ -86,6 +86,10 @@ Contient les elements associes aux menus
 
 /* -- Classes Items -- */
 /* --------------------*/
+.cssmenu-horizontal {
+	display: table;
+}
+
 .cssmenu-horizontal > ul > li {
 	display: inline-block;
 	vertical-align: middle;
