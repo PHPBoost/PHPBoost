@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 14
+ * @version   	PHPBoost 5.2 - last update: 2019 03 26
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -39,36 +39,65 @@ if ($app instanceof Application)
 	$installation_error = $installation_success = false;
 	if (retrieve(POST, 'execute_update', '') && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()))
 	{
-		$update_zip_name = basename($app->get_autoupdate_url());
-		$zip_file_name = PATH_TO_ROOT . '/cache/' . $update_zip_name;
+		$temporary_dir_path = PATH_TO_ROOT . '/cache/phpboost-diff';
+		$temporary_folder = new Folder($temporary_dir_path);
+		$temporary_folder->create();
 		
-		$ch = curl_init($app->get_autoupdate_url());
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$content = curl_exec($ch);
-		curl_close($ch);
-		file_put_contents($zip_file_name, $content);
-
-		$file = new File($zip_file_name);
-		if ($file->exists())
+		$major_version = GeneralConfig::load()->get_phpboost_major_version();
+		$actual_minor_version = Environment::get_phpboost_minor_version();
+		$new_minor_version = str_replace($major_version . '.', '', $app->get_version());
+		
+		if ($app->get_type() == 'kernel' && $actual_minor_version < ($new_minor_version - 1))
 		{
-			$temporary_dir = PATH_TO_ROOT . '/cache/phpboost-diff';
-			$folder = new Folder($temporary_dir);
-			$folder->create();
+			$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $actual_minor_version, $major_version . '.' . ($actual_minor_version + 1)), $app->get_autoupdate_url());
+			$unread_alerts = AdministratorAlertService::get_unread_alerts();
 			
-			$zip_archive = new ZipArchive();
-			$zip_archive->open($zip_file_name);
-			$zip_archive->extractTo($temporary_dir);
-			$zip_archive->close();
-			unlink($zip_file_name);
-			
-			if ($folder->exists())
+			for ($i = $actual_minor_version ; $i < $new_minor_version ; $i++)
+			{
+				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
+				if (!$download_status)
+				{
+					$tpl->put('MSG', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $url)), MessageHelper::ERROR));
+					$installation_error = true;
+					break;
+				}
+				
+				$url = str_replace(array($major_version . '.' . ($i + 1), $major_version . '.' . $i), array($major_version . '.' . ($i + 2), $major_version . '.' . ($i + 1)), $url);
+				
+				foreach ($unread_alerts as $key => $alert)
+				{
+					$details = TextHelper::unserialize($alert->get_properties());
+					if ($details instanceof Application && $details->get_version() == $major_version . '.' . ($i + 1))
+					{
+						// Set admin alert status to processed
+						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
+						AdministratorAlertService::save_alert($alert);
+						
+						unset($unread_alerts[$key]);
+					}
+				}
+			}
+		}
+		else
+		{
+			$download_status = FileSystemHelper::download_remote_file($app->get_autoupdate_url(), $temporary_dir_path);
+			if (!$download_status)
+			{
+				$tpl->put('MSG', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('message.download.file.error', 'status-messages-common'), array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
+				$installation_error = true;
+			}
+		}
+		
+		if ($temporary_folder->exists())
+		{
+			if (!$installation_error)
 			{
 				if ($app->get_type() == 'module')
 				{
 					$existing_folder = new Folder(PATH_TO_ROOT . '/' . $f->get_name());
 					if ($existing_folder->exists())
 					{
-						FileSystemHelper::copy_folder($temporary_dir . '/' . $f->get_name() . '/', PATH_TO_ROOT . '/' . $f->get_name() . '/');
+						FileSystemHelper::copy_folder($temporary_dir_path . '/' . $f->get_name() . '/', PATH_TO_ROOT . '/' . $f->get_name() . '/');
 						
 						switch (ModulesManager::upgrade_module($f->get_name()))
 						{
@@ -96,7 +125,7 @@ if ($app instanceof Application)
 					$existing_folder = new Folder(PATH_TO_ROOT . '/templates/' . $f->get_name());
 					if ($existing_folder->exists())
 					{
-						FileSystemHelper::copy_folder($temporary_dir . '/templates/' . $f->get_name() . '/', PATH_TO_ROOT . '/templates/' . $f->get_name() . '/');
+						FileSystemHelper::copy_folder($temporary_dir_path . '/templates/' . $f->get_name() . '/', PATH_TO_ROOT . '/templates/' . $f->get_name() . '/');
 						$installation_success = true;
 					}
 					else
@@ -107,50 +136,48 @@ if ($app instanceof Application)
 				}
 				else
 				{
-					foreach ($folder->get_folders() as $f)
+					foreach ($temporary_folder->get_folders() as $f)
 					{
 						$existing_folder = new Folder(PATH_TO_ROOT . '/' . $f->get_name());
 						if ($f->get_name() != 'lang' && $f->get_name() != 'templates' && $existing_folder->exists())
 						{
-							FileSystemHelper::copy_folder($temporary_dir . '/' . $f->get_name() . '/', PATH_TO_ROOT . '/' . $f->get_name() . '/');
+							FileSystemHelper::copy_folder($temporary_dir_path . '/' . $f->get_name() . '/', PATH_TO_ROOT . '/' . $f->get_name() . '/');
 						}
 						else if ($f->get_name() == 'lang')
 						{
-							$lang_folder = new Folder($temporary_dir . '/lang');
+							$lang_folder = new Folder($temporary_dir_path . '/lang');
 							foreach ($lang_folder->get_folders() as $f_lang)
 							{
 								$existing_folder = new Folder(PATH_TO_ROOT . '/lang/' . $f_lang->get_name());
 								if ($existing_folder->exists())
-									FileSystemHelper::copy_folder($temporary_dir . '/lang/' . $f_lang->get_name() . '/', PATH_TO_ROOT . '/lang/' . $f_lang->get_name() . '/');
+									FileSystemHelper::copy_folder($temporary_dir_path . '/lang/' . $f_lang->get_name() . '/', PATH_TO_ROOT . '/lang/' . $f_lang->get_name() . '/');
 							}
 						}
 						else if ($f->get_name() == 'templates')
 						{
-							$templates_folder = new Folder($temporary_dir . '/templates');
+							$templates_folder = new Folder($temporary_dir_path . '/templates');
 							foreach ($templates_folder->get_folders() as $f_templates)
 							{
 								$existing_folder = new Folder(PATH_TO_ROOT . '/templates/' . $f_templates->get_name());
 								if ($existing_folder->exists())
-									FileSystemHelper::copy_folder($temporary_dir . '/templates/' . $f_templates->get_name() . '/', PATH_TO_ROOT . '/templates/' . $f_templates->get_name() . '/');
+									FileSystemHelper::copy_folder($temporary_dir_path . '/templates/' . $f_templates->get_name() . '/', PATH_TO_ROOT . '/templates/' . $f_templates->get_name() . '/');
 							}
 						}
 					}
 					$installation_success = true;
 				}
 				
-				FileSystemHelper::remove_folder($temporary_dir);
-				
-				// Set admin alert status to processed
-				$update->set_status(Event::EVENT_STATUS_PROCESSED);
-				AdministratorAlertService::save_alert($update);
-				
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				if ($installation_success)
+				{
+					// Set admin alert status to processed
+					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
+					AdministratorAlertService::save_alert($update);
+					
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+				}
 			}
-			else
-			{
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR));
-				$installation_error = true;
-			}
+			
+			FileSystemHelper::remove_folder($temporary_dir_path);
 		}
 		else
 		{

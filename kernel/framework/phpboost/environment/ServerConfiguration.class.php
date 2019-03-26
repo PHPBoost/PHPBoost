@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 24
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -69,7 +69,7 @@ class ServerConfiguration
 		{
 			return in_array(self::$mod_rewrite, apache_get_modules());
 		}
-		throw new UnsupportedOperationException('can\'t check url rewriting availabilty');
+		throw new UnsupportedOperationException('can\'t check url rewriting availability');
 	}
 }
 ?>

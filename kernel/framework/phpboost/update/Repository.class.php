@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
  * @since       PHPBoost 2.0 - 2008 08 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class Repository
@@ -59,11 +60,17 @@ class Repository
 				}
 			}
 
+			$server_configuration = new ServerConfiguration();
+			
 			// Keep only the first applyable update
-			$firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
-			if (!empty($firstNewVersion))
+			if ($server_configuration->has_curl_library() && $app->get_type() == 'kernel')
+				$NewVersion = count($newerVersions) > 0 ? max(array_keys($newerVersions)) : '';
+			else
+				$NewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
+			
+			if (!empty($NewVersion))
 			{
-				$app->load($versions[$newerVersions[$firstNewVersion]]);
+				$app->load($versions[$newerVersions[$NewVersion]]);
 				return $app;
 			}
 		}

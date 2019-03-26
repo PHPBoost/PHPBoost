@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -402,12 +402,14 @@ class Environment
 	 */
 	public static function get_phpboost_version()
 	{
-		$major_version = GeneralConfig::load()->get_phpboost_major_version();
-		$minor_version = self::get_phpboost_minor_version();
-		return $major_version . '.' . $minor_version;
+		return GeneralConfig::load()->get_phpboost_major_version() . '.' . self::get_phpboost_minor_version();
 	}
 
-	private static function get_phpboost_minor_version()
+	/**
+	 * Returns phpboost minor version (build number)
+	 * @return string the minor version
+	 */
+	public static function get_phpboost_minor_version()
 	{
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
 		$build =  $file->read();

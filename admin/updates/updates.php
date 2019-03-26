@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 14
+ * @version   	PHPBoost 5.2 - last update: 2019 03 26
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -41,7 +41,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		$update = TextHelper::unserialize($update_alert->get_properties());
 		if (($update instanceof Application) && ($update_type == '' || $update->get_type() == $update_type))
 		{
-			if ($update->check_compatibility() && $update_alert->get_status() != Event::EVENT_STATUS_PROCESSED)
+			if ($update->check_compatibility() && $update_alert->get_status() != AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED)
 			{
 				$updates[] = $update;
 			}
@@ -49,7 +49,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 			{
 				// Like the update is incompatible (or has been applied)
 				// We set the alert status to processed
-				$update_alert->set_status(Event::EVENT_STATUS_PROCESSED);
+				$update_alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 				AdministratorAlertService::save_alert($update_alert);
 			}
 		}

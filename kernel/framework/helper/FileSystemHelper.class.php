@@ -5,8 +5,8 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 02 14
- * @since       PHPBoost 5.2 - 2018 02 14
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
+ * @since       PHPBoost 5.2 - 2019 02 14
 */
 
 class FileSystemHelper
@@ -89,6 +89,60 @@ class FileSystemHelper
 				closedir ($dh);
 			}
 		}
+	}
+
+	/**
+	 * Download a file from a remote url with md5 sum check and extract it if needed in case of a zip file. Curl library needed.
+	 * @param string $url Url of the remote file.
+	 * @param string $destination_path Destination path of the file.
+	 * @param string $extract_archive Extract the content of the zip file and delete the zip file if true.
+	 * @param string $retry Second try if the archive is corrupted. No need to use this parameter, it is used automatically by the function.
+	 * @return bool True if the file is successfully downloaded, otherwise false.
+	 */
+	public static function download_remote_file($url, $destination_path, $extract_archive = true, $retry = false)
+	{
+		if (!preg_match( "/^.*\/$/", $destination_path))
+			$destination_path .= '/';
+		
+		$server_configuration = new ServerConfiguration();
+		
+		if ($server_configuration->has_curl_library() && Url::check_url_validity($url))
+		{
+			$file_basename = basename($url);
+			$file_extension = substr($file_basename, strrpos($file_basename, '.') + 1);
+			$file_name = PATH_TO_ROOT . '/cache/' . $file_basename;
+			
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$content = curl_exec($ch);
+			curl_close($ch);
+			file_put_contents($file_name, $content);
+			
+			$file = new File($file_name);
+			if ($file->exists())
+			{
+				if (md5_file($url) != md5_file($file_name))
+				{
+					if (!$retry)
+						FileSystemHelper::download_remote_file($url, $destination_path, $extract_archive, true);
+					else
+						return false;
+				}
+				
+				if ($extract_archive && $file_extension == 'zip')
+				{
+					$zip_archive = new ZipArchive();
+					$zip_archive->open($file_name);
+					$zip_archive->extractTo($destination_path);
+					$zip_archive->close();
+					unlink($file_name);
+				}
+				
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 }
 ?>
