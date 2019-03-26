@@ -114,6 +114,8 @@ class AdministratorAlertService
 	 */
 	public static function get_unread_alerts()
 	{
+		$array_result = array();
+		
 		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 			FROM " . DB_TABLE_EVENTS  . "
 			WHERE contribution_type = :contribution_type AND current_status = :current_status", array(
