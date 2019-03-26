@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 03 26
  * @since   	PHPBoost 1.6 - 2007 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,58 +42,62 @@ if (!empty($increment_view))
 	//Mise à jour du nombre de vues.
 	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 }
-else
+elseif (!empty($rename_pics)) //Renomme une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-	if (!empty($rename_pics)) //Renomme une image.
-	{
-		try {
-			$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
-		} catch (RowNotFoundException $e) {
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-
-		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
-		{
-			//Initialisation  de la class de gestion des fichiers.
-			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
-			$Gallery = new Gallery;
-
-			$name = $request->get_postvalue('name', '');
-			$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
-
-			if (!empty($id_file))
-				echo $Gallery->Rename_pics($id_file, $name, $previous_name);
-			else
-				echo -1;
-		}
+	try {
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
 	}
-	elseif (!empty($aprob_pics))
+
+	if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 	{
-		try {
-			$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
-		} catch (RowNotFoundException $e) {
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
+		//Initialisation  de la class de gestion des fichiers.
+		include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
+		$Gallery = new Gallery;
 
-		if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
-		{
-			$Gallery = new Gallery();
+		$name = $request->get_postvalue('name', '');
+		$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
 
-			if (!empty($id_file))
-			{
-				echo $Gallery->Aprob_pics($id_file);
-				//Régénération du cache des photos aléatoires.
-				GalleryMiniMenuCache::invalidate();
-				GalleryCategoriesCache::invalidate();
-			}
-			else
-				echo 0;
-		}
+		if (!empty($id_file))
+			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
+		else
+			echo -1;
 	}
+}
+elseif (!empty($aprob_pics))
+{
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
+
+	try {
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
+	if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
+	{
+		$Gallery = new Gallery();
+
+		if (!empty($id_file))
+		{
+			echo $Gallery->Aprob_pics($id_file);
+			//Régénération du cache des photos aléatoires.
+			GalleryMiniMenuCache::invalidate();
+			GalleryCategoriesCache::invalidate();
+		}
+		else
+			echo 0;
+	}
+}
+else
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
 }
 
 ?>
