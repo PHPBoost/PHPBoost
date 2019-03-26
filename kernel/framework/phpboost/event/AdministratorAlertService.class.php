@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
  * @since       PHPBoost 2.0 - 2008 08 29
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -106,6 +106,30 @@ class AdministratorAlertService
 		{
 			return AdministratorAlertCache::load()->get_all_alerts_number();
 		}
+	}
+
+	/**
+	 * Builds a list of unread alerts.
+	 * @return AdministratorAlert[] The list of the matching alerts.
+	 */
+	public static function get_unread_alerts()
+	{
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+			FROM " . DB_TABLE_EVENTS  . "
+			WHERE contribution_type = :contribution_type AND current_status = :current_status", array(
+				'contribution_type' => ADMINISTRATOR_ALERT_TYPE,
+				'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD
+		));
+
+		while ($row = $result->fetch())
+		{
+			$alert = new AdministratorAlert();
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date($row['creation_date'], Timezone::SERVER_TIMEZONE), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$array_result[] = $alert;
+		}
+		$result->dispose();
+
+		return $array_result;
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 03 26
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,6 +55,8 @@ $lang['confirm.delete'] = 'Do you really want to delete this item ?';
 
 $lang['message.success.config'] = 'The configuration has been modified';
 $lang['message.success.position.update'] = 'The position of the items has been updated';
+
+$lang['message.download.file.error'] = 'File :filename download failed';
 
 $lang['message.delete_install_and_update_folders'] = 'For security reasons we recommand you to delete the <b>install</b> and <b>update</b> folders and all their contents, hackers could manage to run the installation script and you could lose data !';
 $lang['message.delete_install_or_update_folders'] = 'For security reasons we recommand you to delete the <b>:folder</b> folder and all its contents, hackers could manage to run the installation script and you could lose data !';

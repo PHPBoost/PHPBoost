@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 03 26
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,6 +55,8 @@ $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
 
 $lang['message.success.config'] = 'La configuration a été modifiée';
 $lang['message.success.position.update'] = 'Les éléments ont été repositionnés';
+
+$lang['message.download.file.error'] = 'Echec lors du téléchargement du fichier :filename';
 
 $lang['message.delete_install_and_update_folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer les dossiers <b>install</b> et <b>update</b> et tout ce qu\'ils contiennent, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';
 $lang['message.delete_install_or_update_folders'] = 'Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>:folder</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !';

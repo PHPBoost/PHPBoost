@@ -453,7 +453,7 @@ class ModulesManager
 		return $error;
 	}
 
-	private static function set_module_activation($module_id, bool $activated)
+	public static function set_module_activation($module_id, bool $activated)
 	{
 		$module = self::get_module($module_id);
 		$module->set_activated($activated);
@@ -461,7 +461,7 @@ class ModulesManager
 		ModulesConfig::save();
 	}
 
-	public static function execute_module_installation($module_id)
+	private static function execute_module_installation($module_id)
 	{
 		$module_setup = self::get_module_setup($module_id);
 		$environment_check = $module_setup->check_environment();

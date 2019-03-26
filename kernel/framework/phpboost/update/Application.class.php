@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 02 14
+ * @version     PHPBoost 5.2 - last update: 2019 03 26
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -100,7 +100,7 @@ class Application
 		}
 
 		$this->security_update = self::get_attribute($xml_desc, 'security-update');
-		$this->security_update = TextHelper::strtolower($this->security_update) == 'true' ? true : false;
+		$this->security_update = TextHelper::strtolower($this->security_update) == 'true';
 
 		$this->priority = self::get_attribute($xml_desc, 'priority');
 		switch ($this->priority)
@@ -319,7 +319,7 @@ class Application
 		switch ($this->type)
 		{
 			case self::KERNEL_TYPE:
-				return GeneralConfig::load()->get_phpboost_major_version();
+				return Environment::get_phpboost_version();
 			case self::MODULE_TYPE:
 				if (ModulesManager::is_module_installed($this->id))
 				{
