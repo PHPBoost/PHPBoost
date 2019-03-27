@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 08
+ * @version     PHPBoost 5.2 - last update: 2019 03 27
  * @since       PHPBoost 2.0 - 2008 07 06
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -322,6 +322,16 @@ class File extends FileSystemElement
 		{
 			throw new IOException($message . ' : ' . $this->get_path());
 		}
+	}
+
+	/**
+	 * Get file checksum in sha256.
+	 * @param string $filename Path of the file you want to work with.
+	 * @return string The hash of the file in sha256.
+	 */
+	public static function get_file_checksum($filename)
+	{
+		return hash_file('sha256', $filename);
 	}
 }
 ?>

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 26
+ * @version     PHPBoost 5.2 - last update: 2019 03 27
  * @since       PHPBoost 5.2 - 2019 02 14
 */
 
@@ -121,7 +121,7 @@ class FileSystemHelper
 			$file = new File($file_name);
 			if ($file->exists())
 			{
-				if (md5_file($url) != md5_file($file_name))
+				if (File::get_file_checksum($url) != File::get_file_checksum($file_name))
 				{
 					if (!$retry)
 						FileSystemHelper::download_remote_file($url, $destination_path, $extract_archive, true);
