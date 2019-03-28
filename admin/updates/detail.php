@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 26
+ * @version   	PHPBoost 5.2 - last update: 2019 03 28
  * @since   	PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -45,9 +45,10 @@ if ($app instanceof Application)
 		
 		$major_version = GeneralConfig::load()->get_phpboost_major_version();
 		$actual_minor_version = Environment::get_phpboost_minor_version();
+		$new_major_version = basename($app->get_version());
 		$new_minor_version = str_replace($major_version . '.', '', $app->get_version());
 		
-		if ($app->get_type() == 'kernel' && $actual_minor_version < ($new_minor_version - 1))
+		if ($app->get_type() == 'kernel' && $major_version == $new_major_version && $actual_minor_version < ($new_minor_version - 1))
 		{
 			$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $actual_minor_version, $major_version . '.' . ($actual_minor_version + 1)), $app->get_autoupdate_url());
 			$unread_alerts = AdministratorAlertService::get_unread_alerts();
