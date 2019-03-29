@@ -44,7 +44,7 @@
 							<div class="infos options center">
 								<p class="infos-options alert-priority {PRIORITY_CSS_CLASS}">{PRIORITY}</p>
 								# IF C_DISPLAY_UPDATE_BUTTON #
-									<form action="/admin/updates/detail.php?identifier={IDENTIFIER}" method="post">
+									<form action="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={IDENTIFIER}" method="post">
 										<button type="submit" name="execute_update" class="infos-options submit" onclick="" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 										<input type="hidden" name="token" value="{TOKEN}">
 									</form>
