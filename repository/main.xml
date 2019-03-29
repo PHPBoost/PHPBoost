@@ -3,6 +3,31 @@
 <repository>
 	<header />
 		<app id="kernel" type="kernel">
+			<version num="5.2.2" language="french" localized_language="Francais" name="Noyau" pubdate="2019/03/29">
+				<compatibility min="5.2" />
+				<download url="https://www.phpboost.com/download/">PHPBoost 5.2.2</download>
+				<update url="https://www.phpboost.com/download/70-mises-a-jour-phpboost-5-2/">Mise à jour</update>
+				<autoupdate url="https://dl.phpboost.com/5.2/diff/diff-phpboost-5.2.1-to-phpboost-5.2.2-optimized.zip">Mise à jour automatique</autoupdate>
+				<authors>
+					<author name="Equipe PHPBoost" email="contact@phpboost.com" />
+				</authors>
+				<description>
+					La version PHPBoost 5.2.2 améliorera la stabilité de votre site et vous fera profiter des améliorations et corrections suivantes :
+				</description>
+				<whatsnew>
+					<new type="improvement">Suppression du lien de partage Google+ en vue de la fermeture du service le 02/04/19</new>
+					<new type="improvement">Mise à jour de la librairie d'icônes Font Awesome en version 5.8.1 pour prendre en compte leurs dernières évolutions</new>
+					<new type="improvement">Possibilité d'installer plusieurs versions mineures d'un coup pour rattraper un retard pour ceux qui ont la librairie Curl sur leur serveur (à partir de cette version).</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1714-themeswitcher"&gt;#1714&lt;/a&gt;&lt;/s&gt; ThemeSwitcher</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1873-archive-de-newsletter"&gt;#1873&lt;/a&gt;&lt;/s&gt; archive de newsletter</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1902-lien-sms-modules"&gt;#1902&lt;/a&gt;&lt;/s&gt; Lien SMS modules</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1905-erreur-archivees"&gt;#1905&lt;/a&gt;&lt;/s&gt; Erreur archivées</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1906-modules-liens-web-et-telechargements-pas-de-confirmation-avant-de-signaler-un-lien-mort"&gt;#1906&lt;/a&gt;&lt;/s&gt; Modules Liens Web et Téléchargements : pas de confirmation avant de signaler un lien mort</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1907-invalid-query-lors-de-l-installation-5-2"&gt;#1907&lt;/a&gt;&lt;/s&gt; Invalid Query lors de l'installation 5.2</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1908-statistiques-pages-vues"&gt;#1908&lt;/a&gt;&lt;/s&gt; Statistiques "Pages Vues"</new>
+					<new type="bug">&lt;s&gt;&lt;a href="https://www.phpboost.com/bugtracker/detail/1909-erreur-lors-de-la-desinstallation-multiple-de-themeslanguesmodules"&gt;#1909&lt;/a&gt;&lt;/s&gt; Erreur lors de la désinstallation multiple de thèmes/langues/modules</new>
+				</whatsnew>
+			</version>
 			<version num="5.2.1" language="french" localized_language="Francais" name="Noyau" priority="high" security-update="true" pubdate="2019/02/15">
 				<compatibility min="5.2" />
 				<download url="https://www.phpboost.com/download/">PHPBoost 5.2.1</download>
