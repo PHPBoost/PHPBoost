@@ -200,7 +200,7 @@ function lengthMaxFormFieldValidator(field_id, rbound, message)
 function maxSizeFilePickerFormFieldValidator(field_id, max_size, message)
 {
 	var field = HTMLForms.getField(field_id);
-	if (field)
+	if (field && jQuery("#" + field.getHTMLId())[0].files[0])
 	{
 		var value = jQuery("#" + field.getHTMLId())[0].files[0].size;
 		if (value !== '')
