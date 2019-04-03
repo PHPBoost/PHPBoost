@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -438,9 +438,7 @@ class DownloadFile
 		$notation->set_user_already_noted(!empty($properties['note']));
 		$this->notation = $notation;
 
-		$units = array(LangLoader::get_message('unit.bytes', 'common'), LangLoader::get_message('unit.kilobytes', 'common'), LangLoader::get_message('unit.megabytes', 'common'), LangLoader::get_message('unit.gigabytes', 'common'));
-		$power = $this->size > 0 ? floor(log($this->size, 1024)) : 0;
-		$this->formated_size = (float)number_format($this->size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+		$this->formated_size = File::get_formated_size($this->size);
 	}
 
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
