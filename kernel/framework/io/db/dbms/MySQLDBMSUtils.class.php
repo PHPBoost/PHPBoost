@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 04 12
+ * @version     PHPBoost 5.2 - last update: 2019 04 03
  * @since       PHPBoost 3.0 - 2009 11 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -290,9 +290,18 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result;
 	}
 
-	public function parse_file(File $file, $prefix = '')
+	public function parse_file(File $file, $prefix = '', $check_site_url = true)
 	{
 		$reader = new BufferedFileReader($file);
+		
+		if ($check_site_url)
+		{
+			$general_config = GeneralConfig::load();
+			
+			if (!preg_match('`s:8:"site_url";s:' . strlen($general_config->get_site_url()) . ':"' . $general_config->get_site_url() . '";s:9:"site_path";s:' . strlen($general_config->get_site_path()) . ':"' . $general_config->get_site_path() . '";`u', $reader->read_all()))
+				return false;
+		}
+		
 		$query = '';
 		while (($line = $reader->read_line()) !== null)
 		{
@@ -323,6 +332,7 @@ class MySQLDBMSUtils implements DBMSUtils
 				}
 			}
 		}
+		return true;
 	}
 
 	/**

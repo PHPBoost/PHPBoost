@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 26
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 4.1 - 2015 09 30
 */
 
@@ -29,7 +29,7 @@ $lang['creation_date'] = 'Creation date';
 $lang['database_management'] = 'Database management';
 $lang['db_sql_queries'] = 'SQL queries';
 $lang['db_explain_actions'] = 'This panel allows you to manage your database. You can see the list of tables used by PHPBoost, their properties and tools which allows you to do basic operations on the tables. You can save your database or some tables by checking them in the list below.';
-$lang['db_explain_actions.question'] = 'The optimization of the database allows to reorganize the structure of the tables in order to facilitate the operations to the SQL Server. This operation is done automatically once a day. You can optimize tables manually through this database management panel.
+$lang['db_explain_actions.question'] = 'The optimization of the database allows to reorganize the structure of the tables in order to facilitate the operations to the SQL Server. This operation can be performed automatically if the option is checked in module administration. You can optimize tables manually through this database management panel.
 <br />
 Repairing isn\'t normally required, but when a problem occurs it may be useful. Before performing this action, please contact the PHPBoost support team.
 <br />
@@ -88,6 +88,8 @@ $lang['db_restore_success'] = 'The restoration query has been executed successfu
 $lang['db_restore_failure'] = 'An error occurred while restoring the database.';
 $lang['db_upload_failure'] = 'An error occured during file transfert from it you wish import your database';
 $lang['db_file_already_exists'] = 'The file you try to import has the same name of a file in the cache/backup folder. Please rename the file you try to import.';
+$lang['db_no_sql_file'] = 'The file to import is not the backup of a database, please provide a correct file to restore.';
+$lang['db_backup_not_from_this_site'] = 'The file to import is not the backup of this site, impossible to restore.';
 $lang['db_unlink_success'] = 'The file was successfuly deleted!';
 $lang['db_unlink_failure'] = 'The file couldn\'t be deleted';
 $lang['db_confirm_delete_file'] = 'Do you really want to delete this file?';

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 28
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 3.0 - 2010 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -56,7 +56,25 @@ class CLIDumpCommand implements CLICommand
 		{
 			PersistenceContext::get_dbms_utils()->dump_tables($file_writer, $tables, DBMSUtils::DUMP_STRUCTURE_AND_DATA);
 		}
-		CLIOutput::writeln('Tables dumped to file ' . $file_path);
+		
+		$file_basename = str_replace('.sql', '', $file_path);
+		
+		include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+		$archive = new PclZip($file_basename . '.zip');
+		if ($archive->create($file_basename . '.sql'))
+		{
+			$file = new File($file_basename . '.sql');
+			$file->delete();
+			$file_link = $file_basename . '.zip';
+		}
+		else
+		{
+			$file = new File($file_basename . '.zip');
+			$file->delete();
+			$file_link = $file_basename . '.sql';
+		}
+		
+		CLIOutput::writeln('Tables dumped to file ' . $file_link);
 	}
 }
 ?>

@@ -25,13 +25,12 @@
 
 			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 
-
 				<fieldset>
 						<legend><h1>{L_DATABASE_MANAGEMENT}</h1></legend>
 						<div class="fieldset-inset">
-								{L_EXPLAIN_ACTIONS}
-								<div class="spacer"></div>
-								<div class="message-helper question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+							{L_EXPLAIN_ACTIONS}
+							<div class="spacer"></div>
+							<div class="message-helper question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
 						</div>
 				</fieldset>
 				<fieldset>
@@ -45,14 +44,13 @@
 								<div class="db-restore block">
 										{L_RESTORE_FROM_UPLOADED_FILE}
 										<br /><br />
-										<label for="select-file-for-backup">
-											<input id="select-file-for-backup" type="file" class="file" name="file_sql">
-											<input type="hidden" name="max_file_size" value="500000000">
+										<label for="select-file-to-restore">
+											<input id="select-file-to-restore" type="file" class="file" name="file_sql">
 											<span class="sr-only">${LangLoader::get_message('db_select_db_for_restore', 'common', 'database')}</span>
 										</label>
 										<br /><br />
 										<div class="center">
-											<button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
+											<button type="submit" id="submit-file-to-restore" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
 											<input type="hidden" name="token" value="{TOKEN}">
 										</div>
 								</div>
@@ -172,6 +170,17 @@
 
 				<script>
 				<!--
+				$('#submit-file-to-restore').click( function() {
+				{
+					if ($('#select-file-to-restore')[0].files[0].size > {RESTORE_UPLOADED_FILE_MAX_SIZE}) 
+					{
+						alert("{L_RESTORE_UPLOADED_FILE_SIZE_EXCEEDED}");
+						return false;
+					}
+
+					return true;
+				}});
+
 				function check_all(status, id)
 				{
 					var i;
@@ -241,7 +250,7 @@
 			<div class="spacer"></div>
 			# ENDIF #
 
-			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
+			<form action="admin_database.php?action=backup" method="post" name="table_list">
 				<script>
 					<!--
 						function check_select_all_tables(status)
@@ -282,6 +291,15 @@
 							<td>
 								<p>{L_EXPLAIN_BACKUP}</p>
 								<p class="center"><i class="fa fa-2x fa-save" aria-hidden="true"></i></p>
+								<fieldset>
+									<div class="form-field">
+										<div class="form-field-checkbox">
+											<input type="checkbox" name="compress_file" id="compress_file" checked="checked">
+											<label for="compress_file"></label>
+										</div>
+									</div>
+									<label for="compress_file">Compresser le fichier</label>
+								</fieldset>
 								<fieldset>
 									<div class="form-field-radio">
 										<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>

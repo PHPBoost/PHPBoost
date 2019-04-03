@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 26
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 4.1 - 2015 09 30
 */
 
@@ -29,7 +29,7 @@ $lang['creation_date'] = 'Date de création';
 $lang['database_management'] = 'Gestion base de données';
 $lang['db_sql_queries'] = 'Requêtes SQL';
 $lang['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés, ainsi que divers outils qui vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.';
-$lang['db_explain_actions.question'] = 'L\'optimisation de la base de données permet de réorganiser la structure de la table afin de faciliter les opérations au serveur SQL. Cette opération est effectuée automatiquement sur chaque table une fois par jour. Vous pouvez optimiser les tables manuellement via ce panneau d\'administration.
+$lang['db_explain_actions.question'] = 'L\'optimisation de la base de données permet de réorganiser la structure de la table afin de faciliter les opérations au serveur SQL. Cette opération peut être effectuée automatiquement si l\'option est cochée dans l\'administration du module. Vous pouvez optimiser les tables manuellement via ce panneau d\'administration.
 <br />
 La réparation n\'est normalement pas à envisager mais en cas de problème elle peut s\'avérer utile. Le support vous dira de l\'effectuer quand cela sera nécessaire.
 <br />
@@ -88,6 +88,8 @@ $lang['db_restore_success'] = 'La restauration de la base de données a été ef
 $lang['db_restore_failure'] = 'Une erreur est survenue pendant la restauration de la base de données';
 $lang['db_upload_failure'] = 'Une erreur est survenue lors du transfert du fichier à partir duquel vous souhaitez importer votre base de données';
 $lang['db_file_already_exists'] = 'Un fichier du répertoire cache/backup porte le même nom que celui que vous souhaitez importer. Merci de renommer un des deux fichiers pour pouvoir l\'importer.';
+$lang['db_no_sql_file'] = 'Le fichier à importer n\'est pas la sauvegarde d\'une base de données, merci de fournir un fichier correct à restaurer.';
+$lang['db_backup_not_from_this_site'] = 'Le fichier à importer n\'est pas la sauvegarde de ce site, restauration impossible.';
 $lang['db_unlink_success'] = 'Le fichier a été supprimé avec succès !';
 $lang['db_unlink_failure'] = 'Le fichier n\'a pas pu être supprimé';
 $lang['db_confirm_delete_file'] = 'Etes-vous sûr de vouloir supprimer ce fichier ?';

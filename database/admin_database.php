@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 26
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,7 +15,7 @@ require_once('../admin/admin_begin.php');
 
 //On regarde si on doit lire un fichier
 $read_file = retrieve(GET, 'read_file', '', TSTRING_UNCHANGE);
-if (!empty($read_file) && TextHelper::substr($read_file, -4) == '.sql')
+if (!empty($read_file) && (TextHelper::substr($read_file, -4) == '.sql' || TextHelper::substr($read_file, -4) == '.zip'))
 {
 	//Si le fichier existe on le lit
 	if (is_file(PATH_TO_ROOT .'/cache/backup/' . $read_file))
@@ -165,7 +165,7 @@ elseif ($action == 'restore')
 		$file = TextHelper::strprotect($del);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
 		//Si le fichier existe
-		if (preg_match('`[^/]+\.sql$`u', $file) && is_file($file_path))
+		if ((preg_match('`[^/]+\.sql$`u', $file) || preg_match('`[^/]+\.zip$`u', $file)) && is_file($file_path))
 		{
 			if (@unlink($file_path))
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=unlink_success', '', '&'));
@@ -182,40 +182,123 @@ elseif ($action == 'restore')
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-		$file = TextHelper::strprotect($file);
-		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
-		if (preg_match('`[^/]+\.sql$`u', $file) && is_file($file_path))
+		$filename = TextHelper::strprotect($file);
+		$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
+		$original_file_compressed = false;
+		
+		if (preg_match('`[^/]+\.zip$`u', $filename))
+		{
+			$original_file_compressed = true;
+			$extract_filename = '';
+			
+			include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+			$archive = new PclZip($file_path);
+			
+			foreach ($archive->listContent() as $element)
+			{
+				if (preg_match('`[^/]+\.sql$`u', $element['filename']))
+				{
+					$extract_filename = $element['filename'];
+					break;
+				}
+			}
+			
+			if ($extract_filename && $archive->extract())
+			{
+				$filename = basename($extract_filename);
+				$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
+			}
+			else
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=no_sql_file', '', '&'));
+		}
+
+		if (preg_match('`[^/]+\.sql$`u', $filename) && is_file($file_path))
 		{
 			Environment::try_to_increase_max_execution_time();
 			$db_utils = PersistenceContext::get_dbms_utils();
-			$db_utils->parse_file(new File($file_path));
-			$tables_list = $db_utils->list_tables();
-			$db_utils->optimize($tables_list);
-			$db_utils->repair($tables_list);
-			AppContext::get_cache_service()->clear_cache();
-
-			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
-		}
-	}
-	//Fichier envoyé par post
-	elseif (!empty($post_file))
-	{
-		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`u', $post_file['name']))
-		{
-			$file_path = PATH_TO_ROOT .'/cache/backup/' . $post_file['name'];
-			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
+			if ($db_utils->parse_file(new File($file_path)))
 			{
-				Environment::try_to_increase_max_execution_time();
-				$db_utils = PersistenceContext::get_dbms_utils();
-				$db_utils->parse_file(new File($file_path));
 				$tables_list = $db_utils->list_tables();
 				$db_utils->optimize($tables_list);
 				$db_utils->repair($tables_list);
 				AppContext::get_cache_service()->clear_cache();
-
+			}
+			else
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
+			
+			if ($original_file_compressed)
+			{
+				$file = new File(PATH_TO_ROOT . '/cache/backup/' . $filename);
+				$file->delete();
+			}
+			
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
+		}
+		else
+			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=no_sql_file', '', '&'));
+	}
+	//Fichier envoyé par post
+	elseif (!empty($post_file))
+	{
+		if (preg_match('`[^/]+\.sql$`u', $post_file['name']) || preg_match('`[^/]+\.zip$`u', $post_file['name']))
+		{
+			$filename = $post_file['name'];
+			$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
+			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
+			{
+				$original_file_compressed = false;
+				
+				if (preg_match('`[^/]+\.zip$`u', $filename))
+				{
+					$original_file_compressed = true;
+					$extract_filename = '';
+					
+					include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+					$archive = new PclZip($file_path);
+					
+					foreach ($archive->listContent() as $element)
+					{
+						if (preg_match('`[^/]+\.sql$`u', $element['filename']))
+						{
+							$extract_filename = $element['filename'];
+							break;
+						}
+					}
+					
+					if ($extract_filename && $archive->extract())
+					{
+						$filename = basename($extract_filename);
+						$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
+					}
+					else
+					{
+						$file = new File($file_path);
+						$file->delete();
+						AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=no_sql_file', '', '&'));
+					}
+				}
+				
+				Environment::try_to_increase_max_execution_time();
+				$db_utils = PersistenceContext::get_dbms_utils();
+				if ($db_utils->parse_file(new File($file_path)))
+				{
+					$tables_list = $db_utils->list_tables();
+					$db_utils->optimize($tables_list);
+					$db_utils->repair($tables_list);
+					AppContext::get_cache_service()->clear_cache();
+				}
+				else
+					AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
+				
+				if ($original_file_compressed)
+				{
+					$file = new File(PATH_TO_ROOT . '/cache/backup/' . $filename);
+					$file->delete();
+				}
+				
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
-			elseif (is_file($file_path))//Le fichier existe déjà, on ne peut pas le copier
+			elseif (is_file($file_path))
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=upload_failure', '', '&'));
@@ -257,6 +340,12 @@ elseif ($action == 'restore')
 			case 'file_already_exists' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], MessageHelper::WARNING));
 				break;
+			case 'no_sql_file' :
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_no_sql_file'], MessageHelper::WARNING));
+				break;
+			case 'backup_not_from_this_site' :
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_backup_not_from_this_site'], MessageHelper::WARNING));
+				break;
 			case 'unlink_success' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));
 				break;
@@ -271,37 +360,25 @@ elseif ($action == 'restore')
 		}
 	}
 
-	$dir = PATH_TO_ROOT .'/cache/backup';
-	$i = 0;
 	$filelist = array();
-	if (is_dir($dir))
+	$backup_folder = new Folder(PATH_TO_ROOT . '/cache/backup');
+	
+	foreach ($backup_folder->get_files() as $file)
 	{
-	   if ($dh = opendir($dir))
+		if ($file->get_extension() == 'sql' || $file->get_extension() == 'zip')
 		{
-			while (($file = readdir($dh)) !== false)
-			{
-				if (TextHelper::strpos($file, '.sql') !== false)
-				{
-					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common'), 'file_date' => Date::to_format(filemtime($dir . '/' . $file), Date::FORMAT_DAY_MONTH_YEAR));
-					$i++;
-				}
-			}
-		   closedir($dh);
+			$filelist[$file->get_last_modification_date()] = array('file_name' => $file->get_name(), 'weight' => File::get_formated_size($file->get_file_size()), 'file_date' => Date::to_format($file->get_last_modification_date(), Date::FORMAT_DAY_MONTH_YEAR));
 		}
 	}
 
-	if (count($filelist) > 0) {
-		krsort($filelist);
-	}
-
-	if ($i == 0)
+	if (count($filelist) == 0)
 	{
-		$tpl->put_all(array(
-			'L_INFO' => $LANG['db_empty_dir'],
-		));
+		$tpl->put('L_INFO', $LANG['db_empty_dir']);
 	}
 	else
 	{
+		krsort($filelist);
+		
 		$tpl->put_all(array(
 			'C_FILES' => true,
 			'L_INFO' => $LANG['db_restore_file']
@@ -329,13 +406,31 @@ else
 		if (empty($selected_tables))
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
-		$file_name = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', Date::to_format(Date::DATE_NOW, 'y-m-d-H-i-s')) . '.sql';
-		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
+		$file_basename = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', Date::to_format(Date::DATE_NOW, 'y-m-d-H-i-s'));
 
 		Environment::try_to_increase_max_execution_time();
-		PersistenceContext::get_dbms_utils()->dump_tables(new BufferedFileWriter(new File($file_path)), $selected_tables, $backup_type);
-
-		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
+		PersistenceContext::get_dbms_utils()->dump_tables(new BufferedFileWriter(new File(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql')), $selected_tables, $backup_type);
+		
+		$file_link = $file_basename . '.sql';
+		
+		if ($request->has_postparameter('compress_file') && $request->get_postvalue('compress_file') == 'on')
+		{
+			include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+			$archive = new PclZip(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.zip');
+			if ($archive->create(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql'))
+			{
+				$file = new File(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql');
+				$file->delete();
+				$file_link = $file_basename . '.zip';
+			}
+			else
+			{
+				$file = new File(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.zip');
+				$file->delete();
+			}
+		}
+		
+		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_link));
 	}
 
 	if ($tables_backup) //Liste des tables pour les sauvegarder
@@ -409,17 +504,12 @@ else
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
 		foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
 		{
-			$free = NumberHelper::round($table_info['data_free']/1024, 1);
-			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
-			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-
 			$tpl->assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
 				'TABLE_ENGINE' => $table_info['engine'],
 				'TABLE_ROWS' => $table_info['rows'],
-				'TABLE_DATA' => $data != 0 ? $data : '-',
-				'TABLE_FREE' => $free != 0 ? $free : '-',
+				'TABLE_DATA' => ($table_info['data_length'] + $table_info['index_length']) != 0 ? File::get_formated_size($table_info['data_length'] + $table_info['index_length']) : '-',
+				'TABLE_FREE' => $table_info['data_free'] != 0 ? File::get_formated_size($table_info['data_free']) : '-',
 				'TABLE_COLLATION' => $table_info['collation'],
 				'I' => $i
 			));
@@ -430,24 +520,23 @@ else
 			$i++;
 		}
 
-		$nbr_free = NumberHelper::round($nbr_free/1024, 1);
-		$nbr_data = NumberHelper::round($nbr_data/1024, 1);
-		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_free . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : $nbr_data . ' ' . LangLoader::get_message('unit.kilobytes', 'common');
-
+		$upload_max_filesize = (int)str_replace('M', '', ini_get('upload_max_filesize')) * pow(1024, 2);
+		
 		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
 			'NBR_TABLES' => count(PersistenceContext::get_dbms_utils()->list_tables()),
 			'NBR_ROWS' => $nbr_rows,
-			'NBR_DATA' => $nbr_data,
-			'NBR_FREE' => $nbr_free,
+			'NBR_DATA' => File::get_formated_size($nbr_data),
+			'NBR_FREE' => File::get_formated_size($nbr_free),
 			'L_EXPLAIN_ACTIONS' => $LANG['db_explain_actions'],
 			'L_EXPLAIN_ACTIONS_QUESTION' => $LANG['db_explain_actions.question'],
 			'L_DB_RESTORE' => $LANG['db_restore'],
 			'L_RESTORE_FROM_SERVER' => $LANG['db_restore_from_server'],
 			'L_FILE_LIST' => $LANG['db_view_file_list'],
-			'L_RESTORE_FROM_UPLOADED_FILE' => sprintf($LANG['import_file_explain'], ini_get('upload_max_filesize')),
+			'L_RESTORE_FROM_UPLOADED_FILE' => sprintf($LANG['import_file_explain'], File::get_formated_size($upload_max_filesize)),
+			'RESTORE_UPLOADED_FILE_MAX_SIZE' => $upload_max_filesize,
+			'L_RESTORE_UPLOADED_FILE_SIZE_EXCEEDED' => StringVars::replace_vars(LangLoader::get_message('upload.max_file_size_exceeded', 'status-messages-common'), array('max_file_size' => File::get_formated_size($upload_max_filesize))),
 			'L_RESTORE_NOW' => $LANG['db_restore'],
 			'L_TABLE_LIST' => $LANG['db_table_list'],
 			'L_TABLE_NAME' => $LANG['db_table_name'],

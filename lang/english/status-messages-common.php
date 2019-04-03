@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 26
+ * @version   	PHPBoost 5.2 - last update: 2019 04 03
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -117,5 +117,6 @@ $lang['content.is_locked.another_user'] = 'another user';
 $lang['upload.success'] = 'The archive has successfully been uploaded';
 $lang['upload.invalid_format'] = 'The archive format is invalid';
 $lang['upload.error'] = 'Error whle uploading file';
+$lang['upload.max_file_size_exceeded'] = 'The maximum file size must not exceed :max_file_size.';
 
 ?>
