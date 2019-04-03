@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 10
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,7 +33,7 @@ $lang['modules.update.warning_before_update'] = '<span class="message-helper war
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';
-$lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip et ne doit pas dépasser :max_size. En cas de dépassement, déposez le dossier extrait de l\'archive à la racine de votre site sur votre FTP.';
 
 //Module
 $lang['modules.php_version'] = 'Version PHP';

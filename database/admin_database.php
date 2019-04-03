@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 03
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -520,7 +520,7 @@ else
 			$i++;
 		}
 
-		$upload_max_filesize = (int)str_replace('M', '', ini_get('upload_max_filesize')) * pow(1024, 2);
+		$upload_max_filesize = ServerConfiguration::get_upload_max_filesize();
 		
 		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 26
+ * @version     PHPBoost 5.2 - last update: 2019 04 04
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -17,6 +17,9 @@ class ServerConfiguration
 	const RECOMMENDED_PHP_VERSION = '7.1';
 	private static $mod_rewrite = 'mod_rewrite';
 
+	/**
+	 * @return string system php version.
+	 */
 	public static function get_phpversion()
 	{
 		$system_phpversion = phpversion();
@@ -26,6 +29,14 @@ class ServerConfiguration
 			return $matches[1];
 		}
 		return $system_phpversion;
+	}
+
+	/**
+	 * @return int upload max filesize in bytes.
+	 */
+	public static function get_upload_max_filesize()
+	{
+		return (int)str_replace('M', '', ini_get('upload_max_filesize')) * pow(1024, 2);
 	}
 
 	/**

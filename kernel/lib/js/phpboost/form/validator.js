@@ -197,6 +197,23 @@ function lengthMaxFormFieldValidator(field_id, rbound, message)
 	return '';
 }
 
+function maxSizeFilePickerFormFieldValidator(field_id, max_size, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = jQuery("#" + field.getHTMLId())[0].files[0].size;
+		if (value !== '')
+		{
+			if (!integerMaxValidator(value, max_size))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
 function DisplayNameExistValidator(field_id, message, user_id)
 {
 	var field = HTMLForms.getField(field_id);

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -86,7 +86,7 @@ class AdminModuleAddController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.warning_before_install'], array('class' => 'full-field')));
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description'], array('class' => 'half-field', 'authorized_extensions' => 'gz|zip')));
+		$fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))), array('class' => 'half-field', 'authorized_extensions' => 'gz|zip')));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

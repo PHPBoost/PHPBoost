@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 17
+ * @version     PHPBoost 5.2 - last update: 2019 04 04
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -24,6 +24,7 @@ class FormFieldFilePicker extends AbstractFormField
 
 	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
 	{
+		$constraints[] = new FormFieldConstraintFileMaxSize($field_options['max_size'] ? $field_options['max_size'] : $this->get_max_file_size());
 		if (isset($field_options['authorized_extensions']))
 			$constraints[] = new FormFieldConstraintFileExtension($field_options['authorized_extensions']);
 		parent::__construct($id, $label, null, $field_options, $constraints);
@@ -39,7 +40,6 @@ class FormFieldFilePicker extends AbstractFormField
 
 		$file_field_tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
 		$file_field_tpl->put_all(array(
-			'MAX_FILE_SIZE' => $this->get_max_file_size(),
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
@@ -63,7 +63,7 @@ class FormFieldFilePicker extends AbstractFormField
 		}
 		else
 		{
-			return 10000000000;
+			return ServerConfiguration::get_upload_max_filesize();
 		}
 	}
 
@@ -77,7 +77,6 @@ class FormFieldFilePicker extends AbstractFormField
 				case 'max_size':
 					$this->max_size = $value;
 					unset($field_options['max_size']);
-					// TODO add max size constraint
 					break;
 				case 'authorized_extensions':
 					$this->authorized_extensions = $value;
