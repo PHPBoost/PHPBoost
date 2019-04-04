@@ -24,7 +24,7 @@ class FormFieldFilePicker extends AbstractFormField
 
 	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
 	{
-		$constraints[] = new FormFieldConstraintFileMaxSize($field_options['max_size'] ? $field_options['max_size'] : $this->get_max_file_size());
+		$constraints[] = new FormFieldConstraintFileMaxSize(isset($field_options['max_size']) ? $field_options['max_size'] : $this->get_max_file_size());
 		if (isset($field_options['authorized_extensions']))
 			$constraints[] = new FormFieldConstraintFileExtension($field_options['authorized_extensions']);
 		parent::__construct($id, $label, null, $field_options, $constraints);
