@@ -425,6 +425,11 @@ optgroup {
 	padding: 0 0.618em;
 }
 
+.multiple-vertical-radio .form-field-radio-span {
+	padding: 0 0.618em 0.618em;
+	display: inline-block;
+}
+
 .form-field-radio {
 	display: inline-block;
 	vertical-align: top;
