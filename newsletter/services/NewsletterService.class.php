@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 06 03
+ * @version   	PHPBoost 5.3 - last update: 2019 04 05
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -114,9 +114,10 @@ class NewsletterService
 	{
 		$list_subscribers = array();
 
-		$result = PersistenceContext::get_querier()->select("SELECT subscription.stream_id, subscription.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
+		$result = PersistenceContext::get_querier()->select("SELECT subscription.stream_id, subscription.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail, member.display_name
 		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscription
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscription.subscriber_id = subscriber.id
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = subscriber.user_id
 		WHERE subscription.stream_id = :stream_id
 		",
 			array(
@@ -128,7 +129,8 @@ class NewsletterService
 			$list_subscribers[$row['id']] = array(
 				'id' => $row['id'],
 				'user_id' => $row['user_id'],
-				'mail' => $row['mail']
+				'mail' => $row['mail'],
+				'display_name' => isset($row['display_name']) ? $row['display_name'] : TextHelper::lcfirst(LangLoader::get_message('visitor', 'user-common')),
 			);
 		}
 		$result->dispose();

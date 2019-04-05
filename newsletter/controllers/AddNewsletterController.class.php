@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.3 - last update: 2019 04 05
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -153,13 +153,13 @@ class AddNewsletterController extends ModuleController
 		if ($type == 'bbcode')
 		{
 			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], '', array(
-				'rows' => 10, 'cols' => 47, 'required' => true)
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
 			);
 		}
 		else
 		{
 			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], '', array(
-				'rows' => 10, 'cols' => 47, 'required' => true)
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
 			);
 		}
 	}

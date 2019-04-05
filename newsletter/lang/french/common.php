@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @version   	PHPBoost 5.3 - last update: 2019 04 05
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -99,6 +99,7 @@ $lang['newsletter.view_archives'] = 'Voir les archives';
 $lang['newsletter.view_subscribers'] = 'Voir les inscrits';
 $lang['newsletter.title'] = 'Titre de la newsletter';
 $lang['newsletter.contents'] = 'Contenu';
+$lang['newsletter.contents.explain'] = 'Utilisez <b>:user_display_name</b> pour afficher le pseudo du membre si besoin (sera remplacé par visiteur pour les inscrits qui ne sont pas membres du site).';
 
 //Messages
 $lang['stream.message.success.add'] = 'Le flux <b>:name</b> a été ajouté';
