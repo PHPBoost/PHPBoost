@@ -11,3 +11,8 @@
 	margin: 0;
 	padding: 0.456em 0;
 }
+
+#module-mini-download .category-folder {
+	text-align: right;
+	font-size: 0.809em;
+}

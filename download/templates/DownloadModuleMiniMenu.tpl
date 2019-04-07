@@ -9,25 +9,28 @@
 		</tr>
 	</thead>
 	<tbody>
-	# IF C_FILES #
-		# START downloadfiles #
-		<tr>
-			<td># IF C_SORT_BY_DATE #<time datetime="{downloadfiles.DATE_ISO8601}">{downloadfiles.DATE_DAY_MONTH}</time># ELSE #{downloadfiles.DISPLAYED_POSITION}# ENDIF #</td>
-			<td # IF C_SORT_BY_NOTATION #class="mini-download-table-name"# ENDIF #>
-				<a href="{downloadfiles.U_LINK}" title="{@most_downloaded_files} {downloadfiles.DISPLAYED_POSITION} : {downloadfiles.NAME}">
-					{downloadfiles.NAME}
-				</a>
-			</td>
-			# IF NOT C_SORT_BY_DATE #
-			<td># IF C_SORT_BY_NUMBER_DOWNLOADS #{downloadfiles.NUMBER_DOWNLOADS}# ELSE #{downloadfiles.STATIC_NOTATION}# ENDIF #</td>
-			# ENDIF #
-		</tr>
-		# END downloadfiles #
-	# ELSE #
-		<tr>
-			<td colspan="# IF C_SORT_BY_DATE #2# ELSE #3# ENDIF #">${LangLoader::get_message('no_item_now', 'common')}</td>
-		</tr>
-	# ENDIF #
+		# IF C_FILES #
+			# START downloadfiles #
+				<tr>
+					<td># IF C_SORT_BY_DATE #<time datetime="{downloadfiles.DATE_ISO8601}">{downloadfiles.DATE_DAY_MONTH}</time># ELSE #{downloadfiles.DISPLAYED_POSITION}# ENDIF #</td>
+					<td # IF C_SORT_BY_NOTATION #class="mini-download-table-name"# ENDIF #>
+						<a href="{downloadfiles.U_LINK}" title="{@most_downloaded_files} {downloadfiles.DISPLAYED_POSITION} : {downloadfiles.NAME}">
+							{downloadfiles.NAME}
+						</a>
+						<div class="category-folder">
+							<i class="far fa-folder"></i> {downloadfiles.CATEGORY_NAME}
+						</div>
+					</td>
+					# IF NOT C_SORT_BY_DATE #
+						<td># IF C_SORT_BY_NUMBER_DOWNLOADS #{downloadfiles.NUMBER_DOWNLOADS}# ELSE #{downloadfiles.STATIC_NOTATION}# ENDIF #</td>
+					# ENDIF #
+				</tr>
+			# END downloadfiles #
+		# ELSE #
+			<tr>
+				<td colspan="# IF C_SORT_BY_DATE #2# ELSE #3# ENDIF #">${LangLoader::get_message('no_item_now', 'common')}</td>
+			</tr>
+		# ENDIF #
 	</tbody>
 </table>
 
