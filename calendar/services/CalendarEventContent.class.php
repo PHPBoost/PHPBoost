@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 4.0 - 2013 10 29
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarEventContent
@@ -19,6 +20,7 @@ class CalendarEventContent
 	private $location;
 	private $map_displayed;
 
+	private $cancelled;
 	private $approved;
 
 	private $creation_date;
@@ -273,6 +275,21 @@ class CalendarEventContent
 		return $this->repeat_type != self::NEVER;
 	}
 
+	public function cancel()
+	{
+		$this->cancelled = true;
+	}
+
+	public function uncancel()
+	{
+		$this->cancelled = false;
+	}
+
+	public function is_cancelled()
+	{
+		return $this->cancelled;
+	}
+
 	public function get_properties()
 	{
 		return array(
@@ -283,6 +300,7 @@ class CalendarEventContent
 			'contents' => $this->get_contents(),
 			'picture_url' => $this->get_picture()->relative(),
 			'location' => $this->get_location(),
+			'cancelled' => (int)$this->is_cancelled(),
 			'approved' => (int)$this->is_approved(),
 			'map_displayed' => (int)$this->is_map_displayed(),
 			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
@@ -315,6 +333,11 @@ class CalendarEventContent
 			$this->approve();
 		else
 			$this->unapprove();
+
+		if ($properties['cancelled'])
+			$this->cancel();
+		else
+			$this->uncancel();
 
 		if ($properties['registration_authorized'])
 			$this->authorize_registration();
@@ -361,6 +384,7 @@ class CalendarEventContent
 
 		$this->repeat_number = 1;
 		$this->repeat_type = self::NEVER;
+		$this->cancelled = false;
 	}
 }
 ?>

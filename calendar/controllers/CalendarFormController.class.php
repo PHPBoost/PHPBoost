@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarFormController extends ModuleController
@@ -174,6 +175,9 @@ class CalendarFormController extends ModuleController
 
 		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
+			if ($this->get_event()->get_id() !== null)
+				$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_event()->get_content()->is_cancelled()));
+
 			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $event_content->is_approved()));
 		}
 
@@ -287,6 +291,11 @@ class CalendarFormController extends ModuleController
 
 		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
+			if ($event->get_id() !== null && $this->form->get_value('cancelled'))
+				$event_content->cancel();
+			if ($event->get_id() !== null && !$this->form->get_value('cancelled'))
+				$event_content->uncancel();
+
 			if ($this->form->get_value('approved'))
 				$event_content->approve();
 			else

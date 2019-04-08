@@ -26,11 +26,15 @@
 						<div class="more">
 							<div class="fa fa-user"></div> # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
 						</div>
-						<div class="content" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<div class="content# IF event.C_CANCELLED # error# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 							<meta itemprop="about" content="{event.CATEGORY_NAME}">
 							# IF C_COMMENTS_ENABLED #
-							<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
-							<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
+								<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
+								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
+							# ENDIF #
+
+							# IF event.C_CANCELLED #
+							<span class="message-helper error">{@calendar.cancelled}</span>
 							# ENDIF #
 
 							<div class="options infos">

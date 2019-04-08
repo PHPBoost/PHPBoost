@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 03 29
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 4.0 - 2013 02 25
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarFeedProvider implements FeedProvider
@@ -58,19 +59,22 @@ class CalendarFeedProvider implements FeedProvider
 				$event = new CalendarEvent();
 				$event->set_properties($row);
 
-				$category = $categories[$event->get_content()->get_category_id()];
+				if (!$event->get_content()->is_cancelled())
+				{
+					$category = $categories[$event->get_content()->get_category_id()];
 
-				$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_content()->get_rewrited_title());
+					$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_content()->get_rewrited_title());
 
-				$item = new FeedItem();
-				$item->set_title($event->get_content()->get_title());
-				$item->set_link($link);
-				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($event->get_content()->get_contents()) . ($event->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
-				$item->set_date($event->get_start_date());
-				$item->set_image_url($event->get_content()->get_picture()->rel());
-				$item->set_auth(CalendarService::get_categories_manager()->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
-				$data->add_item($item);
+					$item = new FeedItem();
+					$item->set_title($event->get_content()->get_title());
+					$item->set_link($link);
+					$item->set_guid($link);
+					$item->set_desc(FormatingHelper::second_parse($event->get_content()->get_contents()) . ($event->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
+					$item->set_date($event->get_start_date());
+					$item->set_image_url($event->get_content()->get_picture()->rel());
+					$item->set_auth(CalendarService::get_categories_manager()->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+					$data->add_item($item);
+				}
 			}
 			$result->dispose();
 

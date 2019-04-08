@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 10 20
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarSetup extends DefaultModuleSetup
@@ -80,6 +81,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'map_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'cancelled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'max_registered_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),

@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -35,6 +36,7 @@ $lang['calendar.titles.repetition'] = 'Repetition';
 $lang['calendar.pending'] = 'Pending events';
 $lang['calendar.manage'] = 'Manage events';
 $lang['calendar.events_list'] = 'Events list';
+$lang['calendar.cancelled'] = 'This event has been canceled';
 
 //Labels
 $lang['calendar.labels.location'] = 'Location';
@@ -67,6 +69,7 @@ $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'No one';
 $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
+$lang['calendar.labels.cancel'] = 'Cancel the event';
 
 //Administration
 $lang['calendar.config.events.management'] = 'Events management';

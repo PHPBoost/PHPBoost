@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.2 - last update: 2019 04 04
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarEvent
@@ -192,6 +193,7 @@ class CalendarEvent
 			'C_REGISTRATION_DAYS_LEFT' => !empty($registration_days_left) && $registration_days_left <= 5,
 			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 			'C_AUTHOR_EXIST' => $author->get_id() !== User::VISITOR_LEVEL,
+			'C_CANCELLED' => $this->content->is_cancelled(),
 
 			//Event
 			'ID' => $this->id,
