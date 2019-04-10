@@ -3,24 +3,36 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 07
+ * @version   	PHPBoost 5.3 - last update: 2019 04 09
  * @since   	PHPBoost 5.1 - 2018 09 20
 */
 
 class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 {
-	private $querier;
-	private $db_utils;
-
 	public function __construct()
 	{
 		parent::__construct('smallads');
-		$this->querier = PersistenceContext::get_querier();
-		$this->db_utils = PersistenceContext::get_dbms_utils();
+		
+		$this->content_tables = array(PREFIX . 'smallads');
+		$this->delete_old_files_list = array(
+			'/controllers/AdminSmalladsConfigController.class.php',
+			'/controllers/SmalladsHomeController.class.php',
+			'/fields/SmalladsFormFieldSelectSources.class.php',
+			'/lang/english/smallads_english.php',
+			'/lang/english/smallads_french.php',
+			'/phpboost/SmalladsModuleMiniMenu.class.php',
+			'/templates/smallads.tpl',
+			'/templates/SmalladsModuleMiniMenu.tpl',
+			'/templates/fields/SmalladsFormFieldSelectSources.tpl',
+			'/smallads.class.php',
+			'/smallads.php',
+			'/smallads_begin.php'
+		);
 	}
 
 	public function execute()
 	{
+		parent::execute();
 		if (ModulesManager::is_module_installed('smallads'))
 		{
 			$tables = $this->db_utils->list_tables(true);
@@ -34,13 +46,9 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			if (in_array(PREFIX . 'smallads', $tables))
 				$this->update_smallads_table();
 
-			$this->update_content();
-
 			$this->delete_old_mini_menu();
 			self::pics_to_upload();
 		}
-
-		$this->delete_old_files();
 	}
 
 	private function create_smallads_cats_table()
@@ -210,50 +218,6 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			}
 			$result->dispose();
 		}
-	}
-
-	public function update_content()
-	{
-		UpdateServices::update_table_content(PREFIX . 'smallads');
-	}
-
-	private function delete_old_files()
-	{
-		$file = new File(PATH_TO_ROOT . '/smallads/controllers/AdminSmalladsConfigController.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/controllers/SmalladsHomeController.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/fields/SmalladsFormFieldSelectSources.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/lang/english/smallads_french.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/lang/french/smallads_french.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/phpboost/SmalladsModuleMiniMenu.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/templates/smallads.tpl');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/templates/SmalladsModuleMiniMenu.tpl');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/templates/fields/SmalladsFormFieldSelectSources.tpl');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/smallads.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/smallads.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/smallads/smallads_begin.php');
-		$file->delete();
 	}
 }
 ?>
