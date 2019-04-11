@@ -3,7 +3,7 @@ This web application allows everybody without any particular knowledge required 
 
 It's an open-source project and it's totally free (under the GPL license).
 
-Visit the project page [PHPBoost CMS](https://www.phpboost.com "link to PHPBoost CMS official Website") for [support](https://www.phpboost.com/forum "link to PHPBoost CMS Support"), [documentation](https://www.phpboost.com/wiki "link to PHPBoost CMS Documentation") and a [demonstration website](http://demo.phpboost.com "link to PHPBoost CMS demo website").
+Visit the project page [PHPBoost CMS](https://www.phpboost.com "link to PHPBoost CMS official Website") for [support](https://www.phpboost.com/forum "link to PHPBoost CMS Support"), [documentation](https://www.phpboost.com/wiki "link to PHPBoost CMS Documentation") and a [demonstration website](https://demo.phpboost.com "link to PHPBoost CMS demo website").
 
 
 # How can I download PHPBoost CMS ?
@@ -17,9 +17,9 @@ We create one branch per version.
 | Branch | Description | Maintenance |
 | --- | --- | --- |
 | master | developpement branch | no |
-| 5.2 | RC version | no |
-| **5.1** | **latest stable version** | **fully** |
-| 5.0 | previous stable version | fully |
+| **5.2** | **latest stable version** | **fully** |
+| 5.1 | previous stable version | fully |
+| 5.0 | older stable version | no |
 | 4.1 | older stable version | no | 
 | 4.0 | older stable version | no |
 | 3.0 | older stable version | no |
