@@ -3,18 +3,29 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 09
+ * @version   	PHPBoost 5.3 - last update: 2019 04 11
  * @since   	PHPBoost 3.0 - 2012 02 26
 */
 
 abstract class ModuleUpdateVersion implements UpdateVersion
 {
 	protected $module_id;
+	
 	protected $content_tables = array();
+	
 	protected $delete_old_files_list = array();
 	protected $delete_old_folders_list = array();
+	
+	protected $database_columns_to_add = array();
+	protected $database_columns_to_delete = array();
+	protected $database_columns_to_modify = array();
+	
+	protected $database_keys_to_add = array();
+	protected $database_keys_to_delete = array();
+	
 	protected $querier;
 	protected $db_utils;
+	protected $tables_list;
 
 	public function __construct($module_id)
 	{
@@ -32,11 +43,120 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	{
 		if (ModulesManager::is_module_installed($this->module_id))
 		{
+			$this->tables_list = $this->db_utils->list_tables(true);
+
+			$this->add_database_columns();
+			$this->delete_database_columns();
+			$this->modify_database_columns();
+
+			$this->add_database_keys();
+			$this->delete_database_keys();
+			
 			$this->update_content();
 		}
 
 		$this->delete_old_files();
 		$this->delete_old_folders();
+	}
+
+	/**
+	 * Add columns in the database.
+	 */
+	private function add_database_columns()
+	{
+		foreach ($this->database_columns_to_add as $table)
+		{
+			if (in_array($table['table_name'], $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table['table_name']);
+				
+				foreach ($table['columns'] as $column_name => $attributes)
+				{
+					if (!isset($columns[$column_name]))
+						$this->querier->add_column($table['table_name'], $column_name, $attributes);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Delete columns in the database.
+	 */
+	private function delete_database_columns()
+	{
+		foreach ($this->database_columns_to_delete as $table)
+		{
+			if (in_array($table['table_name'], $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table['table_name']);
+				
+				foreach ($table['columns'] as $column_name)
+				{
+					if (isset($columns[$column_name]))
+						$this->querier->drop_column($table['table_name'], $column_name);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Updates columns in the database.
+	 */
+	private function modify_database_columns()
+	{
+		foreach ($this->database_columns_to_modify as $table)
+		{
+			if (in_array($table['table_name'], $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table['table_name']);
+				
+				foreach ($table['columns'] as $old_name => $new_name)
+				{
+					if (isset($columns[$old_name]))
+						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' CHANGE ' . $old_name . ' ' . $new_name);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Add keys in tables of the database.
+	 */
+	private function add_database_keys()
+	{
+		foreach ($this->database_keys_to_add as $table)
+		{
+			if (in_array($table['table_name'], $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table['table_name']);
+				
+				foreach ($table['keys'] as $column_name => $fulltext)
+				{
+					if (!isset($columns[$column_name]['key']) || !$columns[$column_name]['key'])
+						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' ADD ' . ($fulltext ? 'FULLTEXT ' : '') . 'KEY `' . $column_name . '` (`' . $column_name . '`)');
+				}
+			}
+		}
+	}
+
+	/**
+	 * Delete keys in tables of the database.
+	 */
+	private function delete_database_keys()
+	{
+		foreach ($this->database_keys_to_delete as $table)
+		{
+			if (in_array($table['table_name'], $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table['table_name']);
+				
+				foreach ($table['keys'] as $column_name)
+				{
+					if (isset($columns[$column_name]['key']) && $columns[$column_name]['key'])
+						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' DROP KEY `' . $column_name . '`');
+				}
+			}
+		}
 	}
 
 	/**

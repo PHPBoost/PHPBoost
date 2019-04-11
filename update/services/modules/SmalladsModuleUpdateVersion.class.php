@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 09
+ * @version   	PHPBoost 5.3 - last update: 2019 04 11
  * @since   	PHPBoost 5.1 - 2018 09 20
 */
 
@@ -27,6 +27,66 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/smallads.class.php',
 			'/smallads.php',
 			'/smallads_begin.php'
+		);
+		
+		$this->database_columns_to_add = array(
+			array(
+				'table_name' => PREFIX . 'smallads',
+				'columns' => array(
+					'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+					'rewrited_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+					'description' => array('type' => 'text', 'length' => 65000),
+					'brand' => array('type' => 'string', 'length' => 255),
+					'completed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+					'location' => array('type' => 'text', 'length' => 65000),
+					'other_location' => array('type' => 'string', 'length' => 255),
+					'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+					'displayed_author_email' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+					'custom_author_email' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+					'displayed_author_pm' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
+					'displayed_author_name' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+					'custom_author_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+					'displayed_author_phone' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+					'author_phone' => array('type' => 'string', 'length' => 25, 'default' => "''"),
+					'publication_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+					'publication_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+					'sources' => array('type' => 'text', 'length' => 65000),
+					'carousel' => array('type' => 'text', 'length' => 65000)
+				)
+			)
+		);
+		
+		$this->database_columns_to_delete = array(
+			array(
+				'table_name' => PREFIX . 'smallads',
+				'columns' => array('cat_id', 'links_flag', 'shipping', 'vid', 'id_updated', 'date_approved')
+			)
+		);
+		
+		$this->database_keys_to_add = array(
+			array(
+				'table_name' => PREFIX . 'smallads',
+				'keys' => array(
+					'title' => true,
+					'contents' => true,
+					'description' => true,
+					'id_category' => true
+				)
+			)
+		);
+		
+		$this->database_columns_to_modify = array(
+			array(
+				'table_name' => PREFIX . 'smallads',
+				'columns' => array(
+					'picture' => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
+					'type' => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
+					'id_created' => 'author_user_id INT(11) NOT NULL DEFAULT 0',
+					'approved' => 'published INT(11) NOT NULL DEFAULT 0',
+					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
+					'date_updated' => 'updated_date INT(11) NOT NULL DEFAULT 0'
+				)
+			)
 		);
 	}
 
@@ -73,85 +133,6 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 
 	private function update_smallads_table()
 	{
-		$columns = $this->db_utils->desc_table(PREFIX . 'smallads');
-
-		$rows_change = array(
-			'picture' => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
-			'type' => 'smallad_type VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL',
-			'id_created' => 'author_user_id INT(11) NOT NULL DEFAULT 0',
-			'approved' => 'published INT(11) NOT NULL DEFAULT 0',
-			'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
-			'date_updated' => 'updated_date INT(11) NOT NULL DEFAULT 0'
-		);
-
-		foreach ($rows_change as $old_name => $new_name)
-		{
-			if (isset($columns[$old_name]))
-				$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads CHANGE ' . $old_name . ' ' . $new_name);
-		}
-
-		if (isset($columns['cat_id']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'cat_id');
-		if (isset($columns['links_flag']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'links_flag');
-		if (isset($columns['shipping']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'shipping');
-		if (isset($columns['vid']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'vid');
-		if (isset($columns['id_updated']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'id_updated');
-		if (isset($columns['date_approved']))
-			$this->db_utils->drop_column(PREFIX . 'smallads', 'date_approved');
-
-		if (!isset($columns['id_category']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'id_category', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['rewrited_title']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'rewrited_title', array('type' => 'string', 'length' => 255, 'default' => "''"));
-		if (!isset($columns['description']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'description', array('type' => 'text', 'length' => 65000));
-		if (!isset($columns['brand']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'brand', array('type' => 'string', 'length' => 255));
-		if (!isset($columns['completed']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'completed', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['location']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'location', array('type' => 'text', 'length' => 65000));
-		if (!isset($columns['other_location']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'other_location', array('type' => 'string', 'length' => 255));
-		if (!isset($columns['views_number']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
-		if (!isset($columns['displayed_author_email']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'displayed_author_email', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['custom_author_email']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'custom_author_email', array('type' => 'string', 'length' => 255, 'default' => "''"));
-		if (!isset($columns['displayed_author_pm']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'displayed_author_pm', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
-		if (!isset($columns['displayed_author_name']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'displayed_author_name', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
-		if (!isset($columns['custom_author_name']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'custom_author_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
-		if (!isset($columns['displayed_author_phone']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'displayed_author_phone', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['author_phone']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'author_phone', array('type' => 'string', 'length' => 25, 'default' => "''"));
-		if (!isset($columns['publication_start_date']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'publication_start_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['publication_end_date']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'publication_end_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		if (!isset($columns['sources']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'sources', array('type' => 'text', 'length' => 65000));
-		if (!isset($columns['carousel']))
-			$this->db_utils->add_column(PREFIX . 'smallads', 'carousel', array('type' => 'text', 'length' => 65000));
-
-		$columns = $this->db_utils->desc_table(PREFIX . 'smallads');
-		if (!isset($columns['title']['key']) || !$columns['title']['key'])
-			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `title` (`title`)');
-		if (!isset($columns['contents']['key']) || !$columns['contents']['key'])
-			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `contents` (`contents`)');
-		if (!isset($columns['description']['key']) || !$columns['description']['key'])
-			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `description` (`description`)');
-		if (!isset($columns['id_category']['key']) || !$columns['id_category']['key'])
-			$this->querier->inject('ALTER TABLE ' . PREFIX . 'smallads ADD FULLTEXT KEY `id_category` (`id_category`)');
-
 		$folder = new Folder(PATH_TO_ROOT . '/smallads/pics/');
 		if ($folder->exists())
 		{
