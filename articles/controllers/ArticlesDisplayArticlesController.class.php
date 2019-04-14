@@ -105,7 +105,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 		if ($nbr_pages > 1)
 			$this->build_form($array_page, $current_page);
 
-		$this->build_sources_view();
+		foreach ($this->article->get_sources() as $name => $url)
+		{
+			$this->tpl->assign_block_vars('sources', $this->article->get_array_tpl_source_vars($name));
+		}
 
 		$this->build_keywords_view();
 
@@ -197,24 +200,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 
 		return $options;
-	}
-
-	private function build_sources_view()
-	{
-		$sources = $this->article->get_sources();
-		$nbr_sources = count($sources);
-		$this->tpl->put('C_SOURCES', $nbr_sources > 0);
-
-		$i = 1;
-		foreach ($sources as $name => $url)
-		{
-			$this->tpl->assign_block_vars('sources', array(
-				'C_SEPARATOR' => $i < $nbr_sources,
-				'NAME' => $name,
-				'URL' => $url,
-			));
-			$i++;
-		}
 	}
 
 	private function build_keywords_view()

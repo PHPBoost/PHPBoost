@@ -136,30 +136,13 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			$this->build_keywords_view($article);
 
 			$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
-			$this->build_sources_view($article);
-		}
-		$result->dispose();
-	}
 
-	private function build_sources_view(Article $article)
-	{
-		$sources = $article->get_sources();
-		$nbr_sources = count($sources);
-		if ($nbr_sources)
-		{
-			$this->view->put('articles.C_SOURCES', $nbr_sources > 0);
-
-			$i = 1;
-			foreach ($sources as $name => $url)
+			foreach ($article->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('articles.sources', array(
-					'C_SEPARATOR' => $i < $nbr_sources,
-					'NAME' => $name,
-					'URL' => $url,
-				));
-				$i++;
+				$this->tpl->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
 			}
 		}
+		$result->dispose();
 	}
 
 	private function build_keywords_view(Article $article)

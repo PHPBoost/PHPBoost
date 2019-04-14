@@ -95,28 +95,14 @@ class NewsDisplayNewsController extends ModuleController
 			));
 		}
 
-		$this->build_sources_view($news);
+		foreach ($news->get_sources() as $name => $url)
+		{
+			$this->tpl->assign_block_vars('sources', $news->get_array_tpl_source_vars($name));
+		}
+		
 		$this->build_keywords_view($news);
 		$this->build_suggested_news($news);
 		$this->build_navigation_links($news);
-	}
-
-	private function build_sources_view(News $news)
-	{
-		$sources = $news->get_sources();
-		$nbr_sources = count($sources);
-		$this->tpl->put('C_SOURCES', $nbr_sources > 0);
-
-		$i = 1;
-		foreach ($sources as $name => $url)
-		{
-			$this->tpl->assign_block_vars('sources', array(
-				'C_SEPARATOR' => $i < $nbr_sources,
-				'NAME' => $name,
-				'URL' => $url,
-			));
-			$i++;
-		}
 	}
 
 	private function build_keywords_view(News $news)

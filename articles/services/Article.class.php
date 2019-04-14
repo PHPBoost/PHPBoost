@@ -506,5 +506,22 @@ class Article
 			)
 		);
 	}
+	
+	public function get_array_tpl_source_vars($source_name)
+	{
+		$vars = array();
+		$sources = $this->get_sources();
+		
+		if (isset($sources[$source_name]))
+		{
+			$vars = array(
+				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
+				'NAME' => $source_name,
+				'URL' => $sources[$source_name]
+			);
+		}
+		
+		return $vars;
+	}
 }
 ?>
