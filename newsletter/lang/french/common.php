@@ -46,7 +46,7 @@ $lang['auth.read'] = 'Autorisations d\'accès aux flux';
 $lang['auth.archives-read'] = 'Autorisations de lecture des archives';
 $lang['auth.archives-moderation'] = 'Autorisations de modération des archives';
 $lang['auth.subscribers-read'] = 'Autorisations de lecture de la liste des inscrits';
-$lang['auth.subscribers-moderation'] = 'Autorisations de modéreration des inscrits';
+$lang['auth.subscribers-moderation'] = 'Autorisations de modération des inscrits';
 $lang['auth.subscribe'] = 'Autorisations de s\'enregistrer aux newsletters';
 $lang['auth.create-newsletter'] = 'Autorisations de créer une newsletter';
 $lang['auth.manage-streams'] = 'Autorisations de gérer les flux';
@@ -111,7 +111,7 @@ $lang['stream.message.delete_confirmation'] = 'Voulez-vous vraiment supprimer le
 $lang['error.sender-mail-not-configured'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée par l\'administrateur, veuillez réessayer quand ça sera fait.';
 $lang['error.sender-mail-not-configured-for-admin'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
-$lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
+$lang['error-subscriber-not-existed'] = 'L\'inscrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
 $lang['newsletter.message.success.add'] = 'La newsletter a été envoyée';
