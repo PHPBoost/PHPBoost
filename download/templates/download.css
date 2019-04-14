@@ -3,6 +3,14 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+#download-sources-container {
+	margin: 1em 1em 1em 2em;
+}
+
+.download-sources-title {
+	font-weight: bold;
+}
+
 .article-download.article-several .actions {
 	padding-top: 0.618em;
 }
@@ -11,7 +19,7 @@
 @media (min-width: 769px) {
 	#DownloadFormController_file_size_field,
 	#DownloadFormController_file_size_unit_field {
-	    display: inline-block;
+		display: inline-block;
 	}
 
 	#onblurContainerResponseDownloadFormController_file_size,

@@ -150,9 +150,14 @@ class DownloadDisplayCategoryController extends ModuleController
 			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
-
+			
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
+			
+			foreach ($downloadfile->get_sources() as $name => $url)
+			{
+				$this->tpl->assign_block_vars('downloadfiles.sources', $downloadfile->get_array_tpl_source_vars($name));
+			}
 		}
 		$result->dispose();
 

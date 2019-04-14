@@ -39,6 +39,7 @@ class DownloadFile
 	private $number_downloads;
 	private $notation;
 	private $keywords;
+	private $sources;
 
 	const SORT_ALPHABETIC       = 'name';
 	const SORT_AUTHOR           = 'display_name';
@@ -358,6 +359,21 @@ class DownloadFile
 		return array_keys($this->get_keywords());
 	}
 
+	public function add_source($source)
+	{
+		$this->sources[] = $source;
+	}
+
+	public function set_sources($sources)
+	{
+		$this->sources = $sources;
+	}
+
+	public function get_sources()
+	{
+		return $this->sources;
+	}
+
 	public function is_authorized_to_add()
 	{
 		return DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || DownloadAuthorizationsService::check_authorizations($this->id_category)->contribution();
@@ -394,7 +410,8 @@ class DownloadFile
 			'number_downloads' => $this->get_number_downloads(),
 			'number_view' => $this->get_number_view(),
 			'picture_url' => $this->get_picture()->relative(),
-			'software_version' => $this->get_software_version()
+			'software_version' => $this->get_software_version(),
+			'sources' => TextHelper::serialize($this->get_sources())
 		);
 	}
 
@@ -418,6 +435,7 @@ class DownloadFile
 		$this->number_downloads = $properties['number_downloads'];
 		$this->picture_url = new Url($properties['picture_url']);
 		$this->software_version = $properties['software_version'];
+		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -455,6 +473,7 @@ class DownloadFile
 		$this->number_view = 0;
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->software_version = '';
+		$this->sources = array();
 		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
@@ -481,6 +500,8 @@ class DownloadFile
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('download', $this->id);
+		$sources = $this->get_sources();
+		$nbr_sources = count($sources);
 		$config = DownloadConfig::load();
 
 		return array_merge(
@@ -499,6 +520,7 @@ class DownloadFile
 			'C_NB_VIEW_ENABLED' => $config->get_nb_view_enabled(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_UPDATED_DATE' => $this->has_updated_date(),
+			'C_SOURCES' => $nbr_sources > 0,
 			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
 			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 
@@ -545,6 +567,23 @@ class DownloadFile
 			'U_COMMENTS' => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 			)
 		);
+	}
+	
+	public function get_array_tpl_source_vars($source_name)
+	{
+		$vars = array();
+		$sources = $this->get_sources();
+		
+		if (isset($sources[$source_name]))
+		{
+			$vars = array(
+				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
+				'NAME' => $source_name,
+				'URL' => $sources[$source_name]
+			);
+		}
+		
+		return $vars;
 	}
 }
 ?>

@@ -1,5 +1,3 @@
-
-
 <section id="module-download">
 	<header>
 		<div class="cat-actions">
@@ -93,6 +91,15 @@
 			<div itemprop="text">{CONTENTS}</div>
 			<div class="spacer"></div>
 			${ContentSharingActionsMenuService::display()}
+
+			# IF C_SOURCES #
+				<div id="download-sources-container">
+					<span class="download-sources-title"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+					# START sources #
+					<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small download-sources-item" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
+					# END sources #
+				</div>
+			# ENDIF #
 		</div>
 		<aside>
 			# INCLUDE COMMENTS #

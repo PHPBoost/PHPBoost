@@ -218,6 +218,18 @@
 
 						<div itemprop="text">{downloadfiles.CONTENTS}</div>
 					</div>
+
+					# IF downloadfiles.C_SOURCES #
+					<div class="spacer"></div>
+					<aside>
+					<div id="download-sources-container">
+						<span>${LangLoader::get_message('form.sources', 'common')}</span> :
+						# START downloadfiles.sources #
+						<a itemprop="isBasedOnUrl" href="{downloadfiles.sources.URL}" class="small" rel="nofollow">{downloadfiles.sources.NAME}</a># IF downloadfiles.sources.C_SEPARATOR #, # ENDIF #
+						# END downloadfiles.sources #
+					</div>
+					</aside>
+					# ENDIF #
 				# ENDIF #
 
 				<footer></footer>

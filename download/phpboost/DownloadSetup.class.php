@@ -70,6 +70,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_downloads' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'sources' => array('type' => 'text', 'length' => 65000),
 			'software_version' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
 		);
 		$options = array(
@@ -130,6 +131,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'author_user_id' => 1,
 			'number_downloads' => 0,
 			'number_view' => 0,
+			'sources' => TextHelper::serialize(array()),
 			'picture_url' => '/download/download.png'
 		));
 	}

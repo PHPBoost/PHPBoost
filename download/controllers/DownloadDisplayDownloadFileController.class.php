@@ -104,6 +104,11 @@ class DownloadDisplayDownloadFileController extends ModuleController
 
 		if ($has_keywords)
 			$this->build_keywords_view($keywords);
+		
+		foreach ($downloadfile->get_sources() as $name => $url)
+		{
+			$this->tpl->assign_block_vars('sources', $downloadfile->get_array_tpl_source_vars($name));
+		}
 	}
 
 	private function build_keywords_view($keywords)

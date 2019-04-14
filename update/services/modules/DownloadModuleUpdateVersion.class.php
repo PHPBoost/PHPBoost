@@ -23,6 +23,7 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'download',
 				'columns' => array(
+					'sources' => array('type' => 'text', 'length' => 65000),
 					'software_version' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
 				)
 			)
