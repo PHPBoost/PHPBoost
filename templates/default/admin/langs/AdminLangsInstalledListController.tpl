@@ -1,4 +1,4 @@
-{@H|langs.warning_before_install}
+{@H|langs.warning_before_delete}
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-langs-container" class="admin-elements-container langs-elements-container installed-elements-container">
 		<header class="legend">{@langs.installed_langs}</header>

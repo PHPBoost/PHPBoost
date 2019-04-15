@@ -3,7 +3,7 @@
 	# INCLUDE errors.MSG #
 # END errors #
 
-{@H|modules.warning_before_install}
+{@H|modules.warning_before_delete}
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-modules-container" class="admin-elements-container modules-elements-container installed-elements-container">
 		<header class="legend">{@modules.installed_modules}</header>

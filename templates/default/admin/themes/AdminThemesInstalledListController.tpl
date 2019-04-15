@@ -1,4 +1,4 @@
-{@H|themes.warning_before_install}
+{@H|themes.warning_before_delete}
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-themes-container" class="admin-elements-container themes-elements-container installed-elements-container">
 		<header class="legend">{@themes.installed_theme}</header>

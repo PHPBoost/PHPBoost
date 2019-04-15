@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 07 02
+ * @version   	PHPBoost 5.3 - last update: 2019 04 15
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -38,12 +38,12 @@ $lang['themes.view_real_preview'] = 'Voir en taille réelle';
 $lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';
 
 //Avertissements
-$lang['themes.warning_before_install'] = '<span class="message-helper warning">Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les thèmes ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
-$lang['themes.add.warning_before_install'] = '<span class="message-helper warning">Un thème doit être installé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les thèmes ajoutés sont automatiquements activés. Pensez à les désactiver si besoin.</span>';
+$lang['themes.warning_before_delete'] = '<span class="message-helper warning">Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['themes.add.warning_before_install'] = '<span class="message-helper notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';
-$lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip et ne doit pas dépasser :max_size. En cas de dépassement, déposez le dossier extrait de l\'archive dans le dossier <b>templates</b> de votre site sur votre FTP.';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';
