@@ -410,7 +410,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0),
 						'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
 						'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
-						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=' . $extension
+						'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=.' . $extension
 					)));
 
 					//Affichage de la liste des miniatures sous l'image.
@@ -492,7 +492,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
-						$display_link = 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=' . $extension;
+						$display_link = 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=.' . $extension;
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					{
@@ -562,7 +562,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'RENAME_CUT' => $html_protected_name,
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'),
-						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=' . $extension,
+						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=.' . $extension,
 						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
