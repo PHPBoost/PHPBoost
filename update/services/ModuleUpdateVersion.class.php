@@ -73,7 +73,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 				foreach ($table['columns'] as $column_name => $attributes)
 				{
 					if (!isset($columns[$column_name]))
-						$this->querier->add_column($table['table_name'], $column_name, $attributes);
+						$this->db_utils->add_column($table['table_name'], $column_name, $attributes);
 				}
 			}
 		}
@@ -93,7 +93,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 				foreach ($table['columns'] as $column_name)
 				{
 					if (isset($columns[$column_name]))
-						$this->querier->drop_column($table['table_name'], $column_name);
+						$this->db_utils->drop_column($table['table_name'], $column_name);
 				}
 			}
 		}
