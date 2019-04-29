@@ -157,6 +157,18 @@ header h2 .actions {
 	padding: 0.809em;
 }
 
+/* --- Id Card --- */
+.id-card {
+	margin: 1.618em 0 0;
+}
+
+.id-card::after,
+.id-card::before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 /* --- Block --- */
 .block {
 	border-width: 2px 1px 1px 1px;

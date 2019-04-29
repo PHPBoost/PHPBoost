@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,6 +29,7 @@ $lang['content.config.anti-flood-enabled'] = 'Anti-flood';
 $lang['content.config.anti-flood-enabled-explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
 $lang['content.config.delay-flood'] = 'Intervalle minimum de temps entre les messages';
 $lang['content.config.delay-flood-explain'] = 'En secondes. 7 secondes par défaut.';
+$lang['content.config.sharing'] = 'Gestion des options de partage';
 $lang['content.config.content-sharing-enabled'] = 'Afficher les liens de partage sur les pages de contenu';
 $lang['content.config.content-sharing-email-enabled'] = 'Afficher le partage par Email';
 $lang['content.config.content-sharing-print-enabled'] = 'Afficher le lien d\'impression de la page';
@@ -72,4 +73,9 @@ $lang['content.config.new-content-duration'] = 'Durée d\'affichage du tag';
 $lang['content.config.new-content-duration-explain'] = 'En jours. 5 jours par défaut.';
 
 $lang['notation.config'] = 'Configuration de la notation';
+
+$lang['content.config.id.card'] = 'Gestion de la bio des auteurs';
+$lang['content.config.id.card.enabled'] = 'Autoriser l\'affichage de la bio des auteurs';
+$lang['content.config.id.card.explain'] = 'Permet d\'afficher dans un article un encart sur l\'auteur (nom + avatar + biographie)';
+$lang['config.id.card.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la bio des auteurs';
 ?>

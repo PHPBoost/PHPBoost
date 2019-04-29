@@ -3,13 +3,14 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 07
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Article
@@ -470,6 +471,7 @@ class Article
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
 			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
+			'C_ID_CARD' 					  => ContentManagementConfig::load()->module_id_card_is_enabled('articles') && $this->is_published(),
 
 			//Articles
 			'ID'                            => $this->get_id(),
@@ -486,6 +488,7 @@ class Article
 			'PICTURE'                       => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS'              => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR'              => $user_group_color,
+			'ID_CARD' 						=> IdcardService::display_idcard($user),
 
 			//Category
 			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
@@ -506,12 +509,12 @@ class Article
 			)
 		);
 	}
-	
+
 	public function get_array_tpl_source_vars($source_name)
 	{
 		$vars = array();
 		$sources = $this->get_sources();
-		
+
 		if (isset($sources[$source_name]))
 		{
 			$vars = array(
@@ -520,7 +523,7 @@ class Article
 				'URL' => $sources[$source_name]
 			);
 		}
-		
+
 		return $vars;
 	}
 }

@@ -23,11 +23,12 @@
 
 		<div class="more">
 			# IF C_AUTHOR_DISPLAYED #
-			<i class="fa fa-user-o" aria-hidden="true"></i>
 				# IF C_AUTHOR_CUSTOM_NAME #
-					{AUTHOR_CUSTOM_NAME}
+					<i class="fa fa-user-o" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME}
 				# ELSE #
-					# IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #|&nbsp;
+					# IF NOT C_ID_CARD #
+						<i class="fa fa-user-o" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF # |&nbsp;
+					# ENDIF #
 				# ENDIF #
 			# ENDIF #
 			<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>&nbsp;|
@@ -62,7 +63,14 @@
 			# ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
-			
+			# IF C_AUTHOR_DISPLAYED #
+				# IF NOT C_AUTHOR_CUSTOM_NAME #
+					# IF C_ID_CARD #
+					 	{ID_CARD}
+					# ENDIF #
+				# ENDIF #
+			# ENDIF #
+
 			${ContentSharingActionsMenuService::display()}
 
 			<hr />

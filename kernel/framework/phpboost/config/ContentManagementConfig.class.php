@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 09 21
+ * @version     PHPBoost 5.3 - last update: 2019 04 29
  * @since       PHPBoost 3.0 - 2010 07 07
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -30,6 +30,8 @@ class ContentManagementConfig extends AbstractConfigData
 	const CONTENT_SHARING_SMS_ENABLED      = 'content_sharing_sms_enabled';
 	const OPENGRAPH_ENABLED                = 'opengraph_enabled';
 	const SITE_DEFAULT_PICTURE_URL         = 'site_default_picture_url';
+	const ID_CARD_ENABLED     			   = 'id_card';
+	const ID_CARD_UNAUTHORIZED_MODULES     = 'id_card_unauthorized_modules';
 
 	public function is_anti_flood_enabled()
 	{
@@ -201,6 +203,31 @@ class ContentManagementConfig extends AbstractConfigData
 		return $this->is_notation_enabled() && !in_array($module_id, $this->get_notation_unauthorized_modules());
 	}
 
+	public function is_id_card_enabled()
+	{
+		return $this->get_property(self::ID_CARD_ENABLED);
+	}
+
+	public function set_id_card_enabled($enabled)
+	{
+		$this->set_property(self::ID_CARD_ENABLED, $enabled);
+	}
+
+	public function get_id_card_unauthorized_modules()
+	{
+		return $this->get_property(self::ID_CARD_UNAUTHORIZED_MODULES);
+	}
+
+	public function set_id_card_unauthorized_modules(array $modules)
+	{
+		$this->set_property(self::ID_CARD_UNAUTHORIZED_MODULES, $modules);
+	}
+
+	public function module_id_card_is_enabled($module_id)
+	{
+		return $this->is_id_card_enabled() && !in_array($module_id, $this->get_id_card_unauthorized_modules());
+	}
+
 	protected function get_default_values()
 	{
 		return array(
@@ -218,7 +245,9 @@ class ContentManagementConfig extends AbstractConfigData
 			self::CONTENT_SHARING_PRINT_ENABLED    => true,
 			self::CONTENT_SHARING_SMS_ENABLED      => true,
 			self::OPENGRAPH_ENABLED                => true,
-			self::SITE_DEFAULT_PICTURE_URL         => ''
+			self::SITE_DEFAULT_PICTURE_URL         => '',
+			self::ID_CARD_ENABLED              	   => true,
+			self::ID_CARD_UNAUTHORIZED_MODULES => array(),
 		);
 	}
 

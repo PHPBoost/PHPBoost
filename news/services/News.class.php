@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class News
@@ -412,19 +413,20 @@ class News
 			Date::get_array_tpl_vars($this->creation_date,'date'),
 			Date::get_array_tpl_vars($this->start_date,'differed_start_date'),
 			array(
-			'C_VISIBLE' => $this->is_visible(),
-			'C_EDIT' => $this->is_authorized_to_edit(),
-			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_PICTURE' => $this->has_picture(),
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_AUTHOR_DISPLAYED' => $news_config->get_author_displayed(),
+			'C_VISIBLE'            => $this->is_visible(),
+			'C_EDIT'               => $this->is_authorized_to_edit(),
+			'C_DELETE'             => $this->is_authorized_to_delete(),
+			'C_PICTURE'            => $this->has_picture(),
+			'C_USER_GROUP_COLOR'   => !empty($user_group_color),
+			'C_AUTHOR_DISPLAYED'   => $news_config->get_author_displayed(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-			'C_NB_VIEW_ENABLED' => $news_config->get_nb_view_enabled(),
-			'C_READ_MORE' => !$this->get_short_contents_enabled() && TextHelper::strlen($contents) > $news_config->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
-			'C_SOURCES' => $nbr_sources > 0,
-			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
-			'C_TOP_LIST' => $this->top_list_enabled(),
-			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+			'C_NB_VIEW_ENABLED'    => $news_config->get_nb_view_enabled(),
+			'C_READ_MORE'          => !$this->get_short_contents_enabled() && TextHelper::strlen($contents) > $news_config->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
+			'C_SOURCES'            => $nbr_sources > 0,
+			'C_DIFFERED'           => $this->approbation_type == self::APPROVAL_DATE,
+			'C_TOP_LIST'           => $this->top_list_enabled(),
+			'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('news', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+			'C_ID_CARD'            => ContentManagementConfig::load()->module_id_card_is_enabled('news') && $this->is_visible(),
 
 			//News
 			'ID' => $this->id,
@@ -437,6 +439,7 @@ class News
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+			'ID_CARD' => IdcardService::display_idcard($user),
 
 			'C_COMMENTS' => !empty($number_comments),
 			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
@@ -460,12 +463,12 @@ class News
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		));
 	}
-	
+
 	public function get_array_tpl_source_vars($source_name)
 	{
 		$vars = array();
 		$sources = $this->get_sources();
-		
+
 		if (isset($sources[$source_name]))
 		{
 			$vars = array(
@@ -474,7 +477,7 @@ class News
 				'URL' => $sources[$source_name]
 			);
 		}
-		
+
 		return $vars;
 	}
 }

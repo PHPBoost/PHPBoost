@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 13
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,6 +53,8 @@ class AdminContentConfigController extends AdminController
 			$this->form->get_field_by_id('content_sharing_print_enabled')->set_hidden(!$this->content_management_config->is_content_sharing_enabled());
 			$this->form->get_field_by_id('content_sharing_sms_enabled')->set_hidden(!$this->content_management_config->is_content_sharing_enabled());
 			$this->form->get_field_by_id('site_default_picture_url')->set_hidden(!$this->content_management_config->is_opengraph_enabled());
+			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_hidden(!$this->content_management_config->is_id_card_enabled());
+			$this->form->get_field_by_id('id_card_unauthorized_modules')->set_selected_options($this->content_management_config->get_id_card_unauthorized_modules());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -167,7 +169,7 @@ class AdminContentConfigController extends AdminController
 			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
 		));
 
-		$fieldset = new FormFieldsetHTML('content_config', $this->lang['content']);
+		$fieldset = new FormFieldsetHTML('sharing_config', $this->lang['content.config.sharing']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled(),
@@ -196,6 +198,7 @@ class AdminContentConfigController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
 			array(
 				'description' => $this->lang['content.config.opengraph-enabled.explain'],
+				'class' => 'top-field',
 				'events' => array('click' => '
 					if (HTMLForms.getField("opengraph_enabled").getValue()) {
 						HTMLForms.getField("site_default_picture_url").enable();
@@ -213,6 +216,23 @@ class AdminContentConfigController extends AdminController
 				'class' => 'top-field',
 				'hidden' => !$this->content_management_config->is_opengraph_enabled()
 				)
+		));
+
+		$fieldset = new FormFieldsetHTML('id_card_config', $this->lang['content.config.id.card']);
+		$form->add_fieldset($fieldset);
+
+		$fieldset->add_field(new FormFieldCheckbox('id_card_enabled', $this->lang['content.config.id.card.enabled'], $this->content_management_config->is_id_card_enabled(),
+			array('class' => 'top-field', 'description' => $this->lang['content.config.id.card.explain'], 'events' => array('click' => '
+				if (HTMLForms.getField("id_card_enabled").getValue()) {
+					HTMLForms.getField("id_card_unauthorized_modules").enable();
+				} else {
+					HTMLForms.getField("id_card_unauthorized_modules").disable();
+				}')
+			)
+		));
+
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('id_card_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_id_card_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('idcard'),
+			array('size' => 6, 'description' => $this->lang['config.id.card.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_id_card_enabled())
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -309,6 +329,20 @@ class AdminContentConfigController extends AdminController
 		}
 		else
 			$this->content_management_config->set_opengraph_enabled(false);
+
+		if ($this->form->get_value('id_card_enabled'))
+		{
+			$this->content_management_config->set_id_card_enabled(true);
+
+			$unauthorized_modules = array();
+			foreach ($this->form->get_value('id_card_unauthorized_modules') as $field => $option)
+			{
+				$unauthorized_modules[] = $option->get_raw_value();
+			}
+			$this->content_management_config->set_id_card_unauthorized_modules($unauthorized_modules);
+		}
+		else
+			$this->content_management_config->set_id_card_enabled(false);
 
 		ContentManagementConfig::save();
 

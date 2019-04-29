@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 01 20
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallationServices
@@ -426,7 +427,7 @@ class InstallationServices
 	{
 		$lang = LangLoader::get('user-common');
 
-		//Sex
+		// Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.sex']);
 		$extended_field->set_field_name('user_sex');
@@ -437,7 +438,18 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 
-		//Mail notofication when receiving PM
+		// Biography
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended-field.field.biography']);
+		$extended_field->set_field_name('user_biography');
+		$extended_field->set_description($lang['extended-field.field.biography-explain']);
+		$extended_field->set_field_type('MemberLongTextExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
+		$extended_field->set_is_freeze(true);
+		ExtendedFieldsService::add($extended_field);
+
+		// Mail notofication when receiving PM
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.pmtomail']);
 		$extended_field->set_field_name('user_pmtomail');
@@ -448,7 +460,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 
-		//Date Birth
+		// Birth Date
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.date-birth']);
 		$extended_field->set_field_name('user_born');
@@ -459,7 +471,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 
-		//Avatar
+		// Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.avatar']);
 		$extended_field->set_field_name('user_avatar');

@@ -3,12 +3,13 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 16
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UpdateServices
@@ -266,6 +267,9 @@ class UpdateServices
 		if (!isset($columns['location_id']))
 			self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', array('type' => 'string', 'length' => 64, 'default' => "''"));
 
+		if (!isset($columns['user_biography']))
+			self::$db_utils->add_column(PREFIX . 'member_extended_fields', 'user_biography', array('type' => 'text', 'length' => 16777215));
+
 		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');
 	}
@@ -308,9 +312,9 @@ class UpdateServices
 
 		$modules_config = ModulesConfig::load();
 		$home_page = GeneralConfig::load()->get_module_home_page();
-		
+
 		$default_module_changed = false;
-		
+
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
 			if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
@@ -338,7 +342,7 @@ class UpdateServices
 			{
 				ModulesManager::update_module($id, false, false);
 				$this->add_information_to_file('module ' . $id, 'has been disabled because : incompatible with new version');
-				
+
 				if ($home_page == $id)
 					$default_module_changed = true;
 			}
@@ -346,7 +350,7 @@ class UpdateServices
 			$modules_config->update($module);
 		}
 		ModulesConfig::save();
-		
+
 		if ($default_module_changed)
 		{
 			if (ModulesManager::is_module_installed('news'))
@@ -355,7 +359,7 @@ class UpdateServices
 				$new_default = 'articles';
 			else
 				$new_default = 'forum';
-			
+
 			$general_config = GeneralConfig::load();
 			$general_config->set_module_home_page($new_default);
 			$general_config->set_other_home_page('');

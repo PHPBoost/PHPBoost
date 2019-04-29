@@ -22,15 +22,15 @@
 		</div>
 		<div class="more">
 			# IF C_AUTHOR_DISPLAYED #
-			<span class="more-element more-element-author">
-				<i class="fa fa-user-o" aria-hidden="true"></i>
-				# IF C_AUTHOR_CUSTOM_NAME #
-					{AUTHOR_CUSTOM_NAME}
-				# ELSE #
-					# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
-				# ENDIF #
-				 |
-			</span>
+				<span class="more-element more-element-author">
+					# IF C_AUTHOR_CUSTOM_NAME #
+						<i class="fa fa-user-o" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME} |
+					# ELSE #
+						# IF NOT C_ID_CARD #
+							<i class="fa fa-user-o" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF # |
+						# ENDIF #
+					# ENDIF #
+				</span>
 			# ENDIF #
 			<span class="more-element more-element-date">
 				<i class="fa fa-calendar" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
@@ -54,6 +54,13 @@
 			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="thumbnail-item" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
+			# IF C_AUTHOR_DISPLAYED #
+				# IF NOT C_AUTHOR_CUSTOM_NAME #
+					# IF C_ID_CARD #
+					 	{ID_CARD}
+					# ENDIF #
+				# ENDIF #
+			# ENDIF #
 		</div>
 
 		<aside>

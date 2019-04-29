@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 24
+ * @version   	PHPBoost 5.3 - last update: 2019 04 29
  * @since   	PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -265,6 +265,8 @@ $lang['extended-field.field.entertainement-explain'] = '';
 
 $lang['extended-field.field.biography'] = 'Biographie';
 $lang['extended-field.field.biography-explain'] = '';
+$lang['extended-field.field.no-biography'] = 'Ce membre n\'a pas renseigné la biographie de son profil';
+$lang['extended-field.field.no-member'] = 'Ce membre n\'est plus inscrit';
 
 //Scroll to
 $lang['scroll-to.top'] = 'haut de la page';
