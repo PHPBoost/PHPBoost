@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 05 06
  * @since   	PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,8 +74,8 @@ $lang['content.config.new-content-duration-explain'] = 'En jours. 5 jours par d�
 
 $lang['notation.config'] = 'Configuration de la notation';
 
-$lang['content.config.id.card'] = 'Gestion de la bio des auteurs';
-$lang['content.config.id.card.enabled'] = 'Autoriser l\'affichage de la bio des auteurs';
-$lang['content.config.id.card.explain'] = 'Permet d\'afficher dans un article un encart sur l\'auteur (nom + avatar + biographie)';
-$lang['config.id.card.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer la bio des auteurs';
+$lang['content.config.id.card'] = 'Gestion des informations sur l\'auteur';
+$lang['content.config.id.card.enabled'] = 'Autoriser l\'affichage des informations sur l\'auteur';
+$lang['content.config.id.card.explain'] = 'Permet d\'afficher dans un article un encart sur l\'auteur (profil + avatar + biographie)';
+$lang['config.id.card.forbidden-module-explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas activer des informations sur l\'auteur';
 ?>

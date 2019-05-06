@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 04 29
+ * @version     PHPBoost 5.3 - last update: 2019 05 06
  * @since       PHPBoost 5.2 - 2019 04 23
 */
 
@@ -26,6 +26,7 @@ class IdcardService
 
         $user_id = $user->get_id();
         $author_name = $user->get_display_name();
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
         if($user_id !== -1)
         {
@@ -46,7 +47,10 @@ class IdcardService
         $template->put_all(array(
             'AUTHOR_NAME' => $author_name,
             'U_AVATAR' => Url::to_rel($avatar),
-            'BIOGRAPHY' => $biography
+            'BIOGRAPHY' => $biography,
+            'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
+			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR' => $user_group_color,
         ));
 
         return $template->render();

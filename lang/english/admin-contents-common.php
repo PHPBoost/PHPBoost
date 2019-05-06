@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 05 06
  * @since   	PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,9 +72,9 @@ $lang['content.config.new-content-duration-explain'] = 'In days. 5 days by defau
 
 $lang['notation.config'] = 'Notation configuration';
 
-$lang['content.config.id.card'] = 'Author biography management';
-$lang['content.config.id.card.enabled'] = 'Enable the biography of the author';
-$lang['content.config.id.card.explain'] = 'Display the biography of the author of an article (name + avatar + biography)';
-$lang['config.id.card.forbidden-module-explain'] = 'Select modules where you don\'t want to enable the biography';
+$lang['content.config.id.card'] = 'Author information management';
+$lang['content.config.id.card.enabled'] = 'Enable the author information';
+$lang['content.config.id.card.explain'] = 'Display the author information of an article (profile + avatar + biography)';
+$lang['config.id.card.forbidden-module-explain'] = 'Select modules where you don\'t want to enable the author information';
 
 ?>
