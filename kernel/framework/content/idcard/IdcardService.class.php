@@ -45,12 +45,15 @@ class IdcardService
 
 
         $template->put_all(array(
+            'C_USER_GROUP_COLOR'   => !empty($user_group_color),
+
             'AUTHOR_NAME' => $author_name,
-            'U_AVATAR' => Url::to_rel($avatar),
             'BIOGRAPHY' => $biography,
-            'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+            
+            'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
+            'U_AVATAR' => Url::to_rel($avatar),
         ));
 
         return $template->render();
