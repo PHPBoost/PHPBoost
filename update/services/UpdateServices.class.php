@@ -267,8 +267,22 @@ class UpdateServices
 		if (!isset($columns['location_id']))
 			self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', array('type' => 'string', 'length' => 64, 'default' => "''"));
 
+		$columns = self::$db_utils->desc_table(PREFIX . 'member_extended_fields');
+
 		if (!isset($columns['user_biography']))
-			self::$db_utils->add_column(PREFIX . 'member_extended_fields', 'user_biography', array('type' => 'text', 'length' => 16777215));
+		{
+			$lang = LangLoader::get('user-common');
+			
+			$extended_field = new ExtendedField();
+			$extended_field->set_name($lang['extended-field.field.biography']);
+			$extended_field->set_field_name('user_biography');
+			$extended_field->set_description($lang['extended-field.field.biography-explain']);
+			$extended_field->set_field_type('MemberLongTextExtendedField');
+			$extended_field->set_is_required(false);
+			$extended_field->set_display(false);
+			$extended_field->set_is_freeze(true);
+			ExtendedFieldsService::add($extended_field);
+		}
 
 		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');
