@@ -173,12 +173,16 @@ class PrivateMsg
 	{
 		//Suppression du message.
 		self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE id = :id AND idconvers = :idconvers', array('id' => $pm_idmsg, 'idconvers' => $pm_idconvers));
-
-		$pm_max_id = self::$db_querier->get_column_value(DB_TABLE_PM_MSG, 'MAX(id)', 'WHERE idconvers = :idconvers', array('idconvers' => $pm_idconvers));
-		$pm_last_msg = self::$db_querier->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $pm_max_id));
-
+		
+		$pm_max_id = 0;
+		try {
+			$pm_max_id = self::$db_querier->get_column_value(DB_TABLE_PM_MSG, 'MAX(id)', 'WHERE idconvers = :idconvers', array('idconvers' => $pm_idconvers));
+		} catch (RowNotFoundException $ex) {}
+		
 		if (!empty($pm_max_id))
 		{
+			$pm_last_msg = self::$db_querier->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $pm_max_id));
+			
 			//Mise à jour de la conversation.
 			$user_view_pm = self::$db_querier->get_column_value(DB_TABLE_PM_TOPIC, 'user_view_pm', 'WHERE id = :id', array('id' => $pm_idconvers));
 			self::$db_querier->inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'");

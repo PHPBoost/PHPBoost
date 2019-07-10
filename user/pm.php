@@ -410,6 +410,21 @@ elseif ($pm_del_convers) //Suppression de conversation.
 
 			$update_nbr_pm = ($view_status == '0');
 			PrivateMsg::delete_conversation($current_user->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
+			
+			//Suppression du message privé dans la boite du destinataire s'il ne la pas encore lu.
+			if ($view_status != '1')
+			{
+				$id_msg = 0;
+				try {
+					$id_msg = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $row['id']));
+				} catch (RowNotFoundException $ex) {}
+
+				if ($id_msg) //Suppression du message.
+				{
+					PrivateMsg::delete($row['user_id_dest'], $id_msg, $row['id']);
+					PrivateMsg::delete_conversation($row['user_id_dest'], $row['id'], false, PrivateMsg::DEL_PM_CONVERS, true);
+				}
+			}
 		}
 	}
 	$result->dispose();
@@ -452,12 +467,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 				$pm_to = $convers['user_id'];
 			}
 
-			$view = false;
-			if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
-				$view = true;
-
-			//Le destinataire n'a pas lu le message => on peut éditer.
-			if ($view === false)
+			if ($pm['view_status'] != '1')
 			{
 				$id_first = 0;
 				try {
@@ -471,7 +481,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne 
 				}
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
-					PrivateMsg::delete_conversation($pm_to, $pm['idconvers'], $expd, PrivateMsg::DEL_PM_CONVERS, PrivateMsg::UPDATE_MBR_PM);
+					PrivateMsg::delete_conversation($pm_to, $pm['idconvers'], $expd, PrivateMsg::DEL_PM_CONVERS, true);
 					AppContext::get_response()->redirect('/user/pm.php');
 				}
 			}
