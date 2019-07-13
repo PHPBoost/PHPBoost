@@ -469,6 +469,8 @@ textarea {
 }
 
 /* --- Verification des contraintes de formulaire --- */
+
+/* texte d'erreur */
 .text-status-constraint {
 	position:absolute;
 	display: block;
@@ -504,11 +506,12 @@ textarea {
 	border-color: transparent;
 }
 
+/* Icônes */
 .field-required:after,
 .picture-status-constraint:after {
 	display: inline-block;
 	position: absolute;
-	left: -16px;
+	left: -14px;
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900;
 	font-size: inherit;
@@ -517,57 +520,21 @@ textarea {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.constraint-status-right .field-required:after,
+.constraint-status-right .picture-status-constraint:after {
+	left: -18px;
+}
+
 .field-required:after {
-	top: 14px;
+	top: 12px;
 	opacity: 0.6;
 	font-size: 0.809rem;
 	content: "\f069";
 	display: table;
 }
 
-.form-field-date.field-required:after,
-.form-field-date.picture-status-constraint:after {
-	right: 24px;
-}
-
-.form-field-select.field-required:after,
-.form-field-number.field-required:after,
-.form-field-decimal.field-required:after {
-	right: -10px;
-}
-
-.form-field-datetime.field-required:after {
-	right: -15px;
-}
-
-.form-field-checkbox.field-required:after {
-	right: -20px;
-	top: 0;
-}
-
-.form-field-upload-file.field-required:after {
-	right: 43px;
-	top: 12px;
-}
-
-.constraint-status-right .form-field-upload-file.picture-status-constraint:after {
-	right: 40px;
-	top: 8px;
-}
-
-.constraint-status-right .form-field-color:after,
-.constraint-status-right .form-field-select:after,
-.constraint-status-right .form-field-number:after,
-.constraint-status-right .form-field-decimal:after {
-	right: -20px;
-}
-
 .constraint-statuts-right .form-field-checkbox:after {
 	top: 4px;
-}
-
-.constraint-statuts-right .form-field-datetime:after {
-	right: -22px;
 }
 
 .form-field-number input,
@@ -576,34 +543,31 @@ textarea {
 	padding-right: 2px;
 }
 
-.form-element-date .constraint-status-error .field-required:after,
-.form-element-date .constraint-status-right .field-required:after {
-	right: 10px;
-}
-
 .form-field-textarea.field-required:after,
 .constraint-status-right .form-field-textarea.field-required:after,
 .constraint-status-right .form-field-textarea.field-required:after {
-	top: 45%;
-}
-
-.constraint-status-right .field-required:after {
-	content: " ";
-}
-
-.constraint-status-right .form-field-checkbox.picture-status-constraint:after {
-	top: 0;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .constraint-status-right .picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
-	top: 10px;
+	top: 6px;
 }
 
-.constraint-status-error .form-field-textarea .picture-status-constraint:after,
-.constraint-status-right .form-field-textarea .picture-status-constraint:after {
-	top: 40%;
+.form-field-radio-button.field-required:after,
+.form-field-multiple-checkbox.field-required:after {
+	top: 8px;
+}
+
+.constraint-status-right .form-field-radio-button.field-required:after,
+.constraint-status-right .form-field-multiple-checkbox.field-required:after {
+	top: 4px;
+}
+
+.constraint-status-right .field-required:after {
+	content: " ";
 }
 
 .constraint-status-right .picture-status-constraint:after {
@@ -618,18 +582,17 @@ textarea {
 	display: none;
 }
 
-.form-field-radio-button.field-required:after,
-.form-field-multiple-checkbox.field-required:after {
-	top: 8px;
-	right: -16px;
-}
-
 .form-field-radio {
 	display: inline-block;
 }
 
 .required-fields-text {
 	text-align: center;
+}
+
+.form-field-upload-file a {
+	position: absolute;
+	padding-left: 0.618em;
 }
 
 /* --- HTML Table--- */
