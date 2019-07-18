@@ -93,14 +93,6 @@ table.formatter-table th.formatter-table-head p {
 	margin-bottom: 0;
 }
 
-/* --- Taille des colonnes --- */
-.col-smaller { width: 3em;  }
-.col-small   { width: 6em;  }
-.col-large   { width: 9em;  }
-.col-larger  { width: 12em; }
-.col-xlarge  { width: 15em; }
-
-
 /* -- Table responsive basictable.js -- */
 /* ------------------------------------ */
 table.bt thead th {
@@ -140,4 +132,36 @@ table.bt tbody td .bt-content {
 	max-height: 310px;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
+}
+
+/* --- Options -------------------------------------------------------------- */
+
+/* --- CSS --- */
+/* --- Taille des colonnes --- */
+.col-smaller { width: 3em;  }
+.col-small   { width: 6em;  }
+.col-large   { width: 9em;  }
+.col-larger  { width: 12em; }
+.col-xlarge  { width: 15em; }
+
+/* --- BBCode --- */
+/* --- Bordures partout --- */
+.bordered td {
+	border-width: 1px 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+.bordered td:last-child {
+	border-width: 1px 1px 0 1px;
+}
+.bordered tr:last-child td {
+	border-width: 1px 0 1px 1px;
+}
+.bordered tr:last-child td:last-child {
+	border-width: 1px;
+}
+/* -- Adaptabilité des tables créées en bbcode -- */
+.responsive-table {
+	width: 100%;
+	overflow: auto;
 }

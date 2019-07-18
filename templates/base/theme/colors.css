@@ -235,6 +235,16 @@ table tbody td {
     border-color:  #81A4C8;
 }
 
+/* --- Options BBCode--- */
+/* --- Bordures partout --- */
+.bordered td {
+	border-color: #D3D3D3;
+}
+/* --- Couleur des lignes --- */
+/* 1-3 */
+.odd-lines tr:nth-child(odd) {background-color: #D3D3D3;}
+/* 2-4 */
+.even-lines tr:nth-child(even) {background-color: #D3D3D3;}
 
 /* -- form.css
     #####  #####  ####   #   #
@@ -713,7 +723,7 @@ h3.formatter-title {
 
 /* -- autres
      ###   #   #  #####  #####  #####  #####
-    #   #  #   #    #    #   #  #      #    
+    #   #  #   #    #    #   #  #      #
     #####  #   #    #    # # #  ###    #####
     #   #  #   #    #    #  #   #          #
     #   #  #####    #    #   #  #####  #####
