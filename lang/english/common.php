@@ -166,8 +166,10 @@ $lang['authorizations.moderation'] = 'Moderation permission';
 $lang['authorizations.categories_management'] = 'Categories management permission';
 
 //Pagination
+$lang['pagination.first'] = 'To first page';
 $lang['pagination.previous'] = 'To previous page';
 $lang['pagination.next'] = 'To next page';
+$lang['pagination.last'] = 'To last page';
 $lang['pagination.current'] = 'The Current page';
 $lang['pagination.page'] = 'To Page';
 ?>
