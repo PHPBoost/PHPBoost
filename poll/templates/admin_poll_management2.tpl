@@ -97,7 +97,7 @@
 						<div class="form-element">
 							<label>* {L_ANSWERS}</label>
 							<div class="form-field">
-								<table id="table" class="admin-poll">
+								<table class="table admin-poll">
 									<tbody>
 										<tr>
 											<td class="no-separator text-strong">

@@ -13,7 +13,7 @@
 			<h2>{@iconfa.sample}</h2>
 		</header>
 		<div>
-			<table>
+			<table class="table">
 				<caption>{@iconfa.social}</caption>
 				<thead>
 					<tr>
@@ -33,7 +33,7 @@
 				</tbody>
 			</table>
 
-			<table>
+			<table class="table">
 				<caption>{@iconfa.screen}</caption>
 				<thead>
 					<tr>

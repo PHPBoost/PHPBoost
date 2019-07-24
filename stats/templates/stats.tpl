@@ -58,7 +58,7 @@
 		</nav>
 
 		# IF C_STATS_SITE #
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -87,7 +87,7 @@
 				<h2>{L_USERS}</h2>
 			</header>
 
-			<table id="table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>
@@ -116,7 +116,7 @@
 					{GRAPH_RESULT_THEME}
 				</div>
 				<div class="block">
-					<table id="table2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -157,7 +157,7 @@
 					{GRAPH_RESULT_SEX}
 				</div>
 				<div class="block">
-					<table id="table3">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -193,7 +193,7 @@
 
 			<div class="spacer"></div>
 
-			<table id="table4">
+			<table class="table">
 				<thead>
 					<tr>
 						<th colspan="3">
@@ -270,7 +270,7 @@
 					</div>
 					<div class="block">
 						# IF C_STATS_NO_GD #
-						<table id="table2">
+						<table class="table">
 							<tbody>
 								<tr>
 									<td></td>
@@ -324,7 +324,7 @@
 						<p class="center">{U_VISITS_MORE}</p>
 					</div>
 					<div class="block">
-						<table id="table">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>
@@ -365,7 +365,7 @@
 					{GRAPH_RESULT}
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_BROWSERS}</th>
@@ -406,7 +406,7 @@
 					{GRAPH_RESULT}
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_OS}</th>
@@ -447,7 +447,7 @@
 					{GRAPH_RESULT}
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_LANG}</th>
@@ -525,7 +525,7 @@
 			<header>
 				<h2>{L_REFERER}</h2>
 			</header>
-			<table id="table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>
@@ -627,7 +627,7 @@
 			<header>
 				<h2>{L_KEYWORD}</h2>
 			</header>
-			<table>
+			<table class="table">
 				<thead>
 					<tr>
 						<th>

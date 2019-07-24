@@ -87,14 +87,14 @@ $lang['welcome.message'] = '<p>Welcome to the Sandbox module.</p>
 <br />
 <p>You can try here several part of the PHPBoost framework :</p>
 <ul class="sandbox-home-list">
-<li><i class="fa fa-fw fa-asterisk"></i> Rendering of the different fields of the <a href="' . SandboxUrlBuilder::form()->absolute() . '" title="Form builder">form builder</a></li>
-<li><i class="fab fa-fw fa-css3"></i> Rendering of the main <a href="' . SandboxUrlBuilder::css()->absolute() . '" title="CSS Classes">CSS classes</a></li>
-<li><i class="far fa-fw fa-file-code"></i> Rendering of the specific styles from the <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '" title="BBCode styles">BBCode</a></li>
-<li><i class="fab fa-fw fa-font-awesome-flag"></i> A tutorial about using icons from the <a href="' . SandboxUrlBuilder::icons()->absolute() . '" title="Font-Awesome icons">Font Awesome library</a></li>
-<li><i class="fa fa-fw fa-list"></i> Rendering of the <a href="' . SandboxUrlBuilder::menu()->absolute() . '" title="Navigation menus">Cssmenu navigation menus</a>.</li>
-<li><i class="fa fa-fw fa-table"></i> The dynamic <a href="' . SandboxUrlBuilder::table()->absolute() . '" title="Table generation">table generation</a></li>
-<li><i class="fa fa-fw fa-at"></i> <a href="' . SandboxUrlBuilder::mail()->absolute() . '" title="Emails sending">Emails sending</a></li>
-<li><i class="fa fa-fw fa-code"></i> <a href="' . SandboxUrlBuilder::template()->absolute() . '" title="Template generation">Template generation</a> with or without cache</li>
+<li><i class="fa fa-fw fa-asterisk"></i> Rendering of the different fields of the <a href="' . SandboxUrlBuilder::form()->absolute() . '">form builder</a></li>
+<li><i class="fab fa-fw fa-css3"></i> Rendering of the main <a href="' . SandboxUrlBuilder::css()->absolute() . '">CSS classes</a></li>
+<li><i class="far fa-fw fa-file-code"></i> Rendering of the specific styles from the <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '">BBCode</a></li>
+<li><i class="fab fa-fw fa-font-awesome-flag"></i> A tutorial about using icons from the <a href="' . SandboxUrlBuilder::icons()->absolute() . '">Font Awesome library</a></li>
+<li><i class="fa fa-fw fa-list"></i> Rendering of the <a href="' . SandboxUrlBuilder::menu()->absolute() . '">Cssmenu navigation menus</a>.</li>
+<li><i class="fa fa-fw fa-table"></i> The dynamic <a href="' . SandboxUrlBuilder::table()->absolute() . '">table generation</a></li>
+<li><i class="fa fa-fw fa-at"></i> <a href="' . SandboxUrlBuilder::mail()->absolute() . '">Emails sending</a></li>
+<li><i class="fa fa-fw fa-code"></i> <a href="' . SandboxUrlBuilder::template()->absolute() . '">Template generation</a> with or without cache</li>
 </ul>
 <br />
 ';
@@ -317,9 +317,11 @@ $lang['css.pagination'] = 'Pagination';
 
 //Tables
 $lang['css.table'] = 'Tables';
-$lang['css.table.description'] = 'Table description';
-$lang['css.table.name'] = 'Name';
 $lang['css.table.description'] = 'Description';
+$lang['css.table.description.content'] = 'Table description';
+$lang['css.table.name'] = 'Name';
+$lang['css.table.caption'] = 'This is a table';
+$lang['css.table.caption.no.header'] = 'This is a table with no header';
 $lang['css.table.author'] = 'Author';
 $lang['css.table.test'] = 'Test';
 $lang['css.table.header'] = 'Header';

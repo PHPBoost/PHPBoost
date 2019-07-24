@@ -3,10 +3,10 @@
 &lt;img src="link-to-picture.ext" alt="Lorem ipsum" /><br />
 
 <em>// Lightbox</em>
-&lt;a href="link-to-picture-1.ext" data-lightbox="formatter" data-rel="lightcase:collection" title="Lorem ipsum">
+&lt;a href="link-to-picture-1.ext" data-lightbox="formatter" data-rel="lightcase:collection" aria-label="Lorem ipsum">
     &lt;img style="max-width: 150px" src="link-to-picture-1.ext" alt="Lorem ipsum" />
 &lt;/a>
-&lt;a href="link-to-picture-2.ext" data-lightbox="formatter" data-rel="lightcase:collection" title="Lorem ipsum">
+&lt;a href="link-to-picture-2.ext" data-lightbox="formatter" data-rel="lightcase:collection" aria-label="Lorem ipsum">
     &lt;img style="max-width: 150px" src="link-to-picture-2.ext" alt="Lorem ipsum" />
 &lt;/a><br />
 

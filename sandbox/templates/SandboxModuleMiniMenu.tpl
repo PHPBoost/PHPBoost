@@ -7,19 +7,19 @@
 			<span class="close-btn bkgd-sub"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
 			<div class="sbx-inset">
 				<div class="sbx-menu-item sbx-text">
-					<div class="item-2x small" title="{@mini.version.pbt}">
+					<div class="item-2x small" aria-label="{@mini.version.pbt}">
 						<span class="sr-only">{@mini.version.pbt} : </span>{PBT_VERSION}
 					</div>
-					<div class="item-2x small" title="{@mini.version.php}">
+					<div class="item-2x small" aria-label="{@mini.version.php}">
 						<span class="sr-only">{@mini.version.php} : </span>{PHP_VERSION}
 					</div>
-					<div class="item-2x small" title="{@mini.version.date}">
+					<div class="item-2x small" aria-label="{@mini.version.date}">
 						<span class="sr-only">{@mini.version.date} : </span>{INSTALL_DATE}
 					</div>
-					<div class="item-2x small" title="{@mini.version.sql}">
+					<div class="item-2x small" aria-label="{@mini.version.sql}">
 						<span class="sr-only">{@mini.version.sql} : </span>{DBMS_VERSION}
 					</div>
-					<div class="item-2x small" title="{@mini.viewport.h}">
+					<div class="item-2x small" aria-label="{@mini.viewport.h}">
 						<span class="icon-stack">
 							<i class="fa fa-tv icon-main" aria-hidden="true"></i>
 							<i class="fa fa-arrows-alt-h icon-sup" aria-hidden="true"></i>
@@ -28,7 +28,7 @@
 							<span id="window-width"></span>
 						</span>
 					</div>
-					<div class="item-2x small" title="{@mini.viewport.v}">
+					<div class="item-2x small" aria-label="{@mini.viewport.v}">
 						<span class="icon-stack">
 							<i class="fa fa-tv icon-main" aria-hidden="true"></i>
 							<i class="fa fa-arrows-alt-v icon-sup" aria-hidden="true"></i>
@@ -41,14 +41,14 @@
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.tools}</div>
 					# IF C_CSS_CACHE_ENABLED #
-						<div class="item-form item-2x" title="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
+						<div class="item-form item-2x" aria-label="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
 					# ELSE #
-						<div class="item-form item-2x" title="{@mini.enable.css.cache}"># INCLUDE ENABLE_CSS_CACHE #</div>
+						<div class="item-form item-2x" aria-label="{@mini.enable.css.cache}"># INCLUDE ENABLE_CSS_CACHE #</div>
 					# ENDIF #
-					<div class="item-form item-2x" title="{@mini.clean.css.cache}"># INCLUDE CLEAN_CSS_CACHE #</div>
-					<div class="item-form item-2x" title="{@mini.clean.tpl.cache}"># INCLUDE CLEAN_TPL_CACHE #</div>
-					<div class="item-form item-2x" title="{@mini.clean.rss.cache}"># INCLUDE CLEAN_RSS_CACHE #</div>
-					<div class="item-2x# IF C_LOGGED_ERRORS # blink# ENDIF #" title="{@mini.errors}">
+					<div class="item-form item-2x" aria-label="{@mini.clean.css.cache}"># INCLUDE CLEAN_CSS_CACHE #</div>
+					<div class="item-form item-2x" aria-label="{@mini.clean.tpl.cache}"># INCLUDE CLEAN_TPL_CACHE #</div>
+					<div class="item-form item-2x" aria-label="{@mini.clean.rss.cache}"># INCLUDE CLEAN_RSS_CACHE #</div>
+					<div class="item-2x# IF C_LOGGED_ERRORS # blink# ENDIF #" aria-label="{@mini.errors}">
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
 							<span class="icon-stack">
 								<i class="fa fa-terminal icon-main" aria-hidden="true"></i>
@@ -59,7 +59,7 @@
 							</span>
 						</a>
 					</div>
-					<div class="item-2x# IF C_404_ERRORS # blink# ENDIF #" title="{@mini.404}">
+					<div class="item-2x# IF C_404_ERRORS # blink# ENDIF #" aria-label="{@mini.404}">
 						<a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
 							<span class="icon-stack">
 								<i class="fa fa-unlink icon-main" aria-hidden="true"></i>
@@ -70,7 +70,7 @@
 							</span>
 						</a>
 					</div>
-					<div class="item-2x" title="{@mini.database}">
+					<div class="item-2x" aria-label="{@mini.database}">
 						<a href="{PATH_TO_ROOT}/database/admin_database.php">
 							<span class="icon-stack">
 								<i class="fa fa-database icon-main" aria-hidden="true"></i>
@@ -78,7 +78,7 @@
 							</span> <span class="sr-only">{@mini.database}</span>
 						</a>
 					</div>
-					<div class="item-2x" title="{@mini.coms}">
+					<div class="item-2x" aria-label="{@mini.coms}">
 						<a href="${relative_url(UserUrlBuilder::comments())}">
 							<span class="icon-stack">
 								<i class="fa fa-comments icon-main" aria-hidden="true"></i>
@@ -92,7 +92,7 @@
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.personalization}</div>
-					<div class="item-3x" title="{@mini.menus}/{@mini.config}">
+					<div class="item-3x" aria-label="{@mini.menus}/{@mini.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
 								<i class="fa fa-bars icon-main" aria-hidden="true"></i>
@@ -100,21 +100,21 @@
 							</span> <span class="sr-only">{@mini.menus}/{@mini.config}</span>
 						</a>
 					</div>
-					<div class="item-form item-3x"# IF C_LEFT_ENABLED # title="{@mini.disable.left.col}"# ELSE # title="{@mini.enable.left.col}"# ENDIF #>
+					<div class="item-form item-3x"# IF C_LEFT_ENABLED # aria-label="{@mini.disable.left.col}"# ELSE # aria-label="{@mini.enable.left.col}"# ENDIF #>
 						# IF C_LEFT_ENABLED #
 							<div># INCLUDE DISABLE_LEFT_COL #</div>
 						# ELSE #
 							<div># INCLUDE ENABLE_LEFT_COL #</div>
 						# ENDIF #
 					</div>
-					<div class="item-form item-3x"# IF C_RIGHT_ENABLED # title="{@mini.disable.right.col}"# ELSE # title="{@mini.enable.right.col}"# ENDIF #>
+					<div class="item-form item-3x"# IF C_RIGHT_ENABLED # aria-label="{@mini.disable.right.col}"# ELSE # aria-label="{@mini.enable.right.col}"# ENDIF #>
 						# IF C_RIGHT_ENABLED #
 							<div># INCLUDE DISABLE_RIGHT_COL #</div>
 						# ELSE #
 							<div># INCLUDE ENABLE_RIGHT_COL #</div>
 						# ENDIF #
 					</div>
-					<div class="item-4x" title="{@mini.theme}/{@mini.manage}">
+					<div class="item-4x" aria-label="{@mini.theme}/{@mini.manage}">
 						<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
 							<span class="icon-stack">
 								<i class="far fa-image icon-main" aria-hidden="true"></i>
@@ -122,7 +122,7 @@
 							</span> <span class="sr-only">{@mini.theme}/{@mini.manage}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.theme}/{@mini.add}">
+					<div class="item-4x" aria-label="{@mini.theme}/{@mini.add}">
 						<a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">
 							<span class="icon-stack">
 								<i class="far fa-image icon-main" aria-hidden="true"></i>
@@ -130,7 +130,7 @@
 							</span> <span class="sr-only">{@mini.theme}/{@mini.add}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.mod}/{@mini.manage}">
+					<div class="item-4x" aria-label="{@mini.mod}/{@mini.manage}">
 						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
 							<span class="icon-stack">
 								<i class="fa fa-cube icon-main" aria-hidden="true"></i>
@@ -138,7 +138,7 @@
 							</span> <span class="sr-only">{@mini.mod}/{@mini.manage}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.mod}/{@mini.add}">
+					<div class="item-4x" aria-label="{@mini.mod}/{@mini.add}">
 						<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
 							<span class="icon-stack">
 								<i class="fa fa-cube icon-main" aria-hidden="true"></i>
@@ -146,7 +146,7 @@
 							</span> <span class="sr-only">{@mini.mod}/{@mini.add}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.user}/{@mini.manage}">
+					<div class="item-4x" aria-label="{@mini.user}/{@mini.manage}">
 						<a href="${relative_url(AdminMembersUrlBuilder::management())}">
 							<span class="icon-stack">
 								<i class="far fa-user icon-main" aria-hidden="true"></i>
@@ -154,7 +154,7 @@
 							</span> <span class="sr-only">{@mini.user}/{@mini.manage}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.user}/{@mini.add}">
+					<div class="item-4x" aria-label="{@mini.user}/{@mini.add}">
 						<a href="${relative_url(AdminMembersUrlBuilder::add())}">
 							<span class="icon-stack">
 								<i class="far fa-user icon-main" aria-hidden="true"></i>
@@ -162,7 +162,7 @@
 							</span> <span class="sr-only">{@mini.user}/{@mini.add}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.config}/{@mini.general.config}">
+					<div class="item-4x" aria-label="{@mini.config}/{@mini.general.config}">
 						<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
 							<span class="icon-stack">
 								<i class="fa fa-university icon-main" aria-hidden="true"></i>
@@ -170,7 +170,7 @@
 							</span> <span class="sr-only">{@mini.config}/{@mini.general.config}</span>
 						</a>
 					</div>
-					<div class="item-4x" title="{@mini.config}/{@mini.advanced.config}">
+					<div class="item-4x" aria-label="{@mini.config}/{@mini.advanced.config}">
 						<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
 							<span class="icon-stack">
 								<i class="fa fa-university icon-main" aria-hidden="true"></i>
@@ -181,12 +181,12 @@
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.sandbox.mod}</div>
-					<div class="item-3x" title="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
-					<div class="item-3x" title="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.css}</span></a></div>
-					<div class="item-3x" title="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.bbcode}</span></a></div>
-					<div class="item-3x" title="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.menu}</span></a></div>
-					<div class="item-3x" title="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.table}</span></a></div>
-					<div class="item-3x" title="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.config}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.css}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.bbcode}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.menu}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.table}</span></a></div>
+					<div class="item-3x" aria-label="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.config}</span></a></div>
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>

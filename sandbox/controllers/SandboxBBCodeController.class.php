@@ -33,50 +33,50 @@ class SandboxBBCodeController extends ModuleController
 
 	private function build_view()
 	{
-		if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))
-		{
-			// Condition de présence du module retourne true
-			$c_wiki = true;
-
-			include_once('../wiki/wiki_functions.php');
-
-			//On crée le menu des paragraphes et on enregistre le menu
-			$contents = wiki_parse("
-				-- Paragraphe 1 --
-				" . $this->lang['framework.lorem.mini'] . "
-				--- paragraphe 1.1 ---
-				" . $this->lang['framework.lorem.mini'] . "
-				---- paragraphe 1.1.1 ----
-				" . $this->lang['framework.lorem.mini'] . "
-				----- paragraphe 1.1.1.1 -----
-				" . $this->lang['framework.lorem.mini'] . "
-				------ paragraphe 1.1.1.1.1 ------
-				" . $this->lang['framework.lorem.mini'] . "
-				------ paragraphe 1.1.1.1.2 ------
-				" . $this->lang['framework.lorem.mini'] . "
-				-----  paragraphe 1.1.1.2 -----
-				" . $this->lang['framework.lorem.mini'] . "
-				---- paragraphe 1.1.2 ----
-				" . $this->lang['framework.lorem.mini'] . "
-
-				--- paragraphe 1.2 ---
-				" . $this->lang['framework.lorem.mini'] . "
-
-				-- Pararaphe 2 --
-				" . $this->lang['framework.lorem.mini'] . "
-				-- Pararaphe 3 --
-				" . $this->lang['framework.lorem.mini'] . "
-			");
-
-			$this->view->assign_block_vars('wikimenu', array(
-				'MENU' => wiki_display_menu(wiki_explode_menu($contents))
-			));
-
-			$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
-		} else {
-			// la condition de présence du module retourne false
-			$c_wiki = false;
-		}
+		// if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))
+		// {
+		// 	// Condition de présence du module retourne true
+		// 	$c_wiki = true;
+		//
+		// 	include_once('../wiki/wiki_functions.php');
+		//
+		// 	//On crée le menu des paragraphes et on enregistre le menu
+		// 	$contents = wiki_parse("
+		// 		-- Paragraphe 1 --
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		--- paragraphe 1.1 ---
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		---- paragraphe 1.1.1 ----
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		----- paragraphe 1.1.1.1 -----
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		------ paragraphe 1.1.1.1.1 ------
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		------ paragraphe 1.1.1.1.2 ------
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		-----  paragraphe 1.1.1.2 -----
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		---- paragraphe 1.1.2 ----
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		//
+		// 		--- paragraphe 1.2 ---
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		//
+		// 		-- Pararaphe 2 --
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 		-- Pararaphe 3 --
+		// 		" . $this->lang['framework.lorem.mini'] . "
+		// 	");
+		//
+		// 	$this->view->assign_block_vars('wikimenu', array(
+		// 		'MENU' => wiki_display_menu(wiki_explode_menu($contents))
+		// 	));
+		//
+		// 	$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
+		// } else {
+		// 	// la condition de présence du module retourne false
+		// 	$c_wiki = false;
+		// }
 
 		$this->view->put_all(array(
 			'TYPOGRAPHY' => file_get_contents('html/bbcode/typography.tpl'),
@@ -84,7 +84,7 @@ class SandboxBBCodeController extends ModuleController
 			'BLOCK_CODE' => file_get_contents('html/bbcode/block-code.tpl'),
 			'MEDIA' => file_get_contents('html/bbcode/media.tpl'),
 			'TABLE' => file_get_contents('html/bbcode/table.tpl'),
-			'C_WIKI' => $c_wiki
+			// 'C_WIKI' => $c_wiki
 		));
 	}
 

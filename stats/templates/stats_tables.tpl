@@ -1,4 +1,4 @@
-<table>
+<table class="table-no-header">
 	<tbody>
 		<tr>
 			<td class="no-separator">

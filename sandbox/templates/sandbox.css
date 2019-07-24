@@ -18,7 +18,7 @@
 	pointer-events: none;
 	padding: 8px 10px;
 	line-height: 15px;
-	white-space: nowrap;
+	white-space: normal;
 	font-size: .9em;
 	border-radius: 0.618em;
 	background-color: #fff;

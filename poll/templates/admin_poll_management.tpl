@@ -22,7 +22,7 @@
 		</nav>
 
 		<div class="admin-module-poll" id="admin-contents">
-			<table id="table">
+			<table class="table">
 				<caption>{L_POLL_MANAGEMENT}</caption>
 				<thead>
 					<tr>

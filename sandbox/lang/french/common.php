@@ -87,14 +87,14 @@ $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
 <br />
 <p>Vous pouvez ici tester plusieurs parties du framework PHPBoost :</p>
 <ul class="sandbox-home-list">
-<li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '" title="formulaires">constructeur de formulaires</a></li>
-<li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '" title="Classes CSS">classes CSS</a></li>
-<li><i class="far fa-fw fa-file-code"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '" title="Styles BBCode">BBCode</a></li>
-<li><i class="fab fa-fw fa-font-awesome-flag"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '" title="Icônes Font-Awesome">Font Awesome</a></li>
-<li><i class="fa fa-fw fa-list"></i> Le rendu des <a href="' . SandboxUrlBuilder::menu()->absolute() . '" title="Menus de navigation">menus de navigation cssmenu</a></li>
-<li><i class="fa fa-fw fa-table"></i> La génération de <a href="' . SandboxUrlBuilder::table()->absolute() . '" title="Tableaux">tableaux dynamiques</a></li>
-<li><i class="fa fa-fw fa-at"></i> L\'<a href="' . SandboxUrlBuilder::mail()->absolute() . '" title="Emails">envoi d\'emails</a></li>
-<li><i class="fa fa-fw fa-code"></i> La <a href="' . SandboxUrlBuilder::template()->absolute() . '" title="Génération de Thème">génération de template</a> avec ou sans cache</li>
+<li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '">constructeur de formulaires</a></li>
+<li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
+<li><i class="far fa-fw fa-file-code"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '">BBCode</a></li>
+<li><i class="fab fa-fw fa-font-awesome-flag"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '">Font Awesome</a></li>
+<li><i class="fa fa-fw fa-list"></i> Le rendu des <a href="' . SandboxUrlBuilder::menu()->absolute() . '">menus de navigation cssmenu</a></li>
+<li><i class="fa fa-fw fa-table"></i> La génération de <a href="' . SandboxUrlBuilder::table()->absolute() . '">tableaux dynamiques</a></li>
+<li><i class="fa fa-fw fa-at"></i> L\'<a href="' . SandboxUrlBuilder::mail()->absolute() . '">envoi d\'emails</a></li>
+<li><i class="fa fa-fw fa-code"></i> La <a href="' . SandboxUrlBuilder::template()->absolute() . '">génération de template</a> avec ou sans cache</li>
 </ul>
 <br />
 ';
@@ -317,9 +317,11 @@ $lang['css.pagination'] = 'Pagination';
 
 //Tables
 $lang['css.table'] = 'Tableaux';
-$lang['css.table.description'] = 'Description du tableau';
-$lang['css.table.name'] = 'Nom';
 $lang['css.table.description'] = 'Description';
+$lang['css.table.description.content'] = 'Description du tableau';
+$lang['css.table.name'] = 'Nom';
+$lang['css.table.caption'] = 'Description du tableau';
+$lang['css.table.caption.no.header'] = 'Ceci est un tableau sans entête';
 $lang['css.table.author'] = 'Auteur';
 $lang['css.table.test'] = 'Test';
 $lang['css.table.header'] = 'Entête';

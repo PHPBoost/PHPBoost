@@ -305,10 +305,10 @@
 
 	<div class="no-style">
 		<article class="block">
-			<table class="formatter-table">
+			<table class="table formatter-table">
 				<tbody>
 					<tr class="formatter-table-row">
-						<th class="formatter-table-head" colspan="2">{@bbcode.table.header}</th>
+						<td class="formatter-table-head" colspan="2">{@bbcode.table.header}</td>
 					</tr>
 					<tr class="formatter-table-row">
 						<td class="formatter-table-col">{@bbcode.table.name}</td>

@@ -8,7 +8,7 @@
         &lt;a href="#" class="basic-button">
             &lt;i class="fa fa-globe">&lt;/i> link
         &lt;/a>
-        &lt;a href="#" class="basic-button alt" title="{@css.options.link}">
+        &lt;a href="#" class="basic-button alt" aria-label="{@css.options.link}">
             &lt;i class="fa fa-unlink">&lt;/i>
         &lt;/a>
     &lt;/div>
@@ -28,7 +28,7 @@
             &lt;/span>
             &lt;span class="notes">
                 &lt;span class="number-notes">0&lt;/span>
-                &lt;span title="0 {@css.options.sort_by.note}">note&lt;/span>
+                &lt;span aria-label="0 {@css.options.sort_by.note}">note&lt;/span>
             &lt;/span>
         &lt;/div>
     &lt;/div>

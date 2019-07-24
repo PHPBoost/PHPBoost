@@ -73,7 +73,7 @@
 		</fieldset>
 
 		# IF C_STATS_SITE #
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -98,7 +98,7 @@
 
 
 		# IF C_STATS_USERS #
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -127,7 +127,7 @@
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" title="{L_TEMPLATES}" />
 				</div>
 				<div class="block">
-					<table id="table2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -168,7 +168,7 @@
 			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
 				<div class="block">
-					<table id="table3">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -204,7 +204,7 @@
 			</div>
 		</fieldset>
 		# ENDIF #
-		<table id="table4">
+		<table class="table">
 			<caption>{L_TOP_TEN_POSTERS}</caption>
 			<thead>
 				<tr>
@@ -271,7 +271,7 @@
 					</div>
 					<div class="block center">
 						# IF C_STATS_NO_GD #
-							<table id="table">
+							<table class="table">
 								<tbody>
 									<tr>
 										<td></td>
@@ -281,12 +281,12 @@
 
 										# START values #
 										<td>
-											<table>
+											<table class="table">
 												<tbody>
 													# START head #
 													<tr>
-														<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png); background-repeat:no-repeat;">
-														</td>
+														<th style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png); background-repeat:no-repeat;">
+														</th>
 													</tr>
 													# END head #
 													<tr>
@@ -331,7 +331,7 @@
 			</fieldset>
 		</form>
 
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -366,7 +366,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_BROWSERS}</th>
@@ -404,7 +404,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_OS}</th>
@@ -442,7 +442,7 @@
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{L_LANG}</th>
@@ -516,7 +516,7 @@
 		-->
 		</script>
 
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -615,7 +615,7 @@
 		-->
 		</script>
 
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -692,7 +692,7 @@
 					</div>
 					# ENDIF #
 					<div class="block">
-						<table id="table">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>

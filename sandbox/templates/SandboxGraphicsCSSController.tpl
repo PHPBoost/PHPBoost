@@ -63,8 +63,8 @@
 					<span>{@css.page.title}</span>
 				</h2>
 				<span class="actions">
-					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" title="{@css.edit}"></i></a>
-					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" aria-hidden="true" title="{@css.delete}"></i></a>
+					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
+					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" aria-hidden="true" aria-label="{@css.delete}"></i></a>
 				</span>
 				<div class="more">{@css.more}</div>
 			</header>
@@ -147,7 +147,7 @@
 							<i class="fa fa-globe" aria-hidden="true"></i> {@css.options.link}
 						</a>
 						<a href="#" class="basic-button alt" aria-label="{@css.options.link}">
-							<i class="fa fa-unlink" aria-hidden="true" title="{@css.options.link}"></i>
+							<i class="fa fa-unlink" aria-hidden="true" aria-label="{@css.options.link}"></i>
 						</a>
 					</div>
 					<h6>{@css.options.file.title}</h6>
@@ -477,21 +477,49 @@
 				<h5>{@css.table}</h5>
 			</header>
 			<div class="content">
-				<table id="table">
+				<table class="table">
 					<caption>
-						{@css.table.description}
+						{@css.table.caption}
 					</caption>
 					<thead>
 						<tr>
 							<th>
 								<a href="#" class="fa fa-table-sort-up" aria-label="{@css.table.sort.up}"></a>
-								{@css.table.name}
+								{@css.table.name} title
 								<a href="#" class="fa fa-table-sort-down" aria-label="{@css.table.sort.down}"></a>
 							</th>
-							<th>{@css.table.description}</th>
-							<th>{@css.table.author}</th>
+							<th>{@css.table.description} title</th>
+							<th>{@css.table.author} title</th>
 						</tr>
 					</thead>
+					<tbody>
+						<tr>
+							<td>{@css.table.test}</td>
+							<td>{@css.table.description}</td>
+							<td>{@css.table.author}</td>
+						</tr>
+						<tr>
+							<td>{@css.table.test}</td>
+							<td>{@css.table.description}</td>
+							<td>{@css.table.author}</td>
+						</tr>
+						<tr>
+							<td>{@css.table.test}</td>
+							<td>{@css.table.description}</td>
+							<td>{@css.table.author}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3"># INCLUDE PAGINATION #</td>
+						</tr>
+					</tfoot>
+				</table>
+
+				<table class="table-no-header">
+					<caption>
+						{@css.table.caption.no.header}
+					</caption>
 					<tbody>
 						<tr>
 							<td>{@css.table.test}</td>
