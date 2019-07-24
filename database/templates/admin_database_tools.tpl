@@ -67,11 +67,11 @@
 					});
 				</script>
 			</div>
-			
+
 			<div class="spacer"></div>
 
 			# IF C_DATABASE_TABLE_STRUCTURE #
-				<table id="table">
+				<table class="table">
 					<caption>{TABLE_NAME}</caption>
 					<thead>
 						<tr class="center">
@@ -97,7 +97,7 @@
 					</tbody>
 				</table>
 
-				<table id="table2">
+				<table class="table">
 					<caption>{L_TABLE_INDEX}</caption>
 					<thead>
 						<tr>
@@ -117,7 +117,7 @@
 					</tbody>
 				</table>
 
-				<table id="table3">
+				<table class="table">
 					<caption>{L_SIZE}</caption>
 					<thead>
 						<tr class="center">
@@ -147,7 +147,7 @@
 					</tbody>
 				</table>
 
-				<table id="table4">
+				<table class="table">
 					<caption>{L_STATISTICS}</caption>
 					<thead>
 						<tr>
@@ -194,7 +194,7 @@
 								<div class="spacer"></div>
 								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div class="db-query-result">
-									<table id="table" class="large-table">
+									<table class="table large-table">
 										<thead>
 											<tr>
 												<th>&nbsp;</th>
@@ -287,7 +287,7 @@
 										</fieldset>
 
 										<div class="db-query-result">
-											<table id="table" class="table-fixed">
+											<table class="table table-fixed">
 												<thead>
 													<tr class="center">
 														# START head #
@@ -319,7 +319,7 @@
 
 			# IF C_DATABASE_UPDATE_FORM #
 				<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr class="center">
 								<th>{L_FIELD_FIELD}</th>

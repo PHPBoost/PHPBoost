@@ -59,7 +59,7 @@
 				</form>
 
 				<form action="{TARGET}" method="post">
-					<table id="table">
+					<table class="table">
 						<caption>{L_TABLE_LIST}</caption>
 						<thead>
 							<tr>
@@ -372,7 +372,7 @@
 										</fieldset>
 
 										<div class="db-query-result">
-											<table id="table" class="large-table">
+											<table class="table large-table">
 												# IF C_HEAD #
 												<thead>
 													<tr>
@@ -406,7 +406,7 @@
 
 			# IF C_DATABASE_FILES #
 				# INCLUDE message_helper #
-				<table id="table">
+				<table class="table">
 					<caption>{L_LIST_FILES}</caption>
 					<thead>
 						<tr>
