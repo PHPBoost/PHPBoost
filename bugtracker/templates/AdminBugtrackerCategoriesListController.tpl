@@ -53,7 +53,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 -->
 </script>
 
-<table id="table2" class="categories-list">
+<table class="table categories-list">
 	<thead>
 		<tr>
 			<th>

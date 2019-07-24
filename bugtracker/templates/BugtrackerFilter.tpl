@@ -23,7 +23,7 @@ function toggle_filters_table() {
 <div class="bugtracker-filter">
 	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 </div>
-<table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
+<table class="table" id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #
@@ -90,7 +90,7 @@ function toggle_filters_table() {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a> 
+				<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
 				<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>

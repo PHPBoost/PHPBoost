@@ -9,7 +9,7 @@
 	<div class="spacer"></div>
 
 	# IF C_BUGS #
-	<table id="table">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>

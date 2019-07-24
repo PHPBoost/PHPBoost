@@ -47,7 +47,7 @@
 	</header>
 	<div class="content">
 		# IF C_FIXED_BUGS #
-		<table id="table">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>
@@ -64,13 +64,13 @@
 			<tbody>
 				# START fixed_version #
 				<tr>
-					<td> 
+					<td>
 						{fixed_version.NAME}
 					</td>
-					<td> 
+					<td>
 						{fixed_version.RELEASE_DATE}
 					</td>
-					<td> 
+					<td>
 						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
 					</td>
 				</tr>
@@ -94,7 +94,7 @@
 	<div class="spacer"></div>
 	<div class="content">
 		# IF C_POSTERS #
-		<table id="table2">
+		<table class="table">
 			<thead>
 				<tr>
 					<th>

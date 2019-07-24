@@ -53,7 +53,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 -->
 </script>
 
-<table id="table" class="type-list">
+<table class="table type-list">
 	<thead>
 		<tr>
 			<th>

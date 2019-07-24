@@ -123,7 +123,7 @@ function display_default_version_radio(version_id)
 -->
 </script>
 
-<table id="table5" class="version-list">
+<table class="table version-list">
 	<thead>
 		<tr>
 			<th>
