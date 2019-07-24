@@ -46,7 +46,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
+		if (TextHelper::strpos($this->content, '<table class="table formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
@@ -279,17 +279,17 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
+		while (TextHelper::strpos($this->content, '<table class="table formatter-table"') !== false)
 		{
-			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
+			$this->content = preg_replace('`<table class="table formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<tr class="formatter-table-row"') !== false)
 		{
 			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`suU', '[row$1]$2[/row]', $this->content);
 		}
-		while (TextHelper::strpos($this->content, '<th class="formatter-table-head"') !== false)
+		while (TextHelper::strpos($this->content, '<td class="formatter-table-head"') !== false)
 		{
-			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`suU', '[head$1]$2[/head]', $this->content);
+			$this->content = preg_replace('`<td class="formatter-table-head"([^>]*)>(.*)</td>`suU', '[head$1]$2[/head]', $this->content);
 		}
 		while (TextHelper::strpos($this->content, '<td class="formatter-table-col"') !== false)
 		{

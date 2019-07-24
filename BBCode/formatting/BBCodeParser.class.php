@@ -401,9 +401,9 @@ class BBCodeParser extends ContentFormattingParser
 						//Parsage de row, col et head
 						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`suU', '<tr class="formatter-table-row"$1>$2</tr>', $content[$i]);
 						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`suU', '<td class="formatter-table-col"$1>$2</td>', $content[$i]);
-						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`suU', '<th class="formatter-table-head"$1>$2</th>', $content[$i]);
+						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`suU', '<td class="formatter-table-head"$1>$2</td>', $content[$i]);
 						//parsage réussi (tableau valide), on rajoute le tableau devant
-						$content[$i] = '<table class="formatter-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
+						$content[$i] = '<table class="table formatter-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
 
 					}
 					else
