@@ -72,7 +72,7 @@
 							breakpoint: 768
 						});
 					</script>
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -135,7 +135,7 @@
 						</tfoot>
 					</table>
 
-					<table class="announce-legend">
+					<table class="table-no-header announce-legend">
 						<tr>
 							<td>
 								<i class="fa fa-envelope message-announce" aria-hidden="true"></i> {L_READ}

@@ -1,5 +1,5 @@
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_QUICK_LINKS}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_QUICK_LINKS}">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_QUICK_LINKS}
 			</a>
 			<ul>
@@ -43,32 +43,32 @@
 					<div class="block">
 						<h3><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> {L_SITE_MANAGEMENT}</h3>
 						<ul>
-							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" title="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
-							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" title="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
+							<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" aria-label="{L_GENERAL_CONFIG}">{L_GENERAL_CONFIG}</a></li>
+							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" aria-label="{L_EMPTY_CACHE}">{L_EMPTY_CACHE}</a></li>
 							# IF C_MODULE_DATABASE_INSTALLED #
-							<li><a href="{U_SAVE_DATABASE}" title="{L_SAVE_DATABASE}">{L_SAVE_DATABASE}</a></li>
+							<li><a href="{U_SAVE_DATABASE}" aria-label="{L_SAVE_DATABASE}">{L_SAVE_DATABASE}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
 					<div class="block">
 						<h3><i class="fa fa-fw fa-image" aria-hidden="true"></i> {L_CUSTOMIZE_SITE}</h3>
 						<ul>
-							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" title="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
-							<li><a href="{PATH_TO_ROOT}/admin/menus" title="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
+							<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" aria-label="{L_ADD_TEMPLATE}">{L_ADD_TEMPLATE}</a></li>
+							<li><a href="{PATH_TO_ROOT}/admin/menus" aria-label="{L_MENUS_MANAGEMENT}">{L_MENUS_MANAGEMENT}</a></li>
 							# IF C_MODULE_CUSTOMIZATION_INSTALLED #
-							<li><a href="{U_EDIT_CSS_FILES}" title="{L_CUSTOMIZE_TEMPLATE}">{L_CUSTOMIZE_TEMPLATE}</a></li>
+							<li><a href="{U_EDIT_CSS_FILES}" aria-label="{L_CUSTOMIZE_TEMPLATE}">{L_CUSTOMIZE_TEMPLATE}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
 					<div class="block">
 						<h3><i class="fa fa-fw fa-plus" aria-hidden="true"></i> {L_ADD_CONTENT}</h3>
 						<ul>
-							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" title="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
+							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" aria-label="{L_MODULES_MANAGEMENT}">{L_MODULES_MANAGEMENT}</a></li>
 							# IF C_MODULE_ARTICLES_INSTALLED #
-							<li><a href="{U_ADD_ARTICLE}" title="{L_ADD_ARTICLES}">{L_ADD_ARTICLES}</a></li>
+							<li><a href="{U_ADD_ARTICLE}" aria-label="{L_ADD_ARTICLES}">{L_ADD_ARTICLES}</a></li>
 							# ENDIF #
 							# IF C_MODULE_NEWS_INSTALLED #
-							<li><a href="{U_ADD_NEWS}" title="{L_ADD_NEWS}">{L_ADD_NEWS}</a></li>
+							<li><a href="{U_ADD_NEWS}" aria-label="{L_ADD_NEWS}">{L_ADD_NEWS}</a></li>
 							# ENDIF #
 						</ul>
 					</div>
@@ -95,7 +95,7 @@
 						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 						<div class="fieldset-inset">
 							# START comments_list #
-								<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title=""></i></a>
+								<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" aria-label=""></i></a>
 								<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 									<i class="far fa-hand-point-right" aria-hidden="true"></i>
 								</a>
@@ -114,7 +114,7 @@
 						<div class="admin-index-user-online">
 							<h2><i class="fa fa-user" aria-hidden="true"></i> {L_USER_ONLINE}</h2>
 							<div class="fieldset-inset-user">
-								<table id="table">
+								<table class="table">
 									<thead>
 										<tr>
 											<th>{L_USER_ONLINE}</th>

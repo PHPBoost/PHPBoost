@@ -4,7 +4,7 @@
 			</header>
 			<div class="content">
 			# IF C_MODO_PANEL_USER #
-				<table id="table">
+				<table class="table">
 					<tbody>
 						<tr>
 							<td class="no-separator">
@@ -69,7 +69,7 @@
 					</fieldset>
 				</form>
 
-				<table id="table2">
+				<table class="table">
 					<thead>
 						<tr>
 							<th>{L_LOGIN}</th>

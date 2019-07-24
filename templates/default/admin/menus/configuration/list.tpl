@@ -1,4 +1,4 @@
-<table id="table">
+<table class="table">
 	<thead>
 		<tr>
 			<th style="width: 180px;">{L_MENU_CONFIGURATION_NAME}</th>
@@ -10,11 +10,11 @@
 		# START menu_configuration #
 		<tr>
 			<td>
-				<a href="{menu_configuration.U_CONFIGURE}" title="{EL_MENU_CONFIGURATION_CONFIGURE}">{menu_configuration.E_NAME}</a>
+				<a href="{menu_configuration.U_CONFIGURE}" aria-label="{EL_MENU_CONFIGURATION_CONFIGURE}">{menu_configuration.E_NAME}</a>
 			</td>
 			<td>{menu_configuration.E_MATCH_REGEX}</td>
 			<td class="center">
-				<a href="{menu_configuration.U_EDIT}" aria-label="{L_MENU_CONFIGURATION_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_MENU_CONFIGURATION_EDIT}"></i></a>
+				<a href="{menu_configuration.U_EDIT}" aria-label="{L_MENU_CONFIGURATION_EDIT}"><i class="fa fa-edit" aria-hidden="true" aria-label="{L_MENU_CONFIGURATION_EDIT}"></i></a>
 			</td>
 		</tr>
 		# END menu_configuration #
@@ -22,5 +22,5 @@
 </table>
 <br />
 <span>
-	<a href="{U_DEFAULT_MENU_CONFIG_CONFIGURE}"	title="{EL_MENU_CONFIGURATION_CONFIGURE}">{L_MENU_CONFIGURATION_CONFIGURE_DEFAULT_CONFIG}</a>
+	<a href="{U_DEFAULT_MENU_CONFIG_CONFIGURE}"	aria-label="{EL_MENU_CONFIGURATION_CONFIGURE}">{L_MENU_CONFIGURATION_CONFIGURE_DEFAULT_CONFIG}</a>
 </span>

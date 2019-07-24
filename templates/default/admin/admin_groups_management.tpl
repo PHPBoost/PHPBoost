@@ -1,5 +1,5 @@
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GROUPS_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_GROUPS_MANAGEMENT}">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_GROUPS_MANAGEMENT}
 			</a>
 			<ul>
@@ -16,7 +16,7 @@
 			<fieldset class="fieldset-content">
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
 				<div class="fieldset-inset">
-					<table id="table">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>
@@ -43,10 +43,10 @@
 									{group.IMAGE}
 								</td>
 								<td>
-									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true" title="{L_UPDATE}"></i></a>
+									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true" aria-label="{L_UPDATE}"></i></a>
 								</td>
 								<td>
-									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
 								</td>
 							</tr>
 							# END group #
@@ -54,7 +54,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="4">
-									<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
+									<span><a href="admin_groups.php?add=1" aria-label="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
 								</td>
 							</tr>
 						</tfoot>

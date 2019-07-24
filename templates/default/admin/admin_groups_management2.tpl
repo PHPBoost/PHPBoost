@@ -53,7 +53,7 @@
 		</script>
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GROUPS_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_GROUPS_MANAGEMENT}">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_GROUPS_MANAGEMENT}
 			</a>
 			<ul>
@@ -128,7 +128,7 @@
 									<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 										{IMG_GROUPS}
 									</select>
-									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" title="{IMG}" class="valign-middle" style="display: none;" />
+									<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" aria-label="{IMG}" class="valign-middle" style="display: none;" />
 								</label>
 							</div>
 						</div>
@@ -148,7 +148,7 @@
 
 			# INCLUDE message_helper #
 
-			<table id="table">
+			<table class="table">
 				<caption>
 					{L_MBR_GROUP}
 				</caption>
@@ -169,7 +169,7 @@
 							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
 						</td>
 						<td>
-							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" aria-label="${LangLoader::get_message('delete', 'common')}"></i></a>
 						</td>
 					</tr>
 					# END member #
@@ -282,7 +282,7 @@
 								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" title="{IMG}" class="valign-middle" style="display: none;" />
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" aria-label="{IMG}" class="valign-middle" style="display: none;" />
 							</label></div>
 						</div>
 					</div>

@@ -187,13 +187,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 			//Tableaux
-			while (preg_match('`<table class="formatter-table"( style="([^"]+)")?>`iu', $this->content))
+			while (preg_match('`<table class="table formatter-table"( style="([^"]+)")?>`iu', $this->content))
 			{
-				$this->content = preg_replace('`<table class="formatter-table"( style="([^"]+)")?>`iu', "<table border=\"0\"$1><tbody>", $this->content);
+				$this->content = preg_replace('`<table class="table formatter-table"( style="([^"]+)")?>`iu', "<table border=\"0\"$1><tbody>", $this->content);
 				$this->content = preg_replace('`</table>`iu', "</tbody></table>", $this->content);
 				$this->content = preg_replace('`<td class="formatter-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`iu', "<td$1$2$3>", $this->content);
 				$this->content = preg_replace('`<tr class="formatter-table-row"( style="[^"]+")?>`iu', "<tr$1>", $this->content);
-				$this->content = preg_replace('`<th class="formatter-table-head"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`iu', "<th$1$2$3>", $this->content);
+				$this->content = preg_replace('`<td class="formatter-table-head"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`iu', "<td$1$2$3>", $this->content);
 			}
 
 			//Listes

@@ -191,7 +191,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$style_properties .= $temp_array[1];
 		}
 
-		return '<table class="formatter-table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
+		return '<table class="table formatter-table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
 	}
 
 	/**
