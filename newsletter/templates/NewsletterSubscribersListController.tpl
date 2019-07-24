@@ -1,4 +1,4 @@
-<table id="table">
+<table class="table">
 	# IF C_SUBSCRIBERS #
 	<thead>
 		<tr>

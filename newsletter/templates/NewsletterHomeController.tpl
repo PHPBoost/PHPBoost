@@ -19,7 +19,7 @@
 <div class="spacer"></div>
 # ENDIF #
 
-<table id="table">
+<table class="table">
 	<thead>
 		<tr>
 			<th>

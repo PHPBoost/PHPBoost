@@ -2,7 +2,7 @@
 	<header>
 		<h1>{@online}</h1>
 	</header>
-	<table id="table">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>

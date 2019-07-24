@@ -1,6 +1,6 @@
-<table id="table">
+<table class="table">
 	<thead>
-		<tr> 
+		<tr>
 			<th colspan="3">{@newsletter.types.choice}</th>
 		</tr>
 	</thead>
