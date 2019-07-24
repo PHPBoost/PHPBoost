@@ -38,7 +38,7 @@
 				</h2>
 			</header>
 			<div class="content">
-				<table id="table-{forums_list.cats.IDCAT}" class="forum-table">
+				<table id="table-{forums_list.cats.IDCAT}" class="table forum-table">
 					<thead>
 						<tr>
 							<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>

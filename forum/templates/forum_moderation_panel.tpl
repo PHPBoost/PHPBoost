@@ -9,7 +9,7 @@
 				</h2>
 			</header>
 			<div class="content">
-				<table>
+				<table class="table-no-header">
 					<tbody>
 						<tr>
 							<td class="td33P">
@@ -46,7 +46,7 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
-					<table id="table2">
+					<table class="table">
 						<caption>
 							{L_HISTORY}
 						</caption>
@@ -129,7 +129,7 @@
 				</script>
 
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
-					<table id="table2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th class="td25"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
@@ -190,7 +190,7 @@
 
 
 				# IF C_FORUM_ALERT_LIST #
-				<table id="table2">
+				<table class="table">
 					<thead>
 						<tr>
 							<th colspan="2">
@@ -248,7 +248,7 @@
 				# ENDIF #
 
 				# IF C_FORUM_ALERT_NOT_AUTH #
-				<table>
+				<table class="table-no-header">
 					<thead>
 						<tr>
 							<th colspan="2">
@@ -310,7 +310,7 @@
 				</script>
 
 				<form action="moderation_forum{U_ACTION}" method="post">
-					<table>
+					<table class="table-no-header">
 						<tr>
 							<td>
 								<span>
@@ -331,7 +331,7 @@
 						</tr>
 					</table>
 
-					<table id="table2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th class="td25P">{L_LOGIN}</th>
@@ -386,7 +386,7 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_INFO}" method="post">
-					<table id="table2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>

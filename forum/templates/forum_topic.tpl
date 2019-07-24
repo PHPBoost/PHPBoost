@@ -145,7 +145,7 @@
 			<div class="content center">
 
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table class="forum-poll-table">
+					<table class="table forum-poll-table">
 						<thead>
 							<tr>
 								<th>{L_POLL}: {QUESTION}</th>

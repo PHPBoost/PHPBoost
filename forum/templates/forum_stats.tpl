@@ -5,7 +5,7 @@
 				<h2>{L_STATS}</h2>
 			</header>
 			<div class="content">
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>
@@ -31,7 +31,7 @@
 					</tbody>
 				</table>
 
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>
@@ -50,7 +50,7 @@
 					</tbody>
 				</table>
 
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>
@@ -69,7 +69,7 @@
 					</tbody>
 				</table>
 
-				<table>
+				<table class="table">
 					<thead>
 						<tr>
 							<th>

@@ -21,7 +21,7 @@
 				<div class="content">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
 
-					<table id="table" class="module-table forum-table">
+					<table class="tablemodule-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
 								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>

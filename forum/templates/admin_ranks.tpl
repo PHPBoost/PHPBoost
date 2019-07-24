@@ -36,7 +36,7 @@
 				<fieldset>
 					<legend><h1>{L_FORUM_RANKS_MANAGEMENT}</h1></legend>
 					<div class="fieldset-inset">
-						<table id="table">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>
