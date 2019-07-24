@@ -113,7 +113,7 @@
 			<form action="admin_gallery_add.php" method="post">
 				# IF C_IMG #
 				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
-				<table id="table">
+				<table class="table">
 					<thead>
 						<tr>
 							<th colspan="4">{L_IMG_DISPO_GALLERY}</th>

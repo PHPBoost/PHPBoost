@@ -53,6 +53,10 @@
 	max-width: 100%;
 }
 
+.bt td {
+	width: 100% !important;
+}
+
 .table-pics {
 	display: table;
 	margin: auto;

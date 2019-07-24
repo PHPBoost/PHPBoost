@@ -238,7 +238,7 @@
 				<div class="fieldset-inset">
 
 					# START cat #
-					<table id="table" class="table-cat">
+					<table class="table table-cat">
 						<thead>
 							<tr>
 								<th colspan="{COLSPAN}">
@@ -279,7 +279,7 @@
 					# END cat #
 
 					# START pics.pics_max #
-						<table id="table" class="table-pics">
+						<table class="table table-pics">
 							<thead>
 								<tr>
 									<th colspan="{pics.pics_max.COLSPAN_PICTURE}">
@@ -310,7 +310,7 @@
 
 						<div class="spacer"></div>
 
-						<table id="table2">
+						<table class="table">
 							<thead>
 								<tr>
 									<th colspan="2">
@@ -369,7 +369,7 @@
 
 						<div class="spacer"></div>
 
-						<table id="table3">
+						<table class="table">
 							<thead>
 								<tr>
 									<th colspan="{pics.pics_max.COLSPAN}">
@@ -405,7 +405,7 @@
 						# END pics.pics_max #
 
 						# IF NOT pics.C_PICS_MAX #
-						<table id="table" class="table-pics">
+						<table class="table-no-header table-pics">
 							<thead>
 								<tr>
 									<th colspan="{pics.COLSPAN}">
@@ -418,7 +418,7 @@
 								# IF pics.list.C_DISPLAY_TR_START #<tr># ENDIF #
 									<td class="valign-bottom" style="width:{COLUMN_WIDTH_PICS}%;">
 										<div id="pics{pics.list.ID}" class="pics-list-element" style="height:{HEIGHT_MAX}px;">
-											<a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2"><img src="pics/thumbnails/{pics.list.PATH}" alt="{pics.list.ALT_NAME}" /></a></div>
+											<a class="small" href="{pics.list.U_DISPLAY}" data-lightbox="formatter"><img src="pics/thumbnails/{pics.list.PATH}" alt="{pics.list.ALT_NAME}" /></a></div>
 										<div class="smaller">
 											<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 											<div class="spacer"></div>
