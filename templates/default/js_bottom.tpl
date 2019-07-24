@@ -1,5 +1,3 @@
-<script src="{PATH_TO_ROOT}/kernel/lib/js/lightcase/lightcase.js"></script>
-
 <script>
 <!--
 	jQuery('[data-confirmation]').each(function() {
@@ -30,11 +28,10 @@
 		});
 	});
 
-	jQuery('#table').basictable();
-	jQuery('#table2').basictable();
-	jQuery('#table3').basictable();
-	jQuery('#table4').basictable();
-	jQuery('#table5').basictable();
+	jQuery('.table').basictable();
+	jQuery('.table-no-header').basictable({
+	    header: false
+	});
 
 	jQuery(function() {
 		jQuery(".lined textarea").linedtextarea();

@@ -82,21 +82,64 @@ table tfoot tr td select {
 }
 
 /* --- Patch thead tableaux formates --- */
-table.formatter-table th.formatter-table-head {
+table.formatter-table td.formatter-table-head {
 	padding: 0.618em;
 	font-size: 1.482em;
 	text-align: center;
 	font-weight: normal;
 }
 
-table.formatter-table th.formatter-table-head p {
+table.formatter-table td.formatter-table-head p {
 	margin-bottom: 0;
 }
 
+table.bt.formatter-table td.formatter-table-head {
+	display: none;
+}
+
+
 /* -- Table responsive basictable.js -- */
 /* ------------------------------------ */
+.responsive-table {
+	max-width: 100%;
+	overflow: auto;
+}
+
+table.bt thead,
 table.bt thead th {
 	display: none;
+}
+
+table.bt tfoot th,
+table.bt tfoot td,
+table.bt tbody td {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	vertical-align: top;
+}
+
+table.bt tfoot th::before,
+table.bt tfoot td::before,
+table.bt tbody td::before {
+  content: attr(data-th) ": ";
+  display: inline-block;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  font-weight: bold;
+  width: 6.5em;
+}
+
+table.bt tfoot th.bt-hide,
+table.bt tfoot td.bt-hide,
+table.bt tbody td.bt-hide {
+  display: none;
+}
+
+table.bt tfoot th .bt-content,
+table.bt tfoot td .bt-content,
+table.bt tbody td .bt-content {
+  vertical-align: top;
 }
 
 table.bt thead th:first-child{
@@ -134,9 +177,11 @@ table.bt tbody td .bt-content {
 	-webkit-overflow-scrolling: touch;
 }
 
-/* --- Options -------------------------------------------------------------- */
+table.bt.bt--no-header tfoot td::before,
+table.bt.bt--no-header tbody td::before {
+  display: none;
+}
 
-/* --- CSS --- */
 /* --- Taille des colonnes --- */
 .col-smaller { width: 3em;  }
 .col-small   { width: 6em;  }
@@ -159,9 +204,4 @@ table.bt tbody td .bt-content {
 }
 .bordered tr:last-child td:last-child {
 	border-width: 1px;
-}
-/* -- Adaptabilité des tables créées en bbcode -- */
-.responsive-table {
-	width: 100%;
-	overflow: auto;
 }

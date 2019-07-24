@@ -29,3 +29,9 @@
 
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 <script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
+
+<script src="{PATH_TO_ROOT}/templates/default/plugins/autocomplete.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/basictable.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/lightcase.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/sortable.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/menumaker.js"></script>

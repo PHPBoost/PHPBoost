@@ -1,14 +1,19 @@
-/*
- * Lightcase - jQuery Plugin
- * The smart and flexible Lightbox Plugin.
+/**
+ * Responsive lightbox Lightcase jQuery plugin - Version: 2.4.0
+ * @copyright 	&copy; 2005-2019 PHPBoost - 2017 Cornel Boppart
+ * @license 	https://www.opensource.org/licenses/mit-license.php
+ * @author      Cornel Boppart <cornel@bopp-art.com>
+ * @link        https://github.com/cbopp-art/lightcase/
+ * @doc         https://cornel.bopp-art.com/lightcase/
+ * @version   	PHPBoost 5.3 - last update: 2019 07 23
+ * @since   	PHPBoost 5.1 - 2017 09 17
+ * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
- * @author		Cornel Boppart <cornel@bopp-art.com>
- * @copyright	Author
- *
- * @version		2.4.0 (09/04/2017)
- * @patch 1 by ElenWii : jQuery 3.1
- * @patch 2 by ElenWii : Take into account show_pics.php?...&ext= for module gallery
- */
+ * @patch       1 : jQuery 3.1
+ * @patch       2 : Take into account show_pics.php?...&ext= for module gallery
+ * @patch       3 : Font Awesome 5 for icon then leave the lightcase font
+*/
 
 ;(function ($) {
 
@@ -72,11 +77,12 @@
 				overlayOpacity: .9,
 				slideshow: false,
 				slideshowAutoStart: true,
+				breakBeforeShow: false,
 				timeout: 5000,
 				swipe: true,
 				useKeys: true,
 				useCategories: true,
-				useAsCollection: false,
+				useAsCollection: true,
 				navigateEndless: true,
 				closeOnOverlayClick: true,
 				title: null,
@@ -141,18 +147,18 @@
 				markup: function () {
 					_self.objects.body.append(
 						_self.objects.overlay = $('<div id="' + _self.settings.idPrefix + 'overlay"></div>'),
-						_self.objects.loading = $('<div id="' + _self.settings.idPrefix + 'loading" class="' + _self.settings.classPrefix + 'icon-spin"></div>'),
+						_self.objects.loading = $('<div id="' + _self.settings.idPrefix + 'loading" class="fa ' + _self.settings.classPrefix + 'icon-spin"></div>'),
 						_self.objects.case = $('<div id="' + _self.settings.idPrefix + 'case" aria-hidden="true" role="dialog"></div>')
 					);
 					_self.objects.case.after(
-						_self.objects.close = $('<a href="#" class="' + _self.settings.classPrefix + 'icon-close"><span>' + _self.settings.labels['close'] + '</span></a>'),
+						_self.objects.close = $('<a href="#" class="far ' + _self.settings.classPrefix + 'icon-close"><span>' + _self.settings.labels['close'] + '</span></a>'),
 						_self.objects.nav = $('<div id="' + _self.settings.idPrefix + 'nav"></div>')
 					);
 					_self.objects.nav.append(
-						_self.objects.prev = $('<a href="#" class="' + _self.settings.classPrefix + 'icon-prev"><span>' + _self.settings.labels['navigator.prev'] + '</span></a>').hide(),
-						_self.objects.next = $('<a href="#" class="' + _self.settings.classPrefix + 'icon-next"><span>' + _self.settings.labels['navigator.next'] + '</span></a>').hide(),
-						_self.objects.play = $('<a href="#" class="' + _self.settings.classPrefix + 'icon-play"><span>' + _self.settings.labels['navigator.play'] + '</span></a>').hide(),
-						_self.objects.pause = $('<a href="#" class="' + _self.settings.classPrefix + 'icon-pause"><span>' + _self.settings.labels['navigator.pause'] + '</span></a>').hide()
+						_self.objects.prev = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-prev"><span>' + _self.settings.labels['navigator.prev'] + '</span></a>').hide(),
+						_self.objects.next = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-next"><span>' + _self.settings.labels['navigator.next'] + '</span></a>').hide(),
+						_self.objects.play = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-play"><span>' + _self.settings.labels['navigator.play'] + '</span></a>').hide(),
+						_self.objects.pause = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-pause"><span>' + _self.settings.labels['navigator.pause'] + '</span></a>').hide()
 					);
 					_self.objects.case.append(
 						_self.objects.content = $('<div id="' + _self.settings.idPrefix + 'content"></div>'),
@@ -169,11 +175,14 @@
 				},
 				onInit: {},
 				onStart: {},
+				onBeforeCalculateDimensions: {},
+				onAfterCalculateDimensions: {},
+				onBeforeShow: {},
 				onFinish: {},
 				onResize: {},
 				onClose: {},
 				onCleanup: {}
-			}, 
+			},
 			options,
 			// Load options from data-lc-options attribute
 			_self.origin.data ? _self.origin.data('lc-options') : {});
@@ -228,7 +237,7 @@
 				requestData: _self.settings.ajax.data,
 				requestDataType: _self.settings.ajax.dataType,
 				rel: $object.attr(_self._determineAttributeSelector()),
-				type: _self.settings.type || _self._verifyDataType(_self._determineUrl()),
+				type: _self._verifyDataType(_self._determineUrl()),
 				isPartOfSequence: _self.settings.useAsCollection || _self._isPartOfSequence($object.attr(_self.settings.attr), ':'),
 				isPartOfSequenceWithSlideshow: _self._isPartOfSequence($object.attr(_self.settings.attr), ':slideshow'),
 				currentIndex: $(_self._determineAttributeSelector()).index($object),
@@ -351,7 +360,7 @@
 		_normalizeUrl: function (url) {
 			var srcExp = /^\d+$/;
 
-			return url.split(',').map(function (str) {
+			var urlParser = function (str) {
 				var src = {
 					width: 0,
 					density: 0
@@ -376,7 +385,15 @@
 				});
 
 				return src;
-			});
+			};
+
+			// Data URL detected (no split)
+			if (url.indexOf('data:') === 0) {
+				return [urlParser(url)];
+			}
+
+			// Regular URL, normal behavior
+			return url.split(',').map(urlParser);
 		},
 
 		/**
@@ -552,13 +569,20 @@
 							dataType: _self.objectData.requestDataType,
 							data: _self.objectData.requestData,
 							success: function (data, textStatus, jqXHR) {
-								// Unserialize if data is transferred as json
-								if (_self.objectData.requestDataType === 'json') {
-									_self.objectData.data = data;
-								} else {
-									$object.html(data);
+								// Check for X-Ajax-Location
+								if (jqXHR.getResponseHeader('X-Ajax-Location')) {
+									_self.objectData.url = jqXHR.getResponseHeader('X-Ajax-Location');
+									_self._loadObject($object);
 								}
-								_self._showContent($object);
+								else {
+									// Unserialize if data is transferred as json
+									if (_self.objectData.requestDataType === 'json') {
+										_self.objectData.data = data;
+									} else {
+										$object.html(data);
+									}
+									_self._showContent($object);
+								}
 							},
 							error: function (jqXHR, textStatus, errorThrown) {
 								_self.on('error');
@@ -614,6 +638,8 @@
 		 */
 		_calculateDimensions: function ($object) {
 			_self._cleanupDimensions();
+
+			if (!$object) return;
 
 			// Set default dimensions
 			var dimensions = {
@@ -728,7 +754,8 @@
 			});
 
 			_self.objects.case.css({
-				'width': _self.objects.contentInner.outerWidth()
+				'width': _self.objects.contentInner.outerWidth(),
+				'max-width': '100%'
 			});
 
 			// Adjust margin
@@ -786,7 +813,7 @@
 			return _self._normalizeUrl(dataUrl.toString());
 		},
 
-			// 
+			//
 		/**
 		 * Tries to get the (file) suffix of an url
 		 *
@@ -794,7 +821,8 @@
 		 * @return	{string}
 		 */
 		_getFileUrlSuffix: function (url) {
-			return url.toLowerCase().split('?')[0].split('.')[1];
+			var re = /(?:\.([^.]+))?$/;
+			return re.exec(url.toLowerCase())[1];
 		},
 
 		/**
@@ -809,6 +837,15 @@
 			// Early abort if dataUrl couldn't be verified
 			if (!url) {
 				return false;
+			}
+
+			//checking if user defined type is valid
+			if (_self.settings.type) {
+				for (var key in typeMapping) {
+					if (key === _self.settings.type) {
+						return _self.settings.type;
+					}
+				}
 			}
 
 			// Verify the dataType of url according to typeMapping which
@@ -863,11 +900,19 @@
 			_self.objects.document.attr(_self._prefixAttributeName('type'), _self.objectData.type);
 
 			_self.cache.object = $object;
-			_self._calculateDimensions($object);
 
-			// Call onFinish hook functions
-			_self._callHooks(_self.settings.onFinish);
+			// Call onBeforeShow hook functions
+			_self._callHooks(_self.settings.onBeforeShow);
 
+			if (_self.settings.breakBeforeShow) return;
+			_self.show();
+		},
+
+		/**
+		 * Starts the 'inTransition'
+		 * @return	{void}
+		 */
+		_startInTransition: function () {
 			switch (_self.transition.in()) {
 				case 'scrollTop':
 				case 'scrollRight':
@@ -896,7 +941,7 @@
 			// End loading.
 			_self._loading('end');
 			_self.isBusy = false;
-			
+
 			// Set index of the first item opened
 			if (!_self.cache.firstOpened) {
 				_self.cache.firstOpened = _self.objectData.this;
@@ -907,6 +952,9 @@
 			setTimeout(function () {
 			  _self.transition.fade(_self.objects.info, 'in', _self.settings.speedIn);
 			}, _self.settings.speedIn);
+
+			// Call onFinish hook functions
+			_self._callHooks(_self.settings.onFinish);
 		},
 
 		/**
@@ -1310,6 +1358,7 @@
 				startTransition['opacity'] = startOpacity;
 				endTransition['opacity'] = endOpacity;
 
+				$object.css(_self.support.transition + 'transition', 'none');
 				$object.css(startTransition).show();
 
 				// Css transition
@@ -1399,6 +1448,7 @@
 				endTransition['opacity'] = endOpacity;
 				endTransition[direction] = endOffset;
 
+				$object.css(_self.support.transition + 'transition', 'none');
 				$object.css(startTransition).show();
 
 				// Css transition
@@ -1448,6 +1498,7 @@
 
 				endTransition['opacity'] = endOpacity;
 
+				$object.css(_self.support.transition + 'transition', 'none');
 				$object.css(startTransition).show();
 
 				// Css transition
@@ -1520,15 +1571,43 @@
 
 		/**
 		 * Executes functions for a window resize.
-		 * It stops an eventual timeout and recalculates dimenstions.
+		 * It stops an eventual timeout and recalculates dimensions.
 		 *
+		 * @param	{object}	dimensions
 		 * @return	{void}
 		 */
-		resize: function () {
+		resize: function (event, dimensions) {
 			if (!_self.isOpen) return;
 
 			if (_self.isSlideshowEnabled()) {
 				_self._stopTimeout();
+			}
+
+			if (typeof dimensions === 'object' && dimensions !== null) {
+				if (dimensions.width) {
+					_self.cache.object.attr(
+						_self._prefixAttributeName('width'),
+						dimensions.width
+					);
+				}
+				if (dimensions.maxWidth) {
+					_self.cache.object.attr(
+						_self._prefixAttributeName('max-width'),
+						dimensions.maxWidth
+					);
+				}
+				if (dimensions.height) {
+					_self.cache.object.attr(
+						_self._prefixAttributeName('height'),
+						dimensions.height
+					);
+				}
+				if (dimensions.maxHeight) {
+					_self.cache.object.attr(
+						_self._prefixAttributeName('max-height'),
+						dimensions.maxHeight
+					);
+				}
 			}
 
 			_self.dimensions = _self.getViewportDimensions();
@@ -1627,6 +1706,21 @@
 
 			_self.objects.document.addClass(_self.settings.classPrefix + 'open');
 			_self.objects.case.attr('aria-hidden', 'false');
+		},
+
+		/**
+		 * Shows the lightcase by starting the transition
+		 */
+		show: function () {
+			// Call onCalculateDimensions hook functions
+			_self._callHooks(_self.settings.onBeforeCalculateDimensions);
+
+			_self._calculateDimensions(_self.cache.object);
+
+			// Call onAfterCalculateDimensions hook functions
+			_self._callHooks(_self.settings.onAfterCalculateDimensions);
+
+			_self._startInTransition();
 		},
 
 		/**

@@ -201,7 +201,7 @@ table caption {
 table thead th,
 .table-head,
 table tfoot tr th,
-.formatter-table th {
+.formatter-table .formatter-table-head {
 	background-color: rgba(54, 100, 147, 0.1);
 }
 
@@ -654,7 +654,6 @@ h3.formatter-title {
 	border-color: #2C5169;
 }
 
-
 /* -- cssmenu.css
     #####  #####  #####  #   #  #####  #   #  #   #
     #      #      #      ## ##  #      ##  #  #   #
@@ -720,6 +719,81 @@ h3.formatter-title {
 .small-screen .menu-button.menu-opened:after,
 .small-screen .submenu-button.submenu-opened:after { background-color: rgba(54, 100, 147, 0.2); }
 
+
+/* -- lightcase.css
+    #      #####  #####  #   #  #####  ####   #####  #   #
+    #        #    #      #   #    #    #   #  #   #   # #
+    #        #    #  ##  #####    #    ####   #   #    #
+    #        #    #   #  #   #    #    #   #  #   #   # #
+    #####  #####  #####  #   #    #    ####   #####  #   #
+----------------------------------------------------------------------------- */
+a[class*='lightcase-icon-'], a[class*='lightcase-icon-']:focus {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+a[class*='lightcase-icon-']:hover {
+    color: #FFFFFF;
+    text-shadow: 0 0 0.618em #FFFFFF;
+}
+
+.lightcase-isMobileDevice a[class*='lightcase-icon-']:hover {
+    color: #aaa;
+}
+
+#lightcase-case {
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (min-width: 641px) {
+    html:not([data-lc-type=error]) #lightcase-content {
+        background-color: #FFFFFF;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media screen and (min-width: 641px) {
+    html[data-lc-type=image] #lightcase-content, html[data-lc-type=video] #lightcase-content {
+        background-color: #333333;
+    }
+}
+
+#lightcase-content h1,
+#lightcase-content h2,
+#lightcase-content h3,
+#lightcase-content h4,
+#lightcase-content h5,
+#lightcase-content h6,
+#lightcase-content p {
+    color: #333;
+}
+
+#lightcase-case p.lightcase-error {
+    color: #CE271A;
+}
+
+#lightcase-info #lightcase-title {
+    color: #FFFFFF;
+}
+
+#lightcase-info #lightcase-caption {
+    color: #FFFFFF;
+}
+
+#lightcase-info #lightcase-sequenceInfo {
+    color: #FFFFFF;
+}
+
+#lightcase-loading {
+    text-shadow: 0 0 0.618em #FFFFFF;
+}
+
+#lightcase-loading, #lightcase-loading:focus {
+    color: #FFFFFF;
+}
+
+#lightcase-overlay {
+    background: #366493;
+}
 
 /* -- autres
      ###   #   #  #####  #####  #####  #####
