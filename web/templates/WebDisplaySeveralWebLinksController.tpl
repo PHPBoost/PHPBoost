@@ -42,7 +42,7 @@
 		# ENDIF #
 	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{NUMBER_COLUMNS}# ENDIF #">
 		# IF C_CATEGORY_DISPLAYED_TABLE #
-			<table id="table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>${LangLoader::get_message('form.name', 'common')}</th>

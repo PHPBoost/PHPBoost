@@ -1,10 +1,10 @@
 		# INCLUDE message_helper #
-		
+
 		# IF NO_FAVORITE #
 			<div class="message-helper notice">{L_NO_FAVORITE}</div>
 		# ELSE #
 		{L_FAVORITES}
-			<table id="table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>

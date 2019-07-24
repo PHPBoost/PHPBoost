@@ -3,7 +3,7 @@
 			<header>
 				<h1>{L_HISTORY} : <a href="{U_ARTICLE}">{TITLE}</a></h1>
 			</header>
-			<table id="table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>
@@ -51,7 +51,7 @@
 				<h1>{L_HISTORY}</h1>
 			</header>
 
-			<table id="table2">
+			<table class="table">
 				<caption>{L_HISTORY}</caption>
 				<thead>
 					<tr>
