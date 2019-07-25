@@ -8,7 +8,7 @@
  * @version   	PHPBoost 5.3 - last update: 2019 07 25
  * @since   	PHPBoost 5.2 - 2019 07 25
  *
- * @patch		replace data-tipy by aria-label - #tipy by #tooltip
+ * @patch		replace data-tipy by aria-label / #tipy by #tooltip - move all bottom in first place
 */
 
 jQuery.fn.tipy = function(text,pos,duration,classes)
@@ -60,10 +60,10 @@ jQuery.fn.tipy = function(text,pos,duration,classes)
 		if (splitPos.length == 1){
 			switch (splitPos[0]){
 				case 'all':
-					splitPos = ['t','r','b','l','tr','br','bl','tl'];
+					splitPos = ['b','t','r','l','tr','br','bl','tl'];
 					break;
 				case 'cross':
-					splitPos = ['t','r','b','l'];
+					splitPos = ['b','t','r','l'];
 					break;
 				case 'x':
 					splitPos = ['tr','br','bl','tl'];
@@ -72,15 +72,15 @@ jQuery.fn.tipy = function(text,pos,duration,classes)
 					splitPos = ['r','l'];
 					break;
 				case 'ver':
-					splitPos = ['t','b'];
+					splitPos = ['b','t'];
 					break;
 			}
 		}
 		// Calculate and store the available spaces...
 		var space = {
+			'b' :   $(window).height() - ($(window).scrollTop() + objDim.b),
 			't' :   objDim.t - $(window).scrollTop(),
 			'r' :   ( $(window).width() - objDim.r ) + $(window).scrollLeft(),
-			'b' :   $(window).height() - ($(window).scrollTop() + objDim.b),
 			'l' :   objDim.l - $(window).scrollLeft()
 		},
 			wRemain = (w - objW)/ 2,
@@ -88,19 +88,18 @@ jQuery.fn.tipy = function(text,pos,duration,classes)
 
 		// Check the position in the defined order...
 		for( var i = 0; i<splitPos.length;i++ ){
-			if (('toprightbottomleft').search(splitPos[i])>=0){ //  This is REALLY weird, but does the job... ( can't use indexOf )...
+			if (('toprightbottomleft').search(splitPos[i])>=0){
 				splitPos[i] = splitPos[i][0];
-
 			}
 			switch (splitPos[i]){
+				case 'b':
+					if(h < space.b && wRemain < space.l && wRemain < space.r ){ return 'b';}
+					break;
 				case 't':
 					if(h < space.t && wRemain < space.l && wRemain < space.r ){ return 't';}
 					break;
 				case 'r':
 					if(w < space.r && hRemain < space.t && hRemain < space.b ){ return 'r'; }
-					break;
-				case 'b':
-					if(h < space.b && wRemain < space.l && wRemain < space.r ){ return 'b';}
 					break;
 				case 'l':
 					if(w < space.l && hRemain < space.t && hRemain < space.b ){ return 'l';}
