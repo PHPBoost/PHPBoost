@@ -11,6 +11,10 @@
 				# IF C_DISPLAY_HTML_IN_SUGGESTIONS #
 				formatResult: function (suggestion, currentValue) { 
 					return suggestion.value;
+				},
+				onSelect: function (suggestion) {
+					$(this).val($(this).val().replace(/(<([^>]+)>)/ig,""));
+					$(this).focus();
 				}
 				# ENDIF #
 			});

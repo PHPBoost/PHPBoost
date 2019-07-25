@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @version   	PHPBoost 5.3 - last update: 2019 07 25
  * @since   	PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -109,7 +109,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		$user_assigned = UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 
 		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_display_name() : '',
-			array('class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()),
+			array('required' => true, 'hidden' => !$this->bug->is_assigned()),
 			array(new FormFieldConstraintUserExist())
 		));
 
