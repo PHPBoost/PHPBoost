@@ -186,6 +186,11 @@ i.message-announce-new { color: #62CF5D; }
 .sharing-element-print > a    { background-color: #999999; }
 .sharing-element-sms > a      { background-color: #999999; }
 
+#tooltip {
+	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
+	background-color: #FFFFFF;
+}
+
 
 /* -- table.css
     #####   ###   ###    #      #####

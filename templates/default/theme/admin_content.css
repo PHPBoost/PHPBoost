@@ -1466,3 +1466,24 @@ div.container-block-absolute > div {
 .upload-cat-explorer li span {
 	padding: 0.309em 0.228em;
 }
+
+#tooltip {
+    position: absolute;
+    padding: 0.228em 0.456em;
+    font-size: 0.809em;
+    display: inline-block;
+    opacity: 0;
+    max-width: 200px;
+    width: auto;
+    z-index: 1000;
+}
+
+#tooltip.position-t{ margin-top:  -9px; }
+#tooltip.position-b{ margin-top:   9px; }
+#tooltip.position-r{ margin-left:  9px; }
+#tooltip.position-l{ margin-left: -9px; }
+
+#tooltip.position-tr{ margin-left:  7px; margin-top: -7px; }
+#tooltip.position-br{ margin-left:  7px; margin-top:  7px; }
+#tooltip.position-bl{ margin-left: -7px; margin-top:  7px; }
+#tooltip.position-tl{ margin-left: -7px; margin-top: -7px; }
