@@ -87,14 +87,14 @@ a[class*='lightcase-icon-'].lightcase-icon-pause, a[class*='lightcase-icon-'].li
 @media screen and (max-width: 640px) {
     a[class*='lightcase-icon-'] {
         bottom: 15px;
-        font-size: 24px;4px;
+        font-size: 24px;
     }
 }
 
 @media screen and (min-width: 641px) {
     a[class*='lightcase-icon-'] {
         bottom: 50%;
-        margin-bottom: -0.5em;5em;
+        margin-bottom: -0.5em;
     }
 
     a[class*='lightcase-icon-']:hover, #lightcase-case:hover ~ a[class*='lightcase-icon-'] {
@@ -302,7 +302,7 @@ html[data-lc-type=image] #lightcase-content .lightcase-contentInner {
 @media screen and (max-width: 640px) {
     .lightcase-fullScreenMode #lightcase-info {
         padding-left: 15px;
-        padding-right: 15px;5px;
+        padding-right: 15px;
     }
 
     html:not([data-lc-type=image]):not([data-lc-type=video]):not([data-lc-type=flash]):not([data-lc-type=error]) #lightcase-info {
