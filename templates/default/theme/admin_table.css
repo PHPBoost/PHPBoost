@@ -114,17 +114,17 @@ table tfoot tr th select {
 }
 
 /* Patch thead Tableaux formatés */
-table.formatter-table th.formatter-table-head {
+.formatter-table .formatter-table-head {
 	padding: 8px;
 	font-size: 1.4em;
 	text-align: center;
 	font-weight: normal;
 }
 
-table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px;  }
-table.formatter-table th.formatter-table-head:last-child  { border-top-right-radius: 3px; }
+.formatter-table .formatter-table-head:first-child { border-top-left-radius: 3px;  }
+.formatter-table .formatter-table-head:last-child  { border-top-right-radius: 3px; }
 
-table.formatter-table th.formatter-table-head p {
+.formatter-table .formatter-table-head p {
 	margin-bottom: 0;
 }
 
@@ -153,14 +153,14 @@ table.formatter-table th.formatter-table-head p {
 }
 
 /* Mini tableaux */
-table.mini th,
-table.mini td {
+.mini th,
+.mini td {
 	padding: 3px 1px;
 	font-size: 0.95em;
 }
 
-table.mini th a,
-table.mini td a {
+.mini th a,
+.mini td a {
 	font-size: 0.95em;
 }
 
@@ -174,7 +174,7 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
-td.input-radio {
+.input-radio {
 	width: 80px;
 }
 
@@ -186,7 +186,7 @@ td.input-radio {
 
 
 /* --- responsive tables basictable.js --- */
-table.bt thead th {
+.bt thead th {
 	display: none;
 }
 
@@ -221,18 +221,18 @@ table.bt thead th {
 }
 
 /* --- design mobile --- */
-table.bt thead th:first-child {
+.bt thead th:first-child {
 	display: block;
 	border-radius: 0;
 }
 
 @media (min-width: 769px) {
-	table.bt thead th:first-child {
+	.bt thead th:first-child {
 		border-radius: 3px 3px 0 0;
 	}
 }
 
-table.bt tbody td {
+.bt tbody td {
 	display: block;
 	width: 100%;
 	vertical-align: top;
@@ -240,22 +240,54 @@ table.bt tbody td {
 	border-width: 0 1px;
 }
 
-table.bt tbody td:before {
+.bt tbody td:before {
 	display: inline-block ;
 	width: 35%;
 	content: attr(data-th) " ";
 	font-weight: bold;
 }
 
-table.bt tbody td.bt-hide {
+.bt tbody td.bt-hide {
 	display: none;
 }
 
-table.bt tbody td .bt-content {
+.bt tbody td .bt-content {
 	vertical-align: top;
 	display: inline-block ;
 	padding-left: 6px;
 	max-width: 100%;
+}
+
+.bt tfoot th,
+.bt tfoot td,
+.bt tbody td {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	vertical-align: top;
+}
+
+.bt tfoot th::before,
+.bt tfoot td::before,
+.bt tbody td::before {
+  content: attr(data-th) ": ";
+  display: inline-block;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  font-weight: bold;
+  width: 6.5em;
+}
+
+.bt tfoot th.bt-hide,
+.bt tfoot td.bt-hide,
+.bt tbody td.bt-hide {
+  display: none;
+}
+
+.bt tfoot th .bt-content,
+.bt tfoot td .bt-content,
+.bt tbody td .bt-content {
+  vertical-align: top;
 }
 
 .bt-wrapper.active {
@@ -275,4 +307,10 @@ table.bt tbody td .bt-content {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+
+.responsive-table {
+	max-width: 100%;
+	overflow: auto;
 }

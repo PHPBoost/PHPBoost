@@ -46,11 +46,11 @@ table tbody td,
 	border-color: transparent;
 }
 
-table.bt tbody tr td {
+.bt tbody tr td {
 	border-bottom-width: 0;
 }
 
-table.bt tbody tr td:last-child {
+.bt tbody tr td:last-child {
 	border-width: 0 0 1px;
 }
 
@@ -82,18 +82,18 @@ table tfoot tr td select {
 }
 
 /* --- Patch thead tableaux formates --- */
-table.formatter-table td.formatter-table-head {
+.formatter-table td.formatter-table-head {
 	padding: 0.618em;
 	font-size: 1.482em;
 	text-align: center;
 	font-weight: normal;
 }
 
-table.formatter-table td.formatter-table-head p {
+.formatter-table td.formatter-table-head p {
 	margin-bottom: 0;
 }
 
-table.bt.formatter-table td.formatter-table-head {
+.bt.formatter-table td.formatter-table-head {
 	display: none;
 }
 
@@ -105,23 +105,23 @@ table.bt.formatter-table td.formatter-table-head {
 	overflow: auto;
 }
 
-table.bt thead,
-table.bt thead th {
+.bt thead,
+.bt thead th {
 	display: none;
 }
 
-table.bt tfoot th,
-table.bt tfoot td,
-table.bt tbody td {
+.bt tfoot th,
+.bt tfoot td,
+.bt tbody td {
 	display: flex;
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	vertical-align: top;
 }
 
-table.bt tfoot th::before,
-table.bt tfoot td::before,
-table.bt tbody td::before {
+.bt tfoot th::before,
+.bt tfoot td::before,
+.bt tbody td::before {
   content: attr(data-th) ": ";
   display: inline-block;
   -webkit-flex-shrink: 0;
@@ -130,41 +130,41 @@ table.bt tbody td::before {
   width: 6.5em;
 }
 
-table.bt tfoot th.bt-hide,
-table.bt tfoot td.bt-hide,
-table.bt tbody td.bt-hide {
+.bt tfoot th.bt-hide,
+.bt tfoot td.bt-hide,
+.bt tbody td.bt-hide {
   display: none;
 }
 
-table.bt tfoot th .bt-content,
-table.bt tfoot td .bt-content,
-table.bt tbody td .bt-content {
+.bt tfoot th .bt-content,
+.bt tfoot td .bt-content,
+.bt tbody td .bt-content {
   vertical-align: top;
 }
 
-table.bt thead th:first-child{
+.bt thead th:first-child{
 	display: block;
 }
 
-table.bt tbody td {
+.bt tbody td {
 	display: block;
 	width: 100%;
 	text-align: left;
 	vertical-align: top;
 }
 
-table.bt tbody td:before {
+.bt tbody td:before {
 	display: inline-block;
 	width: 35%;
 	content: attr(data-th) " ";
 	font-weight: bold;
 }
 
-table.bt tbody td.bt-hide {
+.bt tbody td.bt-hide {
 	display: none;
 }
 
-table.bt tbody td .bt-content {
+.bt tbody td .bt-content {
 	display: inline-block;
 	padding-left: 0.309em;
 	max-width: 100%;
@@ -177,8 +177,8 @@ table.bt tbody td .bt-content {
 	-webkit-overflow-scrolling: touch;
 }
 
-table.bt.bt--no-header tfoot td::before,
-table.bt.bt--no-header tbody td::before {
+.bt.bt--no-header tfoot td::before,
+.bt.bt--no-header tbody td::before {
   display: none;
 }
 
@@ -196,12 +196,25 @@ table.bt.bt--no-header tbody td::before {
 	border-style: solid;
 	border-color: transparent;
 }
+
 .bordered td:last-child {
 	border-width: 1px 1px 0 1px;
 }
+
 .bordered tr:last-child td {
 	border-width: 1px 0 1px 1px;
 }
+
 .bordered tr:last-child td:last-child {
+	border-width: 1px;
+}
+
+.bordered .bt td,
+.bordered .bt tbody tr td:last-child,
+.bordered .bt tr:last-child td {
+	border-width: 1px 1px 0 1px;
+}
+
+.bordered .bt tr:last-child td:last-child {
 	border-width: 1px;
 }
