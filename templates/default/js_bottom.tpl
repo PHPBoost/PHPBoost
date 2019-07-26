@@ -27,7 +27,16 @@
 			shrinkFactor: 0.85
 		});
 	});
+	
+	// BBCode table with no header
+	jQuery('.formatter-table').each(function(){
+		$this = jQuery(this).find('tbody tr:first-child td');
+		if ($this.hasClass('formatter-table-head')) {}
+		else
+			$this.closest('.formatter-table').removeClass('table').addClass('table-no-header');
+	});
 
+	// All tables
 	jQuery('.table').basictable();
 	jQuery('.table-no-header').basictable({
 	    header: false
