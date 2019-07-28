@@ -5,12 +5,13 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 07 28
+ * @version     PHPBoost 5.3 - last update: 2019 07 28
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleConfiguration
@@ -21,7 +22,8 @@ class ModuleConfiguration
 	private $author_email;
 	private $author_website;
 	private $version;
-	private $date;
+	private $creation_date;
+	private $last_update;
 	private $compatibility;
 	private $php_version;
 	private $repository;
@@ -69,9 +71,14 @@ class ModuleConfiguration
 		return $this->version;
 	}
 
-	public function get_date()
+	public function get_creation_date()
 	{
-		return $this->date;
+		return $this->creation_date;
+	}
+
+	public function get_last_update()
+	{
+		return $this->last_update;
 	}
 
 	public function get_compatibility()
@@ -142,20 +149,21 @@ class ModuleConfiguration
 		$config = parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
 
-		$this->author = $config['author'];
-		$this->author_email = $config['author_mail'];
-		$this->author_website = $config['author_website'];
-		$this->version = $config['version'];
-		$this->date = $config['date'];
-		$this->compatibility = $config['compatibility'];
-		$this->php_version = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
-		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-		$this->admin_main_page = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
-		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
-		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
+		$this->author                 = $config['author'];
+		$this->author_email           = $config['author_mail'];
+		$this->author_website         = $config['author_website'];
+		$this->version                = $config['version'];
+		$this->creation_date          = isset($config['creation_date']) ? $config['creation_date'] : '';
+		$this->last_update            = isset($config['last_update']) ? $config['last_update'] : '';
+		$this->compatibility          = $config['compatibility'];
+		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
+		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
+		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
+		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
-		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
-		$this->enabled_features = !empty($config['enabled_features']) ? explode(',', $config['enabled_features']) : array();
+		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
+		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', $config['enabled_features']) : array();
 	}
 
 	private function load_description($desc_ini_file)

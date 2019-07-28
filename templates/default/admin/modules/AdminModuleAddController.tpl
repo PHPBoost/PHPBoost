@@ -28,13 +28,15 @@
 
 					<h2 class="not-installed-module-name">{modules_not_installed.NAME}<em> ({modules_not_installed.VERSION})</em></h2>
 				</header>
-				
+
 				<div class="content admin-element-content">
 					<div class="admin-element-icon">
 						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" title="{modules_not_installed.NAME}" />
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {modules_not_installed.CREATION_DATE}<br />
+						<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {modules_not_installed.LAST_UPDATE}<br />
 						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_not_installed.DESCRIPTION}<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span><br />
 					</div>
@@ -44,7 +46,7 @@
 			</article>
 			# END modules_not_installed #
 		</div>
-		# ELSE # 
+		# ELSE #
 		<div class="content">
 			<div class="message-helper notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		</div>

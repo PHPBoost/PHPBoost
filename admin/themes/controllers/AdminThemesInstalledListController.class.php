@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 21
+ * @version   	PHPBoost 5.2 - last update: 2019 07 28
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminThemesInstalledListController extends AdminController
@@ -44,28 +45,33 @@ class AdminThemesInstalledListController extends AdminController
 			$author_website = $configuration->get_author_link();
 			$pictures = $configuration->get_pictures();
 
+			$creation_date = date("d m Y", strtotime($configuration->get_creation_date()));
+			$last_update = date("d m Y", strtotime($configuration->get_last_update()));
+
 			$this->view->assign_block_vars('themes_installed', array(
-				'C_AUTHOR_EMAIL' => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
+				'C_AUTHOR_EMAIL'     => !empty($author_email),
+				'C_AUTHOR_WEBSITE'   => !empty($author_website),
+				'C_COMPATIBLE'       => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
-				'C_IS_ACTIVATED' => $theme->is_activated(),
-				'C_PICTURES' => count($pictures) > 0,
-				'THEME_NUMBER' => $theme_number,
-				'ID' => $theme->get_id(),
-				'NAME' => $configuration->get_name(),
-				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
-				'AUTHOR' => $configuration->get_author_name(),
-				'AUTHOR_EMAIL' => $author_email,
-				'AUTHOR_WEBSITE' => $author_website,
-				'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, $authorizations, array(2 => true), $theme->get_id()),
-				'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
-				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
-				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
+				'C_IS_ACTIVATED'     => $theme->is_activated(),
+				'C_PICTURES'         => count($pictures) > 0,
+				'THEME_NUMBER'       => $theme_number,
+				'ID'                 => $theme->get_id(),
+				'NAME'               => $configuration->get_name(),
+				'CREATION_DATE'      => $creation_date,
+				'LAST_UPDATE'        => $last_update,
+				'VERSION'            => $configuration->get_version(),
+				'MAIN_PICTURE'       => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
+				'AUTHOR'             => $configuration->get_author_name(),
+				'AUTHOR_EMAIL'       => $author_email,
+				'AUTHOR_WEBSITE'     => $author_website,
+				'DESCRIPTION'        => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
+				'COMPATIBILITY'      => $configuration->get_compatibility(),
+				'AUTHORIZATIONS'     => Authorizations::generate_select(Theme::ACCES_THEME, $authorizations, array(2 => true), $theme->get_id()),
+				'HTML_VERSION'       => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
+				'CSS_VERSION'        => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
+				'MAIN_COLOR'         => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
+				'WIDTH'              => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
 			));
 
 			if (count($pictures) > 0)
@@ -109,7 +115,7 @@ class AdminThemesInstalledListController extends AdminController
 				}
 				$theme_number++;
 			}
-			
+
 			$number_ids = count($theme_ids);
 			if ($number_ids > 1)
 			{
@@ -120,7 +126,7 @@ class AdminThemesInstalledListController extends AdminController
 			}
 			else
 				$id = $number_ids ? $theme_ids[0] : '';
-			
+
 			if ($number_ids)
 				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($id));
 		}

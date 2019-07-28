@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2019 07 28
  * @since       PHPBoost 3.0 - 2011 04 10
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ThemeConfiguration
@@ -17,7 +18,8 @@ class ThemeConfiguration
 	private $author_link;
 	private $version;
 	private $description = '';
-	private $date;
+	private $creation_date;
+	private $last_update;
 	private $compatibility;
 	private $require_copyright = false;
 	private $html_version = '1.0 Strict';
@@ -63,6 +65,16 @@ class ThemeConfiguration
 	public function get_description()
 	{
 		return $this->description;
+	}
+
+	public function get_creation_date()
+	{
+		return $this->creation_date;
+	}
+
+	public function get_last_update()
+	{
+		return $this->last_update;
 	}
 
 	public function get_compatibility()
@@ -135,20 +147,21 @@ class ThemeConfiguration
 
 		$this->check_parse_ini_file($config, $config_ini_file);
 
-		$this->author_name = $config['author'];
-		$this->author_mail = $config['author_mail'];
-		$this->author_link = $config['author_link'];
-		$this->version = $config['version'];
-		$this->date = isset($config['date']) ? $config['date'] : '';
-		$this->compatibility = $config['compatibility'];
+		$this->author_name       = $config['author'];
+		$this->author_mail       = $config['author_mail'];
+		$this->author_link       = $config['author_link'];
+		$this->version           = $config['version'];
+		$this->creation_date     = isset($config['creation_date']) ? $config['creation_date'] : '';
+		$this->last_update       = isset($config['last_update']) ? $config['last_update'] : '';
+		$this->compatibility     = $config['compatibility'];
 		$this->require_copyright = (bool)$config['require_copyright'];
-		$this->html_version = isset($config['html_version']) ? $config['html_version'] : '';
-		$this->css_version = isset($config['css_version']) ? $config['css_version'] : '';
-		$this->columns_disabled = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
-		$this->variable_width = (bool)$config['variable_width'];
-		$this->width = isset($config['width']) ? $config['width'] : '';
-		$this->pictures = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
-		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+		$this->html_version      = isset($config['html_version']) ? $config['html_version'] : '';
+		$this->css_version       = isset($config['css_version']) ? $config['css_version'] : '';
+		$this->columns_disabled  = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
+		$this->variable_width    = (bool)$config['variable_width'];
+		$this->width             = isset($config['width']) ? $config['width'] : '';
+		$this->pictures          = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
+		$this->repository        = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
 	}
 

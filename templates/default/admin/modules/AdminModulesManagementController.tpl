@@ -42,6 +42,8 @@
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {modules_installed.CREATION_DATE}<br />
+						<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {modules_installed.LAST_UPDATE}<br />
 						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_installed.DESCRIPTION}<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_installed.COMPATIBILITY}</span><br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_installed.PHP_VERSION}<br />

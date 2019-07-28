@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 21
+ * @version     PHPBoost 5.3 - last update: 2019 07 28
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -44,24 +44,29 @@ class AdminModulesManagementController extends AdminController
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
 
+			$creation_date = date("d m Y", strtotime($configuration->get_creation_date()));
+			$last_update = date("d m Y", strtotime($configuration->get_last_update()));
+
 			$this->view->assign_block_vars('modules_installed', array(
-				'C_AUTHOR_EMAIL' => !empty($author_email),
+				'C_AUTHOR_EMAIL'   => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
-				'C_IS_ACTIVATED' => $module->is_activated(),
-				'MODULE_NUMBER' => $module_number,
-				'ID' => $module->get_id(),
-				'NAME' => TextHelper::ucfirst($configuration->get_name()),
-				'ICON' => $module->get_id(),
-				'VERSION' => $module->get_installed_version(),
-				'AUTHOR' => $configuration->get_author(),
-				'AUTHOR_EMAIL' => $author_email,
-				'AUTHOR_WEBSITE' => $author_website,
-				'DESCRIPTION' => $configuration->get_description(),
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'PHP_VERSION' => $configuration->get_php_version(),
-				'C_DOCUMENTATION' => !empty($documentation),
-				'L_DOCUMENTATION' => $documentation
+				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
+				'C_IS_ACTIVATED'   => $module->is_activated(),
+				'MODULE_NUMBER'    => $module_number,
+				'ID'               => $module->get_id(),
+				'NAME'             => TextHelper::ucfirst($configuration->get_name()),
+				'CREATION_DATE'    => $creation_date,
+				'LAST_UPDATE'      => $last_update,
+				'ICON'             => $module->get_id(),
+				'VERSION'          => $module->get_installed_version(),
+				'AUTHOR'           => $configuration->get_author(),
+				'AUTHOR_EMAIL'     => $author_email,
+				'AUTHOR_WEBSITE'   => $author_website,
+				'DESCRIPTION'      => $configuration->get_description(),
+				'COMPATIBILITY'    => $configuration->get_compatibility(),
+				'PHP_VERSION'      => $configuration->get_php_version(),
+				'C_DOCUMENTATION'  => !empty($documentation),
+				'L_DOCUMENTATION'  => $documentation
 			));
 
 			$module_number++;
@@ -91,7 +96,7 @@ class AdminModulesManagementController extends AdminController
 				}
 				$module_number++;
 			}
-			
+
 			$number_ids = count($module_ids);
 			if ($number_ids > 1)
 			{
@@ -102,7 +107,7 @@ class AdminModulesManagementController extends AdminController
 			}
 			else
 				$id = $number_ids ? $module_ids[0] : '';
-			
+
 			if ($number_ids)
 				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($id));
 		}

@@ -50,6 +50,8 @@
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF themes_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a># ELSE #{themes_installed.AUTHOR}# ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE #<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
+						<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {themes_installed.CREATION_DATE}<br />
+						<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {themes_installed.LAST_UPDATE}<br />
 						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {themes_installed.DESCRIPTION}<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span><br />
 						<span class="text-strong">{@themes.html_version} :</span> {themes_installed.HTML_VERSION}<br />
