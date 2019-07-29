@@ -1491,3 +1491,28 @@ div.container-block-absolute > div {
 #tooltip.position-br{ margin-left:  7px; margin-top:  7px; }
 #tooltip.position-bl{ margin-left: -7px; margin-top:  7px; }
 #tooltip.position-tl{ margin-left: -7px; margin-top: -7px; }
+
+/* easytabs */
+.tab-container > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.tab-container > ul > li {
+    display: inline-block;
+}
+
+.tab-container > ul > li a {
+    display: block;
+    padding: 0.618em;
+    outline: none;
+    text-decoration: none;
+}
+
+.tab-container > ul > li a.shown {
+    position: relative;
+}
+
+.tab-container .panel-container {
+    padding: 0.618em;
+}

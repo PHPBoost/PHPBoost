@@ -191,6 +191,10 @@ i.message-announce-new { color: #62CF5D; }
 	background-color: #FFFFFF;
 }
 
+.tab-container > ul > li a.shown {
+	background-color: rgba(54, 100, 147, 0.2);
+}
+
 
 /* -- table.css
     #####   ###   ###    #      #####

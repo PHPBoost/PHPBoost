@@ -1326,3 +1326,7 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-overlay {
     background: #366493;
 }
+
+.tab-container > ul > li a.shown {
+	background-color: rgba(54, 100, 147, 0.2);
+}

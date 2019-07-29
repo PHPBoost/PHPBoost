@@ -27,7 +27,7 @@
 			shrinkFactor: 0.85
 		});
 	});
-	
+
 	// BBCode table with no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
@@ -45,6 +45,8 @@
 	jQuery(function() {
 		jQuery(".lined textarea").linedtextarea();
 	});
+
+    $('.tab-container').easytabs();
 -->
 </script>
 
