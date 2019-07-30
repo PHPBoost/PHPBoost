@@ -1514,7 +1514,7 @@ div.container-block-absolute > div {
 }
 
 .tab-container .panel-container {
-    padding: 0.618em;
+    margin: 0.618em;
 }
 
 @media (min-width:768px) {
