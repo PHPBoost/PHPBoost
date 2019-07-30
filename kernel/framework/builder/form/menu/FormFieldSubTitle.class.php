@@ -1,6 +1,6 @@
 <?php
 /**
- * This class is a fork of ForFieldFree and manage subtitle for form with menu.
+ * This class is a fork of FormFieldFree and manage subtitle for form with menu.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>template : A template object to personnalize the field</li>
