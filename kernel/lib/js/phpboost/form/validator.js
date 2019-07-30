@@ -197,6 +197,23 @@ function lengthMaxFormFieldValidator(field_id, rbound, message)
 	return '';
 }
 
+function maxSizeFilePickerFormFieldValidator(field_id, max_size, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field && jQuery("#" + field.getHTMLId())[0].files[0])
+	{
+		var value = jQuery("#" + field.getHTMLId())[0].files[0].size;
+		if (value !== '')
+		{
+			if (!integerMaxValidator(value, max_size))
+			{
+				return message;
+			}
+		}
+	}
+	return '';
+}
+
 function DisplayNameExistValidator(field_id, message, user_id)
 {
 	var field = HTMLForms.getField(field_id);
@@ -346,6 +363,18 @@ function inequalityFormFieldValidator(field_id, field_id2, message)
 	var field2 = HTMLForms.getField(field_id2);
 	if (field1 && field2) {
 		if (field1.getValue() == field2.getValue() && field1.getValue() !== '' && field2.getValue() !== '') {
+			return message;
+		}
+	}
+	return "";
+}
+
+function inclusionFormFieldValidator(field_id, field_id2, message)
+{
+	var field1 = HTMLForms.getField(field_id);
+	var field2 = HTMLForms.getField(field_id2);
+	if (field1 && field2) {
+		if (field1.getValue() == field2.getValue() && field1.getValue() !== '' && field2.getValue() !== '' && field2.getValue().toLowerCase().indexOf(field1.getValue().toLowerCase()) >= 0) {
 			return message;
 		}
 	}
