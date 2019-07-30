@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 03
+ * @version   	PHPBoost 5.2 - last update: 2019 07 30
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,6 +94,8 @@ $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent 
 $lang['form.fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
 $lang['form.first_field_must_be_inferior_to_second_field'] = 'Le champ ":field2" doit avoir une valeur inférieure au champ ":field1"';
 $lang['form.first_field_must_be_superior_to_second_field'] = 'Le champ ":field2" doit avoir une valeur supérieure au champ ":field1"';
+$lang['form.first_field_must_not_be_contained_in_second_field'] = 'La valeur champ ":field1" ne doit pas être contenue dans le champ ":field2"';
+$lang['form.login_and_mail_must_not_be_contained_in_second_field'] = 'Votre email ou votre identifiant de connexion ne doivent pas être contenus dans le champ ":field2"';
 
 //User
 $lang['user.not_authorized_during_maintain'] = 'Vous n\'avez pas l\'autorisation d\'accéder au site pendant la maintenance';

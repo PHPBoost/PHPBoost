@@ -368,3 +368,15 @@ function inequalityFormFieldValidator(field_id, field_id2, message)
 	}
 	return "";
 }
+
+function inclusionFormFieldValidator(field_id, field_id2, message)
+{
+	var field1 = HTMLForms.getField(field_id);
+	var field2 = HTMLForms.getField(field_id2);
+	if (field1 && field2) {
+		if (field1.getValue() == field2.getValue() && field1.getValue() !== '' && field2.getValue() !== '' && field2.getValue().toLowerCase().indexOf(field1.getValue().toLowerCase()) >= 0) {
+			return message;
+		}
+	}
+	return "";
+}

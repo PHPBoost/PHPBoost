@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 07 30
  * @since   	PHPBoost 3.0 - 2010 12 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -53,7 +53,7 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
+		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
 			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
 				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
 					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
@@ -71,7 +71,7 @@ class AdminMemberAddController extends AdminController
 
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
-		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
+		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
 			array('events' => array('click' => '
 				if (HTMLForms.getField("custom_login").getValue()) {
 					HTMLForms.getField("login").enable();
@@ -114,8 +114,8 @@ class AdminMemberAddController extends AdminController
 
 		if ($security_config->are_login_and_email_forbidden_in_password())
 		{
-			$form->add_constraint(new FormConstraintFieldsInequality($email, $password));
-			$form->add_constraint(new FormConstraintFieldsInequality($login, $password));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($email, $password));
+			$form->add_constraint(new FormConstraintFieldsNotIncluded($custom_login_checked == 'on' ? $login : $display_name, $password));
 		}
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
