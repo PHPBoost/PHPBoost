@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2015 12 14
+ * @version     PHPBoost 5.2 - last update: 2019 07 30
  * @since       PHPBoost 3.0 - 2010 04 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldActionLinkList extends AbstractFormField
@@ -38,6 +39,7 @@ class FormFieldActionLinkList extends AbstractFormField
 
 		foreach ($this->actions as $action) {
 			$template->assign_block_vars('action', array(
+				'C_IS_ACTIVE_MODULE' => ($action->get_active_module() == '') || (ModulesManager::is_module_installed($action->get_active_module()) & ModulesManager::is_module_activated($action->get_active_module())),
 				'C_PICTURE' => $action->has_css_class() || $action->has_img(),
 				'C_IMG' => $action->has_img(),
 				'TITLE' => $action->get_title(),
