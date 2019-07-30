@@ -195,6 +195,18 @@ i.message-announce-new { color: #62CF5D; }
 	background-color: rgba(54, 100, 147, 0.2);
 }
 
+.fa-finish:before {
+	color: rgba(0, 255, 0, 0.4);
+}
+
+.wizard-container .wizard-header li .completed-step {
+  background-color: rgba(0, 255, 0, 0.4);
+}
+
+.wizard-container .wizard-header .progress {
+	background-color: rgba(54, 100, 147, 0.2);
+}
+
 
 /* -- table.css
     #####   ###   ###    #      #####

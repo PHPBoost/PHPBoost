@@ -669,6 +669,10 @@ optgroup {
 		border-style: solid;
 		border-color: transparent;
 	}
+	
+	.form-element.form-subtitle {
+		padding: 1.618em 1.618em 0.618em 0;
+	}
 }
 
 .form-element.full-field,
