@@ -92,12 +92,12 @@
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.personalization}</div>
-					<div class="item-3x" aria-label="{@mini.menus}/{@mini.config}">
+					<div class="item-3x" aria-label="{@mini.menus}/{@title.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
 								<i class="fa fa-bars icon-main" aria-hidden="true"></i>
 								<i class="fa fa-cog icon-sup" aria-hidden="true"></i>
-							</span> <span class="sr-only">{@mini.menus}/{@mini.config}</span>
+							</span> <span class="sr-only">{@mini.menus}/{@title.config}</span>
 						</a>
 					</div>
 					<div class="item-form item-3x"# IF C_LEFT_ENABLED # aria-label="{@mini.disable.left.col}"# ELSE # aria-label="{@mini.enable.left.col}"# ENDIF #>
@@ -162,32 +162,32 @@
 							</span> <span class="sr-only">{@mini.user}/{@mini.add}</span>
 						</a>
 					</div>
-					<div class="item-4x" aria-label="{@mini.config}/{@mini.general.config}">
+					<div class="item-4x" aria-label="{@title.config}/{@mini.general.config}">
 						<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
 							<span class="icon-stack">
 								<i class="fa fa-university icon-main" aria-hidden="true"></i>
 								<i class="fa fa-cog icon-sup" aria-hidden="true"></i>
-							</span> <span class="sr-only">{@mini.config}/{@mini.general.config}</span>
+							</span> <span class="sr-only">{@title.config}/{@mini.general.config}</span>
 						</a>
 					</div>
-					<div class="item-4x" aria-label="{@mini.config}/{@mini.advanced.config}">
+					<div class="item-4x" aria-label="{@title.config}/{@mini.advanced.config}">
 						<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
 							<span class="icon-stack">
 								<i class="fa fa-university icon-main" aria-hidden="true"></i>
 								<i class="fa fa-cogs icon-sup" aria-hidden="true"></i>
-							</span> <span class="sr-only">{@mini.config}/{@mini.advanced.config}</span>
+							</span> <span class="sr-only">{@title.config}/{@mini.advanced.config}</span>
 						</a>
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@mini.sandbox.mod}</div>
-					<div class="item-4x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.css}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.bbcode}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/plugins"><i class="fa fa-cube fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.menu}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.table}</span></a></div>
-					<div class="item-4x" aria-label="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.config}</span></a></div>
+					<div class="sbx-item-title bkgd-title">{@module.title}</div>
+					<div class="item-4x" aria-label="{@title.form.builder}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.form.builder}</span></a></div>
+					<div class="item-4x" aria-label="{@title.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.css}</span></a></div>
+					<div class="item-4x" aria-label="{@title.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.bbcode}</span></a></div>
+					<div class="item-4x" aria-label="{@title.plugins}"><a href="{PATH_TO_ROOT}/sandbox/plugins"><i class="fa fa-cube fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.plugins}</span></a></div>
+					<div class="item-4x" aria-label="{@title.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.menu}</span></a></div>
+					<div class="item-4x" aria-label="{@title.table.builder}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.table.builder}</span></a></div>
+					<div class="item-4x" aria-label="{@title.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.config}</span></a></div>
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>

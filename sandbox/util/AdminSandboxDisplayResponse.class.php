@@ -14,12 +14,12 @@ class AdminSandboxDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('common', 'sandbox');
-		$this->set_title($lang['mini.module.title']);
+		$this->set_title($lang['module.title']);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), SandboxUrlBuilder::config());
 
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page, $lang['mini.module.title']);
+		$env->set_page_title($title_page, $lang['module.title']);
 	}
 }
 ?>

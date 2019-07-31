@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 14
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,7 +28,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('mini.module.title', 'common', 'sandbox');
+		return LangLoader::get_message('module.title', 'common', 'sandbox');
 	}
 
 	public function is_displayed()
@@ -40,6 +40,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$tpl = new FileTemplate('sandbox/SandboxModuleMiniMenu.tpl');
 		$tpl->add_lang(LangLoader::get('common', 'sandbox'));
+		$tpl->add_lang(LangLoader::get('module-mini', 'sandbox'));
 		$config = SandboxConfig::load();
 
 		MenuService::assign_positions_conditions($tpl, $this->get_block());

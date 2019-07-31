@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 14
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,7 @@
 class SandboxGraphicsCSSController extends ModuleController
 {
 	private $view;
+	private $common_lang;
 	private $lang;
 
 	/**
@@ -33,8 +34,10 @@ class SandboxGraphicsCSSController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$this->lang = LangLoader::get('css', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
+		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
 	}
 
@@ -108,11 +111,11 @@ class SandboxGraphicsCSSController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.css'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.css'], $this->common_lang['module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.css'], SandboxUrlBuilder::css()->rel());
+		$breadcrumb->add($this->common_lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->common_lang['title.css'], SandboxUrlBuilder::css()->rel());
 
 		return $response;
 	}

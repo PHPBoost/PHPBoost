@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 11 09
+ * @version   	PHPBoost 5.2 - last update: 2017 07 31
  * @since   	PHPBoost 5.1 - 2017 09 28
 */
 
@@ -15,7 +15,7 @@ class SandboxConstraintUserIsAdmin extends AbstractFormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('is.not.admin', 'common', 'sandbox');
+			$error_message = LangLoader::get_message('is.not.admin', 'config', 'sandbox');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = TextHelper::to_js_string($error_message);

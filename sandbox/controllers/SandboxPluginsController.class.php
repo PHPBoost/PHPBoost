@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 07 30
+ * @version   	PHPBoost 5.3 - last update: 2019 07 31
  * @since   	PHPBoost 5.2 - 2019 07 30
 */
 
@@ -84,7 +84,7 @@ class SandboxPluginsController extends ModuleController
 		$fieldset_tab_one = new FormFieldsetHTML('tab-01', $this->lang['plugins.form.title'] . ' 01');
 		$tabs_form->add_fieldset($fieldset_tab_one);
 
-		$fieldset_tab_one->set_description($this->lang['plugins.short.content']);
+		$fieldset_tab_one->set_description($this->common_lang['lorem.large.content']);
 
 		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['plugins.form.subtitle'],''));
 
@@ -93,14 +93,14 @@ class SandboxPluginsController extends ModuleController
 		$fieldset_tab_two = new FormFieldsetHTML('tab-02', $this->lang['plugins.form.title'] . ' 02');
 		$tabs_form->add_fieldset($fieldset_tab_two);
 
-		$fieldset_tab_two->set_description($this->lang['plugins.large.content']);
+		$fieldset_tab_two->set_description($this->common_lang['lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('articles') & ModulesManager::is_module_activated('articles'))
 		{
 			$fieldset_tab_three = new FormFieldsetHTML('tab-03', $this->lang['plugins.form.title'] . ' 03');
 			$tabs_form->add_fieldset($fieldset_tab_three);
 
-			$fieldset_tab_three->set_description($this->lang['plugins.short.content']);
+			$fieldset_tab_three->set_description($this->common_lang['lorem.short.content']);
 		}
 
 
@@ -132,7 +132,7 @@ class SandboxPluginsController extends ModuleController
 		$wizard_form->add_fieldset($fieldset_tab_one);
 		$fieldset_tab_one->set_css_class('wizard-step');
 
-		$fieldset_tab_one->set_description($this->lang['plugins.short.content']);
+		$fieldset_tab_one->set_description($this->common_lang['lorem.large.content']);
 
 		$fieldset_tab_one->add_field(new FormFieldSubTitle('tab_01b', $this->lang['plugins.form.subtitle'],''));
 
@@ -142,7 +142,7 @@ class SandboxPluginsController extends ModuleController
 		$wizard_form->add_fieldset($fieldset_tab_two);
 		$fieldset_tab_two->set_css_class('wizard-step');
 
-		$fieldset_tab_two->set_description($this->lang['plugins.large.content']);
+		$fieldset_tab_two->set_description($this->common_lang['lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('news') & ModulesManager::is_module_activated('news'))
 		{
@@ -150,7 +150,7 @@ class SandboxPluginsController extends ModuleController
 			$wizard_form->add_fieldset($fieldset_tab_three);
 			$fieldset_tab_three->set_css_class('wizard-step');
 
-			$fieldset_tab_three->set_description($this->lang['plugins.short.content']);
+			$fieldset_tab_three->set_description($this->common_lang['lorem.short.content']);
 		}
 
 		$this->submit_wizard_button = new FormButtonDefaultSubmit();

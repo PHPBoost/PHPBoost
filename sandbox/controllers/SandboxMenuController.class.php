@@ -3,14 +3,15 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 3.0 - 2012 05 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SandboxMenuController extends ModuleController
 {
-	private $view;
+	private $tpl;
+	private $common_lang;
 	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
@@ -21,28 +22,22 @@ class SandboxMenuController extends ModuleController
 
 		$this->build_view();
 
-		$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
-		$columns_disabled->set_disable_left_columns(true);
-		$columns_disabled->set_disable_right_columns(true);
-		$columns_disabled->set_disable_top_central(true);
-		$columns_disabled->set_disable_bottom_central(true);
-		$columns_disabled->set_disable_top_footer(true);
-
 		return $this->generate_response();
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxMenuController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$this->lang = LangLoader::get('menu', 'sandbox');
+		$this->tpl = new FileTemplate('sandbox/SandboxMenuController.tpl');
+		$this->tpl->add_lang($this->common_lang);
+		$this->tpl->add_lang($this->lang);
 	}
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
-			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'SITE_SLOGAN' => GeneralConfig::load()->get_site_slogan(),
+		$this->tpl->put_all(array(
+			'L_ELEM' => $this->lang['cssmenu.element']
 		));
 	}
 
@@ -57,9 +52,13 @@ class SandboxMenuController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayFrameResponse($this->view);
+		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.menu'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.menu'], $this->common_lang['module.title']);
+
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->common_lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->common_lang['title.menu'], SandboxUrlBuilder::menu()->rel());
 
 		return $response;
 	}

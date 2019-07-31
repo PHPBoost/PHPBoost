@@ -70,7 +70,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				<div>{@framework.lorem.large}</div>
+				<div>{@lorem.large.content}</div>
 			</div>
 		</article>
 	</div>
@@ -119,7 +119,7 @@
 				    </div>
 				</form>
 				<div class="spacer"></div>
-				{@framework.lorem.large}
+				{@lorem.large.content}
 			</div>
 		</article>
 	</div>
@@ -171,7 +171,7 @@
 						</div>
 					</div>
 				</div>
-				{@framework.lorem.large}
+				{@lorem.large.content}
 			</div>
 			<div class="spacer"></div>
 		</article>
@@ -628,7 +628,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.medium}
+				{@lorem.medium.content}
 			</div>
 		</article>
 	</div>
@@ -641,7 +641,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.mini}
+				{@lorem.short.content}
 			</div>
 		</article>
 		<article class="block">
@@ -650,7 +650,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.mini}
+				{@lorem.short.content}
 			</div>
 		</article>
 	</div>
@@ -663,7 +663,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.mini}
+				{@lorem.short.content}
 			</div>
 		</article>
 		<article class="block">
@@ -672,7 +672,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.mini}
+				{@lorem.short.content}
 			</div>
 		</article>
 		<article class="block">
@@ -681,7 +681,7 @@
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
-				{@framework.lorem.mini}
+				{@lorem.short.content}
 			</div>
 		</article>
 	</div>

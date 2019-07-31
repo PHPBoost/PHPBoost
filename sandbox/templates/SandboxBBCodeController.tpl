@@ -90,7 +90,7 @@
 			<header>
 				<h5>{@bbcode.paragraph}</h5>
 			</header>
-			<div class="content"><p>{@framework.lorem.medium}</p></div>
+			<div class="content"><p>{@lorem.medium.content}</p></div>
 		</article>
 	</div>
 
@@ -99,7 +99,7 @@
 			<header>
 				<h5>{@bbcode.block}</h5>
 			</header>
-			<div class="formatter-container formatter-block">{@framework.lorem.medium}</div>
+			<div class="formatter-container formatter-block">{@lorem.medium.content}</div>
 		</article>
 	</div>
 
@@ -111,7 +111,7 @@
 			<fieldset class="formatter-container formatter-fieldset">
 				<legend>{@bbcode.legend}</legend>
 				<div class="formatter-content">
-					{@framework.lorem.medium}
+					{@lorem.medium.content}
 				</div>
 			</fieldset>
 		</article>
@@ -136,7 +136,7 @@
 			<div class="formatter-container formatter-blockquote">
 				<span class="formatter-title title-perso">{@bbcode.quote} : Lorem Ipsum</span>
 				<div class="formatter-content">
-					{@framework.lorem.medium}
+					{@lorem.medium.content}
 				</div>
 			</div>
 		</article>
@@ -150,7 +150,7 @@
 			<div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
 				<span class="formatter-title title-perso">{@bbcode.hidden} :</span>
 				<div class="formatter-content">
-					{@framework.lorem.medium}
+					{@lorem.medium.content}
 				</div>
 			</div>
 		</article>

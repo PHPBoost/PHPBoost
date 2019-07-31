@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 06 16
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,8 +13,9 @@
 
 class SandboxFormController extends ModuleController
 {
-	private $view;
+	private $tpl;
 	private $lang;
+	private $common_lang;
 
 	/**
 	 * @var FormButtonSubmit
@@ -38,13 +39,13 @@ class SandboxFormController extends ModuleController
 		else
 			$c_gmap = false;
 
-		$this->view->put_all(array('C_GMAP' => $c_gmap));
+		$this->tpl->put_all(array('C_GMAP' => $c_gmap));
 
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
 			if ($form->validate())
 			{
-				$this->view->put_all(array(
+				$this->tpl->put_all(array(
 					'C_RESULT' => true,
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -65,22 +66,24 @@ class SandboxFormController extends ModuleController
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
-					$this->view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+					$this->tpl->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
 				}
 			}
 		}
 
-		$this->view->put('form', $form->display());
-		$this->view->add_lang($this->lang);
+		$this->tpl->put('form', $form->display());
+		$this->tpl->add_lang($this->lang);
 
 		return $this->generate_response();
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxFormController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$this->lang = LangLoader::get('form', 'sandbox');
+		$this->tpl = new FileTemplate('sandbox/SandboxFormController.tpl');
+		$this->tpl->add_lang($this->common_lang);
+		$this->tpl->add_lang($this->lang);
 	}
 
 	private function build_form()
@@ -331,7 +334,7 @@ class SandboxFormController extends ModuleController
 		// BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('buttons');
 		$buttons_fieldset->add_element(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit($this->lang['form.preview'], 'preview', 'alert("Hello world preview")');
+		$this->preview_button = new FormButtonSubmit($this->lang['form.preview'], 'previewl', 'alert("Hello world preview")');
 		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$buttons_fieldset->add_element($this->submit_button);
@@ -355,13 +358,13 @@ class SandboxFormController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->view);
+		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.form.builder'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.form.builder'], $this->common_lang['module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.form.builder'], SandboxUrlBuilder::form()->rel());
+		$breadcrumb->add($this->common_lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->common_lang['title.form.builder'], SandboxUrlBuilder::form()->rel());
 
 		return $response;
 	}
