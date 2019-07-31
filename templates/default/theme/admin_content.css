@@ -1577,3 +1577,38 @@ div.container-block-absolute > div {
 	position: relative;
 	z-index: 2;
 }
+
+.wizard-container .wizard-header .progress {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0px;
+	transition-duration: 0.4s;
+	transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.wizard-container .wizard-step {
+	display: none;
+	animation-duration: 0.4s;
+}
+
+.wizard-container .wizard-step.active-step {
+	display: block;
+}
+
+.wizard-container .wizard-navigator {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+	display: block;
+	flex: 0;
+}
+
+@media (min-width: 768px) {
+	.wizard-container .wizard-header ul {
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+	}
+}

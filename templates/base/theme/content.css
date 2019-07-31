@@ -964,6 +964,18 @@ div#release {
     margin: 0.618em;
 }
 
+.tab-container .form-subtitle h2 {
+	display: block;
+	margin: 0 0 0.809em 0;
+	padding: 0 0.809em;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-color: transparent;
+	text-transform: none;
+	font-size: 1.5em;
+	font-weight: 300;
+}
+
 /* wizard */
 .wizard-container {
 	display: flex;
@@ -1027,19 +1039,12 @@ div#release {
 	transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
-.wizard-container .wizard-body {
-	flex: 1;
-	-ms-flex: 1;
-	-webkit-flex: 1;
-	padding: 20px;
-}
-
-.wizard-container .wizard-body .wizard-step {
+.wizard-container .wizard-step {
 	display: none;
 	animation-duration: 0.4s;
 }
 
-.wizard-container .wizard-body .wizard-step.active-step {
+.wizard-container .wizard-step.active-step {
 	display: block;
 }
 

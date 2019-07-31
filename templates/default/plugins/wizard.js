@@ -107,7 +107,7 @@
                 }
                 $(step_links[i]).addClass('active-step');
 
-                elem.find('.wizard-body .wizard-step').removeClass('active-step');
+                elem.find('.wizard-step').removeClass('active-step');
                 $(step_content[step]).addClass('active-step');
 
                 moveProgress(step);

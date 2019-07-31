@@ -195,6 +195,10 @@ i.message-announce-new { color: #62CF5D; }
 	background-color: rgba(54, 100, 147, 0.2);
 }
 
+.tab-container .form-subtitle h2 {
+	border-color: #DDDDDD;
+}
+
 .fa-finish:before {
 	color: rgba(0, 255, 0, 0.4);
 }
