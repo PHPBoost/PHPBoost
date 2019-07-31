@@ -5,7 +5,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 24
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -219,7 +219,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
@@ -253,8 +253,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	private function unparse_fa($matches)
 	{
 		$fa_code = "";
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's'));
+		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd'));
 		$options_list = isset($matches[3]) ? $matches[3] : '';
+		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 
 		if ( !empty($options_list) ) {
 			$options = explode(' ', $options_list);
@@ -269,8 +270,13 @@ class BBCodeUnparser extends ContentFormattingUnparser
 				}
 			}
 		}
+		else
+		{
+			if ($special_fa)
+				$fa_code = "=" . 'fa' . $matches[1];
+		}
 
-		return '[fa' . $fa_code . ']' . $matches[2] . '[/fa]';
+		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
 	}
 
 	/**
