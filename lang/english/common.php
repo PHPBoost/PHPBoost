@@ -39,6 +39,7 @@ $lang['add'] = 'Add';
 $lang['delete'] = 'Delete';
 $lang['edit'] = 'Edit';
 $lang['apply'] = 'Apply';
+$lang['validation'] = 'Validation';
 
 $lang['add.files'] = 'Select files';
 
