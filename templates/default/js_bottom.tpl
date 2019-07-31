@@ -46,7 +46,15 @@
 		jQuery(".lined textarea").linedtextarea();
 	});
 
-    $('.tab-container').easytabs();
+    jQuery('.tab-container').easytabs();
+
+	// Delete captcha fielset if captcha is active when user is connected
+	if(jQuery('.captcha-element .form-element').length == 0)
+		jQuery('.captcha-element').removeClass('wizard-step');
+
+    jQuery('.wizard-container').wizard();
+
+
 -->
 </script>
 

@@ -76,6 +76,7 @@ $lang['mini.add'] = 'Add';
 $lang['title.config'] = 'Configuration';
 $lang['title.form.builder'] = 'Form builder';
 $lang['title.css'] = 'CSS';
+$lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
 $lang['title.menu'] = 'Cssmenu menus ';
 $lang['title.icons'] = 'Font-Awesome icons ';

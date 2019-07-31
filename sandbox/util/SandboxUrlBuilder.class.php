@@ -48,6 +48,14 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function plugins()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/plugins');
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function bbcode()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/bbcode');

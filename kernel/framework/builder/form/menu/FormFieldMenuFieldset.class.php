@@ -11,7 +11,7 @@
 * @since       PHPBoost 5.2 - 2019 07 30
 */
 
-class TabsMenuFieldset extends AbstractFormFieldset
+class FormFieldMenuFieldset extends AbstractFormFieldset
 {
 	protected $title = '';
 
@@ -62,7 +62,7 @@ class TabsMenuFieldset extends AbstractFormFieldset
 
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/menu/TabsMenuFieldset.tpl');
+		return new FileTemplate('framework/builder/form/menu/FormFieldMenuFieldset.tpl');
 	}
 }
 

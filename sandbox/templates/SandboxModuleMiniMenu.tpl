@@ -181,12 +181,13 @@
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.sandbox.mod}</div>
-					<div class="item-3x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
-					<div class="item-3x" aria-label="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.css}</span></a></div>
-					<div class="item-3x" aria-label="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.bbcode}</span></a></div>
-					<div class="item-3x" aria-label="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.menu}</span></a></div>
-					<div class="item-3x" aria-label="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.table}</span></a></div>
-					<div class="item-3x" aria-label="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.config}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.css}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.bbcode}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.form}"><a href="{PATH_TO_ROOT}/sandbox/plugins"><i class="fa fa-cube fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.form}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.menu}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.sandbox.table}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.sandbox.table}</span></a></div>
+					<div class="item-4x" aria-label="{@mini.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@mini.config}</span></a></div>
 				</div>
 				<div class="sbx-menu-item">
 					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>

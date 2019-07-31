@@ -21,6 +21,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('SandboxFormController', '`^/form/?`'),
 	new UrlControllerMapper('SandboxGraphicsCSSController', '`^/css/?`'),
 	new UrlControllerMapper('SandboxGraphicsCSSController', '`^/css/?`'),
+	new UrlControllerMapper('SandboxPluginsController', '`^/plugins/?`'),
 	new UrlControllerMapper('SandboxBBCodeController', '`^/bbcode/?`'),
 	new UrlControllerMapper('SandboxMenuController', '`^/menu/?`'),
 	new UrlControllerMapper('SandboxIconsController', '`^/icons/?`'),
