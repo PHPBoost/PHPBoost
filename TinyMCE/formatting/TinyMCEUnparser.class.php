@@ -8,7 +8,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 31
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -124,13 +124,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_smilies()
 	{
 		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
-		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" border="0" />', $this->content);
+		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" />', $this->content);
 
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" title="([^"]+)" alt="([^"]+)" class="smiley" />`iu',
-		'<img title="$2" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
+		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" />', $this->content);
 
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" title="([^"]+)" class="smiley" />`iu',
-		'<img title="$3" src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" border="0" />', $this->content);
+		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
+		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" />', $this->content);
 	}
 
 	/**
@@ -228,7 +228,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 
 			//Image
-			$this->content = preg_replace_callback('`<img(?: title="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img(?: src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
 
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
@@ -241,9 +241,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		$array_preg = array(
 			'`<acronym class="formatter-acronym">(.*)</acronym>`isuU',
-			'`<acronym title="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<acronym aria-label="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
-			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<abbr aria-label="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
@@ -309,7 +309,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		##Callbacks
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		##Remplacement des balises imbriquées
 
@@ -447,7 +447,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$style = ' style="' . $style . '"';
 			}
 		}
-		return '<img src="' . $matches[2] . '" alt="' . $alt . '" title="' . $title . '"' . $style . ' ' . $params . '/>';
+		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style . ' ' . $params . '/>';
 	}
 
 	private function unparse_fa($matches)

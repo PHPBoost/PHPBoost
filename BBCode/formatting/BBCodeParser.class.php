@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 31
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -142,7 +142,7 @@ class BBCodeParser extends ContentFormattingParser
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')(?:(?![a-z0-9]))`';
-				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" title="' . addslashes($code) . '" class="smiley" />';
+				$smiley_img_url[] = '<img src="/images/smileys/' . $infos['url_smiley'] . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
@@ -226,9 +226,9 @@ class BBCodeParser extends ContentFormattingParser
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym class=\"formatter-acronym\">$1</acronym>",
-			'acronym2' => "<acronym title=\"$1\" class=\"formatter-acronym\">$2</acronym>",
+			'acronym2' => "<acronym aria-label=\"$1\" class=\"formatter-acronym\">$2</acronym>",
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
-			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
+			'abbr2' => "<abbr aria-label=\"$1\" class=\"formatter-abbr\">$2</abbr>",
 			'style' => "<span class=\"message-helper $1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
@@ -303,8 +303,8 @@ class BBCodeParser extends ContentFormattingParser
 			//Image tag
 			if (!in_array('img', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
-				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', array($this, 'parse_img'), $this->content);
+				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
+				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', array($this, 'parse_img'), $this->content);
 			}
 
 			//FA tag
@@ -523,17 +523,16 @@ class BBCodeParser extends ContentFormattingParser
 
 	protected function parse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[5]);
+		$img_pathinfo = pathinfo($matches[4]);
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
 		$alt = !empty($matches[1]) ? $matches[1] : $img_name;
-		$title = !empty($matches[2]) ? $matches[2] : $img_name;
-		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
-		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
-		if (preg_match('`^image/(jpg|jpeg|bmp|gif|png|tiff|svg);base`su', $matches[5]))
-			$matches[5] = 'data:' . $matches[5];
+		$style = !empty($matches[2]) ? ' style="' . $matches[2] . '"' : '';
+		$class = !empty($matches[3]) ? ' class="' . $matches[3] . '"' : '';
+		if (preg_match('`^image/(jpg|jpeg|bmp|gif|png|tiff|svg);base`su', $matches[4]))
+			$matches[4] = 'data:' . $matches[4];
 
-		return '<img src="' . $matches[5] . '" alt="' . $alt . '" title="' . $title . '"' . $class . $style .' />';
+		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $class . $style .' />';
 	}
 
 
@@ -553,9 +552,9 @@ class BBCodeParser extends ContentFormattingParser
 			}
 		}
 		if ($fa_prefix)
-			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true" title="' . $matches[3] . '"></i>';
+			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
 		else
-			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true" title="' . $matches[3] . '"></i>';
+			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
 	}
 
 

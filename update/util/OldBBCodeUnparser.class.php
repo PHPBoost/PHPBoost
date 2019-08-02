@@ -5,10 +5,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class OldBBCodeUnparser extends ContentFormattingUnparser
@@ -78,7 +79,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img class="smiley" title="' . preg_quote($code) . '"(.*) />`suU';
+				$smiley_img_url[] = '`<img class="smiley" />`suU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
@@ -112,11 +113,11 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
 			'`<acronym class="formatter-acronym">(.*)</acronym>`isuU',
-			'`<acronym title="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<acronym aria-label="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
-			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<abbr aria-label="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
-			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
+			'`<a(?: href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
 			'`<h1 class="formatter-title">(.*)</h1>`isuU',
 			'`<h2 class="formatter-title">(.*)</h2>`isuU',
 			'`<h3 class="formatter-title">(.*)</h3>`isuU',
@@ -208,7 +209,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
@@ -232,11 +233,10 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	private function unparse_img($matches)
 	{
 		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
-		$title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $title . $style . $class . ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $style . $class . ']' . $matches[1] . '[/img]';
 	}
 
 	private function unparse_fa($matches)

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,10 +68,10 @@ if (!empty($id_article))
 	while ($row = $result->fetch())
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_restore_version'] . '"><i class="fa fa-undo" aria-hidden="true" title="' . $LANG['wiki_restore_version'] . '"></i></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_restore_version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
 
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . LangLoader::get_message('delete', 'common') . '"></i></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="fa fa-delete" aria-hidden="true"></i></a>' : '';
 
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 

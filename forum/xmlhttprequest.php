@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -78,7 +78,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$height_visible_topics = ($nbr_msg_not_read < $max_visible_topics) ? (23 * $nbr_msg_not_read) : 23 * $max_visible_topics;
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
-		echo "array_unread_topics[1] = '" . '<a class="small" href="' . PATH_TO_ROOT . '/forum/unread.php" title="' . addslashes($LANG['show_not_reads']) . '">' . addslashes($LANG['show_not_reads']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
+		echo "array_unread_topics[1] = '" . '<a class="small" href="' . PATH_TO_ROOT . '/forum/unread.php">' . addslashes($LANG['show_not_reads']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
 		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module-table" style="margin:2px;width:99%">' . $contents . "</table></div>';";
 	}
 	else

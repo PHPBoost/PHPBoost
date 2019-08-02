@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 06
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StatsHomePageExtensionPoint implements HomePageExtensionPoint
@@ -81,8 +82,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'LAST_USER_GROUP_COLOR' => $last_user_group_color,
 				'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 				'USERS' => $stats_cache->get_stats_properties('nbr_members'),
-				'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="' . $LANG['theme_s'] . '" title="' . $LANG['theme_s'] . '" />' : '<img src="../cache/theme.png" alt="' . $LANG['theme_s'] . '" title="' . $LANG['theme_s'] . '" />',
-				'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="' . $LANG['sex'] . '" title="' . $LANG['sex'] . '" />' : '<img src="../cache/sex.png" alt="' . $LANG['sex'] . '" title="' . $LANG['sex'] . '" />',
+				'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="' . $LANG['theme_s'] . '" />' : '<img src="../cache/theme.png" alt="' . $LANG['theme_s'] . '" />',
+				'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="' . $LANG['sex'] . '" />' : '<img src="../cache/sex.png" alt="' . $LANG['sex'] . '" />',
 				'L_LAST_USER' => $LANG['last_member'],
 				'L_TEMPLATES' => $LANG['theme_s'],
 				'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
@@ -253,7 +254,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -422,7 +423,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -639,7 +640,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
+						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -808,7 +809,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'STATS_DAY' => $days,
 					'STATS_MONTH' => $months,
 					'STATS_YEAR' => $years,
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
+					'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="' . $LANG['total_visit'] . '" />'
 				));
 
 				//On fait la liste des visites journalières
@@ -887,7 +888,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				if (@extension_loaded('gd'))
 				{
 					$tpl->put_all(array(
-						'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" title="' . $LANG['total_visit'] . '" />'
+						'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="' . $LANG['total_visit'] . '" />'
 					));
 
 					//On fait la liste des visites journalières
@@ -1117,7 +1118,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$tpl->put_all(array(
 					'C_STATS_BROWSERS' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="' . $LANG['browser_s'] . '" title="' . $LANG['browser_s'] . '" />' : '<img src="../cache/browsers.png" alt="' . $LANG['browser_s'] . '" title="' . $LANG['browser_s'] . '" />',
+					'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="' . $LANG['browser_s'] . '" />' : '<img src="../cache/browsers.png" alt="' . $LANG['browser_s'] . '" />',
 					'L_BROWSERS' => $LANG['browser_s'],
 					'L_COLORS' => $LANG['colors'],
 					'L_PERCENTAGE' => $LANG['percentage']
@@ -1130,7 +1131,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$tpl->put_all(array(
 					'C_STATS_OS' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="' . $LANG['os'] . '" title="' . $LANG['os'] . '" />' : '<img src="../cache/os.png" alt="' . $LANG['os'] . '" title="' . $LANG['os'] . '" />',
+					'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="' . $LANG['os'] . '" />' : '<img src="../cache/os.png" alt="' . $LANG['os'] . '" />',
 					'L_OS' => $LANG['os'],
 					'L_COLORS' => $LANG['colors'],
 					'L_PERCENTAGE' => $LANG['percentage']
@@ -1143,7 +1144,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$tpl->put_all(array(
 					'C_STATS_LANG' => true,
-					'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="' . $LANG['stat_lang'] . '" title="' . $LANG['stat_lang'] . '" />' : '<img src="../cache/lang.png" alt="' . $LANG['stat_lang'] . '" title="' . $LANG['stat_lang'] . '" />',
+					'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="' . $LANG['stat_lang'] . '" />' : '<img src="../cache/lang.png" alt="' . $LANG['stat_lang'] . '" />',
 					'L_LANG' => $LANG['stat_lang'],
 					'L_COLORS' => $LANG['colors'],
 					'L_PERCENTAGE' => $LANG['percentage']
@@ -1172,12 +1173,12 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$value_name = 'other';
 					$angle_value += $percent_other;
 					$percent_other += $angle_value;
-					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" title="' . $LANG['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $LANG['other'] . '" title="' . $LANG['other'] . '" />';
+					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
 					$name_stats = $LANG['other'];
 				}
 				else
 				{
-					$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" title="' . $array_stats_info[$value_name][0] . '" />' : '-';
+					$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
 					$name_stats = $array_stats_info[$value_name][0];
 				}
 

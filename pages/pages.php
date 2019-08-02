@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.6 - 2007 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -150,7 +150,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$tpl->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $LANG['pages_delete_redirection'] . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . $LANG['pages_delete_redirection'] . '"></i></a>' : ''
+				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $LANG['pages_delete_redirection'] . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true"></i></a>' : ''
 		));
 	}
 

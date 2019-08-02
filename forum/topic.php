@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 18
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -207,7 +208,16 @@ $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en c
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;
 $j = 0;
-$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = PersistenceContext::get_querier()->select("
+SELECT
+	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
+	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
+	p.question, p.answers, p.voter_id, p.votes, p.type,
+	ext_field.user_avatar,
+	m2.display_name as login_edit,
+	s.user_id AS connect,
+	tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail,
+	ext_field.user_sign, " . $extended_fields_to_recover_list . "m.warning_percentage
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = :idtopic
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -270,7 +280,7 @@ while ( $row = $result->fetch() )
 			{
 				$total = (int)$array_vote[$key];
 				$percent = NumberHelper::round(($total * 100 / $sum_vote), 1);
-				
+
 				$tpl->assign_block_vars('poll_result', array(
 					'ANSWERS' => stripslashes($answer),
 					'NBRVOTE' => $total,
@@ -345,7 +355,7 @@ while ( $row = $result->fetch() )
 
 	$theme = AppContext::get_current_user()->get_theme();
 	//Image associée au rang.
-	
+
 	//Chemin relatif pour faire fonctionner file_exists
 	$img = PATH_TO_ROOT . '/templates/' . $theme . '/modules/forum/images/ranks/' . $user_rank_icon;
 	if ( file_exists($img) )
@@ -471,7 +481,7 @@ while ( $row = $result->fetch() )
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller user-website" title="' . LangLoader::get_message('regex.website', 'admin-user-common') . '">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
 
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{

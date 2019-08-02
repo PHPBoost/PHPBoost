@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 17
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2012 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -139,7 +140,7 @@ $lang = array(
 								' . (class_exists('FacebookSocialNetwork') ? '<p class="message-helper warning">For those who use Facebook authentication, go to the configuration page of your Facebook Application on <a href="https://developers.facebook.com">Facebook developers</a> and change redirect URL to : <a href="' . UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute() . '">' . UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute() . '</a>.</p>' : '') . '
 								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="https://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
 								<p class="message-helper warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
-								<p>Don\'t forget the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+								<p>Don\'t forget the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym aria-label="Frequently Asked Questions">FAQ</acronym></a>.</p>
 								<p>If you have any problem please go to the <a href="https://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 							</div>
 						</fieldset>
@@ -155,9 +156,9 @@ $lang = array(
 									<li><a href="https://notepad-plus-plus.org">Notepad++</a> and <a href="http://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
 									<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a>: PHP library which manage work with zip files.</li>
 									<li><a href="http://www.xm1math.net/phpmathpublisher/">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-									<li><a href="http://www.tinymce.com">TinyMCE</a>: TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+									<li><a href="http://www.tinymce.com">TinyMCE</a>: TinyMCE is a <acronym aria-label="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
 									<li><a href="http://qbnz.com/highlighter/">GeSHi</a>: Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-									<li><a href="http://jquery.com">jQuery</a>: Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+									<li><a href="http://jquery.com">jQuery</a>: Javascript and <acronym aria-label="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
 									<li><a href="http://flowplayer.org">Flowplayer</a>: flash video reader</li>
 									<li><a href="http://fontawesome.io">Font Awesome</a>: icons librairy</li>
 									<li><a href="http://l-lin.github.io/font-awesome-animation/">Font Awesome Animation</a> : Animation for librairy Font Awesome</li>

@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 08 09
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2010 08 07
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -27,7 +28,7 @@ In fact, at the first time a feed is asked, it\'s fecthed in the data base and c
 $lang['cache_configuration'] = 'Cache configuration';
 $lang['php_cache'] = 'PHP accelerator';
 $lang['explain_php_cache'] = '<p>Some additional PHP modules enable to improve dramatically the execution time of PHP applications.
-PHP supports <acronym title="Alternative PHP Cache">APCu</acronym> which is a cache system to improve pages loading duration.</p>
+PHP supports <acronym aria-label="Alternative PHP Cache">APCu</acronym> which is a cache system to improve pages loading duration.</p>
 <p>By default, cache data are stored on the filesystem (in the files tree) but that kind of module allows to store directly in the server\'s central memory (RAM) which is far faster.</p>';
 $lang['enable_apc'] = 'Enable APCu cache';
 $lang['apc_available'] = 'Availability of the APCu extension';

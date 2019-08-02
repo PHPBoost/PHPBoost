@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.6 - 2007 05 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,7 +120,7 @@ else
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => stripslashes($row['title']),
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_unwatch_this_topic'] . '" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"><i class="fa fa-delete" aria-hidden="true" title="' . $LANG['wiki_unwatch_this_topic'] . '"></i></a>'
+			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_unwatch_this_topic'] . '" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"><i class="fa fa-delete" aria-hidden="true"></i></a>'
 		));
 	}
 	$result->dispose();

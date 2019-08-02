@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2010 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -29,7 +30,7 @@ $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des f
 $lang['cache_configuration'] = 'Configuration du cache';
 $lang['php_cache'] = 'Accélérateur PHP';
 $lang['explain_php_cache'] = '<p>Il existe des modules complémentaires à PHP permettant d\'améliorer nettement la vitesse d\'exécution des applications PHP.
-A l\'heure actuelle, PHPBoost supporte <acronym title="Alternative PHP Cache">APCu</acronym> qui est un système de cache additionnel pour améliorer le temps de chargement des pages.</p>
+A l\'heure actuelle, PHPBoost supporte <abbr aria-label="Alternative PHP Cache">APCu</abbr> qui est un système de cache additionnel pour améliorer le temps de chargement des pages.</p>
 <p>Par défaut le cache est enregistré dans le système de fichier (arborescence de fichiers du serveur) dans le dossier /cache. Un système tel que APCu permet de stocker ces données directement en mémoire centrale (RAM) qui propose des temps d\'accès incomparablement plus faibles.</p>';
 $lang['enable_apc'] = 'Activer le cache d\'APCu';
 $lang['apc_available'] = 'Disponibilité de l\'extension APCu';

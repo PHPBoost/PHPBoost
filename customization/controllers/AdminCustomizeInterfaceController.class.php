@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,7 +53,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 					$this->save($header_logo, $theme);
 					$header_logo_path = $this->get_header_logo_path($theme);
 					$header_logo_file = new File(PATH_TO_ROOT . $header_logo_path);
-					$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" title="' . $this->lang['customization.interface.logo.current'] . '"/>';
+					$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 					$this->form->get_field_by_id('current_logo')->set_value($picture);
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
@@ -110,7 +110,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 			if ($header_logo_file->exists())
 			{
-				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" title="' . $this->lang['customization.interface.logo.current'] . '"/>';
+				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture,
 					array('class' => 'third-field top-field')
 				));

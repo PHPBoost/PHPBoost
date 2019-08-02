@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 17
+ * @version     PHPBoost 5.2 - last update: 2019 08 02
  * @since       PHPBoost 3.0 - 2010 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
@@ -44,7 +45,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />' : $this->lang['extended-field.field.avatar.no_avatar'];
+		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />' : $this->lang['extended-field.field.avatar.no_avatar'];
 		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['extended-field.field.avatar.current_avatar'], $image));
 
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
@@ -67,11 +68,11 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="'. Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="'. Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 		}
 		elseif (!empty($value))
 		{
-			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" title="' . LangLoader::get_message('avatar', 'user-common') . '" />';
+			$avatar = '<img src="'. Url::to_rel($value) .'" alt="' . LangLoader::get_message('avatar', 'user-common') . '" />';
 		}
 		else
 		{

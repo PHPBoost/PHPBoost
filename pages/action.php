@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -377,7 +377,7 @@ elseif ($id_redirection > 0)
 	{
 		$tpl->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => stripslashes($row['title']),
-			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '" aria-label="' . $LANG['pages_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . $LANG['pages_delete_redirection'] . '"></i></a>'
+			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '" aria-label="' . $LANG['pages_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true"></i></a>'
 		));
 	}
 	$result->dispose();
@@ -414,7 +414,7 @@ else
 		$tpl->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . stripslashes($row['title']) . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '" aria-label="' . $LANG['pages_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true" title="' . $LANG['pages_delete_redirection'] . '"></i></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><i class="fa fa-fast-forward" aria-hidden="true" title="' . $LANG['pages_manage_redirection'] . '"></i></a>' : ''		));
+			'ACTIONS' => ( ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '" aria-label="' . $LANG['pages_delete_redirection'] . '"><i class="fa fa-delete" aria-hidden="true"></i></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" aria-label="' . $LANG['pages_manage_redirection'] . '"><i class="fa fa-fast-forward" aria-hidden="true"></i></a>' : ''		));
 	}
 	$result->dispose();
 }

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 3.0 - 2011 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,7 +44,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 				{
 					$this->save($favicon);
 					$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
-					$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" title="' . $this->lang['customization.favicon.current'] . '"/>';
+					$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" />';
 					$this->form->get_field_by_id('current_favicon')->set_value($picture);
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
@@ -88,7 +88,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 			if ($this->config->favicon_exists())
 			{
 				$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
-				$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" title="' . $this->lang['customization.favicon.current'] . '"/>';
+				$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" />';
 				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture,
 					array('class' => 'third-field')
 				));

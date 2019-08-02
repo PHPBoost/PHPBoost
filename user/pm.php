@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 05
+ * @version   	PHPBoost 5.2 - last update: 2019 08 02
  * @since   	PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -410,7 +411,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 
 			$update_nbr_pm = ($view_status == '0');
 			PrivateMsg::delete_conversation($current_user->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
-			
+
 			//Suppression du message privé dans la boite du destinataire s'il ne la pas encore lu.
 			if ($view_status != '1')
 			{
@@ -713,7 +714,11 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;
-	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, m.warning_percentage, m.delay_banned, m.groups, s.user_id AS connect, msg.contents
+	$result = PersistenceContext::get_querier()->select("SELECT
+		msg.id, msg.user_id, msg.timestamp, msg.view_status, msg.contents
+		m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, m.groups,
+		ext_field.user_avatar,
+		s.user_id AS connect
 	FROM " . DB_TABLE_PM_MSG . " msg
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
@@ -902,7 +907,12 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = PersistenceContext::get_querier()->select("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.display_name AS login, m1.display_name AS login_dest, m2.display_name AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.groups AS user_groups, m1.groups AS dest_groups, m2.groups AS last_groups
+	$result = PersistenceContext::get_querier()->select("SELECT
+		pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp,
+		msg.view_status,
+		m.display_name AS login, m.level AS level, m.groups AS user_groups,
+		m1.display_name AS login_dest,  m1.level AS dest_level, m1.groups AS dest_groups,
+		m2.display_name AS last_login, m2.level AS last_level, m2.groups AS last_groups
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id
@@ -998,7 +1008,7 @@ else //Liste des conversation, dans la boite du membre.
 
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" title="" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . '#m' . $row['last_msg_id'] . '" class="far fa-hand-point-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(
