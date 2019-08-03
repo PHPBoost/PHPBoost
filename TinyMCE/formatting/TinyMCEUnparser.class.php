@@ -8,7 +8,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 07 31
  * @since   	PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -228,7 +228,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 
 			//Image
-			$this->content = preg_replace_callback('`<img(?: src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
 
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
@@ -412,15 +412,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 	private function unparse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[2]);
+		$img_pathinfo = pathinfo($matches[1]);
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
-		$alt = !empty($matches[3]) ? $matches[3] : $img_name;
-		$title = !empty($matches[1]) ? $matches[1] : (!empty($matches[4]) ? $matches[4] : $img_name);
+		$alt = !empty($matches[2]) ? $matches[2] : $img_name;
 		$style = '';
 		$params = '';
-		if (isset($matches[5])) {
-			foreach (explode(';', $matches[5]) as $style_att)
+		if (isset($matches[3])) {
+			foreach (explode(';', $matches[3]) as $style_att)
 			{
 				$exp = explode(':', $style_att);
 				if (count($exp) < 2)
@@ -436,9 +435,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 					case 'height':
 						$params .= 'height="' . str_replace('px', '', $value) . '" ';
 						break;
-					case 'border':
-						$style .= 'border:' . $value . ';';
-						break;
 				}
 			}
 
@@ -447,7 +443,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 				$style = ' style="' . $style . '"';
 			}
 		}
-		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style . ' ' . $params . '/>';
+		return '<img src="' . $matches[1] . '" alt="' . $alt . '"' . $style . ' ' . $params . '/>';
 	}
 
 	private function unparse_fa($matches)
