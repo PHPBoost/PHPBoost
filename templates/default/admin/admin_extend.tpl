@@ -1,5 +1,5 @@
 <nav id="admin-quick-menu">
-	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{@quick_links}">
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 		<i class="fa fa-bars" aria-hidden="true"></i> {@quick_links}
 	</a>
 	<ul>
@@ -142,7 +142,7 @@
 					</li>
 					# START modules_extend #
 					<li>
-						<a href="{modules_extend.U_ADMIN_MODULE}" title="{modules_extend.NAME}">
+						<a href="{modules_extend.U_ADMIN_MODULE}">
 							<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
 							<p>{modules_extend.NAME}</p>
 						</a>

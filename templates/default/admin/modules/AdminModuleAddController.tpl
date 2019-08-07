@@ -12,18 +12,18 @@
 				<header>
 					<div class="admin-element-menu-container">
 						# IF modules_not_installed.C_COMPATIBLE #
-						<button type="submit" class="submit admin-element-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+							<button type="submit" class="submit admin-element-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						# ELSE #
-						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+							<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-					# IF modules_not_installed.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}" name="add-checkbox-{modules_not_installed.MODULE_NUMBER}"/>
-						<label for="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}"></label>
-					</div>
-					# ENDIF #
+						# IF modules_not_installed.C_COMPATIBLE #
+							<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+								<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}" name="add-checkbox-{modules_not_installed.MODULE_NUMBER}"/>
+								<label for="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}"></label>
+							</div>
+						# ENDIF #
 					# ENDIF #
 
 					<h2 class="not-installed-module-name">{modules_not_installed.NAME}<em> ({modules_not_installed.VERSION})</em></h2>
@@ -31,7 +31,7 @@
 
 				<div class="content admin-element-content">
 					<div class="admin-element-icon">
-						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" title="{modules_not_installed.NAME}" />
+						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" />
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />

@@ -1,7 +1,7 @@
 # IF C_FLOATING #
 <div id="message-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}" style="display: none;">
 	# IF NOT C_TIMEOUT #
-	<a id="message-helper-button-{ID}" class="message-helper-button {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true" title="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"></i></a>
+	<a id="message-helper-button-{ID}" class="message-helper-button {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true"></i></a>
 	# ENDIF #
 	{MESSAGE_CONTENT}
 </div>
@@ -10,7 +10,7 @@
 
 	/**
 	 *  hide the message-helper named by {element}.
-	 *  @param {jQuery object} element 
+	 *  @param {jQuery object} element
 	 */
 	function hide_message_helper(element)
 	{
@@ -22,7 +22,7 @@
 
 	/**
 	 *  Check if we can hide the floating message-helper container.
-	 *  @param none 
+	 *  @param none
 	 */
 	function hide_floating_message_container()
 	{
@@ -36,12 +36,12 @@
 		}
 
 		if (last == true)
-			$(".floating-message-container").removeClass("active");		
-	}	
+			$(".floating-message-container").removeClass("active");
+	}
 
 	/**
 	 *  Display the message-helper into the floating message container.
-	 *  @param none 
+	 *  @param none
 	 */
 	$(function(){
 		if ($(".floating-message-container").length == 0)
@@ -51,7 +51,7 @@
 
 		$( $("#message-helper-{ID}") ).appendTo( $(".floating-message-container") );
 		$("#message-helper-{ID}").fadeTo("fast", 1);
-		
+
 		# IF C_TIMEOUT #
 		setTimeout('hide_message_helper("#message-helper-{ID}");', {TIMEOUT});
 		# ENDIF #

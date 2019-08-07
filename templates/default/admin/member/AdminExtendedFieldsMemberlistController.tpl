@@ -89,9 +89,9 @@ ExtendedField.prototype = {
 			success: function(returnData){
 				if (returnData.id > 0) {
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@field.display}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-label="{@field.display}"></i>');
 					} else {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@field.not_display}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" aria-label="{@field.not_display}"></i>');
 					}
 				}
 			}
@@ -113,23 +113,23 @@ jQuery(document).ready(function() {
 			<ul id="lists" class="sortable-block">
 				# START list_extended_fields #
 					<li class="sortable-element" id="list-{list_extended_fields.ID}" data-id="{list_extended_fields.ID}">
-						<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+						<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 						<div class="sortable-title">
 							{list_extended_fields.NAME}
 						</div>
 						<div class="sortable-actions">
 							{@field.required} : # IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 							# IF C_MORE_THAN_ONE_FIELD #
-							<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
-							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+							<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 							# ENDIF #
-							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# IF NOT list_extended_fields.C_FREEZE #
-							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 							# ELSE #
 							&nbsp;
 							# ENDIF #
-							<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}" aria-label="# IF list_extended_fields.C_DISPLAY #{@field.display}# ELSE #{@field.not_display}# ENDIF #"><i aria-hidden="true" # IF list_extended_fields.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a>
+							<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}" aria-label="# IF list_extended_fields.C_DISPLAY #{@field.display}# ELSE #{@field.not_display}# ENDIF #"><i aria-hidden="true" # IF list_extended_fields.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i></a>
 						</div>
 						<div class="spacer"></div>
 						<script>

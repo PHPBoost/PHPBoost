@@ -11,18 +11,18 @@
 				<header>
 					<div class="admin-element-menu-container">
 						# IF themes_not_installed.C_COMPATIBLE #
-						<button type="submit" class="submit admin-element-menu-title" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+							<button type="submit" class="submit admin-element-menu-title" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						# ELSE #
-						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+							<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
-					# IF themes_not_installed.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}"/>
-						<label for="multiple-checkbox-{themes_not_installed.THEME_NUMBER}"></label>
-					</div>
-					# ENDIF #
+						# IF themes_not_installed.C_COMPATIBLE #
+							<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+								<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}"/>
+								<label for="multiple-checkbox-{themes_not_installed.THEME_NUMBER}"></label>
+							</div>
+						# ENDIF #
 					# ENDIF #
 
 					<h2 class="not-installed-theme-name">{themes_not_installed.NAME}<em> ({themes_not_installed.VERSION})</em></h2>
@@ -31,13 +31,13 @@
 				<div class="content admin-element-content">
 					<div class="admin-element-picture" >
 						# IF themes_not_installed.C_PICTURES #
-						<a href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" title="{themes_not_installed.NAME}">
-							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" title="{themes_not_installed.NAME}" class="picture-table" />
-							<br/>{@themes.view_real_preview}
-						</a>
-						# START themes_not_installed.pictures #
-						<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" title="{themes_not_installed.NAME}"></a>
-						# END themes_not_installed.pictures #
+							<a href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection">
+								<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" class="picture-table" />
+								<br/>{@themes.view_real_preview}
+							</a>
+							# START themes_not_installed.pictures #
+								<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" aria-label="{themes_not_installed.NAME}"></a>
+							# END themes_not_installed.pictures #
 						# ENDIF #
 					</div>
 					<div class="admin-element-desc">
@@ -55,13 +55,13 @@
 
 				<footer>
 					# IF themes_not_installed.C_COMPATIBLE #
-					<div class="admin-element-auth-container">
-						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
-						<div class="admin-element-auth-content">
-							{themes_not_installed.AUTHORIZATIONS}
-							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
+						<div class="admin-element-auth-container">
+							<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
+							<div class="admin-element-auth-content">
+								{themes_not_installed.AUTHORIZATIONS}
+								<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
+							</div>
 						</div>
-					</div>
 					# ENDIF #
 				</footer>
 			</article>

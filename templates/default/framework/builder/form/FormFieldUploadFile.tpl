@@ -12,7 +12,7 @@
 		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="upload-input# IF C_HAS_CSS_CLASS # ${escape(CSS_CLASS)}# ENDIF #"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
 		# IF C_AUTH_UPLOAD #
 			<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;">
-				<i class="fa fa-cloud-upload fa-2x" aria-hidden="true" title="${LangLoader::get_message('files_management', 'main')}"></i>
+				<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
 			</a>
 		# ENDIF #
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
@@ -24,7 +24,7 @@
 	</label>
 
 	<div class="form-field">
-		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="${LangLoader::get_message('form.picture.preview', 'common')}" title="${LangLoader::get_message('form.picture.preview', 'common')}" style="vertical-align:top" />
+		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="${LangLoader::get_message('form.picture.preview', 'common')}" style="vertical-align:top" />
 	</div>
 </div>
 

@@ -28,10 +28,10 @@
 
 					<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
 				</header>
-				
+
 				<div class="content admin-element-content">
 					<div class="admin-element-icon">
-						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" title="{modules_upgradable.NAME}" />
+						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" />
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
@@ -44,7 +44,7 @@
 			</article>
 			# END modules_upgradable #
 		</div>
-		# ELSE # 
+		# ELSE #
 		<div class="content">
 			<div class="message-helper notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		</div>

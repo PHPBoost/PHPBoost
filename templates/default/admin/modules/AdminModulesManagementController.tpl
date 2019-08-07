@@ -12,14 +12,25 @@
 			<article class="block admin-element module-element installed-element# IF modules_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header>
 					<div class="admin-element-menu-container">
-						<a href="#" id="admin-element-menu-title-{modules_installed.MODULE_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF modules_installed.C_COMPATIBLE ## IF modules_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+						<a href="#" id="admin-element-menu-title-{modules_installed.MODULE_NUMBER}" class="admin-element-menu-title">
+							# IF modules_installed.C_COMPATIBLE #
+								# IF modules_installed.C_IS_ACTIVATED #
+									${LangLoader::get_message('actions', 'admin-common')}
+								# ELSE #
+									${LangLoader::get_message('disabled', 'common')}
+								# ENDIF #
+							# ELSE #
+								${LangLoader::get_message('not_compatible', 'admin-common')}
+							# ENDIF #
+							<i class="fa fa-caret-right" aria-hidden="true"></i>
+						</a>
 						<ul class="admin-menu-elements-content">
 							# IF modules_installed.C_COMPATIBLE #
-							# IF modules_installed.C_IS_ACTIVATED #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{modules_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
-							# ELSE #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{modules_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
-							# ENDIF #
+								# IF modules_installed.C_IS_ACTIVATED #
+									<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{modules_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+								# ELSE #
+									<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{modules_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+								# ENDIF #
 							# ENDIF #
 							<li class="admin-menu-element"><button type="submit" class="submit alt" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 						</ul>
@@ -38,7 +49,7 @@
 				</header>
 				<div class="content admin-element-content">
 					<div class="admin-element-icon">
-						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" title="{modules_installed.NAME}" />
+						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" />
 					</div>
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
@@ -52,7 +63,7 @@
 				<footer>
 					# IF modules_installed.C_DOCUMENTATION #
 					<div class="admin-element-documentation-module">
-						<a class="basic-button smaller"href="{modules_installed.L_DOCUMENTATION}" title="{@module.documentation_of}{modules_installed.NAME}">{@module.documentation}</a>
+						<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
 					</div>
 					# ENDIF #
 				</footer>
@@ -72,7 +83,7 @@
 	# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
 	<div class="admin-element-menu-container multiple-select-menu-container">
 		<div class="admin-element-menu-title">
-			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+			<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')} <i class="fa fa-caret-right" aria-hidden="true"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
 			<li class="admin-menu-checkbox">

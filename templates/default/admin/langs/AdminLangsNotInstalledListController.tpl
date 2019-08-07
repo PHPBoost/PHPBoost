@@ -27,7 +27,7 @@
 
 					<h2 class="not-installed-lang-name">
 						# IF langs_not_installed.C_HAS_PICTURE #
-							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" title="{langs_not_installed.NAME}" class="valign-middle" />
+							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
 						# ENDIF #
 						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
 				</header>
@@ -42,10 +42,10 @@
 				<footer>
 					# IF langs_not_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
-						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"></i></a>
+						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
 						<div class="admin-element-auth-content">
 							{langs_not_installed.AUTHORIZATIONS}
-							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
+							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
 						</div>
 					</div>
 					# ENDIF #

@@ -16,15 +16,15 @@
 					# ENDIF #
 					<div class="message-level">{comments.L_LEVEL}</div>
 				</div>
-				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
+				# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 			</div>
 
 			<div class="message-date">
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-						<a href="{comments.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+						<a href="{comments.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						<a href="{comments.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 					# ENDIF #
 				</span>
 				<time itemprop="datePublished" datetime="{comments.DATE_ISO8601}">{comments.DATE_FULL}</time>

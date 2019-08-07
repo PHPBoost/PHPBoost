@@ -69,9 +69,9 @@ function addSubElement(menu_element_id) {
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true" title="' + {JL_MORE} + '"></i>').appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
 	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete" aria-hidden="true" title="' + {JL_DELETE} + '"></i>').appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
 
 	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
 
@@ -108,9 +108,9 @@ function addSubMenu(menu_element_id) {
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true" title="' + {JL_MORE} + '"></i>').appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
 	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete" aria-hidden="true" title="' + {JL_DELETE} + '"></i>').appendTo('#menu_element_' + id + '_actions');
+	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-delete" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
 
 	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
 

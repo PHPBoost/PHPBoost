@@ -40,9 +40,9 @@
 		<span class="notes">
 			<span class="number-notes" # IF C_NOTES #itemprop="ratingCount"# ENDIF #>{NUMBER_NOTES}</span>
 			# IF C_MORE_1_NOTES #
-				<span title="{NUMBER_NOTES} {L_NOTES}">{L_NOTES}</span>
+				<span aria-label="{NUMBER_NOTES} {L_NOTES}">{L_NOTES}</span>
 			# ELSE #
-				<span title="{NUMBER_NOTES} {L_NOTE}">{L_NOTE}</span>
+				<span aria-label="{NUMBER_NOTES} {L_NOTE}">{L_NOTE}</span>
 			# ENDIF #
 		</span>
 		# IF C_NOTES #

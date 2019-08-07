@@ -10,15 +10,26 @@
 						# IF themes_installed.C_IS_DEFAULT_THEME #
 						<a href="#" class="admin-element-menu-title">{@themes.default}</a>
 						# ELSE #
-						<a href="#" id="admin-element-menu-title-{themes_installed.THEME_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF themes_installed.C_COMPATIBLE ## IF themes_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+						<a href="#" id="admin-element-menu-title-{themes_installed.THEME_NUMBER}" class="admin-element-menu-title">
+							# IF themes_installed.C_COMPATIBLE #
+								# IF themes_installed.C_IS_ACTIVATED #
+									${LangLoader::get_message('actions', 'admin-common')}
+								# ELSE #
+									${LangLoader::get_message('disabled', 'common')}
+								# ENDIF #
+							# ELSE #
+								${LangLoader::get_message('not_compatible', 'admin-common')}
+							# ENDIF #
+							<i class="fa fa-caret-right" aria-hidden="true"></i>
+						</a>
 						<ul class="admin-menu-elements-content">
 							# IF themes_installed.C_COMPATIBLE #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
-							# IF themes_installed.C_IS_ACTIVATED #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
-							# ELSE #
-							<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
-							# ENDIF #
+								<li class="admin-menu-element"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
+								# IF themes_installed.C_IS_ACTIVATED #
+									<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+								# ELSE #
+									<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+								# ENDIF #
 							# ENDIF #
 							<li class="admin-menu-element"><button type="submit" class="submit alt" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 						</ul>
@@ -26,12 +37,12 @@
 					</div>
 
 					# IF C_MORE_THAN_ONE_THEME_INSTALLED #
-					# IF themes_installed.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{themes_installed.THEME_NUMBER}" name="delete-checkbox-{themes_installed.THEME_NUMBER}"# IF themes_installed.C_IS_DEFAULT_THEME # disabled="disabled"# ENDIF # />
-						<label for="multiple-checkbox-{themes_installed.THEME_NUMBER}"></label>
-					</div>
-					# ENDIF #
+						# IF themes_installed.C_COMPATIBLE #
+							<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+								<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{themes_installed.THEME_NUMBER}" name="delete-checkbox-{themes_installed.THEME_NUMBER}"# IF themes_installed.C_IS_DEFAULT_THEME # disabled="disabled"# ENDIF # />
+								<label for="multiple-checkbox-{themes_installed.THEME_NUMBER}"></label>
+							</div>
+						# ENDIF #
 					# ENDIF #
 
 					<h2 class="installed-theme-name">{themes_installed.NAME}<em> ({themes_installed.VERSION})</em></h2>
@@ -39,13 +50,13 @@
 				<div class="content admin-element-content">
 					<div class="admin-element-picture" >
 						# IF themes_installed.C_PICTURES #
-						<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}">
-							<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" title="{themes_installed.NAME}" class="picture-table" />
-							<br/>{@themes.view_real_preview}
-						</a>
-						# START themes_installed.pictures #
-						<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" title="{themes_installed.NAME}"></a>
-						# END themes_installed.pictures #
+							<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection">
+								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" class="picture-table" />
+								<br/>{@themes.view_real_preview}
+							</a>
+							# START themes_installed.pictures #
+								<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" aria-label="{themes_installed.NAME}"></a>
+							# END themes_installed.pictures #
 						# ENDIF #
 					</div>
 					<div class="admin-element-desc">
@@ -64,13 +75,13 @@
 					# IF themes_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						# IF themes_installed.C_IS_DEFAULT_THEME #
-						<span class="admin-element-auth default-element" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true" title="{@themes.default_theme_visibility}"></i></span>
+							<span class="admin-element-auth default-element" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 						# ELSE #
-						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true" title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"></i></a>
-						<div class="admin-element-auth-content">
-							{themes_installed.AUTHORIZATIONS}
-							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
-						</div>
+							<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
+							<div class="admin-element-auth-content">
+								{themes_installed.AUTHORIZATIONS}
+								<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
+							</div>
 						# ENDIF #
 					</div>
 					# ENDIF #
@@ -96,7 +107,7 @@
 	# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 	<div class="admin-element-menu-container multiple-select-menu-container">
 		<div class="admin-element-menu-title">
-			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+			<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
 			<li class="admin-menu-checkbox">

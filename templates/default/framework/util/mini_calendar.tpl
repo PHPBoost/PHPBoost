@@ -47,7 +47,7 @@ function xmlhttprequest_calendar(field, input_field, year, month, day, calendar_
 
 <input type="text" size="11" maxlength="10" id="{CALENDAR_ID}" class="input-date" name="{CALENDAR_ID}" value="{DEFAULT_DATE}" onclick="xmlhttprequest_calendar('{CALENDAR_ID}_date', ${escapejs(CALENDAR_ID)}, ${escapejs(YEAR)}, ${escapejs(MONTH)}, ${escapejs(DAY)}, ${escapejs(CALENDAR_NUMBER)});return false;"  onchange="hide_mini_calendar(${escapejs(CALENDAR_NUMBER)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 <div class="calendar-container">
-	<a id="{CALENDAR_ID}_link" href="" onclick="xmlhttprequest_calendar('{CALENDAR_ID}_date', ${escapejs(CALENDAR_ID)}, ${escapejs(YEAR)}, ${escapejs(MONTH)}, ${escapejs(DAY)}, ${escapejs(CALENDAR_NUMBER)}, 1);return false;" aria-label="{@form.date.selector}"><i class="fa fa-calendar" aria-hidden="true" title="{@form.date.selector}"></i></a>
+	<a id="{CALENDAR_ID}_link" href="" onclick="xmlhttprequest_calendar('{CALENDAR_ID}_date', ${escapejs(CALENDAR_ID)}, ${escapejs(YEAR)}, ${escapejs(MONTH)}, ${escapejs(DAY)}, ${escapejs(CALENDAR_NUMBER)}, 1);return false;" aria-label="{@form.date.selector}"><i class="fa fa-calendar" aria-hidden="true"></i></a>
 	<div id="calendar{CALENDAR_NUMBER}" style="display:none;{CALENDAR_STYLE}">
 		<div id="{CALENDAR_ID}_date" class="calendar-block"></div>
 	</div>

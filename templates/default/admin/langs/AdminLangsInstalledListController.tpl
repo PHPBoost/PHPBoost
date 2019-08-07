@@ -10,7 +10,7 @@
 						# IF langs_installed.C_IS_DEFAULT_LANG #
 						<a href="#" class="admin-element-menu-title">{@langs.default}</a>
 						# ELSE #
-						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" title="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_COMPATIBLE ## IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" aria-label="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_COMPATIBLE ## IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
 						<ul class="admin-menu-elements-content">
 							# IF langs_installed.C_COMPATIBLE #
 							<li class="admin-menu-element"><button type="submit" class="submit" name="default-{langs_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
@@ -36,7 +36,7 @@
 
 					<h2 class="installed-theme-name">
 						# IF langs_installed.C_HAS_PICTURE #
-						<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" title="{langs_installed.NAME}" class="valign-middle" />
+						<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="valign-middle" />
 						# ENDIF #
 						{langs_installed.NAME}<em> ({langs_installed.VERSION})</em></h2>
 				</header>
@@ -50,12 +50,12 @@
 					# IF langs_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						# IF langs_installed.C_IS_DEFAULT_LANG #
-						<span class="admin-element-auth default-element" aria-label="{@langs.default_lang_visibility}"><i class="fa fa-user-shield" aria-hidden="true" title="{@langs.default_lang_visibility}"></i></span>
+						<span class="admin-element-auth default-element" aria-label="{@langs.default_lang_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 						# ELSE #
-						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"  aria-hidden="true"title="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"></i></a>
+						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"  aria-hidden="true"></i></a>
 						<div class="admin-element-auth-content">
 							{langs_installed.AUTHORIZATIONS}
-							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true" title="${LangLoader::get_message('close', 'main')}"></i></a>
+							<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
 						</div>
 						# ENDIF #
 					</div>
@@ -82,7 +82,7 @@
 	# IF C_MORE_THAN_ONE_LANG_INSTALLED #
 	<div class="admin-element-menu-container multiple-select-menu-container">
 		<div class="admin-element-menu-title">
-			<a href="#" class="multiple-select-menu" title="${LangLoader::get_message('action_menu.open', 'admin-common')}">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+			<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')} <i class="fa fa-caret-right" aria-hidden="true"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
 			<li class="admin-menu-checkbox">

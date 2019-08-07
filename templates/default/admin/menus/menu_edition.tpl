@@ -15,7 +15,7 @@
 
 # IF C_NEXT_MENU #
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
-		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}" title="${LangLoader::get_message('position.move', 'common')}"></div>
+		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
 			<i class="fa fa-folder" aria-hidden="true" style="cursor:move"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
@@ -28,11 +28,11 @@
 				});
 			-->
 			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" title="{TITLE}" /></span>
+			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
 		</div>
 		<div class="sortable-actions">
-			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true" title="{L_MORE}"></i></a>
-			<a href="" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+			<a href="" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>
@@ -59,7 +59,7 @@
 
 # IF C_LINK #
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
-		<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('menu.element', 'admin')}">
 			<i class="fa fa-globe" aria-hidden="true"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
@@ -72,11 +72,11 @@
 				});
 			-->
 			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" title="{TITLE}" /></span>
+			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
 		</div>
 		<div class="sortable-actions">
-			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true" title="{L_MORE}"></i></a>
-			<a href="" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+			<a href="" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties"# IF C_AUTH_MENU_HIDDEN # style="display: none;"# ENDIF #>

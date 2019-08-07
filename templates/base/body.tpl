@@ -125,7 +125,7 @@
 	# ENDIF #
 
 	<div role="contentinfo" class="footer-infos">
-		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="https://www.phpboost.com" title="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
+		<span class="footer-infos-powered-by">{L_POWERED_BY} <a href="https://www.phpboost.com" aria-label="{L_PHPBOOST_LINK}">PHPBoost</a> {L_PHPBOOST_RIGHT}</span>
 		# IF C_DISPLAY_BENCH #
 		<span class="footer-infos-separator"> | </span>
 		<span class="footer-infos-benchmark">{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}</span>
@@ -137,4 +137,4 @@
 	</div>
 </footer>
 
-<span id="scroll-to-top" class="scroll-to" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-chevron-up" aria-hidden="true" title="${LangLoader::get_message('scroll-to.top', 'user-common')}"></i></span>
+<span id="scroll-to-top" class="scroll-to" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-chevron-up" aria-hidden="true"></i></span>

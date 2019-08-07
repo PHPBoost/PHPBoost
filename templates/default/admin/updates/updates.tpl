@@ -1,6 +1,6 @@
 <nav id="admin-quick-menu">
 	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-		<i class="fa fa-bars" aria-hidden="true" title="{L_WEBSITE_UPDATES}"></i> {L_WEBSITE_UPDATES}
+		<i class="fa fa-bars" aria-hidden="true"></i> {L_WEBSITE_UPDATES}
 	</a>
 	<ul>
 		<li>

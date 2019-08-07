@@ -1,7 +1,7 @@
 
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 			</a>
 			<ul>
@@ -34,9 +34,9 @@
 							# START file #
 								<div class="file-move-container">
 									# IF file.C_DISPLAY_REAL_IMG #
-										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" title="{file.NAME}" />
+										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
 									# ELSE #
-										<i class="fa {file.FILE_ICON}"></i>
+										<i class="{file.FILE_ICON}" aria-hidden="true"></i>
 									# ENDIF #
 									{file.NAME}
 									<span class="smaller">{file.FILETYPE}</span><br />

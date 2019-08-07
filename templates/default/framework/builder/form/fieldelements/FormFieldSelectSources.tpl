@@ -19,7 +19,7 @@ FormFieldSelectSources.prototype = {
 			jQuery('<input/> ', {type : 'url', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 
-			jQuery('<a/> ', {href : 'javascript:FormFieldSelectSources.delete_field('+ this.integer +');', 'aria-label' : '{@form.del.source}'}).html('<i class="fa fa-delete" aria-hidden="true" title="{@form.del.source}"></i>').appendTo('#' + id);
+			jQuery('<a/> ', {href : 'javascript:FormFieldSelectSources.delete_field('+ this.integer +');', 'aria-label' : '{@form.del.source}'}).html('<i class="fa fa-delete" aria-hidden="true"></i>').appendTo('#' + id);
 
 			this.integer++;
 		}
@@ -44,8 +44,8 @@ var FormFieldSelectSources = new FormFieldSelectSources();
 	<div id="${escape(ID)}_{fieldelements.ID}">
 		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
 		<input type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}" class="field-large"/>
-		<a href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.del.source}"><i class="fa fa-delete" aria-hidden="true" title="{@form.del.source}"></i></a>
+		<a href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.del.source}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" aria-label="{@form.add.source}"><i class="fa fa-plus" aria-hidden="true" title="{@form.add.source}"></i></a>
+<a href="javascript:FormFieldSelectSources.add_field();" id="add-${escape(ID)}" class="field-source-more-value" aria-label="{@form.add.source}"><i class="fa fa-plus" aria-hidden="true"></i></a>
