@@ -33,7 +33,7 @@
 		# START result.answers #
 		<p class="poll-question-mini-container">
 			<span class="infos-options smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
-			<div class="progressbar-container" title="{result.answers.WIDTH}%">
+			<div class="progressbar-container" aria-label="{result.answers.WIDTH}%">
 				<div class="progressbar-infos">{result.answers.WIDTH}%</div>
 				<div class="progressbar" style="width:{result.answers.WIDTH}%;"></div>
 			</div>

@@ -146,10 +146,10 @@
 					# START row #
 						# START row.module #
 							<div class="contribution-module-container" style="width:{row.module.WIDTH}%;">
-								<a class="infos-options" href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}">
+								<a class="infos-options" href="{row.module.U_MODULE_LINK}">
 									<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}.png" alt="{row.module.LINK_TITLE}" />
 								</a>
-								<a href="{row.module.U_MODULE_LINK}" title="{row.module.LINK_TITLE}">{row.module.MODULE_NAME}</a>
+								<a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a>
 							</div>
 						# END row.module #
 						<div class="spacer"></div>
@@ -167,29 +167,23 @@
 		<header>
 			<h1>
 			{ENTITLED}
-			# IF C_WRITE_AUTH #
-			<span class="actions">
-				<a href="{U_UPDATE}" title="{L_UPDATE}" class="fa fa-edit"></a>
-				<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-			</span>
-			# ENDIF #
 			</h1>
+			# IF C_WRITE_AUTH #
+				<div class="cat-actions">
+					<a href="{U_UPDATE}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+					<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+				</div>
+			# ENDIF #
 		</header>
 		<div class="content">
 			# IF C_WRITE_AUTH #
 				# IF C_UNPROCESSED_CONTRIBUTION #
 				<div class="unprocessed-contribution">
 					<div>
-						<a class="infos-options" href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-							<i class="fa fa-wrench fa-2x"></i>
-						</a>
-						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
+						<a href="{FIXING_URL}"><i class="fa fa-wrench fa-2x"aria-hidden="true"></i> {L_PROCESS_CONTRIBUTION}</a>
 					</div>
 					<div>
-						<a class="infos-options" href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">
-							<i class="fa fa-check fa-2x"></i>
-						</a>
-						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>
+						<a href="{U_UPDATE}"><i class="fa fa-check fa-2x"aria-hidden="true"></i> {L_UPDATE} {L_STATUS}</a>
 					</div>
 					<div class="spacer"></div>
 				</div>

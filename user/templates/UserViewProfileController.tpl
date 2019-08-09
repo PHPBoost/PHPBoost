@@ -9,7 +9,7 @@
 				<div class="form-element user-profile-edit">
 					<label>{@profile.edit}</label>
 					<div class="form-field form-field-free">
-						<a href="{U_EDIT_PROFILE}" aria-label="{@profile.edit}"><i class="fa fa-edit" aria-hidden="true" title="{@profile.edit}"></i></a>
+						<a href="{U_EDIT_PROFILE}" aria-label="{@profile.edit}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 					</div>
 				</div>
 				# ENDIF #
@@ -32,7 +32,7 @@
 						<ul class="no-list user-profil-groups-container">
 							# START groups #
 							<li>
-								<a href="{groups.U_GROUP}" class="user-group # IF groups.C_PICTURE #user-group-img # ENDIF #user-group-{groups.ID}"># IF groups.C_PICTURE #<img src="{groups.U_GROUP_PICTURE}" alt="{groups.NAME}" title="{groups.NAME}" class="valign-middle" /># ELSE #{groups.NAME}# ENDIF #</a>
+								<a href="{groups.U_GROUP}" class="user-group # IF groups.C_PICTURE #user-group-img # ENDIF #user-group-{groups.ID}"># IF groups.C_PICTURE #<img src="{groups.U_GROUP_PICTURE}" alt="{groups.NAME}" class="valign-middle" /># ELSE #{groups.NAME}# ENDIF #</a>
 							</li>
 							# END groups #
 						</ul>

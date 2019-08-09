@@ -1,8 +1,8 @@
 <section id="module-news">
 	<header>
 		<div class="cat-actions">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span itemprop="name">{NAME}</span></h1>
 	</header>
@@ -14,10 +14,10 @@
 	<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="article-news-{ID}" class="article-news# IF C_NEW_CONTENT # new-content# ENDIF #">
 		<div class="actions">
 			# IF C_EDIT #
-			<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+			<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 			# ENDIF #
 			# IF C_DELETE #
-			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
 			# ENDIF #
 		</div>
 		<div class="more">
@@ -38,8 +38,8 @@
 			<span class="more-element more-element-category">
 				<i class="fa fa-folder-o" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 			</span>
-			# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><i class="fa fa-comments-o" aria-hidden="true"></i> <a href="#comments-list" title="${LangLoader::get_message('comments.link','comments-common')}"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
-			# IF C_NB_VIEW_ENABLED # | <span title="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
+			# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><i class="fa fa-comments-o" aria-hidden="true"></i> <a href="#comments-list"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
+			# IF C_NB_VIEW_ENABLED # | <span aria-label="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 
 		</div>
 
@@ -51,7 +51,7 @@
 		# ENDIF #
 
 		<div class="content">
-			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="thumbnail-item" /># ENDIF #
+			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" class="thumbnail-item" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
 			# IF C_AUTHOR_DISPLAYED #

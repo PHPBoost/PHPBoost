@@ -23,7 +23,7 @@
 		# ENDIF #
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GALLERY_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_GALLERY_MANAGEMENT}
 			</a>
 			<ul>
@@ -56,11 +56,11 @@
 						<div class="form-element full-field">
 							# START image_up #
 								<div class="center">
-									<strong>{image_up.L_SUCCESS_UPLOAD}</strong> ${LangLoader::get_message('in', 'common')} <a href="{image_up.U_CAT}" title="{image_up.CATNAME}">{image_up.CATNAME}</a>
+									<strong>{image_up.L_SUCCESS_UPLOAD}</strong> ${LangLoader::get_message('in', 'common')} <a href="{image_up.U_CAT}">{image_up.CATNAME}</a>
 									<div class="spacer"></div>
 									<strong>{image_up.NAME}</strong>
 									<div class="spacer"></div>
-									<a href="{image_up.U_IMG}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}"  title="{image_up.NAME}" /></a>
+									<a href="{image_up.U_IMG}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
 									<div class="spacer"></div>
 								</div>
 							# END image_up #
@@ -125,7 +125,7 @@
 							<td class="valign-bottom">
 								<div class="smaller">
 									<div class="thumnails-list-container">
-									<img src="pics/thumbnails/{list.NAME}" alt="{list.NAME}" title="{list.NAME}" />
+									<img src="pics/thumbnails/{list.NAME}" alt="{list.NAME}" />
 									</div>
 									<div class="spacer"></div>
 									<div>

@@ -4,7 +4,7 @@
 
 	<div class="content">
 		<div class="float-right pbt-box center">
-			<a href="http://www.mysql.com/" title="MySQL">
+			<a href="http://www.mysql.com/">
 				<img src="templates/images/mysql.png" alt="MySQL" />
 			</a>
 		</div>

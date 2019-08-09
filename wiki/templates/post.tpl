@@ -65,9 +65,9 @@
 											# START create.list #
 											<li class="sub">
 												# IF create.list.C_SUB_CAT #
-												<a class="parent" href="javascript:show_wiki_cat_contents({create.list.ID}, 1);" title="${LangLoader::get_message('display', 'common')}">
+												<a class="parent" href="javascript:show_wiki_cat_contents({create.list.ID}, 1);" aria-label="${LangLoader::get_message('display', 'common')}">
 													<i class="fa fa-plus-square-o" id="img-subfolder-{create.list.ID}"></i>
-													<i class="fa fa-folder" id ="img-folder-{create.list.ID}"></i>
+													<i class="fa fa-folder" id="img-folder-{create.list.ID}"></i>
 												</a>
 												<a id="class-{create.list.ID}" href="javascript:select_cat({create.list.ID});">{create.list.TITLE}</a>
 												# ELSE #

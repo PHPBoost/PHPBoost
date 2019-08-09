@@ -26,7 +26,7 @@
 					# START file #
 						<div class="upload-elements-move-file">
 							# IF file.C_DISPLAY_REAL_IMG #
-								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" title="{file.NAME}" />
+								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
 							# ELSE #
 								<i class="fa {file.FILE_ICON}"></i>
 							# ENDIF #

@@ -128,7 +128,11 @@
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<div class="left">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" title="{L_SELECT_ALL_MESSAGES}" /> &nbsp;<input type="hidden" name="token" value="{TOKEN}"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
+									<div class="left">
+										&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
+										&nbsp;<input type="hidden" name="token" value="{TOKEN}">
+										<button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button>
+									</div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</td>
 							</tr>
@@ -178,15 +182,15 @@
 								# ENDIF #
 								<div class="message-level">{pm.msg.L_LEVEL}</div>
 							</div>
-							# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" alt="{pm.msg.USER_PSEUDO}" class="message-avatar" /># ENDIF #
+							# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-avatar" /># ENDIF #
 						</div>
 
 						<div class="message-date">
 							<span class="actions">
 								<a href="#article-pm-{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
-								<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_EDIT}"></i></a>
-								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+								<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 								# ENDIF #
 							</span>
 							<span>${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</span>

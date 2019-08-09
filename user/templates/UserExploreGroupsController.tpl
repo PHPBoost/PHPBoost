@@ -4,7 +4,7 @@
 		<h1>
 			{@members_list} {@group.of_group} {GROUP_NAME} ({NUMBER_MEMBERS})
 			# IF C_ADMIN #
-				<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+				<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
 			</h1>
 	</header>
@@ -17,7 +17,7 @@
 				<header></header>
 				<div class="content">
 					<div class="avatar-container">
-					# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}" title="{members_list.PSEUDO}" /># ENDIF #
+					# IF members_list.C_AVATAR #<img class="valign-middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}" /># ENDIF #
 					</div>
 					<div class="infos-container">
 						<div class="user-level">{members_list.LEVEL}</div>
@@ -54,9 +54,9 @@
 		<div class="groups-list-select">
 		# START group #
 			# IF group.C_GROUP_HAS_IMG #
-			<a href="#" id="group-button-{group.GROUP_ID}" class="group-button group-has-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}" /></a>
+			<a href="#" id="group-button-{group.GROUP_ID}" class="group-button group-has-img" onclick="open_group({group.GROUP_ID});return false;"><img alt="{group.GROUP_NAME}" src="{group.U_GROUP_IMG}" /></a>
 			# ELSE #
-			<a href="#" id="group-button-{group.GROUP_ID}" class="button group-button group-without-img" title="{@group.view_list_members} {group.GROUP_NAME}" onclick="open_group({group.GROUP_ID});return false;">{group.GROUP_NAME}</a>
+			<a href="#" id="group-button-{group.GROUP_ID}" class="button group-button group-without-img" onclick="open_group({group.GROUP_ID});return false;">{group.GROUP_NAME}</a>
 			# ENDIF #
 		# END group #
 		</div>
@@ -68,8 +68,8 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('admin', 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group('admin', 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group('admin', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="" onclick="open_group('admin', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
 					{@admins.list} <span class="small">({NUMBER_ADMINS})</span>
 				</h2>
@@ -81,7 +81,7 @@
 					<div class="content">
 						<div class="avatar-container">
 							# IF admins_list.C_AVATAR #
-							<img class="valign-middle" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}" title="{admins_list.PSEUDO}" />
+							<img class="valign-middle" src="{admins_list.U_AVATAR}" alt="{admins_list.PSEUDO}" />
 							# ENDIF #
 						</div>
 						<div class="infos-container">
@@ -109,8 +109,8 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('modo', 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group('modo', 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group('modo', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="" onclick="open_group('modo', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
 					{@modos.list} <span class="small">({NUMBER_MODOS})</span>
 				</h2>
@@ -122,7 +122,7 @@
 					<div class="content">
 						<div class="avatar-container">
 							# IF modos_list.C_AVATAR #
-							<img class="valign-middle" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}" title="{modos_list.PSEUDO}" />
+							<img class="valign-middle" src="{modos_list.U_AVATAR}" alt="{modos_list.PSEUDO}" />
 							# ENDIF #
 						</div>
 						<div class="infos-container">
@@ -151,12 +151,12 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" title="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus"></i></a>
-						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" title="{@group.view_list_members}" class="action-more"><i class="fa fa-plus"></i></a>
+						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
-					<a href="{group.U_GROUP}" class="group-name" title="{@members_list} {@group.of_group} {group.GROUP_NAME}">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
+					<a href="{group.U_GROUP}" class="group-name">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 					# IF C_ADMIN #
-						<a href="{group.U_ADMIN_GROUPS}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
+						<a href="{group.U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 					# ENDIF #
 				</h2>
 			</header>
@@ -168,7 +168,7 @@
 							<div class="content">
 								<div class="avatar-container">
 									# IF group.group_members_list.C_AVATAR #
-									<img class="valign-middle" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}" title="{group.group_members_list.PSEUDO}" />
+									<img class="valign-middle" src="{group.group_members_list.U_AVATAR}" alt="{group.group_members_list.PSEUDO}" />
 									# ENDIF #
 								</div>
 								<div class="infos-container">

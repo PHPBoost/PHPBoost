@@ -127,16 +127,16 @@
 				<span class="actions">
 				# IF C_FORUM_MODERATOR #
 					# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
+					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
 					# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-unban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
+					<a href="action{U_TOPIC_UNLOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-unban" aria-hidden="true"></i></a>
 					# ENDIF #
-					<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-move" aria-hidden="true" title="{L_TOPIC_MOVE}"></i></a>
+					<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-move" aria-hidden="true"></i></a>
 				# ENDIF #
 				</span>
 				<h2>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-					{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+					{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				</h2>
 
 			</header>
@@ -172,7 +172,7 @@
 									{poll_result.ANSWERS}
 
 									{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
-									<div class="progressbar-container" title="{poll_result.PERCENT}%">
+									<div class="progressbar-container" aria-label="{poll_result.PERCENT}%">
 										<div class="progressbar-infos">{poll_result.PERCENT}%</div>
 										<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
 									</div>
@@ -207,7 +207,7 @@
 								<div class="msg-pseudo-mbr bkgd-color-op20">
 								# IF msg.C_FORUM_USER_LOGIN #
 									<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
-									<a title="{msg.FORUM_USER_LOGIN}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
+									<a class="msg-link-pseudo {msg.FORUM_USER_LEVEL}" href="{msg.U_FORUM_USER_PROFILE}"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 										{msg.FORUM_USER_LOGIN}
 									</a>
 									<span class="sr-only"># IF C_USER_ONLINE #${LangLoader::get_message('forum.connected.mbr.yes', 'common', 'forum')}# ELSE #${LangLoader::get_message('forum.connected.mbr.no', 'common', 'forum')}# ENDIF #</span>
@@ -216,7 +216,7 @@
 								# ENDIF #
 								</div>
 								# IF msg.C_USER_RANK #<p class="center">{msg.USER_RANK}</p># ELSE #<p class="center">${LangLoader::get_message('banned', 'user-common')}</p># ENDIF #
-								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" title="${LangLoader::get_message('rank', 'main')}" /></p> # ENDIF #
+								# IF msg.C_USER_IMG_ASSOC #<p class="center"><img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /></p> # ENDIF #
 							</div>
 
 							<div class="msg-avatar-mbr center">
@@ -228,7 +228,7 @@
 								<p class="center">
 									# START msg.usergroups #
 										# IF msg.usergroups.C_IMG_USERGROUP #
-										<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" title="{msg.usergroups.USERGROUP_NAME}" /></a>
+										<a href="{msg.usergroups.U_USERGROUP}" class="user-group user-group-img group-{msg.usergroups.USERGROUP_ID} "# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{msg.usergroups.U_IMG_USERGROUP}" alt="{msg.usergroups.USERGROUP_NAME}" /></a>
 										# ELSE #
 										{msg.usergroups.L_USER_GROUP} : <a href="{msg.usergroups.U_USERGROUP}" class="user-group group-{msg.usergroups.USERGROUP_ID}"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 										# ENDIF #
@@ -237,42 +237,42 @@
 								# ENDIF #
 								<p class="left"># IF msg.C_IS_USER #${LangLoader::get_message('registered_on', 'main')} : {msg.USER_REGISTERED_DATE_FULL}# ENDIF #</p>
 								# IF msg.C_USER_MSG #
-								<p class="left"><a href="{msg.U_USER_MSG}">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}</p>
+									<p class="left"><a href="{msg.U_USER_MSG}">${LangLoader::get_message('message_s', 'main')}</a>: {msg.USER_MSG}</p>
 								# ELSE #
-								<p class="left"># IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
+									<p class="left"># IF msg.C_IS_USER # <a href="{msg.U_USER_MEMBERMG}">${LangLoader::get_message('message', 'main')}</a> : 0# ELSE #${LangLoader::get_message('message', 'main')} : 0# ENDIF #</p>
 								# ENDIF #
 							</div>
 						</div>
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
 							<div class="msg-contents-info bkgd-color-op20">
 								<span class="float-left">
-									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true" title="{msg.TOPIC_DATE_FULL}"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
 								</span>
 								<span class="float-right">
-									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true" title="{L_QUOTE}"></i></a># ENDIF #
+									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #
-									<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true" title="{L_EDIT}"></i></a>
+										<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
 
 									# IF msg.C_FORUM_MSG_DEL #
 										# IF msg.C_FORUM_MSG_DEL_MSG #
-									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="del-msg"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
-									<script>
-									<!--
-										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
-										document.getElementById('dimg{msg.ID}').style.display = 'inline';
-									-->
-									</script>
+											<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+											<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="del-msg"><i class="fa fa-delete" aria-hidden="true"></i></a>
+											<script>
+											<!--
+												document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
+												document.getElementById('dimg{msg.ID}').style.display = 'inline';
+											-->
+											</script>
 										# ELSE #
-									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+											<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 										# ENDIF #
 									# ENDIF #
 
-									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" aria-label="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut" aria-hidden="true" title="{L_CUT_TOPIC}"></i></a> # ENDIF #
+									# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" aria-label="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut" aria-hidden="true"></i></a> # ENDIF #
 
-									<a aria-label="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('go_top', 'common', 'forum')}"></i></a>
-									<a aria-label="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('go_bottom', 'common', 'forum')}"></i></a>
+									<a aria-label="${LangLoader::get_message('go_top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+									<a aria-label="${LangLoader::get_message('go_bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 								</span>
 							</div>
 							<div class="msg-contents">
@@ -306,8 +306,8 @@
 										&nbsp;
 										# IF msg.C_FORUM_MODERATOR #
 										{msg.USER_WARNING}%
-										<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
-										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHMENT_MANAGEMENT}" class="fa fa-lock"></a>
+										<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{L_WARNING_MANAGEMENT}"><i class="fa fa-warning" aria-hidden="true"></i></a>
+										<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{L_PUNISHMENT_MANAGEMENT}"><i class="fa fa-lock" aria-hidden="true"></i></a>
 										# ENDIF #
 									</span>&nbsp;
 								</div>
@@ -324,15 +324,15 @@
 				<span class="actions">
 				# IF C_FORUM_MODERATOR #
 					# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
+					<a href="action{U_TOPIC_LOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true"></i></a>
 					# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban" aria-hidden="true" title="{L_TOPIC_LOCK}"></i></a>
+					<a href="action{U_TOPIC_UNLOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-unban" aria-hidden="true"></i></a>
 					# ENDIF #
-					<a href="move{U_TOPIC_MOVE}" aria-label="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move" aria-hidden="true" title="{L_TOPIC_MOVE}"></i></a>
+					<a href="move{U_TOPIC_MOVE}" aria-label="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-move" aria-hidden="true"></i></a>
 				# ENDIF #
 				</span>
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-				{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" title="{TITLE_T}" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+				{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 
 
 

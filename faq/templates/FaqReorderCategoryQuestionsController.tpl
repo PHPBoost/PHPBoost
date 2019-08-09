@@ -98,10 +98,10 @@
 <section id="module-faq">
 	<header>
 		<div class="cat-actions">
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
 			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
@@ -131,17 +131,17 @@
 					<ul id="questions-list" class="sortable-block">
 						# START questions #
 						<li class="sortable-element# IF questions.C_NEW_CONTENT # new-content# ENDIF #" id="list-{questions.ID}" data-id="{questions.ID}">
-							<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+							<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 							<div class="sortable-title">
 								<span class="question-title">{questions.QUESTION}</span>
 							</div>
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
-								<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up fa-fw" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
-								<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down fa-fw" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+								<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a>
+								<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a>
 								# ENDIF #
-								<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete fa-fw" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+								<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>
+								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete fa-fw" aria-hidden="true"></i></a>
 							</div>
 
 							<script>

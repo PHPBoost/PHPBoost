@@ -14,7 +14,7 @@
 				<tr>
 					<td># IF C_SORT_BY_DATE #<time datetime="{downloadfiles.DATE_ISO8601}">{downloadfiles.DATE_DAY_MONTH}</time># ELSE #{downloadfiles.DISPLAYED_POSITION}# ENDIF #</td>
 					<td # IF C_SORT_BY_NOTATION #class="mini-download-table-name"# ENDIF #>
-						<a href="{downloadfiles.U_LINK}" title="{@most_downloaded_files} {downloadfiles.DISPLAYED_POSITION} : {downloadfiles.NAME}">
+						<a href="{downloadfiles.U_LINK}">
 							{downloadfiles.NAME}
 						</a>
 						<div class="category-folder">

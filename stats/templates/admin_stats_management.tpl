@@ -1,5 +1,5 @@
 	<nav id="admin-quick-menu">
-		<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_STATS}">
+		<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 			<i class="fa fa-bars"></i> {L_STATS}
 		</a>
 		<ul>
@@ -124,7 +124,7 @@
 			<legend>{L_TEMPLATES}</legend>
 			<div class="fieldset-inset elements-container columns-2">
 				<div class="block center">
-					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" title="{L_TEMPLATES}" />
+					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
 				<div class="block">
 					<table class="table">
@@ -246,8 +246,8 @@
 					<div class="block center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 						<p class="center">
-							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoader::get_message('previous', 'common')}"></i></a>&nbsp;
-							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoader::get_message('next', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;
+							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>&nbsp;
+							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
 						</p>
 						# IF C_STATS_DAY #
 						<select name="d" style="width: 80%; margin: 5px auto;">
@@ -688,7 +688,7 @@
 				<div class="fieldset-inset elements-container columns-2">
 					# IF C_ROBOTS_DATA #
 					<div class="block center">
-						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" title="{L_ROBOTS}" />
+						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />
 					</div>
 					# ENDIF #
 					<div class="block">

@@ -19,7 +19,7 @@
 		-->
 		</script>
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_SEARCH_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars"></i> {L_SEARCH_MANAGEMENT}
 			</a>
 			<ul>

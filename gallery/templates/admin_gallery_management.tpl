@@ -57,7 +57,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" title="{L_EDIT}" class="fa fa-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -185,12 +185,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_left]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" title="' + array_pics[key_left]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_left]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] )
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_right]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" title="' + array_pics[key_right]['path'] + '" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="admin_gallery' + array_pics[key_right]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
 						j++;
 					}
 				}
@@ -200,7 +200,7 @@
 		</script>
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_GALLERY_MANAGEMENT}">
+			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_GALLERY_MANAGEMENT}
 			</a>
 			<ul>
@@ -228,7 +228,7 @@
 			# START pics #
 			<fieldset>
 				<legend>
-					{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
+					{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 					# IF C_PAGINATION #
 					<p class="center">
 						# INCLUDE PAGINATION #
@@ -259,7 +259,7 @@
 						# START cat.list #
 						# IF cat.list.C_DISPLAY_TR_START #<tr># ENDIF #
 							<td class="valign-bottom" style="width:{COLUMN_WIDTH_CAT}%;">
-								<a href="admin_gallery.php?cat={cat.list.IDCAT}" title="{cat.list.CAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
+								<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #</a>
 								<div class="spacer"></div>
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
 								<div class="spacer"></div>
@@ -290,7 +290,7 @@
 							<tbody>
 								<tr>
 									<td id="pics_max" colspan="{pics.pics_max.COLSPAN_PICTURE}">
-										<img src="show_pics.php?id={pics.ID}&amp;cat={pics.IDCAT}" alt="{pics.CATNAME}" title="{pics.CATNAME}" />
+										<img src="show_pics.php?id={pics.ID}&amp;cat={pics.IDCAT}" alt="{pics.CATNAME}" />
 									</td>
 								</tr>
 								<tr>
@@ -345,9 +345,9 @@
 								</tr>
 								<tr>
 									<td colspan="2" class="small">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
+										&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
-										<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+										<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 
 										<div id="move{pics.pics_max.ID}" class="move-pics-container">
 											<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
@@ -357,10 +357,8 @@
 												</select>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
-
-
-										<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+										<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+										<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #aria-label="{L_APROB}" class="fa fa-eye"# ELSE #aria-label="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
 										&nbsp;<span id="img{pics.pics_max.ID}"></span>
 									</td>
 								</tr>
@@ -388,7 +386,7 @@
 									</td>
 
 									# START pics.pics_max.list_preview_pics #
-										<td class="center" style="height:{pics.pics_max.list_preview_pics.HEIGHT}px"><span id="thumb{pics.pics_max.list_preview_pics.ID}"><a href="{pics.pics_max.list_preview_pics.URL}" title="{pics.pics_max.list_preview_pics.NAME}"><img src="pics/thumbnails/{pics.pics_max.list_preview_pics.PATH}" alt="{pics.pics_max.list_preview_pics.NAME}" /></a></span></td>
+										<td class="center" style="height:{pics.pics_max.list_preview_pics.HEIGHT}px"><span id="thumb{pics.pics_max.list_preview_pics.ID}"><a href="{pics.pics_max.list_preview_pics.URL}"><img src="pics/thumbnails/{pics.pics_max.list_preview_pics.PATH}" alt="{pics.pics_max.list_preview_pics.NAME}" /></a></span></td>
 									# END pics.pics_max.list_preview_pics #
 
 
@@ -409,7 +407,7 @@
 							<thead>
 								<tr>
 									<th colspan="{pics.COLSPAN}">
-										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a># ENDIF #
+										{GALLERY} # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 									</th>
 								</tr>
 							</thead>
@@ -420,15 +418,14 @@
 										<div id="pics{pics.list.ID}" class="pics-list-element" style="height:{HEIGHT_MAX}px;">
 											<a class="small" href="{pics.list.U_DISPLAY}" data-lightbox="formatter"><img src="pics/thumbnails/{pics.list.PATH}" alt="{pics.list.ALT_NAME}" /></a></div>
 										<div class="smaller">
-											<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+											<a class="com" href="{pics.list.U_DISPLAY}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 											<div class="spacer"></div>
 											{L_BY} # IF pics.list.C_POSTOR_EXIST #<a class="small {pics.list.POSTOR_LEVEL_CLASS}"# IF pics.list.C_POSTOR_GROUP_COLOR # style="color:{pics.list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics.list.U_POSTOR_PROFILE}">{pics.list.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 										</div>
 
 										<div class="actions-container">
-											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a></span>
-
-											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+											<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
+											<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 
 											<div id="move{pics.list.ID}" class="move-pics-container">
 												<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
@@ -438,9 +435,9 @@
 													</select>
 												</div>
 											</div>
-											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+											<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-move"></i></a>
 
-											<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+											<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #aria-label="{L_APROB}" class="fa fa-eye"# ELSE #aria-label="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
 											&nbsp;<span id="img{pics.list.ID}"></span>
 										</div>
 									</td>

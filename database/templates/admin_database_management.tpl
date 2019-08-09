@@ -1,5 +1,5 @@
 		<nav id="admin-quick-menu">
-				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_DATABASE_MANAGEMENT}">
+				<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 					<i class="fa fa-bars" aria-hidden="true"></i> {L_DATABASE_MANAGEMENT}
 				</a>
 				<ul>
@@ -425,7 +425,7 @@
 						# START file #
 							<tr>
 								<td>
-									<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">
+									<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_RESTORE} {file.FILE_NAME}" data-confirmation="{L_CONFIRM_RESTORE}">
 										<i class="fa fa-server" aria-hidden="true"></i>
 										{file.FILE_NAME}
 									</a>
@@ -433,7 +433,8 @@
 								<td>{file.WEIGHT}</td>
 								<td>{file.FILE_DATE}</td>
 								<td>
-									<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DOWNLOAD}"><i class="fa fa-download" aria-hidden="true"></i></a>
+									<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 								</td>
 							</tr>
 						# END file #

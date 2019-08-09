@@ -28,12 +28,12 @@
 							{messages.PSEUDO}
 							# ENDIF #
 						</div>
-						# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" title="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
+						# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 						# IF messages.C_USER_GROUPS #
 							<div class="spacer"></div>
 							# START messages.user_groups #
 								# IF messages.user_groups.C_GROUP_PICTURE #
-								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}" class="message-user-group" />
+								<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" class="message-user-group" />
 								# ELSE #
 								${LangLoader::get_message('group', 'main')}: {messages.user_groups.GROUP_NAME}
 								# ENDIF #
@@ -44,10 +44,10 @@
 					<div class="message-date">
 						<span class="actions">
 							# IF messages.C_EDIT #
-							<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+							<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #
 							# IF messages.C_DELETE #
-							<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+							<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 							# ENDIF #
 						</span>
 						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}

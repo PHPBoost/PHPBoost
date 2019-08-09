@@ -15,16 +15,16 @@
 		    }
 			return true;
 		}
-	
+
 		function in_array(needle, haystack)
 		{
-			for (var i=0; i < haystack.length; i++)	
+			for (var i=0; i < haystack.length; i++)
 				if (haystack[i] == needle)
 					return true;
 
 			return false;
 		}
-		
+
 		function hide_width_height()
 		{
 			var id_music = new Array({JS_ID_MUSIC});
@@ -41,7 +41,7 @@
 					jQuery('#height_dl').show();
 				}
 		}
-		
+
 		jQuery(document).ready(function() {
 			# IF C_MUSIC #
 			jQuery('#width_dl').hide();
@@ -90,7 +90,9 @@
 						<div class="form-field">
 							<input type="text" maxlength="255" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" />
 							# IF C_AUTH_UPLOAD #
-								<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
+								</a>
 							# ENDIF #
 						</div>
 					</div>
@@ -99,7 +101,9 @@
 						<div class="form-field# IF C_AUTH_UPLOAD # form-field-upload-file# ENDIF #">
 							<input type="text" maxlength="255" class="field-large" id="poster" name="poster" value="{POSTER}" />
 							# IF C_AUTH_UPLOAD #
-								<a title="${LangLoader::get_message('files_management', 'main')}" href="" class="fa fa-cloud-upload fa-2x" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
+								</a>
 							# ENDIF #
 						</div>
 					</div>

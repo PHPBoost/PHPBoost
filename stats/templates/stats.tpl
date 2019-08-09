@@ -242,7 +242,7 @@
 						# IF U_YEAR #<div class="date-selector-filter">{MONTH} {U_YEAR}</div># ENDIF #
 						<div class="date-selector-container">
 							<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-							<a href="stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true" title="${LangLoader::get_message('previous', 'common')}"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 							# IF C_STATS_DAY #
 							<select name="d">
 								{STATS_DAY}
@@ -260,7 +260,7 @@
 							# ENDIF #
 
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true" title="${LangLoader::get_message('next', 'common')}"></i></a>
+							<a href="stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 							<p>
 								<input type="hidden" name="{TYPE}" value="1">
 								<input type="hidden" name="token" value="{TOKEN}">

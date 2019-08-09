@@ -21,7 +21,7 @@
 			<div class="subcat-content">
 				# IF C_DISPLAY_CATS_ICON #
 					# IF sub_categories_list.C_CATEGORY_IMAGE #
-						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
+						<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 							<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 						</a>
 					# ENDIF #
@@ -65,10 +65,10 @@
 
 					<div class="actions">
 						# IF articles.C_EDIT #
-						<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+						<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 						# ENDIF #
 						# IF articles.C_DELETE #
-						<a href="{articles.U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+						<a href="{articles.U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>
 					<div class="more">
@@ -90,7 +90,7 @@
 					<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
 
 					<div class="content">
-						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" title="{articles.TITLE}" /></a># ENDIF #
+						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
 						<div itemprop="text">{articles.DESCRIPTION}# IF articles.C_READ_MORE #... <a href="{articles.U_ARTICLE}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</div>
 					</div>
 

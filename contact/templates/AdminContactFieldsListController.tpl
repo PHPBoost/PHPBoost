@@ -69,7 +69,7 @@ ContactField.prototype = {
 		}
 	},
 	change_display : function() {
-		jQuery("#change-display-" + this.id).html('<i class="fa fa-spin fa-spinner" aria-hidden="true" title="{@field.refresh}"></i><span class="sr-only">{@field.refresh}</span>');
+		jQuery("#change-display-" + this.id).html('<i class="fa fa-spin fa-spinner" aria-hidden="true" aria-label="{@field.refresh}"></i><span class="sr-only">{@field.refresh}</span>');
 		jQuery.ajax({
 			url: '${relative_url(ContactUrlBuilder::change_display())}',
 			type: "post",
@@ -78,9 +78,9 @@ ContactField.prototype = {
 			success: function(returnData){
 				if (returnData.id > 0) {
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-hidden="true" title="{@field.display}"></i><span class="sr-only">{@field.display}</span>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-hidden="true" aria-label="{@field.display}"></i><span class="sr-only">{@field.display}</span>');
 					} else {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" aria-hidden="true" title="{@field.not_display}"></i><span class="sr-only">{@field.not_display}</span>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" aria-hidden="true" aria-label="{@field.not_display}"></i><span class="sr-only">{@field.not_display}</span>');
 					}
 				}
 			}
@@ -101,19 +101,19 @@ jQuery(document).ready(function() {
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
 				<li class="sortable-element" id="list-{fields_list.ID}" data-id="{fields_list.ID}">
-					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"><span class="sr-only">${LangLoader::get_message('position.move', 'common')}</span></div>
+					<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"><span class="sr-only">${LangLoader::get_message('position.move', 'common')}</span></div>
 					<div class="sortable-title">
 						{fields_list.NAME}
 					</div>
 					<div class="sortable-actions">
 						{@field.required} : # IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 						# IF C_MORE_THAN_ONE_FIELD #
-						<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
-						<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+							<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# ENDIF #
-						<a href="{fields_list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-						# IF fields_list.C_DELETE #<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a># ELSE #&nbsp;# ENDIF #
-						# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"# IF fields_list.C_DISPLAY # aria-label="{@field.display}"# ELSE #aria-label="{@field.not_display}"# ENDIF #><i aria-hidden="true" # IF fields_list.C_DISPLAY #class="fa fa-eye" title="{@field.display}"# ELSE #class="fa fa-eye-slash" title="{@field.not_display}"# ENDIF #></i></a># ELSE #&nbsp;# ENDIF #
+						<a href="{fields_list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						# IF fields_list.C_DELETE #<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete" aria-hidden="true"></i></a># ELSE #&nbsp;# ENDIF #
+						# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"# IF fields_list.C_DISPLAY # aria-label="{@field.display}"# ELSE #aria-label="{@field.not_display}"# ENDIF #><i aria-hidden="true" class="# IF fields_list.C_DISPLAY #fa fa-eye# ELSE #fa fa-eye-slash# ENDIF #"></i></a># ELSE #&nbsp;# ENDIF #
 					</div>
 					<div class="spacer"></div>
 					<script>

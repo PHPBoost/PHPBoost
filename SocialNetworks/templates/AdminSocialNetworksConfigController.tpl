@@ -61,9 +61,9 @@ SocialNetwork.prototype = {
 			success: function(returnData){
 				if (returnData.id != '') {
 					if (returnData.display) {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" title="{@admin.display_share_link}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-label="{@admin.display_share_link}"></i>');
 					} else {
-						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" title="{@admin.hide_share_link}"></i>');
+						jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye-slash" aria-label="{@admin.hide_share_link}"></i>');
 					}
 				}
 			}
@@ -83,22 +83,22 @@ jQuery(document).ready(function() {
 		<ul id="social-networks-list" class="sortable-block social-networks-list-container">
 			# START social_networks_list #
 				<li class="sortable-element" id="list-{social_networks_list.ID}" data-id="{social_networks_list.ID}">
-					<div class="sortable-selector" title="${LangLoader::get_message('position.move', 'common')}"></div>
+					<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 					<div class="sortable-title">
 						<span class="social-connect {social_networks_list.CSS_CLASS}"><i class="fab fa-fw fa-{social_networks_list.ICON_NAME}"></i></span>
 						{social_networks_list.NAME}
 					</div>
 					<div class="sortable-actions">
-						# IF social_networks_list.C_MOBILE_ONLY #<a href="" aria-label="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt" aria-hidden="true" title="{@admin.visible_on_mobile_only}"></i></a># ENDIF #
-						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" aria-label="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop" aria-hidden="true" title="{@admin.visible_on_desktop_only}"></i></a># ENDIF #
-						<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true" title="${LangLoader::get_message('position.move_up', 'common')}"></i></a>
-						<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true" title="${LangLoader::get_message('position.move_down', 'common')}"></i></a>
+						# IF social_networks_list.C_MOBILE_ONLY #<a href="" aria-label="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt" aria-hidden="true"></i></a># ENDIF #
+						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" aria-label="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop" aria-hidden="true"></i></a># ENDIF #
+						<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+						<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# IF social_networks_list.C_SHARING_CONTENT #
 							<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}" aria-label="# IF social_networks_list.C_DISPLAY #{@admin.display_share_link}# ELSE #{@admin.hide_share_link}# ENDIF #">
-								<i aria-hidden="true" # IF social_networks_list.C_DISPLAY #class="fa fa-eye" title="{@admin.display_share_link}"# ELSE #class="fa fa-eye-slash" title="{@admin.hide_share_link}"# ENDIF #></i>
+								<i aria-hidden="true" # IF social_networks_list.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i>
 							</a>
 						# ELSE #
-							<i class="fa fa-ban" aria-hidden="true" title="{@admin.no_sharing_content_url}"></i>
+							<i class="fa fa-ban" aria-hidden="true" aria-label="{@admin.no_sharing_content_url}"></i>
 							<span class="sr-only">{@admin.no_sharing_content_url}</span>
 						# ENDIF #
 					</div>

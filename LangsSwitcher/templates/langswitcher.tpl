@@ -2,13 +2,13 @@
 	<form action="{REWRITED_SCRIPT}" method="get">
 		<div class="selected-lang# IF C_VERTICAL # langs-switcher-vertical# ENDIF #">
 			<label for="switchlang">
-				<select id="switchlang" title="{@switch_lang}" name="switchlang" onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
+				<select id="switchlang" aria-labelledby="{@switch_lang}" name="switchlang" onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
 				# START langs #
 					<option value="{langs.IDNAME}"# IF langs.C_SELECTED # selected="selected"# ENDIF #>{langs.NAME}</option>
 				# END langs #
 				</select>
 			</label>
-			# IF C_HAS_PICTURE #<img src="{LANG_PICTURE_URL}" alt="{LANG_NAME}" title="{LANG_NAME}" class="valign-middle" /># ENDIF #
+			# IF C_HAS_PICTURE #<img src="{LANG_PICTURE_URL}" alt="{LANG_NAME}" class="valign-middle" /># ENDIF #
 		</div>
 
 		<a href="{URL}{DEFAULT_LANG}">{@default_lang}</a>

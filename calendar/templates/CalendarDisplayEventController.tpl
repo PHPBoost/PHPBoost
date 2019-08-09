@@ -1,8 +1,8 @@
 <section id="module-calendar">
 	<header>
 		<div class="cat-actions">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			<span itemprop="name">{TITLE}</span>
@@ -15,10 +15,10 @@
 		# ENDIF #
 		<div class="actions">
 			# IF C_EDIT #
-				<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+				<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
 			# IF C_DELETE #
-				<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+				<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete" aria-hidden="true"></i></a>
 			# ENDIF #
 		</div>
 		<a itemprop="url" href="{U_LINK}"></a>
@@ -42,7 +42,7 @@
 					<span class="infos-options"><span class="text-strong">{@calendar.labels.end_date}</span> : <time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>
 				</p>
 				# IF C_HAS_PICTURE #
-					<img itemprop="thumbnailUrl" src="{PICTURE}" alt="{TITLE}" title="{TITLE}" />
+					<img itemprop="thumbnailUrl" src="{PICTURE}" alt="{TITLE}" />
 				# ENDIF #
 				# IF C_LOCATION #
 				<p itemprop="location" itemscope itemtype="http://schema.org/Place">

@@ -37,7 +37,7 @@ ${resources('install/install')}
 				<div id="top-header-admin">
 					<div id="site-name-container">
 						<div id="install-site-logo"></div>
-						<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
+						<a id="site-name">PHPBoost CMS</a>
 						<span id="site-slogan">{@phpboost.slogan}</span>
 					</div>
 				</div>
@@ -52,10 +52,10 @@ ${resources('install/install')}
 							<label for="change_lang">
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
 									# START lang #
-									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
+										<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
-								&nbsp;&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_NAME}" title="{LANG_NAME}" class="valign-middle" />
+								&nbsp;&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png" alt="{LANG_NAME}" class="valign-middle" />
 							</label>
 							<p id="button_change_lang">
 								<button type="submit" value="true" class="submit">{@change}</button>
@@ -80,7 +80,7 @@ ${resources('install/install')}
 							# START step #
 								<li class="{step.CSS_CLASS}">
 									<span class="cssmenu-title">
-										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}" aria-hidden="true"></i><span>{step.NAME}</span>
+										<i class="fa fa-{step.IMG} fa-fw" aria-hidden="true"></i><span>{step.NAME}</span>
 									</span>
 								</li>
 							# END step #
@@ -131,7 +131,7 @@ ${resources('install/install')}
 					# INCLUDE installStep #
 				</article>
 				<footer>
-					{@poweredBy} <a href="https://www.phpboost.com" title="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
+					{@poweredBy} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
 				</footer>
 			</section>
 	</body>

@@ -30,7 +30,7 @@ function showCookieBar() {
 		//On ajoute la cookiebar uniquement si elle n'existe pas. On cherche si une id #cookiebar-container existe.
 		if ($('#cookiebar-container').length < 1 )
 		{
-			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '" title="' + L_COOKIEBAR_MORE_TITLE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
+			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
 		}
 
 		//Si cookie accepté on sauvegarde le choix
@@ -58,7 +58,7 @@ function showCookieBar() {
 function showChangeChoice() {
 	if (getCookie('pbt-cookiebar-viewed') == 1)
 	{
-		$('#cookiebar-change-choice').append('<button type="button" onclick="changeCookieBarChoice();" title="' + L_COOKIEBAR_CHANGE_CHOICE + '" id="cookiebar-change-choice-link" class="cookiebar-change-choice-link">' + L_COOKIEBAR_CHANGE_CHOICE + '</button>');
+		$('#cookiebar-change-choice').append('<button type="button" onclick="changeCookieBarChoice();" id="cookiebar-change-choice-link" class="cookiebar-change-choice-link">' + L_COOKIEBAR_CHANGE_CHOICE + '</button>');
 	}
 }
 

@@ -27,73 +27,73 @@ function toggle_filters_table() {
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #
-			<th>
-				{@labels.fields.type}
-			</th>
+				<th>
+					{@labels.fields.type}
+				</th>
 			# ENDIF #
 			# IF C_DISPLAY_CATEGORIES #
-			<th>
-				{@labels.fields.category}
-			</th>
+				<th>
+					{@labels.fields.category}
+				</th>
 			# ENDIF #
 			# IF C_DISPLAY_SEVERITIES #
-			<th>
-				{@labels.fields.severity}
-			</th>
+				<th>
+					{@labels.fields.severity}
+				</th>
 			# ENDIF #
-			<th>
-				{@labels.fields.status}
-			</th>
+				<th>
+					{@labels.fields.status}
+				</th>
 			# IF C_DISPLAY_VERSIONS #
-			<th>
-				{@labels.fields.version}
-			</th>
+				<th>
+					{@labels.fields.version}
+				</th>
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
-			<th>
-			</th>
+				<th>
+				</th>
 			# ENDIF #
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			# IF C_DISPLAY_TYPES #
-			<td class="no-separator">
-				# INCLUDE SELECT_TYPE #
-			</td>
+				<td class="no-separator">
+					# INCLUDE SELECT_TYPE #
+				</td>
 			# ENDIF #
 			# IF C_DISPLAY_CATEGORIES #
-			<td class="no-separator">
-				# INCLUDE SELECT_CATEGORY #
-			</td>
+				<td class="no-separator">
+					# INCLUDE SELECT_CATEGORY #
+				</td>
 			# ENDIF #
 			# IF C_DISPLAY_SEVERITIES #
-			<td class="no-separator">
-				# INCLUDE SELECT_SEVERITY #
-			</td>
+				<td class="no-separator">
+					# INCLUDE SELECT_SEVERITY #
+				</td>
 			# ENDIF #
-			<td class="no-separator">
-				# INCLUDE SELECT_STATUS #
-			</td>
+				<td class="no-separator">
+					# INCLUDE SELECT_STATUS #
+				</td>
 			# IF C_DISPLAY_VERSIONS #
-			<td class="no-separator">
-				# INCLUDE SELECT_VERSION #
-			</td>
+				<td class="no-separator">
+					# INCLUDE SELECT_VERSION #
+				</td>
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
-			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-save" aria-hidden="true" title="{@labels.save_filters}"></i></a>
-			</td>
+				<td class="no-separator">
+					<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-save" aria-hidden="true"></i></a>
+				</td>
 			# ENDIF #
 		</tr>
 		# IF C_SAVED_FILTERS #
 		# START filters #
-		<tr id="filter{filters.ID}">
-			<td colspan="{FILTERS_NUMBER}">
-				<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
-				<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
-			</td>
-		</tr>
+			<tr id="filter{filters.ID}">
+				<td colspan="{FILTERS_NUMBER}">
+					<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true"></i></a>
+					<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				</td>
+			</tr>
 		# END filters #
 		# ENDIF #
 	</tbody>

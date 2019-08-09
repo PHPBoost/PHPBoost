@@ -6,27 +6,27 @@
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<a href="index.php" aria-label="{L_FORUM_INDEX}"><i class="fa fa-home" aria-hidden="true" title="{L_FORUM_INDEX}"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
+						<a href="index.php" aria-label="{L_FORUM_INDEX}"><i class="fa fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="fa fa-showmymsg" aria-hidden="true" title="{L_SHOW_MY_MSG}"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+						<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="fa fa-showmymsg" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track" aria-hidden="true" title="{L_SHOW_TOPIC_TRACK}"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
+						<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
 					</span>
 				</li>
 				<li class="forum-index">
 					<span class="cssmenu-title">
-						<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="fa fa-lastview" aria-hidden="true" title="{L_SHOW_LAST_READ}"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
+						<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="fa fa-lastview" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="fa fa-notread" aria-hidden="true" title="{L_SHOW_NOT_READS}"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
+						<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="fa fa-notread" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
 						<div class="forum-refresh">
 							<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 						</div>
@@ -35,13 +35,13 @@
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_MSG_SET_VIEW}" aria-label="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-eraser" aria-hidden="true" title="{L_MARK_AS_READ}"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+						<a href="{U_MSG_SET_VIEW}" aria-label="{L_MARK_AS_READ}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
 					</span>
 				</li>
 				# IF C_FORUM_CONNEXION #
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out" aria-hidden="true" title="{L_DISCONNECT}"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
+						<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out" aria-hidden="true"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 					</span>
 				</li>
 				# ENDIF #
@@ -53,12 +53,12 @@
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in" aria-hidden="true" title="{L_CONNECT}"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+						<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket" aria-hidden="true" title="{L_REGISTER}"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+						<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 					</span>
 				</li>
 			</ul>
@@ -123,7 +123,7 @@
 				{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 			</span>
 			<span class="float-right forum-stats">
-				<a href="{PATH_TO_ROOT}/forum/stats.php" title="{L_STATS}"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> {L_STATS}</a>
+				<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> {L_STATS}</a>
 			</span>
 			<div class="spacer"></div>
 		</div>
@@ -142,7 +142,7 @@
 					# ENDIF #
 					<li>
 						<span class="cssmenu-title">
-							<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}"><i class="fa fa-warning" aria-hidden="true" title="{L_ALERT}"></i></a> <a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}" title="{L_ALERT}">{L_ALERT}</a>
+							<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}"><i class="fa fa-warning" aria-hidden="true"></i> {L_ALERT}</a>
 						</span>
 					</li>
 					<li>

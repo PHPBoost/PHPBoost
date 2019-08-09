@@ -27,13 +27,13 @@
 <div id="scrolling_images">
 	# IF C_STATIC #
 		# START pics_mini #
-		<a href="{pics_mini.U_PICS}#pics_max" title="{pics_mini.NAME}"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a>
+		<a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a>
 		# END pics_mini #
 	# ELSE #
 	# IF NOT C_NO_RANDOM_PICS #
 	<ul id="mini-gallery-slideshow" class="# IF C_VERTICAL_SCROLL #vertical# ENDIF ## IF C_FADE #fade# ENDIF ## IF C_HORIZONTAL_SCROLL #horizontal# ENDIF #">
 		# START pics_mini #
-		<li><a href="{pics_mini.U_PICS}#pics_max" title="{pics_mini.NAME}"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
+		<li><a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
 		# END pics_mini #
 	</ul>
 	# ENDIF #

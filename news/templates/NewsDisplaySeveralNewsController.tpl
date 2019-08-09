@@ -23,10 +23,10 @@
 				</header>
 				<div class="actions">
 					# IF news.C_EDIT #
-					<a href="{news.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+					<a href="{news.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 					# ENDIF #
 					# IF news.C_DELETE #
-					<a href="{news.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+					<a href="{news.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 					# ENDIF #
 				</div>
 				<div class="more">
@@ -41,7 +41,7 @@
 					<i class="fa fa-calendar" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE} | # ELSE #{news.DIFFERED_START_DATE} | # ENDIF #</time>
 					<i class="fa fa-folder-o" aria-hidden="true"></i> <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 					# IF C_COMMENTS_ENABLED #| <i class="fa fa-comments-o" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}# ENDIF #
-					# IF news.C_NB_VIEW_ENABLED #| <span title="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span> # ENDIF #
+					# IF news.C_NB_VIEW_ENABLED #| <span aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span> # ENDIF #
 				</div>
 
 				<meta itemprop="url" content="{news.U_LINK}">
@@ -52,7 +52,7 @@
 				# ENDIF #
 
 				<div class="content">
-					# IF news.C_PICTURE #<a href="{news.U_LINK}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" /> </a># ENDIF #
+					# IF news.C_PICTURE #<a href="{news.U_LINK}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" /> </a># ENDIF #
 					<div itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}# IF news.C_READ_MORE #... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF ## ELSE # {news.CONTENTS} # ENDIF #</div>
 				</div>
 

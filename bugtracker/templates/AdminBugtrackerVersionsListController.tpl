@@ -69,7 +69,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<div/> ', {id : 'calendar' + id + '_container', class : 'calendar-container'}).appendTo('#td3_' + id + '_bt');
 
-			jQuery('<a/> ', {id : 'release_date' + id + '_link', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "', 1);return false;", style : 'cursor:pointer;', 'aria-label' : ${escapejs(@titles.calendar)}}).html('<i class="fa fa-calendar" aria-hidden="true" title="{@titles.calendar}"></i>').appendTo('#calendar' + id + '_container');
+			jQuery('<a/> ', {id : 'release_date' + id + '_link', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', 'release_date" + id + "', '', '', '', '" + id + "', 1);return false;", style : 'cursor:pointer;', 'aria-label' : ${escapejs(@titles.calendar)}}).html('<i class="fa fa-calendar" aria-hidden="true"></i>').appendTo('#calendar' + id + '_container');
 
 			jQuery('<div/> ', {id : 'calendar' + id, style : 'display:none;', class : 'calendar-block-container'}).appendTo('#calendar' + id + '_container');
 
@@ -85,7 +85,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<td/>', {id : 'td5_' + id, 'data-th' : ${escapejs(LangLoader::get_message('delete', 'common'))}}).appendTo('#tr_' + id);
 
-			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldVersions.delete_version(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_version)}}).html('<i class="fa fa-delete" aria-hidden="true" title="${@titles.del_version}"></i>').appendTo('#td5_' + id);
+			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldVersions.delete_version(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_version)}}).html('<i class="fa fa-delete" aria-hidden="true"></i>').appendTo('#td5_' + id);
 
 			this.integer++;
 		}
@@ -163,7 +163,7 @@ function display_default_version_radio(version_id)
 			<td>
 				<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 				<div class="calendar-container">
-					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar" aria-hidden="true" title="{@titles.calendar}"></i></a>
+					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar" aria-hidden="true"></i></a>
 					<div id="calendar{versions.ID}" class="calendar-block-container" style="display: none;">
 						<div id="release_date{versions.ID}_date" class="calendar-block"></div>
 					</div>
@@ -176,7 +176,7 @@ function display_default_version_radio(version_id)
 				</div>
 			</td>
 			<td>
-				<a href="{versions.LINK_DELETE}" aria-label="${@titles.del_version}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${@titles.del_version}"></i></a>
+				<a href="{versions.LINK_DELETE}" aria-label="${@titles.del_version}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 			</td>
 		</tr>
 		# END versions #
@@ -184,8 +184,8 @@ function display_default_version_radio(version_id)
 	<tfoot>
 		<tr>
 			<td colspan="5">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
-				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true" title="{@titles.add_version}"></i></a>
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #
+				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true"></i></a>
 			</td>
 		</tr>
 	</tfoot>

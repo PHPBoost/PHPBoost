@@ -35,15 +35,15 @@
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 						<label for="login">
 							<span>{@login}</span>
-							<input type="text" id="login" name="login" title="{@login.tooltip}" placeholder="{@login}">
+							<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
 						</label>
 						<label for="password">
 							<span>{@password}</span>
-							<input type="password" id="password" name="password" title="{@password}" placeholder="{@password}">
+							<input type="password" id="password" name="password" placeholder="{@password}">
 						</label>
 						<label for="autoconnect">
 							<span>{@autoconnect}</span>
-							<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" title="{@autoconnect}">
+							<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
 						</label>
 						<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 						<input type="hidden" name="token" value="{TOKEN}">
@@ -59,7 +59,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 					</form>
 					# START external_auth #
-						<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" title="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
+						<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
 					# END external_auth #
 				</div>
 				# ENDIF #
@@ -84,7 +84,7 @@
 		<div class="module-mini-contents connect-contents">
 		# ELSE #
 		<div class="connect-contents">
-			<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;" title="{@dashboard}">
+			<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
 				<i class="fa fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #" aria-hidden="true"></i><span>{L_PRIVATE_PROFIL}</span>
 			</a>
 		# ENDIF #

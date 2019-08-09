@@ -14,7 +14,9 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-edit-message" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
+					<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
 				</h2>
 			</header>
 			<div class="content">
@@ -46,7 +48,9 @@
 				</form>
 			</div>
 			<footer>
-				<a href="index.php" title="{L_FORUM_INDEX}">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
+				<a href="index.php">{L_FORUM_INDEX}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				<a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				<a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span>
 			</footer>
 		</article>
 

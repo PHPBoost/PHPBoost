@@ -2,7 +2,7 @@
 		<section id="module-poll-main">
 			<header>
 				<div class="cat-actions">
-					# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
+					# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
 				</div>
 				<h1>{L_POLL}</h1>
 			</header>
@@ -13,7 +13,7 @@
 				<div class="poll-question-container">
 					<a id="poll-question-{list.U_POLL_ID}" class="poll-question" href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">
 						<span class="infos-options">{list.QUESTION}</span>
-						<img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" title="{list.QUESTION}"/>
+						<img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" />
 					</a>
 				</div>
 				# END list #
@@ -38,8 +38,8 @@
 				<div id="article-poll-{IDPOLL}" class="article-poll">
 					# IF C_IS_ADMIN #
 					<span class="actions">
-						<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-						<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+						<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 					</span>
 					# ENDIF #
 					<div class="content">
@@ -68,7 +68,7 @@
 								# START result #
 								<div>
 									<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
-									<div class="progressbar-container" title="{result.PERCENT}%">
+									<div class="progressbar-container" aria-label="{result.PERCENT}%">
 										<div class="progressbar-infos">{result.PERCENT}%</div>
 										<div class="progressbar" style="width:{result.PERCENT}%;"></div>
 									</div>
@@ -106,8 +106,8 @@
 							{list.QUESTION}
 							<span class="actions">
 								# IF C_IS_ADMIN #
-								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
-								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 								# ENDIF #
 							</span>
 						</h2>
@@ -116,7 +116,7 @@
 						# START list.result #
 							<div>
 								<h6>{list.result.ANSWERS} - ({list.result.NBRVOTE} {list.L_VOTE})</h6>
-								<div class="progressbar-container" title="{list.result.PERCENT}%">
+								<div class="progressbar-container" aria-label="{list.result.PERCENT}%">
 									<div class="progressbar-infos">{list.result.PERCENT}%</div>
 									<div class="progressbar" style="width:{list.result.PERCENT}%"></div>
 								</div>

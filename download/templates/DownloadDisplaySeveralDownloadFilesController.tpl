@@ -1,8 +1,8 @@
 <section id="module-download">
 	<header>
 		<div class="cat-actions">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF ## ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING #{@download.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
@@ -20,7 +20,7 @@
 		<div class="subcat-element block">
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_IMAGE #
-					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}" title="{sub_categories_list.CATEGORY_NAME}">
+					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 					</a>
 				# ENDIF #
@@ -96,10 +96,10 @@
 						# IF C_MODERATION #
 						<td>
 							# IF downloadfiles.C_EDIT #
-								<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a>
+								<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #
 							# IF downloadfiles.C_DELETE #
-								<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a>
+								<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 							# ENDIF #
 						</td>
 						# ENDIF #
@@ -114,8 +114,8 @@
 					<h2><a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a></h2>
 				</header>
 				<div class="actions">
-					# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a># ENDIF #
-					# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"></i></a># ENDIF #
+					# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
+					# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a># ENDIF #
 				</div>
 
 				<meta itemprop="url" content="{downloadfiles.U_LINK}">
@@ -127,17 +127,16 @@
 
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
 					<div class="more">
-						<i class="fa fa-download" title="{downloadfiles.L_DOWNLOADED_TIMES}" aria-hidden="true"></i>
-						<span title="{downloadfiles.L_DOWNLOADED_TIMES}">{downloadfiles.NUMBER_DOWNLOADS}</span>
-						# IF C_NB_VIEW_ENABLED # | <span title="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
+						<span aria-label="{downloadfiles.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {downloadfiles.NUMBER_DOWNLOADS}</span>
+						# IF C_NB_VIEW_ENABLED # | <span aria-label="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							| <i class="fa fa-comments-o" aria-hidden="true" title="${LangLoader::get_message('comments', 'comments-common')}"></i>
+							| <i class="fa fa-comments-o" aria-hidden="true"></i>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
 						# ENDIF #
 						# IF downloadfiles.C_KEYWORDS #
-							| <i class="fa fa-tags" aria-hidden="true" title="${LangLoader::get_message('form.keywords', 'common')}"></i>
+							| <i class="fa fa-tags" aria-hidden="true"></i>
 							# START downloadfiles.keywords #
-								<a itemprop="keywords" aria-hidden="true" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
+								<a itemprop="keywords" href="{downloadfiles.keywords.URL}">{downloadfiles.keywords.NAME}</a>
 								# IF downloadfiles.keywords.C_SEPARATOR #, # ENDIF #
 							# END downloadfiles.keywords #
 						# ENDIF #
@@ -149,7 +148,7 @@
 					<div class="content">
 						# IF downloadfiles.C_PICTURE #
 						<a href="{downloadfiles.U_LINK}" class="thumbnail-item">
-							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" title="{downloadfiles.NAME}" itemprop="image" />
+							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
 						</a>
 						# ENDIF #
 						{downloadfiles.DESCRIPTION}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
@@ -160,7 +159,7 @@
 						<div class="options infos">
 							<div class="center">
 								# IF downloadfiles.C_PICTURE #
-									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" title="{downloadfiles.NAME}" itemprop="image" />
+									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
 									<div class="spacer"></div>
 								# ENDIF #
 								# IF downloadfiles.C_VISIBLE #
@@ -169,7 +168,7 @@
 									</a>
 									# IF IS_USER_CONNECTED #
 									<a href="{downloadfiles.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-										<i class="fa fa-unlink" aria-hidden="true" title="${LangLoader::get_message('deadlink', 'common')}"></i>
+										<i class="fa fa-unlink" aria-hidden="true"></i>
 									</a>
 									# ENDIF #
 								# ELSE #
@@ -186,7 +185,7 @@
 							<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} : </span><time datetime="# IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE_ISO8601}# ELSE #{downloadfiles.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT downloadfiles.C_DIFFERED #{downloadfiles.DATE}# ELSE #{downloadfiles.DIFFERED_START_DATE}# ENDIF #</time></span>
 							# IF downloadfiles.C_UPDATED_DATE #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('form.date.update', 'common')} : </span><time datetime="{downloadfiles.UPDATED_DATE_ISO8601}" itemprop="dateModified">{downloadfiles.UPDATED_DATE}</time></span># ENDIF #
 							<span class="infos-options"><span class="text-strong">{@downloads_number} : </span>{downloadfiles.NUMBER_DOWNLOADS}</span>
-							# IF C_NB_VIEW_ENABLED #<span class="infos-options" title="{downloadfiles.NUMBER_VIEW} {@download.view}"><span class="text-strong">{@download.number.view} : </span>{downloadfiles.NUMBER_VIEW}</span># ENDIF #
+							# IF C_NB_VIEW_ENABLED #<span class="infos-options"><span class="text-strong">{@download.number.view} : </span>{downloadfiles.NUMBER_VIEW}</span># ENDIF #
 							# IF NOT C_CATEGORY #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{downloadfiles.U_CATEGORY}">{downloadfiles.CATEGORY_NAME}</a></span># ENDIF #
 							# IF downloadfiles.C_KEYWORDS #
 								<span class="infos-options">

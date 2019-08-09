@@ -1,14 +1,14 @@
 <nav id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
 	<ul>
 		# IF C_CHANGE_STATUS #
-			<li><a href="{U_CHANGE_STATUS}" aria-label="{@actions.change_status}" class="cssmenu-title"><i class="fas fa-cogs" aria-hidden="true" title="{@actions.change_status}"></i> {@actions.change_status}</a></li>
+			<li><a href="{U_CHANGE_STATUS}" class="cssmenu-title"><i class="fas fa-cogs" aria-hidden="true"></i> {@actions.change_status}</a></li>
 		# ENDIF #
-			<li><a href="{U_HISTORY}" aria-label="{@actions.history}" class="cssmenu-title"><i class="fas fa-history" aria-hidden="true" title="{@actions.history}"></i> {@actions.history}</a></li>
+		<li><a href="{U_HISTORY}" class="cssmenu-title"><i class="fas fa-history" aria-hidden="true"></i> {@actions.history}</a></li>
 		# IF C_EDIT_BUG #
-			<li><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}" class="cssmenu-title"><i class="far fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></li>
+			<li><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}" class="cssmenu-title"><i class="far fa-edit" aria-hidden="true"></i></a></li>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<li><a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" class="cssmenu-title"><i class="fa fa-delete" aria-hidden="true" title="${LangLoader::get_message('delete', 'common')}"></i></a></li>
+			<li><a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" class="cssmenu-title"><i class="fa fa-delete" aria-hidden="true"></i></a></li>
 		# ENDIF #
 	</ul>
 </nav>

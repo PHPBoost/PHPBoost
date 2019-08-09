@@ -24,16 +24,16 @@
 					<table class="tablemodule-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
-								<th class="forum-announce-topic"><i class="fa fa-eye"></i></th>
-								<th class="forum-fixed-topic"><i class="fa fa-heart"></i></th>
-								<th class="forum-topic" title="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-								<th class="forum-author" title="{L_AUTHOR}"><i class="fa fa-user-o hidden-small-screens"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-								<th class="forum-message-nb" title="{L_MESSAGE}"><i class="fa fa-comments-o hidden-small-screens"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
-								<th class="forum-view" title="{L_VIEW}"><i class="fa fa-eye hidden-small-screens"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-								<th class="forum-pm" title="{L_PM}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> <i class="fa fa-envelope-o hidden-small-screens"></i><span class="hidden-large-screens">{L_PM}</span></th>
-								<th class="forum-mail" title="{L_MAIL}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> <i class="fa fa-at hidden-small-screens"></i><span class="hidden-large-screens">{L_MAIL}</span></th>
-								<th class="forum-delete" title="{L_DELETE}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> <i class="fa fa-delete hidden-small-screens"></i><span class="hidden-large-screens">{L_DELETE}</span></th>
-								<th class="forum-last-topic" title="{L_LAST_MESSAGE}"><i class="fa fa-clock-o hidden-small-screens"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+								<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
+								<th class="forum-fixed-topic"><i class="fa fa-heart" aria-hidden="true"></i></th>
+								<th class="forum-topic" aria-label="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+								<th class="forum-author" aria-label="{L_AUTHOR}"><i class="fa fa-user-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+								<th class="forum-message-nb" aria-label="{L_MESSAGE}"><i class="fa fa-comments-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
+								<th class="forum-view" aria-label="{L_VIEW}"><i class="fa fa-eye hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
+								<th class="forum-pm" aria-label="{L_PM}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> <i class="fa fa-envelope-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_PM}</span></th>
+								<th class="forum-mail" aria-label="{L_MAIL}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> <i class="fa fa-at hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_MAIL}</span></th>
+								<th class="forum-delete" aria-label="{L_DELETE}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> <i class="fa fa-delete hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_DELETE}</span></th>
+								<th class="forum-last-topic" aria-label="{L_LAST_MESSAGE}"><i class="fa fa-clock-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -59,7 +59,7 @@
 								</td>
 								<td class="forum-topic">
 									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-									<a href="{topics.U_ANCRE}" title=""><i class="fa fa-hand-o-right"></i></a> <strong>{topics.TYPE}</strong> <a title="{topics.TITLE}" href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+									<a href="{topics.U_ANCRE}" aria-label="{topics.TITLE}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<span class="smaller">{topics.DESC}</span>
 								</td>
 								<td class="forum-author">
@@ -86,7 +86,7 @@
 								</td>
 								<td class="forum-last-topic">
 									<span class="last-topic-title">
-										<i class="fa fa-hand-o-right"></i> <a href={topics.LAST_MSG_URL} title="{topics.TITLE}">{topics.LAST_MSG_DATE_FULL}</a>
+										<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE}<br /> {topics.LAST_MSG_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
 									</span>
 									<span class="last-topic-user">
 										<i class="fa fa-user-o"></i>

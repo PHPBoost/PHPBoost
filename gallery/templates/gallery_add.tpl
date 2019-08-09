@@ -15,7 +15,7 @@
 						<span class="spacer"></span>
 						<strong>{image_up.NAME}</strong>
 						<span class="spacer"></span>
-						<a href="gallery.php?cat={image_up.ID_CAT}&amp;id={image_up.ID}#pics_max" title="{image_up.NAME}"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
+						<a href="gallery.php?cat={image_up.ID_CAT}&amp;id={image_up.ID}#pics_max"><img src="pics/{image_up.PATH}" alt="{image_up.NAME}" /></a>
 						<span class="spacer"></span>
 						<a href="gallery.php?cat={image_up.ID_CAT}">{image_up.CAT_NAME}</a>
 						# END image_up #

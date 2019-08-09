@@ -4,7 +4,7 @@
 
 	<div class="content">
 		<div class="float-right pbt-box center">
-			<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" title="{@phpboost.logo}" />
+			<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
 		</div>
 
 		{@H|step.introduction.explanation}

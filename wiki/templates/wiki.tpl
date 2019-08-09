@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header>
 		<div class="cat-actions">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
 			{CATEGORY_TITLE}
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
@@ -47,7 +47,7 @@
 			# END cat #
 			<div class="spacer"></div>
 		</div>
-		
+
 		# INCLUDE wiki_tools #
 
 		<div class="content">
@@ -59,7 +59,7 @@
 				<div style="width:30%;">
 				{redirect.REDIRECTED}
 					# START redirect.remove_redirection #
-						<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"></i></a>
+						<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true"></i></a>
 					# END redirect.remove_redirection #
 				</div>
 				<div class="spacer"></div>

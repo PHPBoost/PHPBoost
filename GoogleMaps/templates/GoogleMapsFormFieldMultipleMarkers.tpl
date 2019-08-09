@@ -25,7 +25,7 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 			jQuery('<input/> ', {type : 'hidden', id : 'longitude-' + id, name : 'longitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'zoom-' + id, name : 'zoom-' + id}).appendTo('#field-' + id);
 
-			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-delete" aria-hidden="true" title="{@form.del.marker}"></i>').appendTo('#field-' + id);
+			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-delete" aria-hidden="true"></i>').appendTo('#field-' + id);
 
 			jQuery('<div/>', {id : 'map-' + id, class: 'map-canvas'}).appendTo('#marker-' + id);
 
@@ -58,7 +58,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
-			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="{@form.del.marker}"></i></a>
+			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 		</div>
 		<div class="map-canvas" id="map-${escape(HTML_ID)}-{fieldelements.ID}"></div>
 		<script>
@@ -111,7 +111,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" aria-label="{@form.add.marker}"><i class="fa fa-plus" aria-hidden="true" title="{@form.add.marker}"></i></a>
+<a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" aria-label="{@form.add.marker}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 
 # IF C_INCLUDE_API #
 <script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>

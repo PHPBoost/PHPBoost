@@ -1,20 +1,20 @@
 <section id="module-wiki">
 	<header>
 		<div class="cat-actions">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
 		</div>
 		<h1>
 			{TITLE}
 		</h1>
 	</header>
-	
+
 	# INCLUDE wiki_tools #
 
 	<article>
 		<div class="content">
 			{INDEX_TEXT}
 			<div class="options">
-				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
+				<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}">
 					<i class="fa fa-folder-open" aria-hidden="true"></i>
 					{L_EXPLORER}
 				</a>
@@ -44,7 +44,7 @@
 					<div class="wiki-list-top">
 						# IF last_articles.C_ARTICLES #
 							<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="${LangLoader::get_message('syndication', 'common')}">
-								<i class="fa fa-syndication small" aria-hidden="true" title="${LangLoader::get_message('syndication', 'common')}"></i>
+								<i class="fa fa-syndication small" aria-hidden="true"></i>
 							</a>
 						# ENDIF #
 						{last_articles.L_ARTICLES}

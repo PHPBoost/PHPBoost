@@ -14,12 +14,12 @@
 
 		<ul id="profile-container" class="elements-container columns-3">
 			<li class="block">
-				<a href="{U_VIEW_PROFILE}" title=""><i class="fa fa-user fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('my_private_profile', 'main')}</span></a>
+				<a href="{U_VIEW_PROFILE}"><i class="fa fa-user fa-2x" aria-hidden="true"></i> <span class="profile-element-title">${LangLoader::get_message('my_private_profile', 'main')}</span></a>
 			</li>
 			<li class="block">
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_PM}</span></i><i class="fa fa-envelope fa-stack-2x"></i></span>
+					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert" aria-hidden="true"><span>{NUMBER_PM}</span></i><i class="fa fa-envelope fa-stack-2x" aria-hidden="true"></i></span>
 					# ELSE #
 					<i class="fa fa-envelope fa-2x"></i>
 					# END IF #
@@ -29,7 +29,7 @@
 			# IF C_USER_AUTH_FILES #
 			<li class="block">
 				<a href="{U_UPLOAD}">
-					<i class="fa fa-cloud-upload fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
+					<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
 				</a>
 			</li>
 			# ENDIF #
@@ -37,9 +37,9 @@
 			<li class="block">
 				<a href="{PATH_TO_ROOT}/admin/">
 					# IF C_UNREAD_ALERT #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_ALERTS}</span></i><i class="fa fa-wrench fa-stack-2x"></i></span>
+						<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert" aria-hidden="true"><span>{NUMBER_UNREAD_ALERTS}</span></i><i class="fa fa-wrench fa-stack-2x" aria-hidden="true"></i></span>
 					# ELSE #
-					<i class="fa fa-wrench fa-2x"></i>
+						<i class="fa fa-wrench fa-2x" aria-hidden="true"></i>
 					# ENDIF #
 					<span class="profile-element-title">${LangLoader::get_message('admin_panel', 'main')}</span>
 				</a>
@@ -48,16 +48,16 @@
 			# IF C_IS_MODERATOR #
 			<li class="block">
 				<a href="{U_MODERATION_PANEL}">
-					<i class="fa fa-gavel fa-2x"></i><span class="profile-element-title">${LangLoader::get_message('moderation_panel', 'main')}</span>
+					<i class="fa fa-gavel fa-2x" aria-hidden="true"></i><span class="profile-element-title">${LangLoader::get_message('moderation_panel', 'main')}</span>
 				</a>
 			</li>
 			# ENDIF #
 			<li class="block">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
-					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="fa fa-file-alt fa-stack-2x"></i></span>
+					<span class="fa fa-stack"><i class="fa fa-circle blink fa-circle-alert" aria-hidden="true"><span>{NUMBER_UNREAD_CONTRIBUTIONS}</span></i><i class="fa fa-file-alt fa-stack-2x" aria-hidden="true"></i></span>
 					# ELSE #
-					<i class="fa fa-file-alt fa-2x"></i>
+					<i class="fa fa-file-alt fa-2x" aria-hidden="true"></i>
 					# ENDIF #
 					<span class="profile-element-title">${LangLoader::get_message('contribution_panel', 'main')}</span>
 				</a>

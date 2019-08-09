@@ -3,8 +3,8 @@
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation-panel" class="forum-contents">
 			<header>
 				<h2>
-					<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-					<a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					<a href="moderation_forum.php">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i>
 					<a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 				</h2>
 			</header>
@@ -13,19 +13,19 @@
 					<tbody>
 						<tr>
 							<td class="td33P">
-								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}" class="moderation-type-block">
+								<a href="moderation_forum.php?action=warning" class="moderation-type-block">
 									<i class="fa fa-warning fa-2x" aria-hidden="true"></i>
 									<span>{L_USERS_WARNING}</span>
 								</a>
 							</td>
 							<td class="td33P">
-								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}" class="moderation-type-block">
+								<a href="moderation_forum.php?action=punish" class="moderation-type-block">
 									<i class="fa fa-error fa-2x" aria-hidden="true"></i>
 									<span>{L_USERS_PUNISHMENT}</span>
 								</a>
 							</td>
 							<td class="td33P">
-								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}" class="moderation-type-block">
+								<a href="moderation_forum.php?action=alert" class="moderation-type-block">
 									<i class="fa fa-forbidden fa-2x" aria-hidden="true"></i>
 									<span>{L_ALERT_MANAGEMENT}</span>
 								</a>
@@ -70,7 +70,7 @@
 						# START action_list #
 						<tr>
 							<td class="forum-last-topic">
-								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF # title="{action_list.LOGIN}">{action_list.LOGIN}</a>
+								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color: {action_list.GROUP_COLOR};"# ENDIF #>{action_list.LOGIN}</a>
 							</td>
 							<td>
 								# IF action_list.C_ACTION #
@@ -103,10 +103,10 @@
 							<tr>
 								<td colspan="4">
 									# IF C_FORUM_ADMIN #
-									<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
+										<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a href="moderation_forum{U_MORE_ACTION}" title="{L_MORE_ACTION}">{L_MORE_ACTION}</a>
+										<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
 									# ENDIF #
 								</td>
 							</tr>
@@ -344,7 +344,7 @@
 							# START user_list #
 							<tr>
 								<td class="td25P">
-									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF # title="{user_list.LOGIN}">{user_list.LOGIN}</a>
+									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF #>{user_list.LOGIN}</a>
 								</td>
 								<td class="td25P">
 									{user_list.INFO_FULL}
@@ -353,7 +353,7 @@
 									<a href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
 								</td>
 								<td class="td25P">
-									<a href="{user_list.U_PM}" class="basic-button smaller" title="MP">MP</a>
+									<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
 								</td>
 							</tr>
 							# END user_list #
@@ -411,7 +411,7 @@
 									{L_PM}
 								</td>
 								<td>
-									<a href="{U_PM}" class="basic-button smaller" title="MP">MP</a>
+									<a href="{U_PM}" class="basic-button smaller">MP</a>
 								</td>
 							</tr>
 							<tr>
@@ -443,7 +443,9 @@
 
 			</div>
 			<footer>
-				<a href="index.php" title="{FORUM_NAME}">{FORUM_NAME}</a> <i class="fa fa-angle-double-right"></i> <a href="moderation_forum.php" title="{L_MODERATION_FORUM}">{L_MODERATION_FORUM}</a># IF NOT C_HOME # <i class="fa fa-angle-double-right"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+				<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+				<a href="moderation_forum.php">{L_MODERATION_FORUM}</a>
+				# IF NOT C_HOME # <i class="fa fa-angle-double-right aria-hidden="true""></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 			</footer>
 		</article>
 

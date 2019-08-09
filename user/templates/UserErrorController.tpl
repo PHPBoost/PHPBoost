@@ -7,7 +7,7 @@
 		<div class="message-helper {ERROR_TYPE}">{MESSAGE}</div>
 		# IF HAS_LINK #
 		<div class="center">
-			<strong><a href="{U_LINK}" title="${escape(LINK_NAME)}">${escape(LINK_NAME)}</a></strong>
+			<strong><a href="{U_LINK}">${escape(LINK_NAME)}</a></strong>
 		</div>
 		# ENDIF #
 	</div>
