@@ -123,13 +123,14 @@ header h2 .actions {
 	right: 0;
 }
 
-.action {
+.action a {
+	display: block;
 	font-size: 1.5rem;
 	padding: 0.309em 0.456em;
 }
 
 @media (max-width: 768px) {
-	.action {
+	.action a {
 		padding: 1em 0.618em;
 	}
 }
@@ -919,14 +920,16 @@ div#release {
     font-size: 0.809em;
     display: inline-block;
     opacity: 0;
-    max-width: 200px;
+    max-width: 320px;
     width: auto;
     z-index: 1000;
 }
 
-#tooltip[class^="position-"] {
-	transition: all 0.3s ease .5s
-}
+/* @media (min-width: 769px) {
+	#tooltip[class^="position-"] {
+		transition: all 0.3s ease .5s
+	}
+} */
 
 #tooltip.position-t{ margin-top:  -9px; }
 #tooltip.position-b{ margin-top:   9px; }

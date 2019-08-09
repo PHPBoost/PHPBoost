@@ -1473,7 +1473,7 @@ div.container-block-absolute > div {
     font-size: 0.809em;
     display: inline-block;
     opacity: 0;
-    max-width: 200px;
+    max-width: 320px;
     width: auto;
     z-index: 1000;
 }
