@@ -60,6 +60,8 @@ Contient les elements associes aux menus
 	font-size: 1.482rem;
 	font-weight: 400;
 	text-align: left;
+	display: flex;
+	align-items: center;
 }
 
 .level-0 > li > .cssmenu-title {
@@ -67,8 +69,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu-title img {
-	display: inline-block;
-	margin-right: 0.1618em;
+	margin-right: 0.456em;
 }
 
 /* -- Classes Items -- */

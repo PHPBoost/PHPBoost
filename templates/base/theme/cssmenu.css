@@ -66,7 +66,8 @@ Contient les elements associes aux menus
 	white-space: normal;
 	font-weight: 400;
 	text-align: left;
-	display: block;
+	display: flex;
+	align-items: center;
 }
 
 @media (min-width: 769px) {
@@ -79,8 +80,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu-title img {
-	display: inline-block;
-	margin-right: 0.1618em;
+	margin-right: 0.456em;
 }
 
 
