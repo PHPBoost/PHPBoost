@@ -23,7 +23,7 @@ class ArticlesSearchable extends DefaultSearchable
 		$this->use_keywords = true;
 		
 		$this->has_short_contents = true;
-		$this->field_short_contents = 'description';
+		$this->field_short_contents = 'articles_table_name.description';
 		
 		$this->field_approbation_type = 'published';
 		

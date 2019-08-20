@@ -7,7 +7,7 @@
  * @since   	PHPBoost 4.0 - 2013 02 25
 */
 
-class CalendarSearchable extends AbstractSearchableExtensionPoint
+class CalendarSearchable extends DefaultSearchable
 {
 	public function __construct()
 	{
