@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 03 01
+ * @version   	PHPBoost 5.3 - last update: 2019 08 20
  * @since   	PHPBoost 3.0 - 2012 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -54,12 +54,12 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 				$args['id_search']." AS id_search,
 				a.id AS id_content,
 				a.title AS title,
-				( 2 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."') +
-				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') ) / 3 * " . $weight . " AS relevance,
+				( 2 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."' IN BOOLEAN MODE) +
+				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."' IN BOOLEAN MODE) ) / 3 * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-				WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR FT_SEARCH(c.content, '".$args['search']."') )
+				WHERE ( FT_SEARCH(a.title, '".$args['search']."*' IN BOOLEAN MODE) OR FT_SEARCH(c.content, '".$args['search']."*' IN BOOLEAN MODE) )
 				ORDER BY relevance DESC
 				LIMIT 100 OFFSET 0";
 		else if ( $args['WikiWhere'] == 'contents' )
@@ -67,11 +67,11 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 				$args['id_search']." AS id_search,
 				a.id AS id_content,
 				a.title AS title,
-				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') * " . $weight . " AS relevance,
+				FT_SEARCH_RELEVANCE(c.content, '".$args['search']."' IN BOOLEAN MODE) * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles a
 				LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-				WHERE FT_SEARCH(c.content, '".$args['search']."')
+				WHERE FT_SEARCH(c.content, '".$args['search']."*' IN BOOLEAN MODE)
 				ORDER BY relevance DESC
 				LIMIT 100 OFFSET 0";
 		else
@@ -79,10 +79,10 @@ class WikiSearchable extends AbstractSearchableExtensionPoint
 				$args['id_search']." AS id_search,
 				id AS id_content,
 				title AS title,
-				((FT_SEARCH_RELEVANCE(title, '".$args['search']."') )* " . $weight . ") AS relevance,
+				((FT_SEARCH_RELEVANCE(title, '".$args['search']."' IN BOOLEAN MODE) )* " . $weight . ") AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS link
 				FROM " . PREFIX . "wiki_articles
-				WHERE FT_SEARCH(title, '".$args['search']."')
+				WHERE FT_SEARCH(title, '".$args['search']."*' IN BOOLEAN MODE)
 				ORDER BY relevance DESC
 				LIMIT 100 OFFSET 0";
 

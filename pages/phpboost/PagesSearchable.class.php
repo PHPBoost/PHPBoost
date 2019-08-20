@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 29
+ * @version   	PHPBoost 5.3 - last update: 2019 08 20
  * @since   	PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,11 +37,11 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 		$args['id_search']." AS `id_search`,
 		p.id AS `id_content`,
 		p.title AS `title`,
-		( 2 * FT_SEARCH_RELEVANCE(p.title, '".$args['search']."') + FT_SEARCH_RELEVANCE(p.contents, '".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
+		( 2 * FT_SEARCH_RELEVANCE(p.title, '".$args['search']."' IN BOOLEAN MODE) + FT_SEARCH_RELEVANCE(p.contents, '".$args['search']."' IN BOOLEAN MODE) ) / 3 * " . $weight . " AS `relevance`,
 		CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
 		p.auth AS `auth`
 		FROM " . PREFIX . "pages p
-		WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$unauth_cats . "
+		WHERE ( FT_SEARCH(title, '".$args['search']."*' IN BOOLEAN MODE) OR FT_SEARCH(contents, '".$args['search']."*' IN BOOLEAN MODE) )".$unauth_cats . "
 		LIMIT 100 OFFSET 0");
 
 		while ($row = $result->fetch())

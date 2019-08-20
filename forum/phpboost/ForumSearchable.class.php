@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.3 - last update: 2019 08 20
  * @since   	PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -112,12 +112,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			$args['id_search']." AS id_search,
 				MIN(msg.id) AS id_content,
 				t.title AS title,
-				MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS relevance,
+				MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."' IN BOOLEAN MODE) + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."' IN BOOLEAN MODE) ) / 3) * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
-			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
+			WHERE ( FT_SEARCH(t.title, '" . $search."*' IN BOOLEAN MODE) OR FT_SEARCH(msg.contents, '" . $search."*' IN BOOLEAN MODE) ) AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
@@ -128,12 +128,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			$args['id_search']." AS id_search,
 				MIN(msg.id) AS id_content,
 				t.title AS title,
-				MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS relevance,
+				MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."' IN BOOLEAN MODE)) * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
-			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
+			WHERE FT_SEARCH(msg.contents, '" . $search."*' IN BOOLEAN MODE) AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
@@ -143,12 +143,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$args['id_search']." AS id_search,
 				msg.id AS id_content,
 				t.title AS title,
-				FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS relevance,
+				FT_SEARCH_RELEVANCE(t.title, '" . $search."' IN BOOLEAN MODE) * " . $weight . " AS relevance,
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
-			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
+			WHERE FT_SEARCH(t.title, '" . $search."*' IN BOOLEAN MODE) AND msg.timestamp > '" . (time() - $time) . "'
 			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, id_content, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
