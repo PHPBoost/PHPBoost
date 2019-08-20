@@ -4,7 +4,7 @@
 		function check_search_mini_form_post()
 		{
 			var textSearched = document.getElementById('TxTMiniSearched').value;
-			if (textSearched.length > 3)
+			if (textSearched.length >= 3)
 			{
 				textSearched = escape_xmlhttprequest(textSearched);
 				return true;

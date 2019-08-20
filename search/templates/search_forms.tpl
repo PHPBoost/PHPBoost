@@ -22,7 +22,7 @@
 			// Vérifie la validité du formulaire
 			{
 				var textSearched = document.getElementById("TxTsearched").value;
-				if ( textSearched.length > 3 && textSearched != '{L_SEARCH}...')
+				if ( textSearched.length >= 3 && textSearched != '{L_SEARCH}...')
 				{
 					textSearched = escape_xmlhttprequest(textSearched);
 					return true;
