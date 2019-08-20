@@ -19,7 +19,7 @@ class FaqSearchable extends DefaultSearchable
 		$this->cats_table_name = FaqSetup::$faq_cats_table;
 		$this->authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
-		$this->custom_link_end = "'#question', table_name.id";
+		$this->custom_link_end = "'#question', faq_table_name.id";
 		
 		$this->field_title = 'question';
 		$this->field_contents = 'answer';
