@@ -272,7 +272,7 @@ class UpdateServices
 		if (!isset($columns['user_biography']))
 		{
 			$lang = LangLoader::get('user-common');
-			
+
 			$extended_field = new ExtendedField();
 			$extended_field->set_name($lang['extended-field.field.biography']);
 			$extended_field->set_field_name('user_biography');
@@ -686,6 +686,10 @@ class UpdateServices
 			$folder->delete();
 
 		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/google');
+		if ($folder->exists())
+			$folder->delete();
+
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/lightcase');
 		if ($folder->exists())
 			$folder->delete();
 
