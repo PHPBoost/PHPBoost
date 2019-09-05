@@ -31,8 +31,7 @@
 	// BBCode table with no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
-		if ($this.hasClass('formatter-table-head')) {}
-		else
+		if (!$this.hasClass('formatter-table-head')) 
 			$this.closest('.formatter-table').removeClass('table').addClass('table-no-header');
 	});
 
