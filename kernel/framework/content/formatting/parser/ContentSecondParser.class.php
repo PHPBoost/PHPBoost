@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 12 06
+ * @version     PHPBoost 5.2 - last update: 2019 09 14
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -296,16 +296,22 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private function process_media_insertion()
 	{
-		//Swf
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
-		//Movie
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
-		//Movie with poster
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+), \'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
-		//Sound
+	// Swf
+	$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
+		// Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
-		//Youtube
+		// Soundcloud
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundcloudPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_soundcloud_tag'), $this->content);
+		// Movie
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+		// Movie with poster
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+), \'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+		// Youtube
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
+		// Dailymotion
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertDailymotionPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_dailymotion_tag'), $this->content);
+		// Vimeo
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertVimeoPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_vimeo_tag'), $this->content);
 	}
 
 	/**
@@ -387,11 +393,32 @@ class ContentSecondParser extends AbstractParser
 		return '<audio class="audio-player" controls><source src="' . Url::to_rel($matches[1]) . '" /></audio>';
 	}
 
+	private static function process_soundcloud_tag($matches)
+	{
+		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=player/)[^&\n]+|(?<=v=)[^&\n]+|(?<=api.soundcloud.com/)[^&\n]+#', $matches[1], $url_matches);
+		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
+		return $video_id ? '<div class="media-content"><iframe class="soundcloud-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+	}
+
 	private static function process_youtube_tag($matches)
 	{
 		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=embed/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
 		return $video_id ? '<div class="media-content"><iframe class="youtube-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.youtube.com/embed/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+	}
+
+	private static function process_dailymotion_tag($matches)
+	{
+		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=embed/video/)[^&\n]+|(?<=v=)[^&\n]+(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
+		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
+		return $video_id ? '<div class="media-content"><iframe class="dailymotion-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.dailymotion.com/embed/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+	}
+
+	private static function process_vimeo_tag($matches)
+	{
+		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=video/)[^&\n]+|(?<=v=)[^&\n]+(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
+		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
+		return $video_id ? '<div class="media-content"><iframe class="vimeo-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://player.vimeo.com/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private function parse_feed_tag()

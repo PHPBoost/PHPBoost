@@ -390,24 +390,20 @@ function XMLHttpRequest_preview(field)
 
 		<ul id="bbcode-container-movies" class="bbcode-container bbcode-container-more dlt-color-op20-after">
 			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');return false;" aria-label="{@bb_swf}">
-					<i class="fa fa-fw bbcode-icon-flash{AUTH_SWF}" aria-hidden="true"></i>
+				<a href="" onclick="{DISABLED_POSITIONS}bb_display_block('31', '{FIELD}');return false;" onmouseover="{DISABLED_POSITIONS}bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bb_media}">
+					<i class="fa fa-fw bbcode-icon-movie" aria-hidden="true"></i>
 				</a>
-			</li>
-			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bb_movie}">
-					<i class="fa fa-fw bbcode-icon-movie{AUTH_MOVIE}" aria-hidden="true"></i>
-				</a>
-			</li>
-			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bb_youtube}">
-					<i class="fab fa-fw bbcode-icon-youtube{AUTH_YOUTUBE}" aria-hidden="true"></i>
-				</a>
-			</li>
-			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" aria-label="{@bb_sound}">
-					<i class="fa fa-fw bbcode-icon-sound{AUTH_SOUND}" aria-hidden="true"></i>
-				</a>
+				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block31{FIELD}">
+					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);">
+						<li><a href="" onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" aria-label="{@bb_sound_label}"> {@bb_sound} </a></li>
+						<!-- <li><a href="" onclick="{DISABLED_SOUNDCLOUD}insertbbcode('[soundcloud]', '[/soundcloud]', '{FIELD}');return false;" aria-label="{@bb_soundcloud_label}"> {@bb_soundcloud} </a></li> -->
+						<li><a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bb_movie_label}"> {@bb_movie} </a></li>
+						<li><a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bb_youtube_label}"> {@bb_youtube} </a></li>
+						<li><a href="" onclick="{DISABLED_DAILYMOTION}insertbbcode('[dailymotion]', '[/dailymotion]', '{FIELD}');return false;" aria-label="{@bb_dailymotion_label}"> {@bb_dailymotion} </a></li>
+						<li><a href="" onclick="{DISABLED_VIMEO}insertbbcode('[vimeo]', '[/vimeo]', '{FIELD}');return false;" aria-label="{@bb_vimeo_label}"> {@bb_vimeo} </a></li>
+						<li><a href="" onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');return false;" aria-label="{@bb_swf_label}"> {@bb_swf} </a></li>
+					</ul>
+				</div>
 			</li>
 		</ul>
 

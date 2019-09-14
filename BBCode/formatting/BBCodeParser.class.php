@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 09 14
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -204,6 +204,12 @@ class BBCodeParser extends ContentFormattingParser
 			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
 			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
 			'youtube2' => '`\[youtube\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
+			'dailymotion1' => '`\[dailymotion=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/dailymotion\]`iuU',
+			'dailymotion2' => '`\[dailymotion\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/dailymotion\]`iuU',
+			'vimeo1' => '`\[vimeo=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/vimeo\]`iuU',
+			'vimeo2' => '`\[vimeo\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/vimeo\]`iuU',
+			'soundcloud1' => '`\[soundcloud=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/soundcloud\]`iuU',
+			'soundcloud2' => '`\[soundcloud\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/soundcloud\]`iuU',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
@@ -246,6 +252,12 @@ class BBCodeParser extends ContentFormattingParser
 			'url7' => '$1(<a href="$2">$2</a> ) ',
 			'youtube1' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'youtube2' => '[[MEDIA]]insertYoutubePlayer(\'$1\', 560, 315);[[/MEDIA]]',
+			'dailymotion1' => '[[MEDIA]]insertDailymotionPlayer(\'$3\', $1, $2);[[/MEDIA]]',
+			'dailymotion2' => '[[MEDIA]]insertDailymotionPlayer(\'$1\', 560, 315);[[/MEDIA]]',
+			'vimeo1' => '[[MEDIA]]insertVimeoPlayer(\'$3\', $1, $2);[[/MEDIA]]',
+			'vimeo2' => '[[MEDIA]]insertVimeoPlayer(\'$1\', 560, 315);[[/MEDIA]]',
+			'soundcloud1' => '[[MEDIA]]insertSoundcloudPlayer(\'$3\', $1, $2);[[/MEDIA]]',
+			'soundcloud2' => '[[MEDIA]]insertSoundcloudPlayer(\'$1\', 560, 315);[[/MEDIA]]',
 			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',

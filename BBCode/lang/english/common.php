@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 20
+ * @version   	PHPBoost 5.2 - last update: 2019 09 14
  * @since   	PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,9 +76,21 @@ $lang['bb_indent_title'] = 'Indent [indent]text[/indent]';
 $lang['bb_sup'] = 'Sup [sup]text[/sup]';
 $lang['bb_sub'] = 'Sub [sub]text[/sub]';
 $lang['bb_anchor'] = 'Anchor somewhere in the page [anchor=x]text[/anchor]';
-$lang['bb_sound'] = 'Sound [sound]url sound[/sound]';
-$lang['bb_movie'] = 'Movie [movie=width,height]url movie[/movie]';
-$lang['bb_youtube'] = 'Insert youtube vid�o : [youtube=width,height]url youtube[/youtube]';
+$lang['bb_media'] = 'Media';
+$lang['bb_sound'] = 'Sound';
+$lang['bb_sound_label'] = '[sound]file url[/sound]';
+$lang['bb_soundcloud'] = 'Soundcloud';
+$lang['bb_soundcloud_label'] = '[soundcloud=largeur,hauteur]url soundcloud[/soundcloud]';
+$lang['bb_movie'] = 'Video';
+$lang['bb_movie_label'] = '[movie=largeur,hauteur]file url[/movie]';
+$lang['bb_youtube'] = 'Youtube';
+$lang['bb_youtube_label'] = '[youtube=largeur,hauteur]url youtube[/youtube]';
+$lang['bb_dailymotion'] = 'Dailymotion';
+$lang['bb_dailymotion_label'] = '[dailymotion=largeur,hauteur]url dailymotion[/dailymotion]';
+$lang['bb_vimeo'] = 'Vimeo';
+$lang['bb_vimeo_label'] = '[vimeo=largeur,hauteur]url vimeo[/vimeo]';
+$lang['bb_swf'] = 'Flash/swf';
+$lang['bb_swf_label'] = '[swf=largeur,hauteur]file url[/swf]';
 $lang['bb_help'] = 'BBcode help';
 $lang['bb_upload'] = 'Attach files';
 $lang['bb_url_prompt'] = 'Link address?';

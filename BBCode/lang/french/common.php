@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 20
+ * @version   	PHPBoost 5.2 - last update: 2019 09 14
  * @since   	PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,6 @@ $lang['bb_justify'] = 'Justifier';
 $lang['bb_justify_title'] = 'Justifier : [align=justify]objet justifié[/align]';
 $lang['bb_code'] = 'Insérer du code [code=langage]texte[/code]';
 $lang['bb_math'] = 'Insérer du code mathématique [math]texte[/math]';
-$lang['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]';
 $lang['bb_small'] = 'Réduire le champ texte';
 $lang['bb_large'] = 'Agrandir le champ texte';
 $lang['bb_title'] = 'Titre [title=x]texte[/title]';
@@ -77,9 +76,21 @@ $lang['bb_indent_title'] = 'Indentation [indent]texte[/indent]';
 $lang['bb_sup'] = 'Exposant [sup]texte[/sup]';
 $lang['bb_sub'] = 'Indice [sub]texte[/sub]';
 $lang['bb_anchor'] = 'Ancre vers un endroit de la page [anchor=x]texte[/anchor]';
-$lang['bb_sound'] = 'Son [sound]adresse du son[/sound]';
-$lang['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
-$lang['bb_youtube'] = 'Ajouter une vidéo youtube : [youtube=largeur,hauteur]url youtube[/youtube]';
+$lang['bb_media'] = 'Media';
+$lang['bb_sound'] = 'Son';
+$lang['bb_sound_label'] = '[sound]adresse du son[/sound]';
+$lang['bb_soundcloud'] = 'Soundcloud';
+$lang['bb_soundcloud_label'] = '[soundcloud=largeur,hauteur]url soundcloud[/soundcloud]';
+$lang['bb_movie'] = 'Vidéo';
+$lang['bb_movie_label'] = '[movie=largeur,hauteur]adresse du fichier[/movie]';
+$lang['bb_youtube'] = 'Youtube';
+$lang['bb_youtube_label'] = '[youtube=largeur,hauteur]url youtube[/youtube]';
+$lang['bb_dailymotion'] = 'Dailymotion';
+$lang['bb_dailymotion_label'] = '[dailymotion=largeur,hauteur]url dailymotion[/dailymotion]';
+$lang['bb_vimeo'] = 'Vimeo';
+$lang['bb_vimeo_label'] = '[vimeo=largeur,hauteur]url vimeo[/vimeo]';
+$lang['bb_swf'] = 'Flash/swf';
+$lang['bb_swf_label'] = '[swf=largeur,hauteur]adresse animation[/swf]';
 $lang['bb_help'] = 'Aide BBcode';
 $lang['bb_upload'] = 'Attacher un fichier';
 $lang['bb_url_prompt'] = 'Adresse du lien ?';
