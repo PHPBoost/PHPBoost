@@ -259,12 +259,20 @@
 	.bbcode-block-positions { width: 120px; }
 }
 
-
 .bbcode-forbidden,
 .bbcode-forbidden i {
 	opacity: 0.3 !important;
 	cursor: not-allowed !important;
 }
+
+.bbcode-icons-stack {
+	width: 1.618em;
+	height: 1.228em;
+	line-height: 1.228em;
+}
+
+.bbcode-icons-stack .fa-music { left: 0.228em; }
+.bbcode-icons-stack .fa-film  { left: -0.228em; }
 
 .bbcode-icon-anchor:before      { content: "\f13d"; } /* copy anchor */
 .bbcode-icon-bold:before        { content: "\f032"; } /* copy bold */

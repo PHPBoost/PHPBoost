@@ -391,7 +391,11 @@ function XMLHttpRequest_preview(field)
 		<ul id="bbcode-container-movies" class="bbcode-container bbcode-container-more dlt-color-op20-after">
 			<li class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" onclick="{DISABLED_POSITIONS}bb_display_block('31', '{FIELD}');return false;" onmouseover="{DISABLED_POSITIONS}bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bb_media}">
-					<i class="fa fa-fw bbcode-icon-movie" aria-hidden="true"></i>
+					<!-- <i class="fa fa-fw bbcode-icon-movie" aria-hidden="true"></i> -->
+					<span class="fa-stack bbcode-icons-stack">
+						<i class="fa fa-music fa-stack-1x"></i>
+						<i class="fas fa-film fa-stack-1x"></i>
+		            </span>
 				</a>
 				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block31{FIELD}">
 					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);">
