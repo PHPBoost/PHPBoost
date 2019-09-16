@@ -61,7 +61,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu-title {
-	padding: 0.456em 1.618em 0.456em 0.618em;
+	padding: 0.456em 0.618em;
 	font-size: 1.482rem;
 	white-space: normal;
 	font-weight: 400;
@@ -101,11 +101,16 @@ Contient les elements associes aux menus
 }
 
 /* --- Indicateur de sous menu --- */
-.cssmenu-horizontal > ul > li >.cssmenu-title {
-	padding: 0.618em 1.618em 0.618em 0.618em;
+.cssmenu-horizontal li > .cssmenu-title {
+	padding: 0.618em;
 }
 
-.cssmenu-right li.has-sub > .cssmenu-title {
+.cssmenu-horizontal ul li.has-sub > .cssmenu-title,
+.cssmenu-vertical.cssmenu-left ul li.has-sub > .cssmenu-title {
+	padding-right: 1.618em;
+}
+
+.cssmenu-right ul li.has-sub > .cssmenu-title {
 	padding-left: 1.618em;
 }
 
@@ -122,7 +127,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu ul li.has-sub > .cssmenu-title:after {
-	right: 1em;
+	right: 0.809em;
 	content: '\f067';
 	transition: 0.2s;
 }
@@ -132,7 +137,7 @@ Contient les elements associes aux menus
 }
 
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
-	left: 1em;
+	left: 0.809em;
 	content: '\f067';
 }
 
@@ -171,7 +176,7 @@ Contient les elements associes aux menus
 .cssmenu-right.small-screen li:hover > ul   { right: 0;               }
 .cssmenu-left.small-screen li:hover > ul    { left: 0;                }
 
-/* --- Decommenter pour déplier le dernier item de rang 1 vers la gauche pour un menu horizontal --- */
+/* --- Uncomment to unfold the last top-level item to the left for a horizontal menu --- */
 /*
 .cssmenu-horizontal > ul > li:hover:last-child > ul {
 	left: auto;
