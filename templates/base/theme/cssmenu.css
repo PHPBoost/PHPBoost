@@ -56,6 +56,10 @@ Contient les elements associes aux menus
 	}
 }
 
+.cssmenu-horizontal > ul > li > ul {
+	min-width: 100%;
+}
+
 .cssmenu li:hover > .cssmenu-title {
 	text-decoration: none;
 }
@@ -68,6 +72,7 @@ Contient les elements associes aux menus
 	text-align: left;
 	display: flex;
 	align-items: center;
+	justify-content: flex-start;
 }
 
 @media (min-width: 769px) {
