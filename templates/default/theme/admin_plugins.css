@@ -9,7 +9,11 @@
 /* --- Modals --------------------------------------------------------------- */
 .modal-btn {
     position: relative;
-    padding-right: 2.618em;
+    padding: .309em 2.618em .309em 1em;
+    margin: 0.618em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
 }
 
 .modal-btn:after {
@@ -136,11 +140,6 @@
     content: '\f077';
 }
 
-.accordion-container > nav > ul > li > a {
-    border-color: #366493;
-    background-color: rgba(54,100,147,.2);
-}
-
 .accordion-animation {
     height: 0;
     opacity: 0;
@@ -175,10 +174,6 @@
     text-decoration: none;
 }
 
-.tabs-container > nav > ul > li a.active-tab {
-    background-color: rgba(54,100,147,.2);
-}
-
 .tabs-animation {
     height: 0;
     opacity: 0;
@@ -194,10 +189,6 @@
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
-}
-
-.tabs-animation:first-child {
-    height: auto;
 }
 
 /* --------------- */

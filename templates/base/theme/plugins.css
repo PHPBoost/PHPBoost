@@ -9,7 +9,11 @@
 /* --- Modals --------------------------------------------------------------- */
 .modal-btn {
     position: relative;
-    padding-right: 2.618em;
+    padding: .309em 2.618em .309em 1em;
+    margin: 0.618em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
 }
 
 .modal-btn:after {
@@ -185,10 +189,6 @@
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
-}
-
-.tabs-animation:first-child {
-    height: auto;
 }
 
 /* --------------- */

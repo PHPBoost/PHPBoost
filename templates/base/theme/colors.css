@@ -827,6 +827,11 @@ a[class*='lightcase-icon-']:hover {
     #      #      #   #  #   #    #    #   # #      #
     #      #####  #####  #####  #####  #    ##  #####
 ----------------------------------------------------------------------------- */
+.modal-btn {
+    background-color: rgba(54,100,147,.2);
+    border-color: rgba(54,100,147,.6);
+}
+
 .accordion-container > nav > ul > li > a {
     border-color: #366493;
     background-color: rgba(54,100,147,.2);
