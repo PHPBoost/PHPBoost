@@ -527,7 +527,7 @@ tbody td.calendar-weekend   { background-color: rgba(54, 100, 147, 0.1); }
 .bkgd-sub   { background-color: #E1E1E1; }
 .bkgd-title	{ background-color: #afceed; }
 
-abbr, acronym,
+abbr,
 a.wikipedia-link {
 	border-bottom-color: #CCCCCC;
 }
@@ -820,7 +820,23 @@ a[class*='lightcase-icon-']:hover {
     background: #366493;
 }
 
-/* -- autres
+/* -- plugins
+    #####  #      #   #  #####  #####  ##    #  #####
+    #   #  #      #   #  #        #    # #   #  #
+    #####  #      #   #  #  ##    #    #  #  #  #####
+    #      #      #   #  #   #    #    #   # #      #
+    #      #####  #####  #####  #####  #    ##  #####
+----------------------------------------------------------------------------- */
+.accordion-container > nav > ul > li > a {
+    border-color: #366493;
+    background-color: rgba(54,100,147,.2);
+}
+
+.tabs-container > nav > ul > li a.active-tab {
+    background-color: rgba(54,100,147,.2);
+}
+
+/* -- miscellaneous
      ###   #   #  #####  #####  #####  #####
     #   #  #   #    #    #   #  #      #
     #####  #   #    #    # # #  ###    #####

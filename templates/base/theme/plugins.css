@@ -136,11 +136,6 @@
     content: '\f077';
 }
 
-.accordion-container > nav > ul > li > a {
-    border-color: #366493;
-    background-color: rgba(54,100,147,.2);
-}
-
 .accordion-animation {
     height: 0;
     opacity: 0;
@@ -173,10 +168,6 @@
     padding: .618em;
     outline: 0;
     text-decoration: none;
-}
-
-.tabs-container > nav > ul > li a.active-tab {
-    background-color: rgba(54,100,147,.2);
 }
 
 .tabs-animation {
