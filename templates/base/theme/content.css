@@ -1,17 +1,17 @@
-/* --------------------------------------
-		content.css
-Contient les elements :
- - conteneurs, elements de module,
- - pagination des pages,
- - exploreur de categorie,
- - gestion des categories,
- - mini-module,
- - message postes,
- - maintenance,
- - sharing elements
--------------------------------------- */
+/*
+ * content.css
+ * Contains:
+ * 	- Containers, module elements,
+ * 	- Paging,
+ * 	- Categories explorer,
+ * 	- Categories managemnt,
+ * 	- mini module,
+ * 	- posted messages,
+ * 	- maintenance,
+ * 	- sharing elements
+*/
 
-/* -- Conteneurs, elements de module -- */
+/* -- Containers, module elements -- */
 /* ------------------------------------ */
 section,
 article {
@@ -29,7 +29,7 @@ article {
 	}
 }
 
-/* --- Titre d'une page ou d'un element d'un module --- */
+/* --- Page title / Module element title --- */
 section header,
 article header {
 	padding: 0 0.809em;
@@ -53,7 +53,7 @@ section header a:hover {
 	padding: 1.618em 0 0
 }
 
-/* --- Titre d'un bas de page --- */
+/* --- Footer title --- */
 @media (min-width: 769px) {
 	section footer,
 	article footer {
@@ -913,34 +913,6 @@ div#release {
 	margin: 0 0.1em 0.309em 0;
 }
 
-/* tooltip */
-#tooltip {
-    position: absolute;
-    padding: 0.228em 0.456em;
-    font-size: 0.809em;
-    display: inline-block;
-    opacity: 0;
-    max-width: 320px;
-    width: auto;
-    z-index: 1000;
-}
-
-/* @media (min-width: 769px) {
-	#tooltip[class^="position-"] {
-		transition: all 0.3s ease .5s
-	}
-} */
-
-#tooltip.position-t{ margin-top:  -9px; }
-#tooltip.position-b{ margin-top:   9px; }
-#tooltip.position-r{ margin-left:  9px; }
-#tooltip.position-l{ margin-left: -9px; }
-
-#tooltip.position-tr{ margin-left:  7px; margin-top: -7px; }
-#tooltip.position-br{ margin-left:  7px; margin-top:  7px; }
-#tooltip.position-bl{ margin-left: -7px; margin-top:  7px; }
-#tooltip.position-tl{ margin-left: -7px; margin-top: -7px; }
-
 
 /* easytabs */
 .tab-container > nav > ul {
@@ -980,89 +952,3 @@ div#release {
 }
 
 /* wizard */
-.wizard-container {
-	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
-	transition-duration: 0.4s;
-}
-
-.fa-finish:before {
-	content:'\f058';
-}
-
-.wizard-container .wizard-header {
-	padding: 10px;
-}
-
-.wizard-container .wizard-header ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	width: 100%;
-	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	flex-direction: row;
-	-ms-flex-direction: row;
-	-webkit-flex-direction: row;
-	overflow: hidden;
-	position: relative;
-}
-
-.wizard-container .wizard-header li {
-	flex: 1;
-	-ms-flex: 1;
-	-webkit-flex: 1;
-	text-align: center;
-	position: relative;
-	transition-duration: 0.4s;
-}
-
-.wizard-container .wizard-header a {
-	display: block;
-	padding: 0.618em 0;
-}
-
-.wizard-container .wizard-header li span {
-	position: relative;
-	z-index: 2;
-}
-
-.wizard-container .wizard-header .progress {
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 0px;
-	transition-duration: 0.4s;
-	transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-.wizard-container .wizard-step {
-	display: none;
-	animation-duration: 0.4s;
-}
-
-.wizard-container .wizard-step.active-step {
-	display: block;
-}
-
-.wizard-container .wizard-navigator {
-	width: 100%;
-	box-sizing: border-box;
-	padding: 10px;
-	display: block;
-	flex: 0;
-}
-
-@media (min-width: 768px) {
-	.wizard-container .wizard-header ul {
-		flex-direction: row;
-		-ms-flex-direction: row;
-		-webkit-flex-direction: row;
-	}
-}
