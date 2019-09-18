@@ -59,6 +59,28 @@
 
     jQuery('.wizard-container').wizard();
 
+	jQuery('.cssmenu-title').each(function(){
+		var link = jQuery(this).attr('href');
+		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
+			if(jQuery(this).closest('.has-sub').length) { // if item is in subfolder
+				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
+				jQuery(this).closest('.cssmenu > ul > li').addClass('current'); // and to the first ancestor
+			}
+		}
+	});
+
+	jQuery('.submenu a').each(function(){
+		var link = jQuery(this).attr('href');
+		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
+			if(jQuery(this).closest('.submenu > li').length) { // if item is in subfolder
+				jQuery(this).closest('.cssmenu-admin > ul > li').addClass('current'); // and to the first ancestor in admin panel
+				jQuery(this).closest('.submenu > li').addClass('current'); // and to the first ancestor in admin panel
+			}
+		}
+	});
+
 
 -->
 </script>

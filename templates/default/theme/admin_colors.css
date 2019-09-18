@@ -1028,6 +1028,7 @@ h3.menu-title {
 
 @media (min-width: 769px) {
 	.cssmenu ul > li:hover > .cssmenu-title  { background-color: rgba(54, 100, 147, 0.2); }
+	.cssmenu ul > li.current > .cssmenu-title  { background-color: rgba(54, 100, 147, 0.2); }
 
 	/* --- Variante cssmenu-group
 	----------------------------------------------------------------------------- */
@@ -1101,6 +1102,11 @@ nav.admin-index li a:hover span {
 .cssmenu-admin > ul > li:hover {
 	background-color: rgba(0, 0, 0, 0.2);
 }
+
+.cssmenu-admin ul.submenu li:hover > a,
+/* .cssmenu-admin ul > li.current, */
+.submenu li.current > a,
+.admin-li.current > li > a { background-color: rgba(54, 100, 147, 0.2); }
 
 nav.admin-index li:hover {
 	background-color: rgba(0, 0, 0, 0.1);

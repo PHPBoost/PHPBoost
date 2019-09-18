@@ -301,7 +301,7 @@ a.close span {
 }
 
 .submenu > li > a {
-	display: table;
+	display: block;
 	padding: 10px;
 	text-decoration: none;
 	border-width: 0 0 1px 0;
@@ -314,8 +314,8 @@ a.close span {
 }
 
 .submenu ul li a {
-	display: table;
-	padding: 5px 0;
+	display: block;
+	padding: 0.309em 0.618em;
 }
 
 ul.level-2 > li.has-sub > a {
