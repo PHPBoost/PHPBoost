@@ -247,10 +247,6 @@ ul.pagination .current-page {
 	} }
 
 /* Tableaux  */
-table.table-fixed {
-	table-layout: fixed;
-	width: 100%; }
-
 .html-table-filters {
 	padding: 0.809em; }
 

@@ -41,12 +41,12 @@ class AdminLoggedErrorsControllerList extends AdminController
 			'error' => 'error.fatal'
 		);
 
-		$table_model = new HTMLTableModel('table', array(
+		$table_model = new HTMLTableModel('error-list', array(
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large'),
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
-		$table = new HTMLTable($table_model, 'table-fixed error-list');
+		$table = new HTMLTable($table_model, 'error-list');
 
 		$table_model->set_caption($this->lang['logged_errors_list']);
 		$table_model->set_footer_css_class('footer-error-list');

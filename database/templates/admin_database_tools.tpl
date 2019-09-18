@@ -286,8 +286,8 @@
 											<p>{QUERY_HIGHLIGHT}</p>
 										</fieldset>
 
-										<div class="db-query-result">
-											<table class="table table-fixed">
+										<div class="responsive-table">
+											<table class="table">
 												<thead>
 													<tr class="center">
 														# START head #

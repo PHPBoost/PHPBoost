@@ -1,20 +1,18 @@
+/*
+ * Contient les elements pour l'affichage des tableaux HTML et responsive.
+ * 		- Affichage des tableaux basic
+ * 		- Table responsive basictable.js
+*/
 
-/* --- ###################################################################### ---*/
-
-/*                            admin_table.css
- *
- *            Contient les css de mise en forme des tableaux
- *
- *
- * --- ###################################################################### ---*/
-
-
-table,
-.table-fixed {
-	width: calc(100% - 10px) !important;
+/* --- Basics --------------------------------------------------------------- */
+table {
+	margin: 0.618em 0;
 	padding: 0;
-	margin: 8px 5px;
+	width: 100%;
 	border-spacing: 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 table.mini {
@@ -22,7 +20,7 @@ table.mini {
 	margin: 8px 0 !important;
 }
 
-/* Entete */
+/* --- Header --- */
 table caption {
 	margin: 5px;
 	font-size: 2em;
@@ -33,8 +31,7 @@ table caption {
 }
 
 @media (min-width: 769px) {
-	table,
-	.table-fixed {
+	table {
 		width: calc(100% - 40px) !important;
 		margin: 8px 20px;
 	}

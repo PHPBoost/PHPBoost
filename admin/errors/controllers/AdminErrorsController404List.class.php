@@ -40,14 +40,14 @@ class AdminErrorsController404List extends AdminController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'table', array(
+		$table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', array(
 			new HTMLTableColumn($this->lang['404_error_requested_url']),
 			new HTMLTableColumn($this->lang['404_error_from_url']),
 			new HTMLTableColumn($this->lang['404_error_times'], 'times', 'col-small'),
 			new HTMLTableColumn(LangLoader::get_message('delete', 'common'), '', 'col-small')
 		), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
-		$table = new HTMLTable($table_model, 'table-fixed error-list404');
+		$table = new HTMLTable($table_model, 'error-list404');
 
 		$table_model->set_caption($this->lang['404_list']);
 		$table_model->set_footer_css_class('footer-error-list404');
