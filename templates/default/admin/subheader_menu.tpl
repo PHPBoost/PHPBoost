@@ -1,14 +1,33 @@
-<nav class="cssmenu-admin">
-	<ul>
-		<li class="admin-li">
-			<a href="#openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
-			<div id="openmodal-{L_ADMINISTRATION}" class="cssmenu-modal">
-				<a href="#closemodal" aria-label="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
+<div id="admin-subheader" class="modal-container" role="navigation">
+	<nav class="admin-menu">
+		<ul>
+			<li class="admin-li">
+				<a data-trigger data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
+			</li>
+			<li class="admin-li">
+				<a data-trigger data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
+			</li>
+			<li class="admin-li">
+				<a data-trigger data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
+			</li>
+			<li class="admin-li">
+				<a data-trigger data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{L_CONTENT}</span></a>
+			</li>
+			<li class="admin-li">
+				<a data-trigger data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="panel-container">
+		<div id="openmodal-{L_ADMINISTRATION}" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="content-panel">
 				<div class="next-menu">
-					<a href="#openmodule-{L_MODULES}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
-					<a href="#openmodal-{L_TOOLS}">{L_TOOLS} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-trigger data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
+					<a data-trigger data-target="openmodal-{L_TOOLS}">{L_TOOLS} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
-				<ul class="submenu">
+				<ul class="modal-menu">
 					<li>
 						<a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{L_CONFIGURATION}</a>
 						<ul class="level-2">
@@ -52,17 +71,16 @@
 					# ENDIF #
 				</ul>
 			</div>
+		</div>
 
-		</li>
-		<li class="admin-li">
-			<a href="#openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
-			<div id="openmodal-{L_TOOLS}" class="cssmenu-modal">
-				<a href="#closemodal" aria-label="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
+		<div id="openmodal-{L_TOOLS}" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="content-panel">
 				<div class="next-menu">
-					<a href="#openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_ADMINISTRATION}</a>
-					<a href="#openmodal-{L_USER}">{L_USER} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-trigger data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_ADMINISTRATION}</a>
+					<a data-trigger data-target="openmodal-{L_USER}">{L_USER} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
-				<ul class="submenu">
+				<ul class="modal-menu">
 					<li>
 						<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i aria-hidden="true" class="fa fa-fw fa-refresh"></i>{L_CACHE}</a>
 						<ul class="level-2">
@@ -93,16 +111,16 @@
 					# ENDIF #
 				</ul>
 			</div>
-		</li>
-		<li class="admin-li">
-			<a href="#openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
-			<div id="openmodal-{L_USER}" class="cssmenu-modal">
-				<a href="#closemodal" aria-label="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
+		</div>
+
+		<div id="openmodal-{L_USER}" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="content-panel">
 				<div class="next-menu">
-					<a href="#openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_TOOLS}</a>
-					<a href="#openmodal-{L_CONTENT}">{L_CONTENT} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-trigger data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_TOOLS}</a>
+					<a data-trigger data-target="openmodal-{L_CONTENT}">{L_CONTENT} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
-				<ul class="submenu">
+				<ul class="modal-menu">
 					<li>
 						<a href="${relative_url(AdminMembersUrlBuilder::management())}"><i aria-hidden="true" class="fa fa-fw fa-user"></i>{L_USER}</a>
 						<ul class="level-2">
@@ -133,16 +151,16 @@
 					# ENDIF #
 				</ul>
 			</div>
-		</li>
-		<li class="admin-li">
-			<a href="#openmodal-{L_CONTENT}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{L_CONTENT}</span></a>
-			<div id="openmodal-{L_CONTENT}" class="cssmenu-modal">
-				<a href="#closemodal" aria-label="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
+		</div>
+
+		<div id="openmodal-{L_CONTENT}" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="content-panel">
 				<div class="next-menu">
-					<a href="#openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_USER}</a>
-					<a href="#openmodule-{L_MODULES}">{L_MODULES} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-trigger data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_USER}</a>
+					<a data-trigger data-target="openmodal-{L_MODULES}">{L_MODULES} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
-				<ul class="submenu">
+				<ul class="modal-menu">
 					<li>
 						<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="far fa-fw fa-square"></i>{L_CONTENT_CONFIG}</a>
 					</li>
@@ -183,16 +201,16 @@
 					# ENDIF #
 				</ul>
 			</div>
-		</li>
-		<li class="admin-li">
-			<a href="#openmodule-{L_MODULES}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
-			<div id="openmodule-{L_MODULES}" class="cssmenu-modal">
-				<a href="#closemodal" aria-label="${LangLoader::get_message('close_menu', 'admin')}" class="close"><span>x</span></a>
+		</div>
+
+		<div id="openmodal-{L_MODULES}" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="content-panel">
 				<div class="next-menu">
-					<a href="#openmodal-{L_CONTENT}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_CONTENT}</a>
-					<a href="#openmodal-{L_ADMINISTRATION}">{L_ADMINISTRATION} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-trigger data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_CONTENT}</a>
+					<a data-trigger data-target="openmodal-{L_ADMINISTRATION}">{L_ADMINISTRATION} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
-				<ul class="submenu">
+				<ul class="modal-menu">
 					<li>
 						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i>{L_MODULES}</a>
 						<ul class="level-2">
@@ -208,6 +226,7 @@
 					# ENDIF #
 				</ul>
 			</div>
-		</li>
-	</ul>
-</nav>
+		</div>
+	</div>
+
+</div>

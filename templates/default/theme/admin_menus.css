@@ -1,486 +1,395 @@
 
-/* --- ###################################################################### ---*/
+/*
+ * conttains elements for all admin link menus
+ *    - index menu
+ *    - support menu
+ *    - quick links menu
+ *    - extended menu
+ */
 
-/*                            admin_menus.css
- *
- *            contient les css de tous les menus de l'administration
- *            - menu index
- *            - menu support
- *            - menu de liens rapides
- *            - menu etendu
- *
- * --- ###################################################################### ---*/
-
-
-/* -- Menu index ============================================================= */
-nav.admin-index {
-}
-
-nav.admin-index ul {
-	margin: 0;
-	list-style-type: none;
-}
-
-nav.admin-index li {
-	display: inline-block;
-	position: relative;
-	width: calc(94.7% / 4);
-}
-
-nav.admin-index a {
-	position: relative;
-	display: block;
-	padding: 0.3em;
-	text-align: center;
-	font-size: 1em;
-}
-
-nav.admin-index li:first-child:after {
-	content: '';
-}
-
-@media (min-width: 769px) {
-	nav.admin-index a {
-		padding: 0.555em;
-		font-size: 1.4em;
-	}
-}
-
-nav.admin-index li a span {
-	position: absolute;
-	display: block;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	opacity: 0;
-	visibility: hidden;
-	text-align: center;
-	font-size: 0.6em;
-	white-space: nowrap;
-	transition: all 0.3s ease 0s;
-}
-
-@media (min-width: 769px) {
-	nav.admin-index li a span {
-		width: 200%;
-		left: -50%;
-		text-align: center;
-	}
-
-	nav.admin-index li:last-child a span {
-		right: 15px;
-		left: auto;
-		width: 100%;
-	}
-}
-
-nav.admin-index li a:hover span {
-	opacity: 1;
-	visibility: visible;
-	top: 90%;
-	transition: all 0.5s ease 0s;
-}
-
-
-/* -- Menu principal modal ========================================= */
-@media (min-width: 769px) {
-	.cssmenu-admin {
-		margin-bottom: 20px;
-	}
-}
-
-.cssmenu-admin ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.cssmenu-admin > ul > li {
-    display:inline-block;
-	width: calc(100% /  5 - 5px);
-	text-align: center;
-}
-
-ul.submenu li {
-	text-align: left;
-}
-
-@media (min-width: 769px) and (min-height: 601px) {
-	.cssmenu-admin > ul > li {
-		width: 100%;
-		display: block;
-		text-align: left;
-	}
-}
-
-.admin-li > a > i {
-	padding: 5px 20px 5px 5px;
-}
-
-.admin-li > a {
-	display: block;
-	padding: 8px;
-	font-weight: 400;
-	font-size: 1em;
-	text-decoration: none;
-	text-transform: uppercase;
-}
-
-.admin-li > a span {
-	display: none;
-	font-size: 1.3rem;
-}
-
-@media (min-width: 769px) and (min-height: 601px) {
-	.admin-li > a {
-		padding: 8px 17px;
-	}
-
-	.admin-li > a span {
-		display: inline-block;
-	}
-}
-
-.cssmenu-modal {
-	position: fixed;
-	z-index: 10;
-	top: 0;
-	left: 0;
-	width: 100%;
-    height: 100%;
-	opacity:0;
-	pointer-events: none;
-	font-size: 1.2rem;
-	overflow: hidden;
-}
-
-@media (min-width: 769px) {
-	.cssmenu-modal {
-		left: 230px;
-	}
-}
-
-.cssmenu-modal:target {
-	opacity: 1;
-	padding: 30px 20px;
-    overflow-y: auto;
-	pointer-events: auto;
-}
-
-@media (min-width: 769px) {
-	.cssmenu-modal:target {
-		width: calc(100% - 230px);
-	}
-}
-
-.cssmenu-modal .next-menu {
-	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	flex-direction: row;
-	-ms-flex-direction: row;
-	-webkit-flex-direction: row;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-}
-
-.cssmenu-modal .submenu,
-.cssmenu-modal .next-menu,
-.cssmenu-modal a.close i{
-	opacity: 0;
-	transition: opacity .3s ease 0s;
-}
-
-.cssmenu-modal:target .submenu,
-.cssmenu-modal:target .next-menu,
-.cssmenu-modal:target a.close i {
-	opacity: 1;
-	transition: opacity .3s ease .3s;
-}
-
-.cssmenu-modal:target .submenu,
-.cssmenu-modal:target .next-menu {
-	width: 100%;
-	flex: 0 0 auto;
-	-ms-flex: 0 0 auto;
-	-webkit-flex: 0 0 auto;
-}
-
-div[id*="openmodal-"],
-div[id*="openmodule-"] {
-	display: flex;
-	display: -ms-flex;
-	display: -webkit-flex;
-	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
-	justify-content: flex-start;
-	-ms-justify-content: flex-start;
-	-webkit-justify-content: flex-start;
-	align-items: flex-start;
-	-ms-align-items: flex-start;
-	-webkit-align-items: flex-start;
-}
-
-@media (min-width: 769px) {
-	div[id*="openmodal-"] {
-		justify-content: center;
-		-ms-justify-content: center;
-		-webkit-justify-content: center;
-		align-items: center;
-		-ms-align-items: center;
-		-webkit-align-items: center;
-	}
-}
-
-.admin-li a.close {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 100%;
-	left: 0;
-	z-index: 0;
-	cursor: default;
-	text-align: right;
-	padding: 5px 5px 0 0;
-}
-
-a.close span {
-	padding: 1px 8px 5px;
-	border-radius: 30px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	font-size: 1.5rem;
-	cursor: pointer;
-}
-
-.submenu {
-	z-index: 10;
-}
-
-.submenu > li {
-	display: block;
-	padding: 15px;
-	width: 100%;
-}
-
-@media (min-width: 479px) {
-	.submenu > li {
-		display: inline-block;
-		vertical-align: text-top;
-		width: calc(100% / 2 - 5px);
-	}
-}
-
-@media (min-width: 1025px) {
-	.submenu > li {
-		width: calc(100% / 3 - 5px);
-	}
-}
-
-@media (min-width: 1367px) {
-	.submenu > li {
-		width: calc(100% / 5 - 5px);
-	}
-}
-
-@media (min-width: 1601px) {
-	.submenu > li {
-		width: calc(100% / 6 - 5px);
-	}
-}
-
-.submenu a {
-	font-size: 1.5em;
-}
-
-.submenu i {
-	margin-right: 8px;
-}
-
-.submenu > li > a {
-	display: block;
-	padding: 10px;
-	text-decoration: none;
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.submenu ul {
-	padding: 10px;
-}
-
-.submenu ul li a {
-	display: block;
-	padding: 0.309em 0.618em;
-}
-
-ul.level-2 > li.has-sub > a {
-	display: none;
-}
-
-ul.level-2 ul {
-	padding: 0;
-}
-
-ul.level-2 a {
-	font-weight: 400;
-	font-size: 1em;
-}
-
-.next-menu {
-	width:100%;
-	z-index: 20;
-	padding: 10px;
-	margin-top: 5px;
-}
-
-.next-menu i {
-	padding-bottom: 3px;
-}
-
-.next-menu a {
-	text-decoration: none;
-}
-
-
-/* -- Menu support ================================================= */
-#support-pbt {
-	display: none;
-}
-
-@media (min-width: 769px) {
-	#support-pbt {
-		display: block;
-	}
-
-	#support-pbt ul {
+@media { /* --- Index menu -------------------------------------------------- */
+	nav.admin-index ul {
 		margin: 0;
 		list-style-type: none;
 	}
 
-	#support-pbt i {
-		margin-right: 2px;
+	nav.admin-index li {
+		display: inline-block;
+		position: relative;
+		width: calc(94.7% / 4);
 	}
 
-	#support-pbt ul li a {
+	nav.admin-index a {
+		position: relative;
 		display: block;
-		padding: 15px 17px;
+		padding: 0.3em;
+		text-align: center;
+		font-size: 1em;
+	}
+
+	nav.admin-index li:first-child:after {
+		content: '';
+	}
+
+	@media (min-width: 769px) {
+		nav.admin-index a {
+			padding: 0.555em;
+			font-size: 1.4em;
+		}
+	}
+
+	nav.admin-index li a span {
+		position: absolute;
+		display: block;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		opacity: 0;
+		visibility: hidden;
+		text-align: center;
+		font-size: 0.6em;
+		white-space: nowrap;
+		transition: all 0.3s ease 0s;
+	}
+
+	@media (min-width: 769px) {
+		nav.admin-index li a span {
+			width: 200%;
+			left: -50%;
+			text-align: center;
+		}
+
+		nav.admin-index li:last-child a span {
+			right: 15px;
+			left: auto;
+			width: 100%;
+		}
+	}
+
+	nav.admin-index li a:hover span {
+		opacity: 1;
+		visibility: visible;
+		top: 90%;
+		transition: all 0.5s ease 0s;
+	}
+}
+
+@media { /* --- Modal menu -------------------------------------------------- */
+	@media (min-width: 769px) {
+		.admin-menu {
+			margin-bottom: 20px;
+		}
+	}
+
+	.admin-menu ul {
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	}
+
+	.admin-menu > ul > li {
+	    display:inline-block;
+		width: calc(100% /  5 - 5px);
+		text-align: center;
+	}
+
+	@media (width >= 769px) and (height >= 601px) {
+		.admin-menu > ul > li {
+			width: 100%;
+			display: block;
+			text-align: left;
+		}
+	}
+
+	.admin-li > a > i {
+		padding: 0.456em 1.456em 0.456em 0.456em;
+	}
+
+	.admin-li > a {
+		display: block;
+		padding: 0.456em;
+		font-weight: 400;
+		font-size: 1em;
+		text-decoration: none;
 		text-transform: uppercase;
+	}
+
+	.admin-li > a span {
+		display: none;
+		font-size: 1.3rem;
+	}
+
+	@media (min-width: 769px) and (min-height: 601px) {
+		.admin-li > a {
+			padding: 0.618em 1.309em;
+			transition: padding 0.3s ease;
+		}
+
+		.admin-li:hover > a {
+			padding: 0.618em 1.309em 0.618em 2.309em;
+			transition: padding 1.8s ease;
+		}
+
+		.admin-li > a span {
+			display: inline-block;
+		}
+	}
+
+	.modal .next-menu {
+		width:100%;
+		z-index: 20;
+		padding: 1.618em;
+		margin-top: 5px;
+		display: flex;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+	    -webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	    justify-content: space-between;
+	}
+
+	.next-menu i {
+		padding-bottom: 3px;
+	}
+
+	.next-menu a {
 		text-decoration: none;
 	}
-}
 
-
-/* -- Menu de liens rapides ============================================================= */
-nav#admin-quick-menu {
-	min-height: 39px;
-}
-
-nav#admin-quick-menu ul {
-	position: absolute;
-	z-index: 2;
-	opacity: 0;
-	visibility: hidden;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	transition: all 0.5s ease 0s;
-	list-style-type: none;
-}
-
-nav#admin-quick-menu.opened ul {
-	opacity: 1;
-	visibility: visible;
-	background-color: #353535;
-	transition: all 0.5s ease 0s;
-}
-
-nav#admin-quick-menu li {
-	display: block;
-}
-
-nav#admin-quick-menu li a.quick-link {
-	display: block;
-	padding: 10px;
-	margin: 0;
-	text-decoration: none;
-}
-
-a.js-menu-button {
-	display: table;
-	margin: auto;
-	padding: 10px;
-}
-
-a:hover.js-menu-button {
-	text-decoration: none;
-}
-
-@media (min-width: 769px) {
-	a.js-menu-button {
-		display: none;
+	.modal-menu {
+		z-index: 10;
+		display: flex;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+	    -webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
+	    -webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	    justify-content: space-between;
 	}
 
-	nav#admin-quick-menu {
-		overflow: hidden;
+	.modal-menu ul,
+	.modal-menu li {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.modal-menu > li {
+		width: 100%;
+	}
+
+	@media (width >= 479px) {
+		.modal-menu > li {
+			vertical-align: text-top;
+			width: calc(100% / 2);
+		}
+	}
+
+	@media (width >= 1025px) {
+		.modal-menu > li {
+			width: calc(100% / 3);
+		}
+	}
+
+	@media (width >= 1367px) {
+		.modal-menu > li {
+			width: calc(100% / 4);
+		}
+	}
+
+	@media (width >= 1601px) {
+		.modal-menu > li {
+			width: calc(100% / 5);
+		}
+	}
+
+	.modal-menu a {
+		font-size: 1.618em;
+	}
+
+	.modal-menu i {
+		margin-right: 8px;
+	}
+
+	.modal-menu > li > a {
+		display: block;
+		padding: 0.618em;
+		text-decoration: none;
 		border-width: 0 0 1px 0;
 		border-style: solid;
 		border-color: transparent;
 	}
 
+	.modal-menu ul li a {
+		display: block;
+		padding: 0.618em 1em;
+	}
+
+	ul.level-2 > li.has-sub > a {
+		display: none;
+	}
+
+	ul.level-2 ul {
+		padding: 0;
+	}
+
+	ul.level-2 a {
+		font-weight: 400;
+		font-size: 1em;
+	}
+}
+
+@media { /* --- support Menu ------------------------------------------------ */
+	#support-pbt {
+		display: none;
+	}
+
+	#support-pbt .admin-menu > ul > li {
+		display: block;
+		width: 100%;
+		text-align: left;
+	}
+
+	@media (width >= 769px) {
+		#support-pbt {
+			display: block;
+		}
+
+		/* #support-pbt ul {
+			margin: 0;
+			list-style-type: none;
+		}
+
+		#support-pbt i {
+			margin-right: 2px;
+		}
+
+		#support-pbt ul li a {
+			display: block;
+				padding: 0.618em 1.309em;
+			text-transform: uppercase;
+			text-decoration: none;
+		} */
+	}
+}
+
+@media { /* --- Quick links menu -------------------------------------------- */
+	nav#admin-quick-menu {
+		min-height: 39px;
+	}
+
 	nav#admin-quick-menu ul {
-		position: relative;
-		float: right;
+		position: absolute;
+		z-index: 2;
+		opacity: 0;
+		visibility: hidden;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		transition: all 0.5s ease 0s;
+		list-style-type: none;
+	}
+
+	nav#admin-quick-menu.opened ul {
 		opacity: 1;
 		visibility: visible;
-		width: auto;
-		padding: 0 8px;
+		background-color: #353535;
+		transition: all 0.5s ease 0s;
 	}
 
 	nav#admin-quick-menu li {
-		display: inline-block;
+		display: block;
 	}
 
 	nav#admin-quick-menu li a.quick-link {
-		text-align: right;
-		padding: 14px 10px;
+		display: block;
+		padding: 10px;
+		margin: 0;
+		text-decoration: none;
+	}
+
+	a.js-menu-button {
+		display: table;
+		margin: auto;
+		padding: 10px;
+	}
+
+	a:hover.js-menu-button {
+		text-decoration: none;
+	}
+
+	@media (min-width: 769px) {
+		a.js-menu-button {
+			display: none;
+		}
+
+		nav#admin-quick-menu {
+			overflow: hidden;
+			border-width: 0 0 1px 0;
+			border-style: solid;
+			border-color: transparent;
+		}
+
+		nav#admin-quick-menu ul {
+			position: relative;
+			float: right;
+			opacity: 1;
+			visibility: visible;
+			width: auto;
+			padding: 0 8px;
+		}
+
+		nav#admin-quick-menu li {
+			display: inline-block;
+		}
+
+		nav#admin-quick-menu li a.quick-link {
+			text-align: right;
+			padding: 14px 10px;
+		}
 	}
 }
 
-/* -- Menu etendu ================================================================ */
-.admin-extend-menu p {
-	padding: 0;
-}
+@media { /* --- Menu etendu ------------------------------------------------- */
+	.admin-extend-menu p {
+		padding: 0;
+	}
 
-.admin-extend-menu ul h5 {
-	padding: 10px 0;
-}
+	.admin-extend-menu ul h5 {
+		padding: 10px 0;
+	}
 
-.admin-extend-menu li {
-	display: inline-block;
-	margin: 5px 0 0;
-	width: calc(97% / 2);
-	vertical-align: text-top;
-}
-
-.admin-extend-menu li a {
-	display: block;
-	padding: 10px 5px;
-	text-align: center;
-}
-
-@media (min-width: 481px) {
 	.admin-extend-menu li {
-		width: calc(97% / 3);
+		display: inline-block;
+		margin: 5px 0 0;
+		width: calc(97% / 2);
+		vertical-align: text-top;
 	}
-}
 
-@media (min-width: 981px) {
-	.admin-extend-menu li {
-		width: calc(97% / 4);
+	.admin-extend-menu li a {
+		display: block;
+		padding: 10px 5px;
+		text-align: center;
 	}
+
+	@media (min-width: 481px) {
+		.admin-extend-menu li {
+			width: calc(97% / 3);
+		}
+	}
+
+	@media (min-width: 981px) {
+		.admin-extend-menu li {
+			width: calc(97% / 4);
+		}
+	}
+
 }

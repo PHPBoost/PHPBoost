@@ -57,7 +57,7 @@
                     $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
                     $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
                 } else {
-                    $('.tabs-container .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when the page loading
+                    $('.tabs-container .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
                     $('.tabs-container li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
                     $('.tabs-container .tabs .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
                     $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
@@ -79,11 +79,13 @@
                     $(this).on('click', function(e) { //when click on a trigger
                         e.preventDefault(); // stop the trigger action
                         history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
+                        $(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         $(targetPanel).addClass('active-panel'); // add activation class to the target
                         $('.close-modal').on('click', function() {
                             $(targetPanel).removeClass('active-panel'); // remove activation class from the target
                         });
                         $('.modal [data-target]').on('click', function(){ // when trigger is inside one of the targets
+                            $(this).closest('nav').siblings(targetPanel).removeClass('active-panel'); // remove activation class from the target
                             $(this).closest('.modal').removeClass('active-panel'); // remove activation class from the running target
                         });
                         if(options.animation) { // if animate.css is active

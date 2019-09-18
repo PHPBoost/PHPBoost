@@ -70,13 +70,14 @@
 		}
 	});
 
-	jQuery('.submenu a').each(function(){
+	jQuery('.modal-menu a').each(function(){
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
 			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
-			if(jQuery(this).closest('.submenu > li').length) { // if item is in subfolder
-				jQuery(this).closest('.cssmenu-admin > ul > li').addClass('current'); // and to the first ancestor in admin panel
-				jQuery(this).closest('.submenu > li').addClass('current'); // and to the first ancestor in admin panel
+			if(jQuery(this).closest('.modal-menu > li').length) { // if item is in subfolder
+				jQuery(this).closest('.modal-menu > li').addClass('current'); // and to the first ancestor in admin panel
+				var rootLink = jQuery(this).closest('.modal').attr('id'); // get the target
+				jQuery('[data-target="'+rootLink+'"]').parent().addClass('current');
 			}
 		}
 	});

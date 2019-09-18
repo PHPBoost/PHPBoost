@@ -1,0 +1,156 @@
+@media (width >= 769px) {
+    #admin-subheader .modal {
+        left: 230px;
+        width: calc(100% - 230px);
+    }
+}
+
+@media { /* --- colors ------------------------------------------------------ */
+    .modal .content-panel {
+        background-color: #F1F2F3;
+    }
+
+    /* --- admin_menus --- */
+    nav.admin-index li a:hover span {
+    	color: #FFFFFF;
+    }
+
+    .admin-menu > ul > li:hover {
+    	background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-menu ul.modal-menu li:hover > a,
+    .modal-menu li.current > a,
+    .modal-menu li:hover > a,
+    .admin-li.current > li > a { background-color: rgba(54, 100, 147, 0.2); }
+
+    .admin-li.current > a { background-color: rgba(54, 100, 147, 0.5); }
+
+    nav.admin-index li:hover {
+    	background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    nav.admin-index a {
+    	color: #FFFFFF;
+    }
+
+    .admin-li > a {
+    	color: #FFFFFF;
+    }
+
+    .admin-li > a:hover {
+    	color: #366493;
+    }
+
+    .modal-menu > li > a {
+    	border-color: #DDDDDD;
+    }
+
+    ul.level-2 a {
+    	color: #333333;
+    }
+
+    @media (min-width: 769px) {
+
+    	#support-pbt ul li a {
+    		color: #DDDDDD;
+    	}
+
+    	#support-pbt ul li a:hover {
+    		background-color: rgba(0, 0, 0, 0.2);
+    		color: #FFFFFF;
+    	}
+    }
+
+    nav#admin-quick-menu {
+    	background-color: #353535;
+    }
+
+    nav#admin-quick-menu li a.quick-link {
+    	color: #FFFFFF;
+    }
+
+    a.js-menu-button {
+    	color: #EEEEEE;
+    }
+
+    a:hover.js-menu-button {
+    	color: #FFFFFF;
+    }
+
+    @media (min-width: 769px) {
+
+    	nav#admin-quick-menu {
+    		background-color: rgba(255, 255, 255, 0.5);
+    		border-color: #DDDDDD;
+    	}
+
+    	nav#admin-quick-menu li a.quick-link {
+    		color: #4372AA;
+    	}
+
+    	nav#admin-quick-menu li:hover a.quick-link {
+    		color: #2D4D73;
+    	}
+    }
+
+    .admin-extend-menu li:hover {
+    	background-color: #EEEEEE;
+    }
+
+    .admin-extend-menu i.fa-cog 							{ color: #999999; }
+    .admin-extend-menu li:hover i.fa-cog 					{ color: #777777; }
+
+    .admin-extend-menu i.fa-download 						{ color: #F86227; }
+    .admin-extend-menu li:hover i.fa-download 				{ color: #D6511C; }
+
+    .admin-extend-menu i.fa-clock 							{ color: #FCC44C; }
+    .admin-extend-menu li:hover i.fa-clock 					{ color: #E5AF39; }
+
+    .admin-extend-menu i.fa-image    						{ color: #05BAB0; }
+    .admin-extend-menu li:hover i.fa-image   				{ color: #058480; }
+
+    .admin-extend-menu i.fa-language 						{ color: #2ECC71; }
+    .admin-extend-menu li:hover i.fa-language 				{ color: #16A352; }
+
+    .admin-extend-menu i.fa-bell 							{ color: #F1C40F; }
+    .admin-extend-menu li:hover i.fa-bell 					{ color: #D8B00E; }
+
+    .admin-extend-menu i.fa-refresh 						{ color: #DDDDDD; }
+    .admin-extend-menu li:hover i.fa-refresh 				{ color: #BBBBBB; }
+
+    .admin-extend-menu i.fa-exclamation-triangle 			{ color: #BA4B49; }
+    .admin-extend-menu li:hover i.fa-exclamation-triangle 	{ color: #880000; }
+
+    .admin-extend-menu i.fa-building 						{ color: #34495E; }
+    .admin-extend-menu li:hover i.fa-building 				{ color: #1B344D; }
+
+    .admin-extend-menu i.fa-user 							{ color: #1FA6D5; }
+    .admin-extend-menu li:hover i.fa-user 					{ color: #1589B1; }
+
+    .admin-extend-menu i.fa-users 							{ color: #3498DB; }
+    .admin-extend-menu li:hover i.fa-users 					{ color: #1B7CBD; }
+
+    .admin-extend-menu i.fa-bars 							{ color: #9B59B6; }
+    .admin-extend-menu li:hover i.fa-bars 					{ color: #8533A7; }
+
+    .admin-extend-menu i.fa-square 						    { color: #3A3A3A; }
+    .admin-extend-menu li:hover i.fa-square				    { color: #212121; }
+
+    .admin-extend-menu i.fa-list-ul 						{ color: #1FA6D5; }
+    .admin-extend-menu li:hover i.fa-list-ul 				{ color: #1589B1; }
+
+    .admin-extend-menu i.fa-file 							{ color: #E67E22; }
+    .admin-extend-menu li:hover i.fa-file 				    { color: #CA6A14; }
+
+    .admin-extend-menu i.fa-comment 						{ color: #FC4C7D; }
+    .admin-extend-menu li:hover i.fa-comment 				{ color: #E03363; }
+
+    .admin-extend-menu i.fa-smile 						    { color: #FCC44C; }
+    .admin-extend-menu li:hover i.fa-smile 				    { color: #E5AF39; }
+
+    .admin-extend-menu i.fa-cubes 							{ color: #05BAB0; }
+    .admin-extend-menu li:hover i.fa-cubes 					{ color: #058480; }
+
+
+}

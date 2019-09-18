@@ -40,23 +40,23 @@
 				</div>
 
 				<div id="support-pbt">
-					<nav>
+					<nav class="admin-menu">
 						<h3 class="menu-title">
 							<div class="pbt-logo"></div>
 							<span>{L_NEED_HELP}</span>
 						</h3>
 						<ul>
-							<li>
+							<li class="admin-li">
 								<a href="https://www.phpboost.com/forum" aria-label="{L_INDEX_SUPPORT}">
 									<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
 								</a>
 							</li>
-							<li>
+							<li class="admin-li">
 								<a href="https://www.phpboost.com/faq" aria-label="{L_INDEX_FAQ}">
 									<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
 								</a>
 							</li>
-							<li>
+							<li class="admin-li">
 								<a href="https://www.phpboost.com/wiki" aria-label="{L_INDEX_DOCUMENTATION}">
 									<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
 								</a>
