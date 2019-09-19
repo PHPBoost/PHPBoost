@@ -22,7 +22,6 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_plugins.css" type="text/css" media="screen, print" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_hack.css" type="text/css" media="screen, print" />
 		# ENDIF #
 
 		<!-- Modules CSS -->

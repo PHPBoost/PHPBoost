@@ -4,22 +4,22 @@
 			<ul>
 				<li>
 					<a href="{PATH_TO_ROOT}/" aria-label="{L_INDEX_SITE}">
-						<i class="fa fa-fw fa-home" aria-hidden="true"></i> <span>{L_INDEX_SITE}</span>
+						<i class="fa fa-fw fa-home" aria-hidden="true"></i>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin/admin_index.php" aria-label="{L_ADMINISTRATION}">
-						<i class="fa fa-fw fa-cogs" aria-hidden="true"></i> <span>{L_ADMINISTRATION}</span>
+						<i class="fa fa-fw fa-cogs" aria-hidden="true"></i>
 					</a>
 				</li>
 				<li>
 					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" aria-label="{L_EXTEND_MENU}">
-						<i class="fa fa-fw fa-th" aria-hidden="true"></i> <span>{L_EXTEND_MENU}</span>
+						<i class="fa fa-fw fa-th" aria-hidden="true"></i>
 					</a>
 				</li>
 				<li>
 					<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}">
-						<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> <span>{L_DISCONNECT}</span>
+						<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
 					</a>
 				</li>
 			</ul>
@@ -27,7 +27,7 @@
 		<div class="header-admin-container">
 			<div id="top-header-admin">
 				<div id="site-name-container">
-					<a id="site-name" href="{PATH_TO_ROOT}/" aria-label="{SITE_NAME}">{SITE_NAME}</a>
+					<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 				</div>
 			</div>
 			<div id="sub-header-admin">
@@ -40,29 +40,29 @@
 				</div>
 
 				<div id="support-pbt">
-					<nav class="admin-menu">
 						<h3 class="menu-title">
 							<div class="pbt-logo"></div>
 							<span>{L_NEED_HELP}</span>
 						</h3>
-						<ul>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/forum" aria-label="{L_INDEX_SUPPORT}">
-									<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
-								</a>
-							</li>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/faq" aria-label="{L_INDEX_FAQ}">
-									<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
-								</a>
-							</li>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/wiki" aria-label="{L_INDEX_DOCUMENTATION}">
-									<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
-								</a>
-							</li>
-						</ul>
-					</nav>
+						<nav class="admin-menu">
+							<ul>
+								<li class="admin-li">
+									<a href="https://www.phpboost.com/forum">
+										<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
+									</a>
+								</li>
+								<li class="admin-li">
+									<a href="https://www.phpboost.com/faq">
+										<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
+									</a>
+								</li>
+								<li class="admin-li">
+									<a href="https://www.phpboost.com/wiki">
+										<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
+									</a>
+								</li>
+							</ul>
+						</nav>
 				</div>
 			</div>
 		</div>
@@ -91,4 +91,5 @@
 			# ENDIF #
 		</footer>
 
+		<span id="scroll-to-top" class="scroll-to" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-chevron-up" aria-hidden="true"></i></span>
 	</div>

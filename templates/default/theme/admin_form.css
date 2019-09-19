@@ -60,8 +60,8 @@ button[id*=menu_element] {
 /* --- Bouton basic --- */
 .basic-button {
 	display: inline-block;
-	margin: 1px;
-	padding: 1px 0.382em;
+	margin: 0.1618em;
+	padding: 0.1618em 0.382em;
 	border-radius: 2px;
 	font-weight: bold;
 	text-align: center;
@@ -83,7 +83,7 @@ button[id*=menu_element] {
 
 fieldset,
 .fieldset {
-	margin: 1.309em 0.309em 0;
+	padding: 1.309em 0.309em 0;
 	border: none;
 	background: none;
 }
@@ -104,27 +104,27 @@ fieldset .table-cat img {
 }
 
 fieldset[id*="_captcha_fieldset"] {
-	margin: 0 0.309em;
+	padding: 0 0.309em;
 }
 
 fieldset#AdminLoggedErrorsControllerList_fbuttons,
 fieldset#AdminErrorsController404List_fbuttons{
-	margin: 0 0.309em;
+	padding: 0 0.309em;
 }
 
 @media (min-width: 769px) {
 	fieldset,
 	.fieldset {
-		margin: 1.309em 1.309em 0;
+		padding: 1.309em 1.309em 0;
 	}
 
 	fieldset[id*="_captcha_fieldset"] {
-		margin: 0 1.309em;
+		padding: 0 1.309em;
 	}
 
 	fieldset#AdminErrorsController404List_fbuttons,
 	fieldset#AdminLoggedErrorsControllerList_fbuttons {
-		margin: 0 1.309em;
+		padding: 0 1.309em;
 	}
 }
 
@@ -382,9 +382,9 @@ optgroup {
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
 .form-field-checkbox [type="checkbox"]:checked + label:before {
 	left:0;
-	top: 0;
+	top: -1em;
 	width: 100%;
-	height: 1.309em;
+	height: 1.618em;
 	transition: all 0.2s;
 	border-width: 1px;
 	border-style: solid;
@@ -393,7 +393,7 @@ optgroup {
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:after,
 .form-field-checkbox [type="checkbox"]:checked + label:after {
-	top: 0;
+	top: -1em;
 	content: 'O';
 	text-align: center;
 	padding: 0.1618em 0;
@@ -669,7 +669,7 @@ optgroup {
 		border-style: solid;
 		border-color: transparent;
 	}
-	
+
 	.form-element.form-subtitle {
 		padding: 1.618em 1.618em 0.618em 0;
 	}
@@ -759,11 +759,13 @@ fieldset[id*=advises] .form-element {
 	margin-bottom: 0.618em;
 	display: block;
 	font-size: 1.228em;
+	font-weight: 700;
 }
 
 .field-description {
 	display: block;
-	font-size: 0.618em;
+	font-size: 0.809em;
+	font-weight: 300;
 }
 
 p[id*=filter] input,
@@ -1077,17 +1079,20 @@ div.field-required:after {
 
 /* --- HTML Table--- */
 .html-table-header-sortable {
-	float: right;
+	display: none;
 }
 
-@media (max-width: 768px) {
+@media (width > 768px) {
 	.html-table-header-sortable {
-		display: none;
+		display: block;
+	}
+
+	.html-table-header-sortable a {
+		padding: 0 0.256em;
+		display: inline-block;
+		border-radius: 100%
 	}
 }
-
-.html-table-header-sortable .fa-caret-up 	{ margin-bottom: -4px; }
-.html-table-header-sortable .fa-caret-down 	{ margin-top: -12px; }
 
 /* --- Auto-completion --- */
 .autocomplete-suggestions {

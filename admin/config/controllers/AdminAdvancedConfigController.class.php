@@ -175,7 +175,8 @@ class AdminAdvancedConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(), array(
 			'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
-			'hidden' => !$this->server_environment_config->is_hsts_security_enabled())
+			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
+
 			));
 
 		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
@@ -187,14 +188,20 @@ class AdminAdvancedConfigController extends AdminController
 		try {
 			if ($server_configuration->has_url_rewriting())
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')));
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
+					array('class' => 'half-field', 'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
+				));
 			}
 			else
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')));
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED,
+					array('class' => 'half-field', 'disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')
+				));
 			}
 		} catch (UnsupportedOperationException $ex) {
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')));
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
+				array('class' => 'half-field', 'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')
+			));
  		}
 
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
@@ -277,7 +284,7 @@ class AdminAdvancedConfigController extends AdminController
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldTextEditor('cookiebar_aboutcookie_title', $this->lang['advanced-config.cookiebar-aboutcookie-title'], $this->cookiebar_config->get_cookiebar_aboutcookie_title(),
-			array('required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
+			array('class' => 'half-field', 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
