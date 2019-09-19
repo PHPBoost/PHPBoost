@@ -185,28 +185,34 @@ footer#footer span {
 		z-index: 10;
 		display: none;
 		cursor: pointer;
-	}
-
-	#scroll-to-top {
-		left: 0;
-		bottom: 0.618em;
 		padding: 0.618em 0.809em;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 50% 50% 0 0;
 	}
-
-	#scroll-to-top,
+	.scroll-to,
 	.scroll-to i {
 		transition: 0.2s;
 	}
 
-	#scroll-to-top:hover,
-	.scroll-to:hover i {
+	.scroll-to:hover,
+	.scroll-to:hover i  {
 		transition: 0.3s;
 	}
 
+	#scroll-to-top {
+		bottom: 0;
+		border-radius: 50% 50% 0 0;
+		padding: 0.309em 0.809em 0.309em;
+	}
+
+	#scroll-to-bottom {
+		top: 0;
+		border-radius: 0 0 50% 50%;
+		padding: 0.309em 0.809em 0.309em;
+	}
+
 	@media (min-width: 769px) {
-		#scroll-to-top {
-			left: 0.618em;
-		}
 
 		.scroll-to i {
 			font-size: 1.618em;

@@ -375,8 +375,7 @@ table thead th a:hover 	{ color: #FFFFFF; }
 
 /* Contenu */
 table tbody td {
-	background-color: rgba(0, 0, 0, 0.05);
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 	color: #676A74;
 }
 
@@ -385,26 +384,26 @@ tr:nth-child(even) td {
 }
 
 table tbody tr td:last-child {
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 }
 
 table tbody tr td.no-separator:first-child 	{
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 }
 
 /* Pied */
 table tfoot tr th {
 	color: #AAAAAA;
 	background-color: #F0F0F0;
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 }
 
 table tfoot tr th:first-child {
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 }
 
 table tfoot tr th:last-child {
-	border-color: #D1D2D4;
+	border-color: #DDDDDD;
 }
 
 table tfoot tr th a {
@@ -421,7 +420,7 @@ table.formatter-table th.formatter-table-head a:hover 	{ color: #FFFFFF; }
 
 @media (max-width: 980px) {
 	table tbody td	{
-		border-color: #D1D2D4;
+		border-color: #DDDDDD;
 	}
 
 	table tbody tr td.no-separator {
@@ -1127,8 +1126,8 @@ a:hover.js-menu-button {
 }
 
 .menus-block-container {
-	background-color: #CBD6E2;
-	border-color: #366393;
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
 }
 
 .menus-block-title {
@@ -1139,7 +1138,6 @@ a:hover.js-menu-button {
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
-	background-color: #f5f5f5;
 	border-color: #bbbbbb;
 }
 

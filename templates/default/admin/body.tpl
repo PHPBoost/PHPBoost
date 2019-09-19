@@ -8,7 +8,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/admin_index.php" aria-label="{L_ADMINISTRATION}">
+					<a href="{PATH_TO_ROOT}/admin/admin_index.php" aria-label="{L_INDEX_DASHBOARD}">
 						<i class="fa fa-fw fa-cogs" aria-hidden="true"></i>
 					</a>
 				</li>

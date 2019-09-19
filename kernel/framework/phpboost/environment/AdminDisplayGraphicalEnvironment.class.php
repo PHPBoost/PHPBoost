@@ -57,7 +57,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_POWERED_BY'          => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT'      => self::$lang['phpboost_right'],
 			'L_PHPBOOST_LINK'       => self::$lang['phpboost_link'],
-			'L_ADMINISTRATION'      => self::$lang['index.administration'],
+			'L_INDEX_DASHBOARD'     => self::$lang['index.dashboard'],
 			'L_INDEX_SITE'          => self::$lang['index.site'],
 			'L_EXTEND_MENU'         => self::$lang['index.extend_menu'],
 			'L_DISCONNECT'          => self::$lang['index.disconnect'],

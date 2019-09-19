@@ -1165,7 +1165,6 @@ div.container-block-absolute > div {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
-	border-radius: 3px;
 	overflow: auto;
 }
 
@@ -1253,7 +1252,6 @@ div.container-block-absolute > div {
 	border-width: 2px;
 	border-style: dashed;
 	border-color: transparent;
-	border-radius: 3px;
 	text-align: center;
 }
 

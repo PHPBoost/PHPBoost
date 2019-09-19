@@ -435,6 +435,12 @@ function scroll_to( position ) {
 	else {
 		jQuery('#cookie-bar-container').removeClass('fixed');
 	}
+
+	if ( position > 800) {
+		jQuery('#scroll-to-bottom').fadeOut();
+	} else {
+		jQuery('#scroll-to-bottom').fadeIn();
+	}
 }
 
 jQuery(document).ready(function(){

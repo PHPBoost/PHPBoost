@@ -17,6 +17,8 @@
 					</li>
 				</ul>
 		</nav>
+		<span id="scroll-to-bottom" class="scroll-to" aria-label="${LangLoader::get_message('scroll-to.bottom', 'user-common')}"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+
 
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
@@ -166,15 +168,13 @@
 						-->
 					</script>
 				</form>
-
 			# ENDIF #
-
 
 			# IF C_DATABASE_BACKUP #
 				# IF TABLE_NAME #
 				<div>
 					<div class="block-contents1">
-						- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+						<a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 					</div>
 					<nav id="cssmenu-database-backup" class="cssmenu cssmenu-group">
 						<ul>
@@ -299,7 +299,6 @@
 					</fieldset>
 				</form>
 			# ENDIF #
-
 
 			# IF C_DATABASE_QUERY #
 				<script>
@@ -440,6 +439,5 @@
 						# END file #
 					</tbody>
 				</table>
-
 			# ENDIF #
 		</div>
