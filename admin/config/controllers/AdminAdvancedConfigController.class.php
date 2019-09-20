@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 09 20
  * @since   	PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -175,7 +175,7 @@ class AdminAdvancedConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(), array(
 			'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
-			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
+			'hidden' => !$this->server_environment_config->is_hsts_security_enabled())
 
 			));
 
