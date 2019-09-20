@@ -75,6 +75,21 @@
 }
 
 @media { /* --- Modal menu -------------------------------------------------- */
+	.modal-menu li > a {
+		border-width: 1px;
+		border-style: solid;
+		border-color: transparent;
+	}
+
+	/* .admin-menu ul.modal-menu li:hover > a,
+	.modal-menu li.current > a,
+	.modal-menu li:hover > a,
+	.admin-li.current:hover > a {
+		border-width: 1px;
+		border-style: solid;
+		border-color: transparent;
+ 	} */
+
 	@media (min-width: 769px) {
 		.admin-menu {
 			margin-bottom: 20px;

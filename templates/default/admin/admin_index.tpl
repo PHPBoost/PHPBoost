@@ -116,36 +116,38 @@
 						<h2><i class="fa fa-user" aria-hidden="true"></i> {L_USER_ONLINE}</h2>
 					</div>
 					<div class="block-body">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>{L_USER_ONLINE}</th>
-									<th>{L_USER_IP}</th>
-									<th>{L_LOCALISATION}</th>
-									<th>{L_LAST_UPDATE}</th>
-								</tr>
-							</thead>
-							<tbody>
-								# START user #
-								<tr>
-									<td>
-									# IF user.C_ROBOT #
-										<span class="{user.LEVEL_CLASS}">{user.PSEUDO}</span>
-									# ELSE #
-										# IF user.C_VISITOR #
-										{user.PSEUDO}
+						<div class="responsive-table">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>{L_USER_ONLINE}</th>
+										<th>{L_USER_IP}</th>
+										<th>{L_LOCALISATION}</th>
+										<th>{L_LAST_UPDATE}</th>
+									</tr>
+								</thead>
+								<tbody>
+									# START user #
+									<tr>
+										<td>
+										# IF user.C_ROBOT #
+											<span class="{user.LEVEL_CLASS}">{user.PSEUDO}</span>
 										# ELSE #
-										<a href="{user.U_PROFILE}" class="{user.LEVEL_CLASS}" # IF user.C_GROUP_COLOR # style="color:{user.GROUP_COLOR}" # ENDIF #>{user.PSEUDO}</a>
+											# IF user.C_VISITOR #
+											{user.PSEUDO}
+											# ELSE #
+											<a href="{user.U_PROFILE}" class="{user.LEVEL_CLASS}" # IF user.C_GROUP_COLOR # style="color:{user.GROUP_COLOR}" # ENDIF #>{user.PSEUDO}</a>
+											# ENDIF #
 										# ENDIF #
-									# ENDIF #
-									</td>
-									<td>{user.USER_IP}</td>
-									<td>{user.WHERE}</td>
-									<td>{user.TIME}</td>
-								</tr>
-								# END user #
-							</tbody>
-						</table>
+										</td>
+										<td>{user.USER_IP}</td>
+										<td>{user.WHERE}</td>
+										<td>{user.TIME}</td>
+									</tr>
+									# END user #
+								</tbody>
+							</table>
+						</div>						
 					</div>
 				</div>
 

@@ -436,7 +436,7 @@ function scroll_to( position ) {
 		jQuery('#cookie-bar-container').removeClass('fixed');
 	}
 
-	if ( position > 800) {
+	if ( position > 800 || ($(document).height() == $(window.top).height())) {
 		jQuery('#scroll-to-bottom').fadeOut();
 	} else {
 		jQuery('#scroll-to-bottom').fadeIn();
@@ -446,7 +446,7 @@ function scroll_to( position ) {
 jQuery(document).ready(function(){
 	scroll_to($(this).scrollTop());
 
-	jQuery(window).scroll(function(){
+	jQuery(window.top).scroll(function(){
 		scroll_to($(this).scrollTop());
 	});
 
@@ -456,7 +456,7 @@ jQuery(document).ready(function(){
 		return false;
 	});
 	jQuery('#scroll-to-bottom').on('click',function(){
-		jQuery('html, body').animate({scrollTop: $(document).height()-$(window).height()},1200);
+		jQuery('html, body').animate({scrollTop: $(document).height()-$(window.top).height()},1200);
 		return false;
 	});
 });

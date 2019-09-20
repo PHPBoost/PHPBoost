@@ -110,23 +110,24 @@ ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-pa
 	border-color: #315A86;
 }
 
-.block-title, .block-body {
+.block-title,
+.block-body,
+.block-footer {
 	background-color: #FBFDFF;
 	border-color: #DDDDDD;
 }
 
 .no-style .block-title,
-.no-style .block-body {
+.no-style .block-body,
+.no-style .block-footer {
 	background-color: transparent!important;
 	border-color: transparent!important;
 }
 
-.default-element {
-	border-color: #2F9674 #F1F1F1 #F1F1F1 #F1F1F1;
-}
-
-.deactivate-element {
-	border-color: #AAAAAA #F1F1F1 #F1F1F1 #F1F1F1;
+.default-element .block-title,
+.default-element .block-body,
+.default-element .block-footer {
+	border-color: #2F9674;
 }
 
 .explorer h1 {
@@ -938,13 +939,12 @@ h3.menu-title {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
+.admin-li.current > a { background-color: rgba(255, 255, 255, 0.1); }
 
 .admin-menu ul.modal-menu li:hover > a,
 .modal-menu li.current > a,
 .modal-menu li:hover > a,
-.admin-li.current > li > a { background-color: rgba(54, 100, 147, 0.2); }
-
-.admin-li.current > a { background-color: rgba(54, 100, 147, 0.5); }
+.admin-li.current:hover > a { border-color: #366493; }
 
 nav.admin-index li:hover {
 	background-color: rgba(0, 0, 0, 0.1);
@@ -1110,19 +1110,19 @@ a:hover.js-menu-button {
 }
 
 .menu-block-libelle {
-	background-color: #f9f9f9;
-	border-color: #8F8F8F;
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
 	color: #0E2A48;
 }
 
 .menus-block-add {
-	background-color: #f9f9f9;
-	border-color: #8F8F8F;
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
 	color: #0E2A48;
 }
 
 .menus-block-add-links:last-child {
-	border-color: #8F8F8F;
+	border-color: #DDDDDD;
 }
 
 .menus-block-container {

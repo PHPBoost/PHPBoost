@@ -2,13 +2,13 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-langs-container" class="admin-elements-container langs-elements-container installed-elements-container">
 		<header class="legend">{@langs.installed_langs}</header>
-		<div class="content elements-container">
+		<div class="elements-container columns-3">
 			# START langs_installed #
 			<article class="block admin-element lang-element installed-element# IF langs_installed.C_IS_DEFAULT_LANG # default-element# ENDIF ## IF langs_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-				<header>
+				<header class="block-title">
 					<div class="admin-element-menu-container">
 						# IF langs_installed.C_IS_DEFAULT_LANG #
-						<a href="#" class="admin-element-menu-title">{@langs.default}</a>
+							<a href="#" class="admin-element-menu-title">{@langs.default}</a>
 						# ELSE #
 						<a href="#" id="admin-element-menu-title-{langs_installed.LANG_NUMBER}" class="admin-element-menu-title" aria-label="${LangLoader::get_message('action_menu.open', 'admin-common')}"># IF langs_installed.C_COMPATIBLE ## IF langs_installed.C_IS_ACTIVATED #${LangLoader::get_message('actions', 'admin-common')}# ELSE #${LangLoader::get_message('disabled', 'common')}# ENDIF ## ELSE #${LangLoader::get_message('not_compatible', 'admin-common')}# ENDIF #<i class="fa fa-caret-right" aria-hidden="true"></i></a>
 						<ul class="admin-menu-elements-content">
@@ -40,13 +40,13 @@
 						# ENDIF #
 						{langs_installed.NAME}<em> ({langs_installed.VERSION})</em></h2>
 				</header>
-				<div class="content admin-element-content">
+				<div class="block-body admin-element-content">
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_installed.COMPATIBILITY}</span><br />
 					</div>
 				</div>
-				<footer>
+				<footer class="block-footer">
 					# IF langs_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						# IF langs_installed.C_IS_DEFAULT_LANG #

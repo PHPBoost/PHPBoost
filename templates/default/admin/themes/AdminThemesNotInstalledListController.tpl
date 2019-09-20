@@ -5,10 +5,10 @@
 	<section id="not-installed-themes-container" class="admin-elements-container themes-elements-container not-installed-elements-container">
 		<header class="legend">{@themes.available_themes}</header>
 		# IF C_THEME_AVAILABLE #
-		<div class="content elements-container">
+		<div class="elements-container columns-3">
 			# START themes_not_installed #
 			<article class="block admin-element theme-element not-installed-element# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-				<header>
+				<header class="block-title">
 					<div class="admin-element-menu-container">
 						# IF themes_not_installed.C_COMPATIBLE #
 							<button type="submit" class="submit admin-element-menu-title" name="add-{themes_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
@@ -28,7 +28,7 @@
 					<h2 class="not-installed-theme-name">{themes_not_installed.NAME}<em> ({themes_not_installed.VERSION})</em></h2>
 				</header>
 
-				<div class="content admin-element-content">
+				<div class="block-body admin-element-content">
 					<div class="admin-element-picture" >
 						# IF themes_not_installed.C_PICTURES #
 							<a href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection">
@@ -53,7 +53,7 @@
 					</div>
 				</div>
 
-				<footer>
+				<footer class="block-footer">
 					# IF themes_not_installed.C_COMPATIBLE #
 						<div class="admin-element-auth-container">
 							<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>

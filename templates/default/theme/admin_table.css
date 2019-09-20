@@ -267,12 +267,13 @@ table tfoot nav.pagination a span.current-page {
 .bt tfoot th::before,
 .bt tfoot td::before,
 .bt tbody td::before {
-  content: attr(data-th) ": ";
+  content: attr(data-th) " ";
   display: inline-block;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   font-weight: bold;
-  width: 6.5em;
+  min-width: 7em;
+  width: 35%;
 }
 
 .bt tfoot th.bt-hide,

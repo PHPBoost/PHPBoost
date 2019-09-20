@@ -17,9 +17,7 @@
 					</li>
 				</ul>
 		</nav>
-		<span id="scroll-to-bottom" class="scroll-to" aria-label="${LangLoader::get_message('scroll-to.bottom', 'user-common')}"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
-
-
+		
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
 

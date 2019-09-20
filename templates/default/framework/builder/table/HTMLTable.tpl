@@ -20,14 +20,18 @@
 			# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
 			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 				# IF header_column.C_SORTABLE #
-				<span class="html-table-header-sortable">
-					<a href="{header_column.U_SORT_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-up# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #" aria-hidden="true" aria-label="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
+				<span class="html-table-header-sortable# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #">
+					<a href="{header_column.U_SORT_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+						<i class="fa fa-caret-up" aria-hidden="true"></i>
+					</a>
 				</span>
 				# ENDIF #
 				<span class="html-table-header-name">{header_column.NAME}</span>
 				# IF header_column.C_SORTABLE #
-				<span class="html-table-header-sortable">
-					<a href="{header_column.U_SORT_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-down# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #" aria-hidden="true" aria-label="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
+				<span class="html-table-header-sortable# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
+					<a href="{header_column.U_SORT_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+						<i class="fa fa-caret-down" aria-hidden="true"></i>
+					</a>
 				</span>
 				# ENDIF #
 			</th>

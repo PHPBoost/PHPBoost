@@ -1,12 +1,10 @@
-/* --------------------------------------
-		table.css
-Contient les elements pour l'affichage des tableaux HTML et responsive.
- - Affichage des tableaux basic
- - Table responsive basictable.js
--------------------------------------- */
+/*
+ * Contains elements for responsive HTML tables.
+ * 		- Basics
+ * 		- Responsive Table - basictable.js
+*/
 
-/* -- Affichage des tableaux basic -- */
-/* ---------------------------------- */
+/* --- Basics --------------------------------------------------------------- */
 table {
 	margin: 0.618em 0;
 	padding: 0;
@@ -17,7 +15,7 @@ table {
 	border-color: transparent;
 }
 
-/* --- Entete du tableau --- */
+/* --- Header --- */
 table caption {
 	margin: 0.456em 0 0.456em 1.482em;
 	border-width: 0 0 1px;
@@ -35,7 +33,7 @@ table thead th,
 	font-weight: normal;
 }
 
-/* --- Contenu du tableau --- */
+/* --- Content --- */
 table tbody td,
 .table-element-container {
 	padding: 0.228em;
@@ -54,7 +52,7 @@ table tbody td,
 	border-width: 0 0 1px;
 }
 
-/* --- Pied de tableau --- */
+/* --- Footer --- */
 table tfoot tr td {
 	padding: 0.228em;
 	font-size: 0.9em;
@@ -81,7 +79,7 @@ table tfoot tr td select {
 	}
 }
 
-/* --- Patch thead tableaux formates --- */
+/* --- thead patch for formated tables --- */
 .formatter-table td.formatter-table-head {
 	padding: 0.618em;
 	font-size: 1.482em;
@@ -98,8 +96,7 @@ table tfoot tr td select {
 }
 
 
-/* -- Table responsive basictable.js -- */
-/* ------------------------------------ */
+/* --- Responsive Table - basictable.js ------------------------------------- */
 .responsive-table {
 	max-width: 100%;
 	overflow: auto;
@@ -155,8 +152,9 @@ table tfoot tr td select {
 
 .bt tbody td:before {
 	display: inline-block;
+	min-width: 7em;
 	width: 35%;
-	content: attr(data-th) " ";
+	content: attr(data-th);
 	font-weight: bold;
 }
 
@@ -182,15 +180,15 @@ table tfoot tr td select {
   display: none;
 }
 
-/* --- Taille des colonnes --- */
+/* --- Options -------------------------------------------------------------- */
+/* --- Columns sizes --- */
 .col-smaller { width: 3em;  }
 .col-small   { width: 6em;  }
 .col-large   { width: 9em;  }
 .col-larger  { width: 12em; }
 .col-xlarge  { width: 15em; }
 
-/* --- BBCode --- */
-/* --- Bordures partout --- */
+/* --- Bordered --- */
 .bordered td {
 	border-width: 1px 0 0 1px;
 	border-style: solid;

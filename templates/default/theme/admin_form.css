@@ -267,7 +267,7 @@ optgroup {
 	margin: 0;
 	position: relative;
 	display: inline-block;
-	margin: 0.228em 0.618em 0 0;
+	margin: 0.228em 1em 0 0;
 }
 
 .form-field-checkbox-mini [type="checkbox"]:not(:checked),
@@ -1088,9 +1088,9 @@ div.field-required:after {
 	}
 
 	.html-table-header-sortable a {
-		padding: 0 0.256em;
+		padding: 0 0.382em;
 		display: inline-block;
-		border-radius: 100%
+		border-radius: 0.256em
 	}
 }
 

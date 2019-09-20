@@ -1,7 +1,6 @@
-/* --------------------------------------
-		colors.css
-Défini les couleurs du thème
--------------------------------------- */
+/*
+ * Contains all elements colors
+*/
 
 /* -- design.css
     ####   #####  #####  #####  #####  #   #
@@ -186,29 +185,12 @@ i.message-announce-new { color: #62CF5D; }
 .sharing-element-print > a    { background-color: #999999; }
 .sharing-element-sms > a      { background-color: #999999; }
 
-#tooltip {
-	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
-	background-color: #FFFFFF;
-}
-
 .tab-container > nav > ul > li a.shown {
 	background-color: rgba(54, 100, 147, 0.2);
 }
 
 .tab-container .form-subtitle h2 {
 	border-color: #DDDDDD;
-}
-
-.fa-finish:before {
-	color: rgba(0, 255, 0, 0.4);
-}
-
-.wizard-container .wizard-header li .completed-step {
-  background-color: rgba(0, 255, 0, 0.4);
-}
-
-.wizard-container .wizard-header .progress {
-	background-color: rgba(54, 100, 147, 0.2);
 }
 
 
@@ -778,7 +760,8 @@ a[class*='lightcase-icon-']:hover {
 }
 
 @media screen and (min-width: 641px) {
-    html[data-lc-type=image] #lightcase-content, html[data-lc-type=video] #lightcase-content {
+    html[data-lc-type=image] #lightcase-content,
+	html[data-lc-type=video] #lightcase-content {
         background-color: #333333;
     }
 }
@@ -828,19 +811,51 @@ a[class*='lightcase-icon-']:hover {
     #      #      #   #  #   #    #    #   # #      #
     #      #####  #####  #####  #####  #    ##  #####
 ----------------------------------------------------------------------------- */
-.modal-btn {
-    background-color: rgba(54,100,147,.2);
-    border-color: rgba(54,100,147,.6);
+
+@media { /* --- multiTabs --- */
+	.modal-btn {
+	    background-color: rgba(54,100,147,.2);
+	    border-color: rgba(54,100,147,.6);
+	}
+
+	.accordion-container > nav > ul > li > a {
+	    border-color: #366493;
+	    background-color: rgba(54,100,147,.2);
+	}
+
+	.tabs-container > nav > ul > li a.active-tab {
+	    background-color: rgba(54,100,147,.2);
+	}
+
+	.close-modal {
+	    color: #fff;
+	}
+
+	.modal { background-color: rgba(0, 0, 0, 0.5); }
+	.modal .content-panel { background-color: #f5f7fb; }
 }
 
-.accordion-container > nav > ul > li > a {
-    border-color: #366493;
-    background-color: rgba(54,100,147,.2);
+@media { /* --- tooltip --- */
+	#tooltip {
+		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
+		background-color: #FFFFFF;
+	}
 }
 
-.tabs-container > nav > ul > li a.active-tab {
-    background-color: rgba(54,100,147,.2);
+@media { /* --- wizard --- */
+	.wizard-container .wizard-header li .completed-step {
+	  	background-color: rgba(0, 255, 0, 0.4);
+	}
+
+	.wizard-container .wizard-header .progress {
+		background-color: rgba(54, 100, 147, 0.2);
+	}
+
+	.fa-finish:before {
+		color: rgba(0, 255, 0, 0.4);
+	}
 }
+
 
 /* -- miscellaneous
      ###   #   #  #####  #####  #####  #####
