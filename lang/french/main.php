@@ -274,13 +274,15 @@ $LANG['moveto'] = 'Déplacer vers';
 $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
+// D&d upload
+$LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
 
-##########Panneau de modération##########
+// Moderation panel
 $LANG['moderation_panel'] = 'Panneau de modération';
 $LANG['user_contact_pm'] = 'Contacter par message privé';
 $LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="smaller">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
-//Gestion des sanctions
+// Sanctions management
 $LANG['punishment'] = 'Sanctions';
 $LANG['punishment_management'] = 'Gestion des sanctions';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';

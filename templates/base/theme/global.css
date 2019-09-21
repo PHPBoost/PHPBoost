@@ -611,8 +611,32 @@ li.small-block .fa-stack {
 }
 
 
-/* -- Systeme d Upload -- */
-/* ---------------------- */
+/* --- Upload system -------------------------------------------------------- */
+.dnd-dropzone {
+	border-style: dashed;
+}
+
+.dnd-uploader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.upload-btn.submit {
+    padding: 0.309em 0.618em;
+    font-size: 1.256em;
+    display: inline-block;
+	cursor: pointer;
+}
+
 #module-user-upload {
 	margin: 0;
 	padding: 0.309em;

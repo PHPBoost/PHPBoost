@@ -375,6 +375,10 @@ else
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => AppContext::get_current_user()->get_id(),
 		'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
+		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+
+		'L_DND_FILES' => $LANG['drag.and.drop.files'],
+
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],

@@ -1308,14 +1308,58 @@ div.container-block-absolute > div {
 
 
 /* -- Systeme d'Upload ========================================== */
+.dnd-dropzone {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
 
-.upload-address-bar {
-	margin: 0 25px;
-	padding: 6px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	border-radius: 3px;
+#inputfile {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#ready-to-load ul {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#ready-to-load span {
+    padding: 0.309em;
+    margin-right: 0.309em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#ready-to-load img {
+    margin-right: 0.256em
+}
+
+.dnd-dropzone {
+    border: 2px dashed #DDDDDD;
+}
+
+.dnd-dropzone.dragover {
+    background: rgba(54, 100, 147, 0.1);
+}
+
+#ready-to-load span {
+    background-color: #FFFFF;
+    border-color: #DDDDDD;
 }
 
 .upload-address-bar-links {

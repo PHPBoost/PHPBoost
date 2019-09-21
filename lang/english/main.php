@@ -274,8 +274,10 @@ $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $LANG['popup_insert'] = 'Insert code into the form';
+// D&d upload
+$LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
 
-##########Moderation panel##########
+// Moderation panel
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
 $LANG['user_alternative_pm'] = 'Private message sent to the member <span class="smaller">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';

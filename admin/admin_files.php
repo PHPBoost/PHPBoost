@@ -351,6 +351,10 @@ else
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'URL' => $url,
+		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+
+		'L_DND_FILES' => $LANG['drag.and.drop.files'],
+
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
