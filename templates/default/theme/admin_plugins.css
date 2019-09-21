@@ -68,7 +68,7 @@
         position: fixed;
         top: 0;
         right: 0;
-        width:100%;
+        width: calc(100% - 230px);
         height:100%;
     }
 

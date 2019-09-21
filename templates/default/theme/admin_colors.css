@@ -16,7 +16,7 @@
  	}
 
  	#header-admin a 	  { color: #F9FCFF; }
- 	#header-admin a:hover { color: #4372AA; }
+ 	#header-admin a:hover { color: #FFFFFF; }
 
  	.robot {
  		color: #FF6600;
@@ -453,6 +453,10 @@ table tfoot nav.pagination a span.current-page {
 
 /* --- Buttons
 ----------------------------------------------------------------------------- */
+.bbcode {
+	border-color: #DDDDDD !important;
+}
+
 button,
 .button {
 	background-color: #F9F9F9;
@@ -936,10 +940,10 @@ h3.menu-title {
 /* --- admin_menus --- */
 
 .admin-menu > ul > li:hover {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
-.admin-li.current > a { background-color: rgba(255, 255, 255, 0.1); }
+.admin-li.current:not(:hover) > a { background-color: rgba(255, 255, 255, 0.1); }
 
 .admin-menu ul.modal-menu li:hover > a,
 .modal-menu li.current > a,
@@ -959,7 +963,7 @@ nav.admin-index a {
 }
 
 .admin-li > a:hover {
-	color: #366493;
+	text-shadow: 5px 5px #000000;
 }
 
 .modal-menu > li > a {
