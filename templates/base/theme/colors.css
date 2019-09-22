@@ -10,8 +10,8 @@
     ####   #####  #####  #####  #####  #   #
 ----------------------------------------------------------------------------- */
 body {
-	background-color: #FFFFFF;
-	color: #353535;
+	background-color: #f5f7fb;
+	color: #555555;
 }
 
 #site-slogan { color: #81A4C8; }
@@ -635,6 +635,15 @@ h3.formatter-title {
 .xmlhttprequest-result-search {
 	background-color: #FFFFFF;
 	border-color: #CCCCCC;
+}
+
+.dnd-dropzone {
+    border: 2px dashed #DDDDDD;
+}
+
+#ready-to-load span {
+    background-color: #FFFFF;
+    border-color: #DDDDDD;
 }
 
 .upload-address-bar {
