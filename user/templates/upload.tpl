@@ -348,7 +348,7 @@
 						<div id="drop-zone">
 							<div class="dnd-dropzone">
 								<label for="" class="dnd-ufiles">{L_DND_FILES}</label>
-								<input type="file" name="ufile" id="inputfile" multiple>
+								<input type="file" name="upload_file[]" id="inputfile" multiple>
 							</div>
 							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
 						</div>
@@ -370,8 +370,8 @@
 						<legend>{L_ADD_FILES}</legend>
 						<div class="form-element">
 							<div class="form-field">
-								<input type="file" name="upload_file" id="upload-file">
-								<input type="hidden" name="max_file_size" value="2000000">
+								<input type="file" name="ufile" id="upload-file">
+								<input type="hidden" name="max_file_size2" value="2000000">
 							</div>
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
