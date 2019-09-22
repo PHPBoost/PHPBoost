@@ -613,28 +613,44 @@ li.small-block .fa-stack {
 
 /* --- Upload system -------------------------------------------------------- */
 .dnd-dropzone {
-	border-style: dashed;
-}
-
-.dnd-uploader {
+    min-height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
 }
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
+
+#inputfile {
+    cursor: pointer;
     opacity: 0;
-    overflow: hidden;
     position: absolute;
-    z-index: -1;
+    width: 100%;
+    height: 100%;
 }
-.upload-btn.submit {
-    padding: 0.309em 0.618em;
-    font-size: 1.256em;
-    display: inline-block;
-	cursor: pointer;
+
+#ready-to-load ul {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#ready-to-load span {
+    padding: 0.309em;
+    margin-right: 0.309em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#ready-to-load img {
+    margin-right: 0.256em
 }
 
 #module-user-upload {
