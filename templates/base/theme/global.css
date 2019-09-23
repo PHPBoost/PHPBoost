@@ -611,7 +611,8 @@ li.small-block .fa-stack {
 }
 
 
-/* --- Upload system -------------------------------------------------------- */
+/* --- Upload system -------------------------------------------------------- */.dnd-area { position: relative;}
+
 .dnd-dropzone {
     min-height: 200px;
     display: flex;
@@ -621,36 +622,80 @@ li.small-block .fa-stack {
     position: relative;
 }
 
-#inputfile {
-    cursor: pointer;
+#new-multiple-files .submit[disabled] {
+    cursor: not-allowed;
+}
+
+.ufiles {
     opacity: 0;
     position: absolute;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+    background-color: transparent;
 }
 
-#ready-to-load ul {
+.ready-to-load {
+    position: absolute;
+    top: 0.618em;
+    right: 0;
+}
+
+.clear-list {
+    display: none;
+    margin: 0;
+}
+
+.files-nbr {
+    font-size:0.809em;
+    margin-top:2px;
+}
+
+.ulist {
     max-width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
 }
 
-#ready-to-load span {
+.upload-help {
+    border-radius: 100%;
+    padding: .309em 0.618em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.ulist li {
     padding: 0.309em;
-    margin-right: 0.309em;
+    margin: 0.456em 0.456em 0 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     border-style: solid;
     border-width: 1px;
+    line-height: 45px;
 }
 
-#ready-to-load img {
-    margin-right: 0.256em
+.ulist img,
+.ulist .far {
+    margin-right: 0.256em;
+    max-width: 80px;
+    max-height: 45px;
+}
+
+.close-item {
+    position: absolute;
+    top: -0.256em;
+    right: -0.256em;
+/* waiting */
+	display: none;
+
 }
 
 #module-user-upload {

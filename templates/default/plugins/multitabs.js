@@ -1,10 +1,12 @@
 /**
- * @copyright 	&copy; 2015-2019 Labsoweb
+ * Multi Tabs jQuery plugin - Version: 1.0
+ * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	1.0 - 2019 09 06
- * @since   	2019 09 06
+ * @version   	PHPBoost 5.3 - last update: 201909 06
+ * @since   	PHPBoost 5.3 - 2019 09 06
 */
+
 (function($) {
 
     $.fn.extend({

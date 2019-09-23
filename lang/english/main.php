@@ -276,6 +276,16 @@ $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its s
 $LANG['popup_insert'] = 'Insert code into the form';
 // D&d upload
 $LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
+$LANG['clear.list'] = 'Clear list';
+$LANG['upload.helper'] = 'Upload options';
+$LANG['max.files.size'] = 'Bytes allocated to members';
+$LANG['allowed.extensions'] = 'Allowed files extensions';
+$LANG['warning.upload.disabled'] = '<span class=\'message-helper warning small\'>
+<strong>Upload has been disabled for one of those reasons : <br /></strong>
+- At least one of the files weight is too large.<br />
+- The weight of all files exceeds the maximum allowed.<br />
+- At least one of the files extension is not valid.
+</span>';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Moderation panel';
