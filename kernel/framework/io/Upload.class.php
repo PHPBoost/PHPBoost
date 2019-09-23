@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 09 22
+ * @version     PHPBoost 5.2 - last update: 2019 09 23
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,14 +57,28 @@ class Upload
 			$this->isMultiple = is_array($file['name']);
 			$files_number = $this->isMultiple ? count(array_keys($file['name'])) : 1;
 			
+			if ($this->isMultiple)
+			{
+				for ($i = 1 ; $i <= $files_number ; $i++)
+				{
+					$this->original_filename = $file['name'][$i - 1];
+					if (!$this->check_file_path($regexp))
+					{
+						$this->error = 'e_upload_invalid_format';
+						return false;
+					}
+				}
+			}
+			
 			for ($i = 1 ; $i <= $files_number ; $i++)
 			{
 				$this->size = $this->isMultiple ? $file['size'][$i - 1] : $file['size'];
+				$total_size = $this->isMultiple ? array_sum($file['size']) : $file['size'];
 				$this->original_filename = $this->isMultiple ? $file['name'][$i - 1] : $file['name'];
 				
 				if ($this->size > 0)
 				{
-					if (($this->size/1024) <= $weight_max)
+					if (($total_size/1024) <= $weight_max)
 					{
 						//Récupération des infos sur le fichier à traiter.
 						$this->generate_file_info($uniq_name);
