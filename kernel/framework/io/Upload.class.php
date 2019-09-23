@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 03 23
+ * @version     PHPBoost 5.2 - last update: 2019 09 22
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,6 +22,8 @@ class Upload
 	private $original_filename = '';
 	private $size = 0;
 	private $contentCheck = true;
+	private $isMultiple = false;
+	private $files_parameters = array();
 
 	const UNIQ_NAME = true;
 	const NO_UNIQ_NAME = false;
@@ -50,60 +52,75 @@ class Upload
 	public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{
 		$file = $_FILES[$filepostname];
-		$this->size = $file['size'];
-		$this->original_filename = $file['name'];
-
-		if (!empty($file) && $this->size > 0)
+		if ($file)
 		{
-			if (($this->size/1024) <= $weight_max)
+			$this->isMultiple = is_array($file['name']);
+			$files_number = $this->isMultiple ? count(array_keys($file['name'])) : 1;
+			
+			for ($i = 1 ; $i <= $files_number ; $i++)
 			{
-				//Récupération des infos sur le fichier à traiter.
-				$this->generate_file_info($uniq_name);
-				if ($this->check_file_path($regexp))
+				$this->size = $this->isMultiple ? $file['size'][$i - 1] : $file['size'];
+				$this->original_filename = $this->isMultiple ? $file['name'][$i - 1] : $file['name'];
+				
+				if ($this->size > 0)
 				{
-					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
+					if (($this->size/1024) <= $weight_max)
 					{
-						$this->error = self::error_manager($file['error']);
-						if (empty($this->error))
+						//Récupération des infos sur le fichier à traiter.
+						$this->generate_file_info($uniq_name);
+						if ($this->check_file_path($regexp))
 						{
-							if (!empty($this->filename) && !empty($file['tmp_name']))
+							if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
 							{
-								if ($this->contentCheck && !$this->check_file_content($file['tmp_name']))
+								$this->error = self::error_manager($this->isMultiple ? $file['error'][$i - 1] : $file['error']);
+								if (empty($this->error))
 								{
-									$this->error = 'e_upload_php_code';
-									return false;
-								}
+									$tmp_name = $this->isMultiple ? $file['tmp_name'][$i - 1] : $file['tmp_name'];
+									if (!empty($this->filename) && !empty($tmp_name))
+									{
+										if ($this->contentCheck && !$this->check_file_content($tmp_name))
+										{
+											$this->error = 'e_upload_php_code';
+											return false;
+										}
 
-								if (!move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename))
-								{
-									$this->error = 'e_upload_error';
-								}
-								else
-								{
-									return true;
+										if (!move_uploaded_file($tmp_name, $this->base_directory . $this->filename))
+										{
+											$this->error = 'e_upload_error';
+										}
+										else
+										{
+											$this->files_parameters[] = array(
+												'name'      => $this->original_filename, 
+												'path'      => $this->filename,
+												'size'      => $this->get_human_readable_size(),
+												'extension' => $this->extension
+											);
+										}
+									}
+									else
+									{
+										$this->error = 'e_upload_error';
+									}
 								}
 							}
 							else
 							{
-								$this->error = 'e_upload_error';
+								$this->error = 'e_upload_already_exist';
 							}
 						}
+						else
+							$this->error = 'e_upload_invalid_format';
 					}
 					else
-					{
-						$this->error = 'e_upload_already_exist';
-					}
+						$this->error = 'e_upload_max_weight';
 				}
 				else
-					$this->error = 'e_upload_invalid_format';
+					$this->error = 'e_upload_error';
 			}
-			else
-				$this->error = 'e_upload_max_weight';
 		}
-		else
-			$this->error = 'e_upload_error';
-
-		return false;
+		
+		return $this->error ? false : true;
 	}
 
 	/**
@@ -276,5 +293,6 @@ class Upload
 	public function get_original_filename() { return $this->original_filename; }
 	public function get_filename() { return $this->filename; }
 	public function get_size() { return $this->size; }
+	public function get_files_parameters() { return $this->files_parameters; }
 }
 ?>
