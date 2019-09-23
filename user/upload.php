@@ -270,7 +270,6 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'L_ROOT' => $LANG['root'],
 		'L_URL' => $LANG['url'],
 		'L_SUBMIT' => $LANG['submit'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_display_name() . '</a>/'
 	));
 
 	if ($get_error == 'folder_contains_folder')
@@ -406,7 +405,6 @@ else
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_URL' => $LANG['url'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_display_name() . '</a>/'
 	));
 
 	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
