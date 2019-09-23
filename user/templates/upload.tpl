@@ -1,4 +1,5 @@
-	<script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/dndfiles.js"></script>
+<script>
 	<!--
 	function insertAtCursor(myField, myValue)
 	{
@@ -304,32 +305,6 @@
 			}
 		}
 	}
-
-	// D&D multiple files
-	$(document).ready(function(){
-		var $input = $('#inputfile');
-
-		$input.on('change', function(){
-			var fileNbr = $input[0].files.length,
-				items = $input[0].files,
-				list = '';
-			$('#ready-to-upload p').innerHTML = 'Files number: ' + fileNbr;
-			for(var i=0; i < fileNbr; i++) {
-				var fileName = items[i].name,
-					fileSize = items[i].size,
-					fileType = items[i].type;
-				if(fileType.indexOf('image/') === 0)
-				{
-				  list += '<span><img width="40" src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'</span>';
-				} else
-				list += '<span>'+fileName+'</span>';
-				// list += '<li>'+fileName+' / '+ fileSize +' / '+ fileType +'</li>';
-				// console.log(list);
-			}
-			$('#ready-to-load ul').append(list);
-		})
-	});
-	-->
 </script>
 
 
@@ -345,22 +320,48 @@
 				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 					<fieldset>
 						<legend>{L_ADD_FILES}</legend>
-						<div id="drop-zone">
+						<div class="dnd-area">
+
 							<div class="dnd-dropzone">
-								<label for="" class="dnd-ufiles">{L_DND_FILES}</label>
-								<input type="file" name="upload_file[]" id="inputfile" multiple>
+								<label for="inputfiles" class="dnd-label">{L_DND_FILES} <p></p></label>
+								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 							</div>
 							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+							<div class="ready-to-load">
+								<button type="button" class="clear-list">{L_CLEAR_LIST}</button>
+								<span class="fa-stack fa-lg">
+									<i class="far fa-file fa-stack-2x "></i>
+									<strong class="fa-stack-1x files-nbr"></strong>
+								</span>
+							</div>
+							<div class="modal-container">
+								<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
+								<div id="upload-helper" class="modal modal-animation">
+									<div class="close-modal" aria-label="close"></div>
+									<div class="content-panel">
+										<h3>{L_UPLOAD_HELPER}</h3>
+										<p><strong>{L_MAX_FILES_SIZE} :</strong> {SIZE_LIMIT}</p>
+										<p><strong>{L_ALLOWED_EXTENTIONS} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+									</div>
+								</div>
+							</div>
 						</div>
+						<ul class="ulist">
+						</ul>
 						<input type="hidden" name="token" value="{TOKEN}">
-						<div id="ready-to-load">
-							<p></p>
-							<ul></ul>
-						</div>
 						<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
 					</fieldset>
 				</form>
 			</div>
+			<script>
+				$('#inputfiles').dndfiles({
+					multiple: true,
+	                maxFileSize: '{MAX_WEIGHT}',
+	                maxFilesSize: '{REAL_SIZE_LIMIT}',
+	                allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+	                warningText: ${escapejs(L_WARNING_DISABLED)},
+				});
+			</script>
 
 			<!-- single -->
 			<div id="new-file">
