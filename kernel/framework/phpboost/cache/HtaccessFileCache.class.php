@@ -321,21 +321,21 @@ class HtaccessFileCache implements CacheData
 	{
 		$domain = AppContext::get_request()->get_domain_name();
 		
-		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled())
+		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
 			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
 			$this->add_line('RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]');
 		}
 		
-		if (!$this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
+		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to NON-www');
 			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
 			$this->add_line('RewriteRule ^(.*)$ http://%1/$1 [R=301,L]');
 		}
 		
-		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled())
+		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
 			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
@@ -347,7 +347,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]');
 		}
 		
-		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
+		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Force to use HTTPS AND ...');
 			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
