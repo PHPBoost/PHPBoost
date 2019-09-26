@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 04
+ * @version   	PHPBoost 5.2 - last update: 2019 09 26
  * @since   	PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,10 +63,13 @@ if (isset($_FILES['gallery'])) //Upload
 				$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 
 			$name = TextHelper::strprotect($request->get_postvalue('name', ''));
-			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), AppContext::get_current_user()->get_id());
-			if ($Gallery->get_error() != '')
-				$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
-
+			foreach ($Upload->get_files_parameters() as $parameters)
+			{
+				$idpic = $Gallery->Add_pics($idcat_post, $name, $parameters['path'], AppContext::get_current_user()->get_id());
+				if ($Gallery->get_error() != '')
+					$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
+			}
+			
 			//Régénération du cache des photos aléatoires.
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 03 05
+ * @version   	PHPBoost 5.2 - last update: 2019 09 26
  * @since   	PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -127,12 +127,15 @@ elseif (isset($_FILES['gallery'])) //Upload
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
-
-			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), AppContext::get_current_user()->get_id());
-			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Upload->get_error()) . '#message_helper');
-
+				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Gallery->get_error()) . '#message_helper');
+			
+			foreach ($Upload->get_files_parameters() as $parameters)
+			{
+				$idpic = $Gallery->Add_pics($idcat_post, $name_post, $parameters['path'], AppContext::get_current_user()->get_id());
+				if ($Gallery->get_error() != '')
+					AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Gallery->get_error()) . '#message_helper');
+			}
+			
 			//Régénération du cache des photos aléatoires.
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();
