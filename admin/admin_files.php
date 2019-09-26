@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 21
+ * @version   	PHPBoost 5.2 - last update: 2019 09 26
  * @since   	PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,8 +76,11 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_id();
 			$user_id = max($user_id, $folder_member);
 
-			$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => $user_id, 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
-			$id_file = $result->get_last_inserted_id();
+			foreach ($Upload->get_files_parameters() as $parameters)
+			{
+				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => $user_id, 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
+				$id_file = $result->get_last_inserted_id();
+			}
 		}
 	}
 	else
