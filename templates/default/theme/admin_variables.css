@@ -1,27 +1,80 @@
 :root {
-    --txt-color: #353535;
-    --bkg-color: #F1F2F3;
+
+    --txt-dark-color: #202020;
+    --txt-mid-color:  #353535;
+    --txt-lite-color: #555555;
+
+    --bkgd-color: #EDF1F5;
+    --bkgd-option: #FFFFFF;
+
     --bdr-color: #DDDDDD;
 
-    --notice-dark-color:   #888888;
-    --notice-mid-color:    #c3c3c3;
-    --notice-lite-color:   #F0F0F0;
+    --notice-dark-color  : #888888;
+    --notice-lite-color  : rgba(136, 136, 136, 0.2);
 
-    --question-dark-color: #3B88AE;
-    --question-mid-color:  #adddf5;
-    --question-lite-color: #DAEEF8;
+    --question-dark-color: #0066cc;
+    --question-lite-color: rgba(0, 102, 204, 0.2);
 
-    --success-dark-color:  #478948;
-    --success-mid-color:   #c0f0ad;
-    --success-lite-color:  #E0F1D9;
+    --success-dark-color : #40b73a;
+    --success-lite-color : rgba(64, 184, 58, 0.2);
 
-    --warning-dark-color:  #C19954;
-    --warning-mid-color:   #f7dba0;
-    --warning-lite-color:  #FBECCD;
+    --warning-dark-color : #E27B47;
+    --warning-lite-color : rgba(226, 123, 70, 0.2);
 
-    --error-dark-color:    #BA4B49;
-    --error-mid-color:     #eba0ac;
-    --error-lite-color:    #ECCDD2;
+    --error-dark-color   : #E0464A;
+    --error-lite-color   : rgba(224, 70, 74, 0.2);
+
+    --member-dark-color  : #2F9674;
+    --member-lite-color  : rgba(47, 150, 116, 0.2);
+
+    --modo-dark-color    : #48419D;
+    --modo-lite-color    : rgba(72, 65, 157, 0.2);
+
+    --admin-dark-color   : #353535;
+    --admin-lite-color   : rgba(54, 54, 54, 0.2);
+
+    /*
+     * bc = secondary adjacent color #paletton.com
+     * hex : #2F9674
+     * rgb : rgb(47, 150, 116)
+     * hsl : hsl(160, 52%, 39%)
+    */
+
+    --bc-prime-darker:  #096A4A;
+    --bc-prime-dark:    #168661;
+    --bc-prime-mid:     #2F9674;
+    --bc-prime-light:   #4CAA8B;
+    --bc-prime-lighter: #7CCAB0;
+
+    /*
+     * ad = tertiary adjacent color #paletton.com
+     * hex : #48419D
+     * rgb : rgb(72, 65, 157)
+     * hsl : hsl(245, 41%, 44%)
+    */
+
+    --ad-prime-darker:  #1E186E;
+    --ad-prime-dark:    #2E278C;
+    --ad-prime-mid:     #48419D;
+    --ad-prime-light:   #635DB2;
+    --ad-prime-lighter: #8F8ACF;
+
+    /*
+     * comp = complementary adjacent color #paletton.com
+     * hex : #48419D
+     * rgb : rgb(72, 65, 157)
+     * hsl : hsl(245, 41%, 44%)
+    */
+
+    --comp-prime-darker:  #A96E16;
+    --comp-prime-dark:    #D38D24;
+    --comp-prime-mid:     #E2A447;
+    --comp-prime-light:   #FBC169;
+    --comp-prime-lighter: #FFD18C;
+
+    /*
+     * Light on overlay
+    */
 
     --rgba-darker-05: rgba(0, 0, 0, 0.05);
     --rgba-darker-10: rgba(0, 0, 0, 0.10);
@@ -116,7 +169,7 @@
     --sat-prime-85:   #0f63b8;
     --sat-prime-90:   #0a63bd;
     --sat-prime-95:   #0563c2;
-    --sat-prime-100:  #0063c7;
+    --sat-prime-100:  #0066cc;
 
     /*
      * hue-prime = hue of primary color
@@ -148,32 +201,6 @@
     --hue-prime-330: #913663;
     --hue-prime-345: #91364d;
     --hue-prime-360: #913636;
-
-    /*
-     * bc = secondary color #paletton.com
-     * hex : #2F9674
-     * rgb : rgb(47, 150, 116)
-     * hsl : hsl(160, 52%, 39%)
-    */
-
-    --bc-prime-darker:  #096A4A;
-    --bc-prime-dark:    #168661;
-    --bc-prime-mid:     #2F9674;
-    --bc-prime-light:   #4CAA8B;
-    --bc-prime-lighter: #7CCAB0;
-
-    /*
-     * ad = secondary color #paletton.com
-     * hex : #48419D
-     * rgb : rgb(72, 65, 157)
-     * hsl : hsl(245, 41%, 44%)
-    */
-
-    --ad-prime-darker:  #1E186E;
-    --ad-prime-dark:    #2E278C;
-    --ad-prime-mid:     #48419D;
-    --ad-prime-light:   #635DB2;
-    --ad-prime-lighter: #8F8ACF;
 
 
 }

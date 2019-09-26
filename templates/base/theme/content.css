@@ -639,8 +639,11 @@ body.dragging * {
 /* -- Modules minis -- */
 /* ------------------- */
 .module-mini-container {
-	margin: 0 0 0.618em 0;
+	margin: 0 0 0.809em 0;
 	clear: both;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .module-mini-top {

@@ -1082,7 +1082,7 @@ div.field-required:after {
 	display: none;
 }
 
-@media (width > 768px) {
+@media (min-width: 768px) {
 	.html-table-header-sortable {
 		display: block;
 	}

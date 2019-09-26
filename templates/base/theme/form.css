@@ -592,7 +592,10 @@ textarea {
 
 .form-field-upload-file a {
 	position: absolute;
-	padding-left: 0.618em;
+	padding: 0 0.618em;
+	border-width: 1px 1px 1px 0;
+	border-style: solid;
+	border-color: transparent;
 }
 
 /* --- HTML Table--- */

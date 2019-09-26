@@ -1,4 +1,3 @@
-
 /*
  * conttains elements for all admin link menus
  *    - index menu
@@ -81,15 +80,6 @@
 		border-color: transparent;
 	}
 
-	/* .admin-menu ul.modal-menu li:hover > a,
-	.modal-menu li.current > a,
-	.modal-menu li:hover > a,
-	.admin-li.current:hover > a {
-		border-width: 1px;
-		border-style: solid;
-		border-color: transparent;
- 	} */
-
 	@media (min-width: 769px) {
 		.admin-menu {
 			margin-bottom: 20px;
@@ -108,7 +98,7 @@
 		text-align: center;
 	}
 
-	@media (width >= 769px) and (height >= 601px) {
+	@media (min-width: 769px) and (min-height: 601px) {
 		.admin-menu > ul > li {
 			width: 100%;
 			display: block;
@@ -201,26 +191,26 @@
 		width: 100%;
 	}
 
-	@media (width >= 479px) {
+	@media (min-width: 479px) {
 		.modal-menu > li {
 			vertical-align: text-top;
 			width: calc(100% / 2);
 		}
 	}
 
-	@media (width >= 1025px) {
+	@media (min-width: 1025px) {
 		.modal-menu > li {
 			width: calc(100% / 3);
 		}
 	}
 
-	@media (width >= 1367px) {
+	@media (min-width: 1367px) {
 		.modal-menu > li {
 			width: calc(100% / 4);
 		}
 	}
 
-	@media (width >= 1601px) {
+	@media (min-width: 1601px) {
 		.modal-menu > li {
 			width: calc(100% / 5);
 		}
@@ -273,7 +263,7 @@
 		text-align: left;
 	}
 
-	@media (width >= 769px) {
+	@media (min-width: 769px) {
 		#support-pbt {
 			display: block;
 		}

@@ -44,11 +44,11 @@ class SandboxGraphicsCSSController extends ModuleController
 	private function build_view()
 	{
 		$messages = array(
-			MessageHelper::display($this->lang['css.message.success'], MessageHelper::SUCCESS),
 			MessageHelper::display($this->lang['css.message.notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION),
+			MessageHelper::display($this->lang['css.message.success'], MessageHelper::SUCCESS),
 			MessageHelper::display($this->lang['css.message.warning'], MessageHelper::WARNING),
 			MessageHelper::display($this->lang['css.message.error'], MessageHelper::ERROR),
-			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION),
 			MessageHelper::display($this->lang['css.message.member'], MessageHelper::MEMBER_ONLY),
 			MessageHelper::display($this->lang['css.message.modo'], MessageHelper::MODERATOR_ONLY),
 			MessageHelper::display($this->lang['css.message.admin'], MessageHelper::ADMIN_ONLY)

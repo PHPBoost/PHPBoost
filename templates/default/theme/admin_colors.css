@@ -5,17 +5,17 @@
  /* --- admin_design.css ---------------------------------------------------- */
 @media {
 	body {
- 		background-color: #f5f7fb ;
+ 		background-color: #EDF1F5;
  		color: #555555;
  	}
 
  	#header-admin {
 		background-image: linear-gradient(to bottom, #366493 0%,#1c334a 100%);
 		background-color: #366493;
-		color: #F9FCFF;
+		color: #EDF1F5;
  	}
 
- 	#header-admin a 	  { color: #F9FCFF; }
+ 	#header-admin a 	  { color: #EDF1F5; }
  	#header-admin a:hover { color: #FFFFFF; }
 
  	.robot {
@@ -32,7 +32,7 @@
  	}
 
 	.scroll-to         	{ background-color: #366493; }
-	.scroll-to:hover	{ background-color: #0063c7; }
+	.scroll-to:hover	{ background-color: #0066cc; }
 
 	.scroll-to i       	{ color: rgba(255, 255, 255, 0.4); }
 	.scroll-to:hover i 	{ color: rgba(255, 255, 255, 1); }
@@ -224,6 +224,15 @@ div[class*="admin-index"] h2 {
 	#menustats a.js-menu-button {
 		color: #555555;
 	}
+}
+
+.dnd-dropzone {
+    border: 2px dashed #DDDDDD;
+}
+
+#ready-to-load span {
+    background-color: #FFFFF;
+    border-color: #DDDDDD;
 }
 
 .upload-address-bar {
@@ -486,7 +495,7 @@ button:active,
 }
 
 button.submit:hover {
-	background-color: #0063c7;
+	background-color: #0066cc;
 	border-color: #1c334a;
 }
 
@@ -543,7 +552,7 @@ legend,
 [type=file],
 textarea,
 select {
-	background-color: #f5f7fb;
+	background-color: #EDF1F5;
 	border-color: #DDDDDD;
 	color: #555555;
 }
@@ -592,7 +601,7 @@ optgroup {
 }
 
 .form-field-checkbox-mini [type="checkbox"] + label:after {
-	color: #0063c7;
+	color: #0066cc;
 }
 
 .form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
@@ -606,7 +615,7 @@ optgroup {
 }
 
 .form-field-checkbox [type="checkbox"]:checked + label:after {
-	background-color: #0063c7;
+	background-color: #0066cc;
 	color: #EEEEEE;
 }
 
@@ -1340,7 +1349,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 .modal { background-color: rgba(0, 0, 0, 0.5); }
-.modal .content-panel { background-color: #f5f7fb; }
+.modal .content-panel { background-color: #EDF1F5; }
 
 #header-admin .modal .content-panel a { color: #4372AA; }
 #header-admin .modal .content-panel a:hover { color: #2D4D73; }
