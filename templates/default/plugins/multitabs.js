@@ -53,9 +53,8 @@
                 $('.accordion-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
             } else if(options.pluginType == 'tabs') {
                 if(hashUrl) {
-                    if($('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').length){ // if target is nested
+                    if($('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').length) // if target is nested
                         $('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').addClass('active-panel').css('height', 'auto');
-                    }
                     $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
                     $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
                 } else {
@@ -65,7 +64,6 @@
                     $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
                 }
             }
-
 
             return this.each(function() {
                 var dataId = $(this).data('target'), // get the target name
@@ -85,6 +83,7 @@
                         $(targetPanel).addClass('active-panel'); // add activation class to the target
                         $('.close-modal').on('click', function() {
                             $(targetPanel).removeClass('active-panel'); // remove activation class from the target
+                            history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                         });
                         $('.modal [data-target]').on('click', function(){ // when trigger is inside one of the targets
                             $(this).closest('nav').siblings(targetPanel).removeClass('active-panel'); // remove activation class from the target
