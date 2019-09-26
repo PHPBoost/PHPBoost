@@ -320,10 +320,10 @@ span.not-compatible {
 .deactivate-element .admin-menu-element > * { background-color: #AAAAAA; }
 
 .admin-menu-element:hover > *,
-.admin-menu-element > button.submit:hover                 { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
+.admin-menu-element > .submit:hover                 { background-color: rgba(54, 100, 147, 0.2); color: #366493; }
 .deactivate-element .admin-menu-element:hover > *         { background-color: rgba(128, 128, 128, 0.2); color: #AAAAAA; }
 .not-compatible .admin-menu-element:hover > *,
-.not-compatible .admin-menu-element > button.submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
+.not-compatible .admin-menu-element > .submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
 
 .admin-element-auth-content {
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
@@ -341,13 +341,13 @@ span.not-compatible {
 	background-color:  #FFFFFF;
 }
 
-.multiple-select-menu-container button.select-all-button {
+.multiple-select-menu-container .select-all-button {
 	background-color: transparent;
 	border: none;
 	box-shadow: none;
 }
 
-.multiple-select-menu-container:hover button.select-all-button {
+.multiple-select-menu-container:hover .select-all-button {
 	background-color: #FFFFFF;
 	color: #366493;
 }
@@ -494,7 +494,7 @@ button:active,
 	color: #FEFEFE;
 }
 
-button.submit:hover {
+.submit:hover {
 	background-color: #0066cc;
 	border-color: #1c334a;
 }
@@ -504,7 +504,7 @@ button.submit:hover {
 	border-color: #C95A21;
 }
 
-button.submit.alt:hover {
+.submit.alt:hover {
 	background-color: #FFA172;
 	border-color: #E27B47;
 }
@@ -652,15 +652,9 @@ form .constraint-status-right textarea {
 	box-shadow: 0 0 0.309em rgba(71, 137, 72, 0.1);
 }
 
-input[disabled=disabled],
-input[disabled=disabled]:hover,
-input[disabled=disabled]:focus,
-textarea[disabled=disabled],
-textarea[disabled=disabled]:hover,
-textarea[disabled=disabled]:focus,
-select[disabled=disabled],
-select[disabled=disabled]:hover,
-select[disabled=disabled]:focus {
+[disabled=disabled],
+[disabled=disabled]:hover,
+[disabled=disabled]:focus {
 	background-color: #F1F1F1;
 	border-color: #CCCCCC;
 	color: #AAAAAA;
@@ -875,6 +869,21 @@ h4.stitle1 {
 	border-color: #CCCCCC;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
+
+.dnd-dropzone {
+    border: 2px dashed #DDDDDD;
+	background-color: #FFFFFF;
+}
+
+.dnd-dropzone.dragover {
+    background-color: rgba(54, 100, 147, 0.15);
+}
+
+.ulist li {
+    background-color: #FFFFFF;
+    border-color: #DDDDDD;
+}
+
 
 .progressbar-container {
 	background-color: #F5F5F5;

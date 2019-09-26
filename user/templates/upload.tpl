@@ -320,7 +320,6 @@
 					<fieldset>
 						<legend>{L_ADD_FILES}</legend>
 						<div class="dnd-area">
-
 							<div class="dnd-dropzone">
 								<label for="inputfiles" class="dnd-label">{L_DND_FILES} <p></p></label>
 								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
@@ -345,16 +344,19 @@
 								</div>
 							</div>
 						</div>
-						<ul class="ulist">
-						</ul>
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
+						<ul class="ulist"></ul>
+					</fieldset>
+					<fieldset class="fieldset-submit">
+						<div class="fieldset-inset">
+							<input type="hidden" name="token" value="{TOKEN}">
+							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
+						</div>
 					</fieldset>
 				</form>
 			</div>
 
 			<!-- single -->
-			<div id="new-file">
+			<!-- <div id="new-file">
 				# INCLUDE message_helper #
 				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 					<fieldset>
@@ -369,7 +371,7 @@
 							</div>
 					</fieldset>
 				</form>
-			</div>
+			</div> -->
 
 			<div class="upload-address-bar">
 				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
@@ -382,7 +384,7 @@
 				<a href="javascript:display_new_folder();">
 					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
 				</a>
-				<a href="javascript:document.getElementById('upload-file').click();">
+				<a href="javascript:document.getElementById('inputfiles').click();">
 					<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
 				</a>
 			</div>

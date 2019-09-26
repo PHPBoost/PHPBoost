@@ -271,27 +271,45 @@ $(document).ready(function(){
 
 	<div id="new-multiple-files">
 		# INCLUDE message_helper #
-		<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
+		<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
 			<fieldset>
 				<legend>{L_ADD_FILES}</legend>
-				<div id="drop-zone">
+				<div class="dnd-area">
 					<div class="dnd-dropzone">
-						<label for="" class="dnd-ufiles">{L_DND_FILES}</label>
-						<input type="file" name="ufile" id="inputfile" multiple>
+						<label for="inputfiles" class="dnd-label">{L_DND_FILES} <p></p></label>
+						<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 					</div>
 					<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+					<div class="ready-to-load">
+						<button type="button" class="clear-list">{L_CLEAR_LIST}</button>
+						<span class="fa-stack fa-lg">
+							<i class="far fa-file fa-stack-2x "></i>
+							<strong class="fa-stack-1x files-nbr"></strong>
+						</span>
+					</div>
+					<div class="modal-container">
+						<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
+						<div id="upload-helper" class="modal modal-animation">
+							<div class="close-modal" aria-label="close"></div>
+							<div class="content-panel">
+								<h3>{L_UPLOAD_HELPER}</h3>
+								<p><strong>{L_ALLOWED_EXTENTIONS} : </strong> "{ALLOWED_EXTENSIONS}"</p>
+							</div>
+						</div>
+					</div>
 				</div>
+				<ul class="ulist"></ul>
+			</fieldset>
+			<fieldset class="fieldset-submit">
+				<div class="fieldset-inset">
+				<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
-				<div id="ready-to-load">
-					<p></p>
-					<ul></ul>
 				</div>
-				<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
 			</fieldset>
 		</form>
 	</div>
 
-	<div id="new-file">
+	<!-- <div id="new-file">
 		# INCLUDE message_helper #
 		<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
 			<fieldset>
@@ -308,7 +326,7 @@ $(document).ready(function(){
 				</div>
 			</fieldset>
 		</form>
-	</div>
+	</div> -->
 
 	<fieldset>
 		<legend>{L_FILES_ACTION}</legend>
@@ -327,7 +345,7 @@ $(document).ready(function(){
 				<a href="javascript:display_new_folder();">
 					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
 				</a>
-				<a href="javascript:document.getElementById('upload-file').click();">
+				<a href="javascript:document.getElementById('inputfiles').click();">
 					<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
 				</a>
 			</div>
@@ -397,3 +415,15 @@ $(document).ready(function(){
 
 	<div class="spacer"></div>
 </div>
+<script>
+	$('#inputfiles').dndfiles({
+		multiple: true,
+		maxFileSize: '{MAX_WEIGHT}',
+		maxFilesSize: '-1',
+		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+		warningText: ${escapejs(L_WARNING_DISABLED)},
+		warningExtension: ${escapejs(L_WARNING_EXTENSION)},
+		warningFileSize: ${escapejs(L_WARNING_FILE_SIZE)},
+		warningFilesNbr: ${escapejs(L_WARNING_FILES_NBR)},
+	});
+</script>

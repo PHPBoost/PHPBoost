@@ -351,9 +351,19 @@ else
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'URL' => $url,
+
 		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
 
 		'L_DND_FILES' => $LANG['drag.and.drop.files'],
+		'L_CLEAR_LIST' => $LANG['clear.list'],
+		'L_UPLOAD_HELPER' => $LANG['upload.helper'],
+		'L_MAX_FILES_SIZE' => $LANG['max.files.size'],
+		'L_ALLOWED_EXTENTIONS' => $LANG['allowed.extensions'],
+		'L_WARNING_DISABLED' => $LANG['warning.upload.disabled'],
+		'L_WARNING_EXTENSION' => $LANG['warning.upload.extension'],
+		'L_WARNING_FILE_SIZE' => $LANG['warning.upload.file.size'],
+		'L_WARNING_FILES_NBR' => $LANG['warning.upload.files.nbr'],
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
