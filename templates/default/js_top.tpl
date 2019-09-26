@@ -32,6 +32,7 @@
 
 <script src="{PATH_TO_ROOT}/templates/default/plugins/autocomplete.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/basictable.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/dndfiles.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/easytabs.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/lightcase.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/menumaker.js"></script>

@@ -18,13 +18,20 @@
                 maxFileSize: '500000000',
                 maxFilesSize: '-1',
                 allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
-                warningText: 'Upload have been disabled because of bad file',
+                warningText: 'Upload have been disabled because of bad file:',
+                warningExtension: 'bad extension <br />',
+                warningFileSize: 'Too large file <br />',
+                warningFilesNbr: 'The size of the members allocated space is exceeded',
             };
             param = $.extend(settings, options);
 
             $(param.filesNbr).html('0');
 
-    		var $input = $(this);
+    		var $input = $(this),
+                extension,
+                fileSize,
+                fileName,
+                fileType;
             if(param.multiple) $input.attr('multiple', 'multiple');
 
             $input.on('dragover mouseover', function() {
@@ -49,6 +56,7 @@
                 $(param.filesList).empty();
                 $input.closest('form').find('button[type="submit"]').prop("disabled", false);
                 $input.closest('form').find('label p').html('');
+                $input.closest('form').find('label p').removeClass('message-helper warning small');
 
     			var filesNbr = $input[0].files.length,
                     totalWeight = 0,
@@ -60,11 +68,11 @@
                 if(filesNbr > 0) $('.clear-list').show();
 
                 for(var i=0; i < filesNbr; i++) {
-    				var fileName = items[i].name,
-    					fileSize = items[i].size,
-    					fileType = items[i].type,
-                        warningClass = '',
-                        extension = fileName.replace(/^.*\./, '');
+                    var warningClass = '';
+    				fileName = items[i].name;
+					fileSize = items[i].size;
+					fileType = items[i].type;
+                    extension = fileName.replace(/^.*\./, '');
                     if (extension == fileName) extension = '';
                     else extension = extension.toLowerCase();
 
@@ -91,9 +99,19 @@
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     			}
     			$(param.filesList).append(item);
+                console.log(param.allowedExtensions.indexOf(extension));
 
                 if($input.closest('form').find('button[type="submit"]').attr('disabled'))
+                {
+                    $input.closest('form').find('label p').addClass('message-helper warning small');
                     $input.closest('form').find('label p').append(param.warningText);
+                    if(param.allowedExtensions.indexOf(extension) === -1)
+                        $input.closest('form').find('label p').append(param.warningExtension);
+                    if(fileSize > param.maxFileSize)
+                        $input.closest('form').find('label p').append(param.warningFileSize);
+                    if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1)
+                        $input.closest('form').find('label p').append(param.warningFilesNbr);
+                }
 
                 $(param.filesList).find('.close-item').each(function(){
                     $(this).on('click', function(){
@@ -111,6 +129,7 @@
                     $(param.filesList).empty();
                     $input.closest('form').find('button[type="submit"]').prop("disabled", false);
                     $input.closest('form').find('label p').html('');
+                    $input.closest('form').find('label p').removeClass('message-helper warning small');
                 });
     		})
         }

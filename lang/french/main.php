@@ -280,12 +280,10 @@ $LANG['clear.list'] = 'Vider la liste';
 $LANG['upload.helper'] = 'Options de téléversement';
 $LANG['max.files.size'] = 'Espace alloué aux membres';
 $LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
-$LANG['warning.upload.disabled'] = '<span class=\'message-helper warning small\'>
-<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>
-- le poids d\'un des fichiers est trop important.<br />
-- l\'ensemble des fichiers dépasse l\'espace alloué aux membres.<br />
-- un fichier n\'a pas une extension valide.
-</span>';
+$LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';
+$LANG['warning.upload.extension'] = '- un des fichiers n\'a pas une extension valide.<br />';
+$LANG['warning.upload.file.size'] = '- le poids d\'un des fichiers est trop important.<br />';
+$LANG['warning.upload.files.nbr'] = '- l\'ensemble des fichiers dépasse l\'espace alloué aux membres.<br />';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Panneau de modération';

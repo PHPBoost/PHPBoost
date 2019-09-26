@@ -1,4 +1,3 @@
-<script src="{PATH_TO_ROOT}/templates/default/plugins/dndfiles.js"></script>
 <script>
 	<!--
 	function insertAtCursor(myField, myValue)
@@ -353,15 +352,6 @@
 					</fieldset>
 				</form>
 			</div>
-			<script>
-				$('#inputfiles').dndfiles({
-					multiple: true,
-	                maxFileSize: '{MAX_WEIGHT}',
-	                maxFilesSize: '{REAL_SIZE_LIMIT}',
-	                allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-	                warningText: ${escapejs(L_WARNING_DISABLED)},
-				});
-			</script>
 
 			<!-- single -->
 			<div id="new-file">
@@ -472,3 +462,15 @@
 		</footer>
 
 	</section>
+	<script>
+		$('#inputfiles').dndfiles({
+			multiple: true,
+			maxFileSize: '{MAX_WEIGHT}',
+			maxFilesSize: '{REAL_SIZE_LIMIT}',
+			allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+			warningText: ${escapejs(L_WARNING_DISABLED)},
+			warningExtension: ${escapejs(L_WARNING_EXTENSION)},
+			warningFileSize: ${escapejs(L_WARNING_FILE_SIZE)},
+			warningFilesNbr: ${escapejs(L_WARNING_FILES_NBR)},
+		});
+	</script>

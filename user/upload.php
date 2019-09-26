@@ -387,6 +387,9 @@ else
 		'L_MAX_FILES_SIZE' => $LANG['max.files.size'],
 		'L_ALLOWED_EXTENTIONS' => $LANG['allowed.extensions'],
 		'L_WARNING_DISABLED' => $LANG['warning.upload.disabled'],
+		'L_WARNING_EXTENSION' => $LANG['warning.upload.extension'],
+		'L_WARNING_FILE_SIZE' => $LANG['warning.upload.file.size'],
+		'L_WARNING_FILES_NBR' => $LANG['warning.upload.files.nbr'],
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
