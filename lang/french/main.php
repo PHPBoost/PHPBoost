@@ -278,12 +278,12 @@ $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 $LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
 $LANG['clear.list'] = 'Vider la liste';
 $LANG['upload.helper'] = 'Options de téléversement';
-$LANG['max.files.size'] = 'Espace alloué aux membres';
+$LANG['max.files.size'] = 'Espace alloué';
 $LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
 $LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';
-$LANG['warning.upload.extension'] = '- un des fichiers n\'a pas une extension valide.<br />';
+$LANG['warning.upload.extension'] = '- l\'extension d\'un des fichiers n\'est pas autorisée.<br />';
 $LANG['warning.upload.file.size'] = '- le poids d\'un des fichiers est trop important.<br />';
-$LANG['warning.upload.files.nbr'] = '- l\'ensemble des fichiers dépasse l\'espace alloué aux membres.<br />';
+$LANG['warning.upload.files.nbr'] = '- l\'ensemble des fichiers dépasse l\'espace alloué.<br />';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Panneau de modération';

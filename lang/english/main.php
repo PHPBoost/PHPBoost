@@ -278,12 +278,12 @@ $LANG['popup_insert'] = 'Insert code into the form';
 $LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
 $LANG['clear.list'] = 'Clear list';
 $LANG['upload.helper'] = 'Upload options';
-$LANG['max.files.size'] = 'Bytes allocated to members';
+$LANG['max.files.size'] = 'Bytes allocated';
 $LANG['allowed.extensions'] = 'Allowed files extensions';
 $LANG['warning.upload.disabled'] = '<strong>Upload has been disabled for one of those reasons : <br /></strong>';
-$LANG['warning.upload.extension'] = '- one of the files doesn\'t have a valid extension.<br />';
+$LANG['warning.upload.extension'] = '- the extension of one of the files isn\'t allowed.<br />';
 $LANG['warning.upload.file.size'] = '- one of the files weight is too large.<br />';
-$LANG['warning.upload.files.nbr'] = '- the number of files exeeds the members allocated space.<br />';
+$LANG['warning.upload.files.nbr'] = '- the number of files exeeds the allocated space.<br />';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Moderation panel';

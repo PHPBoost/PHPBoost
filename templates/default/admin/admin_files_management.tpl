@@ -386,7 +386,7 @@ $(document).ready(function(){
 					</a>
 					# ELSE #
 					<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" aria-label="{files.NAME}"{files.LIGHTBOX}>
-						<div class="upload-element-icon"><i class="{files.IMG}" aria-hidden="true"></i></div>
+						<div class="upload-element-icon"><i class="fa-upload-img {files.IMG}" aria-hidden="true"></i></div>
 					</a>
 					# ENDIF #
 					<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>

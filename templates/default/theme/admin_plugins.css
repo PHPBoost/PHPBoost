@@ -318,7 +318,7 @@
 
 @media { /* --- admin specs ------------------------------------------------- */
     @media (min-width: 769px) {
-        #admin-subheader .modal {
+        .modal {
             left: 230px;
             width: calc(100% - 230px);
         }
