@@ -60,7 +60,6 @@
 
     			var filesNbr = $input[0].files.length,
                     totalWeight = 0,
-                    totalNames = '',
     				items = $input[0].files,
     				item = '';
 
@@ -84,10 +83,14 @@
                         $input.closest('form').find('button[type="submit"]').attr('disabled', 'disabled');
                     }
 
+                    if(param.allowedExtensions.indexOf(extension) === -1)
+                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningExtension);
+                    if(fileSize > param.maxFileSize)
+                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningFileSize);
+
     				if(fileType.indexOf('image/') === 0)
-    				{
-                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><img src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				} else if(fileType.indexOf('audio/') === 0)
+			            item += '<li class="'+warningClass+'" data-file="'+fileName+'"><img src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+    				else if(fileType.indexOf('audio/') === 0)
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     				else if(fileType.indexOf('video/') === 0)
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
@@ -99,19 +102,14 @@
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     			}
     			$(param.filesList).append(item);
-                console.log(param.allowedExtensions.indexOf(extension));
 
                 if($input.closest('form').find('button[type="submit"]').attr('disabled'))
                 {
                     $input.closest('form').find('label p').addClass('message-helper warning small');
-                    $input.closest('form').find('label p').append(param.warningText);
-                    if(param.allowedExtensions.indexOf(extension) === -1)
-                        $input.closest('form').find('label p').append(param.warningExtension);
-                    if(fileSize > param.maxFileSize)
-                        $input.closest('form').find('label p').append(param.warningFileSize);
-                    if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1)
-                        $input.closest('form').find('label p').append(param.warningFilesNbr);
+                    $input.closest('form').find('label p').prepend(param.warningText);
                 }
+                if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1)
+                    $input.closest('form').find('label p').append(param.warningFilesNbr);
 
                 $(param.filesList).find('.close-item').each(function(){
                     $(this).on('click', function(){
