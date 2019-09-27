@@ -252,6 +252,7 @@ $LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des 
 $LANG['files_management'] = 'Gestion des fichiers';
 $LANG['files_config'] = 'Configuration des fichiers';
 $LANG['file_add'] = 'Ajouter un fichier';
+$LANG['files_add'] = 'Ajout de fichiers';
 $LANG['data'] = 'Total des données';
 $LANG['folders'] = 'Répertoires';
 $LANG['folders_up'] = 'Répertoire parent';
@@ -274,6 +275,16 @@ $LANG['moveto'] = 'Déplacer vers';
 $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
+// D&d upload
+$LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
+$LANG['clear.list'] = 'Vider la liste';
+$LANG['upload.helper'] = 'Options de téléversement';
+$LANG['max.files.size'] = 'Espace alloué';
+$LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
+$LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';
+$LANG['warning.upload.extension'] = ' : l\'extension de ce fichier n\'est pas autorisée.<br />';
+$LANG['warning.upload.file.size'] = ' : le poids de ce fichiers est trop important.<br />';
+$LANG['warning.upload.files.nbr'] = '<br />- l\'ensemble des fichiers dépasse l\'espace alloué.<br />';
 
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';

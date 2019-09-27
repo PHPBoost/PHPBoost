@@ -313,19 +313,43 @@
 
 		<div class="content">
 
-			<div id="new-file">
+			<div id="new-multiple-files">
 				# INCLUDE message_helper #
 				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 					<fieldset>
 						<legend>{L_ADD_FILES}</legend>
-						<div class="form-element">
-							<div class="form-field">
-								<input type="file" name="upload_file" id="upload-file">
-								<input type="hidden" name="max_file_size" value="2000000">
+						<div class="dnd-area">
+							<div class="dnd-dropzone">
+								<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 							</div>
+							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+							<div class="ready-to-load">
+								<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+								<span class="fa-stack fa-lg">
+									<i class="far fa-file fa-stack-2x "></i>
+									<strong class="fa-stack-1x files-nbr"></strong>
+								</span>
+							</div>
+							<!-- <div class="modal-container">
+								<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
+								<div id="upload-helper" class="modal modal-animation">
+									<div class="close-modal" aria-label="close"></div>
+									<div class="content-panel">
+										<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+										<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
+										<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+									</div>
+								</div>
+							</div> -->
+						</div>
+						<ul class="ulist"></ul>
+					</fieldset>
+					<fieldset class="fieldset-submit">
+						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
-							</div>
+						</div>
 					</fieldset>
 				</form>
 			</div>
@@ -419,5 +443,17 @@
 			</fieldset>
 			# ENDIF #
 		</footer>
+		<script>
+			$('#inputfiles').dndfiles({
+				multiple: true,
+				maxFileSize: '{MAX_WEIGHT}',
+				maxFilesSize: '{REAL_SIZE_LIMIT}',
+				allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+				warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
+				warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
+				warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
+				warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+			});
+		</script>
 
 	</section>

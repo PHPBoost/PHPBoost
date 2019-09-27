@@ -252,6 +252,7 @@ $LANG['folder_forbidden_chars'] = 'Folder name can\'t contain the following char
 $LANG['files_management'] = 'Files management';
 $LANG['files_config'] = 'File configuration';
 $LANG['file_add'] = 'Add a file';
+$LANG['files_add'] = 'Add files';
 $LANG['data'] = 'Total data';
 $LANG['folders'] = 'Folders';
 $LANG['folders_up'] = 'Parent folder';
@@ -274,6 +275,16 @@ $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $LANG['popup_insert'] = 'Insert code into the form';
+// D&d upload
+$LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
+$LANG['clear.list'] = 'Clear list';
+$LANG['upload.helper'] = 'Upload options';
+$LANG['max.files.size'] = 'Bytes allocated';
+$LANG['allowed.extensions'] = 'Allowed files extensions';
+$LANG['warning.upload.disabled'] = '<strong>Upload has been disabled for one of those reasons : <br /></strong>';
+$LANG['warning.upload.extension'] = ' : the extension of this file isn\'t allowed.<br />';
+$LANG['warning.upload.file.size'] = ' : the weight of this files is too large.<br />';
+$LANG['warning.upload.files.nbr'] = '<br />- the number of files exeeds the allocated space.<br />';
 
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';

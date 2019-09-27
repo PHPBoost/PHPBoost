@@ -378,6 +378,10 @@ else
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => AppContext::get_current_user()->get_id(),
 		'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
+
+		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+		'ALLOWED_EXTENSIONS' => implode('", "',$files_upload_config->get_authorized_extensions()),
+
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -386,7 +390,7 @@ else
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_FILES_ACTION' => $LANG['files_management'],
 		'L_CONFIG_FILES' => $LANG['files_config'],
-		'L_ADD_FILES' => $LANG['file_add'],
+		'L_ADD_FILES' => $LANG['files_add'],
 		'L_ROOT' => $LANG['root'],
 		'L_NAME' => $LANG['name'],
 		'L_SIZE' => $LANG['size'],
@@ -516,6 +520,7 @@ else
 	$tpl->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],
+		'REAL_SIZE_LIMIT' => !$unlimited_data ? (($group_limit*1024 > 1024*1024) ? NumberHelper::round($group_limit*1024, 2) : NumberHelper::round($group_limit*1024, 0)) : -1 ,
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 		'TOTAL_FOLDERS' => $total_directories,
