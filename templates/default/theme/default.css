@@ -1,9 +1,8 @@
-/* --------------------------------------
-		default.css
-Css par defaut commun * tout les themes, permet les ajouts necessaires au framework et retrocompatibilite
+/*
+ * Default CSS for all themes
 --------------------------------------*/
 
-/* --- Uniformisation des classes génériques par rapport aux navigateurs --- */
+/* --- Reset generic class for different browsers --------------------------- */
 * {
 	margin: 0;
 	padding: 0;
@@ -44,7 +43,7 @@ div, textarea, table, td, th, code, pre, samp {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto; }
 
-/* Fix for no wrap for button */
+/* --- Fix for no wrap for button --- */
 button, .button {
 	word-wrap: normal;
 	overflow-wrap: normal;
@@ -53,7 +52,7 @@ button, .button {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto; }
 
-/* Fix for chrome word-wrap ... */
+/* --- Fix for chrome word-wrap --- */
 fieldset {
 	min-width: 0 !important; }
 
@@ -86,9 +85,9 @@ abbr, acronym {
 	border-bottom-style: dotted;
 	border-bottom-color: transparent; }
 
-/* --- Classes spécifiques PHPBoost --- */
+/* --- PHPBoost specific classes -------------------------------------------- */
 
-/* Liens wikipedia */
+/* --- Wikipedia link --- */
 a.wikipedia-link {
 	position: relative;
 	border-bottom-width: 1px;
@@ -107,7 +106,7 @@ a.wikipedia-link:before {
 	font-weight: 900; /* Solid icons*/
 	font-size: 1em; }
 
-/* Classes d'alignement */
+/* --- Alignment --- */
 .inline 		{ display: inline !important; }
 .inline-block 	{ display: inline-block !important; }
 
@@ -132,7 +131,7 @@ img.float-right {
 		float: right !important;
 		padding: 0.618em 0 0.809em 0.618em;	} }
 
-/* Classe hidden */
+/* --- Hidden --- */
 .hidden { display: none !important; }
 
 @media (max-width: 768px) {
@@ -141,7 +140,7 @@ img.float-right {
 @media (min-width: 769px) {
 	.hidden-large-screens { display: none !important; } }
 
-/* Classes textes */
+/* --- Text --- */
 .text-strong  { font-weight: bold !important; }
 .text-justify { text-align: justify !important; }
 .text-italic  { font-style: italic !important; }
@@ -153,21 +152,21 @@ img.float-right {
 .spacer {
 	clear: both; }
 
-/* Image */
+/* --- Image --- */
 .img-link,
 .img-link:hover {
 	text-decoration: none; }
 
-/* Affichage des smileys */
+/* --- Smileys --- */
 .smiley {
 	vertical-align: middle; }
 
-/* Icones */
+/* --- Icons --- */
 .icon-disabled {
 	opacity: 0.3;
 	cursor: default; }
 
-/* Fieldsets */
+/* --- Fieldsets --- */
 .vertical-fieldset,
 .horizontal-fieldset {
 	margin: 1.309em 0; }
@@ -189,7 +188,7 @@ img.float-right {
 	vertical-align: middle;
 	font-weight: bold; }
 
-/* Imite l'affichage fieldset / legend */
+/* --- Fake fieldset / legend --- */
 .fieldset-content {
 	margin: auto;
 	margin-top: 1.309em; }
@@ -201,17 +200,17 @@ img.float-right {
 .module-mini-contents .fieldset-content {
 	width: 100%; }
 
-/* Opacite */
+/* --- Opacity --- */
 .low-opacity {
 	opacity: 0.40; }
 
-/* Liens pagination */
+/* --- Pagination --- */
 ul.pagination li {
 	display: inline; }
 ul.pagination .current-page {
 	text-decoration: underline; }
 
-/* Debug */
+/* --- Debug --- */
 .pbt-debug {
 	background-color: #FFA500 !important;
 	outline: 3px solid #FF4500 !important; }
@@ -221,12 +220,12 @@ ul.pagination .current-page {
 	max-width: 750px;
 	margin: 1em auto; }
 
-/* Previsualisation AJAX. */
+/* --- AJAX Preview --- */
 .xmlhttprequest-preview {
 	overflow: auto;
 	height: 16.18em; }
 
-/* Elements de previsualisation */
+/* --- Preview elements --- */
 .loading-preview-container {
 	position: relative; }
 
@@ -237,7 +236,7 @@ ul.pagination .current-page {
 	width: 100%;
 	text-align: center; }
 
-/* Impression */
+/* --- Print --- */
 @media print {
 	* {
 		background-color: transparent;
@@ -246,14 +245,14 @@ ul.pagination .current-page {
 		color: #000000;
 	} }
 
-/* Tableaux  */
+/* --- Tables --- */
 .html-table-filters {
 	padding: 0.809em; }
 
 .html-table-nbr-elements {
 	float: left; }
 
-/* Effet Blink */
+/* --- Blink animation effect ----------------------------------------------- */
 @keyframes blink {
 	0%   { opacity: 0; }
 	30%  { opacity: 1; }
@@ -272,8 +271,8 @@ ul.pagination .current-page {
 	-webkit-animation: blink 1.5s ease-in-out infinite; }
 
 
-/* --- Police de caractère de base --- */
-/* open-sans-300 - latin */
+/* --- Basic font ----------------------------------------------------------- */
+/* --- open-sans-300 - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -283,7 +282,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-300.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-300.ttf') format('truetype'); }
 
-/* open-sans-300italic - latin */
+/* --- open-sans-300italic - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: italic;
@@ -293,7 +292,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-300italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-300italic.ttf') format('truetype'); }
 
-/* open-sans-italic - latin */
+/* --- open-sans-italic - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: italic;
@@ -303,7 +302,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-italic.ttf') format('truetype'); }
 
-/* open-sans-regular - latin */
+/* --- open-sans-regular - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -313,7 +312,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-regular.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-regular.ttf') format('truetype'); }
 
-/* open-sans-600 - latin */
+/* --- open-sans-600 - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -323,7 +322,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-600.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-600.ttf') format('truetype'); }
 
-/* open-sans-600italic - latin */
+/* --- open-sans-600italic - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: italic;
@@ -333,7 +332,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-600italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-600italic.ttf') format('truetype'); }
 
-/* open-sans-700 - latin */
+/* --- open-sans-700 - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -343,7 +342,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-700.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-700.ttf') format('truetype'); }
 
-/* open-sans-700italic - latin */
+/* --- open-sans-700italic - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: italic;
@@ -353,7 +352,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-700italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-700italic.ttf') format('truetype'); }
 
-/* open-sans-800 - latin */
+/* --- open-sans-800 - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
@@ -363,7 +362,7 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-800.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-800.ttf') format('truetype'); }
 
-/* open-sans-800italic - latin */
+/* --- open-sans-800italic - latin --- */
 @font-face {
 	font-family: 'Open Sans';
 	font-style: italic;
@@ -374,114 +373,64 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
 
 
-/* --- Classes FA spécifiques PHPBoost --- */
+/* --- PHPBoost specific FA Classes ----------------------------------------- */
 
-/* Messages */
-.fa.fa-success:before { /* copy check */
-  content: "\f00c"; }
-.fa.fa-error:before { /* copy times */
-  content: "\f00d"; }
-.fa.fa-warning:before { /* copy exclamation-triangle */
-  content: "\f071"; }
-.fa.fa-notice:before { /* copy exclamation */
-  content: "\f12a"; }
+/* --- Messages --- */
+.fa.fa-success:before { content: "\f00c"; } /* copy check */
+.fa.fa-error:before   { content: "\f00d"; } /* copy times */
+.fa.fa-warning:before { content: "\f071"; } /* copy exclamation-triangle */
+.fa.fa-notice :before { content: "\f12a"; } /* copy exclamation */
 
-/* Divers */
-.fa.fa-syndication:before { /* copy rss */
-  content: "\f09e"; }
-
-.fa.fa-unban:before { /* copy ban */
-  content: "\f05e"; }
-
+/* --- Miscellaneous --- */
+.fa.fa-syndication:before  { content: "\f09e"; } /* copy rss */
+.fa.fa-unban:before        { content: "\f05e"; } /* copy ban */
 .fa.fa-online:before,
-.fa.fa-offline:before { /* copy user */
-  content: "\f007"; }
+.fa.fa-offline:before      { content: "\f007"; } /* copy user */
+.fa.fa-forbidden:before    { content: "\f056"; } /* copy minus-circle */
+.fa.fa-delete:before       { content: "\f2ed"; } /* copy trash-alt */
+.fa.fa-profil:before       { content: "\f3fd"; } /* copy tachometer-alt */
+.fa.fa-move:before         { content: "\f064"; } /* copy share */
+.fa.fa-refresh:before      { content: "\f021"; } /* copy sync */
+.fa.fa-remove:before       { content: "\f00d"; } /* copy times */
+.fa.fa-legal:before        { content: "\f0e3"; } /* copy gavel */
+.fa.fa-actions-menu:before { content: "\f141"; } /* copy ellipsis-h */
 
-.fa.fa-forbidden:before { /* copy minus-circle */
-  content: "\f056"; }
+/* --- Notation --- */
+.fa.fa-star-empty:before      { content: "\f005"; } /* copy star */
+.fa.fa-star-half-empty:before { content: "\f005"; } /* copy star */
+.fa-star-half-empty:after     { content: "\f089"; } /* copy star-half */
 
-.fa.fa-delete:before { /* copy trash-alt */
-  content: "\f2ed"; }
+/* --- Filter --- */
+.fa-table-sort-up:before   { content: "\f062"; } /* copy arrow-up */
+.fa-table-sort-down:before { content: "\f063"; } /* copy arrow-down */
 
-.fa.fa-profil:before { /* copy tachometer-alt */
-  content: "\f3fd"; }
+/* --- Stats --- */
+.fa-trend-up:before   { content: "\f0d8"; } /* copy caret-up */
+.fa-trend-down:before { content: "\f0d7"; } /* copy caret-down */
 
-.fa.fa-move:before { /* copy share */
-  content: "\f064"; }
-
-.fa.fa-refresh:before {  /* copy sync */
-  content: "\f021"; }
-
-.fa.fa-remove:before {  /* copy times */
-  content: "\f00d"; }
-
-.fa.fa-legal:before {  /* copy gavel */
-  content: "\f0e3"; }
-
- .fa.fa-actions-menu:before { /* copy ellipsis-h */
-   content: "\f141"; }
-
-/* Notation */
-.fa.fa-star-empty:before {  /* copy star */
-  content: "\f005"; }
-
-.fa.fa-star-half-empty:before {  /* copy star */
-  content: "\f005"; }
-.fa-star-half-empty:after { /* copy star-half */
-  content: "\f089";
- }
-
-/* Filter */
-.fa-table-sort-up:before { /* copy arrow-up */
-  content: "\f062"; }
-.fa-table-sort-down:before { /* copy arrow-down */
-  content: "\f063"; }
-
-/* Stats */
-.fa-trend-up:before { /* copy caret-up */
-  content: "\f0d8"; }
-.fa-trend-down:before { /* copy caret-down */
-  content: "\f0d7"; }
-
-/* Upload */
-.fa-upload-audio:before { /* copie fa-file-audio-o */
-  content: "\f1c7"; }
-.fa-upload-exec:before { /* copie fa-cog */
-  content: "\f013"; }
-.fa-upload-html:before { /* copie fa-html5 */
-  content: "\f13b"; }
-.fa-upload-css:before { /* copie fa-css3 */
-  content: "\f38b"; }
-.fa-upload-pdf:before { /* copie fa-file-pdf-o */
-  content: "\f1c1"; }
-.fa-upload-picture:before { /* copie fa-file-picture-o*/
-  content: "\f1c5"; }
-.fa-upload-script:before { /* copie fa-fa-code-o */
-  content: "\f1c9"; }
-.fa-upload-text:before { /* copie fa-file-text-o */
-  content: "\f15c"; }
-.fa-upload-video:before { /* copie fa-file-video-o */
-  content: "\f1c8"; }
-.fa-upload-zip:before { /* copie fa-file-zip-o */
-  content: "\f1c6"; }
-.fa-upload-other:before { /* copie fa-file-o */
-  content: "\f15b"; }
-.fa-upload-sheet:before { /* copie fa-file-excel-o */
-  content: "\f1c3"; }
-.fa-upload-slide:before { /* copie fa-file-powerpoint-o */
-  content: "\f1c4"; }
-.fa-upload-doc:before { /* copie fa-file-word-o */
-  content: "\f1c2"; }
+/* --- Upload --- */
+.fa-upload-audio:before   { content: "\f1c7"; } /* copie fa-file-audio-o */
+.fa-upload-exec:before    { content: "\f013"; } /* copie fa-cog */
+.fa-upload-html:before    { content: "\f13b"; } /* copie fa-html5 */
+.fa-upload-css:before     { content: "\f38b"; } /* copie fa-css3 */
+.fa-upload-pdf:before     { content: "\f1c1"; } /* copie fa-file-pdf-o */
+.fa-upload-picture:before { content: "\f1c5"; } /* copie fa-file-picture-o*/
+.fa-upload-script:before  { content: "\f1c9"; } /* copie fa-fa-code-o */
+.fa-upload-text:before    { content: "\f15c"; } /* copie fa-file-text-o */
+.fa-upload-video:before   { content: "\f1c8"; } /* copie fa-file-video-o */
+.fa-upload-zip:before     { content: "\f1c6"; } /* copie fa-file-zip-o */
+.fa-upload-other:before   { content: "\f15b"; } /* copie fa-file-o */
+.fa-upload-sheet:before   { content: "\f1c3"; } /* copie fa-file-excel-o */
+.fa-upload-slide:before   { content: "\f1c4"; } /* copie fa-file-powerpoint-o */
+.fa-upload-doc:before     { content: "\f1c2"; } /* copie fa-file-word-o */
 
 
-/* Icones forcee en format "Regular" */
+/* --- Icons forced to "Regular" format --- */
 .fa.fa-edit,
 .fa.fa-delete,
 .fa.fa-eye,
 .fa.fa-star-empty,
-.fa.fa-star-half-empty:before {
-  font-weight: 400; }
-
+.fa.fa-star-half-empty:before { font-weight: 400; }
 
 .fa-upload-img.fa-upload-exec {
   font-family: 'Font Awesome 5 Free';
@@ -506,8 +455,7 @@ ul.pagination .current-page {
   font-family: 'Font Awesome 5 Brands';
 }
 
-/* Icones manquantes */
-
+/* --- Missing icons --- */
 .fa-star-half-empty {
 	position: relative;
 }
@@ -518,78 +466,36 @@ ul.pagination .current-page {
 }
 
 
-/* --- Deprecated : alias V4.7 utilisés PHPBoost --- */
-.fa.fa-bar-chart-o:before {  /* copy chart-bar */
-  content: "\f080"; }
+/* --- Deprecated : alias V4.7 used in PHPBoost --- */
+.fa.fa-bar-chart-o:before      { content: "\f080"; } /* copy chart-bar */
+.fa.fa-calendar:before         { content: "\f073"; } /* copy calendar-alt */
+.fa.fa-clock-o:before          { content: "\f017"; } /* copy clock */
+.fa.fa-cloud-upload:before     { content: "\f382"; } /* copy cloud-upload-alt */
+.fa.fa-comment-0:before        { content: "\f075"; } /* copy comment */
+.fa.fa-comments-o:before       { content: "\f086"; } /* copy comments */
+.fa.fa-envelope-o:before       { content: "\f0e0"; } /* copy envelope */
+.fa.fa-exchange:before         { content: "\f362"; } /* copy exchange-alt */
+.fa.fa-file-o:before           { content: "\f15b"; } /* copy file */
+.fa.fa-files-o:before          { content: "\f0c5"; } /* copy copy */
+.fa.fa-file-text:before        { content: "\f15c"; } /* copy file-alt */
+.fa.fa-file-text-o:before      { content: "\f15c"; } /* copy file-alt */
+.fa.fa-folder-o:before         { content: "\f07b"; } /* copy folder */
+.fa.fa-gears:before            { content: "\f085"; } /* copy cogs */
+.fa.fa-hand-o-right:before     { content: "\f0a4"; } /* copy hand-point-right */
+.fa.fa-level-up:before         { content: "\f3bf"; } /* copy level-up-alt */
+.fa.fa-lightbulb-o:before      { content: "\f0eb"; } /* copy lightbulb */
+.fa.fa-minus-square-o:before   { content: "\f146"; } /* copy minus-square */
+.fa.fa-plus-square-o:before    { content: "\f0fe"; } /* copy plus-square */
+.fa.fa-sign-in:before          { content: "\f2f6"; } /* copy sign-in-alt */  
+.fa.fa-sign-out:before         { content: "\f2f5"; } /* copy sign-out-alt */
+.fa.fa-sort-alpha-asc:before   { content: "\f15d"; } /* copy sort-alpha-down */ 
+.fa.fa-sort-amount-asc:before  { content: "\f160"; } /* copy sort-amount-down */
+.fa.fa-sort-amount-desc:before { content: "\f161"; } /* copy sort-amount-up */
+.fa.fa-ticket:before           { content: "\f3ff"; } /* copy ticket-alt */
+.fa.fa-user-o:before           { content: "\f007"; } /* copy user */
 
-.fa.fa-calendar:before {  /* copy calendar-alt */
-  content: "\f073"; }
 
-.fa.fa-clock-o:before {  /* copy clock */
-  content: "\f017"; }
-
-.fa.fa-cloud-upload:before {  /* copy cloud-upload-alt */
-  content: "\f382"; }
-
-.fa.fa-comment-0:before {  /* copy comment */
-  content: "\f075"; }
-.fa.fa-comments-o:before {  /* copy comments */
-  content: "\f086"; }
-
-.fa.fa-envelope-o:before {  /* copy envelope */
-  content: "\f0e0"; }
-
-.fa.fa-exchange:before {  /* copy exchange-alt */
-  content: "\f362"; }
-
-.fa.fa-file-o:before {  /* copy file */
-  content: "\f15b"; }
-.fa.fa-files-o:before {  /* copy copy */
-  content: "\f0c5"; }
-.fa.fa-file-text:before {  /* copy file-alt */
-  content: "\f15c"; }
-.fa.fa-file-text-o:before {  /* copy file-alt */
-  content: "\f15c"; }
-
-.fa.fa-folder-o:before {  /* copy folder */
-  content: "\f07b"; }
-
-.fa.fa-gears:before {  /* copy cogs */
-  content: "\f085"; }
-
-.fa.fa-hand-o-right:before {  /* copy hand-point-right */
-  content: "\f0a4"; }
-
-.fa.fa-level-up:before {  /* copy level-up-alt */
-  content: "\f3bf"; }
-
-.fa.fa-lightbulb-o:before {  /* copy lightbulb */
-  content: "\f0eb"; }
-
-.fa.fa-minus-square-o:before {  /* copy minus-square */
-  content: "\f146"; }
-.fa.fa-plus-square-o:before {  /* copy plus-square */
-  content: "\f0fe"; }
-
-.fa.fa-sign-in:before {  /* copy sign-in-alt */
-  content: "\f2f6"; }
-.fa.fa-sign-out:before {  /* copy sign-out-alt */
-  content: "\f2f5"; }
-
-.fa.fa-sort-alpha-asc:before {  /* copy sort-alpha-down */
-  content: "\f15d"; }
-.fa.fa-sort-amount-asc:before {  /* copy sort-amount-down */
-  content: "\f160"; }
-.fa.fa-sort-amount-desc:before {  /* copy sort-amount-up */
-  content: "\f161"; }
-
-.fa.fa-ticket:before {  /* copy ticket-alt */
-  content: "\f3ff"; }
-
-.fa.fa-user-o:before {  /* copy user */
-  content: "\f007"; }
-
-/* Icones forcee en format "Regular" */
+/* --- Icons forced to "Regular" format --- */
 .fa.fa-clock-o,
 .fa.fa-comment-o,
 .fa.fa-comments-o,

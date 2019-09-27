@@ -611,7 +611,8 @@ li.small-block .fa-stack {
 }
 
 
-/* --- Upload system -------------------------------------------------------- */.dnd-area { position: relative;}
+/* --- Upload system -------------------------------------------------------- */
+/* .dnd-area { position: relative;}
 
 .dnd-dropzone {
     min-height: 200px;
@@ -693,7 +694,6 @@ li.small-block .fa-stack {
     position: absolute;
     top: -0.256em;
     right: -0.256em;
-/* waiting */
 	display: none;
 
 }
@@ -822,10 +822,10 @@ li.small-block .fa-stack {
 
 .upload-no-sub-cat {
 	padding-left: 1em;
-}
+} */
 
 /* --- Deplacement des fichiers --- */
-.upload-selected-cat {
+/* .upload-selected-cat {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
@@ -851,7 +851,7 @@ li.small-block .fa-stack {
 
 .upload-root-cat {
 	padding: 0 0 0 1em;
-}
+} */
 
 
 /* -- Les icones d'annonces et de messagerie -- */

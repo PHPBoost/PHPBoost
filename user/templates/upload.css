@@ -1,0 +1,250 @@
+/*
+ * Upload classes :
+ *     - drag and drop
+ *     - files management
+*/
+
+/* --- Drag and Drop -------------------------------------------------------- */
+.dnd-area { position: relative;}
+
+.dnd-dropzone {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-width: 2px;
+    border-style: dashed;
+}
+
+#new-multiple-files .submit[disabled] {
+    cursor: not-allowed;
+}
+
+.ufiles {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.ready-to-load {
+    position: absolute;
+    top: 0.618em;
+    right: 0;
+}
+
+.clear-list {
+    display: none;
+    margin: 0;
+}
+
+.files-nbr {
+    font-size:0.809em;
+    margin-top:2px;
+}
+
+.ulist {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.upload-help {
+    border-radius: 100%;
+    padding: .309em 0.618em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.ulist li {
+    padding: 0.309em;
+    margin: 0.456em 0.456em 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    line-height: 45px;
+}
+
+.ulist img,
+.ulist .far {
+    margin-right: 0.256em;
+    max-width: 80px;
+    max-height: 45px;
+}
+
+.close-item {
+    position: absolute;
+    top: -0.256em;
+    right: -0.256em;
+	display: none;
+
+}
+
+/* --- Files management ----------------------------------------------------- */
+
+.upload-address-bar-links {
+	padding: 0.618em 1.618em 1.618em;
+    text-align: right;
+}
+
+.upload-address-bar-links a {
+	margin-left: 10px;
+}
+
+.upload-address-bar {
+    padding: 0.618em;
+}
+
+#empty-folder {
+	width: 70%;
+}
+
+.upload-elements-container {
+	text-align: left;
+}
+
+.upload-elements-file,
+.upload-elements-repertory {
+	display: inline-block;
+	vertical-align: top;
+	margin: 10px;
+}
+
+.upload-elements-repertory {
+	line-height: 50px;
+	width: 180px;
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.upload-repertory-controls {
+	font-size: 0;
+}
+
+.upload-repertory-controls span {
+	font-size: 1.6rem;
+	width: calc(100% / 3);
+	display: inline-block;
+}
+
+.upload-elements-file {
+	width: 180px;
+}
+
+.upload-elements-file input {
+	width: 100%;
+}
+
+.upload-element-name {
+	width: 100%;
+	text-align: center;
+}
+
+.upload-element-picture {
+	width: 100%;
+	height: 100px;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.upload-element-icon {
+	width: 100%;
+	line-height: 100px;
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.fa-upload-img {
+    font-style: initial
+}
+
+.upload-file-controls {
+	font-size: 0;
+}
+
+.upload-file-controls a {
+	font-size: 1.6rem;
+	width: calc(100% / 4);
+	display: inline-block;
+	text-align: center;
+	padding: 3px 0;
+}
+
+#new-file .form-field {
+	width: auto;
+}
+
+/* --- Moving files --- */
+.file-move-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+	margin: 0.618em 0;
+}
+
+@media (min-width: 769px) {
+	.file-move-container:last-child {
+		-webkit-align-items: flex-start;
+	    -ms-flex-align: start;
+	    align-items: flex-start;
+	}
+}
+
+.file-move-container img {
+	width: 100px;
+	height: auto;
+}
+
+@media (min-width: 769px) {
+	.file-move-container{
+		float: left;
+		width: calc(100% / 3);
+	}
+}
+
+.upload-selected-cat {
+	border-width: 1px;
+	border-style: solid;
+}
+
+.upload-cat-list,
+.upload-cat-explorer {
+	list-style: none;
+}
+
+.upload-cat-list li a,
+.upload-cat-explorer li a {
+	padding: 0.309em 0.1618em;
+	display: inline-block;
+}
+
+.upload-cat-list li span,
+.upload-cat-explorer li span {
+	padding: 0.309em 0.228em;
+}

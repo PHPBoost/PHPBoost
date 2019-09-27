@@ -276,12 +276,12 @@ $(document).ready(function(){
 				<legend>{L_ADD_FILES}</legend>
 				<div class="dnd-area">
 					<div class="dnd-dropzone">
-						<label for="inputfiles" class="dnd-label">{L_DND_FILES} <p></p></label>
+						<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
 						<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 					</div>
 					<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
 					<div class="ready-to-load">
-						<button type="button" class="clear-list">{L_CLEAR_LIST}</button>
+						<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
 						<span class="fa-stack fa-lg">
 							<i class="far fa-file fa-stack-2x "></i>
 							<strong class="fa-stack-1x files-nbr"></strong>
@@ -292,8 +292,8 @@ $(document).ready(function(){
 						<div id="upload-helper" class="modal modal-animation">
 							<div class="close-modal" aria-label="close"></div>
 							<div class="content-panel">
-								<h3>{L_UPLOAD_HELPER}</h3>
-								<p><strong>{L_ALLOWED_EXTENTIONS} : </strong> "{ALLOWED_EXTENSIONS}"</p>
+								<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+								<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 							</div>
 						</div>
 					</div>
@@ -308,25 +308,6 @@ $(document).ready(function(){
 			</fieldset>
 		</form>
 	</div>
-
-	<!-- <div id="new-file">
-		# INCLUDE message_helper #
-		<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
-			<fieldset>
-				<legend>{L_ADD_FILES}</legend>
-				<div class="fieldset-inset">
-					<div class="form-element">
-						<div class="form-field">
-							<input type="file" name="upload_file" id="upload-file">
-							<input type="hidden" name="max_file_size" value="2000000">
-						</div>
-						<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
-						<input type="hidden" name="token" value="{TOKEN}">
-					</div>
-				</div>
-			</fieldset>
-		</form>
-	</div> -->
 
 	<fieldset>
 		<legend>{L_FILES_ACTION}</legend>
@@ -405,12 +386,12 @@ $(document).ready(function(){
 				# END files #
 			# ENDIF #
 		</div>
-					<div class="options">
-						{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
-						{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
-						{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
-						{L_DATA} : <strong>{TOTAL_SIZE}</strong>
-					</div>
+		<div class="options infos">
+			<span class="infos-options" id="total-folder">{L_FOLDERS} : <strong>{TOTAL_FOLDERS}</strong></span>
+			<span class="infos-options">{L_FILES} : <strong>{TOTAL_FILES}</strong></span>
+			<span class="infos-options">{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong></span>
+			<span class="infos-options">{L_DATA} : <strong>{TOTAL_SIZE}</strong></span>
+		</div>
 	</fieldset>
 
 	<div class="spacer"></div>
@@ -421,9 +402,9 @@ $(document).ready(function(){
 		maxFileSize: '{MAX_WEIGHT}',
 		maxFilesSize: '-1',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(L_WARNING_DISABLED)},
-		warningExtension: ${escapejs(L_WARNING_EXTENSION)},
-		warningFileSize: ${escapejs(L_WARNING_FILE_SIZE)},
-		warningFilesNbr: ${escapejs(L_WARNING_FILES_NBR)},
+		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
+		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
 	});
 </script>

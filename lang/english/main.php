@@ -252,6 +252,7 @@ $LANG['folder_forbidden_chars'] = 'Folder name can\'t contain the following char
 $LANG['files_management'] = 'Files management';
 $LANG['files_config'] = 'File configuration';
 $LANG['file_add'] = 'Add a file';
+$LANG['files_add'] = 'Add files';
 $LANG['data'] = 'Total data';
 $LANG['folders'] = 'Folders';
 $LANG['folders_up'] = 'Parent folder';

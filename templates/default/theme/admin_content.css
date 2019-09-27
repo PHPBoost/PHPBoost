@@ -645,13 +645,13 @@ span.not-compatible {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
+	padding: 0.456em 0.809em;
 }
 
 @media (min-width: 769px) {
 	.options {
 		float: right;
 		margin: 0 0 15px 15px;
-		border-radius: 3px;
 	}
 }
 
@@ -661,9 +661,7 @@ span.not-compatible {
 
 .infos-options {
 	display: block;
-	padding: 10px 15px;
 	margin: 0;
-	width: 100%;
 }
 
 /* --- Gestion des Categories --- */

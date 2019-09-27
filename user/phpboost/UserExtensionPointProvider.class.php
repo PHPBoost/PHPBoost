@@ -20,6 +20,7 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_always_displayed_file('user.css');
+		$module_css_files->adding_always_displayed_file('upload.css');
 		return $module_css_files;
 	}
 

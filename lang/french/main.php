@@ -252,6 +252,7 @@ $LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des 
 $LANG['files_management'] = 'Gestion des fichiers';
 $LANG['files_config'] = 'Configuration des fichiers';
 $LANG['file_add'] = 'Ajouter un fichier';
+$LANG['files_add'] = 'Ajout de fichiers';
 $LANG['data'] = 'Total des données';
 $LANG['folders'] = 'Répertoires';
 $LANG['folders_up'] = 'Répertoire parent';

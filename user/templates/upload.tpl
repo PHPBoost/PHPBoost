@@ -321,12 +321,12 @@
 						<legend>{L_ADD_FILES}</legend>
 						<div class="dnd-area">
 							<div class="dnd-dropzone">
-								<label for="inputfiles" class="dnd-label">{L_DND_FILES} <p></p></label>
+								<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
 								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 							</div>
 							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
 							<div class="ready-to-load">
-								<button type="button" class="clear-list">{L_CLEAR_LIST}</button>
+								<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
 								<span class="fa-stack fa-lg">
 									<i class="far fa-file fa-stack-2x "></i>
 									<strong class="fa-stack-1x files-nbr"></strong>
@@ -337,9 +337,9 @@
 								<div id="upload-helper" class="modal modal-animation">
 									<div class="close-modal" aria-label="close"></div>
 									<div class="content-panel">
-										<h3>{L_UPLOAD_HELPER}</h3>
-										<p><strong>{L_MAX_FILES_SIZE} :</strong> {SIZE_LIMIT}</p>
-										<p><strong>{L_ALLOWED_EXTENTIONS} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+										<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+										<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
+										<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 									</div>
 								</div>
 							</div>
@@ -354,24 +354,6 @@
 					</fieldset>
 				</form>
 			</div>
-
-			<!-- single -->
-			<!-- <div id="new-file">
-				# INCLUDE message_helper #
-				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
-					<fieldset>
-						<legend>{L_ADD_FILES}</legend>
-						<div class="form-element">
-							<div class="form-field">
-								<input type="file" name="ufile" id="upload-file">
-								<input type="hidden" name="max_file_size2" value="2000000">
-							</div>
-							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
-							</div>
-					</fieldset>
-				</form>
-			</div> -->
 
 			<div class="upload-address-bar">
 				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
@@ -470,9 +452,9 @@
 			maxFileSize: '{MAX_WEIGHT}',
 			maxFilesSize: '{REAL_SIZE_LIMIT}',
 			allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-			warningText: ${escapejs(L_WARNING_DISABLED)},
-			warningExtension: ${escapejs(L_WARNING_EXTENSION)},
-			warningFileSize: ${escapejs(L_WARNING_FILE_SIZE)},
-			warningFilesNbr: ${escapejs(L_WARNING_FILES_NBR)},
+			warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
+			warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
+			warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
+			warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
 		});
 	</script>
