@@ -5,10 +5,10 @@
 	<section id="not-installed-langs-container" class="admin-elements-container langs-elements-container not-installed-elements-container">
 		<header class="legend">{@langs.available_langs}</header>
 		# IF C_LANG_AVAILABLE #
-		<div class="elements-container columns-3">
+		<div class="cell-flex cell-flex-3">
 			# START langs_not_installed #
-			<article class="block admin-element lang-element not-installed-element# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-				<header class="block-title">
+			<article class="cell admin-element lang-element not-installed-element# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+				<header class="cell-title">
 					<div class="admin-element-menu-container">
 						# IF langs_not_installed.C_COMPATIBLE #
 						<button type="submit" class="submit admin-element-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
@@ -32,14 +32,33 @@
 						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
 				</header>
 
-				<div class="block-body">
+				<div class="cell-list">
+					<ul>
+						<li class="li-stretch">
+							<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
+							<span>
+								# IF langs_not_installed.C_AUTHOR_EMAIL #
+									<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a>
+								# ELSE #
+									{langs_not_installed.AUTHOR}
+								# ENDIF #
+								# IF langs_not_installed.C_AUTHOR_WEBSITE #
+									<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
+								# ENDIF #
+							</span>
+						</li>
+						<li class="li-stretch">
+							<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+							<span# IF NOT langs_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span>
+						</li>
+					</ul>
 					<div class="admin-element-desc">
-						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span#><br />
+
+
 					</div>
 				</div>
 
-				<footer class="block-footer">
+				<footer class="cell-footer">
 					# IF langs_not_installed.C_COMPATIBLE #
 					<div class="admin-element-auth-container">
 						<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
