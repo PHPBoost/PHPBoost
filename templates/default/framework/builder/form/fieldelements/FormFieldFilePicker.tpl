@@ -12,7 +12,7 @@
 	<ul class="ulist"></ul>
 </div>
 <script>
-	jQuery("#inputfile_${escape(HTML_ID)}").closest("form:first")[0].enctype = "multipart/form-data";
+	jQuery("#inputfile_${escape(HTML_ID)}").parents("form:first")[0].enctype = "multipart/form-data";
 	jQuery('#inputfile_${escape(HTML_ID)}').dndfiles({
 		multiple: false,
 		maxFileSize: '{MAX_WEIGHT}',
