@@ -32,7 +32,7 @@
 						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
 				</header>
 
-				<div class="block-body admin-element-content">
+				<div class="block-body">
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">{langs_not_installed.AUTHOR}</a># ELSE #{langs_not_installed.AUTHOR}# ENDIF # # IF langs_not_installed.C_AUTHOR_WEBSITE #<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span#><br />

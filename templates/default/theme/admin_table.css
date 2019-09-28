@@ -44,9 +44,6 @@ table thead th {
 	font-weight: normal;
 }
 
-table thead th:first-child 	{ border-top-left-radius: 3px;  }
-table thead th:last-child 	{ border-top-right-radius: 3px; }
-
 /* Contenu */
 table tbody td {
 	padding: 8px;

@@ -98,9 +98,8 @@ span.actions a {
 
 /* Contenu */
 .content {
-	margin: 0 15px;
 	word-wrap: break-word;
-	text-align: justify;
+	padding: 0.618em;
 }
 
 .content::after,
@@ -175,55 +174,6 @@ ul.pagination-block-bis li a.next-page:hover {
 	text-decoration: underline;
 }
 
-/* --- Block ==================================================================== */
-.block {
-	padding: 0.382em;
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-}
-
-.block-title {
-	padding: 0.809em;
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
-	flex: 0 1 auto;
-}
-
-.block-body {
-	padding: 0.809em;
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
-	flex: 1 1 auto;
-}
-
-.block-title + .block-body {
-	border-width: 0 1px 1px;
-}
-
-.block-footer {
-	padding: 0.809em;
-	border-style: solid;
-	border-width: 0 1px 1px;
-	border-color: transparent;
-	flex: 0 1 auto;
-}
-
-.block .content {
-	margin: 0;
-}
-
-.block h1 {
-	border: none;
-}
-
-.block header,
-.block footer {
-	margin: 0;
-}
-
 .elements-container {
 	display: flex;
 	display: -ms-flexbox;
@@ -237,13 +187,16 @@ ul.pagination-block-bis li a.next-page:hover {
 	align-content: flex-start;
 	-ms-flex-line-pack: start;
 	-webkit-align-content: flex-start;
-	justify-content: space-around;
-	-ms-flex-pack: distribute;
-	-webkit-justify-content: space-around;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
 }
 
 .elements-container > .block:last-child {
-	flex: 1 1 auto;
+	align-self: flex-start;
 }
 
 /* Gestion en colonnes pour ecran large*/
@@ -324,28 +277,21 @@ ul.pagination-block-bis li a.next-page:hover {
 	margin-left: 0;
 }
 
-.admin-element-picture {
-	float: left;
+/* .block-thumbnail {
 	text-align: center;
-	margin: 0 0.618em 0 0;
-	width: 180px;
-}
-
-.admin-element-picture + .admin-element-desc {
-	margin-left: calc(180px + 0.618em);
-}
-
-.theme-picture {
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+	margin: 0 0 0.618em;
+} */
 
 .admin-element-icon {
 	float: right;
 	text-align: center;
 	margin: 0 0.618em 0 0;
 	width: 32px;
+}
+
+.admin-element-desc .flex {
+	display: flex;
+	justify-content: space-between;
 }
 
 .admin-element-menu-container {
@@ -833,58 +779,23 @@ body.dragging, body.dragging * {
 }
 
 
-/* --- Page d'accueil ========================================================== */
-.welcome {
-	display: table;
-	margin: 0.809em auto ;
-	padding:5px;
-	overflow: hidden;
+/* --- Page d'accueil ------------------------------------------------------- */
+.welcome-desc h2 {
+	padding: 0 0 0.382em;
 }
 
-div.index-logo {
-	float: left;
-	width: 90px;
-	height: 90px;
+.index-logo {
+	float: right;
+	width: 100px;
+	height: 100px;
 	background-image: url(images/logo.png);
 	background-repeat: no-repeat;
 	background-position: center ;
 	background-size: cover;
 }
 
-.welcome img {
-	margin-right: 5px;
-}
-
-.welcome-desc {
-	padding-top: 10px;
-}
-
-.welcome-desc p {
-	padding: 10px;
-	clear: both;
-}
-
-.quick-access ul {
-	margin: 0 0 20px 30px;
-}
-
-@media (min-width: 980px) {
-	.welcome {
-		padding:10px;
-	}
-
-	.welcome-desc{
-		float: left;
-		margin-left: 20px;
-	}
-}
-
 .system-report {
 	font-family: monospace;
-}
-
-.quick-access {
-	display: none;
 }
 
 .admin-index-comments .fieldset-inset {
@@ -908,13 +819,6 @@ div[class*="admin-index"] h2 {
 }
 
 @media (min-width: 769px) {
-	.quick-access {
-		display: block;
-	}
-
-	.quick-access ul li {
-		padding: 5px 0;
-	}
 
 	div[class*="admin-index"] {
 		margin: 20px 20px 0;

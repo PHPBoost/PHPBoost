@@ -176,8 +176,7 @@ class AdminAdvancedConfigController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(), array(
 			'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
 			'hidden' => !$this->server_environment_config->is_hsts_security_enabled())
-
-			));
+		));
 
 		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
 		$form->add_fieldset($url_rewriting_fieldset);

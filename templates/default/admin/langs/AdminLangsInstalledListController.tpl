@@ -40,7 +40,7 @@
 						# ENDIF #
 						{langs_installed.NAME}<em> ({langs_installed.VERSION})</em></h2>
 				</header>
-				<div class="block-body admin-element-content">
+				<div class="block-body">
 					<div class="admin-element-desc">
 						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF langs_installed.C_AUTHOR_EMAIL #<a href="mailto:{langs_installed.AUTHOR_EMAIL}">{langs_installed.AUTHOR}</a># ELSE #{langs_installed.AUTHOR}# ENDIF # # IF langs_installed.C_AUTHOR_WEBSITE #<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT langs_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {langs_installed.COMPATIBILITY}</span><br />

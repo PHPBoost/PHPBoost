@@ -39,11 +39,15 @@ class FormFieldFilePicker extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$file_field_tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
+		$file_field_tpl->add_lang(LangLoader::get('main'));
 		$file_field_tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+
+    		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+    		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
 		));
 
 		$this->assign_common_template_variables($template);

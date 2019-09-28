@@ -397,7 +397,7 @@ $(document).ready(function(){
 	<div class="spacer"></div>
 </div>
 <script>
-	$('#inputfiles').dndfiles({
+	jQuery('#inputfiles').dndfiles({
 		multiple: true,
 		maxFileSize: '{MAX_WEIGHT}',
 		maxFilesSize: '-1',

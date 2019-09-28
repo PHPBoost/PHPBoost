@@ -2,10 +2,10 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-themes-container" class="admin-elements-container themes-elements-container installed-elements-container">
 		<header class="legend">{@themes.installed_theme}</header>
-		<div class="content elements-container columns-3">
+		<div class="cell-flex cell-flex-3">
 			# START themes_installed #
-				<article class="block admin-element theme-element installed-element# IF themes_installed.C_IS_DEFAULT_THEME # default-element# ENDIF ## IF themes_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-					<header class="block-title">
+				<article class="cell admin-element theme-element installed-element# IF themes_installed.C_IS_DEFAULT_THEME # default-element# ENDIF ## IF themes_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+					<header class="cell-title">
 						<div class="admin-element-menu-container">
 							# IF themes_installed.C_IS_DEFAULT_THEME #
 							<a href="#" class="admin-element-menu-title">{@themes.default}</a>
@@ -47,31 +47,62 @@
 
 						<h2 class="installed-theme-name">{themes_installed.NAME}<em> ({themes_installed.VERSION})</em></h2>
 					</header>
-					<div class="block-body admin-element-content">
-						<div class="admin-element-picture" >
+					<div class="cell-body">
+						<div class="cell-thumbnail" >
 							# IF themes_installed.C_PICTURES #
-								<a href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection">
-									<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" class="picture-table" />
-									<br/>{@themes.view_real_preview}
+								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" />
+								<a class="cell-thumbnail-caption" href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection">
+									{@themes.view_real_preview}
 								</a>
 								# START themes_installed.pictures #
 									<a href="{themes_installed.pictures.URL}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection" aria-label="{themes_installed.NAME}"></a>
 								# END themes_installed.pictures #
 							# ENDIF #
 						</div>
-						<div class="admin-element-desc">
-							<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF themes_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a># ELSE #{themes_installed.AUTHOR}# ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE #<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-							<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {themes_installed.CREATION_DATE}<br />
-							<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {themes_installed.LAST_UPDATE}<br />
-							<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {themes_installed.DESCRIPTION}<br />
-							<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span><br />
-							<span class="text-strong">{@themes.html_version} :</span> {themes_installed.HTML_VERSION}<br />
-							<span class="text-strong">{@themes.css_version} :</span> {themes_installed.CSS_VERSION}<br />
-							<span class="text-strong">{@themes.main_color} :</span> {themes_installed.MAIN_COLOR}<br />
-							<span class="text-strong">{@themes.width} :</span> {themes_installed.WIDTH}<br />
-						</div>
 					</div>
-					<footer class="block-footer">
+					<div class="cell-list">
+						<ul>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
+								<span>
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a> # ENDIF #
+								</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
+								<span>{themes_installed.CREATION_DATE}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span>
+								<span>{themes_installed.LAST_UPDATE}</span>
+							</li>
+							<li>
+								<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
+								<span>{themes_installed.DESCRIPTION}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+								<span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">{@themes.html_version} :</span>
+								<span>{themes_installed.HTML_VERSION}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">{@themes.css_version} :</span>
+								<span>{themes_installed.CSS_VERSION}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">{@themes.main_color} :</span>
+								<span>{themes_installed.MAIN_COLOR}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">{@themes.width} :</span>
+								{themes_installed.WIDTH}
+							</li>
+						</ul>
+					</div>
+					<footer class="cell-footer">
 						# IF themes_installed.C_COMPATIBLE #
 							<div class="admin-element-auth-container">
 								# IF themes_installed.C_IS_DEFAULT_THEME #

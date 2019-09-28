@@ -86,7 +86,11 @@ class AdminModuleAddController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.add.warning_before_install'], array('class' => 'full-field')));
-		$fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))), array('class' => 'half-field', 'authorized_extensions' => 'gz|zip')));
+
+		$fieldset->add_field(new FormFieldAdminFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'],
+			array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))),
+			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

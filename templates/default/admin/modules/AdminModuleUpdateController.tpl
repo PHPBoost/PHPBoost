@@ -29,7 +29,7 @@
 					<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
 				</header>
 
-				<div class="content admin-element-content">
+				<div class="content">
 					<div class="admin-element-icon">
 						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" />
 					</div>

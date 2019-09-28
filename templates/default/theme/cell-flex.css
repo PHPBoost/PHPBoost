@@ -1,0 +1,205 @@
+
+/* --- Cell grid ==================================================================== */
+.cell-flex {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.cell-flex::before,
+.cell-flex::after {
+	display: block;
+	clear: both;
+	content: "";
+}
+
+.cell {
+	width: 100%;
+}
+
+@media (min-width: 768px) {
+	.cell-flex { flex-direction: row; }
+
+	.cell-flex-2 .cell { width: calc(100% / 2); }
+	.cell-flex-3 .cell { width: calc(100% / 2); }
+	.cell-flex-4 .cell { width: calc(100% / 2); }
+
+	.cell-2-2,
+	.cell-3-3,
+	.cell-4-4 { width: 100% !important; }
+	.cell-2-4 {width: calc(100% / 2) !important}
+	.cell-2-3 {width: calc(100% / 2) !important}
+	.cell-3-4 {width: calc(100% / 2) !important}
+}
+
+@media (min-width: 1024px) {
+	.cell-flex-2 .cell { width: calc(100% / 2); }
+	.cell-flex-3 .cell { width: calc(100% / 3); }
+	.cell-flex-4 .cell { width: calc(100% / 4); }
+
+	.cell-2-2,
+	.cell-3-3,
+	.cell-4-4 { width: 100% !important; }
+	.cell-2-4 {width: calc(100% / 2) !important}
+	.cell-2-3 {width: calc(100% * 2 / 3) !important}
+	.cell-3-4 {width: calc(100% * 3 / 4) !important}
+}
+
+/* --- Cell structure ------------------------------------------------------- */
+.cell {
+	padding: 0.382em;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.cell-title {
+	padding: 0.809em;
+	border-style: solid;
+	border-width: 1px;
+	border-color: transparent;
+	/* flex: 0 1 auto;
+	display: flex;
+	flex-direction: row;
+    justify-content: space-between;
+    align-content: center; */
+}
+
+.cell-body,
+.cell-list {
+	border-style: solid;
+	border-width: 1px;
+	border-color: transparent;
+	flex: 1 1 auto;
+}
+
+.cell-body {
+    padding: 0.618em;
+}
+
+[class*="cell-"] + .cell-body,
+[class*="cell-"] + .cell-list {
+	border-width: 0 1px 1px;
+}
+
+.cell-thumbnail {
+    position: relative;
+    margin: -0.618em;
+}
+
+.cell-thumbnail-caption {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-thumbnail-caption:hover {
+    opacity: 1
+}
+
+.cell-list ul {
+	margin: 0;
+	padding: 0;
+}
+
+.cell-list ul li {
+	list-style-type: none;
+	padding: 0.309em 0.618em 0;
+}
+
+.cell-list ul li.li-stretch {
+	display: flex;
+	justify-content: space-between;
+}
+
+.cell-list ul li:last-child {
+    padding: 0.309em 0.618em;
+}
+
+.cell-table {
+    overflow: auto;
+}
+
+.cell-table table {
+    margin: 0;
+    min-width: 100%;
+}
+
+.cell-footer {
+	padding: 0.809em;
+	border-style: solid;
+	border-width: 0 1px 1px;
+	border-color: transparent;
+	flex: 0 1 auto;
+}
+
+.cell .content {
+	margin: 0;
+}
+
+.cell h1 {
+	border: none;
+}
+
+.cell header,
+.cell footer {
+	margin: 0;
+}
+
+/* hack consils admin homepage */
+.cell-body form {margin: -0.618em;}
+.cell-body fieldset,
+.cell-body .fieldset-inset,
+.cell-body .form-element {padding: 0;}
+.cell-body legend {padding: 0.456em;}
+.cell-body textarea {margin: 0;}
+
+.cell-title,
+.cell-body,
+.cell-table table,
+.cell-list,
+.cell-footer {
+	background-color: #FBFDFF;
+	border-color: #DDDDDD;
+}
+
+.no-style .cell-title,
+.no-style .cell-body,
+.no-style .cell-list,
+.no-style .cell-table,
+.no-style .cell-footer {
+	background-color: transparent!important;
+	border-color: transparent!important;
+}
+
+.default-element .cell-title,
+.default-element .cell-body,
+.default-element .cell-list,
+.default-element .cell-footer {
+	border-color: #2F9674;
+}
+
+.not-compatible .cell-title,
+.not-compatible .cell-body,
+.not-compatible .cell-list,
+.not-compatible .cell-footer {
+	border-color: #E0464A;
+}
+
+.cell-table tr:nth-child(even) td {
+	background-color: #ECF2F8;
+}
+
+.cell-thumbnail-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cell-thumbnail a {
+    color: #FFFFFF;
+}

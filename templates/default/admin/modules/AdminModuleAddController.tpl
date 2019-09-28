@@ -4,12 +4,12 @@
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
 	<section id="not-installed-modules-container" class="admin-elements-container modules-elements-container not-installed-elements-container">
-		<header class="legend">{@modules.available_modules}</header>
+		<header><h1>{@modules.available_modules}</h1></header>
 		# IF C_MODULE_AVAILABLE #
-			<div class="elements-container columns-3">
+			<div class="cell-flex cell-flex-3">
 				# START modules_not_installed #
-					<article class="block admin-element module-element not-installed-element# IF NOT modules_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-						<header class="block-title">
+					<article class="cell admin-element module-element not-installed-element# IF NOT modules_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+						<header class="cell-title">
 							<div class="admin-element-menu-container">
 								# IF modules_not_installed.C_COMPATIBLE #
 									<button type="submit" class="submit admin-element-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
@@ -28,18 +28,32 @@
 
 							<h2 class="not-installed-module-name">{modules_not_installed.NAME}<em> ({modules_not_installed.VERSION})</em></h2>
 						</header>
-
-						<div class="block-body admin-element-content">
-							<div class="admin-element-icon">
-								<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" />
-							</div>
-							<div class="admin-element-desc">
-								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {modules_not_installed.CREATION_DATE}<br />
-								<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {modules_not_installed.LAST_UPDATE}<br />
-								<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_not_installed.DESCRIPTION}<br />
-								<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span><br />
-							</div>
+						<div class="cell-list">
+							<ul>
+								<li class="li-stretch">
+									<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.ICON}/{modules_not_installed.ICON}.png" alt="{modules_not_installed.NAME}" />
+								</li>
+								<li class="li-stretch"></li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
+									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</li></span>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
+									{modules_not_installed.CREATION_DATE}
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span>
+									{modules_not_installed.LAST_UPDATE}
+								</li>
+								<li>
+									<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
+									{modules_not_installed.DESCRIPTION}
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+									<span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span>
+								</li>
+							</ul>
 						</div>
 
 						<footer></footer>

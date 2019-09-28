@@ -447,7 +447,7 @@
 
 	</section>
 	<script>
-		$('#inputfiles').dndfiles({
+		jQuery('#inputfiles').dndfiles({
 			multiple: true,
 			maxFileSize: '{MAX_WEIGHT}',
 			maxFilesSize: '{REAL_SIZE_LIMIT}',

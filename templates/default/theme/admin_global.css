@@ -481,7 +481,6 @@ li.block .fa-stack {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
-	border-radius: 4px;
 	text-align: left;
 	line-height: 1.309em;
 }
@@ -493,7 +492,7 @@ li.block .fa-stack {
 	top: 7px;
 	width: 28px;
 	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; /* Solid icons*/
+	font-weight: 900; 
 	line-height: 1;
 	font-size: 1.309em;
 	text-align: center;

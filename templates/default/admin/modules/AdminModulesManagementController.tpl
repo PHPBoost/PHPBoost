@@ -7,10 +7,10 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-modules-container" class="admin-elements-container modules-elements-container installed-elements-container">
 		<header class="legend">{@modules.installed_modules}</header>
-		<div class="elements-container columns-3">
+		<div class="cell-flex cell-flex-3">
 			# START modules_installed #
-				<article class="block admin-element module-element installed-element# IF modules_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-					<header class="block-title">
+				<article class="cell admin-element module-element installed-element# IF modules_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+					<header class="cell-title">
 						<div class="admin-element-menu-container">
 							<a href="#" id="admin-element-menu-title-{modules_installed.MODULE_NUMBER}" class="admin-element-menu-title">
 								# IF modules_installed.C_COMPATIBLE #
@@ -47,21 +47,39 @@
 
 						<h2 class="installed-module-name">{modules_installed.NAME}<em> ({modules_installed.VERSION})</em></h2>
 					</header>
-					<div class="block-body admin-element-content">
-						<div class="admin-element-icon">
-							<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" />
-						</div>
-						<div class="admin-element-desc">
-							<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-							<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span> {modules_installed.CREATION_DATE}<br />
-							<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span> {modules_installed.LAST_UPDATE}<br />
-							<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_installed.DESCRIPTION}<br />
-							<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_installed.COMPATIBILITY}</span><br />
-							<span class="text-strong">{@modules.php_version} :</span> {modules_installed.PHP_VERSION}<br />
-						</div>
+					<div class="cell-list">
+						<ul>
+							<li class="li-stretch">
+								<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.ICON}/{modules_installed.ICON}.png" alt="{modules_installed.NAME}" />
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
+								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
+								{modules_installed.CREATION_DATE}
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span>
+								{modules_installed.LAST_UPDATE}
+							</li>
+							<li>
+								<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
+								{modules_installed.DESCRIPTION}
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+								<span# IF NOT modules_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_installed.COMPATIBILITY}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">{@modules.php_version} :</span>
+								{modules_installed.PHP_VERSION}
+							</li>
+						</ul>
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #
-						<div class="block-footer">
+						<div class="cell-footer">
 							<div class="admin-element-documentation-module">
 								<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
 							</div>

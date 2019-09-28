@@ -12,12 +12,12 @@
 	<ul class="ulist"></ul>
 </div>
 <script>
-	jQuery("#inputfile_${escape(HTML_ID)}").closest("form:first")[0].enctype = "multipart/form-data";
+	jQuery("#inputfile_${escape(HTML_ID)}").parents("form:first")[0].enctype = "multipart/form-data";
 	jQuery('#inputfile_${escape(HTML_ID)}').dndfiles({
 		multiple: false,
 		maxFileSize: '{MAX_WEIGHT}',
-		maxFilesSize: '{MAX_FILE_SIZE}',
-		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+		maxFilesSize: '-1',
+		allowedExtensions: ["zip", "gz"],
 		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
 		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
 		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},

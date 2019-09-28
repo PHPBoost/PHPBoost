@@ -74,11 +74,6 @@
 }
 
 @media { /* --- Modal menu -------------------------------------------------- */
-	.modal-menu li > a {
-		border-width: 1px;
-		border-style: solid;
-		border-color: transparent;
-	}
 
 	@media (min-width: 769px) {
 		.admin-menu {
@@ -224,6 +219,16 @@
 		margin-right: 8px;
 	}
 
+	.modal-menu li > a {
+		border-width: 1px;
+		border-style: solid;
+		border-color: transparent;
+	}
+
+	.modal-menu ul li:first-child > a {
+		border-width: 0 1px 1px;
+	}
+
 	.modal-menu > li > a {
 		display: block;
 		padding: 0.618em;
@@ -267,22 +272,6 @@
 		#support-pbt {
 			display: block;
 		}
-
-		/* #support-pbt ul {
-			margin: 0;
-			list-style-type: none;
-		}
-
-		#support-pbt i {
-			margin-right: 2px;
-		}
-
-		#support-pbt ul li a {
-			display: block;
-				padding: 0.618em 1.309em;
-			text-transform: uppercase;
-			text-decoration: none;
-		} */
 	}
 }
 
