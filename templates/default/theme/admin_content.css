@@ -363,8 +363,6 @@ span.not-compatible {
 	width: 150px;
 	margin: 0;
 	list-style: none;
-	border-style: solid;
-	border-width: 2px 0 2px 0;
 	transition: 0.1s;
 }
 
@@ -411,16 +409,14 @@ span.not-compatible {
 .admin-menu-checkbox {
 	position: absolute;
 	z-index: 1;
-	top: calc(100% + 2px);
+	top: 100%;
 	left: 0;
-	border-style: solid;
-	border-width: 2px 0 2px 2px;
-	padding: 11px 5px 11px 10px;
+	padding: 14px 5px 13px 10px;
 }
 
 @media (max-width: 768px) {
 	.admin-menu-checkbox {
-		padding: 12px 3px 13px 10px;
+		padding: 15px 3px 14px 10px;
 	}
 }
 

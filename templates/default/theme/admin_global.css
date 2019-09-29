@@ -1,23 +1,17 @@
-
-/* --- ######################################################################
- *
- *                            admin_global.css
- *
- *            Contient les classes globales au site, peuvent être utilisees partout.
- *            - les liens
- *            - les titres
- *            - le calendrier
- *            - le BBCode
- *            - les barres de progression
- *            - Font-Awesome
- *            - les messages d'erreur
- *
- * --- ###################################################################### ---*/
+/*
+ * Global classes
+ * 		- links
+ * 		- calendar
+ * 		- BBCode classes
+ * 		- progressbars
+ * 		- internal menus
+ *      - Message helper
+*/
 
 
-/* -- La mise en forme du texte ================================================*/
+/* --- Text formatting ---------------------------------------------------------- */
 
-/* --- Les liens du site --- */
+/* --- Links --- */
 a {
 	text-decoration: none;
 	outline: none;
@@ -27,14 +21,19 @@ a:hover {
 	text-decoration: underline;
 }
 
-/* --- Les differentes tailles de polices --- */
+.member,
+.modo,
+.admin {
+	font-weight: 700;
+}
+
+/* --- Font sizes --- */
 .smaller { font-size : 0.869em; }
 .small   { font-size : 0.923em; }
 .big     { font-size : 1.231em; }
 .bigger  { font-size : 1.385em; }
 .biggest { font-size : 1.538em; }
 
-/* --- Les titres (balise h) --- */
 h1 { font-size: 1.615em; }
 h2 { font-size: 1.462em; }
 h3 { font-size: 1.385em; }
@@ -46,60 +45,9 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 }
 
-h5 {
-	-webkit-margin-before: 0;
-	-webkit-margin-after: 0;
-	-webkit-margin-start: 0;
-	-webkit-margin-end: 0;
-}
+/* -- Content formatting ---------------------------------------------------- */
 
-/* --- Les sous titres --- */
-h3.title1, h3.title2, h4.stitle1, h4.stitle2 {
-	display: inline;
-}
-
-h3.title1, h3.title2 {
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-	padding: 0 0 0 3px;
-	margin-bottom: 1em;
-	font-weight: bold;
-}
-
-/* --- Titre 1 --- */
-h3.title1 {
-	font-size: 2em;
-}
-
-/* --- Titre 2 --- */
-h3.title2 {
-	display: inline-block;
-	margin-left: 1.309em;
-	font-size: 1.7em;
-}
-
-/* --- Sous titre 1 --- */
-h4.stitle1 {
-	margin: 0 0 0.618em 2.618em;
-	font-size: 1.5em;
-}
-
-/* --- Sous titre 2 --- */
-h4.stitle2 {
-	margin: 0 0 0.618em 4.236em;
-	font-size: 1.3em;
-}
-
-/* --- Les listes --- */
-ul, ol {
-	margin-left: 1.309em;
-	margin-bottom: 0.618em;
-}
-
-/* -- Mise en forme du contenu ===========================================*/
-
-/* --- Affichage du mini calendrier --- */
+/* --- Calendar picker --- */
 .calendar-block-container {
 	position: absolute;
 	z-index: 100;
@@ -107,13 +55,9 @@ ul, ol {
 	right: 0;
 }
 
-.calendar-container {
-	display: inline-block;
-}
+.calendar-container { display: inline-block; }
 
-.calendar-container a .fa-calendar {
-	font-size: 1.6em;
-}
+.calendar-container a .fa-calendar { font-size: 1.618em; }
 
 .calendar-block {
 	position: absolute;
@@ -217,53 +161,14 @@ ul, ol {
 .calendar-block .date-picker tbody tr:last-child td:first-child { border-radius: 0 0 0 2px; }
 .calendar-block .date-picker tbody tr:last-child td:last-child  { border-radius: 0 0 2px 0; }
 
-/* --- les blocs bbcode --- */
-.bbcode-block-container {
-	position: absolute;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	z-index: 20;
-	top: 26px;
-	left: -4px;
-}
+/* --- Preview for BBCode --- */
 
-.bbcode-block {
-	margin: 0;
-	border-width: 1px;
-	border-style: solid;
+/* --- Preview --- */
+.xmlhttprequest-preview {
+	margin-top: 0.618em;
+	border-width: 2px;
+	border-style: dashed;
 	border-color: transparent;
-	border-radius: 3px;
-}
-
-.bbcode-block a {
-	cursor: pointer;
-	text-decoration: none;
-}
-
-/* --- Le selecteur de couleur --- */
-.color-picker {
-	position: absolute;
-	z-index: 100;
-}
-
-.color-picker .bbcode-block table {
-	border-collapse: collapse;
-	margin: auto;
-	border: none;
-}
-
-.color-picker td {
-	padding: 0;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.color-picker td a {
-	display: block;
-	width: 14px;
-	height: 14px;
 }
 
 /* --- les blocs de quote, de code ou caches --- */
@@ -286,67 +191,7 @@ ul, ol {
 	border-radius: 3px;
 }
 
-.hide {
-	cursor: pointer;
-	height: 0.618em;
-	overflow: hidden;
-}
-
-.hide2 {
-	visibility: hidden;
-	overflow: auto;
-}
-
-/* --- les autres element bbcode --- */
-.indent {
-	margin-left: 30px;
-}
-
-.formatter-acronym {
-	cursor: help;
-}
-
-.formatter-block {
-	display: block;
-	overflow: hidden;
-	margin: 0.309em 1.309em;
-	padding: 0.309em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.formatter-fieldset {
-	margin: 0.618em;
-}
-
-.formatter-ul {
-	text-align: left;
-}
-
-/* --- les listes numerotees --- */
-.code ol {
-	margin-left: 3em;
-}
-
-/* --- La recherche de membre (AJAX) --- */
-.xmlhttprequest-result-search {
-	overflow: auto;
-	margin: 2px 0 0 0;
-	padding: 2px;
-	min-height: 40px;
-	width: 100px;
-	background-color: #FFFFFF;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-
-	border: 1px solid #CCCCCC;
-	border-radius: 4px;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
-}
-
-/* --- La barre de progression --- */
+/* --- Progressbar ---------------------------------------------------------- */
 .progressbar-container {
 	position: relative;
 	margin: 4px 0 0.618em;
@@ -377,21 +222,7 @@ ul, ol {
 	transition: width .6s ease;
 }
 
-/* --- Le systeme de notation --- */
-.notation,
-.static-notation {
-	display: inline-block;
-}
-
-.notation .star,
-.static-notation .star {
-	padding-right: 0.309em;
-	font-size: 1.1em;
-	text-decoration: none;
-}
-
-
-/* -- Les Icones specifiques PHPBoost de FontAwesome ==================================*/
+/* -- PHPBoost specific FontAwesome icons ----------------------------------- */
 
 li.block .fa-stack {
 	height: 2.34em;
@@ -415,7 +246,8 @@ li.block .fa-stack {
 	text-align: center;
 }
 
-/* --- menu de flux --- */
+/* --- Internal menus ------------------------------------------------------- */
+/* --- rss menus --- */
 .feed-list {
 	margin: 0.309em 0;
 	list-style-type: none;
@@ -440,7 +272,7 @@ li.block .fa-stack {
 	margin-top: 0.618em
 }
 
-/* --- menu de flux avec image --- */
+/* --- rss menus with picture --- */
 .feed-img {
 	float: left;
 	width: 73px;
@@ -453,14 +285,13 @@ li.block .fa-stack {
 	padding-left: 6px;
 }
 
-/* --- menus de contenu --- */
+/* --- content menus --- */
 .block-contents div {
 	text-align: justify;
 	padding-top: 0.309em;
 }
 
-/* -- Les message d erreurs --
---------------------------------------*/
+/* -- Message helper -------------------------------------------------------- */
 .message-helper-small {
 	width: 90%;
 }
@@ -492,7 +323,7 @@ li.block .fa-stack {
 	top: 7px;
 	width: 28px;
 	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; 
+	font-weight: 900;
 	line-height: 1;
 	font-size: 1.309em;
 	text-align: center;

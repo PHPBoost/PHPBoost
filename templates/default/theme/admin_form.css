@@ -194,15 +194,6 @@ legend > h1 {
 	font-size: inherit;
 }
 
-/* --- Prévisualition --- */
-.xmlhttprequest-preview {
-	margin-top: 0.309em;
-	padding: 2px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
 /* --- Elements de saisie --- */
 [type=text],
 [type=email],
@@ -934,11 +925,6 @@ textarea#writing_pad_content {
 	display: block;
 }
 
-.bbcode ~ .form-field-textarea textarea {
-	border-radius: 0 0 4px 4px;
-	border-width: 0 1px 1px 1px;
-}
-
 /* --- CSS appliques aux écrans PC --- */
 @media (min-width: 769px) {
 	.form-element-textarea-small {
@@ -993,8 +979,8 @@ input + .text-status-constraint {
 	content: " ";
 }
 
-div.field-required:after,
-div.picture-status-constraint:after {
+.field-required:after,
+.picture-status-constraint:after {
 	position: absolute;
 	display: inline-block;
 	left: 0.309em;
@@ -1006,7 +992,7 @@ div.picture-status-constraint:after {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-div.field-required:after {
+.field-required:after {
 	top: 40%;
 	opacity: 0.6;
 	content: "\f069";
@@ -1029,8 +1015,8 @@ div.field-required:after {
 	padding-right: 2px;
 }
 
-.form-element-date .constraint-status-error div.field-required:after,
-.form-element-date .constraint-status-right div.field-required:after {
+.form-element-date .constraint-status-error .field-required:after,
+.form-element-date .constraint-status-right .field-required:after {
 	left: 0.618em;
 }
 
@@ -1040,11 +1026,11 @@ div.field-required:after {
 	top: 45%;
 }
 
-.constraint-status-right div.field-required:after {
+.constraint-status-right .field-required:after {
 	content: " ";
 }
 
-.constraint-status-right div.picture-status-constraint:after {
+.constraint-status-right .picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
 }
@@ -1054,12 +1040,12 @@ div.field-required:after {
 	top: 40%;
 }
 
-.constraint-status-right div.picture-status-constraint:after {
+.constraint-status-right .picture-status-constraint:after {
 	top: 30%;
 	content: "\f00c";
 }
 
-.constraint-status-right div.form-field-checkbox.picture-status-constraint:after {
+.constraint-status-right .form-field-checkbox.picture-status-constraint:after {
 	top: 0;
 }
 
@@ -1097,10 +1083,9 @@ div.field-required:after {
 /* --- Auto-completion --- */
 .autocomplete-suggestions {
 	overflow: auto;
-}
-
-.autocomplete-suggestions strong {
-	font-weight: normal;
+	border-width: 0 1px 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .autocomplete-suggestion {
