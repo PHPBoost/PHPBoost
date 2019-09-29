@@ -276,6 +276,7 @@ $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 // D&d upload
+$LANG['drag.and.drop.file'] = 'Cliquer ici ou déposer un fichier';
 $LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
 $LANG['clear.list'] = 'Vider la liste';
 $LANG['upload.helper'] = 'Options de téléversement';

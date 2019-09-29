@@ -2,7 +2,7 @@
 	<div class="dnd-area">
 		<div class="dnd-dropzone">
 			<label for="inputfiles" class="dnd-label">
-                {@drag.and.drop.files}
+                {@drag.and.drop.file}
                 <p></p>
             </label>
 			<input type="file" name="${escape(NAME)}" id="inputfile_${escape(HTML_ID)}" class="ufiles" # IF C_DISABLED # disabled="disabled" # ENDIF # />

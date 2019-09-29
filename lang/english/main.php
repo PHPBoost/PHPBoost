@@ -276,6 +276,7 @@ $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $LANG['popup_insert'] = 'Insert code into the form';
 // D&d upload
+$LANG['drag.and.drop.file'] = 'Click here or drag and drop one file';
 $LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
 $LANG['clear.list'] = 'Clear list';
 $LANG['upload.helper'] = 'Upload options';
