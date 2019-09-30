@@ -7,7 +7,7 @@
             </label>
 			<input type="file" name="${escape(NAME)}" id="inputfile_${escape(HTML_ID)}" class="ufiles" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 		</div>
-		<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+		<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 	</div>
 	<ul class="ulist"></ul>
 </div>
@@ -15,8 +15,8 @@
 	jQuery("#inputfile_${escape(HTML_ID)}").parents("form:first")[0].enctype = "multipart/form-data";
 	jQuery('#inputfile_${escape(HTML_ID)}').dndfiles({
 		multiple: false,
-		maxFileSize: '{MAX_WEIGHT}',
-		maxFilesSize: '{MAX_FILE_SIZE}',
+		maxFileSize: '{MAX_FILE_SIZE}',
+		maxFilesSize: '{MAX_FILES_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
 		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
 		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},

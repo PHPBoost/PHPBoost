@@ -38,14 +38,14 @@ class FormFieldMultipleFilePicker extends AbstractFormField
 		$tpl->add_lang(LangLoader::get('common'));
 		$tpl->add_lang(LangLoader::get('main'));
         $tpl->put_all(array(
-			'MAX_FILE_SIZE' => ($this->get_max_file_size() / 1000000) . ' Mo',
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 
-    		'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
+			'MAX_FILES_SIZE_TEXT' => ($this->get_max_file_size() / 1000000) . ' Mo',
+    		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
     		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
         ));
 

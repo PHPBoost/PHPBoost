@@ -18,7 +18,7 @@
 				<div class="close-modal" aria-label="close"></div>
 				<div class="content-panel">
 					<h3>{@upload.helper}</h3>
-					<p><strong>{@max.files.size} :</strong> {MAX_FILE_SIZE}</p>
+					<p><strong>{@max.files.size} :</strong> {MAX_FILES_SIZE_TEXT}</p>
 					<p><strong>{@allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 				</div>
 			</div>

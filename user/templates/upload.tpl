@@ -324,7 +324,7 @@
 								<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
 								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 							</div>
-							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+							<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 							<div class="ready-to-load">
 								<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
 								<span class="fa-stack fa-lg">
@@ -449,8 +449,8 @@
 	<script>
 		jQuery('#inputfiles').dndfiles({
 			multiple: true,
-			maxFileSize: '{MAX_WEIGHT}',
-			maxFilesSize: '{REAL_SIZE_LIMIT}',
+			maxFileSize: '{MAX_FILE_SIZE}',
+			maxFilesSize: '{MAX_FILES_SIZE}',
 			allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
 			warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
 			warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
