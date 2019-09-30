@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 04 04
+ * @version     PHPBoost 5.2 - last update: 2019 09 30
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -45,8 +45,8 @@ class FormFieldFilePicker extends AbstractFormField
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
-			'MAX_WEIGHT' => ServerConfiguration::get_upload_max_filesize(),
-			'ALLOWED_EXTENSIONS' => $this->authorized_extensions ? str_replace('|', '", "', $this->authorized_extensions) : implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
+			'MAX_WEIGHT' => $this->get_max_file_size(),
+			'ALLOWED_EXTENSIONS' => $this->get_authorized_extensions()
 		));
 
 		$this->assign_common_template_variables($template);
@@ -63,7 +63,7 @@ class FormFieldFilePicker extends AbstractFormField
 		return new FileTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
 	}
 
-	private function get_max_file_size()
+	protected function get_max_file_size()
 	{
 		if ($this->max_size > 0)
 		{
@@ -72,6 +72,18 @@ class FormFieldFilePicker extends AbstractFormField
 		else
 		{
 			return ServerConfiguration::get_upload_max_filesize();
+		}
+	}
+
+	protected function get_authorized_extensions()
+	{
+		if ($this->authorized_extensions)
+		{
+			return str_replace('|', '", "', $this->authorized_extensions);
+		}
+		else
+		{
+			return implode('", "',FileUploadConfig::load()->get_authorized_extensions());
 		}
 	}
 
