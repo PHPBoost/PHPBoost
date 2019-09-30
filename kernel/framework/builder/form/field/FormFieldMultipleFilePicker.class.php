@@ -45,6 +45,7 @@ class FormFieldMultipleFilePicker extends AbstractFormField
 			'MAX_INPUT' => $this->max_input,
 
 			'MAX_FILES_SIZE_TEXT' => ($this->get_max_file_size() / 1000000) . ' Mo',
+			'MAX_FILES_SIZE' => '-1',
     		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
     		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
         ));

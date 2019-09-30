@@ -47,7 +47,7 @@ class FormFieldFilePicker extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_FILE_SIZE' => $this->get_max_file_size(),
 			'ALLOWED_EXTENSIONS' => $this->get_authorized_extensions(),
-			'MAX_FILES_SIZE' => !$unlimited_data ? (($group_limit*1024 > 1024*1024) ? NumberHelper::round($group_limit*1024, 2) : NumberHelper::round($group_limit*1024, 0)) : -1 ,
+			'MAX_FILES_SIZE' => '-1' ,
 
 		));
 
