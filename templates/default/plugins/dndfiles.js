@@ -20,9 +20,9 @@
                 maxFilesSize: '-1', // weight max for all files (-1 = rights for admin = unlimited)
                 allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'], // allowed extensions
                 warningText: 'Upload have been disabled because of bad file:', // main warning text
-                warningExtension: 'bad extension <br />', 
-                warningFileSize: 'Too large file <br />', 
-                warningFilesNbr: 'The size of the members allocated space is exceeded',
+                warningExtension: 'bad extension <br />',
+                warningFileSize: 'Too large file <br />',
+                warningFilesNbr: 'The size of the allocated space is exceeded',
             };
             param = $.extend(settings, options);
 
@@ -54,11 +54,11 @@
 
     		$input.parent().on('change', function(e) { // when files are selected, the status of the input changes
                 // reset
-                if(param.multiple) $(param.filesNbr).empty(); // if multiple is true => empty the display of number of files
-                $(param.filesList).empty(); // empty the list of selected files
+                if(param.multiple) $input.closest('.dnd-area').find(param.filesNbr).empty(); // if multiple is true => empty the display of number of files
+                $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the list of selected files
                 $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute of the upload button
-                $input.closest('form').find('label p').html(''); // empty the warning texts
-                $input.closest('form').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                $input.closest('.dnd-area').find('label p').html(''); // empty the warning texts
+                $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
 
                 // init vars
     			var filesNbr = $input[0].files.length, // count number of files
@@ -93,9 +93,9 @@
                     }
 
                     if(param.allowedExtensions.indexOf(extension) === -1) // if an extension is not allowed
-                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningExtension); // send the extension warning text
+                        $input.closest('.dnd-area').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningExtension); // send the extension warning text
                     if(fileSize > param.maxFileSize) // if a file exceeds the max weight allowed
-                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningFileSize); // send the weight warning text
+                        $input.closest('.dnd-area').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningFileSize); // send the weight warning text
 
                     // set the appropriate html depending of the mime type
     				if(fileType.indexOf('image/') === 0)
@@ -111,15 +111,15 @@
     				else
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     			}
-    			$(param.filesList).append(item); // send the list to the page (bellow the dropzone)
+    			$($input).closest('.dnd-area').siblings(param.filesList).append(item); // send the list to the page (bellow the dropzone)
 
                 if($input.closest('form').find('button[type="submit"]').attr('disabled')) // if there's a wrong file
                 {
-                    $input.closest('form').find('label p').addClass('message-helper warning small'); // add warning classes
-                    $input.closest('form').find('label p').prepend(param.warningText); // add main warning text
+                    $input.closest('.dnd-area').find('label p').addClass('message-helper warning small'); // add warning classes
+                    $input.closest('.dnd-area').find('label p').prepend(param.warningText); // add main warning text
                 }
                 if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1) // if nbr of files exceeds max allowed
-                    $input.closest('form').find('label p').append(param.warningFilesNbr); // send the max file warning text
+                    $input.closest('.dnd-area').find('label p').append(param.warningFilesNbr); // send the max file warning text
 
                 // next feature : possibility to delete only one file in the list
                 $(param.filesList).find('.close-item').each(function(){
@@ -136,11 +136,11 @@
                     $('.clear-list').on('click', function(d) {
                         d.preventDefault(); // deactivate the default button behaviour
                         $input.val(''); // empty the input list of files
-                        $(param.filesNbr).html('0'); // reset the display of the number of files
-                        $(param.filesList).empty(); // empty the display of the list  of files
+                        $input.closest('.dnd-area').find(param.filesNbr).html('0'); // reset the display of the number of files
+                        $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the display of the list  of files
                         $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
-                        $input.closest('form').find('label p').html(''); // remove the warning texts
-                        $input.closest('form').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                        $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
+                        $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
                     });
                 }
 
