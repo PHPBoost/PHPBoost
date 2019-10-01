@@ -379,7 +379,7 @@ else
 		'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
 
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
-		'MAX_FILE_SIZE_TEXT' => (ServerConfiguration::get_upload_max_filesize() / 1048576) . ' Mb',
+		'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 		'ALLOWED_EXTENSIONS' => implode('", "',$files_upload_config->get_authorized_extensions()),
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],

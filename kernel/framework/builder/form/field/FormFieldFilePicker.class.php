@@ -22,7 +22,7 @@ class FormFieldFilePicker extends AbstractFormField
 {
 	private $multiple = false;
 	private $max_file_size = 0;
-	private $max_files_size = '-1';
+	private $max_files_size = 0;
 	private $authorized_extensions = '';
 
 	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
@@ -50,9 +50,9 @@ class FormFieldFilePicker extends AbstractFormField
 			'C_DISABLED'          => $this->is_disabled(),
 			'C_MULTIPLE'          => $this->is_multiple(),
 			'MAX_FILE_SIZE'       => $this->get_max_file_size(),
-			'MAX_FILE_SIZE_TEXT'  => ($this->get_max_file_size() / 1048576) . ' Mb',
+			'MAX_FILE_SIZE_TEXT'  => File::get_formated_size($this->get_max_file_size()),
 			'MAX_FILES_SIZE'      => $this->get_max_files_size(),
-			'MAX_FILES_SIZE_TEXT' => ($this->get_max_files_size() / 1048576) . ' Mb',
+			'MAX_FILES_SIZE_TEXT' => File::get_formated_size($this->get_max_files_size()),
 			'ALLOWED_EXTENSIONS'  => $this->get_authorized_extensions()
 		));
 
@@ -84,15 +84,17 @@ class FormFieldFilePicker extends AbstractFormField
 
 	protected function get_max_files_size()
 	{
-		$files_upload_config = FileUploadConfig::load();
-		$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-		$member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
-		$real_max_files_size = $group_limit - $member_memory_used;
-
-		if(AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
-			return '-1';
+		if ($this->max_files_size > 0)
+		{
+			return $this->max_files_size;
+		}
 		else
-			return $real_max_files_size;
+		{
+			if(AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+				return '-1';
+			else
+				return AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, FileUploadConfig::load()->get_maximum_size_upload()) - Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
+		}
 	}
 
 	protected function get_authorized_extensions()
@@ -174,8 +176,21 @@ class FormFieldFilePicker extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$file = $request->get_file($this->get_html_id());
-		$this->set_value($file);
+		
+		if ($this->is_multiple())
+		{
+			$array_file = array();
+			foreach ($_FILES[$this->get_html_id()] as $id => $value)
+			{
+				$array_file[] = $request->get_file($id);
+			}
+			$this->set_value($array_file);
+		}
+		else
+		{
+			$file = $request->get_file($this->get_html_id());
+			$this->set_value($file);
+		}
 	}
 
 	protected function get_default_template()
