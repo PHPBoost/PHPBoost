@@ -356,7 +356,7 @@ else
 		'URL' => $url,
 
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
-		'ALLOWED_EXTENSIONS' => implode('", "',$files_upload_config->get_authorized_extensions()),
+		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
