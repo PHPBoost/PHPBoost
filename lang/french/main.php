@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 03
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -280,6 +280,7 @@ $LANG['drag.and.drop.file'] = 'Cliquer ici ou déposer un fichier';
 $LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
 $LANG['clear.list'] = 'Vider la liste';
 $LANG['upload.helper'] = 'Options de téléversement';
+$LANG['max.file.size'] = 'Taille maximum par fichier';
 $LANG['max.files.size'] = 'Espace alloué';
 $LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
 $LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';

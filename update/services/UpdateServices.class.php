@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 10 01
  * @since   	PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -653,15 +653,15 @@ class UpdateServices
 
 	private function delete_old_files_admin()
 	{
-		// Exemple :
-		// Supprimer un fichier :
+		// Example :
+		// Delete a file :
 		// $file = new File(PATH_TO_ROOT . '/admin/AbstractAdminFormPageController.class.php');
 		// $file->delete();
 		//
-		// Supprimer un dossier :
+		// Delete a folder :
 		// $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/phpboost/deprecated');
 		// if ($folder->exists())
-		// 	$folder->delete();
+		// $folder->delete();
 
 		$file = new File(PATH_TO_ROOT . '/database/lang/english/database_english.php');
 		$file->delete();
@@ -708,6 +708,9 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/AbstractShare.class.php');
 		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/field/FormFieldMultipleFilePicker.class.php');
+		$file->delete();
+
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/FacebookLikeShare.class.php');
 		$file->delete();
 
@@ -740,6 +743,8 @@ class UpdateServices
 
 	private function delete_old_files_templates()
 	{
+		$file = new File(PATH_TO_ROOT . '/templates/default/framework/builder/form/FormFieldMultipleFilePicker.tpl');
+		$file->delete();
 
 	}
 

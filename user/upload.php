@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 22
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -379,6 +379,7 @@ else
 		'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
 
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
+		'MAX_FILE_SIZE_TEXT' => (ServerConfiguration::get_upload_max_filesize() / 1048576) . ' Mb',
 		'ALLOWED_EXTENSIONS' => implode('", "',$files_upload_config->get_authorized_extensions()),
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],

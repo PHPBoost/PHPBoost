@@ -10,21 +10,24 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 09 30
+ * @version     PHPBoost 5.2 - last update: 2019 10 01
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldFilePicker extends AbstractFormField
 {
-	private $max_size = 0;
+	private $multiple = false;
+	private $max_file_size = 0;
+	private $max_files_size = '-1';
 	private $authorized_extensions = '';
 
 	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
 	{
-		$constraints[] = new FormFieldConstraintFileMaxSize(isset($field_options['max_size']) ? $field_options['max_size'] : $this->get_max_file_size());
+		$constraints[] = new FormFieldConstraintFileMaxSize(isset($field_options['max_file_size']) ? $field_options['max_file_size'] : $this->get_max_file_size());
 		if (isset($field_options['authorized_extensions']))
 			$constraints[] = new FormFieldConstraintFileExtension($field_options['authorized_extensions']);
 		parent::__construct($id, $label, null, $field_options, $constraints);
@@ -41,14 +44,16 @@ class FormFieldFilePicker extends AbstractFormField
 		$file_field_tpl = $this->get_file_field_template();
 		$file_field_tpl->add_lang(LangLoader::get('main'));
 		$file_field_tpl->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_id(),
-			'HTML_ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
-			'MAX_FILE_SIZE' => $this->get_max_file_size(),
-			'ALLOWED_EXTENSIONS' => $this->get_authorized_extensions(),
-			'MAX_FILES_SIZE' => '-1' ,
-
+			'NAME'                => $this->get_html_id(),
+			'ID'                  => $this->get_id(),
+			'HTML_ID'             => $this->get_html_id(),
+			'C_DISABLED'          => $this->is_disabled(),
+			'C_MULTIPLE'          => $this->is_multiple(),
+			'MAX_FILE_SIZE'       => $this->get_max_file_size(),
+			'MAX_FILE_SIZE_TEXT'  => ($this->get_max_file_size() / 1048576) . ' Mb',
+			'MAX_FILES_SIZE'      => $this->get_max_files_size(),
+			'MAX_FILES_SIZE_TEXT' => ($this->get_max_files_size() / 1048576) . ' Mb',
+			'ALLOWED_EXTENSIONS'  => $this->get_authorized_extensions()
 		));
 
 		$this->assign_common_template_variables($template);
@@ -67,14 +72,27 @@ class FormFieldFilePicker extends AbstractFormField
 
 	protected function get_max_file_size()
 	{
-		if ($this->max_size > 0)
+		if ($this->max_file_size > 0)
 		{
-			return $this->max_size;
+			return $this->max_file_size;
 		}
 		else
 		{
 			return ServerConfiguration::get_upload_max_filesize();
 		}
+	}
+
+	protected function get_max_files_size()
+	{
+		$files_upload_config = FileUploadConfig::load();
+		$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
+		$member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
+		$real_max_files_size = $group_limit - $member_memory_used;
+
+		if(AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+			return '-1';
+		else
+			return $real_max_files_size;
 	}
 
 	protected function get_authorized_extensions()
@@ -89,6 +107,16 @@ class FormFieldFilePicker extends AbstractFormField
 		}
 	}
 
+	public function is_multiple()
+	{
+		return $this->multiple;
+	}
+
+	protected function set_multiple($multiple)
+	{
+		$this->multiple = $multiple;
+	}
+
 	protected function compute_options(array &$field_options)
 	{
 		foreach($field_options as $attribute => $value)
@@ -96,9 +124,17 @@ class FormFieldFilePicker extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'max_size':
-					$this->max_size = $value;
-					unset($field_options['max_size']);
+				case 'multiple':
+					$this->multiple = $value;
+					unset($field_options['multiple']);
+					break;
+				case 'max_file_size':
+					$this->max_file_size = $value;
+					unset($field_options['max_file_size']);
+					break;
+				case 'max_files_size':
+					$this->max_files_size = $value;
+					unset($field_options['max_files_size']);
 					break;
 				case 'authorized_extensions':
 					$this->authorized_extensions = $value;

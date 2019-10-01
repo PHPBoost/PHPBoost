@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 03
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -280,6 +280,7 @@ $LANG['drag.and.drop.file'] = 'Click here or drag and drop one file';
 $LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
 $LANG['clear.list'] = 'Clear list';
 $LANG['upload.helper'] = 'Upload options';
+$LANG['max.file.size'] = 'Maximum size per file';
 $LANG['max.files.size'] = 'Bytes allocated';
 $LANG['allowed.extensions'] = 'Allowed files extensions';
 $LANG['warning.upload.disabled'] = '<strong>Upload has been disabled for one of those reasons : <br /></strong>';

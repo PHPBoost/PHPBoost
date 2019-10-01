@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 31
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -270,8 +270,8 @@ class SandboxFormController extends ModuleController
 		));
 
 		// MULTIPLE FILE PICKER
-		$fieldset2->add_field(new FormFieldMultipleFilePicker('multiple_files', $this->lang['form.multiple.file.picker'],
-			array('class' => 'form-field-css-class')
+		$fieldset2->add_field(new FormFieldFilePicker('multiple_files', $this->lang['form.multiple.file.picker'],
+			array('class' => 'form-field-css-class', 'multiple' => true)
 		));
 
 		// UPLOAD FILE

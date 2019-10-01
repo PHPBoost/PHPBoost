@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 2019 09 23
+ * @version   	PHPBoost 5.3 - last update: 2019 09 30
  * @since   	PHPBoost 5.3 - 2019 09 23
 */
 
@@ -17,7 +17,7 @@
                 filesList: '.ulist', // class to display the list of selected files
                 multiple: false, // add or not 'multiple attribut to the input'
                 maxFileSize: '500000000', // weight max for one file
-                maxFilesSize: '-1', // weight max for all files (-1 = rights for admin = unlimited)
+                maxFilesSize: '-1', // weight max for all files (-1 = unlimited)
                 allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'], // allowed extensions
                 warningText: 'Upload have been disabled because of bad file:', // main warning text
                 warningExtension: 'bad extension <br />',
@@ -35,7 +35,7 @@
 
             if(param.multiple) { // if multiple parameter is true
                 $input.attr('multiple', 'multiple'); // set the attribute 'multiple' to the input
-                $(param.filesNbr).html('0'); // send '0' to the frontend icon displaying the number of files selected
+                $(param.filesNbr).html('0'); // send '0' to the frontend icon displaying the number of selected files
             }
 
             // change design on drag or mouse hovering
@@ -67,19 +67,19 @@
     				item = '';
 
                 if (param.multiple) { // if multiple parameter is true
-                    $(param.filesNbr).append(filesNbr); // send number of files in the icon and...
+                    $(param.filesNbr).append(filesNbr); // send number of files to the icon and...
                     if(filesNbr > 0) $('.clear-list').show(); // if it's > 0 then show the 'clear list' button
                 }
 
                 // For each file selected
                 for(var i=0; i < filesNbr; i++) {
                     var warningClass = '';
-    				fileName = items[i].name; // get it's name
-					fileSize = items[i].size; // get it's weight
-					fileType = items[i].type; // get it's mime type
+    				fileName = items[i].name; // get its name
+					fileSize = items[i].size; // get its weight
+					fileType = items[i].type; // get its mime type
                     extension = fileName.replace(/^.*\./, ''); // replace special characters in the name
                     if (extension == fileName) extension = ''; // look if extension exists
-                    else extension = extension.toLowerCase(); // set extension to lower case
+                    else extension = extension.toLowerCase(); // force extension to lowercase
 
                     totalWeight += fileSize; // count weight of all files
 

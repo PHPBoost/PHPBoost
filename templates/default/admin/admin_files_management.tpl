@@ -293,6 +293,7 @@ $(document).ready(function(){
 							<div class="close-modal" aria-label="close"></div>
 							<div class="content-panel">
 								<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+								<p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
 								<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 							</div>
 						</div>
