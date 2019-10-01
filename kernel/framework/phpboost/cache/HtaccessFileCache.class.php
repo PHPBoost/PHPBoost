@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 16
+ * @version     PHPBoost 5.2 - last update: 2019 09 25
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -29,14 +29,6 @@ class HtaccessFileCache implements CacheData
 		$this->general_config = GeneralConfig::load();
 		$this->server_environment_config = ServerEnvironmentConfig::load();
 
-		$this->set_default_charset();
-
-		$this->add_free_php56();
-
-		$this->add_hide_directory_listings();
-
-		$this->add_http_headers();
-
 		if ($this->server_environment_config->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
@@ -55,6 +47,14 @@ class HtaccessFileCache implements CacheData
 
 			$this->add_bandwidth_protection();
 		}
+		
+		$this->set_default_charset();
+
+		$this->add_free_php56();
+
+		$this->add_hide_directory_listings();
+
+		$this->add_http_headers();
 
 		$this->add_error_redirection();
 
@@ -320,21 +320,43 @@ class HtaccessFileCache implements CacheData
 	private function force_redirection_if_available()
 	{
 		$domain = AppContext::get_request()->get_domain_name();
-
-		if ($this->server_environment_config->is_redirection_www_enabled())
+		
+		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
-			$this->add_line('RewriteCond %{HTTP_HOST} ^' . $domain . ' [NC]');
-			$this->add_line('RewriteRule ^/?(.*) http' . ($this->server_environment_config->is_redirection_https_enabled() ? 's' : '') . '://' . ($this->server_environment_config->is_redirection_www_mode_with_www() ? 'www.' . $domain : AppContext::get_request()->get_site_domain_name()) . '/$1 [L,R=301]');
+			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
+			$this->add_line('RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]');
 		}
-
-		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
+		
+		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
 		{
-			$this->add_section('Force to use HTTPS if available');
-			$this->add_line('RewriteCond %{HTTPS} !=on [OR]'); //check if HTTPS not "on"
+			$this->add_section('Site redirection to NON-www');
+			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
+			$this->add_line('RewriteRule ^(.*)$ http://%1/$1 [R=301,L]');
+		}
+		
+		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
+		{
+			$this->add_section('Force to use HTTPS AND ...');
+			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
 			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
 			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
-			$this->add_line('RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R=301,L]');
+			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+			$this->add_section('... WWW');
+			$this->add_line('RewriteCond %{HTTP_HOST} !^www\. [NC]');
+			$this->add_line('RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]');
+		}
+		
+		if ($this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && !$this->server_environment_config->is_redirection_www_mode_with_www())
+		{
+			$this->add_section('Force to use HTTPS AND ...');
+			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
+			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
+			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
+			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+			$this->add_section('... NON-WWW');
+			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
+			$this->add_line('RewriteRule ^(.*)$ https://%1/$1 [R=301,L]');
 		}
 	}
 
