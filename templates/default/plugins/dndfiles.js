@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 2019 10 01
+ * @version   	PHPBoost 5.3 - last update: 2019 09 30
  * @since   	PHPBoost 5.3 - 2019 09 23
 */
 
@@ -66,8 +66,8 @@
     				items = $input[0].files,
     				item = '';
 
-                if (param.multiple) { // if multiple parameter is true
-                    $(param.filesNbr).append(filesNbr); // send number of files to the icon and...
+                if ($input.attr('multiple')) { // if multiple parameter is true
+                    $input.closest('.dnd-area').find(param.filesNbr).append(filesNbr); // send number of files to the icon and...
                     if(filesNbr > 0) $('.clear-list').show(); // if it's > 0 then show the 'clear list' button
                 }
 
