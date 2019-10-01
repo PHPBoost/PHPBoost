@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 2019 09 23
+ * @version   	PHPBoost 5.3 - last update: 2019 10 01
  * @since   	PHPBoost 5.3 - 2019 09 23
 */
 
@@ -11,37 +11,38 @@
 
     $.fn.extend({
         dndfiles: function(options) {
+            // set the default parameters
             var settings = {
-                filesNbr: '.files-nbr',
-                filesList: '.ulist',
-                multiple: false,
-                maxFileSize: '500000000',
-                maxFilesSize: '-1',
-                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'],
-                warningText: 'Upload have been disabled because of bad file:',
+                filesNbr: '.files-nbr', // class to display the number of selected files
+                filesList: '.ulist', // class to display the list of selected files
+                multiple: false, // add or not 'multiple attribut to the input'
+                maxFileSize: '500000000', // weight max for one file
+                maxFilesSize: '-1', // weight max for all files (-1 = unlimited)
+                allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'], // allowed extensions
+                warningText: 'Upload have been disabled because of bad file:', // main warning text
                 warningExtension: 'bad extension <br />',
                 warningFileSize: 'Too large file <br />',
-                warningFilesNbr: 'The size of the members allocated space is exceeded',
+                warningFilesNbr: 'The size of the allocated space is exceeded',
             };
             param = $.extend(settings, options);
 
-            $(param.filesNbr).html('0');
-
+            // init vars
     		var $input = $(this),
                 extension,
                 fileSize,
                 fileName,
                 fileType;
-            if(param.multiple) $input.attr('multiple', 'multiple');
 
-            $input.on('dragover mouseover', function() {
-                $('.dnd-dropzone').addClass('dragover');
-            });
+            if(param.multiple) { // if multiple parameter is true
+                $input.attr('multiple', 'multiple'); // set the attribute 'multiple' to the input
+                $(param.filesNbr).html('0'); // send '0' to the frontend icon displaying the number of selected files
+            }
 
-            $input.on('dragleave drop mouseleave', function(){
-                $('.dnd-dropzone').removeClass('dragover');
-            });
+            // change design on drag or mouse hovering
+            $input.on('dragover mouseover',        function() { $('.dnd-dropzone').addClass('dragover'); });
+            $input.on('dragleave drop mouseleave', function() { $('.dnd-dropzone').removeClass('dragover'); });
 
+            // turn file size into human readable
             function formatBytes(a, b) {
                 if (0 == a) return "0 Bytes";
                 var c = 1024,
@@ -51,43 +52,52 @@
                 return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f];
             }
 
-    		$input.parent().on('change', function(e){
-                $(param.filesNbr).empty();
-                $(param.filesList).empty();
-                $input.closest('form').find('button[type="submit"]').prop("disabled", false);
-                $input.closest('form').find('label p').html('');
-                $input.closest('form').find('label p').removeClass('message-helper warning small');
+    		$input.parent().on('change', function(e) { // when files are selected, the status of the input changes
+                // reset
+                if(param.multiple) $input.closest('.dnd-area').find(param.filesNbr).empty(); // if multiple is true => empty the display of number of files
+                $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the list of selected files
+                $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute of the upload button
+                $input.closest('.dnd-area').find('label p').html(''); // empty the warning texts
+                $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
 
-    			var filesNbr = $input[0].files.length,
+                // init vars
+    			var filesNbr = $input[0].files.length, // count number of files
                     totalWeight = 0,
     				items = $input[0].files,
     				item = '';
 
-                $(param.filesNbr).append(filesNbr);
-                if(filesNbr > 0) $('.clear-list').show();
+                if (param.multiple) { // if multiple parameter is true
+                    $(param.filesNbr).append(filesNbr); // send number of files to the icon and...
+                    if(filesNbr > 0) $('.clear-list').show(); // if it's > 0 then show the 'clear list' button
+                }
 
+                // For each file selected
                 for(var i=0; i < filesNbr; i++) {
                     var warningClass = '';
-    				fileName = items[i].name;
-					fileSize = items[i].size;
-					fileType = items[i].type;
-                    extension = fileName.replace(/^.*\./, '');
-                    if (extension == fileName) extension = '';
-                    else extension = extension.toLowerCase();
+    				fileName = items[i].name; // get its name
+					fileSize = items[i].size; // get its weight
+					fileType = items[i].type; // get its mime type
+                    extension = fileName.replace(/^.*\./, ''); // replace special characters in the name
+                    if (extension == fileName) extension = ''; // look if extension exists
+                    else extension = extension.toLowerCase(); // force extension to lowercase
 
-                    totalWeight += fileSize;
+                    totalWeight += fileSize; // count weight of all files
 
+                    // items list construction
+
+                    // if an extension is not allowed or a file exceeds the max allowed or the number of files exceeds the max allowed (-1 = rights for admin = unlimited)
                     if(param.allowedExtensions.indexOf(extension) === -1 || fileSize > param.maxFileSize || (totalWeight > param.maxFilesSize && param.maxFilesSize > -1))
                     {
-                        warningClass = 'warning';
-                        $input.closest('form').find('button[type="submit"]').attr('disabled', 'disabled');
+                        warningClass = 'warning'; // set the warning class to the item in the list
+                        $input.closest('form').find('button[type="submit"]').attr('disabled', 'disabled'); // disable the upload button
                     }
 
-                    if(param.allowedExtensions.indexOf(extension) === -1)
-                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningExtension);
-                    if(fileSize > param.maxFileSize)
-                        $input.closest('form').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningFileSize);
+                    if(param.allowedExtensions.indexOf(extension) === -1) // if an extension is not allowed
+                        $input.closest('.dnd-area').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningExtension); // send the extension warning text
+                    if(fileSize > param.maxFileSize) // if a file exceeds the max weight allowed
+                        $input.closest('.dnd-area').find('label p').append('<span class="filename">'+fileName+'</span>', param.warningFileSize); // send the weight warning text
 
+                    // set the appropriate html depending of the mime type
     				if(fileType.indexOf('image/') === 0)
 			            item += '<li class="'+warningClass+'" data-file="'+fileName+'"><img src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     				else if(fileType.indexOf('audio/') === 0)
@@ -101,16 +111,17 @@
     				else
     					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
     			}
-    			$(param.filesList).append(item);
+    			$($input).closest('.dnd-area').siblings(param.filesList).append(item); // send the list to the page (bellow the dropzone)
 
-                if($input.closest('form').find('button[type="submit"]').attr('disabled'))
+                if($input.closest('form').find('button[type="submit"]').attr('disabled')) // if there's a wrong file
                 {
-                    $input.closest('form').find('label p').addClass('message-helper warning small');
-                    $input.closest('form').find('label p').prepend(param.warningText);
+                    $input.closest('.dnd-area').find('label p').addClass('message-helper warning small'); // add warning classes
+                    $input.closest('.dnd-area').find('label p').prepend(param.warningText); // add main warning text
                 }
-                if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1)
-                    $input.closest('form').find('label p').append(param.warningFilesNbr);
+                if(totalWeight > param.maxFilesSize && param.maxFilesSize > -1) // if nbr of files exceeds max allowed
+                    $input.closest('.dnd-area').find('label p').append(param.warningFilesNbr); // send the max file warning text
 
+                // next feature : possibility to delete only one file in the list
                 $(param.filesList).find('.close-item').each(function(){
                     $(this).on('click', function(){
                         var itemNbr = $('.ulist li:not([value="0"])').length;
@@ -120,15 +131,19 @@
                     });
                 });
 
-                $('.clear-list').on('click', function(d) {
-                    d.preventDefault();
-                    $input.val('');
-                    $(param.filesNbr).html('0');
-                    $(param.filesList).empty();
-                    $input.closest('form').find('button[type="submit"]').prop("disabled", false);
-                    $input.closest('form').find('label p').html('');
-                    $input.closest('form').find('label p').removeClass('message-helper warning small');
-                });
+                if(param.multiple) { // if multiple is true
+                    // reset all when clicking on the 'clear list' button
+                    $('.clear-list').on('click', function(d) {
+                        d.preventDefault(); // deactivate the default button behaviour
+                        $input.val(''); // empty the input list of files
+                        $input.closest('.dnd-area').find(param.filesNbr).html('0'); // reset the display of the number of files
+                        $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the display of the list  of files
+                        $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
+                        $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
+                        $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                    });
+                }
+
     		})
         }
     });

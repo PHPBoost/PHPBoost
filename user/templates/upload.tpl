@@ -323,7 +323,7 @@
 								<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
 								<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 							</div>
-							<input type="hidden" name="max_file_size" value="{MAX_WEIGHT}">
+							<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 							<div class="ready-to-load">
 								<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
 								<span class="fa-stack fa-lg">
@@ -331,17 +331,6 @@
 									<strong class="fa-stack-1x files-nbr"></strong>
 								</span>
 							</div>
-							<!-- <div class="modal-container">
-								<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
-								<div id="upload-helper" class="modal modal-animation">
-									<div class="close-modal" aria-label="close"></div>
-									<div class="content-panel">
-										<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
-										<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
-										<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
-									</div>
-								</div>
-							</div> -->
 						</div>
 						<ul class="ulist"></ul>
 					</fieldset>
@@ -446,8 +435,8 @@
 		<script>
 			$('#inputfiles').dndfiles({
 				multiple: true,
-				maxFileSize: '{MAX_WEIGHT}',
-				maxFilesSize: '{REAL_SIZE_LIMIT}',
+				maxFileSize: '{MAX_FILE_SIZE}',
+				maxFilesSize: '{MAX_FILES_SIZE}',
 				allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
 				warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
 				warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},

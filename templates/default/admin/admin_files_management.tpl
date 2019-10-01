@@ -227,125 +227,148 @@
 		-->
 		</script>
 
-		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
-				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
-			</a>
-			<ul>
-				<li>
-					<a href="admin_files.php" class="quick-link">{L_FILES_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="${relative_url(AdminFilesUrlBuilder::configuration())}" class="quick-link">{L_CONFIG_FILES}</a>
-				</li>
-			</ul>
-		</nav>
+	<nav id="admin-quick-menu">
+		<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" title="{L_FILES_MANAGEMENT}">
+			<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
+		</a>
+		<ul>
+			<li>
+				<a href="admin_files.php" class="quick-link">{L_FILES_MANAGEMENT}</a>
+			</li>
+			<li>
+				<a href="${relative_url(AdminFilesUrlBuilder::configuration())}" class="quick-link">{L_CONFIG_FILES}</a>
+			</li>
+		</ul>
+	</nav>
 
-		<div id="admin-contents">
+	<div id="admin-contents">
 
-			<div id="new-file">
-				# INCLUDE message_helper #
-				<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
-					<fieldset>
-						<legend>{L_ADD_FILES}</legend>
-						<div class="fieldset-inset">
-							<div class="form-element">
-								<div class="form-field">
-									<input type="file" name="upload_file" id="upload-file">
-									<input type="hidden" name="max_file_size" value="2000000">
-								</div>
-								<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
-								<input type="hidden" name="token" value="{TOKEN}">
-							</div>
+		<div id="new-multiple-files">
+			# INCLUDE message_helper #
+			<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
+				<fieldset>
+					<legend>{L_ADD_FILES}</legend>
+					<div class="dnd-area">
+						<div class="dnd-dropzone">
+							<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+							<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 						</div>
-					</fieldset>
-				</form>
-			</div>
-
-			<fieldset>
-				<legend>{L_FILES_ACTION}</legend>
-				<div class="fieldset-inset">
-					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
-					</div>
-
-					<div class="upload-address-bar-links">
-						<a href="admin_files.php?root=1">
-							<i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}
-						</a>
-						<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
-							<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
-						</a>
-						<a href="javascript:display_new_folder();">
-							<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
-						</a>
-						<a href="javascript:document.getElementById('upload-file').click();">
-							<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
-						</a>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset class="upload-elements-container">
-				<legend>{L_FOLDER_CONTENT}</legend>
-				<div class="fieldset-inset">
-					# IF C_EMPTY_FOLDER #
-						<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
-						<span id="new-folder"></span>
-
-					# ELSE #
-						# START folder #
-							<div class="upload-elements-repertory">
-								<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
-								<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
-								<div class="upload-repertory-controls">
-									# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
-									<span>
-										# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-delete" aria-hidden="true" title="{folder.L_TYPE_DEL_FOLDER}"></i></a># ENDIF #
-									</span>
-									<span>
-										# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a># ENDIF #
-									</span>
-									<span id="img{folder.ID}"></span>
-								</div>
-							</div>
-						# END folder #
-						<span id="new-folder"></span>
-
-						# START files #
-						<div class="upload-elements-file">
-							# IF files.C_IMG #
-							<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}">
-								<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-							</a>
-							# ELSE #
-							<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
-								<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
-							</a>
-							# ENDIF #
-							<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
-							<span id="fi{files.ID}"></span>
-							{files.BBCODE}
-							<div class="upload-file-controls">
-								<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" title="${LangLoader::get_message('edit', 'common')}"></i></a></span>
-								<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
-								<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a>
-								{files.INSERT}
-							</div>
-							<span class="text-strong">{files.FILETYPE}</span><br />
-							<span class="text-strong">{files.SIZE}</span>
-							<span id="imgf{files.ID}"></span>
+						<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
+						<div class="ready-to-load">
+							<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+							<span class="fa-stack fa-lg">
+								<i class="far fa-file fa-stack-2x "></i>
+								<strong class="fa-stack-1x files-nbr"></strong>
+							</span>
 						</div>
-						# END files #
-					# ENDIF #
-				</div>
-							<div class="options">
-								{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
-								{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
-								{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
-								{L_DATA} : <strong>{TOTAL_SIZE}</strong>
-							</div>
-			</fieldset>
-
-			<div class="spacer"></div>
+					</div>
+					<ul class="ulist"></ul>
+				</fieldset>
+				<fieldset class="fieldset-submit">
+					<div class="fieldset-inset">
+					<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
+					</div>
+				</fieldset>
+			</form>
 		</div>
+
+		<fieldset>
+			<legend>{L_FILES_ACTION}</legend>
+			<div class="fieldset-inset">
+				<div class="upload-address-bar">
+					<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
+				</div>
+
+				<div class="upload-address-bar-links">
+					<a href="admin_files.php?root=1">
+						<i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}
+					</a>
+					<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
+						<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
+					</a>
+					<a href="javascript:display_new_folder();">
+						<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
+					</a>
+					<a href="javascript:document.getElementById('upload-file').click();">
+						<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
+					</a>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class="upload-elements-container">
+			<legend>{L_FOLDER_CONTENT}</legend>
+			<div class="fieldset-inset">
+				# IF C_EMPTY_FOLDER #
+					<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
+					<span id="new-folder"></span>
+
+				# ELSE #
+					# START folder #
+						<div class="upload-elements-repertory">
+							<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a><br />
+							<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
+							<div class="upload-repertory-controls">
+								# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true" title="${LangLoader::get_message('edit', 'common')}"></i></a></span># ENDIF #
+								<span>
+									# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-delete" aria-hidden="true" title="{folder.L_TYPE_DEL_FOLDER}"></i></a># ENDIF #
+								</span>
+								<span>
+									# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a># ENDIF #
+								</span>
+								<span id="img{folder.ID}"></span>
+							</div>
+						</div>
+					# END folder #
+					<span id="new-folder"></span>
+
+					# START files #
+					<div class="upload-elements-file">
+						# IF files.C_IMG #
+						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" title="{files.TITLE}">
+							<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
+						</a>
+						# ELSE #
+						<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}>
+							<div class="upload-element-icon"><i class="fa {files.IMG}"></i></div>
+						</a>
+						# ENDIF #
+						<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
+						<span id="fi{files.ID}"></span>
+						{files.BBCODE}
+						<div class="upload-file-controls">
+							<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" title="${LangLoader::get_message('edit', 'common')}"></i></a></span>
+							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" title="{L_DELETE}"></i></a>
+							<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true" title="{L_MOVETO}"></i></a>
+							{files.INSERT}
+						</div>
+						<span class="text-strong">{files.FILETYPE}</span><br />
+						<span class="text-strong">{files.SIZE}</span>
+						<span id="imgf{files.ID}"></span>
+					</div>
+					# END files #
+				# ENDIF #
+			</div>
+						<div class="options">
+							{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
+							{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
+							{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
+							{L_DATA} : <strong>{TOTAL_SIZE}</strong>
+						</div>
+		</fieldset>
+
+		<div class="spacer"></div>
+	</div>
+<script>
+	jQuery('#inputfiles').dndfiles({
+		multiple: true,
+		maxFileSize: '{MAX_FILE_SIZE}',
+		maxFilesSize: '-1',
+		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
+		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+	});
+</script>

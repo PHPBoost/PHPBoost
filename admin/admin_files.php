@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 26
+ * @version   	PHPBoost 5.2 - last update: 2019 10 01
  * @since   	PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -354,6 +354,10 @@ else
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'URL' => $url,
+
+		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
+		'ALLOWED_EXTENSIONS' => implode('", "',$files_upload_config->get_authorized_extensions()),
+
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
