@@ -66,8 +66,8 @@
     				items = $input[0].files,
     				item = '';
 
-                if (param.multiple) { // if multiple parameter is true
-                    $(param.filesNbr).append(filesNbr); // send number of files to the icon and...
+                if ($input.attr('multiple')) { // if multiple parameter is true
+                    $input.closest('.dnd-area').find(param.filesNbr).append(filesNbr); // send number of files to the icon and...
                     if(filesNbr > 0) $('.clear-list').show(); // if it's > 0 then show the 'clear list' button
                 }
 
