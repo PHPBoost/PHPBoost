@@ -87,6 +87,10 @@
     max-height: 45px;
 }
 
+.fa-upload-img {
+    font-style: initial
+}
+
 .close-item {
     position: absolute;
     top: -0.256em;
