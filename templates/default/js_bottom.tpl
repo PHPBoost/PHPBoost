@@ -59,6 +59,18 @@
 
     jQuery('.wizard-container').wizard();
 
+	jQuery(document).ready(function () {
+		new jBox('Mouse', {
+			attach: '[aria-label]',
+			getTitle: 'aria-label',
+			position: {
+				x: 'center',
+				y: 'bottom'
+			},
+			addClass: 'tooltip',
+		});
+	});
+
 	jQuery('.cssmenu-title').each(function(){
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items

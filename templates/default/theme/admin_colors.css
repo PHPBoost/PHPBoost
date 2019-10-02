@@ -319,13 +319,6 @@ span.not-compatible {
 	background-color: #0066CC;
 }
 
-#tooltip {
-	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
-	/* border-color: #ffffff; */
-	color: #ffffff;
-	background-color: #366493;
-}
-
 /* -- Table
     #####   ###   ###    #      #####
       #    #   #  #  #   #      #
@@ -1208,11 +1201,10 @@ a[class*='lightcase-icon-'], a[class*='lightcase-icon-']:focus {
 
 a[class*='lightcase-icon-']:hover {
     color: #FFFFFF;
-    text-shadow: 0 0 0.618em #FFFFFF;
 }
 
 .lightcase-isMobileDevice a[class*='lightcase-icon-']:hover {
-    color: #aaa;
+    color: #DDDDDD;
 }
 
 #lightcase-case {
@@ -1227,8 +1219,9 @@ a[class*='lightcase-icon-']:hover {
 }
 
 @media screen and (min-width: 641px) {
-    html[data-lc-type=image] #lightcase-content, html[data-lc-type=video] #lightcase-content {
-        background-color: #333333;
+    html[data-lc-type=image] #lightcase-content,
+	html[data-lc-type=video] #lightcase-content {
+        background-color: #353535;
     }
 }
 
@@ -1239,11 +1232,11 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-content h5,
 #lightcase-content h6,
 #lightcase-content p {
-    color: #333;
+    color: #353535;
 }
 
 #lightcase-case p.lightcase-error {
-    color: #CE271A;
+    color: #E0464A;
 }
 
 #lightcase-info #lightcase-title {
@@ -1267,11 +1260,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 #lightcase-overlay {
-    background: #366493;
-}
-
-.tab-container > nav > ul > li a.shown {
-	background-color: rgba(54, 100, 147, 0.2);
+    background: #202020;
 }
 
 /* -- plugins
@@ -1282,12 +1271,21 @@ a[class*='lightcase-icon-']:hover {
     #      #####  #####  #####  #####  #    ##  #####
 ----------------------------------------------------------------------------- */
 
+.tab-container > nav > ul > li a.shown {
+	background-color: rgba(54, 100, 147, 0.2);
+}
+
 .wizard-container .wizard-header li .completed-step {
   	background-color: rgba(0, 255, 0, 0.4);
 }
 
 .wizard-container .wizard-header .progress {
 	background-color: rgba(54, 100, 147, 0.2);
+}
+
+.tooltip {
+	border-color: #DDDDDD;
+	background-color: #FFFFFF;
 }
 
 .fa-finish:before {

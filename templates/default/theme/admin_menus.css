@@ -225,10 +225,9 @@
 		border-color: transparent;
 	}
 
-	.modal-menu ul li:first-child > a {
+	.modal-menu .level-2 > li:first-child > a {
 		border-width: 0 1px 1px;
 	}
-
 	.modal-menu > li > a {
 		display: block;
 		padding: 0.618em;

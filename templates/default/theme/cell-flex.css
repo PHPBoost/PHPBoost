@@ -27,9 +27,9 @@
 	.cell-2-2,
 	.cell-3-3,
 	.cell-4-4 { width: 100% !important; }
-	.cell-2-4 {width: calc(100% / 2) !important}
-	.cell-2-3 {width: calc(100% / 2) !important}
-	.cell-3-4 {width: calc(100% / 2) !important}
+	.cell-2-4 { width: calc(100% / 2) !important;}
+	.cell-2-3 { width: calc(100% / 2) !important;}
+	.cell-3-4 { width: calc(100% / 2) !important;}
 }
 
 @media (min-width: 1024px) {
@@ -40,9 +40,9 @@
 	.cell-2-2,
 	.cell-3-3,
 	.cell-4-4 { width: 100% !important; }
-	.cell-2-4 {width: calc(100% / 2) !important}
-	.cell-2-3 {width: calc(100% * 2 / 3) !important}
-	.cell-3-4 {width: calc(100% * 3 / 4) !important}
+	.cell-2-4 { width: calc(100% / 2) !important;}
+	.cell-2-3 { width: calc(100% * 2 / 3) !important;}
+	.cell-3-4 { width: calc(100% * 3 / 4) !important;}
 }
 
 /* --- Cell structure ------------------------------------------------------- */

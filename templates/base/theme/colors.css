@@ -761,7 +761,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 .lightcase-isMobileDevice a[class*='lightcase-icon-']:hover {
-    color: #aaa;
+    color: #DDDDDD;
 }
 
 #lightcase-case {
@@ -778,7 +778,7 @@ a[class*='lightcase-icon-']:hover {
 @media screen and (min-width: 641px) {
     html[data-lc-type=image] #lightcase-content,
 	html[data-lc-type=video] #lightcase-content {
-        background-color: #333333;
+        background-color: #353535;
     }
 }
 
@@ -789,11 +789,11 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-content h5,
 #lightcase-content h6,
 #lightcase-content p {
-    color: #333;
+    color: #353535;
 }
 
 #lightcase-case p.lightcase-error {
-    color: #CE271A;
+    color: #E0464A;
 }
 
 #lightcase-info #lightcase-title {
@@ -817,7 +817,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 #lightcase-overlay {
-    background: #366493;
+    background: #202020;
 }
 
 /* -- plugins
@@ -852,8 +852,8 @@ a[class*='lightcase-icon-']:hover {
 }
 
 @media { /* --- tooltip --- */
-	#tooltip {
-		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15);
+	.tooltip {
+		border-color: #DDDDDD;
 		background-color: #FFFFFF;
 	}
 }

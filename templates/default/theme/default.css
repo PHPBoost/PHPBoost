@@ -465,7 +465,6 @@ ul.pagination .current-page {
 	left: 0;
 }
 
-
 /* --- Deprecated : alias V4.7 used in PHPBoost --- */
 .fa.fa-bar-chart-o:before      { content: "\f080"; } /* copy chart-bar */
 .fa.fa-calendar:before         { content: "\f073"; } /* copy calendar-alt */
@@ -486,14 +485,13 @@ ul.pagination .current-page {
 .fa.fa-lightbulb-o:before      { content: "\f0eb"; } /* copy lightbulb */
 .fa.fa-minus-square-o:before   { content: "\f146"; } /* copy minus-square */
 .fa.fa-plus-square-o:before    { content: "\f0fe"; } /* copy plus-square */
-.fa.fa-sign-in:before          { content: "\f2f6"; } /* copy sign-in-alt */  
+.fa.fa-sign-in:before          { content: "\f2f6"; } /* copy sign-in-alt */
 .fa.fa-sign-out:before         { content: "\f2f5"; } /* copy sign-out-alt */
-.fa.fa-sort-alpha-asc:before   { content: "\f15d"; } /* copy sort-alpha-down */ 
+.fa.fa-sort-alpha-asc:before   { content: "\f15d"; } /* copy sort-alpha-down */
 .fa.fa-sort-amount-asc:before  { content: "\f160"; } /* copy sort-amount-down */
 .fa.fa-sort-amount-desc:before { content: "\f161"; } /* copy sort-amount-up */
 .fa.fa-ticket:before           { content: "\f3ff"; } /* copy ticket-alt */
 .fa.fa-user-o:before           { content: "\f007"; } /* copy user */
-
 
 /* --- Icons forced to "Regular" format --- */
 .fa.fa-clock-o,
