@@ -45,7 +45,7 @@ class NumberHelper
 	 */
 	public static function round($number, $dec)
 	{
-		return trim(number_format($number, $dec, '.', ''));
+		return floatval(number_format($number, $dec, '.', ''));
 	}
 }
 ?>
