@@ -286,6 +286,7 @@ $LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
 $LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';
 $LANG['warning.upload.extension'] = ' : l\'extension de ce fichier n\'est pas autorisée.<br />';
 $LANG['warning.upload.file.size'] = ' : le poids de ce fichiers est trop important.<br />';
+$LANG['warning.upload.file.dim'] = 'La hauteur ou la largeur d\'une image excède les dimensions autorisées.<br />';
 $LANG['warning.upload.files.nbr'] = '<br />- l\'ensemble des fichiers dépasse l\'espace alloué.<br />';
 
 // Moderation panel

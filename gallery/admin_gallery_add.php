@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 26
+ * @version   	PHPBoost 5.2 - last update: 2019 10 04
  * @since   	PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
@@ -69,7 +70,7 @@ if (isset($_FILES['gallery'])) //Upload
 				if ($Gallery->get_error() != '')
 					$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 			}
-			
+
 			//Régénération du cache des photos aléatoires.
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();
@@ -132,11 +133,12 @@ if (!empty($add_pic))
 }
 
 $tpl->put_all(array(
-	'WIDTH_MAX' => $config->get_max_width(),
-	'HEIGHT_MAX' => $config->get_max_height(),
-	'WEIGHT_MAX' => $config->get_max_weight(),
-	'AUTH_EXTENSION' => 'JPEG, GIF, PNG',
+	'MAX_WIDTH' => $config->get_max_width(),
+	'MAX_HEIGHT' => $config->get_max_height(),
+	'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
+	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
 	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
+	'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',
 	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
 	'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
 	'L_GALLERY_CONFIG' => $LANG['gallery_config'],

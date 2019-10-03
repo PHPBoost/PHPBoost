@@ -286,6 +286,7 @@ $LANG['allowed.extensions'] = 'Allowed files extensions';
 $LANG['warning.upload.disabled'] = '<strong>Upload has been disabled for one of those reasons : <br /></strong>';
 $LANG['warning.upload.extension'] = ' : the extension of this file isn\'t allowed.<br />';
 $LANG['warning.upload.file.size'] = ' : the weight of this files is too large.<br />';
+$LANG['warning.upload.file.dim'] = ' : the height or width of the picture exceeds the maximum allowed.<br />';
 $LANG['warning.upload.files.nbr'] = '<br />- the number of files exeeds the allocated space.<br />';
 
 // Moderation panel

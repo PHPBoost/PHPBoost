@@ -95,7 +95,7 @@ $lang['unit.gigabytes'] = 'Go';
 $lang['unit.megabytes'] = 'Mo';
 $lang['unit.kilobytes'] = 'Ko';
 $lang['unit.bytes'] = 'Octets';
-$lang['unit.pixels'] = 'Px';
+$lang['unit.pixels'] = 'px';
 
 //Notes
 $lang['note'] = 'Note';

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 26
+ * @version   	PHPBoost 5.2 - last update: 2019 10 03
  * @since   	PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -128,14 +128,14 @@ elseif (isset($_FILES['gallery'])) //Upload
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Gallery->get_error()) . '#message_helper');
-			
+
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
 				$idpic = $Gallery->Add_pics($idcat_post, $name_post, $parameters['path'], AppContext::get_current_user()->get_id());
 				if ($Gallery->get_error() != '')
 					AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Gallery->get_error()) . '#message_helper');
 			}
-			
+
 			//Régénération du cache des photos aléatoires.
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();
@@ -227,9 +227,11 @@ elseif ($g_add)
 		'CAT_ID' => $id_category,
 		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
 		'CATEGORIES_TREE' => GalleryService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
-		'WIDTH_MAX' => $config->get_max_width(),
-		'HEIGHT_MAX' => $config->get_max_height(),
-		'WEIGHT_MAX' => $config->get_max_weight(),
+		'MAX_WIDTH' => $config->get_max_width(),
+		'MAX_HEIGHT' => $config->get_max_height(),
+		'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',
+		'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
+		'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],

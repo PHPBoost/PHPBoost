@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 03
+ * @version   	PHPBoost 5.2 - last update: 2019 10 03
  * @since   	PHPBoost 1.2 - 2005 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -16,7 +17,7 @@
 //Admin
 $LANG['upload_pics'] = 'Upload pictures';
 $LANG['gallery_config'] = 'Gallery configuration';
-$LANG['add_pic'] = 'Add picture';
+$LANG['add_pic'] = 'Add pictures';
 $LANG['img_dispo'] = 'Pictures available on the server';
 $LANG['img_without_cat'] = 'Picture(s) without categories';
 $LANG['total_img_root'] = 'There are %d pictures in the gallery';
@@ -64,10 +65,10 @@ $LANG['nbr_img_explain'] = 'Members (unlimited if guests are authorized)';
 $LANG['nbr_img_modo'] = 'Max number of pictures';
 $LANG['nbr_img_modo_explain'] = 'Moderator';
 $LANG['explain_gallery_cache'] = 'Regeneration of the thumbnails<br />Empties the cache in case of thumbnails configuration modification, and recount number of pictures in each categories.';
-$LANG['explain_pic'] = 'The gallery you wish to delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or to delete this picture?';
-$LANG['explain_pics'] = 'The gallery you wish to delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or to delete all pictures?';
-$LANG['explain_subgallery'] = 'The gallery you wish to delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or to delete it and its contents?';
-$LANG['explain_subgalleries'] = 'The gallery you wish to delete contains <strong>%d</strong> subgalleries, do you want to preserve them by transferring them in another gallery, or to delete all these subgalleries and their contents?';
+$LANG['explain_pic'] = 'The gallery you are about to delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or to delete this picture?';
+$LANG['explain_pics'] = 'The gallery you are about to delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or to delete all pictures?';
+$LANG['explain_subgallery'] = 'The gallery you are about to delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or to delete it and its contents?';
+$LANG['explain_subgalleries'] = 'The gallery you are about to delete contains <strong>%d</strong> subgalleries, do you want to preserve them by transferring them in another gallery, or to delete all these subgalleries and their contents?';
 $LANG['keep_pics'] = 'Keep picture(s)';
 $LANG['keep_subgallery'] = 'Keep subgallery(ies)';
 $LANG['move_pics_to'] = 'Move picture(s) to';

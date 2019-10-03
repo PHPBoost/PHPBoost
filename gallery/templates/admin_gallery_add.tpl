@@ -66,22 +66,7 @@
 							# END image_up #
 						</div>
 
-						<div class="form-element">
-							<span>{L_AUTH_EXTENSION}: <strong>{AUTH_EXTENSION} </strong></span>
-
-							<div class="spacer"></div>
-
-							<span>{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}</span>
-							<div class="spacer"></div>
-							<span>{L_HEIGHT_MAX}: {HEIGHT_MAX} {L_UNIT_PX}</span>
-							<div class="spacer"></div>
-							<span>{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}</span>
-
-							<div class="spacer"></div>
-						</div>
-
-
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 							<div class="form-field">
 								<select name="idcat_post" id="category">
@@ -89,13 +74,37 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-element">
-							<label for="name">{L_NAME}</label>
-							<div class="form-field"><label><input type="text" maxlength="50" name="name" id="name"></label></div>
-						</div>
-						<div class="form-element">
+						<div class="form-element full-field">
 							<label for="gallery">{L_UPLOAD_IMG}</label>
-							<div class="form-field"><label><input type="file" name="gallery" id="gallery" class="file"></label></div>
+							<div class="form-field">
+								<div class="dnd-area">
+									<div class="dnd-dropzone">
+										<label for="gallery" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+										<input type="file" name="gallery[]" id="gallery" class="ufiles" />
+									</div>
+									<div class="ready-to-load">
+										<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+										<span class="fa-stack fa-lg">
+											<i class="far fa-file fa-stack-2x "></i>
+											<strong class="fa-stack-1x files-nbr"></strong>
+										</span>
+									</div>
+									<div class="modal-container">
+										<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
+										<div id="upload-helper" class="modal modal-animation">
+											<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+											<div class="content-panel">
+												<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+												<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+												<p><strong>{L_WIDTH_MAX} :</strong> {MAX_WIDTH} {L_UNIT_PX}</p>
+												<p><strong>{L_HEIGHT_MAX} :</strong> {MAX_HEIGHT} {L_UNIT_PX}</p>
+												<p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<ul class="ulist"></ul>
+							</div>
 						</div>
 					</div>
 				</fieldset>
@@ -165,7 +174,7 @@
 				<div class="spacer"></div>
 
 				<div class="form-element">
-					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <spa class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></span></label>
+					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <span class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></label>
 					<div class="form-field">
 						<select name="root_cat" id="root_cat">
 							{ROOT_CATEGORIES}
@@ -194,3 +203,18 @@
 				</fieldset>
 			</form>
 		</div>
+		<script>
+			jQuery('#gallery').dndfiles({
+				multiple: true,
+				maxFileSize: '{MAX_FILE_SIZE}',
+				maxFilesSize: '-1',
+				maxWidth: '{MAX_WIDTH}',
+				maxHeight: '{MAX_HEIGHT}',
+				allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
+				warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
+				warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
+				warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
+				warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+				warningFileDim: ${escapejs(LangLoader::get_message('warning.upload.file.dim', 'main'))},
+			});
+		</script>

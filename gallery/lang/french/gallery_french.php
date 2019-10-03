@@ -3,11 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 20
+ * @version   	PHPBoost 5.2 - last update: 2019 10 03
  * @since   	PHPBoost 1.2 - 2005 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -15,15 +15,15 @@
 ####################################################
 
 //Admin
-$LANG['upload_pics'] = 'Uploader l\'image';
+$LANG['upload_pics'] = 'Uploader les images';
 $LANG['gallery_config'] = 'Configuration de la galerie';
-$LANG['add_pic'] = 'Ajouter une image';
+$LANG['add_pic'] = 'Ajouter des images';
 $LANG['img_dispo'] = 'Images disponibles sur le serveur';
 $LANG['img_without_cat'] = 'Image(s) sans catégories';
 $LANG['total_img_root'] = 'Il y a %d image(s) dans la galerie';
 $LANG['total_img_root_single'] = 'Il y a une image dans la galerie';
 $LANG['total_img_cat'] = '%d image(s) dans cette catégorie';
-$LANG['height_max'] = 'Hauteur max photos';
+$LANG['height_max'] = 'Hauteur max des photos';
 $LANG['height_max_explain'] = '600px par défaut';
 $LANG['width_max'] = 'Largeur max des photos';
 $LANG['width_max_explain'] = '800px par défaut';
@@ -64,7 +64,7 @@ $LANG['nbr_img'] = 'Nombre de photos maximum';
 $LANG['nbr_img_explain'] = 'Membres (illimité si invités autorisés)';
 $LANG['nbr_img_modo'] = 'Nombre de photos maximum';
 $LANG['nbr_img_modo_explain'] = 'Modérateurs';
-$LANG['explain_gallery_cache'] = 'Régénération des miniatures (définitif!)<br />Vide le cache en cas de modification des configurations des miniatures, et recompte le nombre d\'images par catégories.';
+$LANG['explain_gallery_cache'] = 'Régénération des miniatures (définitif !)<br />Vide le cache en cas de modification des configurations des miniatures, et recompte le nombre d\'images par catégories.';
 $LANG['explain_pic'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> image, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ?';
 $LANG['explain_pics'] = 'La galerie que vous désirez supprimer contient <strong>%d</strong> images, voulez-vous les conserver en les transférant dans une autre galerie, ou bien tout supprimer ?';
 $LANG['explain_subgallery'] = 'La galerie que vous désirez supprimer contient <strong>1</strong> sous-galerie, voulez-vous la conserver en la transférant dans une autre galerie, ou bien la supprimer ainsi que son contenu ?';
@@ -86,7 +86,7 @@ $LANG['new_page'] = 'Nouvelle page';
 $LANG['resize'] = 'Redimensionnement';
 $LANG['popup'] = 'Popup';
 $LANG['popup_full'] = 'Plein écran';
-$LANG['success_upload_img'] = 'Votre image a bien été enregistrée!';
+$LANG['success_upload_img'] = 'Vos images ont bien été enregistrées !';
 $LANG['album'] = 'Albums';
 $LANG['sub_album'] = 'Sous albums';
 $LANG['best_views'] = 'Les plus vues';
@@ -137,11 +137,11 @@ $LANG['title_gallery'] = 'Galerie photos';
 //Galerie
 $LANG['gallery'] = 'Galerie';
 $LANG['gallery_index'] = 'Accueil Galerie';
-$LANG['upload_img'] = 'Uploader l\'image';
+$LANG['upload_img'] = 'Uploader les images';
 $LANG['how_photo'] = 'Photo(s) dans la base de données !';
 $LANG['actual_note'] = 'Avis actuel';
 $LANG['give_note'] = 'Donner votre avis';
-$LANG['img_success'] = 'L\'image a bien été uploadée !';
+$LANG['img_success'] = 'Les images ont bien été uploadées !';
 $LANG['img_format'] = 'Formats d\'image autorisés';
 $LANG['random_img'] = 'Image aléatoire';
 $LANG['no_random_img'] = 'Aucune image';
