@@ -82,10 +82,10 @@ class CalendarEventsListController extends ModuleController
 			$category = $event->get_content()->get_category();
 			$user = $event->get_content()->get_author_user();
 
-			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$edit_link = $event->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-delete');
+			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-delete');
 			$delete_link = $event->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);

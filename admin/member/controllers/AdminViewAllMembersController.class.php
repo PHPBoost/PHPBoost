@@ -65,12 +65,12 @@ class AdminViewAllMembersController extends AdminController
 		{
 			$user = new User();
 			$user->set_properties($row);
-			$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('title' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 
 			if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
-				$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+				$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 			else
-				$delete_link = new LinkHTMLElement('', '', array('title' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
+				$delete_link = new LinkHTMLElement('', '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 

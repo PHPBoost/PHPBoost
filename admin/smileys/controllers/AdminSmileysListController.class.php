@@ -43,12 +43,12 @@ class AdminSmileysListController extends AdminController
 		$results = array();
 		foreach(SmileysCache::load()->get_smileys() as $code => $row)
 		{
-			$edit_link = new LinkHTMLElement(AdminSmileysUrlBuilder::edit($row['idsmiley']), '', array('title' => LangLoader::get_message('edit', 'common')), 'far fa-edit');
+			$edit_link = new LinkHTMLElement(AdminSmileysUrlBuilder::edit($row['idsmiley']), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'far fa-edit');
 
-			$delete_link = new LinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+			$delete_link = new LinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 
 			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'title' => $row['idsmiley']))),
+				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'aria-label' => $row['idsmiley']))),
 				new HTMLTableRowCell($code),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			));

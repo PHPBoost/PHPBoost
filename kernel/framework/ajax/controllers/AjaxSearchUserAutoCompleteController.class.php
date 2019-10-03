@@ -31,12 +31,12 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 
 				if ($is_admin)
 				{
-					$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']), '', array('title' => $lang['edit']), 'fa fa-edit');
+					$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']), '', array('aria-label' => $lang['edit']), 'fa fa-edit');
 
 					if ($row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1))
-						$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', array('title' => $lang['delete'], 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+						$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', array('aria-label' => $lang['delete'], 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 					else
-						$delete_link = new LinkHTMLElement('', '', array('title' => $lang['delete'], 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
+						$delete_link = new LinkHTMLElement('', '', array('aria-label' => $lang['delete'], 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
 
 					$suggestion .= $edit_link->display() . '&nbsp;' . $delete_link->display() . '&nbsp;';
 				}

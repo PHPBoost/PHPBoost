@@ -67,7 +67,7 @@ class AdminSmileysFormController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img'],
-			array('authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions())))
+			array('class' => 'full-field', 'authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions())))
 		));
 
 		$this->upload_submit_button = new FormButtonDefaultSubmit();
@@ -104,7 +104,7 @@ class AdminSmileysFormController extends AdminController
 
 				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
-					// TODO : gérer les archives de smileys (possibilité d'uploader un zip + case à cocher si on veut créer directement chaque smiley avec :nom_du_smiley comme code)
+					// TODO : manage the smileys archive (possibility to upload a zip + checkbox if you want to create each smiley directly with: name_of_smiley as code)
 				}
 				else
 				{
@@ -145,7 +145,7 @@ class AdminSmileysFormController extends AdminController
 			))
 		));
 
-		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => $this->smiley['code_smiley'], 'title' => $this->smiley['code_smiley']));
+		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => $this->smiley['code_smiley'], 'aria-label' => $this->smiley['code_smiley']));
 
 		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'common'), $img_smiley->display(),
 			array('hidden' => !$this->smiley['idsmiley'])
@@ -171,7 +171,7 @@ class AdminSmileysFormController extends AdminController
 				{
 					PersistenceContext::get_querier()->insert(DB_TABLE_SMILEYS, array('code_smiley' => $code_smiley, 'url_smiley' => $url_smiley));
 
-					###### Régénération du cache des smileys #######
+				 	// Regenerate smileys cache
 					SmileysCache::invalidate();
 
 					$this->view->put('MSG', MessageHelper::display($this->lang['smiley_add_success'], MessageHelper::SUCCESS));
@@ -185,7 +185,7 @@ class AdminSmileysFormController extends AdminController
 			{
 				PersistenceContext::get_querier()->update(DB_TABLE_SMILEYS, array('url_smiley' => $url_smiley, 'code_smiley' => $code_smiley), 'WHERE idsmiley = :id', array('id' => $this->smiley['idsmiley']));
 
-				###### Régénération du cache des smileys #######
+				// Regenerate smileys cache
 				SmileysCache::invalidate();
 
 				AppContext::get_response()->redirect(AdminSmileysUrlBuilder::management());
@@ -206,10 +206,10 @@ class AdminSmileysFormController extends AdminController
 			FROM " . PREFIX . "smileys");
 			while ($row = $result->fetch())
 			{
-				//On recherche les clés correspondante à celles trouvée dans la bdd.
+				// Search keys correponding to the database table ones.
 				$key = array_search($row['url_smiley'], $smileys_array);
 				if ($key !== false)
-					unset($smileys_array[$key]); //On supprime ces clés du tableau.
+					unset($smileys_array[$key]); // Delete this keys from the table
 			}
 			$result->dispose();
 
