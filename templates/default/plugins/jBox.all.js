@@ -1,15 +1,12 @@
-/**
- * jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.
- *
- * Author: Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)
- *
- * License: MIT (https://opensource.org/licenses/MIT)
- *
- * Requires: jQuery 3.4.1 (https://code.jquery.com/jquery-3.4.1.min.js)
- *
- * Documentation: https://stephanwagner.me/jBox/documentation
- *
- * Demos: https://stephanwagner.me/jBox/demos
+ /**
+  * tooltips, modal windows and image galleries jQuery plugin - Version: 1.0
+  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 Stephan Wagner
+  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0 - License: MIT (https://opensource.org/licenses/MIT)
+  * @author     Stephan Wagner <stephanwagner.me@gmail.com>
+  * @link       https://github.com/StephanWagner/jBox
+  * @doc        https://stephanwagner.me/jBox/documentation
+  * @version   	PHPBoost 5.3 - last update: 2019 09 30
+  * @since   	PHPBoost 5.2 - 2019 10 03
  */
 
 function jBoxWrapper(jQuery) {
@@ -2763,5 +2760,3 @@ function jBoxNoticeWrapper(jBox, jQuery) {
   try { typeof jBoxNoticeWrapper !== 'undefined' && jBoxNoticeWrapper && jBoxNoticeWrapper(jBox, jQuery); } catch(e) { console.error(e); }
   return jBox;
 }));
-
-//# sourceMappingURL=jBox.all.js.map
