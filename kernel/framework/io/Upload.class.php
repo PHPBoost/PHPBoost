@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 09 23
+ * @version     PHPBoost 5.2 - last update: 2019 10 04
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -78,7 +78,7 @@ class Upload
 				
 				if ($this->size > 0)
 				{
-					if (($total_size/1024) <= $weight_max)
+					if (($total_size/1024) <= ($files_number * $weight_max))
 					{
 						//Récupération des infos sur le fichier à traiter.
 						$this->generate_file_info($uniq_name);
@@ -97,19 +97,22 @@ class Upload
 											$this->error = 'e_upload_php_code';
 											return false;
 										}
-
-										if (!move_uploaded_file($tmp_name, $this->base_directory . $this->filename))
+										
+										if (($this->size/1024) <= $weight_max)
 										{
-											$this->error = 'e_upload_error';
-										}
-										else
-										{
-											$this->files_parameters[] = array(
-												'name'      => $this->original_filename, 
-												'path'      => $this->filename,
-												'size'      => $this->get_human_readable_size(),
-												'extension' => $this->extension
-											);
+											if (!move_uploaded_file($tmp_name, $this->base_directory . $this->filename))
+											{
+												$this->error = 'e_upload_error';
+											}
+											else
+											{
+												$this->files_parameters[] = array(
+													'name'      => $this->original_filename, 
+													'path'      => $this->filename,
+													'size'      => $this->get_human_readable_size(),
+													'extension' => $this->extension
+												);
+											}
 										}
 									}
 									else
