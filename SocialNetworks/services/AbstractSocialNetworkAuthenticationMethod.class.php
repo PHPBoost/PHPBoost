@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 05 16
+ * @version   	PHPBoost 5.2 - last update: 2019 10 04
  * @since   	PHPBoost 5.1 - 2018 04 16
 */
 
@@ -90,24 +90,32 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 					}
 					else
 					{
-						$user = new User();
-
-						if (empty($data['name']))
+						if (UserAccountsConfig::load()->is_registration_enabled() || !AppContext::get_current_user()->is_guest())
 						{
-							$mail_split = explode('@', $data['email']);
-							$name = $mail_split[0];
-							$user->set_display_name($name);
+							$user = new User();
+
+							if (empty($data['name']))
+							{
+								$mail_split = explode('@', $data['email']);
+								$name = $mail_split[0];
+								$user->set_display_name($name);
+							}
+							else
+								$user->set_display_name($data['name']);
+
+							$user->set_level(User::MEMBER_LEVEL);
+							$user->set_email($data['email']);
+
+							$auth_method = new static();
+							$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
+
+							return UserService::create($user, $auth_method, $fields_data, $data);
 						}
 						else
-							$user->set_display_name($data['name']);
-
-						$user->set_level(User::MEMBER_LEVEL);
-						$user->set_email($data['email']);
-
-						$auth_method = new static();
-						$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
-
-						return UserService::create($user, $auth_method, $fields_data, $data);
+						{
+							$error_controller = PHPBoostErrors::registration_disabled();
+							DispatchManager::redirect($error_controller);
+						}
 					}
 				}
 				else

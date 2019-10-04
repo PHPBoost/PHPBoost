@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 07
+ * @version   	PHPBoost 5.2 - last update: 2019 10 04
  * @since   	PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -107,17 +107,9 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$tpl->put_all(array(
-					'C_USER_NOTCONNECTED' => true,
-					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
-					'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
-					'L_REQUIRE_PASSWORD' => $lang['require_password'],
-					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
-					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
-				));
-
-				$activated_external_authentication = AuthenticationService::get_external_auths_activated();
-				foreach ($activated_external_authentication as $id => $authentication)
+				$external_authentication = 0;
+				
+				foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 				{
 					$tpl->assign_block_vars('external_auth', array(
 						'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
@@ -126,7 +118,18 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 						'IMAGE_HTML' => $authentication->get_image_renderer_html(),
 						'CSS_CLASS' => $authentication->get_css_class()
 					));
+					$external_authentication++;
 				}
+				
+				$tpl->put_all(array(
+					'C_USER_NOTCONNECTED' => true,
+					'C_USER_REGISTER' => UserAccountsConfig::load()->is_registration_enabled(),
+					'C_DISPLAY_REGISTER_CONTAINER' => $external_authentication || UserAccountsConfig::load()->is_registration_enabled(),
+					'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
+					'L_REQUIRE_PASSWORD' => $lang['require_password'],
+					'U_CONNECT' => UserUrlBuilder::connect()->rel(),
+					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path()))
+				));
 			}
 
 			return $tpl->render();

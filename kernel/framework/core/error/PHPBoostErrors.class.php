@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2015 07 29
+ * @version     PHPBoost 5.2 - last update: 2019 10 04
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -46,6 +46,13 @@ class PHPBoostErrors
 	{
 		AppContext::get_response()->set_status_code(401);
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'));
+		return $controller;
+	}
+
+	public static function registration_disabled()
+	{
+		AppContext::get_response()->set_status_code(401);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.auth.registration_disabled', 'status-messages-common'));
 		return $controller;
 	}
 
