@@ -81,6 +81,10 @@
 .cell-thumbnail {
     position: relative;
     margin: -0.618em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
 }
 
 .cell-thumbnail-caption {

@@ -80,7 +80,8 @@ class AdminSandboxConfigController extends AdminModuleController
 			array(
 				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.left'], SandboxConfig::LEFT_MENU),
 				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.right'], SandboxConfig::RIGHT_MENU)
-			)
+			),
+			array('class' => 'inline-radio custom-radio')
 		));
 
 		$common_lang = LangLoader::get('common');

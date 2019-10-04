@@ -14,9 +14,10 @@ BugtrackerFormFieldTypes.prototype = {
 
 			jQuery('<td/>', {id : 'td1_' + id, 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
 
-			jQuery('<div/>', {id : 'types_radio_' + id, class: 'form-field-radio'}).appendTo('#td1_' + id);
-			jQuery('<input/> ', {type : 'radio', id : 'default_type' + id, name : 'default_type', value : id}).appendTo('#types_radio_' + id);
+			jQuery('<div/>', {id : 'types_radio_' + id, class: 'form-field-radio custom-radio'}).appendTo('#td1_' + id);
 			jQuery('<label/> ', {for : 'default_type' + id}).appendTo('#types_radio_' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'default_type' + id, name : 'default_type', value : id}).appendTo('#types_radio_' + id + ' label');
+			jQuery('<span/>', {class : 'custom-radio'}).appendTo('#types_radio_' + id + ' label');
 
 			jQuery('<td/>', {id : 'td2_' + id, 'data-th' : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#tr_' + id);
 
@@ -76,9 +77,11 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		# START types #
 		<tr>
 			<td>
-				<div id="types_radio_{types.ID}" class="form-field-radio">
-					<input aria-label="{types.NAME}" id="default_type{types.ID}" type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
-					<label for="default_type{types.ID}"></label>
+				<div id="types_radio_{types.ID}" class="form-field-radio custom-radio">
+					<label for="default_type{types.ID}">
+						<input aria-label="{types.NAME}" id="default_type{types.ID}" type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
+						<span></span>
+					</label>
 				</div>
 			</td>
 			<td>

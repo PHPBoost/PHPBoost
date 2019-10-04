@@ -17,7 +17,7 @@
 					</li>
 				</ul>
 		</nav>
-		
+
 		<div id="admin-contents">
 			# IF C_DATABASE_INDEX #
 
@@ -255,26 +255,27 @@
 								</p>
 
 							</div>
-							<div class="form-element third-field top-field center">
+							<div class="form-element third-field top-field center custom-radio">
 								<label for="">{L_SELECTION}</label>
-								<div class="form-field form-field-radio-button multiple-vertical-radio">
+								<div class="form-field form-field-radio-button">
 									<div class="form-field-radio">
-										<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
-										<label for="backup_all"><span class="sr-only">{L_BACKUP_ALL}</span></label>
+										<label for="backup_all">
+											<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
+											<span>{L_BACKUP_ALL}</span>
+										</label>
 									</div>
-									<span class="form-field-radio-span">{L_BACKUP_ALL}</span>
-									<div class="spacer"></div>
 									<div class="form-field-radio">
-										<input type="radio" id="backup_struct" name="backup_type" value="struct">
-										<label for="backup_struct"><span class="sr-only">{L_BACKUP_STRUCT}</span></label>
+										<label for="backup_struct">
+											<input type="radio" id="backup_struct" name="backup_type" value="struct">
+											<span>{L_BACKUP_STRUCT}</span>
+										</label>
 									</div>
-									<span class="form-field-radio-span">{L_BACKUP_STRUCT}</span>
-									<div class="spacer"></div>
-									<div class="form-field-radio">
-										<input type="radio" id="backup_data" name="backup_type" value="data"/>
-										<label for="backup_data"><span class="sr-only">{L_BACKUP_DATA}</span></label>
+									<div class="form-field-radio">										
+										<label for="backup_data">
+											<input type="radio" id="backup_data" name="backup_type" value="data"/>
+											<span>{L_BACKUP_DATA}</span>
+										</label>
 									</div>
-									<span class="form-field-radio-span">{L_BACKUP_DATA}</span>
 								</div>
 							</div>
 							<div class="form-element third-field top-field">

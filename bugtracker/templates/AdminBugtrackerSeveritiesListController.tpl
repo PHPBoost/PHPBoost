@@ -16,9 +16,11 @@
 		# START severities #
 		<tr>
 			<td>
-				<div class="form-field-radio">
-					<input aria-label="{severities.NAME}" id="default_severity{severities.ID}" type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
-					<label for="default_severity{severities.ID}"></label>
+				<div class="form-field-radio custom-radio">
+					<label for="default_severity{severities.ID}">
+						<input aria-label="{severities.NAME}" id="default_severity{severities.ID}" type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF # />
+						<span></span>
+					</label>
 				</div>
 			</td>
 			<td>

@@ -14,9 +14,10 @@ BugtrackerFormFieldCategories.prototype = {
 
 			jQuery('<td/>', {id : 'td1_' + id, 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
 
-			jQuery('<div/>', {id : 'categories_radio_' + id, class: 'form-field-radio'}).appendTo('#td1_' + id);
-			jQuery('<input/> ', {type : 'radio', id : 'default_category' + id, name : 'default_category', value : id}).appendTo('#categories_radio_' + id);
+			jQuery('<div/>', {id : 'categories_radio_' + id, class: 'form-field-radio custom-radio'}).appendTo('#td1_' + id);
 			jQuery('<label/> ', {for : 'default_category' + id}).appendTo('#categories_radio_' + id);
+			jQuery('<input/> ', {type : 'radio', id : 'default_category' + id, name : 'default_category', value : id}).appendTo('#categories_radio_' + id + ' label');
+			jQuery('<span/>', {class : 'custom-radio'}).appendTo('#categories_radio_' + id + ' label');
 
 			jQuery('<td/>', {id : 'td2_' + id, 'data-th' : ${escapejs(LangLoader::get_message('form.name', 'common'))}}).appendTo('#tr_' + id);
 
@@ -76,9 +77,11 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		# START categories #
 		<tr>
 			<td>
-				<div id="categories_radio_{categories.ID}" class="form-field-radio">
-					<input aria-label="{categories.NAME}" id="default_category{categories.ID}" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
-					<label for="default_category{categories.ID}"></label>
+				<div id="categories_radio_{categories.ID}" class="form-field-radio custom-radio">
+					<label for="default_category{categories.ID}">
+						<input aria-label="{categories.NAME}" id="default_category{categories.ID}" type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
+						<span></span>
+					</label>
 				</div>
 			</td>
 			<td>

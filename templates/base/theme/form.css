@@ -582,7 +582,11 @@ textarea {
 	display: none;
 }
 
-.form-field-radio {
+.form-field-radio input[type="radio"] {
+	margin: 0 0 0.309em;
+}
+
+.inline-radio .form-field-radio {
 	display: inline-block;
 }
 

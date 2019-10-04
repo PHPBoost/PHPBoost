@@ -23,7 +23,7 @@ class AdminUninstallLangController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		
+
 		$this->lang_id = $request->get_value('id', null);
 
 		if ($this->lang_id == 'delete_multiple')
@@ -76,7 +76,8 @@ class AdminUninstallLangController extends AdminController
 			array(
 				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'common'), '1'),
 				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'common'), '0')
-			)
+			),
+			array('class' => 'inline-radio custom-radio')
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

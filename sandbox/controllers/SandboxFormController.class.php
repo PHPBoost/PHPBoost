@@ -178,6 +178,16 @@ class SandboxFormController extends ModuleController
 
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
+		$fieldset->add_field(new FormFieldRadioChoice('inline_radio', $this->lang['form.input.radio'] . ' inline', '',
+			array(
+				$default_option,
+				new FormFieldRadioChoiceOption($this->lang['form.input.choice.2'], '2')
+			),
+			array('required' => true, 'class' => 'form-field-css-class inline-radio')
+		));
+
+		// RADIO
+		$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
 		$fieldset->add_field(new FormFieldRadioChoice('radio', $this->lang['form.input.radio'], '',
 			array(
 				$default_option,

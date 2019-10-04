@@ -13,9 +13,10 @@ ContactFormFieldObjectPossibleValues.prototype = {
 
 			jQuery('<div/>', {'id' : id, 'class' : 'possible-values'}).appendTo('#input_fields_' + this.id_input);
 
-			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio'}).appendTo('#' + id);
-			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer);
+			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio custom-radio'}).appendTo('#' + id);
 			jQuery('<label/>', {for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer + ' label');
+			jQuery('<span/>').appendTo('#radio_' + this.integer + ' label');
 			jQuery('#radio_' + this.integer).after(' ');
 
 			jQuery('<input/>', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, required : "required", placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
@@ -57,10 +58,12 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 		<span class="title-possible-value title-desc">${LangLoader::get_message('field.possible_values.recipient', 'common', 'contact')}</span>
 	</div>
 	# START fieldelements #
-	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible_values">
+	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible_values custom-radio">
 		<div class="form-field-radio possible-values">
-			<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
-			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}"></label>
+			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
+				<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
+				<span></span>
+			</label>
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.possible_values.subject}">
 		<select id="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}" name="field_recipient_${escape(HTML_ID)}_{fieldelements.ID}">
