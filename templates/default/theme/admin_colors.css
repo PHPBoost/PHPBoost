@@ -1311,7 +1311,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 .modal { background-color: rgba(0, 0, 0, 0.5); }
-.modal .content-panel { background-color: #ECF2F8; }
+.modal .content-panel { background-color: #FFFFFF; }
 
 #header-admin .modal .content-panel a { color: #4372AA; }
 #header-admin .modal .content-panel a:hover { color: #2D4D73; }

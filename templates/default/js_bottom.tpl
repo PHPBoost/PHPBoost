@@ -1,5 +1,6 @@
 <script>
 <!--
+// Delete confirmation
 	jQuery('[data-confirmation]').each(function() {
 		data_confirmation = jQuery(this).attr('data-confirmation');
 		if (data_confirmation == 'delete-element')
@@ -9,6 +10,7 @@
 		this.onclick = function () { return confirm(message); }
 	});
 
+// lightbox
 	jQuery(document).ready(function() {
 		jQuery('a[rel^=lightbox]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
@@ -28,22 +30,27 @@
 		});
 	});
 
-	// BBCode table with no header
+// BBCode table with no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
 		if (!$this.hasClass('formatter-table-head'))
 			$this.closest('.formatter-table').removeClass('table').addClass('table-no-header');
 	});
 
-	// All tables
+// All tables
 	jQuery('.table').basictable();
 	jQuery('.table-no-header').basictable({
 	    header: false
 	});
 
+// line numbers in <code>
 	jQuery(function() {
 		jQuery(".lined textarea").linedtextarea();
 	});
+
+// Delete captcha fielset if captcha is active when user is connected
+	if(jQuery('.captcha-element .form-element').length == 0)
+		jQuery('.captcha-element').removeClass('wizard-step');
 
 // TODO: change form builder to multitabs
     jQuery('.tab-container').easytabs();
@@ -53,12 +60,9 @@
     jQuery('.accordion-container.siblings [data-trigger]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
     jQuery('.tabs-container [data-trigger]').multiTabs({ pluginType: 'tabs' });
 
-	// Delete captcha fielset if captcha is active when user is connected
-	if(jQuery('.captcha-element .form-element').length == 0)
-		jQuery('.captcha-element').removeClass('wizard-step');
-
     jQuery('.wizard-container').wizard();
 
+// Tooltip
 	jQuery(document).ready(function () {
 		new jBox('Mouse', {
 			attach: '[aria-label]',
@@ -71,6 +75,7 @@
 		});
 	});
 
+// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
 	jQuery('.cssmenu-title').each(function(){
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
@@ -82,6 +87,7 @@
 		}
 	});
 
+// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
 	jQuery('.modal-menu a').each(function(){
 		var link = jQuery(this).attr('href');
 		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
@@ -92,6 +98,12 @@
 				jQuery('[data-target="'+rootLink+'"]').parent().addClass('current');
 			}
 		}
+	});
+
+// sizes of .cell-thumbnail
+	jQuery('.cell-thumbnail').each(function() {
+		var widthRef = $(this).innerWidth();
+		$(this).outerHeight(widthRef * 9 / 16);
 	});
 
 -->

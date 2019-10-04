@@ -77,12 +77,11 @@ article footer {
 	margin-bottom: 15px;
 }
 
-/* --- articles --- */
-.article-several {
-	clear: both;
+/* --- Icones avec les actions (edition, suppression, etc) =================== */
+.cat-actions {
+    text-align: right;
 }
 
-/* --- Icones avec les actions (edition, suppression, etc) =================== */
 span.actions {
 	float: right;
 }

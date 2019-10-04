@@ -13,6 +13,7 @@
  * @patch       1 : jQuery 3.1
  * @patch       2 : Take into account show_pics.php?...&ext= for module gallery
  * @patch       3 : Font Awesome 5 for icon then leave the lightcase font
+ * @patch       title => aria-label
 */
 
 ;(function ($) {
@@ -230,7 +231,7 @@
 		 	var $object = $(object),
 				objectData = {
 				this: $(object),
-				title: _self.settings.title || $object.attr(_self._prefixAttributeName('title')) || $object.attr('title'),
+				title: _self.settings.title || $object.attr(_self._prefixAttributeName('aria-label')) || $object.attr('aria-label'),
 				caption: _self.settings.caption || $object.attr(_self._prefixAttributeName('caption')) || $object.children('img').attr('alt'),
 				url: _self._determineUrl(),
 				requestType: _self.settings.ajax.type,

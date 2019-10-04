@@ -5,9 +5,9 @@
 				jQuery('#' + '{list.ID}activ').prop('checked', false);
 				# END list #
 				jQuery('#change_all_pictures_selection_top').attr('onclick', "select_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_top').text("{L_SELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_top').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
 				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "select_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_bottom').text("{L_SELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_bottom').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
 			};
 
 			function select_all_pictures() {
@@ -15,9 +15,9 @@
 				jQuery('#' + '{list.ID}activ').prop('checked', 'checked');
 				# END list #
 				jQuery('#change_all_pictures_selection_top').attr('onclick', "unselect_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_top').text("{L_UNSELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_top').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
 				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "unselect_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_bottom').text("{L_UNSELECT_ALL_PICTURES}");
+				jQuery('#change_all_pictures_selection_bottom').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
 			};
 		</script>
 		# ENDIF #
@@ -121,59 +121,43 @@
 
 			<form action="admin_gallery_add.php" method="post">
 				# IF C_IMG #
-				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th colspan="4">{L_IMG_DISPO_GALLERY}</th>
-						</tr>
-					</thead>
-					<tbody>
+				<article>
+					<header>
+						<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+						<h2>{L_IMG_DISPO_GALLERY}</h2>
+					</header>
+					<div class="cell-flex cell-flex-4">
 						# START list #
-						# IF list.C_DISPLAY_TR_START #<tr># ENDIF #
-							<td class="valign-bottom">
-								<div class="smaller">
-									<div class="thumnails-list-container">
-									<img src="pics/thumbnails/{list.NAME}" alt="{list.NAME}" />
+							<div class="cell">
+								<div class="cell-title">
+									<input type="text" name="{list.ID}name" value="{list.NAME}">
+									<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
+								</div>
+								<div class="cell-body">
+									<div class="cell-thumbnail">
+										<img src="pics/{list.NAME}" alt="{list.NAME}" />
 									</div>
-									<div class="spacer"></div>
-									<div>
-										{L_NAME}
-										<div class="spacer"></div>
-										<input type="text" name="{list.ID}name" value="{list.NAME}">
-										<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
-									</div>
-									<div class="spacer"></div>
-									<div>
-										${LangLoader::get_message('form.category', 'common')}
-										<div class="spacer"></div>
+								</div>
+								<div class="cell-list">
+									<ul>
+										<li>
+											${LangLoader::get_message('form.category', 'common')}
 											<select name="{list.ID}cat" id="{list.ID}cat" class="select-cat">
 												{list.CATEGORIES}
 											</select>
-									</div>
-									<div class="spacer"></div>
-									<div class="right">
-										{L_SELECT} <input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
-										<div class="spacer"></div>
-										{L_DELETE} <input type="checkbox" name="{list.ID}del" value="1">
-									</div>
+										</li>
+										<li class="li-stretch">{L_SELECT} <input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1"></li>
+										<li class="li-stretch">{L_DELETE} <input type="checkbox" name="{list.ID}del" value="1"></li>
+									</ul>
 								</div>
-							</td>
-						# IF list.C_DISPLAY_TR_END #</tr># ENDIF #
+							</div>
 						# END list #
+					</div>
+					<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+				</article>
 
-						# START end_td_pics #
-							<td style="width:{end_td_pics.COLUMN_WIDTH_PICS}%;padding:0">&nbsp;</td>
 
-						# IF end_td_pics.C_DISPLAY_TR_END #</tr># ENDIF #
-						# END end_td_pics #
-					</tbody>
-				</table>
-				<div class="center"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES}</a></div>
-
-				<div class="spacer"></div>
-
-				<div class="form-element">
+				<div class="form-element half-field">
 					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <span class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></label>
 					<div class="form-field">
 						<select name="root_cat" id="root_cat">

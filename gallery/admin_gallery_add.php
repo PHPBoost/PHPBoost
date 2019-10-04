@@ -12,7 +12,7 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('gallery'); //Chargement de la langue du module.
+load_module_lang('gallery'); // loading of the module lang
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -30,7 +30,7 @@ $valid = $request->get_postvalue('valid', false);
 
 $tpl = new FileTemplate('gallery/admin_gallery_add.tpl');
 
-if (isset($_FILES['gallery'])) //Upload
+if (isset($_FILES['gallery'])) // Upload
 {
 	$dir = 'pics/';
 	$authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
@@ -48,17 +48,17 @@ if (isset($_FILES['gallery'])) //Upload
 	else
 		$error = 'e_upload_invalid_format';
 
-	if ($error != '') //Erreur, on arrête ici
+	if ($error != '') // Error, then stop here
 		$tpl->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
-		if (!empty($error)) //Erreur, on arrête ici
+		if (!empty($error)) // Error, then stop here
 			$tpl->put('message_helper', MessageHelper::display($LANG[$error], MessageHelper::WARNING));
 		else
 		{
-			//Enregistrement de l'image dans la bdd.
+			// Saving the picture in database.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
 				$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
@@ -71,7 +71,7 @@ if (isset($_FILES['gallery'])) //Upload
 					$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 			}
 
-			//Régénération du cache des photos aléatoires.
+			// Regenerate cache of mini module
 			GalleryMiniMenuCache::invalidate();
 			GalleryCategoriesCache::invalidate();
 		}
@@ -80,13 +80,13 @@ if (isset($_FILES['gallery'])) //Upload
 	if (empty($error) && !$Gallery->get_error())
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
-elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
+elseif ($valid && !empty($nbr_pics_post)) // Massive addition through ftp
 {
 	for ($i = 1; $i <= $nbr_pics_post; $i++)
 	{
 		$activ = trim($request->get_postvalue($i . 'activ', ''));
 		$uniq = trim($request->get_postvalue($i . 'uniq', ''));
-		if ($activ && !empty($uniq)) //Sélectionné.
+		if ($activ && !empty($uniq)) // Selected
 		{
 			$name = TextHelper::strprotect($request->get_postvalue($i . 'name', ''));
 			$cat = NumberHelper::numeric($request->get_postint($i . 'cat', 0));
@@ -103,14 +103,14 @@ elseif ($valid && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 		}
 	}
 
-	//Régénération du cache des photos aléatoires.
+	// Regenerate cache of mini module
 	GalleryMiniMenuCache::invalidate();
 	GalleryCategoriesCache::invalidate();
 
 	$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 }
 
-//Affichage de la photo uploadée.
+// Display of the uploaded picture
 if (!empty($add_pic))
 {
 	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
@@ -136,9 +136,10 @@ $tpl->put_all(array(
 	'MAX_WIDTH' => $config->get_max_width(),
 	'MAX_HEIGHT' => $config->get_max_height(),
 	'MAX_FILE_SIZE' => $config->get_max_weight() * 1024,
+	// 'MAX_FILE_SIZE_TEXT' => File::get_formated_size($config->get_max_weight()),
 	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('unit.megabytes', 'common'),
 	'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
-	'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',
+	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 	'L_GALLERY_MANAGEMENT' => LangLoader::get_message('gallery.management', 'common', 'gallery'),
 	'L_GALLERY_PICS_ADD' => LangLoader::get_message('gallery.actions.add', 'common', 'gallery'),
 	'L_GALLERY_CONFIG' => $LANG['gallery_config'],
