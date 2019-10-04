@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 30
+ * @version   	PHPBoost 5.2 - last update: 2019 10 04
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,6 +28,7 @@ $lang['message.close_ephemeral_message'] = 'Fermer le message';
 //PHPBoost errors
 $lang['error.auth'] = 'Vous n\'avez pas le niveau requis !';
 $lang['error.auth.guest'] = 'Le contenu de cette page est protégé. Veuillez vous inscrire ou vous connecter sur le site pour y accéder.';
+$lang['error.auth.registration_disabled'] = 'L\'inscription de nouveaux membres est désactivée sur le site.';
 $lang['error.page.forbidden'] = 'L\'accès à ce dossier est interdit !';
 $lang['error.page.unexist'] = 'La page que vous demandez n\'existe pas !';
 $lang['error.action.unauthorized'] = 'Action non autorisée !';

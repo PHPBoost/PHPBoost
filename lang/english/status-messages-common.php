@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 30
+ * @version   	PHPBoost 5.2 - last update: 2019 10 04
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,6 +28,7 @@ $lang['message.close_ephemeral_message'] = 'Close the message';
 //PHPBoost errors
 $lang['error.auth'] = 'You don\'t have the required level!';
 $lang['error.auth.guest'] = 'Protected content. Please suscribe or connect to access this page.';
+$lang['error.auth.registration_disabled'] = 'Registration is disabled on the site.';
 $lang['error.page.forbidden'] = 'This folder access is forbidden!';
 $lang['error.page.unexist'] = 'This page doesn\'t exist!';
 $lang['error.action.unauthorized'] = 'Unauthorized action!';
