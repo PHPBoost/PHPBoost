@@ -64,6 +64,7 @@
                 $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute of the upload button
                 $input.closest('.dnd-area').find('label p').html(''); // empty the warning texts
                 $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
 
                 // init vars
     			var filesNbr = $input[0].files.length, // count number of files
@@ -162,6 +163,7 @@
                         $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
                         $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
                         $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                        $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
                     });
                 }
 

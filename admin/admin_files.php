@@ -357,7 +357,7 @@ else
 		'URL' => $url,
 
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
-		'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+        'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
 
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
