@@ -44,8 +44,8 @@
             }
 
             // change design on drag or mouse hovering
-            $input.on('dragover mouseover',        function() { $('.dnd-dropzone').addClass('dragover'); });
-            $input.on('dragleave drop mouseleave', function() { $('.dnd-dropzone').removeClass('dragover'); });
+            $input.on('dragover mouseover',        function() { $input.closest('.dnd-dropzone').addClass('dragover'); });
+            $input.on('dragleave drop mouseleave', function() { $input.closest('.dnd-dropzone').removeClass('dragover'); });
 
             // turn file size into human readable
             function formatBytes(a, b) {
