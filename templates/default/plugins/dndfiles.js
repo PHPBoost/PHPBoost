@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 2019 09 30
+ * @version   	PHPBoost 5.3 - last update: 2019 10 03
  * @since   	PHPBoost 5.3 - 2019 09 23
 */
 
@@ -18,11 +18,14 @@
                 multiple: false, // add or not 'multiple attribut to the input'
                 maxFileSize: '500000000', // weight max for one file
                 maxFilesSize: '-1', // weight max for all files (-1 = unlimited)
+                maxWidth: '-1', // max width for pictures  (-1 = unlimited)
+                maxHeight: '-1', // max height for pictures (-1 = unlimited)
                 allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg'], // allowed extensions
                 warningText: 'Upload have been disabled because of bad file:', // main warning text
                 warningExtension: 'bad extension <br />',
                 warningFileSize: 'Too large file <br />',
-                warningFilesNbr: 'The size of the allocated space is exceeded',
+                warningFilesNbr: 'The size of the allocated space is exceeded <br />',
+                warningFilesDim: 'The height or width of the picture exceeds the maximum allowed <br />',
             };
             param = $.extend(settings, options);
 
@@ -31,7 +34,9 @@
                 extension,
                 fileSize,
                 fileName,
-                fileType;
+                fileType,
+                fileWidth,
+                fileHeight;
 
             if(param.multiple) { // if multiple parameter is true
                 $input.attr('multiple', 'multiple'); // set the attribute 'multiple' to the input
@@ -39,8 +44,8 @@
             }
 
             // change design on drag or mouse hovering
-            $input.on('dragover mouseover',        function() { $('.dnd-dropzone').addClass('dragover'); });
-            $input.on('dragleave drop mouseleave', function() { $('.dnd-dropzone').removeClass('dragover'); });
+            $input.on('dragover mouseover',        function() { $input.closest('.dnd-dropzone').addClass('dragover'); });
+            $input.on('dragleave drop mouseleave', function() { $input.closest('.dnd-dropzone').removeClass('dragover'); });
 
             // turn file size into human readable
             function formatBytes(a, b) {
@@ -59,6 +64,7 @@
                 $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute of the upload button
                 $input.closest('.dnd-area').find('label p').html(''); // empty the warning texts
                 $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
 
                 // init vars
     			var filesNbr = $input[0].files.length, // count number of files
@@ -80,6 +86,21 @@
                     extension = fileName.replace(/^.*\./, ''); // replace special characters in the name
                     if (extension == fileName) extension = ''; // look if extension exists
                     else extension = extension.toLowerCase(); // force extension to lowercase
+                    if(fileType.indexOf('image/') === 0) {
+                        var file = items[i];
+                        var img = new Image();
+                        img.onload = function() {
+                            fileWidth = this.width;
+                            fileHeight = this.height;
+                            if((param.maxWidth > -1 && fileWidth > param.maxWidth) || (param.maxHeight > -1 && fileHeight > param.maxHeight))
+                            {
+                                $input.closest('form').find('button[type="submit"]').attr('disabled', 'disabled'); // disable the upload button
+                                $input.closest('.dnd-area').find('.upload-help').addClass(' warning');
+                                $input.closest('.dnd-area').find('label p').addClass('message-helper warning small').append(param.warningFileDim);
+                            }
+                        };
+                        img.src = URL.createObjectURL(file);
+                    }
 
                     totalWeight += fileSize; // count weight of all files
 
@@ -115,6 +136,7 @@
 
                 if($input.closest('form').find('button[type="submit"]').attr('disabled')) // if there's a wrong file
                 {
+                    $input.closest('.dnd-area').find('.upload-help').addClass(' warning');
                     $input.closest('.dnd-area').find('label p').addClass('message-helper warning small'); // add warning classes
                     $input.closest('.dnd-area').find('label p').prepend(param.warningText); // add main warning text
                 }
@@ -141,6 +163,7 @@
                         $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
                         $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
                         $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                        $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
                     });
                 }
 
