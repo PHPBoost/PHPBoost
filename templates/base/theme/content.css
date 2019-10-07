@@ -158,6 +158,13 @@ header h2 .actions {
 	padding: 0.809em;
 }
 
+.ellipsis {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 /* --- Id Card --- */
 .id-card {
 	margin: 1.618em 0 0;

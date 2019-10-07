@@ -10,7 +10,7 @@
     ####   #####  #####  #####  #####  #   #
 ----------------------------------------------------------------------------- */
 body {
-	background-color: #ECF2F8;
+	background-color: #FFFFFF;
 	color: #555555;
 }
 
@@ -100,7 +100,7 @@ body {
 }
 
 .options {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
@@ -130,7 +130,7 @@ body {
 }
 
 .module-mini-container {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
@@ -318,7 +318,7 @@ legend {
 [type=file],
 textarea,
 select {
-	background-color: #ECF2F8;
+	background-color: #FFFFFF;
 	border-color: #DDDDDD;
 	color: #555555;
 }
@@ -334,7 +334,7 @@ select {
 [type=file]:hover,
 textarea:hover,
 select:hover {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 }
 
 [type=text]:focus,
@@ -348,7 +348,7 @@ select:hover {
 [type=file]:focus,
 textarea:focus,
 select:focus {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 }
 
 form input:focus:invalid,
@@ -597,7 +597,7 @@ td.calendar-week { border-color: #0066cc; }
 .floating-message-container .admin-only     { background-color: rgba(223, 216, 234, 1); }
 
 .formatter-content {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
@@ -607,7 +607,7 @@ h3.formatter-title {
 }
 
 .progressbar-container {
-	background-color: #f0f1f5;
+	background-color: #ECF2F8;
 }
 
 .progressbar-container .progressbar {
@@ -871,6 +871,8 @@ a[class*='lightcase-icon-']:hover {
 		color: rgba(0, 255, 0, 0.4);
 	}
 }
+
+
 
 
 /* -- miscellaneous

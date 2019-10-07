@@ -93,7 +93,6 @@
 }
 
 .move-pics-container {
-	position: absolute;
 	z-index: 100;
 	float: left;
 	display: none;

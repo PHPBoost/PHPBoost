@@ -62,7 +62,7 @@
 					html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 					html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="basic-button" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 					document.getElementById('img' + id_file).innerHTML = '';
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -294,150 +294,165 @@
 			</div>
 
 			# IF C_SUB_CATEGORIES #
-			<div class="subcat-container elements-container# IF C_SEVERAL_CATS_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
-				# START sub_categories_list #
-					<div class="subcat-element block">
-						<div class="subcat-content">
-							# IF sub_categories_list.C_CATEGORY_IMAGE #
-								<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
-								</a>
-							# ENDIF #
-							<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
-							<span class="subcat-options">{sub_categories_list.PICTURES_NUMBER}</span>
-						</div>
-					</div>
-				# END sub_categories_list #
-				<div class="spacer"></div>
-			</div>
-			# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
-			# ELSE #
-				<div class="spacer"></div>
-			# ENDIF #
-
-			<div class="content">
-				# IF C_GALLERY_PICS #
-				<article id="article-gallery-{ID}" class="article-gallery article-several">
-					<header>
-						<h2>${LangLoader::get_message('image', 'main')}</h2>
-					</header>
-					<div class="content">
-						<p class="center" id="pics_max"></p>
-
-						# IF C_GALLERY_PICS_MAX #
-							<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
-							<div class="options">
-								<h6>{L_INFORMATIONS}</h6>
-								# IF C_TITLE_ENABLED #
-									<span class="infos-options"><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
-								# ENDIF #
-								# IF C_AUTHOR_DISPLAYED #
-									<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="small {POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
-								# ENDIF #
-								# IF C_VIEWS_COUNTER_ENABLED #
-									<span class="infos-options"><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
-								# ENDIF #
-								<span class="infos-options"><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
-								<span class="infos-options"><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
-								<span class="infos-options"><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
-								# IF C_COMMENTS_ENABLED #
-									<a class="infos-options" href="{U_COMMENTS}">{L_COMMENTS}</a>
-								# ENDIF #
-								<div class="center">
-									# IF C_NOTATION_ENABLED #
-										<div class="text-strong">{KERNEL_NOTATION}</div>
+				<div class="cell-flex cell-flex-{COLUMNS_NUMBER}">
+					# START sub_categories_list #
+						<div class="cell">
+							<div class="cell-title">
+								<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+							</div>
+							<div class="cell-body">
+								<div class="cell-thumbnail">
+									# IF sub_categories_list.C_CATEGORY_IMAGE #
+											<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 									# ENDIF #
-									# IF C_GALLERY_PICS_MODO #
-									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
-
-									<div id="move{ID}" class="move-pics-container">
-										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
-											<div>{L_MOVETO} :</div>
-											<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}">
-												{CAT}
-											</select>
-										</div>
-									</div>
-									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
-
-									<a href="javascript:pics_aprob({ID});" class="basic-button" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
-									<span id="img{ID}"></span>
-									<a href="{U_DEL}" aria-label="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
-									# ENDIF #
+									<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
+										<span class="fa fa-eye"></span>
+									</a>
 								</div>
 							</div>
-							<div class="link-to-other-pics-container">
-								<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
-								<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
+							<div class="cell-footer">
+								<span class="subcat-options">{sub_categories_list.PICTURES_NUMBER}</span>
 							</div>
-							<table class="pics-max-thumbnails">
-								<thead>
-									<tr>
-										<th colspan="{COLSPAN}">
-											{L_THUMBNAILS}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-										</td>
+						</div>
+					# END sub_categories_list #
+				</div>
+				# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+			# ENDIF #
 
-										# START list_preview_pics #
-											<td class="center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
-										# END list_preview_pics #
+			# IF C_GALLERY_PICS #
+			<article id="article-gallery-{ID}" class="article-gallery article-several">
+				<header>
+					<h2>${LangLoader::get_message('image', 'main')}</h2>
+				</header>
+				<div class="content">
+					<p class="center" id="pics_max"></p>
 
-										<td>
-											<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="${LangLoader::get_message('next', 'main')}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							{COMMENTS}
-						# ENDIF #
+					# IF C_GALLERY_PICS_MAX #
+						<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
+						<div class="options">
+							<h6>{L_INFORMATIONS}</h6>
+							# IF C_TITLE_ENABLED #
+								<span class="infos-options"><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
+							# ENDIF #
+							# IF C_AUTHOR_DISPLAYED #
+								<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="small {POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							# ENDIF #
+							# IF C_VIEWS_COUNTER_ENABLED #
+								<span class="infos-options"><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
+							# ENDIF #
+							<span class="infos-options"><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
+							<span class="infos-options"><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
+							<span class="infos-options"><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
+							# IF C_COMMENTS_ENABLED #
+								<a class="infos-options" href="{U_COMMENTS}">{L_COMMENTS}</a>
+							# ENDIF #
+							<div class="center">
+								# IF C_NOTATION_ENABLED #
+									<div class="text-strong">{KERNEL_NOTATION}</div>
+								# ENDIF #
+								# IF C_GALLERY_PICS_MODO #
+								<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
 
-						<table class="table-no-header table-pics">
-							<tbody>
-							# START pics_list #
-								# IF pics_list.C_OPEN_TR #<tr># ENDIF #
-								<td class="valign-bottom# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #" style="width:{COLUMN_WIDTH_PICS}%;">
-									<div id="pics{pics_list.ID}" class="thumbnails-list-container">
-										<a class="small" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #><img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" /></a>
+								<div id="move{ID}" class="move-pics-container">
+									<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
+										<div>{L_MOVETO} :</div>
+										<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}">
+											{CAT}
+										</select>
 									</div>
+								</div>
+								<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
 
-									<div class="spacer"></div>
+								<a href="javascript:pics_aprob({ID});" aria-label="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}" aria-hidden="true"></i></a>
+								<span id="img{ID}"></span>
+								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+								# ENDIF #
+							</div>
+						</div>
+						<div class="link-to-other-pics-container">
+							<span class="float-left">&nbsp;&nbsp;&nbsp;<a href="{U_PREVIOUS}#pics_max" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+							<span class="float-right"><a href="{U_NEXT}#pics_max" aria-label="${LangLoader::get_message('next', 'main')}"> <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;</span>
+						</div>
+						<table class="pics-max-thumbnails">
+							<thead>
+								<tr>
+									<th colspan="{COLSPAN}">
+										{L_THUMBNAILS}
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<span id="display_left"># IF C_LEFT_THUMBNAILS #<a href="javascript:display_thumbnails('left')" aria-label="${LangLoader::get_message('previous', 'main')}"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+									</td>
 
-									<div class="small">
-										# IF C_PICTURE_NAME_DISPLAYED #
-											<a class="infos-options" href="{pics_list.U_PICTURE_LINK}">
-												<span id="fi_{pics_list.ID}">{pics_list.NAME}</span>
-											</a>
-										# ELSE #
-											<span class="infos-options" id="fi_{pics_list.ID}"></span>
-										# ENDIF # <span id="fi{pics_list.ID}"></span>
+									# START list_preview_pics #
+										<td class="center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
+									# END list_preview_pics #
+
+									<td>
+										<span id="display_right"># IF C_RIGHT_THUMBNAILS #<a href="javascript:display_thumbnails('right')" aria-label="${LangLoader::get_message('next', 'main')}"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a># ENDIF #</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						{COMMENTS}
+					# ENDIF #
+
+					<div class="cell-flex cell-flex-{COLUMN_NBR}">
+						# START pics_list #
+							<div class="cell# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
+								<div class="cell-title">
+									<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-download"></i></a> -->
+									# IF C_PICTURE_NAME_DISPLAYED #
+										<a class="ellipsis" href="{pics_list.U_PICTURE_LINK}">
+											<span id="fi_{pics_list.ID}">{pics_list.NAME}</span>
+										</a>
+									# ELSE #
+										<span class="infos-options" id="fi_{pics_list.ID}"></span>
+									# ENDIF # <span id="fi{pics_list.ID}"></span>
+								</div>
+								<div class="cell-body">
+									<div class="cell-thumbnail">
+										<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
+										<a class="cell-thumbnail-caption smaller" aria-label="# IF C_PICTURE_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
+											${LangLoader::get_message('general-config.view_real_preview', 'admin-config-common')}
+										</a>
+									</div>
+								</div>
+								<div class="cell-list small">
+									<ul>
 										# IF C_AUTHOR_DISPLAYED #
-											# IF pics_list.C_POSTOR_EXIST #
-												<a class="infos-options {pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
-													{L_BY} {pics_list.POSTOR}
-												</a>
-											# ELSE #
-												<span class="infos-options">{L_BY} ${LangLoader::get_message('guest', 'main')}</span>
-											# ENDIF #
+											<li>
+												# IF pics_list.C_POSTOR_EXIST #
+													<a class="{pics_list.POSTOR_LEVEL_CLASS}"# IF pics_list.C_POSTOR_GROUP_COLOR # style="color:{pics_list.POSTOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_POSTOR_PROFILE}">
+														{L_BY} {pics_list.POSTOR}
+													</a>
+												# ELSE #
+													{L_BY} ${LangLoader::get_message('guest', 'main')}
+												# ENDIF #
+											</li>
 										# ENDIF #
 										# IF C_VIEWS_COUNTER_ENABLED #
-											<span class="infos-options"><span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span></span>
+											<li>
+												<span id="gv{pics_list.ID}">{pics_list.VIEWS}</span> <span id="gvl{pics_list.ID}">{pics_list.L_VIEWS}</span>
+											</li>
 										# ENDIF #
 										# IF C_COMMENTS_ENABLED #
-											<a class="infos-options" href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+											<li>
+												<a href="{pics_list.U_COMMENTS}">{pics_list.L_COMMENTS}</a>
+											</li>
 										# ENDIF #
 										# IF C_NOTATION_ENABLED #
-											<span class="infos-options">{pics_list.KERNEL_NOTATION}</span>
+											<li>
+												{pics_list.KERNEL_NOTATION}
+											</li>
 										# ENDIF #
-									</div>
-
-									<div class="actions-container">
-										# IF C_GALLERY_MODO #
+									</ul>
+								</div>
+								# IF C_GALLERY_MODO #
+									<div class="cell-footer">
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit"></i></a></span>
 										<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 										<div id="move{pics_list.ID}" class="move-pics-container">
@@ -452,36 +467,18 @@
 
 										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" aria-label="{pics_list.L_APROB_IMG}" class="# IF pics_list.C_IMG_APROB #fa fa-eye-slash# ELSE #fa fa-eye# ENDIF #"></a>
 										&nbsp;<span id="img{ID}"></span>
-										# ENDIF #
-										<span id="img{pics_list.ID}"></span>
 									</div>
-								</td>
-								# IF pics_list.C_CLOSE_TR #</tr># ENDIF #
-							# END pics_list #
-
-							# START end_table #
-								<td class="td-end" style="width:{end_table.COLUMN_WIDTH_PICS}%">&nbsp;</td>
-
-							# IF end_table.C_DISPLAY_TR_END #</tr># ENDIF #
-							# END end_table #
-							</tbody>
-							# IF C_PAGINATION #
-							<tfoot>
-								<tr>
-									<td colspan="{COLUMNS_NUMBER}">
-									# INCLUDE PAGINATION #
-									</td>
-								</tr>
-							</tfoot>
-							# ENDIF #
-						</table>
+								# ENDIF #
+								<span id="img{pics_list.ID}"></span>
+							</div>
+						# END pics_list #
 					</div>
-					<footer></footer>
-				</article>
-				# ENDIF #
 
-				<p class="nbr-total-pics smaller">{L_TOTAL_IMG}</p>
-			</div>
+				</div>
+				<footer></footer>
+			</article>
+			# ENDIF #
 			<footer>
+				<p class="nbr-total-pics">{L_TOTAL_IMG}</p>
 			</footer>
 		</section>
