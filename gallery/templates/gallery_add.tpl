@@ -36,7 +36,7 @@
 						{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}
 
 						{CATEGORIES_TREE}
-						<label>{L_NAME} plop: <input type="text" maxlength="50" name="name"></label>
+						<label>{L_NAME} : <input type="text" maxlength="50" name="name"></label>
 						* <input type="file" name="gallery" class="file" />
 					</div>
 					<fieldset class="fieldset-submit">
