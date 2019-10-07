@@ -12,7 +12,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('smallads');
-		
+
 		$this->content_tables = array(PREFIX . 'smallads');
 		$this->delete_old_files_list = array(
 			'/controllers/AdminSmalladsConfigController.class.php',
@@ -23,12 +23,13 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/SmalladsModuleMiniMenu.class.php',
 			'/templates/smallads.tpl',
 			'/templates/SmalladsModuleMiniMenu.tpl',
+			'/templates/images/default.png',
 			'/templates/fields/SmalladsFormFieldSelectSources.tpl',
 			'/smallads.class.php',
 			'/smallads.php',
 			'/smallads_begin.php'
 		);
-		
+
 		$this->database_columns_to_add = array(
 			array(
 				'table_name' => PREFIX . 'smallads',
@@ -55,14 +56,14 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 				)
 			)
 		);
-		
+
 		$this->database_columns_to_delete = array(
 			array(
 				'table_name' => PREFIX . 'smallads',
 				'columns' => array('cat_id', 'links_flag', 'shipping', 'vid', 'id_updated', 'date_approved')
 			)
 		);
-		
+
 		$this->database_keys_to_add = array(
 			array(
 				'table_name' => PREFIX . 'smallads',
@@ -74,7 +75,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 				)
 			)
 		);
-		
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'smallads',

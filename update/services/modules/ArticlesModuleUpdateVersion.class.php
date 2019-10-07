@@ -13,15 +13,18 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('articles');
-		
+
 		$this->content_tables = array(PREFIX . 'articles');
 		$this->delete_old_files_list = array(
 			'/phpboost/ArticlesNewContent.class.php',
 			'/phpboost/ArticlesNotation.class.php',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
-		$this->delete_old_folders_list = array('/fields');
-		
+		$this->delete_old_folders_list = array(
+			'/fields',
+			'/templates/images'
+		);
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'articles',
