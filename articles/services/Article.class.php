@@ -66,8 +66,6 @@ class Article
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
 
-	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
-
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -420,7 +418,7 @@ class Article
 		$this->publishing_end_date = new Date();
 		$this->date_created = new Date();
 		$this->sources = array();
-		$this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
 		$this->number_view = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;

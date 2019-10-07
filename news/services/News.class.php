@@ -41,8 +41,6 @@ class News
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
 
-	const DEFAULT_PICTURE = '/news/news.png';
-
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -377,7 +375,7 @@ class News
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->sources = array();
-		$this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
 		$this->end_date_enabled = false;
 		$this->number_view = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();

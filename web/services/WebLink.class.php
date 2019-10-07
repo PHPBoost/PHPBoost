@@ -58,8 +58,6 @@ class WebLink
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
 
-	const DEFAULT_PICTURE = '';
-
 	public function get_id()
 	{
 		return $this->id;
@@ -402,7 +400,7 @@ class WebLink
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->number_views = 0;
-		$this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
 		$this->url = new Url('');
 		$this->partner_picture = new Url('');
 		$this->end_date_enabled = false;

@@ -368,7 +368,7 @@ class CalendarEventContent
 		$this->category_id = $category_id;
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
-		$this->picture_url = new Url('');
+		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
 
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;

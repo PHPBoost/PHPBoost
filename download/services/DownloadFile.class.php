@@ -68,8 +68,6 @@ class DownloadFile
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
 
-	const DEFAULT_PICTURE = '/download/download.png';
-
 	public function get_id()
 	{
 		return $this->id;
@@ -471,7 +469,7 @@ class DownloadFile
 		$this->creation_date = new Date();
 		$this->number_downloads = 0;
 		$this->number_view = 0;
-		$this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
 		$this->software_version = '';
 		$this->sources = array();
 		$this->end_date_enabled = false;
@@ -568,12 +566,12 @@ class DownloadFile
 			)
 		);
 	}
-	
+
 	public function get_array_tpl_source_vars($source_name)
 	{
 		$vars = array();
 		$sources = $this->get_sources();
-		
+
 		if (isset($sources[$source_name]))
 		{
 			$vars = array(
@@ -582,7 +580,7 @@ class DownloadFile
 				'URL' => $sources[$source_name]
 			);
 		}
-		
+
 		return $vars;
 	}
 }

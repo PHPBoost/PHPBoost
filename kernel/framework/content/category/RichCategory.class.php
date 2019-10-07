@@ -33,7 +33,7 @@ class RichCategory extends Category
 	public function get_image()
 	{
 		if (!$this->image instanceof Url)
-			return new Url('/' . Environment::get_running_module_name() . '/' . Environment::get_running_module_name() . '.png');
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/cat_default.png');
 
 		return $this->image;
 	}
