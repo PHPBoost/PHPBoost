@@ -75,7 +75,9 @@ class UserLoginController extends AbstractController
 		{
 			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
 			{
-				if ($this->request->get_value('redirect', '') || $this->redirect !== null)
+				if ($this->login_type == self::ADMIN_LOGIN && !AppContext::get_current_user()->is_admin())
+					AppContext::get_response()->redirect(Environment::get_home_page());
+				else if ($this->request->get_value('redirect', '') || $this->redirect !== null)
 					AppContext::get_response()->redirect($this->get_redirect_url());
 				else if ($was_already_authenticated)
 					AppContext::get_response()->redirect(UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())->rel());
