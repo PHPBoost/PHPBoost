@@ -1,41 +1,39 @@
-<div id="input_files_${escape(HTML_ID)}">
-	<div class="dnd-area">
-		<div class="dnd-dropzone">
-			<label for="inputfiles" class="dnd-label"># IF C_MULTIPLE #{@drag.and.drop.files}# ELSE #{@drag.and.drop.file}# ENDIF #<p></p></label>
-			<input type="file" name="upload_file# IF C_MULTIPLE #[]# ENDIF #" id="inputfiles_${escape(HTML_ID)}" class="ufiles" />
-		</div>
-		<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
-		# IF C_MULTIPLE #
-		<div class="ready-to-load">
-			<button type="button" class="clear-list">{@clear.list}</button>
-			<span class="fa-stack fa-lg">
-				<i class="far fa-file fa-stack-2x "></i>
-				<strong class="fa-stack-1x files-nbr"></strong>
-			</span>
-		</div>
-		<div class="modal-container">
-			<button class="upload-help" data-trigger data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
-			<div id="upload-helper" class="modal modal-animation">
-				<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-				<div class="content-panel">
-					<h3>{@upload.helper}</h3>
-					# IF IS_ADMIN #
-						<p><strong>{@max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
-					# ELSE #
-						<p><strong>{@max.files.size} :</strong> {MAX_FILES_SIZE_TEXT}</p>
-					# ENDIF #
-					<p><strong>{@allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
-				</div>
+<div class="dnd-area">
+	<div class="dnd-dropzone">
+		<label for="inputfiles" class="dnd-label"># IF C_MULTIPLE #{@drag.and.drop.files}# ELSE #{@drag.and.drop.file}# ENDIF #<p></p></label>
+		<input type="file" name="${escape(NAME)}# IF C_MULTIPLE #[]# ENDIF #" id="${escape(HTML_ID)}" class="ufiles"# IF C_DISABLED # disabled="disabled" # ENDIF # />
+	</div>
+	<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
+	# IF C_MULTIPLE #
+	<div class="ready-to-load">
+		<button type="button" class="clear-list">{@clear.list}</button>
+		<span class="fa-stack fa-lg">
+			<i class="far fa-file fa-stack-2x "></i>
+			<strong class="fa-stack-1x files-nbr"></strong>
+		</span>
+	</div>
+	<div class="modal-container">
+		<button class="upload-help" data-trigger data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
+		<div id="upload-helper" class="modal modal-animation">
+			<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+			<div class="content-panel">
+				<h3>{@upload.helper}</h3>
+				# IF IS_ADMIN #
+					<p><strong>{@max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+				# ELSE #
+					<p><strong>{@max.files.size} :</strong> {MAX_FILES_SIZE_TEXT}</p>
+				# ENDIF #
+				<p><strong>{@allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 			</div>
 		</div>
-		# ENDIF #
 	</div>
-	<ul class="ulist"></ul>
+	# ENDIF #
 </div>
+<ul class="ulist"></ul>
 
 <script>
-	jQuery('#inputfiles_${escape(HTML_ID)}').parents('form')[0].enctype = "multipart/form-data";
-	jQuery('#inputfiles_${escape(HTML_ID)}').dndfiles({
+	jQuery('#${escape(HTML_ID)}').parents('form:first')[0].enctype = "multipart/form-data";
+	jQuery('#${escape(HTML_ID)}').dndfiles({
 		multiple:# IF C_MULTIPLE # true# ELSE # false# ENDIF #,
 		maxFileSize: '{MAX_FILE_SIZE}',
 		maxFilesSize: '{MAX_FILES_SIZE}',
