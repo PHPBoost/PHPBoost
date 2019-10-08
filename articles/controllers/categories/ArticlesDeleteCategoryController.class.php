@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 13
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
@@ -37,7 +38,7 @@ class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 
 	protected function get_module_home_page_title()
 	{
-		return LangLoader::get_message('articles', 'common', 'articles');
+		return LangLoader::get_message('articles.module.title', 'common', 'articles');
 	}
 
 	protected function check_authorizations()

@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 03 28
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesDisplayPendingArticlesController extends ModuleController
@@ -225,13 +226,13 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['articles.pending_articles'], $this->lang['articles'], $page);
+		$graphical_environment->set_page_title($this->lang['articles.pending.items'], $this->lang['articles.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
+		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.pending.items'], ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		return $response;
 	}

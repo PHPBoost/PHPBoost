@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 06
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminArticlesConfigController extends AdminModuleController
@@ -47,7 +48,7 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminArticlesDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminArticlesDisplayResponse($tpl, $this->lang['articles.module.config.title']);
 	}
 
 	private function init()
@@ -63,7 +64,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('articles_configuration', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTMLHeading('articles_configuration', $this->lang['articles.module.config.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_articles_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_articles_per_page(),
@@ -83,22 +84,22 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled()
+		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles.display.categories.icon'], $this->config->are_cats_icon_enabled()
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
-				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST)
+				new FormFieldSelectChoiceOption($this->lang['articles.display.type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
+				new FormFieldSelectChoiceOption($this->lang['articles.display.type.list'], ArticlesConfig::DISPLAY_LIST)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),
+		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['articles.characters.number.to.cut'], $this->config->get_number_character_to_cut(),
 			array('min' => 20, 'max' => 1000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles_configuration.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests()));
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles.display.decriptions.to.guests'], $this->config->are_descriptions_displayed_to_guests()));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)

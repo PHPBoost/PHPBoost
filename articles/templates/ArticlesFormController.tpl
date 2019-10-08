@@ -2,7 +2,7 @@
 <!--
 	function bbcode_page()
 	{
-		var page = prompt('{@articles.form.add_page.title}', '');
+		var page = prompt('{@articles.add.page.title}', '');
 
 		if (page) {
 			# IF C_TINYMCE_EDITOR #

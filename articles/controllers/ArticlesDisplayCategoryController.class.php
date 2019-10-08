@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 04
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesDisplayCategoryController extends ModuleController
@@ -309,9 +310,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->category->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles'], $page);
+			$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles.module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['articles'], '', $page);
+			$graphical_environment->set_page_title($this->lang['articles.module.title'], '', $page);
 
 		$description = $this->category->get_description();
 		if (empty($description))
@@ -320,7 +321,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
 
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)

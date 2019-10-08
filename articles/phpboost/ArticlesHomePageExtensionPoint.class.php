@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 03 19
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
@@ -16,7 +17,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('articles', 'common', 'articles');
+		return LangLoader::get_message('articles.module.title', 'common', 'articles');
 	}
 }
 ?>

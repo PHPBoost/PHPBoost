@@ -5,7 +5,7 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true"></i> </a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING #{@articles.pending_articles}# ELSE #{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+			# IF C_PENDING #{@articles.pending.items}# ELSE #{@articles.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
@@ -30,9 +30,9 @@
 				<span class="subcat-options">
 					{sub_categories_list.ARTICLES_NUMBER}
 					# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
-						${TextHelper::lcfirst(LangLoader::get_message('articles', 'common', 'articles'))}
+						{@articles.items}
 					# ELSE #
-						${TextHelper::lcfirst(LangLoader::get_message('article', 'common', 'articles'))}
+						{@articles.item}
 					# ENDIF #
 				</span>
 			</div>

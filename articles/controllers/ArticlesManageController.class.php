@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2019 10 08
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesManageController extends ModuleController
@@ -49,7 +50,7 @@ class ArticlesManageController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(ArticlesSetup::$articles_table, 'table', $columns, new HTMLTableSortingRule('date_created', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['articles_management']);
+		$table_model->set_caption($this->lang['articles.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -128,13 +129,12 @@ class ArticlesManageController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['articles_management'], $this->lang['articles'], $page);
+		$graphical_environment->set_page_title($this->lang['articles.management'], $this->lang['articles.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::manage_articles());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-
-		$breadcrumb->add($this->lang['articles_management'], ArticlesUrlBuilder::manage_articles());
+		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.management'], ArticlesUrlBuilder::manage_articles());
 
 		return $response;
 	}

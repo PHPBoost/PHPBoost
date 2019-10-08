@@ -3,7 +3,7 @@
 	<header>
 		<div class="cat-actions">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
-			{@articles}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
+			{@articles.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -32,7 +32,7 @@
 				# ENDIF #
 			# ENDIF #
 			<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;<time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>&nbsp;|
-			&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>&nbsp;<span aria-label="{NUMBER_VIEW} {@articles.sort_field.views}">{NUMBER_VIEW}</span>
+			&nbsp;<i class="fa fa-eye" aria-hidden="true"></i>&nbsp;<span aria-label="{NUMBER_VIEW} {@articles.sort.field.views}">{NUMBER_VIEW}</span>
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<i class="fa fa-comments-o" aria-hidden="true"></i> <a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
