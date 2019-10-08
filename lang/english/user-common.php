@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 08 02
+ * @version   	PHPBoost 5.3 - last update: 2019 10 08
  * @since   	PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,6 +24,7 @@ $lang['dashboard'] = 'Dashboard';
 $lang['messages'] = 'User messages';
 $lang['maintain'] = 'Maintain';
 $lang['welcome'] = 'Welcome';
+$lang['about.author'] = 'About the author';
 
 $lang['members_list'] = 'Members list';
 $lang['member-management'] = 'Member management';

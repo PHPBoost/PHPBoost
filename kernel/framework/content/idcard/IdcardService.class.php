@@ -6,14 +6,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 05 06
+ * @version     PHPBoost 5.3 - last update: 2019 10 08
  * @since       PHPBoost 5.2 - 2019 04 23
 */
 
 class IdcardService
 {
-    private static $lang;
-
 	/**
 	 * Select some item author datas
 	 * @param User $user
@@ -22,7 +20,8 @@ class IdcardService
     public static function display_idcard(User $user)
     {
         $lang = LangLoader::get('user-common');
-        $template = new FileTemplate('framework/content/idcard/idcard.tpl');
+        $tpl = new FileTemplate('framework/content/idcard/idcard.tpl');
+		$tpl->add_lang($lang);
 
         $user_id = $user->get_id();
         $author_name = $user->get_display_name();
@@ -43,20 +42,19 @@ class IdcardService
             $biography = $lang['extended-field.field.no-member'];
         }
 
-
-        $template->put_all(array(
+        $tpl->put_all(array(
             'C_USER_GROUP_COLOR'   => !empty($user_group_color),
 
             'AUTHOR_NAME' => $author_name,
             'BIOGRAPHY' => $biography,
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-            
+
             'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
             'U_AVATAR' => Url::to_rel($avatar),
         ));
 
-        return $template->render();
+        return $tpl->render();
     }
 }
 
