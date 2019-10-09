@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 04
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 5.1 - 2018 04 16
 */
 
@@ -90,7 +90,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 					}
 					else
 					{
-						if (UserAccountsConfig::load()->is_registration_enabled() || !AppContext::get_current_user()->is_guest())
+						if (UserAccountsConfig::load()->is_registration_enabled())
 						{
 							$user = new User();
 
