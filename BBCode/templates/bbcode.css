@@ -216,7 +216,7 @@
 
 #bbcode-expanded .form-element {
 	margin: 0 !important;
-	padding: 0.309em 0;
+	padding: 0.309em;
 }
 
 .bbcode-block .form-element label.smaller {
@@ -246,17 +246,17 @@
 @media (min-width: 769px){
 	.bbcode-block-fonts 	{ width: 120px; }
 	.bbcode-block-title 	{ width: 70px;  }
-	.bbcode-block-ul 		{ width: 150px; }
+	.bbcode-block-ul 		{ width: 170px; }
 	.bbcode-block-block 	{ width: 100px; }
-	.bbcode-block-message 	{ width: 110px; }
+	.bbcode-block-message 	{ width: 120px; }
 	.bbcode-block-size 		{ width: 40px;  }
 	.bbcode-block-hide 		{ width: 90px;  }
-	.bbcode-block-table 	{ width: 160px; }
+	.bbcode-block-table 	{ width: 190px; }
 	.bbcode-block-code 		{ width: 130px; }
 	.bbcode-block-smileys   { width: 188px; }
 	.bbcode-block-fa        { width: 272px; }
 	.bbcode-block-aligns    { width: 120px; }
-	.bbcode-block-positions { width: 120px; }
+	.bbcode-block-positions { width: 140px; }
 }
 
 .bbcode-forbidden,
