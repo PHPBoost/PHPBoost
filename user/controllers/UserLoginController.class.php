@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -110,19 +110,9 @@ class UserLoginController extends AbstractController
 
 	private function init_vars_template()
 	{
-		$this->view->put_all(array(
-			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
-			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
-			'C_HAS_ERROR' => $this->has_error,
-			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
-			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
-			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
-			'LOGIN_FORM' => $this->form->display(),
-		));
-
-		$activated_external_authentication = AuthenticationService::get_external_auths_activated();
-		foreach ($activated_external_authentication as $id => $authentication)
+		$external_authentication = 0;
+		
+		foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 		{
 			$this->view->assign_block_vars('external_auth', array(
 				'U_CONNECT' => UserUrlBuilder::connect($id)->rel(),
@@ -131,7 +121,20 @@ class UserLoginController extends AbstractController
 				'IMAGE_HTML' => $authentication->get_image_renderer_html(),
 				'CSS_CLASS' => $authentication->get_css_class()
 			));
+			$external_authentication++;
 		}
+
+		$this->view->put_all(array(
+			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+			'C_DISPLAY_EXTERNAL_AUTHENTICATION' => $external_authentication,
+			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
+			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
+			'C_HAS_ERROR' => $this->has_error,
+			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
+			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
+			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
+			'LOGIN_FORM' => $this->form->display(),
+		));
 
 		if ($this->maintain_config->is_under_maintenance())
 		{

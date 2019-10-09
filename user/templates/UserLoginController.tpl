@@ -7,6 +7,8 @@
 		<div class="center">
 			# IF C_REGISTRATION_ENABLED #
 				<a class="infos-options" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@registration}</a>
+			# ENDIF #
+			# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
 				# START external_auth #
 					<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>
 				# END external_auth #
