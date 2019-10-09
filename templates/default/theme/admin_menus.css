@@ -217,6 +217,7 @@
 
 	.modal-menu i {
 		margin-right: 8px;
+		align-self: center;
 	}
 
 	.modal-menu li > a {
@@ -229,7 +230,7 @@
 		border-width: 0 1px 1px;
 	}
 	.modal-menu > li > a {
-		display: block;
+		display: flex;
 		padding: 0.618em;
 		text-decoration: none;
 		border-width: 0 0 1px 0;
