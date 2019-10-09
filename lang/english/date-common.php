@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 27
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 3.0 - 2012 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,7 +16,7 @@
 
 $lang['date_format']                                 = 'YYYY-MM-DD';
 $lang['date_format_day_month']                       = 'm/d';
-$lang['date_format_day_month_year']                  = 'd/m/Y';
+$lang['date_format_day_month_year']                  = 'm/d/Y';
 $lang['date_format_day_month_year_hour_minute']      = 'm/d/Y \a\t H\hi';
 $lang['date_format_day_month_year_long']             = 'j F Y';
 $lang['date_format_day_month_year_text']             = 'l j F Y';
