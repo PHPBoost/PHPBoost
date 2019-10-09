@@ -171,6 +171,25 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: transparent;
 }
 
+/* --- Le selecteur de couleurs --- */
+.color-picker .bbcode-block table {
+	margin: 0;
+	border: none;
+}
+
+.color-picker td {
+	padding: 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.color-picker td a {
+	display: block;
+	width: 14px;
+	height: 14px;
+}
+
 /* --- les blocs de quote, de code ou caches --- */
 .formatter-blockquote, .formatter-code, .formatter-hide {
 	display: block;
