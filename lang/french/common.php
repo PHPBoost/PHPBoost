@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 25
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -158,13 +158,14 @@ $lang['deadlink.confirmation'] = 'Etes-vous sûr de vouloir signaler ce lien com
 $lang['contribution.deadlink'] = 'Lien mort : :link_name';
 $lang['contribution.deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
-//Autorisations
+// Autorisations
 $lang['authorizations'] = 'Autorisations';
 $lang['authorizations.read'] = 'Autorisation de lecture';
 $lang['authorizations.write'] = 'Autorisation d\'écriture';
 $lang['authorizations.contribution'] = 'Autorisation de contribution';
 $lang['authorizations.moderation'] = 'Autorisation de modération';
 $lang['authorizations.categories_management'] = 'Autorisation de gérer les catégories';
+$lang['authorizations.menu'] = 'Autorisation d\'afficher le menu';
 
 //Pagination
 $lang['pagination.first'] = 'Vers la première page';

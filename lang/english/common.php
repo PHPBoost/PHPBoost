@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 25
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -165,6 +165,7 @@ $lang['authorizations.write'] = 'Write permission';
 $lang['authorizations.contribution'] = 'Contribution permission';
 $lang['authorizations.moderation'] = 'Moderation permission';
 $lang['authorizations.categories_management'] = 'Categories management permission';
+$lang['authorizations.menu'] = 'Permission to display menu';
 
 //Pagination
 $lang['pagination.first'] = 'To first page';

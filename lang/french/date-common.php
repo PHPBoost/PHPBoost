@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 27
+ * @version   	PHPBoost 5.2 - last update: 2019 10 09
  * @since   	PHPBoost 3.0 - 2012 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -84,8 +84,8 @@ $lang['week']      = 'semaine';
 $lang['weeks']     = 'semaines';
 $lang['month']     = 'mois';
 $lang['months']    = 'mois';
-$lang['year']      = 'année';
-$lang['years']     = 'années';
+$lang['year']      = 'an';
+$lang['years']     = 'ans';
 
 $lang['ago']       = 'il y a :time';
 ?>
