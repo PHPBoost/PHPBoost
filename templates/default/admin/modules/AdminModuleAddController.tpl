@@ -36,7 +36,8 @@
 								<li class="li-stretch"></li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</li></span>
+									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
 									{modules_not_installed.CREATION_DATE}

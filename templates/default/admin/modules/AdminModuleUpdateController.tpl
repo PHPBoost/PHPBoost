@@ -6,48 +6,63 @@
 	<section id="upgrade-modules-container" class="admin-elements-container modules-elements-container upgrade-elements-container">
 		<header class="legend">{@modules.updates_available}</header>
 		# IF C_UPDATES #
-		<div class="content elements-container">
-			# START modules_upgradable #
-			<article class="block admin-element module-element upgrade-element">
-				<header>
-					<div class="admin-element-menu-container">
-						# IF modules_upgradable.C_COMPATIBLE #
-						<button type="submit" class="submit admin-element-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
-						# ELSE #
-						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
-						# ENDIF #
-					</div>
-					# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-					# IF modules_upgradable.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
-						<label for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}"></label>
-					</div>
-					# ENDIF #
-					# ENDIF #
+			<div class="cell-flex cell-flex-3">
+				# START modules_upgradable #
+					<article class="cell admin-element module-element upgrade-element">
+						<header class="cell-title">
+							<div class="admin-element-menu-container">
+								# IF modules_upgradable.C_COMPATIBLE #
+									<button type="submit" class="submit admin-element-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
+								# ELSE #
+									<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+								# ENDIF #
+							</div>
+							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
+								# IF modules_upgradable.C_COMPATIBLE #
+									<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
+										<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
+										<label for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}"></label>
+									</div>
+								# ENDIF #
+							# ENDIF #
+							<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
+						</header>
+						<div class="cell-list">
+							<ul>
+								<li>
+									<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" />
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
+									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
+									{modules_upgradable.CREATION_DATE}
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('last_update', 'admin')} :</span>
+									{modules_upgradable.LAST_UPDATE}
+								</li>
+								<li>
+									<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
+									{modules_upgradable.DESCRIPTION}
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
+								</li>
+							</ul>
+						</div>
 
-					<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
-				</header>
-
-				<div class="content">
-					<div class="admin-element-icon">
-						<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" />
-					</div>
-					<div class="admin-element-desc">
-						<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span> # IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
-						<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span> {modules_upgradable.DESCRIPTION}<br />
-						<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span> <span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span><br />
-					</div>
-				</div>
-
-				<footer></footer>
-			</article>
-			# END modules_upgradable #
-		</div>
+						<footer></footer>
+					</article>
+				# END modules_upgradable #
+			</div>
 		# ELSE #
-		<div class="content">
-			<div class="message-helper notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
-		</div>
+			<div class="content">
+				<div class="message-helper notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
+			</div>
 		# ENDIF #
 		<footer></footer>
 	</section>
