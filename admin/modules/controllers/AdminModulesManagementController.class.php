@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 28
+ * @version     PHPBoost 5.3 - last update: 2019 10 10
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -44,9 +44,6 @@ class AdminModulesManagementController extends AdminController
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
 
-			$creation_date = date("d m Y", strtotime($configuration->get_creation_date()));
-			$last_update = date("d m Y", strtotime($configuration->get_last_update()));
-
 			$this->view->assign_block_vars('modules_installed', array(
 				'C_AUTHOR_EMAIL'   => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
@@ -55,8 +52,8 @@ class AdminModulesManagementController extends AdminController
 				'MODULE_NUMBER'    => $module_number,
 				'ID'               => $module->get_id(),
 				'NAME'             => TextHelper::ucfirst($configuration->get_name()),
-				'CREATION_DATE'    => $creation_date,
-				'LAST_UPDATE'      => $last_update,
+				'CREATION_DATE'    => $configuration->get_creation_date(),
+				'LAST_UPDATE'      => $configuration->get_last_update(),
 				'ICON'             => $module->get_id(),
 				'VERSION'          => $module->get_installed_version(),
 				'AUTHOR'           => $configuration->get_author(),

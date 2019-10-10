@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 15
+ * @version   	PHPBoost 5.3 - last update: 2019 10 10
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -105,21 +105,22 @@ class AdminModuleUpdateController extends AdminController
 				$author_website = $configuration->get_author_website();
 
 				$this->view->assign_block_vars('modules_upgradable', array(
-					'C_AUTHOR_EMAIL' => !empty($author_email),
+					'C_AUTHOR_EMAIL'   => !empty($author_email),
 					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'C_COMPATIBLE' => $configuration->get_compatibility() == $phpboost_version,
-					'MODULE_NUMBER' => $module_number,
-					'ID' => $module->get_id(),
-					'NAME' => TextHelper::ucfirst($configuration->get_name()),
-					'ICON' => $module->get_id(),
-					'VERSION' => $configuration->get_version(),
-					'AUTHOR' => $configuration->get_author(),
-					'AUTHOR_EMAIL' => $author_email,
-					'AUTHOR_WEBSITE' => $author_website,
-					'DESCRIPTION' => $configuration->get_description(),
-					'COMPATIBILITY' => $configuration->get_compatibility(),
-					'PHP_VERSION' => $configuration->get_php_version(),
-					'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
+					'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
+					'MODULE_NUMBER'    => $module_number,
+					'ID'               => $module->get_id(),
+					'NAME'             => TextHelper::ucfirst($configuration->get_name()),
+					'CREATION_DATE'    => $configuration->get_creation_date(),
+					'LAST_UPDATE'      => $configuration->get_last_update(),
+					'ICON'             => $module->get_id(),
+					'VERSION'          => $configuration->get_version(),
+					'AUTHOR'           => $configuration->get_author(),
+					'AUTHOR_EMAIL'     => $author_email,
+					'AUTHOR_WEBSITE'   => $author_website,
+					'DESCRIPTION'      => $configuration->get_description(),
+					'COMPATIBILITY'    => $configuration->get_compatibility(),
+					'PHP_VERSION'      => $configuration->get_php_version()
 				));
 
 				$modules_upgradable++;

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 28
+ * @version     PHPBoost 5.3 - last update: 2019 10 10
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -153,8 +153,8 @@ class ModuleConfiguration
 		$this->author_email           = $config['author_mail'];
 		$this->author_website         = $config['author_website'];
 		$this->version                = $config['version'];
-		$this->creation_date          = isset($config['creation_date']) ? $config['creation_date'] : '';
-		$this->last_update            = isset($config['last_update']) ? $config['last_update'] : '';
+		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']),Date::FORMAT_DAY_MONTH_YEAR) : '';
+		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']),Date::FORMAT_DAY_MONTH_YEAR) : '';
 		$this->compatibility          = $config['compatibility'];
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;

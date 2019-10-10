@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 28
+ * @version     PHPBoost 5.3 - last update: 2019 10 10
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ThemeConfiguration
@@ -151,8 +152,8 @@ class ThemeConfiguration
 		$this->author_mail       = $config['author_mail'];
 		$this->author_link       = $config['author_link'];
 		$this->version           = $config['version'];
-		$this->creation_date     = isset($config['creation_date']) ? $config['creation_date'] : '';
-		$this->last_update       = isset($config['last_update']) ? $config['last_update'] : '';
+		$this->creation_date     = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']),Date::FORMAT_DAY_MONTH_YEAR) : '';
+		$this->last_update       = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']),Date::FORMAT_DAY_MONTH_YEAR) : '';
 		$this->compatibility     = $config['compatibility'];
 		$this->require_copyright = (bool)$config['require_copyright'];
 		$this->html_version      = isset($config['html_version']) ? $config['html_version'] : '';
