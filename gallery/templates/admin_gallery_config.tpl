@@ -247,19 +247,21 @@
 				<fieldset>
 					<legend>{L_IMG_PROTECT}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element top-field inline-radio custom-radio">
 							<label for="logo_enabled">{L_LOGO_ENABLED} <span class="field-description">{L_LOGO_ENABLED_EXPLAIN}</span></label>
 							<div class="form-field">
 								<div class="form-field-radio">
-									<input type="radio" # IF C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED" value="1" />
-									<label for="logo_ENABLED"></label>
+									<label for="logo_ENABLED">
+										<input type="radio" # IF C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED" value="1" />
+										<span>{L_ENABLED}</span>
+									</label>
 								</div>
-								<span>{L_ENABLED}</span>
 								<div class="form-field-radio">
-									<input type="radio" # IF NOT C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED_2" value="0" />
-									<label for="logo_ENABLED_2"></label>
+									<label for="logo_ENABLED_2">
+										<input type="radio" # IF NOT C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED_2" value="0" />
+										<span>{L_DISABLED}</span>
+									</label>
 								</div>
-								<span>{L_DISABLED}</span>
 							</div>
 						</div>
 						<div class="form-element">
