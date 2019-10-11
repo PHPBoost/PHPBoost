@@ -56,12 +56,12 @@
                 if(hashUrl) {
                     if($('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').length) // if target is nested
                         $('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').addClass('active-panel').css('height', 'auto');
-                    $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
-                    $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
+                        $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
+                        $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
                 } else {
-                    $('.tabs-container .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
+                    $('.tabs-container .tabs').first().addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
                     $('.tabs-container li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
-                    $('.tabs-container .tabs .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
+                    $('.tabs-container .tabs .tabs').first().addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
                     $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
                 }
             }

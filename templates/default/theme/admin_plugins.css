@@ -1,13 +1,81 @@
 /*
- * Contains all elements for some jQuery plugins
- *     - multitabs
- *     - tooltip
- *     - wizard
+ * Contains elements for some jQuery plugins
+ *    - Multitabs
+ *        - Accordion
+ *        - Modal
+ *        - Tabs
+ *    - Tooltip (jBox)
+ *    - Wizard
+ *    - Specification for backend administration
 */
 
 [data-trigger] { cursor: pointer; }
 
-@media { /* --- multitabs Modals --------------------------------------------------------------- */
+@media { /* --- multitabs Accordion ----------------------------------------- */
+    .accordion-container .accordion-controls {
+        text-align: right;
+    }
+
+    .accordion-controls span {
+        display: inline-block;
+        padding: 0.618em;
+    }
+
+    .accordion-container > nav > ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .accordion-container > nav > ul > li > a {
+        position: relative;
+        display: block;
+        border-width: 1px 1px 0;
+        border-style: solid;
+        border-color: transparent;
+        padding: 0.618em;
+        transition: border-width 0.3s ease 0.3s;
+    }
+
+    .accordion-container > nav > ul > li:last-child > a,
+    .accordion-container > nav > ul > li > a.active-tab {
+        border-width: 1px;
+        transition: border-width 0s linear;
+    }
+
+    .accordion-container > nav > ul > li > a:after {
+        position: absolute;
+        font-family: 'Font Awesome 5 free';
+        font-weight: 900;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.618em;
+        content: '\f078'
+    }
+
+    .accordion-container > nav > ul > li > a.active-tab:after {
+        content: '\f077';
+    }
+
+    .accordion-animation {
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
+            visibility 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
+            margin 0.3s ease 0.3s,
+            height 0.3s ease 0.3s;
+    }
+
+    .accordion-animation.active-panel {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
+    }
+}
+
+@media { /* --- multitabs Modals -------------------------------------------- */
     .modal-btn {
         position: relative;
         padding: .309em 2.618em .309em 1em;
@@ -90,73 +158,11 @@
     }
 }
 
-
-@media { /* --- multitabs Accordion ------------------------------------------------------------ */
-    .accordion-container .accordion-controls {
-        text-align: right;
-    }
-
-    .accordion-controls span {
-        display: inline-block;
-        padding: 0.618em;
-    }
-
-    .accordion-container > nav > ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    .accordion-container > nav > ul > li > a {
-        position: relative;
-        display: block;
-        border-width: 1px 1px 0;
-        border-style: solid;
-        border-color: transparent;
-        padding: 0.618em;
-        transition: border-width 0.3s ease 0.3s;
-    }
-
-    .accordion-container > nav > ul > li:last-child > a,
-    .accordion-container > nav > ul > li > a.active-tab {
-        border-width: 1px;
-        transition: border-width 0s linear;
-    }
-
-    .accordion-container > nav > ul > li > a:after {
-        position: absolute;
-        font-family: 'Font Awesome 5 free';
-        font-weight: 900;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0.618em;
-        content: '\f078'
-    }
-
-    .accordion-container > nav > ul > li > a.active-tab:after {
-        content: '\f077';
-    }
-
-    .accordion-animation {
-        height: 0;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-            opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-            visibility 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-            margin 0.3s ease 0.3s,
-            height 0.3s ease 0.3s;
-    }
-
-    .accordion-animation.active-panel {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
-    }
-}
-
-
 @media { /* --- multitabs Tabs ---------------------------------------------- */
+    .tabs-container > nav {
+        margin-bottom: 1.618em;
+    }
+
     .tabs-container > nav > ul {
         margin: 0;
         padding: 0;
@@ -298,5 +304,11 @@
             left: 230px;
             width: calc(100% - 230px);
         }
+
+    	.tabs-container .fieldset-submit {
+    		position: fixed;
+    		right: 0.618em;
+    		bottom: 5%;
+    	}
     }
 }

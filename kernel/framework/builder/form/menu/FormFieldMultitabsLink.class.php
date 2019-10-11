@@ -1,0 +1,49 @@
+<?php
+/**
+ * This class manage an multitabs link.
+ *
+ * @package     Builder
+ * @subpackage  Form\field
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 5.2 - last update: 2015 12 14
+ * @since       PHPBoost 3.0 - 2010 04 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
+class FormFieldMultitabsLink extends AbstractFormField
+{
+	/**
+	 * @var FormFieldMultitabsLinkElement
+	 */
+	private $action;
+
+	/**
+	 * @param string $id the form field id
+	 * @param string $title the action title
+	 * @param Url $url the action url
+	 * @param string $css_class the action font awesome css class
+	 * @param Url $img the action icon url
+	 */
+	public function __construct($id, $title, $target, $css_class = '', $img = '')
+	{
+		$this->action = new FormFieldMultitabsLinkElement($title, $target, $css_class, $img);
+		parent::__construct($id, '', '');
+	}
+
+	/**
+	 * @return string The html code for the field.
+	 */
+	public function display()
+	{
+		$field = new FormFieldMultitabsLinkList($this->id, array($this->action));
+		return $field->display();
+	}
+
+	protected function get_default_template()
+	{
+		return new FileTemplate('framework/builder/form/menu/FormFieldMultitabsLinkList.tpl');
+	}
+}
+?>
