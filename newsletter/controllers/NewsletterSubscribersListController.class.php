@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @version   	PHPBoost 5.2 - last update: 2019 10 11
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -34,7 +34,7 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function build_form(HTTPRequestCustom $request)
 	{
-		$field = $request->get_value('field', 'pseudo');
+		$field = $request->get_value('field', 'name');
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 
@@ -46,11 +46,11 @@ class NewsletterSubscribersListController extends ModuleController
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		switch ($field)
 		{
-			case 'pseudo' :
-				$field_bdd = 'display_name';
+			case 'mail' :
+				$field_bdd = 'user_mail';
 			break;
 			default :
-				$field_bdd = 'display_name';
+				$field_bdd = 'name';
 		}
 
 		$subscribers_list = NewsletterService::list_subscribers_by_stream($this->stream->get_id());
@@ -70,14 +70,16 @@ class NewsletterSubscribersListController extends ModuleController
 			'C_SUBSCRIBERS' => (int)$nbr_subscribers,
 			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->rel(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'pseudo', 'top', $current_page)->rel(),
-			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'pseudo', 'bottom', $current_page)->rel(),
+			'SORT_NAME_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'name', 'top', $current_page)->rel(),
+			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'nae', 'bottom', $current_page)->rel(),
+			'SORT_MAIL_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'top', $current_page)->rel(),
+			'SORT_MAIL_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'bottom', $current_page)->rel(),
 			'PAGINATION' => $pagination->display()
 		));
 
 		if (!empty($nbr_subscribers))
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.display_name, member.email
+			$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, COALESCE(NULLIF(subscribers.mail, ''), member.email) AS user_mail, COALESCE(NULLIF(member.display_name, ''), '" . LangLoader::get_message('visitor', 'user-common') . "') AS name
 			FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 			LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
 			WHERE subscribers.id IN :ids_list
@@ -92,18 +94,17 @@ class NewsletterSubscribersListController extends ModuleController
 
 			while ($row = $result->fetch())
 			{
-				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['display_name'] .'</a>' : LangLoader::get_message('visitor', 'user-common');
-				$mail = $row['user_id'] > 0 ? $row['email'] : $row['mail'];
-
-				if (!empty($mail))
+				if ($row['user_mail'])
 				{
 					$this->view->assign_block_vars('subscribers_list', array(
 						'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
+						'C_MEMBER' => $row['user_id'] > 0,
 						'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
 						'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
 						'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
-						'PSEUDO' => $pseudo,
-						'MAIL' => $mail
+						'NAME' => $row['name'],
+						'MAIL' => $row['user_mail'],
+						'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 					));
 				}
 			}
@@ -121,7 +122,7 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function generate_response(HTTPRequestCustom $request)
 	{
-		$sort_field = $request->get_getvalue('field', 'pseudo');
+		$sort_field = $request->get_getvalue('field', 'name');
 		$sort_mode = $request->get_getvalue('sort', 'top');
 		$page = $request->get_getint('page', 1);
 
