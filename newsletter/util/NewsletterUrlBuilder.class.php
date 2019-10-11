@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 14
+ * @version   	PHPBoost 5.2 - last update: 2019 10 11
  * @since   	PHPBoost 3.0 - 2011 09 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -70,9 +70,7 @@ class NewsletterUrlBuilder
 	{
 		$stream = $id_stream > 0 ? $id_stream . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 ? $page . '/': '';
-		$sort_field = ($sort_field !== self::DEFAULT_SORT_FIELD && $sort_field !== '') || $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE && $sort_mode !== '' ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $stream . $sort_field . $sort_mode . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/subscribers/' . $stream . $sort_field . '/' . $sort_mode . '/' . $page);
 	}
 
 	/**
@@ -114,8 +112,8 @@ class NewsletterUrlBuilder
 	{
 		$stream = $id_stream > 0 ? $id_stream . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 ? $page . '/': '';
-		$sort_field = ($sort_field !== self::DEFAULT_SORT_FIELD && $sort_field !== '') || $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE && $sort_mode !== '' ? $sort_mode . '/' : '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/archives/' . $stream . $sort_field . $sort_mode . $page);
 	}
 

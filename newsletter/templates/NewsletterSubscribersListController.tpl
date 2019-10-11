@@ -3,12 +3,14 @@
 	<thead>
 		<tr>
 			<th>
-				<a href="{SORT_PSEUDO_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
+				<a href="{SORT_NAME_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 				{@subscribers.pseudo}
-				<a href="{SORT_PSEUDO_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
+				<a href="{SORT_NAME_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 			</th>
 			<th>
+				<a href="{SORT_MAIL_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true" title="${LangLoader::get_message('sort.asc', 'common')}"></i></a>
 				{@subscribers.mail}
+				<a href="{SORT_MAIL_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true" title="${LangLoader::get_message('sort.desc', 'common')}"></i></a>
 			</th>
 			<th></th>
 		</tr>
@@ -17,7 +19,7 @@
 		# START subscribers_list #
 		<tr>
 			<td>
-				{subscribers_list.PSEUDO}
+				# IF subscribers_list.C_MEMBER #<a href="{subscribers_list.U_USER_PROFILE}">{subscribers_list.NAME}</a># ELSE #{subscribers_list.NAME}# ENDIF #
 			</td>
 			<td>
 				{subscribers_list.MAIL}
