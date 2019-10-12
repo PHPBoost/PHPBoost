@@ -20,6 +20,7 @@ $lang['module.title'] = 'Bac à sable';
 $lang['title.config'] = 'Configuration';
 $lang['title.form.builder'] = 'Formulaires';
 $lang['title.css'] = 'CSS';
+$lang['title.multitabs'] = 'Multitabs';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
 $lang['title.menu'] = 'Menus Cssmenu';
@@ -35,6 +36,7 @@ $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
 <ul class="sandbox-home-list">
 <li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '">constructeur de formulaires</a></li>
 <li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
+<li><i class="fa fa-fw fa-list"></i> Le rendu du <a href="' . SandboxUrlBuilder::multitabs()->absolute() . '">plugin  Multitabs</a></li>
 <li><i class="fa fa-fw fa-cube"></i> Le rendu des <a href="' . SandboxUrlBuilder::plugins()->absolute() . '">plugins jQuery</a> intégrés dans PHPBoost</li>
 <li><i class="far fa-fw fa-file-code"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '">BBCode</a></li>
 <li><i class="fab fa-fw fa-font-awesome-flag"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '">Font Awesome</a></li>

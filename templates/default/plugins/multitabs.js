@@ -31,7 +31,8 @@
                     $(this).closest('.accordion-container').find('[data-target]').addClass('active-tab');
                 });
                 $('.close-all-accordions').on('click', function(){
-                    $(this).closest('.accordion-container').find('.accordion').removeClass('active-panel').css('height', 0);
+                    $(this).closest('.accordion-container').find('.accordion').removeClass('active-panel');
+                    $(this).closest('.accordion-container').find('.accordion').delay(800).queue(function (next) {$(this).css('height', 0); next();});
                     $(this).closest('.accordion-container').find('[data-target]').removeClass('active-tab');
                 });
             }
@@ -59,9 +60,9 @@
                         $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
                         $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
                 } else {
-                    $('.tabs-container .tabs').first().addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
+                    $('.tabs-container .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
                     $('.tabs-container li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
-                    $('.tabs-container .tabs .tabs').first().addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
+                    $('.tabs-container .tabs .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
                     $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
                 }
             }
@@ -115,6 +116,7 @@
                             $(this).removeClass('active-tab');
                             $(targetPanel).removeClass('active-panel'); // remove activation class
                             $(targetPanel).css('height', 0); // set height of target to zero
+                            history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                             if(options.animation) { // if animate.css
                                 $(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
                                 $(targetPanel).addClass('accordion ' + options.animationClass + ' ' + options.animationOut);  // then add necessary closing classes for animate.css

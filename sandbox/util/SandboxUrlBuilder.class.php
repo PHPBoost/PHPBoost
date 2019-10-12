@@ -48,6 +48,14 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function multitabs()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/multitabs');
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function plugins()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/plugins');

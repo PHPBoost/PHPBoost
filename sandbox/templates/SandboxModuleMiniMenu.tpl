@@ -184,6 +184,7 @@
 					<div class="item-4x" aria-label="{@title.form.builder}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.form.builder}</span></a></div>
 					<div class="item-4x" aria-label="{@title.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.css}</span></a></div>
 					<div class="item-4x" aria-label="{@title.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.bbcode}</span></a></div>
+					<div class="item-4x" aria-label="{@title.multitabs}"><a href="{PATH_TO_ROOT}/sandbox/multitabs"><i class="fa fa-list fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.multitabs}</span></a></div>
 					<div class="item-4x" aria-label="{@title.plugins}"><a href="{PATH_TO_ROOT}/sandbox/plugins"><i class="fa fa-cube fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.plugins}</span></a></div>
 					<div class="item-4x" aria-label="{@title.menu}"><a href="{PATH_TO_ROOT}/sandbox/menu"><i class="fa fa-bars fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.menu}</span></a></div>
 					<div class="item-4x" aria-label="{@title.table.builder}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.table.builder}</span></a></div>
