@@ -61,7 +61,6 @@ class SandboxMultitabsController extends ModuleController
 			'PRE_TABS_HTML' => file_get_contents('html/multitabs/tabs-html.tpl'),
 			'TABS_PHP_FORM' => $this->tabs_form->display(),
 		));
-
 	}
 
 	private function build_accordion_form()
@@ -69,8 +68,11 @@ class SandboxMultitabsController extends ModuleController
 		$accordion_form = new HTMLForm('accordion_form');
 		$accordion_form->set_css_class('accordion-container siblings fieldset-content');
 
+		$fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
+		$accordion_form->add_fieldset($fieldset_accordion_controls);
+
 		// Accordion menu
-		$fieldset_accordion_menu = new FormFieldMenuFieldset('tab_menu', '');
+		$fieldset_accordion_menu = new FormFieldMenuFieldset('accordion_menu', '');
 		$accordion_form->add_fieldset($fieldset_accordion_menu);
 
 		$fieldset_accordion_menu->add_field(new FormFieldMultitabsLinkList('tab_menu_list',

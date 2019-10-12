@@ -48,8 +48,8 @@
 			<h5>{@multitabs.html}</h5>
 			<div class="accordion-container basic">
 			    <div class="accordion-controls">
-			        <span class="open-all-accordions" aria-label="Open all panels"><i class="fa fa-fw fa-chevron-down"></i></span>
-			        <span class="close-all-accordions" aria-label="Close all panels"><i class="fa fa-fw fa-chevron-up"></i></span>
+			        <span class="open-all-accordions" aria-label="${LangLoader::get_message('open.all.panels', 'main')}"><i class="fa fa-fw fa-chevron-down"></i></span>
+			        <span class="close-all-accordions" aria-label="${LangLoader::get_message('close.all.panels', 'main')}"><i class="fa fa-fw fa-chevron-up"></i></span>
 			    </div>
 				<nav>
 					<ul>

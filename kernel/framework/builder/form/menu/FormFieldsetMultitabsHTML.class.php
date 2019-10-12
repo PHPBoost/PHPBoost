@@ -46,8 +46,8 @@ class FormFieldsetMultitabsHTML extends FormFieldsetHTML
 					unset($options['modal']);
 					break;
 			}
-			parent::compute_options($options);
 		}
+		parent::compute_options($options);
 	}
 
 	protected function get_default_template()

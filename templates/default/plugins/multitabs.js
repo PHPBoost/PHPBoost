@@ -62,7 +62,7 @@
                 } else {
                     $('.tabs-container .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
                     $('.tabs-container li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
-                    $('.tabs-container .tabs .tabs:first-child').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
+                    $('.tabs-container .tabs .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
                     $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
                 }
             }
