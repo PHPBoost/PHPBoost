@@ -52,7 +52,7 @@ class FormFieldsetMultitabsHTML extends FormFieldsetHTML
 
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/menu/FormFieldsetMultitabs.tpl');
+		return new FileTemplate('framework/builder/form/menu/FormFieldsetMultitabsHTML.tpl');
 	}
 }
 

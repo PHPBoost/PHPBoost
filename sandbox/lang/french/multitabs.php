@@ -13,8 +13,9 @@
 
 // Multitabs
 $lang['multitabs.accordion.title']  = 'Menu Accordéon';
-$lang['multitabs.modal.title']  = 'Modal';
+$lang['multitabs.modal.title']  = 'Fenêtre modale';
 $lang['multitabs.tabs.title']  = 'Menu tabulaire';
+
 $lang['multitabs.definition']  = '
     Multitabs.js est un plugin jQuery qui permet de gérer 3 types de comportement de révélation de contenus cachés:
     <ul>
@@ -22,21 +23,31 @@ $lang['multitabs.definition']  = '
         <li>Les fenêtres en "modal"</li>
         <li>Les menus tabulaires</li>
     </ul>
-    Pour les besoin de cette démo, les déclencheurs sont une liste de liens, mais les déclanchements sont basés sur les attributs "data-trigger",
+    Pour les besoins de cette démo, les déclencheurs sont une liste de liens, mais les déclanchements sont basés sur les attributs "data-trigger",
     ils peuvent donc être defini sur n\'importe quelle balise html.
 ';
-$lang['multitabs.panel.title']  = 'Titre du panneau ';
+$lang['multitabs.js'] = '
+    Par default, PHPBoost comporte 4 déclarations:
+        <ul>
+            <li><h6>Accordéon</h6></li>
+            <li>jQuery(\'.accordion-container.basic [data-trigger]\').multiTabs({ pluginType: \'accordion\'});</li>
+            <li>jQuery(\'.accordion-container.siblings [data-trigger]\').multiTabs({ pluginType: \'accordion\', accordionSiblings: true });</li>
+            <li><h6>Modal</h6></li>
+            <li>jQuery(\'.modal-container [data-trigger]\').multiTabs({ pluginType: \'modal\' });</li>
+            <li><h6>Tabulaire</h6></li>
+            <li>jQuery(\'.tabs-container [data-trigger]\').multiTabs({ pluginType: \'tabs\' });</li>
+        </ul>
+        Pour l\'accordéon "basic", les panneaux sont indépendants (exemple html); pour le "siblings", les panneaux sont dépendants, un seul peut ête ouvert à la fois (exemple php).<br />
+        Vous pouvez définir des animations avec les options du plugin et en ajoutant <a href="https://daneden.github.io/animate.css/">Animate.css</a> à votre thème.
+';
 
-
-// Tabs
 $lang['multitabs.html']  = 'Déclaration en HTML';
 $lang['multitabs.form']  = 'Déclaration dans un formulaire php';
+$lang['multitabs.open.modal']  = 'Ouvrir la fenêtre modale';
 
+$lang['multitabs.panel.title']  = 'Titre du panneau ';
 $lang['multitabs.menu.title']  = 'Panneau';
-$lang['multitabs.last.step']  = 'Panneau final';
-$lang['multitabs.form.title']  = 'Titre du Panneau';
 $lang['multitabs.form.subtitle']  = 'Sous Titre';
 $lang['multitabs.form.input']  = 'Champ texte';
 
-$lang['multitabs.tooltip.example']  = 'au survol de ce <span aria-label="ce plugin supporte les balise br dans la description.<br /><br /> Test de saut de ligne" style="color: #FF8800">mot</span>, la description apparait après 0.5s . ';
 ?>

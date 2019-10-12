@@ -30,6 +30,9 @@
 				<li><a href="#tabs-form" class="summary-link">Form</a></li>
 			</ul>
 		</li>
+        <li>
+			<a class="summary-link" href="#jquery">jQuery</a>
+		</li>
       </ul>
     </div>
 	<div class="open-summary">
@@ -100,6 +103,43 @@
 		</div>
 	</article>
 
+	<article id="modal-example" class="sandbox-title">
+		<header>
+			<h2>{@multitabs.modal.title}</h2>
+		</header>
+		<div id="modal-html">
+			<h5>{@multitabs.html}</h5>
+			<div class="modal-container">
+				<button class="modal-btn" data-trigger data-target="modal-01">{@multitabs.open.modal}</button>
+				<div id="modal-01" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel">
+						<h6>{@multitabs.panel.title} 07</h6>
+						{@lorem.large.content}
+					</div>
+				</div>
+			</div>
+
+			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+				<div class="formatter-content">
+					{PRE_MODAL_HTML}
+				</div>
+			</div>
+		</div>
+		<div id="modal-form">
+			<h5>{@multitabs.form}</h5>
+			# INCLUDE MODAL_PHP_FORM #
+
+			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+				<div class="formatter-content">
+					{PRE_MODAL_FORM}
+				</div>
+			</div>
+		</div>
+	</article>
+
 	<article id="tabs-example" class="sandbox-title">
 		<header>
 			<h2>{@multitabs.tabs.title}</h2>
@@ -114,24 +154,22 @@
 						<li><a href="#" data-trigger data-target="tab-09">{@multitabs.menu.title} 09</a></li>
 					</ul>
 				</nav>
-				<div class="panel-container">
-					<div id="tab-07" class="tabs tabs-animation first-tab">
-						<div class="content-panel">
-							<h6>{@multitabs.panel.title} 07</h6>
-							{@lorem.large.content}
-						</div>
+				<div id="tab-07" class="tabs tabs-animation first-tab">
+					<div class="content-panel">
+						<h6>{@multitabs.panel.title} 07</h6>
+						{@lorem.large.content}
 					</div>
-					<div id="tab-08" class="tabs tabs-animation">
-						<div class="content-panel">
-							<h6>{@multitabs.panel.title} 08</h6>
-							{@lorem.medium.content}
-						</div>
+				</div>
+				<div id="tab-08" class="tabs tabs-animation">
+					<div class="content-panel">
+						<h6>{@multitabs.panel.title} 08</h6>
+						{@lorem.medium.content}
 					</div>
-					<div id="tab-09" class="tabs tabs-animation">
-						<div class="content-panel">
-							<h6>{@multitabs.panel.title} 09</h6>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
-						</div>
+				</div>
+				<div id="tab-09" class="tabs tabs-animation">
+					<div class="content-panel">
+						<h6>{@multitabs.panel.title} 09</h6>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
 					</div>
 				</div>
 			</div>
@@ -156,7 +194,14 @@
 		</div>
 	</article>
 
-	THIS PAGE IS STILL UNDER CONSTRUCTION
+	<article id="jquery">
+		<header>
+			<h5>jQuery</h5>
+		</header>
+		<div class="content">
+			${LangLoader::get_message('multitabs.js', 'multitabs', 'sandbox')}
+		</div>
+	</article>
 
 	<footer></footer>
 </section>

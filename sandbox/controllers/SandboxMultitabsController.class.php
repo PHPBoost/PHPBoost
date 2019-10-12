@@ -51,12 +51,16 @@ class SandboxMultitabsController extends ModuleController
 	{
 
 		$this->build_accordion_form();
+		$this->build_modal_form();
 		$this->build_tabs_form();
 
 		$this->tpl->put_all(array(
 			'PRE_ACCORDION_FORM' => file_get_contents('html/multitabs/accordion-form.tpl'),
 			'PRE_ACCORDION_HTML' => file_get_contents('html/multitabs/accordion-html.tpl'),
 			'ACCORDION_PHP_FORM' => $this->accordion_form->display(),
+			'PRE_MODAL_FORM' => file_get_contents('html/multitabs/modal-form.tpl'),
+			'PRE_MODAL_HTML' => file_get_contents('html/multitabs/modal-html.tpl'),
+			'MODAL_PHP_FORM' => $this->modal_form->display(),
 			'PRE_TABS_FORM' => file_get_contents('html/multitabs/tabs-form.tpl'),
 			'PRE_TABS_HTML' => file_get_contents('html/multitabs/tabs-html.tpl'),
 			'TABS_PHP_FORM' => $this->tabs_form->display(),
@@ -84,7 +88,7 @@ class SandboxMultitabsController extends ModuleController
 		));
 
 		// Accordion panels
-		$fieldset_accordion_one = new FormFieldsetMultitabsHTML('accordion-04', $this->lang['multitabs.form.title'] . ' 04', array('css_class' => 'accordion accordion-animation'));
+		$fieldset_accordion_one = new FormFieldsetMultitabsHTML('accordion-04', $this->lang['multitabs.panel.title'] . ' 04', array('css_class' => 'accordion accordion-animation'));
 		$accordion_form->add_fieldset($fieldset_accordion_one);
 
 		$fieldset_accordion_one->set_description($this->common_lang['lorem.large.content']);
@@ -93,14 +97,14 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_accordion_one->add_field(new FormFieldTextEditor('text', $this->lang['multitabs.form.input'], ''));
 
-		$fieldset_accordion_two = new FormFieldsetMultitabsHTML('accordion-05', $this->lang['multitabs.form.title'] . ' 05', array('css_class' => 'accordion accordion-animation'));
+		$fieldset_accordion_two = new FormFieldsetMultitabsHTML('accordion-05', $this->lang['multitabs.panel.title'] . ' 05', array('css_class' => 'accordion accordion-animation'));
 		$accordion_form->add_fieldset($fieldset_accordion_two);
 
 		$fieldset_accordion_two->set_description($this->common_lang['lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('articles') & ModulesManager::is_module_activated('articles'))
 		{
-			$fieldset_accordion_three = new FormFieldsetMultitabsHTML('accordion-06', $this->lang['multitabs.form.title'] . ' 06', array('css_class' => 'accordion accordion-animation'));
+			$fieldset_accordion_three = new FormFieldsetMultitabsHTML('accordion-06', $this->lang['multitabs.panel.title'] . ' 06', array('css_class' => 'accordion accordion-animation'));
 			$accordion_form->add_fieldset($fieldset_accordion_three);
 
 			$fieldset_accordion_three->set_description($this->common_lang['lorem.short.content']);
@@ -111,6 +115,34 @@ class SandboxMultitabsController extends ModuleController
 		$accordion_form->add_button(new FormButtonReset());
 
 		$this->accordion_form = $accordion_form;
+	}
+
+	private function build_modal_form()
+	{
+		$modal_form = new HTMLForm('modal_form');
+		$modal_form->set_css_class('modal-container fieldset-content');
+
+		// Modal triggers
+		$fieldset_modal_menu = new FormFieldMenuFieldset('modal_menu', '');
+		$modal_form->add_fieldset($fieldset_modal_menu);
+
+		$fieldset_modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
+			array(
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' modal', 'modal_form_modal-10', 'fa-cog'),
+			)
+		));
+
+		// Modal window
+		$fieldset_modal_one = new FormFieldsetMultitabsHTML('modal-10', $this->lang['multitabs.panel.title'] . ' 10', array('css_class' => 'modal modal-animation', 'modal' => true));
+		$modal_form->add_fieldset($fieldset_modal_one);
+
+		$fieldset_modal_one->set_description($this->common_lang['lorem.large.content']);
+
+		$this->submit_modal_button = new FormButtonDefaultSubmit();
+		$modal_form->add_button($this->submit_modal_button);
+		$modal_form->add_button(new FormButtonReset());
+
+		$this->modal_form = $modal_form;
 	}
 
 	private function build_tabs_form()
@@ -131,7 +163,7 @@ class SandboxMultitabsController extends ModuleController
 		));
 
 		// Tabs panels
-		$fieldset_tab_one = new FormFieldsetMultitabsHTML('tab-10', $this->lang['multitabs.form.title'] . ' 10', array('css_class' => 'tabs tabs-animation first-tab'));
+		$fieldset_tab_one = new FormFieldsetMultitabsHTML('tab-10', $this->lang['multitabs.panel.title'] . ' 10', array('css_class' => 'tabs tabs-animation first-tab'));
 		$tabs_form->add_fieldset($fieldset_tab_one);
 
 		$fieldset_tab_one->set_description($this->common_lang['lorem.large.content']);
@@ -140,14 +172,14 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_tab_one->add_field(new FormFieldTextEditor('text', $this->lang['multitabs.form.input'], ''));
 
-		$fieldset_tab_two = new FormFieldsetMultitabsHTML('tab-11', $this->lang['multitabs.form.title'] . ' 11', array('css_class' => 'tabs tabs-animation'));
+		$fieldset_tab_two = new FormFieldsetMultitabsHTML('tab-11', $this->lang['multitabs.panel.title'] . ' 11', array('css_class' => 'tabs tabs-animation'));
 		$tabs_form->add_fieldset($fieldset_tab_two);
 
 		$fieldset_tab_two->set_description($this->common_lang['lorem.medium.content']);
 
 		if (ModulesManager::is_module_installed('articles') & ModulesManager::is_module_activated('articles'))
 		{
-			$fieldset_tab_three = new FormFieldsetMultitabsHTML('tab-12', $this->lang['multitabs.form.title'] . ' 12', array('css_class' => 'tabs tabs-animation'));
+			$fieldset_tab_three = new FormFieldsetMultitabsHTML('tab-12', $this->lang['multitabs.panel.title'] . ' 12', array('css_class' => 'tabs tabs-animation'));
 			$tabs_form->add_fieldset($fieldset_tab_three);
 
 			$fieldset_tab_three->set_description($this->common_lang['lorem.short.content']);
