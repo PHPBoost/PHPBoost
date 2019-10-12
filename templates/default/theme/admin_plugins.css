@@ -10,6 +10,7 @@
 */
 
 [data-trigger] { cursor: pointer; }
+.fieldset-inset h2 { width: 100%; }
 
 @media { /* --- multitabs Accordion ----------------------------------------- */
     .accordion-container .accordion-controls {
