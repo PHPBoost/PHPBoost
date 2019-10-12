@@ -101,9 +101,9 @@
                     navigator.append(btnBack + btnNext);
                 }
 
-                elem.find('nav ul li a').removeClass('active-step compvared-step');
+                elem.find('nav ul li a').removeClass('active-step compared-step');
                 for(i = 0 ; i < step ; i++){
-                    $(step_links[i]).addClass('compvared-step');
+                    $(step_links[i]).addClass('compared-step');
                 }
                 $(step_links[i]).addClass('active-step');
 

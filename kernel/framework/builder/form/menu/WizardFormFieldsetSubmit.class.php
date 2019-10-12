@@ -12,10 +12,6 @@
 class WizardFormFieldsetSubmit extends FormFieldsetHTML
 {
 	/**
-	 * @var Template
-	 */
-	private $template;
-	/**
 	 * @var FormButton[]
 	 */
 	private $buttons;
