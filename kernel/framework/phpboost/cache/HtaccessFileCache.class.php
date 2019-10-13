@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 09 25
+ * @version     PHPBoost 5.2 - last update: 2019 10 13
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -357,6 +357,15 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('... NON-WWW');
 			$this->add_line('RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]');
 			$this->add_line('RewriteRule ^(.*)$ https://%1/$1 [R=301,L]');
+		}
+		
+		if ($this->server_environment_config->is_redirection_https_enabled() && !$this->server_environment_config->is_redirection_www_enabled())
+		{
+			$this->add_section('Force to use HTTPS WITH SUBDOMAIN');
+			$this->add_line('RewriteCond %{HTTPS} !=on'); //check if HTTPS not "on"
+			$this->add_line('RewriteCond %{SERVER_PORT} 80 [OR]'); // OR if the server port is 80
+			$this->add_line('RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]'); // OR if the website is behind a load balancer
+			$this->add_line('RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
 		}
 	}
 
