@@ -21,7 +21,7 @@
 			<div class="message-helper notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		# START messages #
-			<article id="m{messages.ID}" class="guestbook-item guestbook-items message# IF messages.C_CURRENT_USER_MESSAGE # current-user# ENDIF #">
+			<article id="m{messages.ID}" class="guestbook-item guestbook-items message# IF messages.C_CURRENT_USER_MESSAGE # current-user-color# ENDIF #">
 				<header class="message-header-container">
 					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" class="message-avatar" /># ENDIF #
 					<div class="message-header-infos">
@@ -46,7 +46,7 @@
 						</div>
 						<div class="message-info">
 							<span>${LangLoader::get_message('the', 'common')} {messages.DATE}</span>
-							<a href="{messages.U_ANCHOR}">\#{messages.ID}</a>
+							<a href="{messages.U_ANCHOR}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{messages.ID}</a>
 						</div>
 					</div>
 				</header>

@@ -74,10 +74,17 @@
     border-color: #DDDDDD;
 }
 
+/* --- Current user --- */
+.current-user-color .message-header-container,
+.current-user-color .message-content,
+.current-user-color .message-footer-container {
+    background-color: #ECF2F8;
+}
+
 /* content.css to delete */
 
-.message-avatar {padding: 0;}
+#module-guestbook .message-avatar {padding: 0;}
 
-.message-message {
+#module-guestbook .message-message {
     margin: 0;
 }

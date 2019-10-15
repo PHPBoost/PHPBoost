@@ -22,6 +22,7 @@ $lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de c
 $lang['comment.add'] = 'Ajouter un commentaire';
 $lang['comment.edit'] = 'Editer un commentaire';
 $lang['comments.link'] = 'Lien vers les commentaires';
+$lang['link.to.anchor'] = 'Lien vers cette ancre';
 
 $lang['lock'] = 'Verrouiller';
 $lang['unlock'] = 'Déverrouiller';
