@@ -35,26 +35,6 @@
 
 	.scroll-to i       	{ color: rgba(255, 255, 255, 0.4); }
 	.scroll-to:hover i 	{ color: rgba(255, 255, 255, 1); }
-
- 	.cookiebar-container {
- 		background-color: #F2F2F2;
- 		border-color: #E2E2E2;
- 	}
-
- 	.cookiebar-button {
- 		color: #FEFEFE;
- 	}
-
- 	.cookiebar-button-understand {
-		background-color: #366493;
-		border-color: #2E6DA4;
-	}
-
- 	.cookiebar-button-allowed 			{ background-color: #5CB85C; border-color: #4CAE4C; }
- 	.cookiebar-button-allowed:hover 	{ background-color: #4CAE4C; }
-
- 	.cookiebar-button-declined 			{ background-color: #E84E40; border-color: #CE271A; }
- 	.cookiebar-button-declined:hover 	{ background-color: #CE271A; }
 }
 
 /* -- Content
@@ -959,7 +939,7 @@ ul.level-2 a {
 @media (min-width: 769px) {
 
 	#admin-quick-menu {
-		background-color: rgba(255, 255, 255, 0.5);
+		background-color: #FFFFFF;
 		border-color: #DDDDDD;
 	}
 
