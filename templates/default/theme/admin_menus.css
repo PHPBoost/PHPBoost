@@ -1,7 +1,7 @@
 /*
  * contains elements for all admin menus
  *    - index menu
- *    - admin menu
+ *    - modal admin menu
  *    - support menu
  *    - quick links menu
  *    - extended menu
@@ -75,7 +75,7 @@
 	}
 }
 
-@media all { /* --- Modal menu ---------------------------------------------- */
+@media all { /* --- Modal admin menu ---------------------------------------------- */
 
 	@media (min-width: 769px) {
 		.admin-menu {
@@ -354,7 +354,7 @@
 	}
 }
 
-@media all { /* --- Menu etendu --------------------------------------------- */
+@media all { /* --- Extended menu --------------------------------------------- */
 	.admin-extend-menu p {
 		padding: 0;
 	}
@@ -625,7 +625,7 @@
 	}
 
 	.menusmanagement .fa {
-		padding: 0.309em 0.618em;
+		padding: 0.309em;
 	}
 
 	@media (min-width: 769px) and (min-height: 601px) {

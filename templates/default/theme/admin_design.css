@@ -85,7 +85,7 @@ body {
 	}
 }
 
-/* --- Conteneurs ============================================================= */
+/* --- Containers --- */
 #admin-main {
 	min-height: 95vh;
 	padding-bottom: 40px;
@@ -102,19 +102,19 @@ body {
 	}
 }
 
-html > body #admin-contents {
+#admin-contents {
 	height: auto;
 	min-height: 450px;
 }
 
-/* --- Coloration des moteurs de recherche ====================================== */
+/* --- Search engine --- */
 .robot {
 	font-size: 0.9em;
 	font-weight: bold;
 }
 
 
-/* -- Pied de page ============================================================= */
+/* --- Footer --- */
 #footer {
 	min-height: 5vh;
 	padding: 5px 10px;
@@ -148,7 +148,7 @@ html > body #admin-contents {
 }
 
 
-@media { /* --- Scroll to Top ----------------------------------------------- */
+@media all { /* --- Scroll to Top ------------------------------------------- */
 	.scroll-to {
 		position: fixed;
 		z-index: 10;
@@ -196,7 +196,7 @@ html > body #admin-contents {
 	}
 }
 
-@media { /* --- Cookie Bar -------------------------------------------------- */
+@media all { /* --- Cookie Bar ---------------------------------------------- */
 	.cookiebar-container {
 		z-index: 100;
 		left: 0;

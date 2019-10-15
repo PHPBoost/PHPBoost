@@ -52,9 +52,7 @@
 	if(jQuery('.captcha-element .form-element').length == 0)
 		jQuery('.captcha-element').removeClass('wizard-step');
 
-// TODO: change form builder to multitabs
-    jQuery('.tab-container').easytabs();
-
+// Multitabs
     jQuery('.modal-container [data-trigger]').multiTabs({ pluginType: 'modal' });
     jQuery('.accordion-container.basic [data-trigger]').multiTabs({ pluginType: 'accordion'});
     jQuery('.accordion-container.siblings [data-trigger]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
