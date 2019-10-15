@@ -739,7 +739,8 @@ fieldset[id*=advises] .form-element {
 }
 
 /* --- Label pour les inputs [for] et pour les elements sans associations--- */
-.form-element > label {
+.form-element > label,
+.form-element-textarea > label {
 	margin-bottom: 0.228em;
 	display: block;
 	font-weight: 700;

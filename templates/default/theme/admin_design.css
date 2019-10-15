@@ -20,77 +20,55 @@ body {
 	position: relative;
 	height: auto;
 	min-height: 100%;
-	font-size: 1.5em;
+	font-size: 1.309em;
 	font-family: 'Open Sans', sans-serif;
-}
-
-@media (min-width: 769px) {
-	body {
-		font-size: 1.3em;
-	}
 }
 
 /* -- Entete de la page =============================================== */
 
-div#site-name-container {
-	padding: 20px 10px;
+#site-name-container {
+	padding: 1.618em 0.809em;
 	text-align: center;
 }
 
-a#site-name {
-	font-size: 1.2em;
-	font-weight: 400;
-	line-height: 1em;
+#site-name {
+	font-size: 1.309em;
 	letter-spacing: 1.1pt;
 	text-decoration: none;
 }
 
 /* -- Sous-entete de la page ========================================= */
-div#sub-header-admin {
+#sub-header-admin {
 	z-index: 8;
 	width: 100%;
 }
 
-h3.menu-title {
+.menu-title {
 	display: none;
 }
 
 @media (min-width: 769px) {
-	header#header-admin {
+	#header-admin {
 		position: fixed;
 		top: 0;
 		left: 0;
 		bottom: 0;
 		z-index: 3;
-		max-width: 230px;
-		max-height: none;
-		height: 100%;
-		width: 250px;
+		width: 230px;
 	}
 
-	div.header-admin-container{
-		position: absolute;
-		max-height: 100%;
-		left: 0;
-	}
-
-	div#site-name-container {
-		padding: 30px 10px;
-		width: 230px
-	}
-
-	h3.menu-title {
+	.menu-title {
 		display: block;
-		margin: 20px 0 0;
-		padding: 5px 0 5px 30px;
+		margin: 1.618em 0 0;
+		padding: 0.309em 0 0.309em 2em;
 		overflow: hidden;
 	}
 
-	div.pbt-logo,
-	div.site-logo {
+	.pbt-logo,
+	.site-logo {
 		display: inline-block;
-		height: 25px;
-		width: 25px;
+		height: 1.618em;
+		width: 1.618em;
 		background-image: url(images/logo.png);
 		background-repeat: no-repeat;
 		background-position: center ;
@@ -100,42 +78,33 @@ h3.menu-title {
 }
 
 /* --- Conteneur principal ==================================================== */
-div#global {
-}
-
 @media (min-width: 769px) {
-	div#global {
+	#global {
 		width: 100%;
 		padding-left: 230px;
 	}
 }
 
 /* --- Conteneurs ============================================================= */
-div#admin-main {
+#admin-main {
 	min-height: 95vh;
 	padding-bottom: 40px;
 }
 
-div#admin-contents {
+#admin-contents {
 	clear: both;
 	margin: auto;
 }
 
 @media (min-width: 769px) {
-	div#admin-contents{
+	#admin-contents{
 		padding: 10px 20px;
 	}
 }
 
-html > body div#admin-contents {
+html > body #admin-contents {
 	height: auto;
 	min-height: 450px;
-}
-
-/* --- Tableaux de l'administration ============================================= */
-.block-container {
-	margin-top: 15px;
-	width: 98%;
 }
 
 /* --- Coloration des moteurs de recherche ====================================== */
@@ -146,7 +115,7 @@ html > body div#admin-contents {
 
 
 /* -- Pied de page ============================================================= */
-footer#footer {
+#footer {
 	min-height: 5vh;
 	padding: 5px 10px;
 	border-width: 5px 0 0 0;
@@ -155,7 +124,7 @@ footer#footer {
 	text-align: right;
 }
 
-footer#footer span {
+#footer span {
 	font-size: 0.8em;
 }
 
