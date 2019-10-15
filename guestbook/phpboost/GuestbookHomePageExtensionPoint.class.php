@@ -16,7 +16,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'guestbook');
+		return LangLoader::get_message('guestbook.module.title', 'common', 'guestbook');
 	}
 }
 ?>

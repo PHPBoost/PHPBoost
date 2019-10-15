@@ -4,4 +4,4 @@
 # ELSE #
 <p>${LangLoader::get_message('no_item_now', 'common')}</p>
 # ENDIF #
-<a class="small" href="{U_GUESTBOOK}">{@module_title}</a>
+<a class="small" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>

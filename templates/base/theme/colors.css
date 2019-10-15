@@ -211,7 +211,7 @@ table tfoot tr th,
 }
 
 table tbody td {
-	border-color: #cccccc;
+	border-color: #DDDDDD;
 }
 
 .calendar-block {
@@ -234,10 +234,6 @@ table tbody td {
 
 .calendar-block .date-picker {
     background-color:  #FFFFFF;
-}
-
-.calendar-block .date-picker tbody td.calendar-event a {
-    border-color:  #81A4C8;
 }
 
 /* --- Options BBCode--- */
@@ -829,18 +825,14 @@ a[class*='lightcase-icon-']:hover {
 ----------------------------------------------------------------------------- */
 
 @media { /* --- multiTabs --- */
-	.modal-btn {
-	    background-color: rgba(54,100,147,.2);
-	    border-color: rgba(54,100,147,.6);
-	}
 
 	.accordion-container > nav > ul > li > a {
 	    border-color: #366493;
 	    background-color: rgba(54,100,147,.2);
 	}
-
-	.tabs-container > nav > ul > li a.active-tab {
+	.modal-btn {
 	    background-color: rgba(54,100,147,.2);
+	    border-color: rgba(54,100,147,.6);
 	}
 
 	.close-modal {
@@ -848,7 +840,11 @@ a[class*='lightcase-icon-']:hover {
 	}
 
 	.modal { background-color: rgba(0, 0, 0, 0.5); }
-	.modal .content-panel { background-color: #ecf2f8; }
+	.modal .content-panel { background-color: #FFFFFF; }
+
+	.tabs-container > nav > ul > li a.active-tab {
+	    background-color: rgba(54,100,147,.2);
+	}
 }
 
 @media { /* --- tooltip --- */

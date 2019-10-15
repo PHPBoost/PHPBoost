@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.3 - last update: 2019 10 15
  * @since   	PHPBoost 3.0 - 2012 12 12
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookController extends ModuleController
@@ -52,6 +53,7 @@ class GuestbookController extends ModuleController
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
+				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'C_USER_GROUPS' => !empty($row['groups']),
 				'U_AVATAR' => $user_avatar
@@ -90,7 +92,7 @@ class GuestbookController extends ModuleController
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['error.post.unauthorized'], MessageHelper::WARNING));
+			$this->view->put('MSG', MessageHelper::display($this->lang['guestbook.error.post.unauthorized'], MessageHelper::WARNING));
 		}
 
 		return $this->view;
@@ -134,12 +136,12 @@ class GuestbookController extends ModuleController
 
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+		$graphical_environment->set_page_title($this->lang['guestbook.module.title'], '', $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['guestbook.seo.description'], array('site' => GeneralConfig::load()->get_site_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page));
+		$breadcrumb->add($this->lang['guestbook.module.title'], GuestbookUrlBuilder::home($page));
 
 		return $response;
 	}

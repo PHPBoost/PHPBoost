@@ -188,11 +188,11 @@ class GuestbookFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page));
+		$breadcrumb->add($this->lang['guestbook.module.title'], GuestbookUrlBuilder::home($page));
 
 		if ($message->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['guestbook.add'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['guestbook.add'], $this->lang['guestbook.module.title']);
 			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::add());
 		}
@@ -201,7 +201,7 @@ class GuestbookFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['guestbook.module.title']);
 			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));
 		}

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.7 - last update: 2019 10 15
  * @since   	PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -46,7 +46,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminGuestbookDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminGuestbookDisplayResponse($tpl, $this->admin_common_lang['configuration']);
 	}
 
 	private function init()
@@ -60,7 +60,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration'] . ': ' .$this->lang['guestbook.module.title']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
@@ -72,7 +72,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['admin.config.max_links_number_per_message_enabled'], $this->config->is_max_links_number_per_message_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['guestbook.max.links.number.per.message.enabled'], $this->config->is_max_links_number_per_message_enabled(),
 			array('class' => 'top-field', 'events' => array('click' => '
 				if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
 						HTMLForms.getField("max_links_number_per_message").enable();
@@ -82,7 +82,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('max_links_number_per_message', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(),
+		$fieldset->add_field(new FormFieldNumberEditor('max_links_number_per_message', $this->lang['guestbook.max.links'], $this->config->get_maximum_links_message(),
 			array('class' => 'top-field', 'min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 20))
 		));

@@ -15,13 +15,13 @@ class AdminGuestbookDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('common', 'guestbook');
-		$this->set_title($lang['module_title']);
+		$this->set_title($lang['guestbook.module.title']);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), GuestbookUrlBuilder::configuration());
 		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('guestbook')->get_configuration()->get_documentation());
 
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page, $lang['module_title']);
+		$env->set_page_title($title_page, $lang['guestbook.module.title']);
 	}
 }
 ?>

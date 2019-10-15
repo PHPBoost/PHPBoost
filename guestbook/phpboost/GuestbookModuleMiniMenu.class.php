@@ -23,7 +23,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'guestbook');
+		return LangLoader::get_message('guestbook.module.title', 'common', 'guestbook');
 	}
 
 	public function is_displayed()
