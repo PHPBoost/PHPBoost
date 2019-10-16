@@ -475,7 +475,7 @@
 						</div>
 
 					</div>
-					<footer></footer>
+					<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
 				</article>
 			# ENDIF #
 			<footer>
