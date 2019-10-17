@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 02 05
+ * @version   	PHPBoost 5.2 - last update: 2019 10 17
  * @since   	PHPBoost 3.0 - 2011 09 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -22,7 +22,7 @@ $lang['comment.locked'] = 'Comments blocked, you can not post comments';
 $lang['comment.add'] = 'Add a comment';
 $lang['comment.edit'] = 'Edit a comment';
 $lang['comments.link'] = 'Link to comments';
-$lang['link.to.anchor'] = 'Link to this anchor';
+$lang['link.to.anchor'] = 'Link to this message';
 
 $lang['lock'] = 'Lock';
 $lang['unlock'] = 'Unlock';
