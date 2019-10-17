@@ -186,6 +186,8 @@ $LANG['rank'] = 'Rang';
 $LANG['ranks'] = 'Rangs';
 $LANG['never'] = 'Jamais';
 $LANG['picture'] = 'Images';
+$LANG['open.all.panels'] = 'Ouvrir tous les panneaux';
+$LANG['close.all.panels'] = 'Fermer tous les panneaux';
 
 //Dates.
 $LANG['on'] = 'Le';

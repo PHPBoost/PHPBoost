@@ -10,6 +10,7 @@
 
 /* --- Multitabs common */
 [data-trigger] { cursor: pointer; }
+.content-panel { padding: 0.618em; }
 
 @media all { /* --- Multitabs Accordion ------------------------------------- */
     .accordion-container .accordion-controls {
