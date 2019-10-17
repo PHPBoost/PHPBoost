@@ -53,19 +53,21 @@
 		<fieldset>
 			<legend>{L_INDEX_WIKI}</legend>
 			<div class="fieldset-inset">
-				<div class="form-element">
+				<div class="form-element inline-radio custom-radio">
 					<label for="display_cats">{L_DISPLAY_CATEGORIES_ON_INDEX}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<input type="radio" {HIDE_CATEGORIES_ON_INDEX} name="display_categories_on_index" id="display_cats" value="0">
-							<label for="display_cats"></label>
+							<label for="display_cats">
+								<input type="radio" {HIDE_CATEGORIES_ON_INDEX} name="display_categories_on_index" id="display_cats" value="0">
+								<span>{L_NOT_DISPLAY}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_NOT_DISPLAY}</span>
 						<div class="form-field-radio">
-							<input type="radio" {DISPLAY_CATEGORIES_ON_INDEX} id="display_cats_visible" name="display_categories_on_index" value="1" />
-							<label for="display_cats_visible"></label>
+							<label for="display_cats_visible">
+								<input type="radio" {DISPLAY_CATEGORIES_ON_INDEX} id="display_cats_visible" name="display_categories_on_index" value="1" />
+								<span>{L_DISPLAY}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_DISPLAY}</span>
 					</div>
 				</div>
 				<div class="form-element">

@@ -78,19 +78,21 @@
 						<label><input type="text" id="name" name="name" value="{NAME}"></label>
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element inline-radio custom-radio">
 					<label for="auth_flood">{L_AUTH_FLOOD}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" />
-							<label for="auth_flood"></label>
+							<label for="auth_flood">
+								<input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" />
+								<span>{L_YES}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_YES}</span>
 						<div class="form-field-radio">
-							<input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" id="auth_flood_1" value="0" />
-							<label for="auth_flood_1"></label>
+							<label for="auth_flood_1">
+								<input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" id="auth_flood_1" value="0" />
+								<span>{L_NO}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_NO}</span>
 					</div>
 				</div>
 				<div class="form-element">
@@ -261,19 +263,21 @@
 						<label><input type="text" maxlength="25" id="name" name="name" value=""></label>
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element inline-radio custom-radio">
 					<label for="auth_flood">{L_AUTH_FLOOD}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1" />
-							<label for="auth_flood"></label>
+							<label for="auth_flood">
+								<input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" />
+								<span>{L_YES}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_YES}</span>
 						<div class="form-field-radio">
-							<input type="radio" name="auth_flood" id="auth_flood_1" value="0" />
-							<label for="auth_flood_1"></label>
+							<label for="auth_flood_1">
+								<input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" id="auth_flood_1" value="0" />
+								<span>{L_NO}</span>
+							</label>
 						</div>
-						<span class="form-field-radio-span">{L_NO}</span>
 					</div>
 				</div>
 				<div class="form-element">
