@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 2.0 - 2008 08 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminCacheConfigController extends AdminController
@@ -56,23 +57,28 @@ class AdminCacheConfigController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('explain', $this->lang['cache_configuration']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp_php_cache', $this->lang['explain_php_cache'], array( 'class' => 'half-field' )));
-		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['apc_available'], $this->is_apc_available(), array('class' => 'top-field half-field', 'description' => $this->lang['explain_apc_available'])));
+		$fieldset->add_field(new FormFieldBooleanInformation('apc_available', $this->lang['apc_available'], $this->is_apc_available(), array('class' => 'top-field', 'description' => $this->lang['explain_apc_available'])));
 
 		if ($this->is_apc_available())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], $this->is_apc_enabled()));
+			$fieldset->add_field(new FormFieldCheckbox('enable_apc', $this->lang['enable_apc'], $this->is_apc_enabled(),
+				array('class' => ' top-field custom-checkbox')
+			));
 		}
 
 		$fieldset->add_field(new FormFieldHTML('exp_css_cache', '<hr><br />' . $this->lang['explain_css_cache_config'], array('class'=>'half-field')));
-		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled(), array(
-		'class' => 'top-field',
-		'events' => array('click' => '
-			if (HTMLForms.getField("enable_css_cache").getValue()) {
-				HTMLForms.getField("level_css_cache").enable();
-			} else {
-				HTMLForms.getField("level_css_cache").disable();
-			}'
-		))));
+		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled(),
+			array(
+				'class' => 'top-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("enable_css_cache").getValue()) {
+						HTMLForms.getField("level_css_cache").enable();
+					} else {
+						HTMLForms.getField("level_css_cache").disable();
+					}'
+				)
+			)
+		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('level_css_cache', $this->lang['level_css_cache'], $this->css_cache_config->get_optimization_level(), array(
 			new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], CSSFileOptimizer::LOW_OPTIMIZATION),

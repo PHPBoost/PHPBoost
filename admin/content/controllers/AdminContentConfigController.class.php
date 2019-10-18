@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 10 18
  * @since   	PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,7 +103,10 @@ class AdminContentConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
-			array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['content.config.anti-flood-enabled-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
@@ -122,14 +125,18 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('new_content_enabled', $this->lang['content.config.new-content'], $this->content_management_config->is_new_content_enabled(),
-			array('class' => 'top-field', 'description' => $this->lang['content.config.new-content-explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("new_content_enabled").getValue()) {
-					HTMLForms.getField("new_content_duration").enable();
-					HTMLForms.getField("new_content_unauthorized_modules").enable();
-				} else {
-					HTMLForms.getField("new_content_duration").disable();
-					HTMLForms.getField("new_content_unauthorized_modules").disable();
-				}')
+			array(
+				'class' => 'top-field custom-checkbox',
+				'description' => $this->lang['content.config.new-content-explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("new_content_enabled").getValue()) {
+						HTMLForms.getField("new_content_duration").enable();
+						HTMLForms.getField("new_content_unauthorized_modules").enable();
+					} else {
+						HTMLForms.getField("new_content_duration").disable();
+						HTMLForms.getField("new_content_unauthorized_modules").disable();
+					}'
+				)
 			)
 		));
 
@@ -147,7 +154,7 @@ class AdminContentConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->content_management_config->is_notation_enabled(),
 			array(
-				'class' => 'top-field',
+				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
 					if (HTMLForms.getField("notation_enabled").getValue()) {
 						HTMLForms.getField("notation_scale").enable();
@@ -174,7 +181,7 @@ class AdminContentConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_enabled', $this->lang['content.config.content-sharing-enabled'], $this->content_management_config->is_content_sharing_enabled(),
 			array(
-				'class' => 'top-field',
+				'class' => 'top-field custom-checkbox',
 				'events' => array('click' => '
 					if (HTMLForms.getField("content_sharing_enabled").getValue()) {
 						HTMLForms.getField("content_sharing_email_enabled").enable();
@@ -189,16 +196,32 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['content.config.content-sharing-email-enabled'], $this->content_management_config->is_content_sharing_email_enabled(), array('hidden' => !$this->content_management_config->is_content_sharing_enabled())));
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_email_enabled', $this->lang['content.config.content-sharing-email-enabled'], $this->content_management_config->is_content_sharing_email_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
+			)
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(), array('description' => $this->lang['content.config.content-sharing-print-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['content.config.content-sharing-print-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled()
+			)
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['content.config.content-sharing-sms-enabled'], $this->content_management_config->is_content_sharing_sms_enabled(), array('description' => $this->lang['content.config.content-sharing-sms-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled())));
+		$fieldset->add_field(new FormFieldCheckbox('content_sharing_sms_enabled', $this->lang['content.config.content-sharing-sms-enabled'], $this->content_management_config->is_content_sharing_sms_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['content.config.content-sharing-sms-enabled.explain'],
+				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
+			)
+		));
 
 		$fieldset->add_field(new FormFieldCheckbox('opengraph_enabled', $this->lang['content.config.opengraph-enabled'], $this->content_management_config->is_opengraph_enabled(),
 			array(
+				'class' => 'top-field custom-checkbox',
 				'description' => $this->lang['content.config.opengraph-enabled.explain'],
-				'class' => 'top-field',
 				'events' => array('click' => '
 					if (HTMLForms.getField("opengraph_enabled").getValue()) {
 						HTMLForms.getField("site_default_picture_url").enable();
@@ -215,24 +238,32 @@ class AdminContentConfigController extends AdminController
 			array(
 				'class' => 'top-field',
 				'hidden' => !$this->content_management_config->is_opengraph_enabled()
-				)
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('id_card_config', $this->lang['content.config.id.card']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('id_card_enabled', $this->lang['content.config.id.card.enabled'], $this->content_management_config->is_id_card_enabled(),
-			array('class' => 'top-field', 'description' => $this->lang['content.config.id.card.explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("id_card_enabled").getValue()) {
-					HTMLForms.getField("id_card_unauthorized_modules").enable();
-				} else {
-					HTMLForms.getField("id_card_unauthorized_modules").disable();
-				}')
+			array(
+				'class' => 'top-field custom-checkbox',
+				'description' => $this->lang['content.config.id.card.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("id_card_enabled").getValue()) {
+						HTMLForms.getField("id_card_unauthorized_modules").enable();
+					} else {
+						HTMLForms.getField("id_card_unauthorized_modules").disable();
+					}'
+				)
 			)
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('id_card_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_id_card_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('idcard'),
-			array('size' => 6, 'description' => $this->lang['config.id.card.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_id_card_enabled())
+			array(
+				'size' => 6,
+				'description' => $this->lang['config.id.card.forbidden-module-explain'],
+				'hidden' => !$this->content_management_config->is_id_card_enabled()
+			)
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

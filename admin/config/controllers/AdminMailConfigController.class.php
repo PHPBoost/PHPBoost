@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminMailConfigController extends AdminController
@@ -67,13 +68,17 @@ class AdminMailConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['mail-config.send_protocol'], array('description' => $this->lang['mail-config.send_protocol_explain']));
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['mail-config.use_custom_smtp_configuration'], $smtp_enabled,
-		array('events' => array('click' => '
-			if (HTMLForms.getField("use_smtp").getValue()) {
-				HTMLForms.getFieldset("smtp_configuration").enable();
-			} else {
-				HTMLForms.getFieldset("smtp_configuration").disable();
-			}'
-		))));
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("use_smtp").getValue()) {
+						HTMLForms.getFieldset("smtp_configuration").enable();
+					} else {
+						HTMLForms.getFieldset("smtp_configuration").disable();
+					}'
+				)
+			)
+		));
 
 
 		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['mail-config.custom_smtp_configuration'], array('disabled' => !$smtp_enabled));

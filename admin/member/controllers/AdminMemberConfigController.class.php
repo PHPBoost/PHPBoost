@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -66,16 +66,19 @@ class AdminMemberConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $this->user_accounts_config->is_registration_enabled(),
-		array('events' => array('change' => '
-				if (HTMLForms.getField("members_activation").getValue()) {
-					HTMLForms.getField("type_activation_members").enable();
-					if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
-						HTMLForms.getField("unactivated_accounts_timeout").enable();
-					}
-				} else {
-					HTMLForms.getField("type_activation_members").disable();
-					HTMLForms.getField("unactivated_accounts_timeout").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('change' => '
+					if (HTMLForms.getField("members_activation").getValue()) {
+						HTMLForms.getField("type_activation_members").enable();
+						if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
+							HTMLForms.getField("unactivated_accounts_timeout").enable();
+						}
+					} else {
+						HTMLForms.getField("type_activation_members").disable();
+						HTMLForms.getField("unactivated_accounts_timeout").disable();
+					}'
+				)
 			)
 		));
 
@@ -100,9 +103,13 @@ class AdminMemberConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
-		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['members.config.allow_users_to_change_display_name'], $this->user_accounts_config->are_users_allowed_to_change_display_name()));
+		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['members.config.allow_users_to_change_display_name'], $this->user_accounts_config->are_users_allowed_to_change_display_name(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_email', $this->lang['members.config.allow_users_to_change_email'], $this->user_accounts_config->are_users_allowed_to_change_email()));
+		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_email', $this->lang['members.config.allow_users_to_change_email'], $this->user_accounts_config->are_users_allowed_to_change_email(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset = new FormFieldsetHTML('security_config', $this->lang['members.config-security']);
 		$form->add_fieldset($fieldset);
@@ -121,15 +128,22 @@ class AdminMemberConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $this->user_accounts_config->is_avatar_upload_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $this->user_accounts_config->is_avatar_upload_enabled(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['members.config.activation-resize-avatar'], $this->user_accounts_config->is_avatar_auto_resizing_enabled(),
-			array('description' => $this->lang['members.activation-resize-avatar-explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['members.activation-resize-avatar-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_accounts_config->get_max_avatar_width(),
@@ -148,12 +162,19 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $this->user_accounts_config->is_default_avatar_enabled(),
-			array('class' => 'top-field', 'description' => $this->lang['members.config.default-avatar-activation-explain'])
+			array(
+				'class' => 'top-field custom-checkbox',
+				'description' => $this->lang['members.config.default-avatar-activation-explain']
+			)
 		));
 
 		$default_avatar_link = $this->user_accounts_config->get_default_avatar_name();
 		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link,
-			array('class' => 'top-field', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => 'jQuery("#img_avatar").attr("src", "' . TPL_PATH_TO_ROOT . '/templates/'. AppContext::get_current_user()->get_theme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue())'))
+			array(
+				'class' => 'top-field',
+				'description' => $this->lang['members.default-avatar-link-explain'],
+				'events' => array('change' => 'jQuery("#img_avatar").attr("src", "' . TPL_PATH_TO_ROOT . '/templates/'. AppContext::get_current_user()->get_theme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue())')
+			)
 		));
 
 		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. AppContext::get_current_user()->get_theme() .'/images/'. $default_avatar_link) .'" alt="' . LangLoader::get_message('preview', 'main') . '" />'));

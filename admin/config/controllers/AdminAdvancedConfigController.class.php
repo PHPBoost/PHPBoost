@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 20
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,13 +103,16 @@ class AdminAdvancedConfigController extends AdminController
 
 		$fieldset->add_field( new FormFieldCheckbox('redirection_www_enabled', $this->lang['advanced-config.redirection_www_enabled'], $this->server_environment_config->is_redirection_www_enabled(),
 			array(
-				'description' => $redirection_www_enabled_explain, 'disabled' => $redirection_www_disabled,
+				'class' => 'custom-checkbox',
+				'description' => $redirection_www_enabled_explain,
+				'disabled' => $redirection_www_disabled,
 				'events' => array('click' => '
-				if (HTMLForms.getField("redirection_www_enabled").getValue()) {
-					HTMLForms.getField("redirection_www_mode").enable();
-				} else {
-					HTMLForms.getField("redirection_www_mode").disable();
-				}')
+					if (HTMLForms.getField("redirection_www_enabled").getValue()) {
+						HTMLForms.getField("redirection_www_mode").enable();
+					} else {
+						HTMLForms.getField("redirection_www_mode").disable();
+					}'
+				)
 			)
 		));
 
@@ -134,18 +137,21 @@ class AdminAdvancedConfigController extends AdminController
 			$redirection_https_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
 		}
 
-		$fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(), array(
-			'description' => $redirection_https_enabled_explain,
-			'disabled' => $redirection_https_disabled,
-			'events' => array('click' => '
-				if (HTMLForms.getField("redirection_https_enabled").getValue()) {
-					HTMLForms.getField("hsts_security_enabled").enable();
-				} else {
-					HTMLForms.getField("hsts_security_enabled").disable();
-					HTMLForms.getField("hsts_security_enabled").setValue(false);
-					HTMLForms.getField("hsts_security_duration").disable();
-					HTMLForms.getField("hsts_security_subdomain").disable();
-				}')
+		$fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $redirection_https_enabled_explain,
+				'disabled' => $redirection_https_disabled,
+				'events' => array('click' => '
+					if (HTMLForms.getField("redirection_https_enabled").getValue()) {
+						HTMLForms.getField("hsts_security_enabled").enable();
+					} else {
+						HTMLForms.getField("hsts_security_enabled").disable();
+						HTMLForms.getField("hsts_security_enabled").setValue(false);
+						HTMLForms.getField("hsts_security_duration").disable();
+						HTMLForms.getField("hsts_security_subdomain").disable();
+					}'
+				)
 			)
 		));
 
@@ -188,18 +194,18 @@ class AdminAdvancedConfigController extends AdminController
 			if ($server_configuration->has_url_rewriting())
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
-					array('class' => 'half-field', 'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
+					array('class' => 'half-field custom-checkbox', 'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
 				));
 			}
 			else
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED,
-					array('class' => 'half-field', 'disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')
+					array('class' => 'half-field custom-checkbox', 'disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')
 				));
 			}
 		} catch (UnsupportedOperationException $ex) {
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
-				array('class' => 'half-field', 'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')
+				array('class' => 'half-field custom-checkbox', 'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')
 			));
  		}
 
@@ -242,20 +248,24 @@ class AdminAdvancedConfigController extends AdminController
 
 		$cookiebar_config_fieldset->set_description($this->lang['advanced-config.cookiebar-more']);
 		$cookiebar_config_fieldset->add_field(new FormFieldCheckbox('cookiebar_enabled', $this->lang['advanced-config.cookiebar-activation'], $this->cookiebar_config->is_cookiebar_enabled(),
-			array('class' => 'third-field', 'description' => $this->lang['advanced-config.cookiebar-activation.desc'], 'events' => array('click' => '
-				if (HTMLForms.getField("cookiebar_enabled").getValue()) {
-					HTMLForms.getField("cookiebar_duration").enable();
-					HTMLForms.getField("cookiebar_tracking_mode").enable();
-					HTMLForms.getField("cookiebar_content").enable();
-					HTMLForms.getField("cookiebar_aboutcookie_title").enable();
-					HTMLForms.getField("cookiebar_aboutcookie_content").enable();
-				} else {
-					HTMLForms.getField("cookiebar_duration").disable();
-					HTMLForms.getField("cookiebar_tracking_mode").disable();
-					HTMLForms.getField("cookiebar_content").disable();
-					HTMLForms.getField("cookiebar_aboutcookie_title").disable();
-					HTMLForms.getField("cookiebar_aboutcookie_content").disable();
-				}')
+			array(
+				'class' => 'third-field custom-checkbox',
+				'description' => $this->lang['advanced-config.cookiebar-activation.desc'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("cookiebar_enabled").getValue()) {
+						HTMLForms.getField("cookiebar_duration").enable();
+						HTMLForms.getField("cookiebar_tracking_mode").enable();
+						HTMLForms.getField("cookiebar_content").enable();
+						HTMLForms.getField("cookiebar_aboutcookie_title").enable();
+						HTMLForms.getField("cookiebar_aboutcookie_content").enable();
+					} else {
+						HTMLForms.getField("cookiebar_duration").disable();
+						HTMLForms.getField("cookiebar_tracking_mode").disable();
+						HTMLForms.getField("cookiebar_content").disable();
+						HTMLForms.getField("cookiebar_aboutcookie_title").disable();
+						HTMLForms.getField("cookiebar_aboutcookie_content").disable();
+					}'
+				)
 			)
 		));
 
@@ -296,25 +306,38 @@ class AdminAdvancedConfigController extends AdminController
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(),
-				array('description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
+				array(
+					'class' => 'custom-checkbox',
+					'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>'
+				)
 			));
 		}
 		else
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED,
-				array('description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>', 'disabled' => true)
+				array(
+					'class' => 'custom-checkbox',
+					'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>',
+					'disabled' => true
+				)
 			));
 		}
 
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['advanced-config.debug-mode'], Debug::is_debug_mode_enabled(),
-		array('description' => $this->lang['advanced-config.debug-mode.explain'], 'events' => array('change' => '
-				if (HTMLForms.getField("debug_mode_enabled").getValue()) {
-					HTMLForms.getField("debug_mode_type").enable();
-					HTMLForms.getField("display_database_query_enabled").enable();
-				} else {
-					HTMLForms.getField("debug_mode_type").disable();
-					HTMLForms.getField("display_database_query_enabled").disable();
-				}'))));
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['advanced-config.debug-mode.explain'],
+				'events' => array('change' => '
+					if (HTMLForms.getField("debug_mode_enabled").getValue()) {
+						HTMLForms.getField("debug_mode_type").enable();
+						HTMLForms.getField("display_database_query_enabled").enable();
+					} else {
+						HTMLForms.getField("debug_mode_type").disable();
+						HTMLForms.getField("display_database_query_enabled").disable();
+					}'
+				)
+			)
+		));
 
 		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['advanced-config.debug-mode.type'], Debug::is_strict_mode_enabled(),
 			array(
@@ -325,7 +348,11 @@ class AdminAdvancedConfigController extends AdminController
 		));
 
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('display_database_query_enabled', $this->lang['advanced-config.debug-display-database-query-enabled'], Debug::is_display_database_query_enabled(),
-			array('hidden' => !Debug::is_debug_mode_enabled())));
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !Debug::is_debug_mode_enabled()
+			)
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

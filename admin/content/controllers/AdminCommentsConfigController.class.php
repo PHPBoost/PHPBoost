@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2015 11 07
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -66,20 +66,25 @@ class AdminCommentsConfigController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comments.config.enabled'], $this->configuration->are_comments_enabled(), array('events' => array('click' => '
-				if (HTMLForms.getField("comments_enabled").getValue()) {
-					HTMLForms.getField("number_comments_display").enable();
-					HTMLForms.getField("max_links_comment").enable();
-					HTMLForms.getField("order_display_comments").enable();
-					HTMLForms.getField("forbidden_tags").enable();
-					HTMLForms.getField("comments_unauthorized_modules").enable();
-				} else {
-					HTMLForms.getField("number_comments_display").disable();
-					HTMLForms.getField("max_links_comment").disable();
-					HTMLForms.getField("order_display_comments").disable();
-					HTMLForms.getField("forbidden_tags").disable();
-					HTMLForms.getField("comments_unauthorized_modules").disable();
-				}'))
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comments.config.enabled'], $this->configuration->are_comments_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("comments_enabled").getValue()) {
+						HTMLForms.getField("number_comments_display").enable();
+						HTMLForms.getField("max_links_comment").enable();
+						HTMLForms.getField("order_display_comments").enable();
+						HTMLForms.getField("forbidden_tags").enable();
+						HTMLForms.getField("comments_unauthorized_modules").enable();
+					} else {
+						HTMLForms.getField("number_comments_display").disable();
+						HTMLForms.getField("max_links_comment").disable();
+						HTMLForms.getField("order_display_comments").disable();
+						HTMLForms.getField("forbidden_tags").disable();
+						HTMLForms.getField("comments_unauthorized_modules").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(),

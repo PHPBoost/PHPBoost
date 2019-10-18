@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -122,15 +122,15 @@ class AdminGeneralConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('page_bench', $this->lang['general-config.page_bench'], $this->graphical_environment_config->is_page_bench_enabled(),
-			array('class' => 'third-field', 'description' => $this->lang['general-config.page_bench-explain'])
+			array('class' => 'third-field custom-checkbox', 'description' => $this->lang['general-config.page_bench-explain'])
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_theme_author', $this->lang['general-config.display_theme_author'], $this->graphical_environment_config->get_display_theme_author(),
-			array('class' => 'third-field', 'description' => $this->lang['general-config.display_theme_author-explain'])
+			array('class' => 'third-field custom-checkbox', 'description' => $this->lang['general-config.display_theme_author-explain'])
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 4.1 - 2014 09 11
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminMaintainController extends AdminController
@@ -106,17 +107,23 @@ class AdminMaintainController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_duration', $this->lang['display_duration'], $this->maintenance_config->get_display_duration(),
-			array('events' => array('click' =>
-				'if (HTMLForms.getField("display_duration").getValue()) {
-					HTMLForms.getField("display_duration_for_admin").enable();
-				} else {
-					HTMLForms.getField("display_duration_for_admin").disable();
-				}'
-			))
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' =>
+					'if (HTMLForms.getField("display_duration").getValue()) {
+						HTMLForms.getField("display_duration_for_admin").enable();
+					} else {
+						HTMLForms.getField("display_duration_for_admin").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_duration_for_admin', $this->lang['display_duration_for_admin'], $this->maintenance_config->get_display_duration_for_admin(),
-			array('hidden' => !$this->maintenance_config->get_display_duration())
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->maintenance_config->get_display_duration()
+			)
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['maintain_text'], $this->maintenance_config->get_message(),
