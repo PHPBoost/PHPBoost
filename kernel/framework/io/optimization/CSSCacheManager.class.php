@@ -44,7 +44,7 @@ class CSSCacheManager
 			{
 				if (basename($file) == '@import.css')
 				{
-					foreach ($this->extract_css_urls(implode(' ', file(PATH_TO_ROOT . $file))) as $url)
+					foreach (self::extract_css_urls(implode(' ', file(PATH_TO_ROOT . $file))) as $url)
 						$files[] = $url;
 					
 					unset($files[array_search($file, $files)]);
@@ -63,7 +63,7 @@ class CSSCacheManager
 	/**
 	 * Extract URLs from CSS text.
 	 */
-	private function extract_css_urls($text)
+	public static function extract_css_urls($text)
 	{
 		$urls = array();
 		
