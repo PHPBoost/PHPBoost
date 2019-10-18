@@ -89,14 +89,9 @@
  	top: -10px;
  }
 
- /* .checkbox-mini .form-field-multiple-checkbox .form-field-checkbox [type="checkbox"]:not(:checked) + span:before,
- .checkbox-mini .form-field-multiple-checkbox .form-field-checkbox [type="checkbox"]:checked + span:before {
- 	top:-14px;
+ td .form-field-checkbox {
+ 	margin: auto;
  }
-
- .checkbox-mini .form-field-multiple-checkbox .form-field-checkbox input[type="checkbox"]:checked + span:after {
- 	top:-12px;
- } */
 
  .form-field-multiple-checkbox .spacer { margin-bottom: 0.309em;}
 

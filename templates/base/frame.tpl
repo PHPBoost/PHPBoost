@@ -23,7 +23,7 @@
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
-			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/{THEME}/theme/@import.css;/templates/default/theme/debug.css')}" type="text/css" media="screen, print" />
+			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/{THEME}/theme/@import.css')}" type="text/css" media="screen, print" />
 		# ELSE #
 			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css" type="text/css" />
 		# ENDIF #

@@ -592,15 +592,11 @@ optgroup {
 
 .checkbox-mini .form-field-checkbox [type="checkbox"]:not(:checked) + span:before,
 .checkbox-mini .form-field-checkbox [type="checkbox"]:checked + span:before {
-	background: #EEEEEE;
-	box-shadow: 0 0 1px 1px rgba(0, 0, 0, .1);
+	background: #FFFFFF;
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.checkbox-mini .form-field-checkbox [type="checkbox"]:checked + span:before {
-	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0);
-}
-
-.checkbox-mini .form-field-checkbox [type="checkbox"] + span:after {
+.checkbox-mini .form-field-checkbox [type="checkbox"]:checked + span:after {
 	color: #0066cc;
 }
 
