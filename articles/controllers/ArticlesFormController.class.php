@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,13 +72,16 @@ class ArticlesFormController extends ModuleController
 		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_article()->rewrited_title_is_personalized(),
-				array('events' => array('click' =>'
-					if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
-						HTMLForms.getField("rewrited_title").enable();
-					} else {
-						HTMLForms.getField("rewrited_title").disable();
-					}'
-				))
+				array(
+					'class' => 'custom-checkbox',
+					'events' => array('click' =>'
+						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
+							HTMLForms.getField("rewrited_title").enable();
+						} else {
+							HTMLForms.getField("rewrited_title").disable();
+						}'
+					)
+				)
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_article()->get_rewrited_title(),
@@ -98,7 +101,9 @@ class ArticlesFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.decription.enabled'], $this->get_article()->get_description_enabled(),
 			array('description' => StringVars::replace_vars($this->lang['articles.decription.enabled.annex'],
-			array('number' => ArticlesConfig::load()->get_number_character_to_cut())),
+			array(
+				'class' => 'custom-checkbox',
+				'number' => ArticlesConfig::load()->get_number_character_to_cut())),
 				'events' => array('click' => '
 					if (HTMLForms.getField("enable_description").getValue()) {
 						HTMLForms.getField("description").enable();
@@ -121,12 +126,16 @@ class ArticlesFormController extends ModuleController
 		if ($this->get_article()->get_author_name_displayed() == true)
 		{
 			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_article()->is_author_custom_name_enabled(),
-				array('events' => array('click' => '
-				if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
-					HTMLForms.getField("author_custom_name").enable();
-				} else {
-					HTMLForms.getField("author_custom_name").disable();
-				}'))
+				array(
+					'class' => 'custom-checkbox',
+					'events' => array('click' => '
+						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
+							HTMLForms.getField("author_custom_name").enable();
+						} else {
+							HTMLForms.getField("author_custom_name").disable();
+						}'
+					)
+				)
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->common_lang['form.author_custom_name'], $this->get_article()->get_author_custom_name(), array(
@@ -137,7 +146,9 @@ class ArticlesFormController extends ModuleController
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
-		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed()));
+		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
 
@@ -158,7 +169,11 @@ class ArticlesFormController extends ModuleController
 
 			if (!$this->get_article()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_article()->get_status() != Article::NOT_PUBLISHED)
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+					array(
+						'class' => 'custom-checkbox',
+						'hidden' => $this->get_article()->get_status() != Article::NOT_PUBLISHED
+					)
 				));
 			}
 
@@ -168,14 +183,17 @@ class ArticlesFormController extends ModuleController
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
 					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Article::PUBLISHED_DATE),
 				),
-				array('events' => array('change' => '
-				if (HTMLForms.getField("publishing_state").getValue() == 2) {
-					jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
-					HTMLForms.getField("end_date_enable").enable();
-				} else {
-					jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
-					HTMLForms.getField("end_date_enable").disable();
-				}'))
+				array(
+					'events' => array('change' => '
+						if (HTMLForms.getField("publishing_state").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").show();
+							HTMLForms.getField("end_date_enable").enable();
+						} else {
+							jQuery("#' . __CLASS__ . '_publishing_start_date_field").hide();
+							HTMLForms.getField("end_date_enable").disable();
+						}'
+					)
+				)
 			));
 
 			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'],
@@ -184,14 +202,17 @@ class ArticlesFormController extends ModuleController
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(),
-				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
+				array(
+					'class' => 'custom-checkbox',
+					'hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
 						} else {
 							HTMLForms.getField("publishing_end_date").disable();
 						}'
-				))
+					)
+				)
 			));
 
 			$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'],

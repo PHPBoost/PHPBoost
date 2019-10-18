@@ -47,6 +47,41 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: normal;
 }
 
+/* --- Visits counter --- */
+#visit-counter {
+	position: absolute;
+	right: 1.618em;
+	top : 92.5%;
+	font-size: 0.9em;
+	text-align: right;
+}
+
+/* --- Breadcrumb --- */
+#breadcrumb {
+	padding: 0.618em;
+	font-size: 0.809em;
+}
+
+#breadcrumb ol {
+	margin: 0;
+	list-style: none;
+}
+
+#breadcrumb li {
+	display: inline;
+}
+
+#breadcrumb li:not(.current):after {
+	content: '/';
+}
+
+/* --- Search engines --- */
+.robot {
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+
 /* --- Les Titres bbcode --- */
 .formatter-title {
 	display: inline-block;

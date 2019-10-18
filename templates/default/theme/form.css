@@ -12,9 +12,9 @@ Contient les elements :
 /* --- Normal --- */
 button,
 .button {
+	height: auto;
 	margin: 0.618em;
 	padding: 0.309em 1em;
-	height: auto;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
@@ -350,14 +350,6 @@ select[readonly=readonly]:focus {
 	border-style: solid;
 	border-color: transparent;
 	cursor: not-allowed;
-}
-
-.form-field-checkbox {
-	display: inline-block;
-}
-
-.form-field-checkbox-mini > label {
-	display: inline-block;
 }
 
 /* --- Textarea --- */

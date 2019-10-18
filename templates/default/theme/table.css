@@ -13,6 +13,7 @@ table {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
+	border-collapse: collapse;
 }
 
 /* --- Header --- */
@@ -21,14 +22,14 @@ table caption {
 	border-width: 0 0 1px;
 	border-style: solid;
 	border-color: transparent;
-	font-size: 0.8em;
+	font-size: 1.482em;
 	text-align: left;
 }
 
 table thead th,
 .table-head {
 	padding: 0.228em;
-	font-size: 0.9em;
+	font-size: 1.2em;
 	text-align: center;
 	font-weight: normal;
 }
@@ -36,8 +37,7 @@ table thead th,
 /* --- Content --- */
 table tbody td,
 .table-element-container {
-	padding: 0.228em;
-	font-size: 0.9em;
+	padding: 0.456em;
 	text-align: center;
 	border-width: 0 0 1px;
 	border-style: solid;
@@ -74,7 +74,7 @@ table tfoot tr td select {
 	table thead th,
 	table tbody td,
 	table tfoot tr td {
-		padding: 0.309em;
+		padding: 0.618em;
 		font-size: 1em;
 	}
 }
@@ -97,10 +97,6 @@ table tfoot tr td select {
 
 
 /* --- Responsive Table - basictable.js ------------------------------------- */
-.responsive-table {
-	max-width: 100%;
-	overflow: auto;
-}
 
 .bt thead,
 .bt thead th {
@@ -119,24 +115,24 @@ table tfoot tr td select {
 .bt tfoot th::before,
 .bt tfoot td::before,
 .bt tbody td::before {
-  content: attr(data-th) ": ";
-  display: inline-block;
-  -webkit-flex-shrink: 0;
-  flex-shrink: 0;
-  font-weight: bold;
-  width: 6.5em;
+	content: attr(data-th) ": ";
+	display: inline-block;
+	-webkit-flex-shrink: 0;
+	flex-shrink: 0;
+	font-weight: bold;
+	width: 6.5em;
 }
 
 .bt tfoot th.bt-hide,
 .bt tfoot td.bt-hide,
 .bt tbody td.bt-hide {
-  display: none;
+	display: none;
 }
 
 .bt tfoot th .bt-content,
 .bt tfoot td .bt-content,
 .bt tbody td .bt-content {
-  vertical-align: top;
+	vertical-align: top;
 }
 
 .bt thead th:first-child{
@@ -177,10 +173,28 @@ table tfoot tr td select {
 
 .bt.bt--no-header tfoot td::before,
 .bt.bt--no-header tbody td::before {
-  display: none;
+	display: none;
 }
 
 /* --- Options -------------------------------------------------------------- */
+.responsive-table {
+	max-width: 100%;
+	overflow: auto;
+}
+
+.large-table th {
+    white-space: nowrap;
+}
+
+.large-table .bt-content,
+.bt.large-table .bt-content {
+    display: inline-block;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* --- Columns sizes --- */
 .col-smaller { width: 3em;  }
 .col-small   { width: 6em;  }

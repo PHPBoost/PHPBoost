@@ -1,0 +1,139 @@
+.sortable-block .sortable-element > .sortable-block {
+	flex: 1 0 calc(100% - 0.618em);
+	-ms-flex: 1 0 calc(100% - 0.618em);
+	-webkit-flex: 1 0 calc(100% - 0.618em);
+	margin: 0 0 0 0.618em;
+}
+
+.sortable-block {
+	margin: 0;
+	padding: 0;
+	min-height: 24px;
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+.sortable-block .sortable-element {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	align-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 0.309em;
+	padding: 0;
+	width: 100%;
+	transition: all 0.2s;
+}
+
+.sortable-block .sortable-element:hover {
+	transition: all 0.2s;
+}
+
+.sortable-block .sortable-selector {
+	padding: 0 0 0 0.309em;
+}
+
+@media (min-width:769px){
+	.sortable-block .sortable-element .sortable-selector {
+		flex: 0 0 1.309em;
+		-ms-flex: 0 0 1.309em;
+		-webkit-flex: 0 0 1.309em;
+		opacity: 0.2;
+		transition: opacity 0.3s;
+		cursor: move;
+	}
+
+	.sortable-selector:after {
+		content: "\f0b2";
+		font-family: 'Font Awesome 5 Free';
+		font-weight: 900;
+	}
+}
+
+.sortable-block .sortable-element:hover .sortable-actions {
+	opacity: 1;
+	transition: opacity 0.3s;
+}
+
+.sortable-block .sortable-element:hover .sortable-selector {
+	opacity: 1;
+	transition: opacity 0.3s;
+}
+
+.sortable-block .sortable-title {
+	flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	padding: 0.618em;
+	max-width: calc(100% - 5.2em)
+}
+
+.sortable-block .sortable-title:hover {
+	transition: all 0.2s linear;
+}
+
+.sortable-block .sortable-title > span {
+	font-size: 1.482em;
+}
+
+.sortable-block .sortable-title span.cat-desc {
+	font-size: 0.8em;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.sortable-block fieldset {
+	padding: 0 1.618em;
+}
+
+.sortable-block .sortable-actions a {
+    padding: 0.618em 0.309em;
+}
+
+.sortable-block .sortable-actions {
+	flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	-webkit-flex: 0 1 auto;
+	padding: 0.1618em;
+	opacity: 0.2;
+	transition: opacity 0.2s;
+}
+
+.sortable-block .sortable-element hr {
+	margin-top: 0.309em;
+}
+
+.sortable-block .sortable-element label {
+	margin-left: 0.809em;
+}
+
+.sortable-block .sortable-actions img,
+.sortable-block .sortable-element:hover label,
+.sortable-block .sortable-element .fa:hover {
+	cursor: pointer;
+}
+
+.dragged {
+	position: absolute;
+	opacity: 0.9;
+	z-index: 2000;
+}
+
+body.dragging,
+body.dragging * {
+	cursor: move !important;
+}
+
+.dropzone {
+	margin: 0.618em 0;
+	padding: 0.309em;
+	opacity: 0.6;
+	text-align: center;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: transparent;
+}
+
+.preview img {
+	overflow: hidden;
+}

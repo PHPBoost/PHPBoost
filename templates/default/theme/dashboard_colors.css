@@ -215,6 +215,55 @@ div[class*="admin-index"] h2 {
 	border-color: #366493;
 }
 
+
+.cell-title,
+.cell-body,
+.cell-list,
+.cell-footer,
+.cell-table {
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
+}
+
+.cell-table table thead th {
+	border-color: #366493;
+}
+
+.no-style .cell-title,
+.no-style .cell-body,
+.no-style .cell-list,
+.no-style .cell-table,
+.no-style .cell-footer {
+	background-color: transparent!important;
+	border-color: transparent!important;
+}
+
+.default-element .cell-title,
+.default-element .cell-body,
+.default-element .cell-list,
+.default-element .cell-footer {
+	border-color: #2F9674;
+}
+
+.not-compatible .cell-title,
+.not-compatible .cell-body,
+.not-compatible .cell-list,
+.not-compatible .cell-footer {
+	border-color: #E0464A;
+}
+
+.cell-table tr:nth-child(even) td {
+	background-color: #ECF2F8;
+}
+
+.cell-thumbnail-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cell-thumbnail a:hover {
+    color: #FFFFFF;
+}
+
 /* Couleurs des blocks themes/modules/langues */
 article .admin-element-menu-title,
 .admin-element-menu-title a {
@@ -541,31 +590,31 @@ optgroup {
 	border-color: #5B5A5A;
 }
 
-.form-field-checkbox-mini [type="checkbox"]:not(:checked) + label:before,
-.form-field-checkbox-mini [type="checkbox"]:checked + label:before {
+.checkbox-mini .form-field-checkbox [type="checkbox"]:not(:checked) + span:before,
+.checkbox-mini .form-field-checkbox [type="checkbox"]:checked + span:before {
 	background: #EEEEEE;
 	box-shadow: 0 0 1px 1px rgba(0, 0, 0, .1);
 }
 
-.form-field-checkbox-mini [type="checkbox"]:checked + label:before {
+.checkbox-mini .form-field-checkbox [type="checkbox"]:checked + span:before {
 	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0);
 }
 
-.form-field-checkbox-mini [type="checkbox"] + label:after {
+.checkbox-mini .form-field-checkbox [type="checkbox"] + span:after {
 	color: #0066cc;
 }
 
-.form-field-checkbox [type="checkbox"]:not(:checked) + label:before,
-.form-field-checkbox [type="checkbox"]:checked + label:before {
+.custom-checkbox .form-field-checkbox [type="checkbox"]:not(:checked) + span:before,
+.custom-checkbox .form-field-checkbox [type="checkbox"]:checked + span:before {
 	border-color: #DDDDDD;
 }
 
-.form-field-checkbox [type="checkbox"]:not(:checked) + label:after,
-.form-field-checkbox [type="checkbox"]:checked + label:after {
+.custom-checkbox .form-field-checkbox [type="checkbox"]:not(:checked) + span:after,
+.custom-checkbox .form-field-checkbox [type="checkbox"]:checked + span:after {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-.form-field-checkbox [type="checkbox"]:checked + label:after {
+.custom-checkbox .form-field-checkbox [type="checkbox"]:checked + span:after {
 	background-color: #0066cc;
 	color: #EEEEEE;
 }
@@ -573,7 +622,7 @@ optgroup {
 .custom-radio .form-field-radio [type="radio"]:not(:checked) + span:before,
 .custom-radio .form-field-radio [type="radio"]:checked + span:before {
 	background-color: #FFFFFF;
-	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .custom-radio .form-field-radio [type="radio"]:not(:checked) + span:after,
@@ -880,7 +929,7 @@ td.alert-priority         { border-color: #D1D2D4;}
 ----------------------------------------------------------------------------- */
 
 /* --- Menu header --- */
-h3.menu-title {
+.menu-title {
 	background-color: rgba(0,0,0,.2);
 }
 /* --- admin_menus --- */

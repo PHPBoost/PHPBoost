@@ -54,7 +54,7 @@
 }
 
 .cell-title {
-	padding: 0.809em;
+	padding: 0.456em;
 	border-style: solid;
 	border-width: 1px;
 	border-color: transparent;
@@ -70,7 +70,7 @@
 }
 
 .cell-body {
-    padding: 0.618em;
+    padding: 0.456em;
 }
 
 [class*="cell-"] + .cell-body,
@@ -80,7 +80,7 @@
 
 .cell-thumbnail {
     position: relative;
-    margin: -0.618em;
+    margin: -0.456em;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -110,7 +110,7 @@
 
 .cell-list ul li {
 	list-style-type: none;
-	padding: 0.309em 0.618em 0;
+	padding: 0.309em 0.456em 0;
 }
 
 .cell-list ul li.li-stretch {
@@ -119,7 +119,7 @@
 }
 
 .cell-list ul li:last-child {
-    padding: 0.309em 0.618em;
+    padding: 0.309em 0.456em;
 }
 
 .cell-table {
@@ -138,7 +138,7 @@
 .cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
 
 .cell-footer {
-	padding: 0.809em;
+	padding: 0.456em;
 	border-style: solid;
 	border-width: 0 1px 1px;
 	border-color: transparent;
@@ -156,61 +156,4 @@
 .cell header,
 .cell footer {
 	margin: 0;
-}
-
-/* hack consils admin homepage */
-.cell-body form {margin: -0.618em;}
-.cell-body fieldset,
-.cell-body .fieldset-inset,
-.cell-body .form-element {padding: 0;}
-.cell-body legend {padding: 0.456em;}
-.cell-body textarea {margin: 0;}
-
-/* colors to be sent to admin_colors.css */
-.cell-title,
-.cell-body,
-.cell-list,
-.cell-footer,
-.cell-table {
-	background-color: #FFFFFF;
-	border-color: #DDDDDD;
-}
-
-.cell-table table thead th {
-	border-color: #366493;
-}
-
-.no-style .cell-title,
-.no-style .cell-body,
-.no-style .cell-list,
-.no-style .cell-table,
-.no-style .cell-footer {
-	background-color: transparent!important;
-	border-color: transparent!important;
-}
-
-.default-element .cell-title,
-.default-element .cell-body,
-.default-element .cell-list,
-.default-element .cell-footer {
-	border-color: #2F9674;
-}
-
-.not-compatible .cell-title,
-.not-compatible .cell-body,
-.not-compatible .cell-list,
-.not-compatible .cell-footer {
-	border-color: #E0464A;
-}
-
-.cell-table tr:nth-child(even) td {
-	background-color: #ECF2F8;
-}
-
-.cell-thumbnail-caption {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.cell-thumbnail a:hover {
-    color: #FFFFFF;
 }

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -84,7 +84,8 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles.display.categories.icon'], $this->config->are_cats_icon_enabled()
+		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles.display.categories.icon'], $this->config->are_cats_icon_enabled(),
+			array('class' => 'custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles.display.type'], $this->config->get_display_type(),
@@ -99,7 +100,9 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles.display.decriptions.to.guests'], $this->config->are_descriptions_displayed_to_guests()));
+		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles.display.decriptions.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)

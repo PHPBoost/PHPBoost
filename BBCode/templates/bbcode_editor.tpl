@@ -182,7 +182,11 @@ function XMLHttpRequest_preview(field)
 						<div class="form-element">
 							<label class="smaller" for="bb_ordered_list{FIELD}">{@bbcode.ordered.list}</label>
 							<div class="form-field">
-								<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" >
+								<label for="bb_ordered_list{FIELD}">
+									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" >
+									<span></span>
+								</label>
+
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
@@ -346,7 +350,11 @@ function XMLHttpRequest_preview(field)
 						<div class="form-element">
 							<label class="smaller" for="bb-head{FIELD}">{@bbcode.head.add}</label>
 							<div class="form-field">
-								<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
+								<label for="bb-head{FIELD}">
+									<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
+									<span></span>
+								</label>
+
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">

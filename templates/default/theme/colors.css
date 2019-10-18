@@ -183,14 +183,58 @@ i.message-announce-new { color: #62CF5D; }
 .sharing-element-print > a    { background-color: #999999; }
 .sharing-element-sms > a      { background-color: #999999; }
 
-.tab-container > nav > ul > li a.shown {
-	background-color: rgba(54, 100, 147, 0.1);
-}
 
-.tab-container .form-subtitle h2 {
+.cell-title,
+.cell-body,
+.cell-list,
+.cell-footer,
+.cell-table {
+	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
+.cell-table table thead th {
+	border-color: #366493;
+}
+
+.no-style .cell-title,
+.no-style .cell-body,
+.no-style .cell-list,
+.no-style .cell-table,
+.no-style .cell-footer {
+	background-color: transparent!important;
+	border-color: transparent!important;
+}
+
+.default-element .cell-title,
+.default-element .cell-body,
+.default-element .cell-list,
+.default-element .cell-footer,
+.new-content .cell-title,
+.new-content .cell-body,
+.new-content .cell-list,
+.new-content .cell-footer {
+	border-color: #2F9674;
+}
+
+.not-compatible .cell-title,
+.not-compatible .cell-body,
+.not-compatible .cell-list,
+.not-compatible .cell-footer {
+	border-color: #E0464A;
+}
+
+.cell-table tr:nth-child(even) td {
+	background-color: #FFFFFF;
+}
+
+.cell-thumbnail-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cell-thumbnail a:hover {
+    color: #FFFFFF;
+}
 
 /* -- table.css
     #####   ###   ###    #      #####

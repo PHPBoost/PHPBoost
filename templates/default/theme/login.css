@@ -3,34 +3,23 @@
 Contient les elements pour afficher la page de connexion a l'administration ou au site lorsqu'il est en maintenance.
 -------------------------------------- */
 
-.fieldset-content {
-	margin: 0 auto;
-	max-width: 100%;
-}
-
 body {
 	display: flex;
-	display: -ms-flex;
-	display: -webkit-flex;
 	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
 	justify-content: center;
-	-ms-justify-content: center;
-	-webkit-justify-content: center;
 	align-items: center;
-	-ms-align-items: center;
-	-webkit-align-items: center;
-	margin: 0;
-	padding: 0;
-	height: auto;
 }
 
-div#global {
+#global {
 	padding: 2.618em;
 	min-height: 0;
 	width: 100%;
 	border-spacing: 1px;
+}
+
+.fieldset-content {
+	margin: 0 auto;
+	max-width: 100%;
 }
 
 .cookiebar-container {

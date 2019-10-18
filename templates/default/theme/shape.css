@@ -26,9 +26,6 @@ body {
 	}
 }
 
-
-/* -- Gestion de la taille du site -- */
-/* ---------------------------------- */
 #header,
 #global,
 #footer {
@@ -67,7 +64,20 @@ body {
 	position: relative;
 }
 
-/* --- Partie inferieur du header --- */
+#top-header {
+	display: flex;
+	flex-direction: column;
+}
+
+#top-header-content {
+	flex: 1 1 auto;
+}
+
+#site-infos {
+	display: flex;
+	flex: 1 1 auto;
+}
+
 #site-logo {
 	width: 60px;
 	height: 60px;
@@ -75,6 +85,7 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	flex: 0 0 auto;
 }
 
 #site-name-container {
@@ -96,6 +107,14 @@ body {
 }
 
 @media (min-width: 769px) {
+	#top-header {
+		flex-direction: row;
+	}
+
+	#top-header-content {
+		align-self: flex-end;
+	}
+
 	#site-logo {
 		width: 90px;
 		height: 90px;
@@ -119,8 +138,14 @@ body {
 
 /* -- Conteneur global du site -- */
 /* ------------------------------ */
+#global {
+	display: flex;
+	flex-direction: column;
+}
+
 #main {
 	width: 100%;
+	order : 1;
 }
 
 #menu-left,
@@ -128,7 +153,19 @@ body {
 	width: 100%;
 }
 
+#menu-left {
+	order : 2;
+}
+
+#menu-right {
+	order : 3;
+}
+
 @media (min-width: 769px) {
+	#global {
+		flex-direction: row;
+	}
+
 	#menu-left { margin-right: 1.618em; }
 	#menu-right { margin-left: 1.618em; }
 
@@ -145,8 +182,24 @@ body {
 		width: calc(100% / 13 * 2.5);
 	}
 
+	#menu-left  {
+		order : 1;
+	}
+
+	#menu-right {
+		order : 3;
+	}
+
 	#main {
 		padding: 0 0 1.618em;
+		order : 2;
+		flex: 1 0 auto;
+	}
+
+	#main.main-with-left,
+	#main.main-with-right,
+	#main.main-with-left.main-with-right {
+		flex: 1 0 auto;
 	}
 
 	#main.main-with-left,
@@ -163,23 +216,17 @@ body {
 	padding: 0.809em;
 }
 
-.block-container {
-	margin-top: 1em;
-}
-
-/* --- Emplacement au dessus et en dessous du contenu de la page --- */
+/* --- Up and under main content --- */
 #top-content {
 	margin: 0 0 1.618em 0;
 }
 
-/* --- Emplacement au dessus du pied de page --- */
 #bottom-content {
 	margin: 1.618em 0 0;
 }
 
 
-/* -- Pied de page - Footer -- */
-/* --------------------------- */
+/* --- Footer --------------------------------------------------------------- */
 #footer {
 	clear: both;
 	border-width: 4px 0 0 0;
@@ -220,172 +267,4 @@ body {
 	.footer-infos {
 		padding: 0.618em 0 0;
 	}
-}
-
-
-/* -- Elements specifiques PHPboost -- */
-/* ----------------------------------- */
-
-/* --- Compteur de visites --- */
-#visit-counter {
-	position: absolute;
-	right: 1.618em;
-	top : 92.5%;
-	font-size: 0.9em;
-	text-align: right;
-}
-
-/* --- Barre de lien rapide --- */
-#breadcrumb {
-	padding: 0.618em;
-	font-size: 0.809em;
-}
-
-#breadcrumb ol {
-	margin: 0;
-	list-style: none;
-}
-
-#breadcrumb li {
-	display: inline;
-}
-
-#breadcrumb li:not(.current):after {
-	content: '/';
-}
-
-/* --- Scroll to Top --- */
-.scroll-to {
-	position: fixed;
-	z-index: 10;
-	display: none;
-	cursor: pointer;
-	opacity: 0.5
-}
-
-.scroll-to:hover {
-	opacity: 1;
-}
-
-#scroll-to-top {
-	right: 0;
-	bottom: 0.618em;
-	padding: 0.618em 0.809em;
-}
-
-#scroll-to-top,
-.scroll-to i {
-	transition: 0.2s;
-}
-
-#scroll-to-top:hover,
-.scroll-to:hover i {
-	transition: 0.3s;
-}
-
-@media (min-width: 769px) {
-	#scroll-to-top {
-		right: 0.618em;
-	}
-
-	.scroll-to i {
-		font-size: 1.618em;
-	}
-}
-
-/* --- Cookie Bar --- */
-.cookiebar-container {
-	z-index: 100;
-	left: 0;
-	right: 0;
-	top: 0;
-	padding: 0.456em 1.309em;
-	font-size: 0.809em;
-	text-align: center;
-}
-
-@media (max-width: 768px) {
-	.cookiebar-container {
-		position: fixed;
-		top: auto;
-		bottom: 0;
-		padding: 1.309em 1.309em 0.456em 1.309em;
-		margin: 1em 0.456em;
-		border-style: solid;
-		border-width: 1px;
-		font-size: 1em;
-	}
-}
-
-.cookiebar-container.fixed {
-	position: fixed;
-}
-
-.cookiebar-content {
-	text-align: justify;
-}
-
-@media (min-width: 769px) {
-	.cookiebar-content {
-		display: inline-block;
-		max-width: calc(100% - 400px);
-		vertical-align: top;
-	}
-
-	.cookiebar-actions {
-		display: inline-block;
-		width: 400px;
-	}
-}
-
-@media (max-width: 768px) {
-	.cookiebar-content {
-		margin-bottom: 0.309em;
-	}
-
-	.cookiebar-actions {
-		margin: 1em 0 0.309em 0;
-	}
-}
-
-.cookiebar-button {
-	margin: 0 0.309em;
-}
-
-@media (max-width: 768px) {
-	.cookiebar-button {
-		margin: 0 0.618em;
-	}
-}
-
-@media (max-width: 468px) {
-	.cookiebar-more {
-		display: block;
-		margin: 0.618em 0 0.309em 0;
-	}
-}
-
-.aboutcookie-title {
-	font-size: 1.3em;
-	line-height: 1.3em;
-	font-weight: bold
-}
-
-.aboutcookie-title + p {
-	margin: 0 0 1.309 0;
-}
-
-#cookiebar-change-choice {
-	margin-top: 0.618em;
-	text-align: center;
-}
-
-.cookiebar-change-choice-link {
-	text-align: center;
-}
-
-/* --- Search engines --- */
-.robot {
-	font-size: 0.9em;
-	font-weight: bold;
 }

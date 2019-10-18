@@ -23,25 +23,11 @@
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
-			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/default.css;/kernel/lib/css/font-awesome/css/font-awesome.css;/kernel/lib/css/font-awesome-animation/css/font-awesome-animation.css;/templates/{THEME}/theme/lightcase.css;/templates/{THEME}/theme/shape.css;/templates/{THEME}/theme/design.css;/templates/{THEME}/theme/content.css;/templates/{THEME}/theme/table.css;/templates/{THEME}/theme/form.css;/templates/{THEME}/theme/global.css;/templates/{THEME}/theme/cssmenu.css;/templates/{THEME}/theme/plugins.css;/templates/{THEME}/theme/colors.css')}" type="text/css" media="screen, print" />
+			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/{THEME}/theme/@import.css;/templates/default/theme/debug.css')}" type="text/css" media="screen, print" />
 		# ELSE #
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome-animation/css/font-awesome-animation.css" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/lightcase.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/shape.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/table.css" type="text/css" media="screen, print" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/form.css" type="text/css" media="screen, print" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/cssmenu.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/plugins.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/cell-flex.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/messages.css" type="text/css" media="screen" />
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/colors.css" type="text/css" media="screen" />
+			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css" type="text/css" />
 		# ENDIF #
-		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/login.css" type="text/css" media="screen" /># ENDIF #
+		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/login.css" type="text/css" media="screen" /># ENDIF #
 
 		<!-- Modules CSS -->
 		{MODULES_CSS}

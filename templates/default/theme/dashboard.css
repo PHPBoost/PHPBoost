@@ -1,0 +1,34 @@
+/*
+ * Contains all hacks for common css files
+*/
+
+/* --- multitabs --- */
+
+.close-modal { width: calc(100% - 230px); }
+
+@media (min-width: 769px) {
+    .modal {
+        left: 230px;
+        width: calc(100% - 230px);
+    }
+
+	.tabs-container .fieldset-submit {
+		position: fixed;
+		right: 0.618em;
+		bottom: 5%;
+	}
+}
+
+/* --- cellflex -- dashboard homepage --- */
+.cell-body form { margin: -0.618em; }
+
+.cell-body fieldset,
+.cell-body .fieldset-inset,
+.cell-body .form-element { padding: 0; }
+
+.cell-body legend {
+    padding: 0.309em;
+    font-size: 1.482em;
+}
+
+.cell-body textarea {margin: 0;}

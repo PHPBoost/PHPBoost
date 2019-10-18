@@ -154,9 +154,6 @@
     }
 
     @media (min-width:769px) {
-        .close-modal {
-            height:calc(100% - 40px);
-        }
         .close-modal:after {
             top: 0.618em;
             right: 1.618em;

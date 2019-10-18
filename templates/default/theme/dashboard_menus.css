@@ -12,20 +12,18 @@
 	.admin-index ul {
 		margin: 0;
 		list-style-type: none;
+		display: flex;
+		flex-direction: row;
 	}
 
 	.admin-index li {
-		display: inline-block;
-		position: relative;
-		width: calc(94.7% / 4);
+		width: calc(100% / 4);
 	}
 
 	.admin-index a {
-		position: relative;
 		display: block;
 		padding: 0.3em;
 		text-align: center;
-		font-size: 1em;
 	}
 
 	.admin-index li:first-child:after {
@@ -35,43 +33,35 @@
 	@media (min-width: 769px) {
 		.admin-index a {
 			padding: 0.555em;
-			font-size: 1.4em;
 		}
 	}
+}
 
-	.admin-index li a span {
-		position: absolute;
-		display: block;
-		top: 100%;
-		left: 0;
-		width: 100%;
-		opacity: 0;
-		visibility: hidden;
-		text-align: center;
-		font-size: 0.6em;
-		white-space: nowrap;
-		transition: all 0.3s ease 0s;
+@media all { /* --- Menu titles ---------------------------------------------- */
+	.menu-title {
+		display: none;
 	}
 
 	@media (min-width: 769px) {
-		.admin-index li a span {
-			width: 200%;
-			left: -50%;
-			text-align: center;
+
+		.menu-title {
+			display: block;
+			margin: 1.618em 0 0;
+			padding: 0.309em;
+			overflow: hidden;
 		}
 
-		.admin-index li:last-child a span {
-			right: 15px;
-			left: auto;
-			width: 100%;
+		.pbt-logo,
+		.site-logo {
+			display: inline-block;
+			height: 1.618em;
+			width: 1.618em;
+			background-image: url(images/logo.png);
+			background-repeat: no-repeat;
+			background-position: center ;
+			background-size: cover;
+			vertical-align: middle;
 		}
-	}
-
-	.admin-index li a:hover span {
-		opacity: 1;
-		visibility: visible;
-		top: 90%;
-		transition: all 0.5s ease 0s;
 	}
 }
 
@@ -111,14 +101,13 @@
 		display: block;
 		padding: 0.456em;
 		font-weight: 400;
-		font-size: 1em;
+		font-size: 1.3rem;
 		text-decoration: none;
 		text-transform: uppercase;
 	}
 
 	.admin-li > a span {
 		display: none;
-		font-size: 1.3rem;
 	}
 
 	@media (min-width: 769px) and (min-height: 601px) {
@@ -213,10 +202,6 @@
 		}
 	}
 
-	.modal-menu a {
-		font-size: 1.618em;
-	}
-
 	.modal-menu i {
 		margin-right: 8px;
 		align-self: center;
@@ -243,6 +228,12 @@
 	.modal-menu ul li a {
 		display: block;
 		padding: 0.618em 1em;
+		font-size: 1.482rem
+	}
+
+	.modal-menu > li > a,
+	li.has-sub > a {
+		font-size: 2rem
 	}
 
 	ul.level-2 > li.has-sub > a {
@@ -251,11 +242,6 @@
 
 	ul.level-2 ul {
 		padding: 0;
-	}
-
-	ul.level-2 a {
-		font-weight: 400;
-		font-size: 1em;
 	}
 }
 
