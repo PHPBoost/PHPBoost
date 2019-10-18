@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 02 14
+ * @version     PHPBoost 5.2 - last update: 2019 10 18
  * @since       PHPBoost 3.0 - 2011 03 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -40,6 +40,17 @@ class CSSCacheManager
 				$files = explode(';', $files);
 			}
 
+			foreach ($files as $file)
+			{
+				if (basename($file) == '@import.css')
+				{
+					foreach ($this->extract_css_urls(implode(' ', file(PATH_TO_ROOT . $file))) as $url)
+						$files[] = $url;
+					
+					unset($files[array_search($file, $files)]);
+				}
+			}
+
 			$css_cache = new CSSCacheManager();
 			$css_cache->set_files($files);
 			$css_cache->set_cache_file_location(PATH_TO_ROOT . $cache_file_location);
@@ -47,6 +58,34 @@ class CSSCacheManager
 
 			return TPL_PATH_TO_ROOT . $cache_file_location;
 		}
+	}
+
+	/**
+	 * Extract URLs from CSS text.
+	 */
+	private function extract_css_urls($text)
+	{
+		$urls = array();
+		
+		$url_pattern     = '(([^\\\\\'", \(\)]*(\\\\.)?)+)';
+		$urlfunc_pattern = 'url\(\s*[\'"]?' . $url_pattern . '[\'"]?\s*\)';
+		$pattern         = '/(' .
+			 '(@import\s*[\'"]' . $url_pattern     . '[\'"])' .
+			'|(@import\s*'      . $urlfunc_pattern . ')'      .
+			'|('                . $urlfunc_pattern . ')'      .  ')/iu';
+		if ( !preg_match_all( $pattern, $text, $matches ) )
+			return $urls;
+		
+		foreach ( array_merge($matches[3], $matches[7]) as $match )
+		{
+			if ( !empty($match) )
+			{
+				$url = preg_replace( '/\\\\(.)/u', '\\1', $match );
+				$urls[] = preg_match( '/^..\/..\//', $url) ? str_replace('../../', '/templates/', $url) : '/templates/' . AppContext::get_current_user()->get_theme() . '/theme/' . $url;
+			}
+		}
+		
+		return $urls;
 	}
 
 	public function set_files(Array $files)
