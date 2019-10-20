@@ -42,7 +42,7 @@ class RichCategory extends Category
 	public function get_default_image()
 	{
 		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_category_thumbnail.png');
-		if ($file_exists())
+		if ($file->exists())
 			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_category_thumbnail.png');
 		else
 			return new Url('/templates/default/images/default_category_thumbnail.png');
