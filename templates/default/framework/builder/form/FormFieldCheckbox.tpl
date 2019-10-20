@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
 	# ENDIF #
 
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
-		<label for="${escape(HTML_ID)}">
+		<label class="checkbox" for="${escape(HTML_ID)}">
 			<input type="checkbox" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_CHECKED # checked="checked" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>
 			<span></span>
 		</label>
