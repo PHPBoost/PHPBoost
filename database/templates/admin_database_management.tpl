@@ -88,30 +88,34 @@
 						</thead>
 						<tbody>
 							# START table_list #
-							<tr class="center">
-								<td>
-									<div class="form-field-checkbox-mini" style="margin: auto;">
-										<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
-										<label for="id{table_list.I}"><span class="sr-only">{L_SELECTED_TABLES}</span></label>
-									</div>
-								</td>
-								<td>
-									<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
-								</td>
-								<td>{table_list.TABLE_ROWS}</td>
-								<td>{table_list.TABLE_ENGINE}</td>
-								<td>{table_list.TABLE_COLLATION}</td>
-								<td>{table_list.TABLE_DATA}</td>
-								<td>{table_list.TABLE_FREE}</td>
-							</tr>
+								<tr class="center">
+									<td class="checkbox-mini">
+										<div class="form-field-checkbox">
+											<label class="checkbox" for="id{table_list.I}">
+												<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
+												<span>&nbsp;</span>
+												<span class="sr-only">{L_SELECTED_TABLES}</span>
+											</label>
+										</div>
+									</td>
+									<td>
+										<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
+									</td>
+									<td>{table_list.TABLE_ROWS}</td>
+									<td>{table_list.TABLE_ENGINE}</td>
+									<td>{table_list.TABLE_COLLATION}</td>
+									<td>{table_list.TABLE_DATA}</td>
+									<td>{table_list.TABLE_FREE}</td>
+								</tr>
 							# END table_list #
 							<tr class="center">
-								<td>
-									<div class="form-field-checkbox-mini" style="display: inline-block;">
-										<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
-										<label for="check-all"><span class="sr-only">{L_ALL}</span></label>
+								<td class="checkbox-mini">
+									<div class="form-field-checkbox">
+										<label class="checkbox" for="check-all">
+											<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
+											<span class="valign-bottom">{L_ALL}</span>
+										</label>
 									</div>
-									<span class="valign-bottom">{L_ALL}</span>
 								</td>
 								<td><strong>{NBR_TABLES}</strong></td>
 								<td><strong>{NBR_ROWS}</strong></td>
@@ -123,26 +127,32 @@
 						</tbody>
 					</table>
 
-					<div class="spacer"></div>
-
 					<fieldset>
 						<legend>{ACTION_FOR_SELECTION}</legend>
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<ul class="elements-container columns-3 center no-list no-style">
-								<li class="block">
-									<i class="fa fa-chart-bar fa-2x" aria-hidden="true"></i>
-									<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
-								</li>
-								<li class="block">
-									<i class="fa fa-cogs fa-2x" aria-hidden="true"></i>
-									<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
-								</li>
-								<li class="block">
-									<i class="fa fa-save fa-2x" aria-hidden="true"></i>
-									<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
-								</li>
-							</ul>
+							<div class="cell-flex cell-flex-3 no-style">
+								<div class="cell">
+									<button type="submit" name="optimize" value="true" class="submit">
+										<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
+										{L_OPTIMIZE}
+									</button>
+								</div>
+								<div class="cell">
+
+									<button type="submit" name="repair" value="true" class="submit">
+										<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
+										{L_REPAIR}
+									</button>
+								</div>
+								<div class="cell">
+
+									<button type="submit" name="backup" value="true" class="submit">
+										<i class="fa fa-save fa-fw" aria-hidden="true"></i>
+										{L_BACKUP}
+									</button>
+								</div>
+							</div>
 						</div>
 					</fieldset>
 
@@ -270,7 +280,7 @@
 											<span>{L_BACKUP_STRUCT}</span>
 										</label>
 									</div>
-									<div class="form-field-radio">										
+									<div class="form-field-radio">
 										<label for="backup_data">
 											<input type="radio" id="backup_data" name="backup_type" value="data"/>
 											<span>{L_BACKUP_DATA}</span>
@@ -278,12 +288,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-element third-field top-field">
-								<label for="compress_file">Compresser le fichier</label>
+							<div class="form-element third-field top-field custom-checkbox">
+								<label for="compress_file">{L_COMPRESS_FILE}</label>
 								<div class="form-field">
 									<div class="form-field-checkbox">
-										<input type="checkbox" name="compress_file" id="compress_file" checked="checked">
-										<label for="compress_file"></label>
+										<label class="checkbox" for="compress_file">
+											<input type="checkbox" name="compress_file" id="compress_file" checked="checked">
+											<span>&nbsp;</span>
+										</label>
 									</div>
 								</div>
 							</div>

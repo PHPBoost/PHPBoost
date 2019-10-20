@@ -17,13 +17,14 @@ $lang['module_config_title'] = 'Configuration du module base de données';
 $lang['database.actions.database_management'] = 'Gestion base de données';
 $lang['database.actions.db_sql_queries'] = 'Requêtes SQL';
 
-//config
+// Configuration
 $lang['config.database-tables-optimization-enabled'] = 'Activer l\'optimisation automatique des tables de la base de données';
 $lang['config.database-tables-optimization-day'] = 'Jour de l\'optimisation';
 $lang['config.database-tables-optimization-day.explain'] = 'Optimisation exécutée dans la nuit';
 
 
-//Administration
+
+// Management
 $lang['database'] = 'Base de données';
 $lang['creation_date'] = 'Date de création';
 $lang['database_management'] = 'Gestion base de données';
@@ -62,6 +63,7 @@ $lang['db_optimize'] = 'Optimiser';
 $lang['db_repair'] = 'Réparer';
 $lang['db_insert'] = 'Insérer';
 $lang['db_backup'] = 'Sauvegarder';
+$lang['database.compress.file'] = 'Compresser le fichier';
 $lang['db_download'] = 'Télécharger';
 $lang['db_succes_repair_tables'] = 'La sélection de tables (<em>%s</em>) a été réparée avec succès';
 $lang['db_succes_optimize_tables'] = 'La sélection de tables (<em>%s</em>) a été optimisée avec succès';

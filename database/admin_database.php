@@ -66,6 +66,7 @@ $tpl->put_all(array(
 	'L_INSERT' => $LANG['db_insert'],
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_BACKUP' => $LANG['db_backup'],
+	'L_COMPRESS_FILE' => $LANG['database.compress.file'],
 	'L_TRUNCATE' => LangLoader::get_message('empty', 'main'),
 	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'L_DB_TOOLS' => $LANG['db_tools']
@@ -185,15 +186,15 @@ elseif ($action == 'restore')
 		$filename = TextHelper::strprotect($file);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
 		$original_file_compressed = false;
-		
+
 		if (preg_match('`[^/]+\.zip$`u', $filename))
 		{
 			$original_file_compressed = true;
 			$extract_filename = '';
-			
+
 			include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 			$archive = new PclZip($file_path);
-			
+
 			foreach ($archive->listContent() as $element)
 			{
 				if (preg_match('`[^/]+\.sql$`u', $element['filename']))
@@ -202,7 +203,7 @@ elseif ($action == 'restore')
 					break;
 				}
 			}
-			
+
 			if ($extract_filename && $archive->extract())
 			{
 				$filename = basename($extract_filename);
@@ -225,13 +226,13 @@ elseif ($action == 'restore')
 			}
 			else
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
-			
+
 			if ($original_file_compressed)
 			{
 				$file = new File(PATH_TO_ROOT . '/cache/backup/' . $filename);
 				$file->delete();
 			}
-			
+
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
 		else
@@ -247,15 +248,15 @@ elseif ($action == 'restore')
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
 				$original_file_compressed = false;
-				
+
 				if (preg_match('`[^/]+\.zip$`u', $filename))
 				{
 					$original_file_compressed = true;
 					$extract_filename = '';
-					
+
 					include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 					$archive = new PclZip($file_path);
-					
+
 					foreach ($archive->listContent() as $element)
 					{
 						if (preg_match('`[^/]+\.sql$`u', $element['filename']))
@@ -264,7 +265,7 @@ elseif ($action == 'restore')
 							break;
 						}
 					}
-					
+
 					if ($extract_filename && $archive->extract())
 					{
 						$filename = basename($extract_filename);
@@ -277,7 +278,7 @@ elseif ($action == 'restore')
 						AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=no_sql_file', '', '&'));
 					}
 				}
-				
+
 				Environment::try_to_increase_max_execution_time();
 				$db_utils = PersistenceContext::get_dbms_utils();
 				if ($db_utils->parse_file(new File($file_path)))
@@ -289,13 +290,13 @@ elseif ($action == 'restore')
 				}
 				else
 					AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
-				
+
 				if ($original_file_compressed)
 				{
 					$file = new File(PATH_TO_ROOT . '/cache/backup/' . $filename);
 					$file->delete();
 				}
-				
+
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif (is_file($file_path))
@@ -362,7 +363,7 @@ elseif ($action == 'restore')
 
 	$filelist = array();
 	$backup_folder = new Folder(PATH_TO_ROOT . '/cache/backup');
-	
+
 	foreach ($backup_folder->get_files() as $file)
 	{
 		if ($file->get_extension() == 'sql' || $file->get_extension() == 'zip')
@@ -378,7 +379,7 @@ elseif ($action == 'restore')
 	else
 	{
 		krsort($filelist);
-		
+
 		$tpl->put_all(array(
 			'C_FILES' => true,
 			'L_INFO' => $LANG['db_restore_file']
@@ -410,9 +411,9 @@ else
 
 		Environment::try_to_increase_max_execution_time();
 		PersistenceContext::get_dbms_utils()->dump_tables(new BufferedFileWriter(new File(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql')), $selected_tables, $backup_type);
-		
+
 		$file_link = $file_basename . '.sql';
-		
+
 		if ($request->has_postparameter('compress_file') && $request->get_postvalue('compress_file') == 'on')
 		{
 			include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
@@ -429,7 +430,7 @@ else
 				$file->delete();
 			}
 		}
-		
+
 		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_link));
 	}
 
@@ -521,7 +522,7 @@ else
 		}
 
 		$upload_max_filesize = ServerConfiguration::get_upload_max_filesize();
-		
+
 		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
