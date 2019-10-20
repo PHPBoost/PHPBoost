@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -71,33 +71,48 @@ class AdminContactConfigController extends AdminModuleController
 			array('maxlength' => 255, 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("tracking_number_enabled").getValue()) {
-					HTMLForms.getField("date_in_tracking_number_enabled").enable();
-				} else {
-					HTMLForms.getField("date_in_tracking_number_enabled").disable();
-				}'))
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("tracking_number_enabled").getValue()) {
+						HTMLForms.getField("date_in_tracking_number_enabled").enable();
+					} else {
+						HTMLForms.getField("date_in_tracking_number_enabled").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['admin.config.date_in_date_in_tracking_number_enabled'], $this->config->is_date_in_tracking_number_enabled(),
-			array('description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'], 'hidden' => !$this->config->is_tracking_number_enabled())
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'],
+				'hidden' => !$this->config->is_tracking_number_enabled()
+			)
 		));
 
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['admin.config.informations_enabled'], $this->config->are_informations_enabled(),
-			array('description' => $this->lang['admin.config.informations.explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("informations_enabled").getValue()) {
-					HTMLForms.getField("informations_position").enable();
-					HTMLForms.getField("informations").enable();
-				} else {
-					HTMLForms.getField("informations_position").disable();
-					HTMLForms.getField("informations").disable();
-				}'))
-			));
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['admin.config.informations.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("informations_enabled").getValue()) {
+						HTMLForms.getField("informations_position").enable();
+						HTMLForms.getField("informations").enable();
+					} else {
+						HTMLForms.getField("informations_position").disable();
+						HTMLForms.getField("informations").disable();
+					}'
+				)
+			)
+		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['admin.config.informations_position'], $this->config->get_informations_position(),
 			array(
@@ -120,14 +135,19 @@ class AdminContactConfigController extends AdminModuleController
 			$form->add_fieldset($map_fieldset);
 
 			$map_fieldset->add_field(new FormFieldCheckbox('map_enabled', $this->lang['admin.config.map_enabled'], $this->config->is_map_enabled(),
-				array('class' => 'top-field', 'hidden' => !$this->config->is_googlemaps_available(), 'events' => array('click' => '
-					if (HTMLForms.getField("map_enabled").getValue()) {
-						HTMLForms.getField("map_position").enable();
-						HTMLForms.getField("map_markers").enable();
-					} else {
-						HTMLForms.getField("map_position").disable();
-						HTMLForms.getField("map_markers").disable();
-					}'))
+				array(
+					'class' => 'top-field custom-checkbox',
+					'hidden' => !$this->config->is_googlemaps_available(),
+					'events' => array('click' => '
+						if (HTMLForms.getField("map_enabled").getValue()) {
+							HTMLForms.getField("map_position").enable();
+							HTMLForms.getField("map_markers").enable();
+						} else {
+							HTMLForms.getField("map_position").disable();
+							HTMLForms.getField("map_markers").disable();
+						}'
+					)
+				)
 			));
 
 			$map_fieldset->add_field(new FormFieldSimpleSelectChoice('map_position', $this->lang['admin.config.map_position'], $this->config->get_map_position(),
@@ -139,7 +159,10 @@ class AdminContactConfigController extends AdminModuleController
 			));
 
 			$map_fieldset->add_field(new GoogleMapsFormFieldMultipleMarkers('map_markers', $this->lang['admin.config.map.markers'], $this->config->get_map_markers(),
-				array('class' => 'half-field', 'hidden' => !$this->config->is_map_enabled())
+				array(
+					'class' => 'full-field',
+					'hidden' => !$this->config->is_map_enabled()
+				)
 			));
 		}
 

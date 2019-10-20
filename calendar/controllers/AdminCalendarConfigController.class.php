@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -66,27 +66,12 @@ class AdminCalendarConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			array('class' => 'top-field','min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
-			array(),
-			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("members_birthday_enabled").getValue()) {
-					HTMLForms.getField("birthday_color").enable();
-				} else {
-					HTMLForms.getField("birthday_color").disable();
-				}')
-			)
-		));
-
-		$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
-			array('hidden' => !$this->config->is_members_birthday_enabled()),
+			array('class' => 'top-field'),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 
@@ -96,6 +81,29 @@ class AdminCalendarConfigController extends AdminModuleController
 		{
 			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.e_user_born_field_disabled'], MessageHelper::WARNING)->render()));
 		}
+		else
+		{
+			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
+				array(
+					'class' => 'custom-checkbox',
+					'events' => array('click' => '
+						if (HTMLForms.getField("members_birthday_enabled").getValue()) {
+							HTMLForms.getField("birthday_color").enable();
+						} else {
+							HTMLForms.getField("birthday_color").disable();
+						}'
+					)
+				)
+			));
+
+			$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
+				array('hidden' => !$this->config->is_members_birthday_enabled()),
+				array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
+			));
+		}
+
+
+
 
 		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))

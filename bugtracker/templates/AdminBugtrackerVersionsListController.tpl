@@ -48,7 +48,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<tr/>', {id : 'tr_' + id}).appendTo('#versions_list');
 
-			jQuery('<td/>', {id : 'td1_' + id, 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
 
 			jQuery('<div/>', {id : 'versions_radio_' + id, class: 'form-field-radio', style : 'display:none;'}).appendTo('#td1_' + id);
 			jQuery('<label/> ', {for : 'default_version' + id}).appendTo('#versions_radio_' + id);
@@ -76,13 +76,14 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<div/> ', {id : 'release_date' + id + '_date', class : 'calendar-block'}).appendTo('#calendar' + id);
 
-			jQuery('<td/>', {id : 'td4_' + id, 'data-th' : ${escapejs(@labels.fields.version_detected)}}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td4_' + id, class : 'checkbox-mini', 'data-th' : ${escapejs(@labels.fields.version_detected)}}).appendTo('#tr_' + id);
 
 			jQuery('<span/>', {id : 'td4_' + id + '_bt', class : 'bt-content'}).appendTo('#td4_' + id);
 
-			jQuery('<div/>', {id : 'versions_checkbox_' + id, class: 'form-field-checkbox-mini'}).appendTo('#td4_' + id + '_bt');
-			jQuery('<input/> ', {type : 'checkbox', id : 'detected_in' + id, name : 'detected_in' + id, onclick : 'display_default_version_radio(' + id + ');'}).appendTo('#versions_checkbox_' + id);
-			jQuery('<label/> ', {for : 'detected_in' + id}).appendTo('#versions_checkbox_' + id);
+			jQuery('<div/>', {id : 'versions_checkbox_' + id, class: 'form-field-checkbox'}).appendTo('#td4_' + id + '_bt');
+			jQuery('<label/> ', {class : 'checkbox', for : 'detected_in' + id}).appendTo('#versions_checkbox_' + id);
+			jQuery('<input/> ', {type : 'checkbox', id : 'detected_in' + id, name : 'detected_in' + id, onclick : 'display_default_version_radio(' + id + ');'}).appendTo('#versions_checkbox_' + id + ' label');
+			jQuery('<span/>').appendTo('#versions_checkbox_' + id + ' label');
 
 			jQuery('<td/>', {id : 'td5_' + id, 'data-th' : ${escapejs(LangLoader::get_message('delete', 'common'))}}).appendTo('#tr_' + id);
 
@@ -152,8 +153,8 @@ function display_default_version_radio(version_id)
 		</tr>
 		# START versions #
 		<tr>
-			<td>
-				<div id="versions_radio_{versions.ID}" class="form-field-radio custom-radio"# IF NOT versions.C_DETECTED_IN # style="display: none;"# ENDIF #>
+			<td class="custom-radio">
+				<div id="versions_radio_{versions.ID}" class="form-field-radio"# IF NOT versions.C_DETECTED_IN # style="display: none;"# ENDIF #>
 					<label for="default_version{versions.ID}">
 						<input aria-label="{versions.NAME}" type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF #>
 						<span></span>
@@ -172,10 +173,12 @@ function display_default_version_radio(version_id)
 					</div>
 				</div>
 			</td>
-			<td>
-				<div id="versions_checkbox_{versions.ID}" class="form-field-checkbox-mini">
-					<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
-					<label for="detected_in{versions.ID}"></label>
+			<td class="checkbox-mini">
+				<div id="versions_checkbox_{versions.ID}" class="form-field-checkbox">
+					<label class="checkbox" for="detected_in{versions.ID}">
+						<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
+						<span>&nbsp;</span>
+					</label>
 				</div>
 			</td>
 			<td>

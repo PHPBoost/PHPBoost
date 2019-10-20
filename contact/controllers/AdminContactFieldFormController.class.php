@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 4.0 - 2013 08 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -84,9 +84,19 @@ class AdminContactFieldFormController extends AdminModuleController
 			array('class' => 'top-field', 'rows' => 4, 'cols' => 47)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->admin_user_common_lang['field.required'], (int)$field->is_required(), array('class' => 'top-field', 'disabled' => $field->is_readonly())));
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->admin_user_common_lang['field.required'], (int)$field->is_required(),
+			array(
+				'class' => 'top-field custom-checkbox',
+				'disabled' => $field->is_readonly()
+			)
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display', $this->admin_user_common_lang['field.display'], (int)$field->is_displayed(), array('class' => 'top-field', 'disabled' => $field->is_readonly())));
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->admin_user_common_lang['field.display'], (int)$field->is_displayed(),
+			array(
+				'class' => 'top-field custom-checkbox',
+				'disabled' => $field->is_readonly()
+			)
+		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->admin_user_common_lang['field.type'], $field->get_field_type(),
 			$this->get_array_select_type($field->get_field_name()),

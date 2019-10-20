@@ -24,22 +24,18 @@
 	margin-right: 45%;
 }
 
-div[id*="AdminContactFieldFormController_possible_values_"] {
+[id*="AdminContactFieldFormController_possible_values_"] {
 	margin: 0.618em 0 0 0;
 	clear: both;
 }
 
 @media (max-width: 768px) {
-	div[id*="AdminContactFieldFormController_possible_values_"] > .form-field-checkbox,
-	div[id*="AdminContactFieldFormController_possible_values_"] > input {
-		display: inline-block;
-	}
 
-	div[id*="AdminContactFieldFormController_possible_values_"] > .form-field-checkbox {
+	[id*="AdminContactFieldFormController_possible_values_"] .form-field-checkbox {
 		margin: 0.618em 0 1.309em 0;
 	}
 
-	div[id*="AdminContactFieldFormController_possible_values_"] > input {
+	[id*="AdminContactFieldFormController_possible_values_"] input {
 		margin: 0 0 0.309em 0;
 	}
 
@@ -51,7 +47,7 @@ div[id*="AdminContactFieldFormController_possible_values_"] {
 		margin: 0 0 0 1.309em;
 	}
 
-	div[id*="AdminContactFieldFormController_possible_values_"] .form-field-radio {
+	[id*="AdminContactFieldFormController_possible_values_"] .form-field-radio {
 		vertical-align: middle;
 		margin: 0.618em 0;
 	}

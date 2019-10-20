@@ -12,8 +12,8 @@
 	<tbody>
 		# START priorities #
 		<tr>
-			<td>
-				<div class="form-field-radio custom-radio">
+			<td class="custom-radio">
+				<div class="form-field-radio">
 					<label for="default_priority{priorities.ID}">
 						<input aria-label="{priorities.NAME}" id="default_priority{priorities.ID}" type="radio" name="default_priority" value="{priorities.ID}"# IF priorities.C_IS_DEFAULT # checked="checked"# ENDIF # />
 						<span></span>

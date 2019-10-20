@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2012 10 22
 */
 
@@ -119,7 +119,9 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 		$fieldset->set_description($this->lang['config.delete_parameter.description.' . $this->parameter]);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('delete_parameter_and_content', $this->lang['config.delete_parameter.parameter_and_content.' . $this->parameter], FormFieldCheckbox::UNCHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('delete_parameter_and_content', $this->lang['config.delete_parameter.parameter_and_content.' . $this->parameter], FormFieldCheckbox::UNCHECKED),
+			array('class' => 'custom-checkbox')
+		);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('move_into_another', $this->lang['config.delete_parameter.move_into_another'], '', $this->get_move_into_another_options()));
 

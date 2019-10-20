@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 18
  * @since   	PHPBoost 3.0 - 2012 10 18
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -101,35 +101,44 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['config.enable_roadmap'], $this->config->is_roadmap_enabled(),
-			array('description' => $this->lang['explain.roadmap'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['explain.roadmap']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('restrict_display_to_own_elements_enabled', $this->lang['config.restrict_display_to_own_elements_enabled'], $this->config->is_restrict_display_to_own_elements_enabled(),
-			array('description' => $this->lang['config.restrict_display_to_own_elements_enabled.explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['config.restrict_display_to_own_elements_enabled.explain']
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('progress_bar', $this->lang['config.progress_bar']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['config.enable_progress_bar'], $this->config->is_progress_bar_displayed(),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("progress_bar_displayed").getValue()) {
-					HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
-					HTMLForms.getField("' . Bug::PENDING . '").enable();
-					HTMLForms.getField("' . Bug::ASSIGNED . '").enable();
-					HTMLForms.getField("' . Bug::IN_PROGRESS . '").enable();
-					HTMLForms.getField("' . Bug::REJECTED . '").enable();
-					HTMLForms.getField("' . Bug::REOPEN . '").enable();
-					HTMLForms.getField("' . Bug::FIXED . '").enable();
-				} else {
-					HTMLForms.getField("' . Bug::NEW_BUG . '").disable();
-					HTMLForms.getField("' . Bug::PENDING . '").disable();
-					HTMLForms.getField("' . Bug::ASSIGNED . '").disable();
-					HTMLForms.getField("' . Bug::IN_PROGRESS . '").disable();
-					HTMLForms.getField("' . Bug::REJECTED . '").disable();
-					HTMLForms.getField("' . Bug::REOPEN . '").disable();
-					HTMLForms.getField("' . Bug::FIXED . '").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("progress_bar_displayed").getValue()) {
+						HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
+						HTMLForms.getField("' . Bug::PENDING . '").enable();
+						HTMLForms.getField("' . Bug::ASSIGNED . '").enable();
+						HTMLForms.getField("' . Bug::IN_PROGRESS . '").enable();
+						HTMLForms.getField("' . Bug::REJECTED . '").enable();
+						HTMLForms.getField("' . Bug::REOPEN . '").enable();
+						HTMLForms.getField("' . Bug::FIXED . '").enable();
+					} else {
+						HTMLForms.getField("' . Bug::NEW_BUG . '").disable();
+						HTMLForms.getField("' . Bug::PENDING . '").disable();
+						HTMLForms.getField("' . Bug::ASSIGNED . '").disable();
+						HTMLForms.getField("' . Bug::IN_PROGRESS . '").disable();
+						HTMLForms.getField("' . Bug::REJECTED . '").disable();
+						HTMLForms.getField("' . Bug::REOPEN . '").disable();
+						HTMLForms.getField("' . Bug::FIXED . '").disable();
+					}'
+				)
 			)
 		));
 
@@ -145,19 +154,25 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['config.enable_admin_alerts'], $this->config->are_admin_alerts_enabled(),
-			array('class' => 'top-field', 'events' => array('click' => '
-				if (HTMLForms.getField("admin_alerts_enabled").getValue()) {
-					HTMLForms.getField("admin_alerts_fix_action").enable();
-					HTMLForms.getField("admin_alerts_levels").enable();
-				} else {
-					HTMLForms.getField("admin_alerts_fix_action").disable();
-					HTMLForms.getField("admin_alerts_levels").disable();
-				}')
+			array(
+				'class' => 'top-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("admin_alerts_enabled").getValue()) {
+						HTMLForms.getField("admin_alerts_fix_action").enable();
+						HTMLForms.getField("admin_alerts_levels").enable();
+					} else {
+						HTMLForms.getField("admin_alerts_fix_action").disable();
+						HTMLForms.getField("admin_alerts_levels").disable();
+					}'
+				)
 			)
 		));
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('admin_alerts_levels', $this->lang['config.admin_alerts_levels'], $this->config->get_admin_alerts_levels(), $this->build_admin_alerts_levels($severities),
-			array('class' => 'top-field', 'hidden' => !$this->config->are_admin_alerts_enabled())
+			array(
+				'class' => 'top-field checkbox-mini inline-checkbox',
+				'hidden' => !$this->config->are_admin_alerts_enabled()
+			)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(),
@@ -165,32 +180,43 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['labels.alert_fix'], BugtrackerConfig::FIX),
 				new FormFieldSelectChoiceOption($this->lang['labels.alert_delete'], BugtrackerConfig::DELETE)
 			),
-			array('class' => 'top-field', 'hidden' => !$this->config->are_admin_alerts_enabled())
+			array(
+				'class' => 'top-field',
+				'hidden' => !$this->config->are_admin_alerts_enabled()
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('stats', $this->lang['titles.stats']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('stats_enabled', $this->lang['config.enable_stats'], $this->config->are_stats_enabled(),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("stats_enabled").getValue()) {
-					HTMLForms.getField("stats_top_posters_enabled").enable();
-					HTMLForms.getField("stats_top_posters_number").enable();
-				} else {
-					HTMLForms.getField("stats_top_posters_enabled").disable();
-					HTMLForms.getField("stats_top_posters_number").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("stats_enabled").getValue()) {
+						HTMLForms.getField("stats_top_posters_enabled").enable();
+						HTMLForms.getField("stats_top_posters_number").enable();
+					} else {
+						HTMLForms.getField("stats_top_posters_enabled").disable();
+						HTMLForms.getField("stats_top_posters_number").disable();
+					}'
+				)
 			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('stats_top_posters_enabled', $this->lang['config.enable_stats_top_posters'], $this->config->are_stats_top_posters_enabled(),
-			array('hidden' => !$this->config->are_stats_enabled(), 'events' => array('click' => '
-				if (HTMLForms.getField("stats_top_posters_enabled").getValue()) {
-					HTMLForms.getField("stats_top_posters_number").enable();
-				} else {
-					HTMLForms.getField("stats_top_posters_number").disable();
-				}')
-		)));
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_stats_enabled(),
+				'events' => array('click' => '
+					if (HTMLForms.getField("stats_top_posters_enabled").getValue()) {
+						HTMLForms.getField("stats_top_posters_number").enable();
+					} else {
+						HTMLForms.getField("stats_top_posters_number").disable();
+					}'
+				)
+			)
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
 			'min' => 1, 'required' => true, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
@@ -201,64 +227,95 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('pm_enabled', $this->lang['config.enable_pm'], $this->config->are_pm_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
-			array('events' => array('click' => '
-				if (HTMLForms.getField("pm_enabled").getValue()) {
-					HTMLForms.getField("pm_edit_enabled").enable();
-					HTMLForms.getField("pm_delete_enabled").enable();
-					HTMLForms.getField("pm_comment_enabled").enable();
-					HTMLForms.getField("pm_in_progress_enabled").enable();
-					HTMLForms.getField("pm_pending_enabled").enable();
-					HTMLForms.getField("pm_assign_enabled").enable();
-					HTMLForms.getField("pm_fix_enabled").enable();
-					HTMLForms.getField("pm_reject_enabled").enable();
-					HTMLForms.getField("pm_reopen_enabled").enable();
-				} else {
-					HTMLForms.getField("pm_edit_enabled").disable();
-					HTMLForms.getField("pm_delete_enabled").disable();
-					HTMLForms.getField("pm_comment_enabled").disable();
-					HTMLForms.getField("pm_in_progress_enabled").disable();
-					HTMLForms.getField("pm_pending_enabled").disable();
-					HTMLForms.getField("pm_assign_enabled").disable();
-					HTMLForms.getField("pm_fix_enabled").disable();
-					HTMLForms.getField("pm_reject_enabled").disable();
-					HTMLForms.getField("pm_reopen_enabled").disable();
-				}')
-		)));
-
-		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['config.enable_pm.edit'], $this->config->are_pm_edit_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("pm_enabled").getValue()) {
+						HTMLForms.getField("pm_edit_enabled").enable();
+						HTMLForms.getField("pm_delete_enabled").enable();
+						HTMLForms.getField("pm_comment_enabled").enable();
+						HTMLForms.getField("pm_in_progress_enabled").enable();
+						HTMLForms.getField("pm_pending_enabled").enable();
+						HTMLForms.getField("pm_assign_enabled").enable();
+						HTMLForms.getField("pm_fix_enabled").enable();
+						HTMLForms.getField("pm_reject_enabled").enable();
+						HTMLForms.getField("pm_reopen_enabled").enable();
+					} else {
+						HTMLForms.getField("pm_edit_enabled").disable();
+						HTMLForms.getField("pm_delete_enabled").disable();
+						HTMLForms.getField("pm_comment_enabled").disable();
+						HTMLForms.getField("pm_in_progress_enabled").disable();
+						HTMLForms.getField("pm_pending_enabled").disable();
+						HTMLForms.getField("pm_assign_enabled").disable();
+						HTMLForms.getField("pm_fix_enabled").disable();
+						HTMLForms.getField("pm_reject_enabled").disable();
+						HTMLForms.getField("pm_reopen_enabled").disable();
+					}'
+				)
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['config.enable_pm.delete'], $this->config->are_pm_delete_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['config.enable_pm.edit'], $this->config->are_pm_edit_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['config.enable_pm.comment'], $this->config->are_pm_comment_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['config.enable_pm.delete'], $this->config->are_pm_delete_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_in_progress_enabled', $this->lang['config.enable_pm.in_progress'], $this->config->are_pm_in_progress_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['config.enable_pm.comment'], $this->config->are_pm_comment_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_pending_enabled', $this->lang['config.enable_pm.pending'], $this->config->are_pm_pending_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_in_progress_enabled', $this->lang['config.enable_pm.in_progress'], $this->config->are_pm_in_progress_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_assign_enabled', $this->lang['config.enable_pm.assign'], $this->config->are_pm_assign_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_pending_enabled', $this->lang['config.enable_pm.pending'], $this->config->are_pm_pending_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['config.enable_pm.fix'], $this->config->are_pm_fix_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_assign_enabled', $this->lang['config.enable_pm.assign'], $this->config->are_pm_assign_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_reject_enabled', $this->lang['config.enable_pm.reject'], $this->config->are_pm_reject_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['config.enable_pm.fix'], $this->config->are_pm_fix_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['config.enable_pm.reopen'], $this->config->are_pm_reopen_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('pm_reject_enabled', $this->lang['config.enable_pm.reject'], $this->config->are_pm_reject_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['config.enable_pm.reopen'], $this->config->are_pm_reopen_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => !$this->config->are_pm_enabled()
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('contents-value', $this->lang['titles.contents_value_title']);
@@ -273,9 +330,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.type'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory()));
+		$fieldset->add_field(new FormFieldCheckbox('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render(), array('class' => 'full-field')));
 
@@ -283,9 +344,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.category'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory()));
+		$fieldset->add_field(new FormFieldCheckbox('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render(), array('class' => 'full-field')));
 
@@ -293,7 +358,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.severity'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory()));
+		$fieldset->add_field(new FormFieldCheckbox('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render(), array('class' => 'full-field')));
 
@@ -301,9 +368,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.priority'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory()));
+		$fieldset->add_field(new FormFieldCheckbox('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render(), array('class' => 'full-field')));
 
@@ -311,9 +382,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.version'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory()));
+		$fieldset->add_field(new FormFieldCheckbox('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render(), array('class' => 'full-field')));
 
