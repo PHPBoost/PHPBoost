@@ -46,39 +46,39 @@
 }
 
 /* --- Cell structure ------------------------------------------------------- */
-.cell {
+.cell-flex .cell {
 	padding: 0.456em;
 	margin: 0;
 	display: flex;
 	flex-direction: column;
 }
 
-.cell-title {
+.cell-flex .cell-title {
 	padding: 0.456em;
 	border-style: solid;
 	border-width: 1px;
 	border-color: transparent;
 }
 
-.cell-body,
-.cell-list,
-.cell-table {
+.cell-flex .cell-body,
+.cell-flex .cell-list,
+.cell-flex .cell-table {
 	border-style: solid;
 	border-width: 1px;
 	border-color: transparent;
 	flex: 1 1 auto;
 }
 
-.cell-body {
+.cell-flex .cell-body {
     padding: 0.456em;
 }
 
-[class*="cell-"] + .cell-body,
-[class*="cell-"] + .cell-list {
+.cell-flex [class*="cell-"] + .cell-body,
+.cell-flex [class*="cell-"] + .cell-list {
 	border-width: 0 1px 1px;
 }
 
-.cell-thumbnail {
+.cell-flex .cell-thumbnail {
     position: relative;
     margin: -0.456em;
 	display: flex;
@@ -87,7 +87,7 @@
 	overflow: hidden;
 }
 
-.cell-thumbnail-caption {
+.cell-flex .cell-thumbnail-caption {
     position: absolute;
     top: 0;
     right: 0;
@@ -99,45 +99,45 @@
     align-items: center;
 }
 
-.cell-thumbnail-caption:hover {
+.cell-flex .cell-thumbnail-caption:hover {
     opacity: 1
 }
 
-.cell-list ul {
+.cell-flex .cell-list ul {
 	margin: 0;
 	padding: 0;
 }
 
-.cell-list ul li {
+.cell-flex .cell-list ul li {
 	list-style-type: none;
 	padding: 0.309em 0.456em 0;
 }
 
-.cell-list ul li.li-stretch {
+.cell-flex .cell-list ul li.li-stretch {
 	display: flex;
 	justify-content: space-between;
 }
 
-.cell-list ul li:last-child {
+.cell-flex .cell-list ul li:last-child {
     padding: 0.309em 0.456em;
 }
 
-.cell-table {
+.cell-flex .cell-table {
     overflow: auto;
 }
 
-.cell-table table {
+.cell-flex .cell-table table {
     margin: -2px 0 0;
 }
 
-.cell-table table thead th {
+.cell-flex .cell-table table thead th {
 	border-width: 0 1px;
 	border-style: solid;
 }
-.cell-table table tbody tr td:first-child { border-width: 0 0 1px 0; }
-.cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
+.cell-flex .cell-table table tbody tr td:first-child { border-width: 0 0 1px 0; }
+.cell-flex .cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
 
-.cell-footer {
+.cell-flex .cell-footer {
 	padding: 0.456em;
 	border-style: solid;
 	border-width: 0 1px 1px;
@@ -145,15 +145,15 @@
 	flex: 0 1 auto;
 }
 
-.cell .content {
+.cell-flex .cell .content {
 	margin: 0;
 }
 
-.cell h1 {
+.cell-flex .cell h1 {
 	border: none;
 }
 
-.cell header,
-.cell footer {
+.cell-flex .cell header,
+.cell-flex .cell footer {
 	margin: 0;
 }
