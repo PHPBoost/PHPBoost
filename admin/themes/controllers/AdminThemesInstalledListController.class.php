@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 10
+ * @version   	PHPBoost 5.2 - last update: 2019 10 21
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,8 +76,9 @@ class AdminThemesInstalledListController extends AdminController
 				unset($pictures[0]);
 				foreach ($pictures as $picture)
 				{
+					$url = '/templates/' . (!preg_match('/\/default\//', $picture) ? $theme->get_id() . '/' : '') . $picture;
 					$this->view->assign_block_vars('themes_installed.pictures', array(
-						'URL' => Url::to_rel('/templates/' . $theme->get_id() . '/' . $picture)
+						'URL' => Url::to_rel($url)
 					));
 				}
 			}
