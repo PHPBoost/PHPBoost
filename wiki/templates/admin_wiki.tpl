@@ -57,13 +57,13 @@
 					<label for="display_cats">{L_DISPLAY_CATEGORIES_ON_INDEX}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<label for="display_cats">
+							<label class="radio" for="display_cats">
 								<input type="radio" {HIDE_CATEGORIES_ON_INDEX} name="display_categories_on_index" id="display_cats" value="0">
 								<span>{L_NOT_DISPLAY}</span>
 							</label>
 						</div>
 						<div class="form-field-radio">
-							<label for="display_cats_visible">
+							<label class="radio" for="display_cats_visible">
 								<input type="radio" {DISPLAY_CATEGORIES_ON_INDEX} id="display_cats_visible" name="display_categories_on_index" value="1" />
 								<span>{L_DISPLAY}</span>
 							</label>

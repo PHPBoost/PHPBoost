@@ -51,7 +51,7 @@ BugtrackerFormFieldVersions.prototype = {
 			jQuery('<td/>', {id : 'td1_' + id, class : 'custom-radio', 'data-th' : ${escapejs(@labels.default)}}).appendTo('#tr_' + id);
 
 			jQuery('<div/>', {id : 'versions_radio_' + id, class: 'form-field-radio', style : 'display:none;'}).appendTo('#td1_' + id);
-			jQuery('<label/> ', {for : 'default_version' + id}).appendTo('#versions_radio_' + id);
+			jQuery('<label/> ', {class : 'radio',for : 'default_version' + id}).appendTo('#versions_radio_' + id);
 			jQuery('<input/> ', {type : 'radio', id : 'default_version' + id, name : 'default_version', value : id}).appendTo('#versions_radio_' + id + ' label');
 			jQuery('<span/>').appendTo('#versions_radio_' + id + ' label');
 
@@ -155,7 +155,7 @@ function display_default_version_radio(version_id)
 		<tr>
 			<td class="custom-radio">
 				<div id="versions_radio_{versions.ID}" class="form-field-radio"# IF NOT versions.C_DETECTED_IN # style="display: none;"# ENDIF #>
-					<label for="default_version{versions.ID}">
+					<label class="radio" for="default_version{versions.ID}">
 						<input aria-label="{versions.NAME}" type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF #>
 						<span></span>
 					</label>

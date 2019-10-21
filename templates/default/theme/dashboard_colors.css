@@ -613,19 +613,19 @@ optgroup {
 	color: #FFFFFF;
 }
 
-.custom-radio .form-field-radio [type="radio"]:not(:checked) + span::before,
-.custom-radio .form-field-radio [type="radio"]:checked + span::before {
+.custom-radio .radio [type="radio"]:not(:checked) + span::before,
+.custom-radio .radio [type="radio"]:checked + span::before {
 	background-color: #FFFFFF;
 	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.custom-radio .form-field-radio [type="radio"]:not(:checked) + span:after,
-.custom-radio .form-field-radio [type="radio"]:checked + span:after {
+.custom-radio .radio [type="radio"]:not(:checked) + span:after,
+.custom-radio .radio [type="radio"]:checked + span:after {
 	background-color: #DDDDDD;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 }
 
-.custom-radio .form-field-radio [type="radio"]:checked + span:after {
+.custom-radio .radio [type="radio"]:checked + span:after {
 	background-color: #0066cc;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 }

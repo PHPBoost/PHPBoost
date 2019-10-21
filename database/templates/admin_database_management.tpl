@@ -89,7 +89,7 @@
 						<tbody>
 							# START table_list #
 								<tr class="center">
-									<td class="checkbox-mini">
+									<td class="mini-checkbox">
 										<div class="form-field-checkbox">
 											<label class="checkbox" for="id{table_list.I}">
 												<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
@@ -109,7 +109,7 @@
 								</tr>
 							# END table_list #
 							<tr class="center">
-								<td class="checkbox-mini">
+								<td class="mini-checkbox">
 									<div class="form-field-checkbox">
 										<label class="checkbox" for="check-all">
 											<input type="checkbox" id="check-all" onclick="check_all(this.checked, 'id');" class="valign-middle">
@@ -269,19 +269,19 @@
 								<label for="">{L_SELECTION}</label>
 								<div class="form-field form-field-radio-button">
 									<div class="form-field-radio">
-										<label for="backup_all">
+										<label class="radio" for="backup_all">
 											<input type="radio" id="backup_all" name="backup_type" checked="checked" value="all"/>
 											<span>{L_BACKUP_ALL}</span>
 										</label>
 									</div>
 									<div class="form-field-radio">
-										<label for="backup_struct">
+										<label class="radio" for="backup_struct">
 											<input type="radio" id="backup_struct" name="backup_type" value="struct">
 											<span>{L_BACKUP_STRUCT}</span>
 										</label>
 									</div>
 									<div class="form-field-radio">
-										<label for="backup_data">
+										<label class="radio" for="backup_data">
 											<input type="radio" id="backup_data" name="backup_type" value="data"/>
 											<span>{L_BACKUP_DATA}</span>
 										</label>

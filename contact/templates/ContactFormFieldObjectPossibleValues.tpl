@@ -14,7 +14,7 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			jQuery('<div/>', {'id' : id, 'class' : 'possible-values'}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<div/>', {id : 'radio_' + this.integer, class: 'form-field-radio custom-radio'}).appendTo('#' + id);
-			jQuery('<label/>', {for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
+			jQuery('<label/>', {class : 'radio',for : 'field_is_default_' + id}).appendTo('#radio_' + this.integer);
 			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + id, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#radio_' + this.integer + ' label');
 			jQuery('<span/>').appendTo('#radio_' + this.integer + ' label');
 			jQuery('#radio_' + this.integer).after(' ');
@@ -60,7 +60,7 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 	# START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible_values custom-radio">
 		<div class="form-field-radio possible-values">
-			<label for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
+			<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
 				<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
 				<span></span>
 			</label>

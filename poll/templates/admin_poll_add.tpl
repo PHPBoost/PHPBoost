@@ -63,34 +63,38 @@
 							<label for="question">* {L_QUESTION}</label>
 							<div class="form-field"><input type="text" maxlength="100" id="question" name="question"></div>
 						</div>
-						<div class="form-element top-field">
+						<div class="form-element top-field custom-radio inline-radio">
 							<label for="type">* {L_ANSWERS_TYPE}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
-									<input type="radio" name="type" id="type1" value="1" checked="checked">
-									<label for="type1"></label>
+									<label class="radio" for="type1">
+										<input type="radio" name="type" id="type1" value="1" checked="checked">
+										<span>{L_SINGLE}</span>
+									</label>
 								</div>
-								<span class="form-field-radio-span">{L_SINGLE}</span>
 								<div class="form-field-radio">
-									<input type="radio" name="type" id="type2" value="0">
-									<label for="type2"></label>
+									<label class="radio" for="type2">
+										<input type="radio" name="type" id="type2" value="0">
+										<span>{L_MULTIPLE}</span>
+									</label>
 								</div>
-								<span class="form-field-radio-span">{L_MULTIPLE}</span>
 							</div>
 						</div>
-						<div class="form-element top-field">
+						<div class="form-element top-field custom-radio inline-radio">
 							<label for="archive">* ${LangLoader::get_message('hidden', 'common')}</label>
 							<div class="form-field">
 								<div class="form-field-radio">
-									<input type="radio" name="archive" id="archive1" value="1">
-									<label for="archive1"></label>
+									<label class="radio" for="archive1">
+										<input type="radio" name="archive" id="archive1" value="1">
+										<span>{L_YES}</span>
+									</label>
 								</div>
-								<span class="form-field-radio-span">{L_YES}</span>
 								<div class="form-field-radio">
-									<input type="radio" name="archive" id="archive2" value="0" checked="checked">
-									<label for="archive2"></label>
+									<label class="radio" for="archive2">
+										<input type="radio" name="archive" id="archive2" value="0" checked="checked">
+										<span>{L_NO}</span>
+									</label>
 								</div>
-								<span class="form-field-radio-span">{L_NO}</span>
 							</div>
 						</div>
 						<div class="form-element full-field">
@@ -107,13 +111,13 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="no-separator">
+											<td class="left no-separator">
 												<label class="infos-options"><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
 												<label class="infos-options"><input type="text" name="a1" value="{ANSWER1}" /></label>
 												<label class="infos-options"><input type="text" name="a2" value="{ANSWER2}" /></label>
 												<span id="a3"></span>
 											</td>
-											<td class="no-separator">
+											<td class="left no-separator">
 												<label class="infos-options"><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
@@ -121,7 +125,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2">
+											<td class="left" colspan="2">
 												<span id="s3"><a href="javascript:add_field(3, 20)" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
 											</td>
 										</tr>
@@ -135,29 +139,33 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element half-field">
+						<div class="form-element half-field custom-radio">
 							<label for="release_date">{L_RELEASE_DATE}</label>
 							<div class="form-field poll-form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<div class="form-field-radio">
-										<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
-										<label for"start_end_date"></label>
+										<label class="radio" for"start_end_date">
+											<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
+											<span>
+												{CALENDAR_START}
+												{L_UNTIL}
+											    {CALENDAR_END}
+											</span>
+										</label>
 									</div>
-									{CALENDAR_START}
-									 {L_UNTIL}
-								     {CALENDAR_END}
 								</div>
 							</div>
 							<div class="form-field-radio">
-								<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
-								<label for="release_date"></label>
-								&nbsp; <span class="form-field-radio-span">{L_IMMEDIATE}</span>
+								<label class="radio" for="release_date">
+									<input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED} />
+									<span>{L_IMMEDIATE}</span>
+								</label>
 							</div>
-								<div class="spacer"></div>
 							<div class="form-field-radio">
-								<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
-								<label for="unaprob"></label>
-								&nbsp; <span class="form-field-radio-span">{L_UNAPROB}</span>
+								<label class="radio" for="unaprob">
+									<input type="radio" value="0" id="unaprob" name="visible" {VISIBLE_UNAPROB} />
+									<span>{L_UNAPROB}</span>
+								</label>
 							</div>
 						</div>
 						<div class="form-element top-field">

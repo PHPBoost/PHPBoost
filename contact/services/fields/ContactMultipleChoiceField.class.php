@@ -37,7 +37,7 @@ class ContactMultipleChoiceField extends AbstractContactField
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox($field->get_field_name(), $field->get_name(), $default_values, $options,
 			array(
-				'class' => 'checkbox-mini',
+				'class' => 'mini-checkbox',
 				'required' => (bool)$field->is_required(),
 				'description' => $field->get_description()
 			)

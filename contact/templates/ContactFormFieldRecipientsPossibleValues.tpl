@@ -11,7 +11,7 @@ ContactFormFieldRecipientsPossibleValues.prototype = {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			jQuery('<div/>', {'id' : id, class: 'checkbox-mini'}).appendTo('#input_fields_' + this.id_input);
+			jQuery('<div/>', {'id' : id, class: 'mini-checkbox'}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<div/>', {id : 'checkbox_' + this.integer, class : 'form-field-checkbox possible-values'}).appendTo('#' + id);
 			jQuery('<label/>', {class : 'checkbox', for : 'field_is_default_' + this.id_input + this.integer}).appendTo('#checkbox_' + this.integer);
@@ -48,7 +48,7 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 <div id="input_fields_${escape(HTML_ID)}">
 <span class="text-strong is-default-title">{@field.possible_values.is_default}</span>
 # START fieldelements #
-	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="checkbox-mini">
+	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="mini-checkbox">
 		<div class="form-field-checkbox possible-values">
 			<label class="checkbox" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
 				<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
