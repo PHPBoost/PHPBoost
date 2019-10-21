@@ -113,12 +113,14 @@
 						<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element custom-checkbox">
 					<label for="delete_group_color">{L_DELETE_GROUP_COLOR}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="delete_group_color" id="delete_group_color">
-							<label for="delete_group_color"></label>
+							<label class="checkbox" for="delete_group_color">
+								<input type="checkbox" name="delete_group_color" id="delete_group_color">
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>

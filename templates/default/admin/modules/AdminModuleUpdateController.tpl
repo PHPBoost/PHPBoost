@@ -19,9 +19,11 @@
 							</div>
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_upgradable.C_COMPATIBLE #
-									<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-										<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
-										<label for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}"></label>
+									<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+										<label class="checkbox" for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}">
+											<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
+											<span>&nbsp;</span>
+										</label>
 									</div>
 								# ENDIF #
 							# ENDIF #
@@ -67,10 +69,12 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-	<div class="multiple-select-menu-container admin-element-menu-title">
-		<div class="form-field form-field-checkbox-mini select-all-checkbox">
-			<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
-			<label for="upgrade-all-checkbox"></label>
+	<div class="multiple-select-menu-container admin-element-menu-title mini-checkbox">
+		<div class="form-field form-field-checkbox select-all-checkbox">
+			<label class="checkbox" for="upgrade-all-checkbox">
+				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+				<span>&nbsp;</span>
+			</label>
 		</div>
 		<button type="submit" name="upgrade-selected-modules" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
 	</div>

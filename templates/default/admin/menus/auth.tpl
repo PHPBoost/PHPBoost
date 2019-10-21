@@ -20,12 +20,14 @@
 						</select>
 					</label></div>
 				</div>
-				<div class="form-element">
+				<div class="form-element custom-checkbox">
 					<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF # />
-							<label for="hidden_with_small_screens"></label>
+							<label class="checkbox" for="hidden_with_small_screens">
+								<input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF # />
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>

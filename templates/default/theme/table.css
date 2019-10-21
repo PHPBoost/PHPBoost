@@ -58,10 +58,6 @@ table tfoot tr td {
 	font-size: 0.9em;
 }
 
-table tfoot tr td:only-child {
-	text-align: right;
-}
-
 table tfoot tr td * {
 	vertical-align: middle;
 }

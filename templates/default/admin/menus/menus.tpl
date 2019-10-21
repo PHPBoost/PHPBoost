@@ -111,12 +111,15 @@
 		<div class="menusmanagement">
 			<div id="container-top-header">
 				<div class="container-block">
-					<p class="menu-block-libelle">
-						<span class="form-field-checkbox-mini">
-							<input id="header_enabled" onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMN} />
-							<label for="header_enabled"></label>
+					<p class="menu-block-libelle mini-checkbox">
+						<span class="form-field-checkbox">
+							<label class="checkbox" for="header_enabled">
+								<input id="header_enabled" onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMN} />
+								<span>&nbsp;</span>
+							</label>
 						</span>
 						{L_HEADER}
+
 					</p>
 					<p class="menus-block-add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 						<i class="fa fa-plus" aria-hidden="true"></i> {L_ADD_MENU}
@@ -143,10 +146,12 @@
 			</div>
 			<div id="container-sub-header">
 				<div class="container-block">
-					<p class="menu-block-libelle">
-						<span class="form-field-checkbox-mini">
-							<input id="sub_header_enabled" onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMN} />
-							<label for="sub_header_enabled"></label>
+					<p class="menu-block-libelle mini-checkbox">
+						<span class="form-field-checkbox">
+							<label class="checkbox" for="sub_header_enabled">
+								<input id="sub_header_enabled" onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMN} />
+								<span>&nbsp;</span>
+							</label>
 						</span>
 						{L_SUB_HEADER}
 					</p>
@@ -189,10 +194,12 @@
 								</p>
 							</div>
 						</div>
-						<p class="menu-block-libelle">
-							<span class="form-field-checkbox-mini">
-								<input id="left_column_enabled" onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN} />
-								<label for="left_column_enabled"></label>
+						<p class="menu-block-libelle mini-checkbox">
+							<span class="form-field-checkbox">
+								<label class="checkbox" for="left_column_enabled">
+									<input id="left_column_enabled" onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN} />
+									<span>&nbsp;</span>
+								</label>
 							</span>
 							{L_LEFT_MENU}
 						</p><p class="menus-block-add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
@@ -208,10 +215,12 @@
 				<div id="container-main" class="menus-management-column-central">
 					<div id="container-top-content">
 						<div class="container-block">
-							<p class="menu-block-libelle">
-								<span class="form-field-checkbox-mini">
-									<input id="top_central_enabled" onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN} />
-									<label for="top_central_enabled"></label>
+							<p class="menu-block-libelle mini-checkbox">
+								<span class="form-field-checkbox">
+									<label class="checkbox" for="top_central_enabled">
+										<input id="top_central_enabled" onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN} />
+										<span>&nbsp;</span>
+									</label>
 								</span>
 								{L_TOP_CENTRAL_MENU}
 							</p>
@@ -251,10 +260,12 @@
 					</div>
 					<div id="container-bottom-content">
 						<div class="container-block">
-							<p class="menu-block-libelle">
-								<span class="form-field-checkbox-mini">
-									<input id="bottom_central_enabled" onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN} />
-									<label for="bottom_central_enabled"></label>
+							<p class="menu-block-libelle mini-checkbox">
+								<span class="form-field-checkbox">
+									<label class="checkbox" for="bottom_central_enabled">
+										<input id="bottom_central_enabled" onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN} />
+										<span>&nbsp;</span>
+									</label>
 								</span>
 								{L_BOTTOM_CENTRAL_MENU}
 							</p>
@@ -285,10 +296,12 @@
 				<div id="container-menu-right" class="menus-management-column-right">
 					<div class="container-block">
 						<div class="menu-manager-block">
-							<p class="menu-block-libelle">
-								<span class="form-field-checkbox-mini">
-									<input id="right_column_enabled" onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN} />
-									<label for="right_column_enabled"></label>
+							<p class="menu-block-libelle mini-checkbox">
+								<span class="form-field-checkbox">
+									<label class="checkbox" for="right_column_enabled">
+										<input id="right_column_enabled" onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN} />
+										<span>&nbsp;</span>
+									</label>
 								</span>
 								{L_RIGHT_MENU}
 							</p>
@@ -319,10 +332,12 @@
 			</div>
 			<div id="container-top-footer">
 				<div class="container-block">
-					<p class="menu-block-libelle">
-						<span class="form-field-checkbox-mini">
-							<input id="top_footer_enabled" onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN} />
-							<label for="top_footer_enabled"></label>
+					<p class="menu-block-libelle mini-checkbox">
+						<span class="form-field-checkbox">
+							<label class="checkbox" for="top_footer_enabled">
+								<input id="top_footer_enabled" onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN} />
+								<span>&nbsp;</span>
+							</label>
 						</span>
 						{L_TOP_FOOTER}
 					</p>
@@ -351,10 +366,12 @@
 			</div>
 			<div id="container-footer-content">
 				<div class="container-block">
-					<p class="menu-block-libelle">
-						<span class="form-field-checkbox-mini">
-							<input id="footer_enabled" onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN} />
-							<label for="footer_enabled"></label>
+					<p class="menu-block-libelle mini-checkbox">
+						<span class="form-field-checkbox">
+							<label class="checkbox" for="footer_enabled">
+								<input id="footer_enabled" onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN} />
+								<span>&nbsp;</span>
+							</label>
 						</span>
 						{L_FOOTER}
 					</p>

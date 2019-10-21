@@ -1,5 +1,5 @@
 
-/* --- Cell grid ==================================================================== */
+/* --- flex layout ---------------------------------------------------------- */
 .cell-flex {
 	display: flex;
 	flex-direction: column;
@@ -24,12 +24,12 @@
 	.cell-flex-3 .cell { width: calc(100% / 2); }
 	.cell-flex-4 .cell { width: calc(100% / 2); }
 
-	.cell-2-2,
-	.cell-3-3,
-	.cell-4-4 { width: 100% !important; }
-	.cell-2-4 { width: calc(100% / 2) !important;}
-	.cell-2-3 { width: calc(100% / 2) !important;}
-	.cell-3-4 { width: calc(100% / 2) !important;}
+	.cell-flex .cell-2-2,
+	.cell-flex .cell-3-3,
+	.cell-flex .cell-4-4 { width: 100% !important; }
+	.cell-flex .cell-2-4 { width: calc(100% / 2) !important;}
+	.cell-flex .cell-2-3 { width: calc(100% / 2) !important;}
+	.cell-flex .cell-3-4 { width: calc(100% / 2) !important;}
 }
 
 @media (min-width: 1024px) {
@@ -37,80 +37,36 @@
 	.cell-flex-3 .cell { width: calc(100% / 3); }
 	.cell-flex-4 .cell { width: calc(100% / 4); }
 
-	.cell-2-2,
-	.cell-3-3,
-	.cell-4-4 { width: 100% !important; }
-	.cell-2-4 { width: calc(100% / 2) !important;}
-	.cell-2-3 { width: calc(100% * 2 / 3) !important;}
-	.cell-3-4 { width: calc(100% * 3 / 4) !important;}
+	.cell-flex .cell-2-2,
+	.cell-flex .cell-3-3,
+	.cell-flex .cell-4-4 { width: 100% !important; }
+	.cell-flex .cell-2-4 { width: calc(100% / 2) !important;}
+	.cell-flex .cell-2-3 { width: calc(100% * 2 / 3) !important;}
+	.cell-flex .cell-3-4 { width: calc(100% * 3 / 4) !important;}
 }
 
 /* --- Cell structure ------------------------------------------------------- */
 .cell-flex .cell {
-	padding: 0.456em;
-	margin: 0;
 	display: flex;
 	flex-direction: column;
-}
-
-.cell-flex .cell-title {
-	padding: 0.456em;
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
 }
 
 .cell-flex .cell-body,
 .cell-flex .cell-list,
 .cell-flex .cell-table {
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
 	flex: 1 1 auto;
 }
 
-.cell-flex .cell-body {
-    padding: 0.456em;
-}
-
-.cell-flex [class*="cell-"] + .cell-body,
-.cell-flex [class*="cell-"] + .cell-list {
-	border-width: 0 1px 1px;
-}
-
 .cell-flex .cell-thumbnail {
-    position: relative;
-    margin: -0.456em;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	overflow: hidden;
 }
 
 .cell-flex .cell-thumbnail-caption {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.cell-flex .cell-thumbnail-caption:hover {
-    opacity: 1
-}
-
-.cell-flex .cell-list ul {
-	margin: 0;
-	padding: 0;
-}
-
-.cell-flex .cell-list ul li {
-	list-style-type: none;
-	padding: 0.309em 0.456em 0;
 }
 
 .cell-flex .cell-list ul li.li-stretch {
@@ -118,42 +74,6 @@
 	justify-content: space-between;
 }
 
-.cell-flex .cell-list ul li:last-child {
-    padding: 0.309em 0.456em;
-}
-
-.cell-flex .cell-table {
-    overflow: auto;
-}
-
-.cell-flex .cell-table table {
-    margin: -2px 0 0;
-}
-
-.cell-flex .cell-table table thead th {
-	border-width: 0 1px;
-	border-style: solid;
-}
-.cell-flex .cell-table table tbody tr td:first-child { border-width: 0 0 1px 0; }
-.cell-flex .cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
-
 .cell-flex .cell-footer {
-	padding: 0.456em;
-	border-style: solid;
-	border-width: 0 1px 1px;
-	border-color: transparent;
 	flex: 0 1 auto;
-}
-
-.cell-flex .cell .content {
-	margin: 0;
-}
-
-.cell-flex .cell h1 {
-	border: none;
-}
-
-.cell-flex .cell header,
-.cell-flex .cell footer {
-	margin: 0;
 }

@@ -38,21 +38,25 @@ function CheckForm() {
 						</select>
 					</div>
 				</div>
-				<div class="form-element third-field">
+				<div class="form-element third-field custom-checkbox">
 					<label for="display_title">{L_DISPLAY_TITLE}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" id="display_title" name="display_title" value="display_title" {DISPLAY_TITLE_CHECKED} />
-							<label for="display_title"></label>
+							<label class="checkbox" for="display_title">
+								<input type="checkbox" id="display_title" name="display_title" value="display_title" {DISPLAY_TITLE_CHECKED} />
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>
-				<div class="form-element third-field">
+				<div class="form-element third-field custom-checkbox">
 					<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF # />
-							<label for="hidden_with_small_screens"></label>
+							<label class="checkbox" for="hidden_with_small_screens">
+								<input type="checkbox" name="hidden_with_small_screens" id="hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF # />
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>

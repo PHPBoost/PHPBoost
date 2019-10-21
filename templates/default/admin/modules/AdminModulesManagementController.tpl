@@ -38,9 +38,11 @@
 
 						# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
 						# IF modules_installed.C_COMPATIBLE #
-						<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-							<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{modules_installed.MODULE_NUMBER}" name="delete-checkbox-{modules_installed.MODULE_NUMBER}"/>
-							<label for="multiple-checkbox-{modules_installed.MODULE_NUMBER}"></label>
+						<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+							<label class="checkbox" for="multiple-checkbox-{modules_installed.MODULE_NUMBER}">
+								<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{modules_installed.MODULE_NUMBER}" name="delete-checkbox-{modules_installed.MODULE_NUMBER}"/>
+								<span>&nbsp;</span>
+							</label>
 						</div>
 						# ENDIF #
 						# ENDIF #
@@ -104,10 +106,12 @@
 			<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')} <i class="fa fa-caret-right" aria-hidden="true"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
-			<li class="admin-menu-checkbox">
-				<div class="form-field form-field-checkbox-mini select-all-checkbox">
-					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
-					<label for="delete-all-checkbox"></label>
+			<li class="admin-menu-checkbox mini-checkbox">
+				<div class="form-field form-field-checkbox select-all-checkbox">
+					<label class="checkbox" for="delete-all-checkbox">
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+						<span>&nbsp;</span>
+					</label>
 				</div>
 			</li>
 			<li class="admin-menu-element"><button type="submit" name="activate-selected-modules" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>

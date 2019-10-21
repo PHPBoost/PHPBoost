@@ -26,12 +26,14 @@
 					</div>
 
 					# IF C_MORE_THAN_ONE_LANG_INSTALLED #
-					# IF langs_installed.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
-						<label for="multiple-checkbox-{langs_installed.LANG_NUMBER}"></label>
-					</div>
-					# ENDIF #
+						# IF langs_installed.C_COMPATIBLE #
+							<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+								<label class="checkbox" for="multiple-checkbox-{langs_installed.LANG_NUMBER}">
+									<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{langs_installed.LANG_NUMBER}" name="delete-checkbox-{langs_installed.LANG_NUMBER}"# IF langs_installed.C_IS_DEFAULT_LANG # disabled="disabled"# ENDIF # />
+									<span>&nbsp;</span>
+								</label>
+							</div>
+						# ENDIF #
 					# ENDIF #
 
 					<h2 class="installed-theme-name">
@@ -100,10 +102,12 @@
 			<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')} <i class="fa fa-caret-right" aria-hidden="true"></i></a>
 		</div>
 		<ul class="admin-menu-elements-content">
-			<li class="admin-menu-checkbox">
-				<div class="form-field form-field-checkbox-mini select-all-checkbox">
-					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
-					<label for="delete-all-checkbox"></label>
+			<li class="admin-menu-checkbox mini-checkbox">
+				<div class="form-field form-field-checkbox select-all-checkbox">
+					<label class="checkbox" for="delete-all-checkbox">
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
+						<span>&nbsp;</span>
+					</label>
 				</div>
 			</li>
 			<li class="admin-menu-element"><button type="submit" name="delete-selected-langs" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>

@@ -18,9 +18,11 @@
 					</div>
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						# IF themes_not_installed.C_COMPATIBLE #
-							<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-								<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}"/>
-								<label for="multiple-checkbox-{themes_not_installed.THEME_NUMBER}"></label>
+							<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+								<label class="checkbox" for="multiple-checkbox-{themes_not_installed.THEME_NUMBER}">
+									<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{themes_not_installed.THEME_NUMBER}" name="add-checkbox-{themes_not_installed.THEME_NUMBER}"/>
+									<span>&nbsp;</span>
+								</label>
 							</div>
 						# ENDIF #
 					# ENDIF #
@@ -32,11 +34,11 @@
 					<div class="cell-thumbnail" >
 						# IF themes_not_installed.C_PICTURES #
 							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" />
-							<a class="cell-thumbnail-caption" href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_installed.ID}">
+							<a class="cell-thumbnail-caption" href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_not_installed.ID}">
 								{@themes.view_real_preview}
 							</a>
 							# START themes_not_installed.pictures #
-								<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_installed.ID}" aria-label="{themes_not_installed.NAME}"></a>
+								<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_not_installed.ID}" aria-label="{themes_not_installed.NAME}"></a>
 							# END themes_not_installed.pictures #
 						# ENDIF #
 					</div>
@@ -109,9 +111,11 @@
 	</section>
 	# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 	<div class="multiple-select-menu-container admin-element-menu-title">
-		<div class="form-field form-field-checkbox-mini select-all-checkbox">
-			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER});" aria-label="{@themes.select_all_themes}" />
-			<label for="add-all-checkbox"></label>
+		<div class="form-field form-field-checkbox select-all-checkbox mini-checkbox">
+			<label class="checkbox" for="add-all-checkbox">
+				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER});" aria-label="{@themes.select_all_themes}" />
+				<span>&nbsp;</span>
+			</label>
 		</div>
 		<button type="submit" name="add-selected-themes" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 	</div>

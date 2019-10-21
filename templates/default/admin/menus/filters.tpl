@@ -9,7 +9,7 @@
 
 				var new_id = this.max_filter_p + 1;
 				document.getElementById('add_filter' + this.max_filter_p).innerHTML +=
-					'<p id="filter' + new_id + '">{PATH_TO_ROOT} / <select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
+					'<p id="filter' + new_id + '" class="menu-filter">{PATH_TO_ROOT} / <select name="filter_module' + new_id + '" id="filter_module' + new_id + '">' +
 					# START modules #
 					'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
@@ -33,7 +33,7 @@
 					<label>{@filters}</label>
 					<div class="form-field">
 						# START filters #
-						<p id="filter{filters.ID}">
+						<p id="filter{filters.ID}" class="menu-filter">
 							{PATH_TO_ROOT} /
 							<select name="filter_module{filters.ID}" id="filter_module{filters.ID}">
 								# START filters.modules #
@@ -46,7 +46,7 @@
 						# END filters #
 
 						<span id="add_filter{NBR_FILTER}"></span>
-						<p class="center">
+						<p class="menu-filter right">
 							<a href="javascript:add_filter({NBR_FILTER})" aria-label="{@add_filter}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 						</p>
 					</div>

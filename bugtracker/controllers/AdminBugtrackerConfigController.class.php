@@ -170,7 +170,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('admin_alerts_levels', $this->lang['config.admin_alerts_levels'], $this->config->get_admin_alerts_levels(), $this->build_admin_alerts_levels($severities),
 			array(
-				'class' => 'top-field checkbox-mini inline-checkbox',
+				'class' => 'top-field mini-checkbox inline-checkbox',
 				'hidden' => !$this->config->are_admin_alerts_enabled()
 			)
 		));

@@ -33,18 +33,18 @@
 		</div>
 		<div id="sub-header-admin">
 			<div id="admin-link">
-				<h3 class="menu-title">
+				<h5 class="menu-title">
 					<div class="site-logo" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
 					<span>{L_ADMIN_MAIN_MENU}</span>
-				</h3>
+				</h5>
 				# INCLUDE subheader_menu #
 			</div>
 
 			<div id="support-pbt">
-					<h3 class="menu-title">
+					<h5 class="menu-title">
 						<div class="pbt-logo"></div>
 						<span>{L_NEED_HELP}</span>
-					</h3>
+					</h5>
 					<nav class="admin-menu">
 						<ul>
 							<li class="admin-li">

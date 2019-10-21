@@ -11,25 +11,28 @@
 				<header class="cell-title">
 					<div class="admin-element-menu-container">
 						# IF langs_not_installed.C_COMPATIBLE #
-						<button type="submit" class="submit admin-element-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+							<button type="submit" class="submit admin-element-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 						# ELSE #
-						<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+							<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 						# ENDIF #
 					</div>
 					# IF C_MORE_THAN_ONE_LANG_AVAILABLE #
-					# IF langs_not_installed.C_COMPATIBLE #
-					<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-						<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{langs_not_installed.LANG_NUMBER}" name="add-checkbox-{langs_not_installed.LANG_NUMBER}"/>
-						<label for="multiple-checkbox-{langs_not_installed.LANG_NUMBER}"></label>
-					</div>
-					# ENDIF #
+						# IF langs_not_installed.C_COMPATIBLE #
+							<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+								<label class="checkbox" for="multiple-checkbox-{langs_not_installed.LANG_NUMBER}">
+									<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{langs_not_installed.LANG_NUMBER}" name="add-checkbox-{langs_not_installed.LANG_NUMBER}"/>
+									<span>&nbsp;</span>
+								</label>
+							</div>
+						# ENDIF #
 					# ENDIF #
 
 					<h2 class="not-installed-lang-name">
 						# IF langs_not_installed.C_HAS_PICTURE #
 							<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
 						# ENDIF #
-						{langs_not_installed.NAME}<em> ({langs_not_installed.VERSION})</em></h2>
+						{langs_not_installed.NAME} <em>({langs_not_installed.VERSION})</em>
+					</h2>
 				</header>
 
 				<div class="cell-list">
@@ -81,9 +84,11 @@
 	</section>
 	# IF C_MORE_THAN_ONE_LANG_AVAILABLE #
 	<div class="multiple-select-menu-container admin-element-menu-title">
-		<div class="form-field form-field-checkbox-mini select-all-checkbox">
-			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER});" aria-label="{@langs.select_all_langs}" />
-			<label for="add-all-checkbox"></label>
+		<div class="form-field form-field-checkbox select-all-checkbox mini-checkbox">
+			<label class="checkbox" for="add-all-checkbox">
+				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER});" aria-label="{@langs.select_all_langs}" />
+				<span>&nbsp;</span>
+			</label>
 		</div>
 		<button type="submit" name="add-selected-langs" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 	</div>

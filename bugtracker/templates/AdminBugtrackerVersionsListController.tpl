@@ -76,7 +76,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<div/> ', {id : 'release_date' + id + '_date', class : 'calendar-block'}).appendTo('#calendar' + id);
 
-			jQuery('<td/>', {id : 'td4_' + id, class : 'checkbox-mini', 'data-th' : ${escapejs(@labels.fields.version_detected)}}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td4_' + id, class : 'mini-checkbox', 'data-th' : ${escapejs(@labels.fields.version_detected)}}).appendTo('#tr_' + id);
 
 			jQuery('<span/>', {id : 'td4_' + id + '_bt', class : 'bt-content'}).appendTo('#td4_' + id);
 
@@ -173,7 +173,7 @@ function display_default_version_radio(version_id)
 					</div>
 				</div>
 			</td>
-			<td class="checkbox-mini">
+			<td class="mini-checkbox">
 				<div id="versions_checkbox_{versions.ID}" class="form-field-checkbox">
 					<label class="checkbox" for="detected_in{versions.ID}">
 						<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />

@@ -38,9 +38,11 @@
 
 						# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 							# IF themes_installed.C_COMPATIBLE #
-								<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-									<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{themes_installed.THEME_NUMBER}" name="delete-checkbox-{themes_installed.THEME_NUMBER}"# IF themes_installed.C_IS_DEFAULT_THEME # disabled="disabled"# ENDIF # />
-									<label for="multiple-checkbox-{themes_installed.THEME_NUMBER}"></label>
+								<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+									<label class="checkbox" for="multiple-checkbox-{themes_installed.THEME_NUMBER}">
+										<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{themes_installed.THEME_NUMBER}" name="delete-checkbox-{themes_installed.THEME_NUMBER}"# IF themes_installed.C_IS_DEFAULT_THEME # disabled="disabled"# ENDIF # />
+										<span>&nbsp;</span>
+									</label>
 								</div>
 							# ENDIF #
 						# ENDIF #
@@ -141,10 +143,12 @@
 				<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
 			</div>
 			<ul class="admin-menu-elements-content">
-				<li class="admin-menu-checkbox">
-					<div class="form-field form-field-checkbox-mini select-all-checkbox">
-						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@themes.select_all_themes}" />
-						<label for="delete-all-checkbox"></label>
+				<li class="admin-menu-checkbox mini-checkbox">
+					<div class="form-field form-field-checkbox select-all-checkbox">
+						<label class="checkbox" for="delete-all-checkbox">
+							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@themes.select_all_themes}" />
+							<span>&nbsp;</span>
+						</label>
 					</div>
 				</li>
 				<li class="admin-menu-element"><button type="submit" name="delete-selected-themes" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>

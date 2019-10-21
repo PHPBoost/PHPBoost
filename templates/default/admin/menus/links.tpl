@@ -236,12 +236,14 @@ jQuery(document).ready(function() {
 						</select>
 					</label></div>
 				</div>
-				<div class="form-element third-field">
+				<div class="form-element third-field top-field custom-checkbox">
 					<label for="menu_element_{ID}_hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="menu_element_{ID}_hidden_with_small_screens" id="menu_element_{ID}_hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #>
-							<label for="menu_element_{ID}_hidden_with_small_screens"></label>
+							<label class="checkbox" for="menu_element_{ID}_hidden_with_small_screens">
+								<input type="checkbox" name="menu_element_{ID}_hidden_with_small_screens" id="menu_element_{ID}_hidden_with_small_screens"# IF C_MENU_HIDDEN_WITH_SMALL_SCREENS # checked="checked"# ENDIF #>
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>

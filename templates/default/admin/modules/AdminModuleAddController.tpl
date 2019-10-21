@@ -19,9 +19,11 @@
 							</div>
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_not_installed.C_COMPATIBLE #
-									<div class="form-field form-field-checkbox-mini multiple-checkbox-container">
-										<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}" name="add-checkbox-{modules_not_installed.MODULE_NUMBER}"/>
-										<label for="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}"></label>
+									<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+										<label class="checkbox" for="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}">
+											<input type="checkbox" class="multiple-checkbox add-checkbox" id="multiple-checkbox-{modules_not_installed.MODULE_NUMBER}" name="add-checkbox-{modules_not_installed.MODULE_NUMBER}"/>
+											<span>&nbsp;</span>
+										</label>
 									</div>
 								# ENDIF #
 							# ENDIF #
@@ -70,9 +72,11 @@
 	</section>
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 		<div class="multiple-select-menu-container admin-element-menu-title">
-			<div class="form-field form-field-checkbox-mini select-all-checkbox">
-				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
-				<label for="add-all-checkbox"></label>
+			<div class="form-field form-field-checkbox select-all-checkbox mini-checkbox">
+				<label class="checkbox" for="add-all-checkbox">
+					<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+					<span>&nbsp;</span>
+				</label>
 			</div>
 			<button type="submit" name="add-selected-modules" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 		</div>

@@ -1,0 +1,303 @@
+/*
+ * Contient les elements pour l'affichage des tableaux HTML et responsive.
+ * 		- Affichage des tableaux basic
+ * 		- Table responsive basictable.js
+*/
+
+/* --- Basics --------------------------------------------------------------- */
+table {
+	margin: 0.618em 0;
+	padding: 0;
+	width: 100%;
+	border-spacing: 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-collapse: collapse;
+}
+
+table.mini {
+	width: 100% !important;
+	margin: 8px 0 !important;
+}
+
+/* --- Header --- */
+table caption {
+	margin: 5px;
+	font-size: 2em;
+	text-align: left;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
+}
+
+table thead th {
+	padding: 8px;
+	font-size: 1.2em;
+	text-align: center;
+	font-weight: normal;
+}
+
+/* Contenu */
+table tbody td {
+	padding: 8px;
+	border-width: 0 0 1px 1px;
+	border-style: solid;
+	border-color: transparent;
+	text-align: center;
+}
+
+table tbody tr td:last-child {
+	border-width: 0 1px 1px 1px;
+}
+
+table tbody tr.no-separator td {
+	border-top: none;
+}
+
+table tbody tr td.no-separator {
+	border-left: none;
+}
+
+table tbody tr td.no-separator:first-child 	{
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+/* Pied */
+table tfoot tr th {
+	padding: 8px;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
+}
+
+table tfoot tr th:first-child {
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-bottom-left-radius: 3px;
+}
+
+table tfoot tr th:last-child {
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: transparent;
+	border-bottom-right-radius: 3px;
+}
+
+table tfoot tr th:only-child {
+	text-align: right;
+}
+
+table tfoot tr th * {
+	vertical-align: middle;
+}
+
+table tfoot tr th select {
+	padding: 2px 5px;
+}
+
+/* Patch thead Tableaux formatés */
+.formatter-table .formatter-table-head {
+	padding: 8px;
+	font-size: 1.4em;
+	text-align: center;
+	font-weight: normal;
+}
+
+.formatter-table .formatter-table-head:first-child { border-top-left-radius: 3px;  }
+.formatter-table .formatter-table-head:last-child  { border-top-right-radius: 3px; }
+
+.formatter-table .formatter-table-head p {
+	margin-bottom: 0;
+}
+
+.col-smaller { width: 3em;  }
+.col-small   { width: 6em;  }
+.col-large   { width: 9em;  }
+.col-larger  { width: 12em; }
+.col-xlarge  { width: 15em; }
+
+@media (max-width: 980px) {
+	.col-large {
+		width: 100%
+	}
+
+	table tbody td	{
+		border-width: 0 1px 0 0;
+		border-style: solid;
+		border-color: transparent;
+	}
+
+	table tbody tr td.no-separator {
+		border-width: 0 0 0 1px;
+		border-style: solid;
+		border-color: transparent;
+	}
+}
+
+/* Mini tableaux */
+.mini th,
+.mini td {
+	padding: 3px 1px;
+	font-size: 0.95em;
+}
+
+.mini th a,
+.mini td a {
+	font-size: 0.95em;
+}
+
+/* Pagination footer tableaux */
+table tfoot nav.pagination a {
+	padding: 3px 3px;
+	text-decoration: none;
+}
+
+table tfoot nav.pagination a span.current-page {
+	text-decoration: none;
+}
+
+.input-radio {
+	width: 80px;
+}
+
+/* --- images dans une table --- */
+.picture-table {
+	vertical-align: top;
+	max-width: 180px;
+}
+
+
+/* --- responsive tables basictable.js --- */
+.bt thead th {
+	display: none;
+}
+
+/* --- pagination des tables --- */
+
+.table-rows-options {
+	padding: 0 10px;
+}
+
+.table-rows-options select{
+	margin: 5px 0;
+}
+
+@media (min-width: 981px) {
+	.table-navigation,
+	.table-rows-options {
+		float: right;
+	}
+}
+
+/* --- largeur specifique de colonne --- */
+@media (min-width: 981px) {
+	.tdw50 	{ width: 50%; }
+	.tdw30 	{ width: 30%; }
+	.tdw25 	{ width: 25%; }
+	.td200 	{ width: 200px; }
+	.td150 	{ width: 150px; }
+	.td100 	{ width: 100px; }
+	.td75	{ width: 75px;  }
+	.td70 	{ width: 70px;  }
+	.td50 	{ width: 50px;  }
+}
+
+/* --- design mobile --- */
+.bt thead th:first-child {
+	display: block;
+	border-radius: 0;
+}
+
+@media (min-width: 769px) {
+	.bt thead th:first-child {
+		border-radius: 3px 3px 0 0;
+	}
+}
+
+.bt tbody td {
+	display: block;
+	width: 100%;
+	vertical-align: top;
+	text-align: left;
+	border-width: 0 1px;
+}
+
+.bt tbody td:before {
+	display: inline-block ;
+	width: 35%;
+	content: attr(data-th) " ";
+	font-weight: bold;
+}
+
+.bt tbody td.bt-hide {
+	display: none;
+}
+
+.bt tbody td .bt-content {
+	vertical-align: top;
+	display: inline-block ;
+	padding-left: 6px;
+	max-width: 100%;
+}
+
+.bt tfoot th,
+.bt tfoot td,
+.bt tbody td {
+	display: flex;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	vertical-align: top;
+}
+
+.bt tfoot th::before,
+.bt tfoot td::before,
+.bt tbody td::before {
+  content: attr(data-th) " ";
+  display: inline-block;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  font-weight: bold;
+  min-width: 7em;
+  width: 35%;
+}
+
+.bt tfoot th.bt-hide,
+.bt tfoot td.bt-hide,
+.bt tbody td.bt-hide {
+  display: none;
+}
+
+.bt tfoot th .bt-content,
+.bt tfoot td .bt-content,
+.bt tbody td .bt-content {
+  vertical-align: top;
+}
+
+.bt-wrapper.active {
+	max-height: 310px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.large-table th {
+	white-space: nowrap;
+}
+
+.large-table .bt-content,
+.bt.large-table .bt-content {
+	display: inline-block;
+	max-width: 400px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
+.responsive-table {
+	max-width: 100%;
+	overflow: auto;
+}
