@@ -259,6 +259,9 @@ class News
 
 	public function get_picture()
 	{
+		if (!$this->picture_url instanceof Url)
+			return $this->get_default_thumbnail();
+
 		return $this->picture_url;
 	}
 
@@ -266,6 +269,15 @@ class News
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
+	}
+
+	public function get_default_thumbnail()
+	{
+		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		if ($file->exists())
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		else
+			return new Url('/templates/default/images/default_item_thumbnail.png');
 	}
 
 	public function add_source($source)
@@ -375,7 +387,7 @@ class News
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
 		$this->sources = array();
-		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
+		$this->picture_url = self::get_default_thumbnail();
 		$this->end_date_enabled = false;
 		$this->number_view = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();

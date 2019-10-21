@@ -104,7 +104,7 @@ class NewsSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
 			'description' => $this->messages['cat.description'],
-			'image' => '/news/news.png'
+			'image' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 
@@ -124,7 +124,7 @@ class NewsSetup extends DefaultModuleSetup
 			'end_date' => 0,
 			'number_view' => 0,
 			'top_list_enabled' => 0,
-			'picture_url' => '',
+			'picture_url' => '/templates/default/images/default_item_thumbnail.png',
 			'author_custom_name' => '',
 			'author_user_id' => 1,
 			'sources' => TextHelper::serialize(array())

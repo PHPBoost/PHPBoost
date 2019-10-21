@@ -104,7 +104,7 @@ class WebSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
-			'image' => '/web/web.png'
+			'image' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 

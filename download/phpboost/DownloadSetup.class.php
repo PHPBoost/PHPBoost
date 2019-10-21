@@ -107,7 +107,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
-			'image' => '/download/download.png'
+			'image' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 
@@ -132,7 +132,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'number_downloads' => 0,
 			'number_view' => 0,
 			'sources' => TextHelper::serialize(array()),
-			'picture_url' => '/download/download.png'
+			'picture_url' => '/templates/default/images/default_item_thumbnail.png'
 		));
 	}
 }

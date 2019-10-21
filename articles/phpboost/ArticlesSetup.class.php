@@ -104,7 +104,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
-			'image' => '/articles/articles.png'
+			'image' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 
@@ -113,7 +113,7 @@ class ArticlesSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$articles_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'picture_url' => '/articles/templates/images/default.png',
+			'picture_url' => '/templates/default/images/default_item_thumbnail.png',
 			'title' => $this->messages['default.article.title'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.title']),
 			'description' => $this->messages['default.article.description'],

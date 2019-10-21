@@ -111,6 +111,9 @@ class CalendarEventContent
 
 	public function get_picture()
 	{
+		if (!$this->picture_url instanceof Url)
+			return $this->get_default_thumbnail();
+
 		return $this->picture_url;
 	}
 
@@ -118,6 +121,15 @@ class CalendarEventContent
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
+	}
+
+	public function get_default_thumbnail()
+	{
+		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		if ($file->exists())
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		else
+			return new Url('/templates/default/images/default_item_thumbnail.png');
 	}
 
 	public function set_location($location)
@@ -368,7 +380,7 @@ class CalendarEventContent
 		$this->category_id = $category_id;
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
-		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
+		$this->picture_url = self::get_default_thumbnail();
 
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;

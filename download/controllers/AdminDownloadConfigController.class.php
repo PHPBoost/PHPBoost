@@ -86,9 +86,13 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.download_number_view_enabled'], $this->config->get_nb_view_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.download_number_view_enabled'], $this->config->get_nb_view_enabled(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('category_display_type', $this->lang['config.category_display_type'], $this->config->get_category_display_type(),
 			array(
@@ -106,7 +110,10 @@ class AdminDownloadConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
-			array('hidden' => $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT)
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT
+			)
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
@@ -140,15 +147,18 @@ class AdminDownloadConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['config.limit_oldest_file_day_in_menu'], $this->config->is_limit_oldest_file_day_in_menu_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("limit_oldest_file_day_in_menu").getValue()) {
-					HTMLForms.getField("oldest_file_day_in_menu").enable();
-				} else {
-					HTMLForms.getField("oldest_file_day_in_menu").disable();
-				}'
+		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['config.limit_oldest_file_day_in_menu'], $this->config->is_limit_oldest_file_day_in_menu_enabled(),
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("limit_oldest_file_day_in_menu").getValue()) {
+						HTMLForms.getField("oldest_file_day_in_menu").enable();
+					} else {
+						HTMLForms.getField("oldest_file_day_in_menu").disable();
+					}'
+				)
 			)
-		)));
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('oldest_file_day_in_menu', $this->lang['config.oldest_file_day_in_menu'], $this->config->get_oldest_file_day_in_menu(),
 			array('min' => 1, 'max' => 365, 'required' => true, 'hidden' => !$this->config->is_limit_oldest_file_day_in_menu_enabled()),
