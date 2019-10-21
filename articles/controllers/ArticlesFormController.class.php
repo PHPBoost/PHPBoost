@@ -73,7 +73,6 @@ class ArticlesFormController extends ModuleController
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array(
-					'class' => 'custom-checkbox',
 					'events' => array('click' =>'
 						if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
 							HTMLForms.getField("rewrited_title").enable();
@@ -102,7 +101,6 @@ class ArticlesFormController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.decription.enabled'], $this->get_article()->get_description_enabled(),
 			array('description' => StringVars::replace_vars($this->lang['articles.decription.enabled.annex'],
 			array(
-				'class' => 'custom-checkbox',
 				'number' => ArticlesConfig::load()->get_number_character_to_cut())),
 				'events' => array('click' => '
 					if (HTMLForms.getField("enable_description").getValue()) {
@@ -127,7 +125,6 @@ class ArticlesFormController extends ModuleController
 		{
 			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->common_lang['form.author_custom_name_enabled'], $this->get_article()->is_author_custom_name_enabled(),
 				array(
-					'class' => 'custom-checkbox',
 					'events' => array('click' => '
 						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 							HTMLForms.getField("author_custom_name").enable();
@@ -146,9 +143,7 @@ class ArticlesFormController extends ModuleController
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
-		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed(),
-			array('class' => 'custom-checkbox')
-		));
+		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed()));
 
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
 
@@ -170,10 +165,7 @@ class ArticlesFormController extends ModuleController
 			if (!$this->get_article()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
-					array(
-						'class' => 'custom-checkbox',
-						'hidden' => $this->get_article()->get_status() != Article::NOT_PUBLISHED
-					)
+					array('hidden' => $this->get_article()->get_status() != Article::NOT_PUBLISHED)
 				));
 			}
 
@@ -203,7 +195,6 @@ class ArticlesFormController extends ModuleController
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(),
 				array(
-					'class' => 'custom-checkbox',
 					'hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
