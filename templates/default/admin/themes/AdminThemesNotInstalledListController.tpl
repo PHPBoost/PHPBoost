@@ -32,11 +32,11 @@
 					<div class="cell-thumbnail" >
 						# IF themes_not_installed.C_PICTURES #
 							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" />
-							<a class="cell-thumbnail-caption" href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection">
+							<a class="cell-thumbnail-caption" href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_installed.ID}">
 								{@themes.view_real_preview}
 							</a>
 							# START themes_not_installed.pictures #
-								<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection" aria-label="{themes_not_installed.NAME}"></a>
+								<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_installed.ID}" aria-label="{themes_not_installed.NAME}"></a>
 							# END themes_not_installed.pictures #
 						# ENDIF #
 					</div>
