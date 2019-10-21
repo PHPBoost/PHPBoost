@@ -161,6 +161,9 @@ class Article
 
 	public function get_picture()
 	{
+		if (!$this->picture_url instanceof Url)
+			return $this->get_default_thumbnail();
+
 		return $this->picture_url;
 	}
 
@@ -168,6 +171,15 @@ class Article
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
+	}
+
+	public function get_default_thumbnail()
+	{
+		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		if ($file->exists())
+			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
+		else
+			return new Url('/templates/default/images/default_item_thumbnail.png');
 	}
 
 	public function set_number_view($number_view)
@@ -418,7 +430,7 @@ class Article
 		$this->publishing_end_date = new Date();
 		$this->date_created = new Date();
 		$this->sources = array();
-		$this->picture_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/item_default.png');
+		$this->picture_url = self::get_default_thumbnail();
 		$this->number_view = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
@@ -453,7 +465,7 @@ class Article
 			Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'),
 			Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'),
 			array(
-			//Conditions
+			// Conditions
 			'C_EDIT'                          => $this->is_authorized_to_edit(),
 			'C_DELETE'                        => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE'                   => $this->has_picture(),
@@ -471,7 +483,7 @@ class Article
 			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
 			'C_ID_CARD' 					  => ContentManagementConfig::load()->module_id_card_is_enabled('articles') && $this->is_published(),
 
-			//Articles
+			// Articles
 			'ID'                            => $this->get_id(),
 			'TITLE'                         => $this->get_title(),
 			'STATUS'                        => $this->get_status(),
@@ -488,7 +500,7 @@ class Article
 			'USER_GROUP_COLOR'              => $user_group_color,
 			'ID_CARD' 						=> IdcardService::display_idcard($user),
 
-			//Category
+			// Categories
 			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
 			'CATEGORY_ID'          => $category->get_id(),
 			'CATEGORY_NAME'        => $category->get_name(),
@@ -496,7 +508,7 @@ class Article
 			'CATEGORY_IMAGE'       => $category->get_image()->rel(),
 			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
 
-			//Links
+			// Links
 			'U_COMMENTS'       => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_AUTHOR'         => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_CATEGORY'       => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
