@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 12 28
+ * @version     PHPBoost 5.2 - last update: 2019 10 21
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -266,7 +266,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template =  new FileTemplate('maintain.tpl');
 
 		$maintenance_config = MaintenanceConfig::load();
-		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
+		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration() && (!AppContext::get_current_user()->is_admin() || (AppContext::get_current_user()->is_admin() && $maintenance_config->get_display_duration_for_admin())))
 		{
 			$date_lang = LangLoader::get('date-common');
 			//Durée de la maintenance.
