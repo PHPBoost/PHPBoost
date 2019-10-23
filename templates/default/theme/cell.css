@@ -1,5 +1,5 @@
 .cell {
-	padding: 0.456em;
+	padding: 0.618em;
 	margin: 0;
 }
 
@@ -12,15 +12,23 @@
 }
 
 .cell header,
-.cell footer {
+.cell footer,
+.cell-title button {
 	margin: 0;
 }
 
 .cell-title {
-	padding: 0.456em;
+	padding: 0.618em;
+	white-space: normal;
 	border-style: solid;
 	border-width: 1px;
 	border-color: transparent;
+}
+
+.cell-title .cell-name {
+	display: inline-block;
+	font-size: 1.618em;
+	padding: 0 0.309em;
 }
 
 .cell-body,
@@ -33,7 +41,7 @@
 }
 
 .cell-body {
-    padding: 0.456em;
+    padding: 0.618em;
 }
 
 [class*="cell-"] + .cell-body,
@@ -43,7 +51,7 @@
 
 .cell-thumbnail {
     position: relative;
-    margin: -0.456em;
+    margin: -0.618em;
 	overflow: hidden;
 }
 
@@ -67,11 +75,11 @@
 
 .cell-list ul li {
 	list-style-type: none;
-	padding: 0.309em 0.456em 0;
+	padding: 0.456em 0.618em 0;
 }
 
 .cell-list ul li:last-child {
-    padding: 0.309em 0.456em;
+    padding: 0.456em 0.618em;
 }
 
 .cell-table {
@@ -91,7 +99,7 @@
 .cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
 
 .cell-footer {
-	padding: 0.456em;
+	padding: 0.618em;
 	border-style: solid;
 	border-width: 0 1px 1px;
 	border-color: transparent;

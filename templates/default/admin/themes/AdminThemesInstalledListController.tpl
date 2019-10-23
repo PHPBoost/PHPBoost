@@ -1,44 +1,14 @@
-{@H|themes.warning_before_delete}
+<div class="text-helper">{@H|themes.warning_before_delete}</div>
 <form action="{REWRITED_SCRIPT}" method="post">
-	<section id="installed-themes-container" class="admin-elements-container themes-elements-container installed-elements-container">
+	<section id="installed-themes-container">
 		<header class="legend">{@themes.installed_theme}</header>
 		<div class="cell-flex cell-flex-3">
 			# START themes_installed #
-				<article class="cell admin-element theme-element installed-element# IF themes_installed.C_IS_DEFAULT_THEME # default-element# ENDIF ## IF themes_installed.C_IS_ACTIVATED # activate-element# ELSE # deactivate-element# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 					<header class="cell-title">
-						<div class="admin-element-menu-container">
-							# IF themes_installed.C_IS_DEFAULT_THEME #
-							<a href="#" class="admin-element-menu-title">{@themes.default}</a>
-							# ELSE #
-							<a href="#" id="admin-element-menu-title-{themes_installed.THEME_NUMBER}" class="admin-element-menu-title">
-								# IF themes_installed.C_COMPATIBLE #
-									# IF themes_installed.C_IS_ACTIVATED #
-										${LangLoader::get_message('actions', 'admin-common')}
-									# ELSE #
-										${LangLoader::get_message('disabled', 'common')}
-									# ENDIF #
-								# ELSE #
-									${LangLoader::get_message('not_compatible', 'admin-common')}
-								# ENDIF #
-								<i class="fa fa-caret-right" aria-hidden="true"></i>
-							</a>
-							<ul class="admin-menu-elements-content">
-								# IF themes_installed.C_COMPATIBLE #
-									<li class="admin-menu-element"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
-									# IF themes_installed.C_IS_ACTIVATED #
-										<li class="admin-menu-element"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
-									# ELSE #
-										<li class="admin-menu-element"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
-									# ENDIF #
-								# ENDIF #
-								<li class="admin-menu-element"><button type="submit" class="submit alt" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
-							</ul>
-							# ENDIF #
-						</div>
-
 						# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 							# IF themes_installed.C_COMPATIBLE #
-								<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+								<div class="mini-checkbox">
 									<label class="checkbox" for="multiple-checkbox-{themes_installed.THEME_NUMBER}">
 										<input type="checkbox" class="multiple-checkbox delete-checkbox" id="multiple-checkbox-{themes_installed.THEME_NUMBER}" name="delete-checkbox-{themes_installed.THEME_NUMBER}"# IF themes_installed.C_IS_DEFAULT_THEME # disabled="disabled"# ENDIF # />
 										<span>&nbsp;</span>
@@ -46,8 +16,38 @@
 								</div>
 							# ENDIF #
 						# ENDIF #
-
-						<h2 class="installed-theme-name">{themes_installed.NAME}<em> ({themes_installed.VERSION})</em></h2>
+						<div class="cell-name">{themes_installed.NAME}</div>
+						<div class="addon-menu-container">
+							# IF themes_installed.C_IS_DEFAULT_THEME #
+								<div class="addon-menu-container">
+									<a href="#" class="addon-menu-title">{@themes.default}</a>
+								</div>
+							# ELSE #
+								<div class="addon-menu-container addon-with-menu">
+									<a href="#" id="addon-menu-title-{themes_installed.THEME_NUMBER}" class="addon-menu-title">
+										# IF themes_installed.C_COMPATIBLE #
+											# IF themes_installed.C_IS_ACTIVATED #
+												${LangLoader::get_message('actions', 'admin-common')}
+											# ELSE #
+												${LangLoader::get_message('disabled', 'common')}
+											# ENDIF #
+										# ELSE #
+											${LangLoader::get_message('not_compatible', 'admin-common')}
+										# ENDIF #
+									</a>
+									<ul class="addon-menu-content">
+										# IF themes_installed.C_COMPATIBLE #
+											<li class="addon-menu-item"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
+											# IF themes_installed.C_IS_ACTIVATED #
+												<li class="addon-menu-item"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+											# ELSE #
+												<li class="addon-menu-item"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+											# ENDIF #
+										# ENDIF #
+										<li class="addon-menu-item"><button type="submit" class="submit alt" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+									</ul>
+								</div>
+							# ENDIF #
 					</header>
 					<div class="cell-body">
 						<div class="cell-thumbnail" >
@@ -65,6 +65,14 @@
 					<div class="cell-list">
 						<ul>
 							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('version', 'admin')} :</span>
+								<span>{themes_installed.VERSION}</span>
+							</li>
+							<li class="li-stretch">
+								<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+								<span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span>
+							</li>
+							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
 									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a> # ENDIF #
@@ -81,10 +89,6 @@
 							<li>
 								<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
 								<span>{themes_installed.DESCRIPTION}</span>
-							</li>
-							<li class="li-stretch">
-								<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-								<span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@themes.html_version} :</span>
@@ -106,14 +110,14 @@
 					</div>
 					<footer class="cell-footer">
 						# IF themes_installed.C_COMPATIBLE #
-							<div class="admin-element-auth-container">
+							<div class="addon-auth-container">
 								# IF themes_installed.C_IS_DEFAULT_THEME #
-									<span class="admin-element-auth default-element" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
+									<span class="addon-auth default-addon" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 								# ELSE #
-									<a href="" class="admin-element-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
-									<div class="admin-element-auth-content">
+									<a href="" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
+									<div class="addon-auth-content">
 										{themes_installed.AUTHORIZATIONS}
-										<a href="#" class="admin-element-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
+										<a href="#" class="addon-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
 									</div>
 								# ENDIF #
 							</div>
@@ -121,8 +125,8 @@
 					</footer>
 				</article>
 				<script>
-					jQuery('#admin-element-menu-title-{themes_installed.THEME_NUMBER}').opensubmenu({
-						osmTarget: '.admin-element-menu-container'
+					jQuery('#addon-menu-title-{themes_installed.THEME_NUMBER}').opensubmenu({
+						osmTarget: '.addon-menu-container'
 					});
 				</script>
 			# END themes_installed #
@@ -138,36 +142,32 @@
 	</section>
 
 	# IF C_MORE_THAN_ONE_THEME_INSTALLED #
-		<div class="admin-element-menu-container multiple-select-menu-container">
-			<div class="admin-element-menu-title">
-				<a href="#" class="multiple-select-menu">${LangLoader::get_message('multiple.select', 'admin-common')}<i class="fa fa-caret-right" aria-hidden="true"></i></a>
-			</div>
-			<ul class="admin-menu-elements-content">
-				<li class="admin-menu-checkbox mini-checkbox">
-					<div class="form-field form-field-checkbox select-all-checkbox">
-						<label class="checkbox" for="delete-all-checkbox">
-							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@themes.select_all_themes}" />
-							<span>&nbsp;</span>
-						</label>
-					</div>
+		<div class="addon-menu-container multiple-select-menu-container">
+			<a href="#" class="multiple-select-menu addon-menu-title">${LangLoader::get_message('multiple.select', 'admin-common')}</a>
+			<ul class="addon-menu-content">
+				<li class="addon-menu-checkbox mini-checkbox select-all-checkbox">
+					<label class="checkbox" for="delete-all-checkbox">
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@themes.select_all_themes}" />
+						<span>&nbsp;</span>
+					</label>
 				</li>
-				<li class="admin-menu-element"><button type="submit" name="delete-selected-themes" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
-				<li class="admin-menu-element"><button type="submit" name="deactivate-selected-themes" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
-				<li class="admin-menu-element"><button type="submit" name="activate-selected-themes" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="delete-selected-themes" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="deactivate-selected-themes" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="activate-selected-themes" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
 			</ul>
 		</div>
 	# ENDIF #
 </form>
 
 <script>
-	jQuery('.admin-element-menu-title').opensubmenu({
-		osmTarget: '.admin-element-menu-title',
-		osmCloseExcept : '.admin-menu-checkbox, .admin-menu-checkbox *'
+	jQuery('.addon-menu-title').opensubmenu({
+		osmTarget: '.addon-menu-title',
+		osmCloseExcept : '.addon-menu-checkbox, .addon-menu-checkbox *'
 	});
 
-	jQuery('.admin-element-auth').opensubmenu({
-		osmTarget: '.admin-element-auth-container',
-		osmCloseExcept: '.admin-element-auth-content *',
-		osmCloseButton: '.admin-element-auth-close i',
+	jQuery('.addon-auth').opensubmenu({
+		osmTarget: '.addon-auth-container',
+		osmCloseExcept: '.addon-auth-content *',
+		osmCloseButton: '.addon-auth-close i',
 	});
 </script>

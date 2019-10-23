@@ -206,10 +206,6 @@ i.message-announce-new { color: #62CF5D; }
 	border-color: transparent!important;
 }
 
-.default-element .cell-title,
-.default-element .cell-body,
-.default-element .cell-list,
-.default-element .cell-footer,
 .new-content .cell-title,
 .new-content .cell-body,
 .new-content .cell-list,

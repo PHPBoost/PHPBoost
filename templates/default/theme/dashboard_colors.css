@@ -238,10 +238,10 @@ div[class*="admin-index"] h2 {
 	border-color: transparent!important;
 }
 
-.default-element .cell-title,
-.default-element .cell-body,
-.default-element .cell-list,
-.default-element .cell-footer {
+.default-addon .cell-title,
+.default-addon .cell-body,
+.default-addon .cell-list,
+.default-addon .cell-footer {
 	border-color: #2F9674;
 }
 
@@ -265,18 +265,19 @@ div[class*="admin-index"] h2 {
 }
 
 /* Couleurs des blocks themes/modules/langues */
-article .admin-element-menu-title,
-.admin-element-menu-title a {
+article .addon-menu-title,
+.addon-menu-title a {
 	color: #FFFFFF;
 }
 
-.admin-element-menu-title,
-.submit.admin-element-menu-title              { background-color: #366493; border-color: #366493; }
-.default-element .admin-element-menu-title    { background-color: #2F9674; border-color: #2F9674; }
-.deactivate-element .admin-element-menu-title { background-color: #AAAAAA; border-color: #AAAAAA; }
-.not-compatible .admin-element-menu-title     { background-color: #E84E40; border-color: #E84E40; }
+.multiple-select-button,
+.addon-menu-title,
+.submit.addon-menu-title              { background-color: #366493; border-color: #366493; }
+.default-addon .addon-menu-title    { background-color: #2F9674; border-color: #2F9674; }
+.deactivate-element .addon-menu-title { background-color: #AAAAAA; border-color: #AAAAAA; }
+.not-compatible .addon-menu-title     { background-color: #E84E40; border-color: #E84E40; }
 
-.admin-element.not-compatible {
+.addon.not-compatible {
 	border-color: #E84E40;
 }
 
@@ -284,67 +285,60 @@ span.not-compatible {
 	color: #E84E40;
 }
 
-.admin-element-menu-container:hover .admin-element-menu-title,
-.admin-element-menu-container.opened .admin-element-menu-title,
-.admin-element-menu-title.opened { background-color: #0066cc; }
+.multiple-select-button:hover,
+.addon-menu-container:hover .addon-menu-title,
+.addon-menu-container.opened .addon-menu-title,
+.addon-menu-title.opened { background-color: #0066cc; }
 
-.admin-element-menu-container:hover .admin-element-menu-title,
-.admin-element-menu-container:hover .admin-element-menu-title a,
-.admin-element-menu-container.opened .admin-element-menu-title,
-.admin-element-menu-container.opened .admin-element-menu-title a,
-.admin-element-menu-title.opened,
-.admin-element-menu-title.opened a { color: #FFFFFF; }
+.addon-menu-container .addon-menu-title,
+.addon-menu-container.opened .addon-menu-title,
+.addon-menu-container.opened .addon-menu-title a,
+.addon-menu-title.opened,
+.addon-menu-title.opened a { color: #FFFFFF; }
 
-.deactivate-element .admin-element-menu-container:hover .admin-element-menu-title,
-.deactivate-element .admin-element-menu-container.opened .admin-element-menu-title { color: #AAAAAA; }
+.deactivate-element .addon-menu-container:hover .addon-menu-title,
+.deactivate-element .addon-menu-container.opened .addon-menu-title { color: #AAAAAA; }
 
-.not-compatible .admin-element-menu-container:hover .admin-element-menu-title,
-.not-compatible .admin-element-menu-container.opened .admin-element-menu-title { color: #E84E40; }
+.not-compatible .addon-menu-container:hover .addon-menu-title,
+.not-compatible .addon-menu-container.opened .addon-menu-title { color: #E84E40; }
 
-.default-element .admin-element-menu-container:hover .admin-element-menu-title { color: #2F9674; }
+.default-addon .addon-menu-container:hover .addon-menu-title { color: #2F9674; }
 
-.admin-menu-elements-content {
+.addon-menu-content {
 	background-color: #FFFFFF;
 	color: #FFFFFF;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.multiple-select-menu-container .admin-menu-elements-content {
+.multiple-select-menu-container .addon-menu-content {
 	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.deactivate-element .admin-menu-elements-content { border-color: #AAAAAA; }
-.not-compatible .admin-menu-elements-content     { border-color: #E84E40; }
+.deactivate-element .addon-menu-content { border-color: #AAAAAA; }
+.not-compatible .addon-menu-content     { border-color: #E84E40; }
 
-.admin-menu-element > * { background-color: #366493; }
+.addon-menu-item > * { background-color: #366493; }
 
-.not-compatible .admin-menu-element:hover > *,
-.not-compatible .admin-menu-element > .submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
+.not-compatible .addon-menu-item:hover > *,
+.not-compatible .addon-menu-item > .submit:hover { background-color: rgba(232, 78, 64, 0.2); color: #E84E40; }
 
-.admin-element-auth-content {
+.addon-auth-content {
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
 	border-color: #DDDDDD;
+	background-color: #FFFFFF;
 }
 
-.admin-element-auth i { color: #366493; }
-.default-element .admin-element-auth i { color: #DDDDDD; }
+.addon-auth i { color: #366493; }
+.default-addon .addon-auth i { color: #DDDDDD; }
 
-.multiple-select-menu-container:hover {
-	background-color:  #FFFFFF;
-}
-
-.multiple-select-menu-container .select-all-button {
+.multiple-select-button .select-all-button {
 	background-color: transparent;
 	border: none;
 	box-shadow: none;
+	color: #FFFFFF;
 }
 
-.multiple-select-menu-container:hover .select-all-button {
-	background-color: #FFFFFF;
-	color: #366493;
-}
-
-.admin-menu-checkbox {
+.addon-menu-checkbox {
 	background-color: #0066CC;
 }
 
@@ -596,19 +590,19 @@ optgroup {
 	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.mini-checkbox .form-field-checkbox [type="checkbox"]:checked + span::after {
+.mini-checkbox .checkbox [type="checkbox"]:checked + span::after {
 	color: #0066cc;
 }
 
-.custom-checkbox .form-field-checkbox [type="checkbox"] + span::before {
+.custom-checkbox .checkbox [type="checkbox"] + span::before {
 	border-color: #DDDDDD;
 }
 
-.custom-checkbox .form-field-checkbox [type="checkbox"] + span::after {
+.custom-checkbox .checkbox [type="checkbox"] + span::after {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-.custom-checkbox .form-field-checkbox [type="checkbox"]:checked + span::after {
+.custom-checkbox .checkbox [type="checkbox"]:checked + span::after {
 	background-color: #0066cc;
 	color: #FFFFFF;
 }

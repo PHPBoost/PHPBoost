@@ -3,23 +3,16 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
-	<section id="upgrade-modules-container" class="admin-elements-container modules-elements-container upgrade-elements-container">
+	<section id="upgrade-modules-container">
 		<header class="legend">{@modules.updates_available}</header>
 		# IF C_UPDATES #
 			<div class="cell-flex cell-flex-3">
 				# START modules_upgradable #
-					<article class="cell admin-element module-element upgrade-element">
+					<article class="cell addon">
 						<header class="cell-title">
-							<div class="admin-element-menu-container">
-								# IF modules_upgradable.C_COMPATIBLE #
-									<button type="submit" class="submit admin-element-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
-								# ELSE #
-									<span class="admin-element-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
-								# ENDIF #
-							</div>
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_upgradable.C_COMPATIBLE #
-									<div class="form-field form-field-checkbox multiple-checkbox-container mini-checkbox">
+									<div class="mini-checkbox">
 										<label class="checkbox" for="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}">
 											<input type="checkbox" class="multiple-checkbox upgrade-checkbox" id="multiple-checkbox-{modules_upgradable.MODULE_NUMBER}" name="upgrade-checkbox-{modules_upgradable.MODULE_NUMBER}"/>
 											<span>&nbsp;</span>
@@ -27,12 +20,27 @@
 									</div>
 								# ENDIF #
 							# ENDIF #
-							<h2 class="upgrade-module-name">{modules_upgradable.NAME}<em> ({modules_upgradable.VERSION})</em></h2>
+							<div class="cell-name">{modules_upgradable.NAME}</div>
+							<div class="addon-menu-container">
+								# IF modules_upgradable.C_COMPATIBLE #
+									<button type="submit" class="submit addon-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
+								# ELSE #
+									<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+								# ENDIF #
+							</div>
 						</header>
 						<div class="cell-list">
 							<ul>
 								<li>
 									<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="{modules_upgradable.NAME}" />
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('version', 'admin')} :</span>
+									{modules_upgradable.VERSION}
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
+									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
@@ -50,13 +58,8 @@
 									<span class="text-strong">${LangLoader::get_message('description', 'main')} :</span>
 									{modules_upgradable.DESCRIPTION}
 								</li>
-								<li class="li-stretch">
-									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
-								</li>
 							</ul>
 						</div>
-
 						<footer></footer>
 					</article>
 				# END modules_upgradable #
@@ -69,21 +72,19 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-	<div class="multiple-select-menu-container admin-element-menu-title mini-checkbox">
-		<div class="form-field form-field-checkbox select-all-checkbox">
+		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
 			<label class="checkbox" for="upgrade-all-checkbox">
 				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
 				<span>&nbsp;</span>
 			</label>
+			<button type="submit" name="upgrade-selected-modules" value="true" class="select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
 		</div>
-		<button type="submit" name="upgrade-selected-modules" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
-	</div>
 	# ENDIF #
 </form>
 <script>
-	jQuery('.admin-element-auth').opensubmenu({
-		osmTarget: '.admin-element-auth-container',
-		osmCloseExcept: '.admin-element-auth-content *',
-		osmCloseButton: '.admin-element-auth-close i',
+	jQuery('.addon-auth').opensubmenu({
+		osmTarget: '.addon-auth-container',
+		osmCloseExcept: '.addon-auth-content *',
+		osmCloseButton: '.addon-auth-close i',
 	});
 </script>

@@ -9,6 +9,7 @@
 @import url('../../default/theme/dashboard_form.css') screen, print;
 @import url('../../default/theme/dashboard_global.css') screen, print;
 @import url('../../default/theme/dashboard_menus.css') screen, print;
+@import url('../../default/theme/dashboard_addons.css') screen, print;
 
 @import url('../../default/theme/cookies.css') screen, print;
 @import url('../../default/theme/scrollto.css') screen, print;

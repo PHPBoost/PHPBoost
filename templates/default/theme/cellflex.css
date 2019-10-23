@@ -51,6 +51,16 @@
 	flex-direction: column;
 }
 
+.cell-flex .cell-title {
+	display: flex;
+	align-items: center;
+}
+
+.cell-flex .cell-name {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
 .cell-flex .cell-body,
 .cell-flex .cell-list,
 .cell-flex .cell-table {
@@ -60,7 +70,7 @@
 .cell-flex .cell-thumbnail {
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .cell-flex .cell-thumbnail-caption {

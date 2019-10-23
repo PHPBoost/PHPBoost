@@ -32,3 +32,14 @@
 }
 
 .cell-body textarea {margin: 0;}
+
+
+/* --- Text helper --- */
+.text-helper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-helper span {
+    width: calc(100% / 2.1);
+}

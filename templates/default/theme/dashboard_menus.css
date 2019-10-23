@@ -216,13 +216,13 @@
 	.modal-menu .level-2 > li:first-child > a {
 		border-width: 0 1px 1px;
 	}
+
 	.modal-menu > li > a {
 		display: flex;
 		padding: 0.618em;
 		text-decoration: none;
 		border-width: 0 0 1px 0;
-		border-style: solid;
-		border-color: transparent;
+		white-space: normal;
 	}
 
 	.modal-menu ul li a {

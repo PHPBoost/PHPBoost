@@ -82,13 +82,13 @@
 					<label for="auth_flood">{L_AUTH_FLOOD}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<label for="auth_flood">
+							<label class="radio" for="auth_flood">
 								<input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" />
 								<span>{L_YES}</span>
 							</label>
 						</div>
 						<div class="form-field-radio">
-							<label for="auth_flood_1">
+							<label class="radio" for="auth_flood_1">
 								<input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" id="auth_flood_1" value="0" />
 								<span>{L_NO}</span>
 							</label>
@@ -269,13 +269,13 @@
 					<label for="auth_flood">{L_AUTH_FLOOD}</label>
 					<div class="form-field">
 						<div class="form-field-radio">
-							<label for="auth_flood">
+							<label class="radio" for="auth_flood">
 								<input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" />
 								<span>{L_YES}</span>
 							</label>
 						</div>
 						<div class="form-field-radio">
-							<label for="auth_flood_1">
+							<label class="radio" for="auth_flood_1">
 								<input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" id="auth_flood_1" value="0" />
 								<span>{L_NO}</span>
 							</label>
