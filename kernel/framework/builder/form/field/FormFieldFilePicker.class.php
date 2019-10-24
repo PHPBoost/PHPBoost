@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 01
+ * @version     PHPBoost 5.2 - last update: 2019 10 24
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -175,22 +175,7 @@ class FormFieldFilePicker extends AbstractFormField
 	 */
 	public function retrieve_value()
 	{
-		$request = AppContext::get_request();
-		
-		if ($this->is_multiple())
-		{
-			$array_file = array();
-			foreach ($_FILES[$this->get_html_id()] as $id => $value)
-			{
-				$array_file[] = $request->get_file($id);
-			}
-			$this->set_value($array_file);
-		}
-		else
-		{
-			$file = $request->get_file($this->get_html_id());
-			$this->set_value($file);
-		}
+		$this->set_value(AppContext::get_request()->get_file($this->get_html_id()));
 	}
 
 	protected function get_default_template()

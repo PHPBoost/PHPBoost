@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 10 24
  * @since   	PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
 */
@@ -105,6 +105,7 @@ class AdminSmileysFormController extends AdminController
 				if ($upload->file('upload_smiley_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu'))
 				{
 					// TODO : manage the smileys archive (possibility to upload a zip + checkbox if you want to create each smiley directly with: name_of_smiley as code)
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 				}
 				else
 				{
@@ -113,7 +114,7 @@ class AdminSmileysFormController extends AdminController
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::NOTICE));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('upload.error', 'status-messages-common'), MessageHelper::NOTICE));
 			}
 		}
 		else
