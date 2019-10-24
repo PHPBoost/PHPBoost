@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 13
+ * @version     PHPBoost 5.2 - last update: 2019 10 24
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -75,9 +75,12 @@ abstract class LinksMenuElement extends Menu
 			else
 				$url = new Url($this->image);
 
-			if (file_exists($url->absolute()))
+			if (!$url->is_relative() || file_exists(PATH_TO_ROOT . $this->image))
 			{
-				$image = new Image($url->absolute());
+				if (!$url->is_relative())
+					$image = new Image($url->absolute());
+				else
+					$image = new Image(PATH_TO_ROOT . $this->image);
 				
 				$template->put_all(array(
 					'C_IMG' => !empty($this->image),
