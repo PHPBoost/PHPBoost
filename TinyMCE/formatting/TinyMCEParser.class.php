@@ -7,7 +7,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 31
+ * @version   	PHPBoost 5.2 - last update: 2019 10 24
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -391,15 +391,17 @@ class TinyMCEParser extends ContentFormattingParser
 		if (!in_array('url', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg_replace, '<a href="$1">$6</a>');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
 			array_push($array_preg_replace, '<a href="$2">$7</a>');
-			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg, '`&lt;a(?: title="")? href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`suU');
 			array_push($array_preg_replace, '<a href="$1">$6</a>');
 		}
 		//Link tag with target
 		if (!in_array('url', $this->forbidden_tags))
 		{
 
-			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
+			array_push($array_preg, '`&lt;a(?: title="([^"]+)?")? href="(' . Url::get_wellformness_regex() . ')" target="_blank"&gt;(.+)&lt;/a&gt;`suU');
 			array_push($array_preg_replace, '<a href="$2" target="_blank">$7</a>');
 		}
 		//Sub tag
@@ -443,7 +445,7 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;a id="([^"]+)" class="mce-item-anchor"?&gt;&lt;/a&gt;`isuU');
 			array_push($array_preg_replace, '<span id="$1" class="anchor"></span>');
-			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: name="[^"]+")? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isuU');
+			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="([^"]+)?")?(?: name="[^"]+")? id="([^"]+)"&gt;(.*)&lt;/a&gt;`isuU');
 			array_push($array_preg_replace, '<span id="$1" class="anchor">$2</span>');
 		}
 		//Title tag
@@ -519,7 +521,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")? src="([^"]+)"(?: alt="([^"]+)?")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")?(?: title="([^"]+)?")? src="([^"]+)"(?: alt="([^"]+)?")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
 		}
 
 		//indent tag
@@ -590,13 +592,15 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img src="(.+)?/images/smileys/([^"]+)"(?: alt="([^"]+)?")? /&gt;`iu',
+		$this->content = preg_replace('`&lt;img title="([^"]+)?" src="(.+)?/images/smileys/([^"]+)"(?: alt="([^"]+)?")?(?: border="0")? /&gt;`iu',
 			'<img src="/images/smileys/$3" alt="$4" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)?/images/smileys/([^"]+)"(?: alt="([^"]+)?")? /&gt;`iu',
+		$this->content = preg_replace('`&lt;img class="smiley" title="([^"]+)?" src="(.+)?/images/smileys/([^"]+)"(?: alt="([^"]+)?")?(?: border="0")? /&gt;`iu',
 			'<img src="/images/smileys/$3" alt="$4" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?" /&gt;`iu',
+		$this->content = preg_replace('`&lt;img title="([^"]+)?" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?"(?: border="0")? /&gt;`iu',
 			'<img src="/images/smileys/$3" alt="$4" class="smiley" />', $this->content);
-		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?" /&gt;`iu',
+		$this->content = preg_replace('`&lt;img class="smiley" src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?"(?: title="([^"]+)?")? /&gt;`iu',
+			'<img src="/images/smileys/$2" alt="$3" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?"(?: title="([^"]+)?")? class="smiley" /&gt;`iu',
 			'<img src="/images/smileys/$2" alt="$3" class="smiley" />', $this->content);
 		$this->content = preg_replace('`&lt;img src="(.+)?/images/smileys/([^"]+)" alt="([^"]+)?" class="smiley" /&gt;`iu',
 			'<img src="/images/smileys/$2" alt="$3" class="smiley" />', $this->content);
@@ -662,9 +666,9 @@ class TinyMCEParser extends ContentFormattingParser
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'acronym' => "<acronym class=\"formatter-acronym\">$1</acronym>",
-			'acronym2' => "<acronym aria-label=\"$1\" class=\"formatter-acronym\">$2</acronym>",
+			'acronym2' => "<acronym title=\"$1\" class=\"formatter-acronym\">$2</acronym>",
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
-			'abbr2' => "<abbr aria-label=\"$1\" class=\"formatter-abbr\">$2</abbr>",
+			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => "[[MEDIA]]insertSwfPlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie' => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",
