@@ -105,7 +105,7 @@
 	<div class="spacer"></div>
 </div>
 
-<footer id="footer" class="sticky-footer">
+<footer id="footer">
 
 	# IF C_MENUS_TOP_FOOTER_CONTENT #
 	<div id="top-footer">

@@ -55,6 +55,13 @@ body {
 }
 
 /* --- Main ----------------------------------------------------------------- */
+#global {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100vh;
+}
+
 @media (min-width: 769px) {
 	#global {
 		width: 100%;
@@ -65,45 +72,28 @@ body {
 /* --- Containers --- */
 #admin-main {
 	padding-bottom: 40px;
-}
-
-#admin-contents {
-	clear: both;
-	margin: auto;
+	flex: 1 1 auto;
 }
 
 @media (min-width: 769px) {
 	#admin-contents{
-		padding: 10px 20px;
+		padding: 0.618em 1em;
 	}
-}
-
-#admin-contents {
-	height: auto;
-	min-height: 450px;
 }
 
 /* --- Search engine --- */
 .robot {
-	font-size: 0.9em;
+	font-size: 0.809em;
 	font-weight: bold;
 }
 
 /* --- Footer --------------------------------------------------------------- */
 #footer {
 	min-height: 5vh;
-	padding: 5px 10px;
+	padding: 0.618em 1.309em;
 	border-width: 5px 0 0 0;
 	border-style: solid;
 	border-color: transparent;
 	text-align: right;
 	width: 100%;
-}
-
-#footer span {
-	font-size: 0.8em;
-}
-
-.powered-by {
-	font-size: 1em;
 }
