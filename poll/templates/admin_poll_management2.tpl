@@ -94,7 +94,7 @@
 								<span class="form-field-radio-span">${LangLoader::get_message('no', 'common')}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element full-field">
 							<label>* {L_ANSWERS}</label>
 							<div class="form-field">
 								<table id="table" class="admin-poll">
@@ -108,13 +108,13 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="no-separator">
+											<td class="no-separator left">
 												# START answers #
 												<label class="infos-options"><input type="text" name="a{answers.ID}" value="{answers.ANSWER}" /></label>
 												# END answers #
 												<span id="a{MAX_ID}"></span>
 											</td>
-											<td class="no-separator">
+											<td class="no-separator left">
 												# START votes #
 												<label class="infos-options"><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label>
 												# END votes #
@@ -142,9 +142,9 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element half-field">
 							<label for="release_date">{L_RELEASE_DATE}</label>
-							<div class="form-field">
+							<div class="form-field poll-form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<label>
 										<div class="form-field-radio">
@@ -172,9 +172,9 @@
 								<span class="form-field-radio-span">{L_UNAPROB}</span>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element half-field top-field">
 							<label for="current_date">* {L_POLL_DATE}</label>
-							<div class="form-field"><label>
+							<div class="form-field poll-form-field"><label>
 								{CALENDAR_CURRENT_DATE}
 								{L_AT}
 								<input class="input-date" type="text" maxlength="2" name="hour" value="{HOUR}" /> h <input class="input-date" type="text" maxlength="2" name="min" value="{MIN}" />
