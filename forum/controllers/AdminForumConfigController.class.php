@@ -90,33 +90,46 @@ class AdminForumConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 500))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['config.edit_mark_enabled'], $this->config->is_edit_mark_enabled()));
-
-		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['config.multiple_posts_allowed'], $this->config->are_multiple_posts_allowed(),
-			array('description' => $this->lang['config.multiple_posts_allowed.explain'])
+		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['config.edit_mark_enabled'], $this->config->is_edit_mark_enabled(),
+			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['config.connexion_form_displayed'], $this->config->is_connexion_form_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['config.multiple_posts_allowed'], $this->config->are_multiple_posts_allowed(),
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['config.multiple_posts_allowed.explain'])
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_left_column', 'admin-common'), array('module' => "forum")), $this->config->is_left_column_disabled()));
+		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['config.connexion_form_displayed'], $this->config->is_connexion_form_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_right_column', 'admin-common'), array('module' => "forum")), $this->config->is_right_column_disabled()));
+		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_left_column', 'admin-common'), array('module' => "forum")), $this->config->is_left_column_disabled(),
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['config.message_before_topic_title_displayed'], $this->config->is_message_before_topic_title_displayed(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("message_before_topic_title_displayed").getValue()) {
-					HTMLForms.getField("message_before_topic_title").enable();
-					HTMLForms.getField("message_when_topic_is_unsolved").enable();
-					HTMLForms.getField("message_when_topic_is_solved").enable();
-					HTMLForms.getField("message_before_topic_title_icon_displayed").enable();
-				} else {
-					HTMLForms.getField("message_before_topic_title").disable();
-					HTMLForms.getField("message_when_topic_is_unsolved").disable();
-					HTMLForms.getField("message_when_topic_is_solved").disable();
-					HTMLForms.getField("message_before_topic_title_icon_displayed").disable();
-				}'
+		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars(LangLoader::get_message('config.hide_right_column', 'admin-common'), array('module' => "forum")), $this->config->is_right_column_disabled(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['config.message_before_topic_title_displayed'], $this->config->is_message_before_topic_title_displayed(),
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("message_before_topic_title_displayed").getValue()) {
+						HTMLForms.getField("message_before_topic_title").enable();
+						HTMLForms.getField("message_when_topic_is_unsolved").enable();
+						HTMLForms.getField("message_when_topic_is_solved").enable();
+						HTMLForms.getField("message_before_topic_title_icon_displayed").enable();
+					} else {
+						HTMLForms.getField("message_before_topic_title").disable();
+						HTMLForms.getField("message_when_topic_is_unsolved").disable();
+						HTMLForms.getField("message_when_topic_is_solved").disable();
+						HTMLForms.getField("message_before_topic_title_icon_displayed").disable();
+					}'
+				)
 			)
-		)));
+		));
 
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
@@ -133,7 +146,10 @@ class AdminForumConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->lang['config.message_before_topic_title_icon_displayed'], $this->config->is_message_before_topic_title_icon_displayed(),
-			array('description' => $this->lang['config.message_before_topic_title_icon_displayed.explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['config.message_before_topic_title_icon_displayed.explain']
+			)
 		));
 
 		$common_lang = LangLoader::get('common');

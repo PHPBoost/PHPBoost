@@ -221,7 +221,7 @@
 				<legend>{L_UPLOAD_GROUPS}</legend>
 				<div class="dnd-area">
 					<div class="dnd-dropzone">
-						<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.file', 'main')} <p></p></label>
+						<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
 						<input type="file" name="upload_groups[]" id="inputfiles" class="ufiles" />
 					</div>
 					<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">

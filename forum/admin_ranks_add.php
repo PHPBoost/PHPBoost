@@ -86,6 +86,9 @@ foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 
 $template->put_all(array(
 	'RANK_OPTIONS'             => $rank_options,
+	'MAX_FILE_SIZE' 		   => ServerConfiguration::get_upload_max_filesize(),
+	'MAX_FILE_SIZE_TEXT'       => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+	'ALLOWED_EXTENSIONS'       => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
 	'L_REQUIRE'                => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 	'L_REQUIRE_RANK_NAME'      => $LANG['require_rank_name'],
 	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],

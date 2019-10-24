@@ -124,7 +124,10 @@
 					<tr>
 						# IF C_MASS_MODO_CHECK #
 						<td class="forum-mass-modo">
-							<input type="checkbox" name="ck{topics.ID}">
+							<label class="checkbox" for="modo{topics.ID}">
+								<input id="modo{topics.ID}" type="checkbox" name="ck{topics.ID}">
+								<span>&nbsp;</span>
+							</label>
 						</td>
 						# ENDIF #
 						<td class="forum-announce-topic">
