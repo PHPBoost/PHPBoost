@@ -146,14 +146,13 @@
                     $(this).on('click', function(e) {
                         e.preventDefault(); // stop the trigger action
                         history.pushState('', '', '#'+dataId); // send the id of the target as hash of the url whitout apllying it
-                        var contentHeight = contentPanel.outerHeight(); // set the height of the target
                         if(!$(this).hasClass('active-tab')) // if the trigger isn't active
                         {
                             $(targetPanel).siblings('.tabs').removeClass('active-panel').css('height', 0); // remove the activation class from all targets and set height of targets to zero
                             $(this).parent().siblings().find('[data-target]').removeClass('active-tab'); // and from all sibling triggers
                         }
                         $(this).addClass('active-tab'); // add activation class to the trigger
-                        $(targetPanel).addClass('active-panel').css('height', contentHeight + 'px'); // set the height of the target
+                        $(targetPanel).addClass('active-panel').css('height', 'auto'); // set the height of the target
                         if($(this).parents(options.contentClass).length) // if the trigger is inside a target
                         {
                             $(targetPanel).closest(options.contentClass).closest('.tabs').css('height', 'auto'); // set the new height of the container
