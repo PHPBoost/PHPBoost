@@ -429,6 +429,27 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
 			$this->content = preg_replace_callback('`&lt;iframe src="//www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
 			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/watch\?v=([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+		}
+		//Dailymotion tag
+		if (!in_array('dailymotion', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+		}
+		//Vimeo tag
+		if (!in_array('vimeo', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`&lt;iframe src="/player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -902,6 +923,16 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_youtube_tag($matches)
 	{
 		return '[[MEDIA]]insertYoutubePlayer(\'https://www.youtube.com/embed/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
+	}
+
+	private function parse_dailymotion_tag($matches)
+	{
+		return '[[MEDIA]]insertDailymotionPlayer(\'https://www.dailymotion.com/embed/video/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
+	}
+
+	private function parse_vimeo_tag($matches)
+	{
+		return '[[MEDIA]]insertVimeoPlayer(\'https://player.vimeo.com/video/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
 	}
 
 	private function parse_swf_tag($matches)

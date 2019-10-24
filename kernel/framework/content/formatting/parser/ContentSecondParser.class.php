@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 09 14
+ * @version     PHPBoost 5.2 - last update: 2019 10 24
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -409,16 +409,16 @@ class ContentSecondParser extends AbstractParser
 
 	private static function process_dailymotion_tag($matches)
 	{
-		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=embed/video/)[^&\n]+|(?<=v=)[^&\n]+(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
+		preg_match('#(?<=embed/video/)[^&\n]+|(?<=video/)[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
 		return $video_id ? '<div class="media-content"><iframe class="dailymotion-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://www.dailymotion.com/embed/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private static function process_vimeo_tag($matches)
 	{
-		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=video/)[^&\n]+|(?<=v=)[^&\n]+(?<=youtu.be/)[^&\n]+#', $matches[1], $url_matches);
+		preg_match('#(?<=vimeo.com/)(?<=video/)?[^&\n]+#', $matches[1], $url_matches);
 		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<div class="media-content"><iframe class="vimeo-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://player.vimeo.com/video/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
+		return $video_id ? '<div class="media-content"><iframe class="vimeo-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://player.vimeo.com/' . (!preg_match('#video/#', $video_id) ? 'video/' : '') . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private function parse_feed_tag()

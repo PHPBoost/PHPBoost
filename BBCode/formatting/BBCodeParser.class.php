@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 09 14
+ * @version   	PHPBoost 5.2 - last update: 2019 10 24
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -202,12 +202,12 @@ class BBCodeParser extends ContentFormattingParser
 			'url5' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isuU',
 			'url6' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')\)(\s|<+)`isuU',
 			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
-			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
-			'youtube2' => '`\[youtube\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iuU',
-			'dailymotion1' => '`\[dailymotion=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/dailymotion\]`iuU',
-			'dailymotion2' => '`\[dailymotion\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/dailymotion\]`iuU',
-			'vimeo1' => '`\[vimeo=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/vimeo\]`iuU',
-			'vimeo2' => '`\[vimeo\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/vimeo\]`iuU',
+			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}+(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/youtube\]`iuU',
+			'youtube2' => '`\[youtube\]((?:https?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}+(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/youtube\]`iuU',
+			'dailymotion1' => '`\[dailymotion=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://(?:([a-z0-9-]+\.)*)?[a-z0-9-]+\.[a-z]{2,4}(/[a-z0-9~_-]+)*)\[/dailymotion\]`iuU',
+			'dailymotion2' => '`\[dailymotion\]((?:https?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}+(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/dailymotion\]`iuU',
+			'vimeo1' => '`\[vimeo=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://(?:([a-z0-9-]+\.)*)?[a-z0-9-]+\.[a-z]{2,4}(/[a-z0-9~_-]+)*)\[/vimeo\]`iuU',
+			'vimeo2' => '`\[vimeo\]((?:https?)://(?:([a-z0-9-]+\.)*)[a-z0-9-]+\.[a-z]{2,4}(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/vimeo\]`iuU',
 			'soundcloud1' => '`\[soundcloud=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/soundcloud\]`iuU',
 			'soundcloud2' => '`\[soundcloud\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/soundcloud\]`iuU',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
