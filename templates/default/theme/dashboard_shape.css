@@ -64,7 +64,6 @@ body {
 
 /* --- Containers --- */
 #admin-main {
-	min-height: 95vh;
 	padding-bottom: 40px;
 }
 
@@ -98,6 +97,7 @@ body {
 	border-style: solid;
 	border-color: transparent;
 	text-align: right;
+	width: 100%;
 }
 
 #footer span {

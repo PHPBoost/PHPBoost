@@ -76,7 +76,7 @@
 		{CONTENT}
 	</div>
 
-	<footer id="footer">
+	<footer id="footer" class="sticky-footer">
 		<span>
 			{L_POWERED_BY} <a class="powered-by" href="https://www.phpboost.com" aria-label="PHPBoost">PHPBoost</a> {L_PHPBOOST_RIGHT}
 		</span>
