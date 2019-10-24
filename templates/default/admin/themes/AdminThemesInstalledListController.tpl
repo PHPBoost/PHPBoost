@@ -20,7 +20,7 @@
 						<div class="addon-menu-container">
 							# IF themes_installed.C_IS_DEFAULT_THEME #
 								<div class="addon-menu-container">
-									<a href="#" class="addon-menu-title">{@themes.default}</a>
+									<span class="addon-menu-title">{@themes.default}</span>
 								</div>
 							# ELSE #
 								<div class="addon-menu-container addon-with-menu">

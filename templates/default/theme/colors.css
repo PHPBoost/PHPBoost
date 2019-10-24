@@ -23,9 +23,8 @@ body {
 	color: #616161;
 }
 
-.scroll-to         	{ background-color: #366493; }
-
-.scroll-to i       	{ color: #FFFFFF; }
+.scroll-to   { background-color: #366493; }
+.scroll-to i { color: #FFFFFF; }
 
 .cookiebar-container {
 	background-color: rgba(54, 100, 147, 0.1);

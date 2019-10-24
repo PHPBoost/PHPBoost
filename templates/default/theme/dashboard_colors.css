@@ -2,7 +2,7 @@
  * Contains all elements colors
 */
 
- /* --- admin_design.css ---------------------------------------------------- */
+ /* --- dashboard_shape.css ---------------------------------------------------- */
 @media {
 	body {
  		background-color: #ECF2F8;
@@ -17,18 +17,14 @@
 
  	#header-admin a { color: #FFFFFF; }
 
- 	.robot {
- 		color: #FF6600;
- 	}
+ 	.robot { color: #FF6600; }
 
  	#footer {
  		background-color: #1c334a;
- 		border-color: #404040;
+ 		border-color: #366493;
  	}
 
- 	#footer span {
- 		color: #FFFFFF;
- 	}
+ 	#footer span { color: #FFFFFF; }
 
 	.scroll-to         	{ background-color: #366493; }
 	.scroll-to:hover	{ background-color: #0066cc; }

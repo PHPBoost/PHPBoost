@@ -23,7 +23,7 @@
 						{langs_installed.NAME}</div>
 					# IF langs_installed.C_IS_DEFAULT_LANG #
 						<div class="addon-menu-container">
-							<a href="#" class="addon-menu-title">{@langs.default}</a>
+							<span class="addon-menu-title">{@langs.default}</span>
 						</div>
 					# ELSE #
 						<div class="addon-menu-container addon-with-menu">

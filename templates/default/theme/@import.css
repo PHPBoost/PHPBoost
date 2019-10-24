@@ -11,7 +11,6 @@
 @import url('../../default/theme/dashboard_menus.css') screen, print;
 @import url('../../default/theme/dashboard_addons.css') screen, print;
 
-@import url('../../default/theme/cookies.css') screen, print;
 @import url('../../default/theme/scrollto.css') screen, print;
 @import url('../../default/theme/sortable.css') screen, print;
 @import url('../../default/theme/checkbox.css') screen, print;
@@ -20,7 +19,6 @@
 @import url('../../default/theme/plugins.css') screen, print;
 @import url('../../default/theme/cell.css') screen, print;
 @import url('../../default/theme/cellflex.css') screen, print;
-@import url('../../default/theme/messages.css') screen, print;
 
 @import url('../../default/theme/dashboard.css') screen, print;
 @import url('../../default/theme/dashboard_colors.css') screen, print;

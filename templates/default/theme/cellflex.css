@@ -59,6 +59,7 @@
 .cell-flex .cell-name {
 	flex: 1 1 auto;
 	min-width: 0;
+	display: flex;
 }
 
 .cell-flex .cell-body,
