@@ -649,10 +649,7 @@ class UpdateServices
 		$this->delete_old_files_lang();
 		$this->delete_old_files_templates();
 		$this->delete_old_files_user();
-	}
 
-	private function delete_old_files_admin()
-	{
 		// Example :
 		// Delete a file :
 		// $file = new File(PATH_TO_ROOT . '/admin/AbstractAdminFormPageController.class.php');
@@ -662,7 +659,10 @@ class UpdateServices
 		// $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/phpboost/deprecated');
 		// if ($folder->exists())
 		// $folder->delete();
+	}
 
+	private function delete_old_files_admin()
+	{
 		$file = new File(PATH_TO_ROOT . '/database/lang/english/database_english.php');
 		$file->delete();
 
@@ -672,7 +672,6 @@ class UpdateServices
 		$folder = new Folder(PATH_TO_ROOT . '/ReCaptcha/lib');
 		if ($folder->exists())
 			$folder->delete();
-
 	}
 
 	private function delete_old_files_kernel()
@@ -690,6 +689,14 @@ class UpdateServices
 			$folder->delete();
 
 		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/lightcase');
+		if ($folder->exists())
+			$folder->delete();
+
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css/font-awesome');
+		if ($folder->exists())
+			$folder->delete();
+
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css/font-awesome-animation');
 		if ($folder->exists())
 			$folder->delete();
 
@@ -746,6 +753,65 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/templates/default/framework/builder/form/FormFieldMultipleFilePicker.tpl');
 		$file->delete();
 
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_colors.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_content.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_cssmenu.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_design.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_form.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_global.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_menus.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/default/theme/admin_table.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/content.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/cssmenu.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/design.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/form.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/global.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/login.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/menus.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/shape.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/table.css');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/images/logo.png');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/theme/images/admin.jpg');
+		$file->delete();
 	}
 
 	private function delete_old_files_user()

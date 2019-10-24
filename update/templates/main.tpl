@@ -8,26 +8,18 @@ ${resources('update/update')}
 		<meta name="robots" content="noindex, follow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome-animation/css/font-awesome-animation.css" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors.css" type="text/css" media="screen, print" />
-		<link type="text/css" href="templates/update.css" title="phpboost" rel="stylesheet" />
+		<link type="text/css" href="{PATH_TO_ROOT}/update/templates/@import.css" title="phpboost" rel="stylesheet" />
 
 		<script>
-		<!--
-		var PATH_TO_ROOT = "{PATH_TO_ROOT}";
-		var TOKEN = "{TOKEN}";
-		var THEME = "{THEME}";
-		-->
+			<!--
+			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
+			var TOKEN = "{TOKEN}";
+			var THEME = "{THEME}";
+			-->
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/default/plugins/sticky.footer.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
@@ -79,7 +71,7 @@ ${resources('update/update')}
 							# START step #
 								<li class="{step.CSS_CLASS}# IF step.C_NO_DATABASE_STEP_CLASS # no-database-step# ENDIF #">
 									<span class="cssmenu-title">
-										<i class="fa fa-{step.IMG} fa-fw" title="${escape(step.NAME)}" aria-hidden="true"></i><span>{step.NAME}</span>
+										<i class="fa fa-{step.IMG} fa-fw" aria-hidden="true"></i><span>{step.NAME}</span>
 									</span>
 								</li>
 							# END step #
@@ -109,8 +101,8 @@ ${resources('update/update')}
 			<article>
 				# INCLUDE UpdateStep #
 			</article>
-			<footer>
-				{@poweredBy} <a href="https://www.phpboost.com" title="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
+			<footer id="footer" class="sticky-footer">
+				<span>{@poweredBy} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
 			</footer>
 		</section>
 	</body>

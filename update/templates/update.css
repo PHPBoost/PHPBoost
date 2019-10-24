@@ -1,38 +1,4 @@
-header#header-admin {
-	padding-bottom: 10px;
-}
-
-@media (min-width: 769px) {
-	header#header-admin {
-		position: fixed;
-		z-index: 3;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		width: 250px;
-		max-width: 230px;
-		height: 100%;
-		max-height: none;
-		overflow: hidden;
-	}
-
-	div.header-admin-container {
-		position: absolute;
-		right: -20px;
-		left: 0;
-		width: calc(100% + 20px);
-		max-height: 100%;
-		overflow-y: scroll;
-	}
-}
-
-@media (max-width: 768px) {
-	div#site-name-container {
-		padding: 10px;
-	}
-}
-
-div#update-site-logo {
+#update-site-logo {
 	display: inline-block;
 	margin-bottom: 10px;
 	width: 25px;
@@ -44,14 +10,9 @@ div#update-site-logo {
 	vertical-align: middle;
 }
 
-a#site-name {
-	font-size: 1.8em;
-}
 
 #site-slogan {
 	display: none;
-	padding: 5px;
-	color: #FFFFFF;
 }
 
 @media (min-width: 769px) {
@@ -60,38 +21,38 @@ a#site-name {
 	}
 }
 
-#sub-header-admin select {
-	background-color: #FFFFFF;
-	border-color: #BBBBBB;
-	color: #222222;
-}
-
 #sub-header-admin .cssmenu > ul > li > .cssmenu-title {
     display: block;
 	font-size: 1.228rem;
 }
 
-/*--- Menus ====================================================================== */
-h3.menu-title {
-	padding-left: 15px;
-}
+/* --- Menus ---------------------------------------------------------------- */
 
-div.site-logo {
+.site-logo {
 	float: left;
 	margin-right: 5px;
 }
 
 .cssmenu > ul > li {
 	width: 100%;
+	border-width: 0 0 0 3px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+@media (min-width: 769px) {
+	.cssmenu > ul > li {
+		border-width: 0 0 0 5px;
+	}
 }
 
 .cssmenu > ul > li > .cssmenu-title {
 	display: table;
-	padding: 12px 17px;
+	padding: 0.809em 1.228em;
 }
 
 .cssmenu > ul > li > .cssmenu-title i,
-.cssmenu > ul > li > .cssmenu-title span{
+.cssmenu > ul > li > .cssmenu-title span {
 	display: table-cell;
 	color: #DDDDDD;
 }
@@ -101,19 +62,15 @@ div.site-logo {
 }
 
 .row-next {}
-.row-success {}
 
 @media (min-width: 769px) {
-	.row-current {
-		border-left: 5px solid #FF9900;
+	.cssmenu > ul > li.row-current {
+		border-color: #E27B47;
     	background-color: rgba(54, 100, 147, 0.5);
 	}
-}
 
-@media (max-width: 768px) {
-	.row-current {
-		border-bottom: 3px solid #FF9900;
-    	background-color: rgba(54, 100, 147, 0.5);
+	.cssmenu > ul > li.row-success {
+		border-color: #40b73a;
 	}
 }
 
@@ -121,18 +78,9 @@ div.site-logo {
 	color: #FFFFFF;
 }
 
-.help-menu.cssmenu > ul > li > a:hover.cssmenu-title i,
-.help-menu.cssmenu > ul > li > a:hover.cssmenu-title span {
-	color: #8AC77F;
-}
-
 .progressbar-container {
 	margin: 10px auto;
 	width: 90%;
-}
-
-.progressbar[style*="100"] {
-	border-radius: 3px;
 }
 
 @media (max-width: 768px) {
@@ -161,10 +109,6 @@ div.site-logo {
 		text-align: center;
 	}
 
-	.help-menu.cssmenu > ul > li > .cssmenu-title i {
-		vertical-align: top;
-	}
-
 	.step-menu.cssmenu > ul > li > .cssmenu-title i {
 		display: inline-block;
 		padding: 0;
@@ -175,11 +119,14 @@ div.site-logo {
 	}
 }
 
-/* --- contenu ====================================================================== */
-section#global,
+/* --- Content -------------------------------------------------------------- */
+
+
+#global,
 article {
 	margin: 0;
 	width: 100%;
+	position: relative;
 }
 
 section header {
@@ -187,8 +134,8 @@ section header {
 }
 
 section header h1 {
-	padding: 10px;
-	border-bottom: 2px solid #BBBBBB;
+	padding: 0.618em;
+	border-bottom: 1px solid #DDDDDD;
 }
 
 article header h2 {
@@ -203,7 +150,6 @@ article h3 {
 
 article {
 	padding: 10px;
-	min-height: calc(95vh - 57px);
 }
 
 .content > a > img {
@@ -219,8 +165,13 @@ article {
 	margin: 5px 0;
 }
 
+#footer {
+	width: 100%;
+	margin: 0;
+}
+
 @media (min-width: 769px) {
-	section#global {
+	#global {
 		padding-left: 230px;
 		width: 100%;
 	}
@@ -232,6 +183,8 @@ article {
 	article header h2 {
 		font-size: 2.5em;
 	}
+
+	/* #footer { width: calc(100% - 230px); } */
 }
 
 /* --- welcome --- */
@@ -267,8 +220,8 @@ article {
 	text-align: center;
 }
 
-.success-block { background: #8AC77F; color: #008000; }
-.failure-block { background: #EE8D8D; color: #FF0000; }
+.success-block { background-color: #8AC77F; color: #008000; }
+.failure-block { background-color: #EE8D8D; color: #FF0000; }
 
 #chmod .form-element {
 	padding: 2px;
@@ -314,48 +267,48 @@ article {
 
 /* --- finish --- */
 
-nav.finish-menu ul {
+.finish-menu ul {
 	display: table;
 	margin: 20px auto;
 	padding: 0;
 	list-style-type: none;
 }
 
-nav.finish-menu ul li {
+.finish-menu ul li {
 	display: inline-block;
 	padding: 10px;
 	width: 100%;
 	text-align: center;
 }
 
-nav.finish-menu ul li a {
+.finish-menu ul li a {
 	text-decoration: none;
 }
 
-nav.finish-menu ul li i,
-nav.finish-menu ul li span {
+.finish-menu ul li i,
+.finish-menu ul li span {
 	display: block;
 }
 
 @media (min-width: 769px) {
-	nav.finish-menu ul li {
+	.finish-menu ul li {
 		width: 200px;
 		vertical-align: top;
 	}
 
-	nav.finish-menu ul li i,
-	nav.finish-menu ul li span {
+	.finish-menu ul li i,
+	.finish-menu ul li span {
 		display: block;
 	}
 }
 
 /* --- footer --- */
-section > footer {
+/* section > footer {
 	margin: 0;
-	padding: 10px;
+	padding: 0.618em;
 	min-height: 5vh;
-	background: #404040;
+	background-color: #404040;
 	border-top: 5px solid #366393;
 	color: #FFFFFF;
 	text-align: right;
-}
+} */
