@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 24
  * @since   	PHPBoost 5.0 - 2017 03 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -90,13 +90,17 @@ class AdminGoogleMapsConfigController extends AdminModuleController
 
 		if ($this->form->get_value('api_key') && !$this->form->get_field_by_id('default_position')->is_hidden())
 		{
-			$default_marker = new GoogleMapsMarker();
-			$default_marker->set_properties(TextHelper::unserialize($this->form->get_value('default_position')));
+			$default_position = TextHelper::unserialize($this->form->get_value('default_position'));
+			if ($default_position)
+			{
+				$default_marker = new GoogleMapsMarker();
+				$default_marker->set_properties($default_position);
 
-			$this->config->set_default_marker_address($default_marker->get_address());
-			$this->config->set_default_marker_latitude($default_marker->get_latitude());
-			$this->config->set_default_marker_longitude($default_marker->get_longitude());
-			$this->config->set_default_zoom($default_marker->get_zoom());
+				$this->config->set_default_marker_address($default_marker->get_address());
+				$this->config->set_default_marker_latitude($default_marker->get_latitude());
+				$this->config->set_default_marker_longitude($default_marker->get_longitude());
+				$this->config->set_default_zoom($default_marker->get_zoom());
+			}
 		}
 
 		GoogleMapsConfig::save();
