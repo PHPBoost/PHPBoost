@@ -37,10 +37,10 @@
 
 				<div id="article-poll-{IDPOLL}" class="article-poll">
 					# IF C_IS_ADMIN #
-					<span class="actions">
-						<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-						<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
-					</span>
+						<span class="actions">
+							<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+							<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+						</span>
 					# ENDIF #
 					<div class="content">
 						# IF C_POLL_QUESTION #
@@ -66,13 +66,13 @@
 						# IF C_POLL_RESULTS #
 							# IF C_DISPLAY_RESULTS #
 								# START result #
-								<div>
-									<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
-									<div class="progressbar-container" aria-label="{result.PERCENT}%">
-										<div class="progressbar-infos">{result.PERCENT}%</div>
-										<div class="progressbar" style="width:{result.PERCENT}%;"></div>
+									<div>
+										<h6>{result.ANSWERS} - ({result.NBRVOTE} {L_VOTE})</h6>
+										<div class="progressbar-container" aria-label="{result.PERCENT}%">
+											<div class="progressbar-infos">{result.PERCENT}%</div>
+											<div class="progressbar" style="width:{result.PERCENT}%;"></div>
+										</div>
 									</div>
-								</div>
 								# END result #
 								<div>
 									<span class="smaller left">{VOTES} {L_VOTE}</span>
