@@ -36,7 +36,7 @@ $lang['modules.upload_module'] = 'Uploader un module';
 $lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip et ne doit pas dépasser :max_size. En cas de dépassement, déposez le dossier extrait de l\'archive à la <b>racine</b> de votre site sur votre FTP.';
 
 //Module
-$lang['modules.php_version'] = 'Version PHP';
+$lang['modules.php.version'] = 'Version PHP';
 $lang['module.documentation'] = 'Documentation';
 $lang['module.documentation_of'] = 'Documentation of';
 

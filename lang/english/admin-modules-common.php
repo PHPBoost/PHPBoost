@@ -36,7 +36,7 @@ $lang['modules.upload_module'] = 'Install a module';
 $lang['modules.upload_description'] = 'The file must be uploaded as a zip or gzip archive and must not exceed :max_size. In case of overrun, drop the extracted folder from the archive to the <b>root</b> of your site on your FTP.';
 
 //Module
-$lang['modules.php_version'] = 'PHP version';
+$lang['modules.php.version'] = 'PHP version';
 $lang['module.documentation'] = 'Documentation';
 $lang['module.documentation_of'] = 'Documentation du module ';
 
