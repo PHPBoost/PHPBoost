@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,6 +54,8 @@ $lang['security.config.internal-password-strength.medium'] = 'Moyenne (lettres e
 $lang['security.config.internal-password-strength.strong'] = 'Forte (minuscules, majuscules et chiffres)';
 $lang['security.config.internal-password-strength.very-strong'] = 'Très forte (minuscules, majuscules, chiffres et caractères spéciaux)';
 $lang['security.config.login-and-email-forbidden-in-password'] = 'Interdire l\'adresse email et l\'identifiant de connexion dans le mot de passe';
+$lang['security.config.forbidden-mail-domains'] = 'Liste des noms de domaines interdits';
+$lang['security.config.forbidden-mail-domains.explain'] = 'Domaines interdits dans les adresses mail des utilisateurs (séparés par des virgules). Exemple : <b>domain.com</b>';
 
 $lang['members.config-authentication'] = 'Configuration des moyens d\'authentification';
 

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 09 24
+ * @version     PHPBoost 5.2 - last update: 2019 10 25
  * @since       PHPBoost 5.1 - 2015 07 17
 */
 
@@ -14,6 +14,7 @@ class SecurityConfig extends AbstractConfigData
 	const INTERNAL_PASSWORD_MIN_LENGTH = 'internal_password_min_length';
 	const INTERNAL_PASSWORD_STRENGTH = 'internal_password_strength';
 	const LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD = 'login_and_email_forbidden_in_password';
+	const FORBIDDEN_MAIL_DOMAINS = 'forbidden_mail_domains';
 
 	const PASSWORD_STRENGTH_WEAK = 'weak';
 	const PASSWORD_STRENGTH_MEDIUM = 'medium';
@@ -55,6 +56,16 @@ class SecurityConfig extends AbstractConfigData
 		return $this->get_property(self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD);
 	}
 
+	public function get_forbidden_mail_domains()
+	{
+		return $this->get_property(self::FORBIDDEN_MAIL_DOMAINS);
+	}
+
+	public function set_forbidden_mail_domains(array $value)
+	{
+		$this->set_property(self::FORBIDDEN_MAIL_DOMAINS, $value);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -63,7 +74,8 @@ class SecurityConfig extends AbstractConfigData
 		return array(
 			self::INTERNAL_PASSWORD_MIN_LENGTH => 6,
 			self::INTERNAL_PASSWORD_STRENGTH => self::PASSWORD_STRENGTH_WEAK,
-			self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD => false
+			self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD => false,
+			self::FORBIDDEN_MAIL_DOMAINS => array()
 		);
 	}
 
