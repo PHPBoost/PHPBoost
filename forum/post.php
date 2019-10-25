@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 09
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -277,7 +277,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 				$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
-				if (!$config->are_multiple_posts_allowed() && $topic['last_user_id'] == AppContext::get_current_user()->get_id())
+				if ($config->are_multiple_posts_allowed() || ForumAuthorizationsService::check_authorizations()->multiple_posts() || $topic['last_user_id'] != AppContext::get_current_user()->get_id())
+					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
+				else
 				{
 					$last_page = ceil( $topic['nbr_msg'] / $config->get_number_messages_per_page() );
 					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
@@ -321,8 +323,6 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					//On marque le topic comme lu pour le posteur
 					mark_topic_as_read($idt_get, $last_msg_id, $last_timestamp);
 				}
-				else
-					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 
 				//Redirection après post.
 				AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);

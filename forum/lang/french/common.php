@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -67,4 +67,5 @@ $lang['authorizations.read_topics_content'] = 'Autorisation d\'afficher le conte
 $lang['authorizations.flood'] = 'Autorisation de flooder';
 $lang['authorizations.hide_edition_mark'] = 'Désactivation du marqueur d\'édition des messages';
 $lang['authorizations.unlimited_topics_tracking'] = 'Désactivation de la limite de sujet suivis';
+$lang['authorizations.multiple_posts'] = 'Utilisateurs autorisés à à poster plusieurs messages consécutifs';
 ?>

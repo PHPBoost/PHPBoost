@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 15
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 4.1 - 2015 02 25
 */
 
@@ -14,6 +14,7 @@ class ForumAuthorizationsService
 	const UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS = 64;
 	const READ_TOPICS_CONTENT_AUTHORIZATIONS = 128;
 	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 256;
+	const MULTIPLE_POSTS_AUTHORIZATIONS = 512;
 
 	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
@@ -60,6 +61,11 @@ class ForumAuthorizationsService
 	public function manage_categories()
 	{
 		return $this->is_authorized(self::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
+	}
+
+	public function multiple_posts()
+	{
+		return $this->is_authorized(self::MULTIPLE_POSTS_AUTHORIZATIONS);
 	}
 
 	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
