@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -164,7 +164,8 @@ class AdminForumConfigController extends AdminModuleController
 			new ActionAuthorization($this->lang['authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.hide_edition_mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['authorizations.unlimited_topics_tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
+			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($this->lang['authorizations.multiple_posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

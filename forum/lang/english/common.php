@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -67,4 +67,5 @@ $lang['authorizations.read_topics_content'] = 'Display topics content authorizat
 $lang['authorizations.flood'] = 'Flood authorization';
 $lang['authorizations.hide_edition_mark'] = 'Hide last edited time information';
 $lang['authorizations.unlimited_topics_tracking'] = 'Deactivate topics subscription limit';
+$lang['authorizations.multiple_posts'] = 'Users authorized to post several consecutive messages';
 ?>
