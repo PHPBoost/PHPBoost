@@ -300,8 +300,6 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
 		// Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
-		// Soundcloud
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundcloudPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_soundcloud_tag'), $this->content);
 		// Movie
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		// Movie with poster
@@ -391,13 +389,6 @@ class ContentSecondParser extends AbstractParser
 	private static function process_sound_tag($matches)
 	{
 		return '<audio class="audio-player" controls><source src="' . Url::to_rel($matches[1]) . '" /></audio>';
-	}
-
-	private static function process_soundcloud_tag($matches)
-	{
-		preg_match('#(?<=docid=)[a-zA-Z0-9-]+(?=&)|(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=e\/)[^&\n]+(?=\?)|(?<=player/)[^&\n]+|(?<=v=)[^&\n]+|(?<=api.soundcloud.com/)[^&\n]+#', $matches[1], $url_matches);
-		$video_id = isset($url_matches[0]) ? $url_matches[0] : '';
-		return $video_id ? '<div class="media-content"><iframe class="soundcloud-player" type="text/html" width="' . $matches[2] . '" height="' . $matches[3] . '" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' . $video_id . '" frameborder="0" allowfullscreen></iframe></div>' : '';
 	}
 
 	private static function process_youtube_tag($matches)

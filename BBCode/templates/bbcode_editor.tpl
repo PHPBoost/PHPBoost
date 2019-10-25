@@ -408,7 +408,6 @@ function XMLHttpRequest_preview(field)
 				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block31{FIELD}">
 					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" aria-label="{@bbcode.sound.label}"> {@bbcode.sound} </a></li>
-						<!-- <li><a href="" onclick="{DISABLED_SOUNDCLOUD}insertbbcode('[soundcloud]', '[/soundcloud]', '{FIELD}');return false;" aria-label="{@bbcode.soundcloud.label}"> {@bbcode.soundcloud} </a></li> -->
 						<li><a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bbcode.movie.label}"> {@bbcode.movie} </a></li>
 						<li><a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bbcode.youtube.label}"> {@bbcode.youtube} </a></li>
 						<li><a href="" onclick="{DISABLED_DAILYMOTION}insertbbcode('[dailymotion]', '[/dailymotion]', '{FIELD}');return false;" aria-label="{@bbcode.dailymotion.label}"> {@bbcode.dailymotion} </a></li>

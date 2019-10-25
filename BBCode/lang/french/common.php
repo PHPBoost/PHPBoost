@@ -79,8 +79,6 @@ $lang['bbcode.anchor'] = 'Ancre vers un endroit de la page [anchor=x]texte[/anch
 $lang['bbcode.media'] = 'Media';
 $lang['bbcode.sound'] = 'Son';
 $lang['bbcode.sound.label'] = '[sound]adresse du son[/sound]';
-$lang['bbcode.soundcloud'] = 'Soundcloud';
-$lang['bbcode.soundcloud.label'] = '[soundcloud=largeur,hauteur]url soundcloud[/soundcloud]';
 $lang['bbcode.movie'] = 'Vidéo';
 $lang['bbcode.movie.label'] = '[movie=largeur,hauteur]adresse du fichier[/movie]';
 $lang['bbcode.youtube'] = 'Youtube';
