@@ -63,13 +63,17 @@ class AdminSandboxConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['mini.superadmin.enabled'], $this->config->get_superadmin_enabled(),
-			array('events' => array('click' => '
-			if (HTMLForms.getField("superadmin_enabled").getValue()) {
-				HTMLForms.getField("superadmin_name").enable();
-			} else {
-				HTMLForms.getField("superadmin_name").disable();
-			}'
-		))));
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("superadmin_enabled").getValue()) {
+						HTMLForms.getField("superadmin_name").enable();
+					} else {
+						HTMLForms.getField("superadmin_name").disable();
+					}'
+				)
+			)
+		));
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('superadmin_name', $this->lang['mini.superadmin.id'], $this->config->get_superadmin_name(),
 			array('hidden' => !$this->config->get_superadmin_enabled()),

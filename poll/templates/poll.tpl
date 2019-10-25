@@ -46,11 +46,11 @@
 						# IF C_POLL_QUESTION #
 						<div>
 							# START radio #
-							<p class="poll-question-select"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
+								<p class="poll-question-select"><label class="radio"><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> <span>{radio.ANSWERS}</span></label></p>
 							# END radio #
 
 							# START checkbox #
-							<p class="poll-question-select"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
+								<p class="poll-question-select"><label class="checkbox"><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> <span>{checkbox.ANSWERS}</span></label></p>
 							# END checkbox #
 
 							<p class="center">

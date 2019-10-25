@@ -75,7 +75,9 @@ class AdminOnlineConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset_config->add_field(new FormFieldCheckbox('display_robots', $this->lang['admin.robots-displayed'], $this->config->are_robots_displayed()));
+		$fieldset_config->add_field(new FormFieldCheckbox('display_robots', $this->lang['admin.robots-displayed'], $this->config->are_robots_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);

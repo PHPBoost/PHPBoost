@@ -70,12 +70,15 @@ class AdminShoutboxConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_messages_number_enabled', $this->lang['config.max_messages_number_enabled'], $this->config->is_max_messages_number_enabled(),
-			array('class' => 'third-field', 'events' => array('click' => '
-				if (HTMLForms.getField("max_messages_number_enabled").getValue()) {
-					HTMLForms.getField("max_messages_number").enable();
-				} else {
-					HTMLForms.getField("max_messages_number").disable();
-				}')
+			array(
+				'class' => 'third-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("max_messages_number_enabled").getValue()) {
+						HTMLForms.getField("max_messages_number").enable();
+					} else {
+						HTMLForms.getField("max_messages_number").disable();
+					}'
+				)
 			)
 		));
 
@@ -87,16 +90,19 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('no_write_authorization_message_displayed', $this->lang['config.no_write_authorization_message_displayed'], $this->config->is_no_write_authorization_message_displayed(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['config.max_links_number_per_message_enabled'], $this->config->is_max_links_number_per_message_enabled(),
-			array('class' => 'third-field', 'events' => array('click' => '
-				if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
-					HTMLForms.getField("max_links_number_per_message").enable();
-				} else {
-					HTMLForms.getField("max_links_number_per_message").disable();
-				}')
+			array(
+				'class' => 'third-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
+						HTMLForms.getField("max_links_number_per_message").enable();
+					} else {
+						HTMLForms.getField("max_links_number_per_message").disable();
+					}'
+				)
 			)
 		));
 
@@ -115,29 +121,32 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date_displayed'], $this->config->is_date_displayed(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('validation_onkeypress_enter_enabled', $this->lang['config.validation_onkeypress_enter_enabled'], $this->config->is_validation_onkeypress_enter_enabled(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 		{
 			$fieldset->add_field(new FormFieldCheckbox('shout_bbcode_enabled', $this->lang['config.shout_bbcode_enabled'], $this->config->is_shout_bbcode_enabled(),
-				array('class' => 'third-field')
+				array('class' => 'third-field custom-checkbox')
 			));
 		}
 
 		$fieldset->add_field(new FormFieldFree('3_separator', '', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('automatic_refresh_enabled', $this->lang['config.automatic_refresh_enabled'], $this->config->is_automatic_refresh_enabled(),
-			array('class' => 'third-field', 'events' => array('click' => '
-				if (HTMLForms.getField("automatic_refresh_enabled").getValue()) {
-					HTMLForms.getField("refresh_delay").enable();
-				} else {
-					HTMLForms.getField("refresh_delay").disable();
-				}')
+			array(
+				'class' => 'third-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("automatic_refresh_enabled").getValue()) {
+						HTMLForms.getField("refresh_delay").enable();
+					} else {
+						HTMLForms.getField("refresh_delay").disable();
+					}'
+				)
 			)
 		));
 
@@ -148,12 +157,15 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldFree('4_separator', '', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('shout_max_messages_number_enabled', $this->lang['config.shout_max_messages_number_enabled'], $this->config->is_shout_max_messages_number_enabled(),
-			array('class' => 'third-field', 'events' => array('click' => '
-				if (HTMLForms.getField("shout_max_messages_number_enabled").getValue()) {
-					HTMLForms.getField("shout_max_messages_number").enable();
-				} else {
-					HTMLForms.getField("shout_max_messages_number").disable();
-				}')
+			array(
+				'class' => 'third-field custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("shout_max_messages_number_enabled").getValue()) {
+						HTMLForms.getField("shout_max_messages_number").enable();
+					} else {
+						HTMLForms.getField("shout_max_messages_number").disable();
+					}'
+				)
 			)
 		));
 

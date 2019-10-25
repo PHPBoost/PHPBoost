@@ -24,48 +24,56 @@
 				<fieldset>
 					<legend>{L_PAGES_CONGIG}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element">
+						<div class="form-element custom-checkbox">
 							<label for="count_hits">
 								{L_COUNT_HITS}
 								<span class="field-description">({L_COUNT_HITS_EXPLAIN})</span>
 							</label>
 							<div class="form-field">
 								<div class="form-field-checkbox">
-									<input id="hits-checked" type="checkbox" name="count_hits" {HITS_CHECKED} />
-									<label for="hits-checked"></label>
+									<label class="checkbox" for="hits-checked">
+										<input id="hits-checked" type="checkbox" name="count_hits" {HITS_CHECKED} />
+										<span>&nbsp;</span>
+									</label>
 								</div>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element custom-checkbox">
 							<label for="comments_activated">
 								{L_COMMENTS_ACTIVATED}
 							</label>
 							<div class="form-field">
 								<div class="form-field-checkbox">
-									<input id="com-checked" type="checkbox" name="comments_activated" {COM_CHECKED} />
-									<label for="com-checked"></label>
+									<label class="checkbox" for="com-checked">
+										<input id="com-checked" type="checkbox" name="comments_activated" {COM_CHECKED} />
+										<span>&nbsp;</span>
+									</label>
 								</div>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element custom-checkbox">
 							<label for="left_column_disabled">
 								{L_HIDE_LEFT_COLUMN}
 							</label>
 							<div class="form-field">
 								<div class="form-field-checkbox">
-									<input id="left-checked" type="checkbox" name="left_column_disabled" {HIDE_LEFT_COLUMN_CHECKED} />
-									<label for="left-checked"></label>
+									<label class="checkbox" for="left-checked">
+										<input id="left-checked" type="checkbox" name="left_column_disabled" {HIDE_LEFT_COLUMN_CHECKED} />
+										<span>&nbsp;</span>
+									</label>
 								</div>
 							</div>
 						</div>
-						<div class="form-element">
+						<div class="form-element custom-checkbox">
 							<label for="right_column_disabled">
 								{L_HIDE_RIGHT_COLUMN}
 							</label>
 							<div class="form-field">
 								<div class="form-field-checkbox">
-									<input id="right-checked" type="checkbox" name="right_column_disabled" {HIDE_RIGHT_COLUMN_CHECKED} />
-									<label for="right-checked"></label>
+									<label class="checkbox" for="right-checked">
+										<input id="right-checked" type="checkbox" name="right_column_disabled" {HIDE_RIGHT_COLUMN_CHECKED} />
+										<span>&nbsp;</span>
+									</label>
 								</div>
 							</div>
 						</div>

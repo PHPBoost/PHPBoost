@@ -77,7 +77,9 @@ class AdminMediaConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->is_author_displayed(),
+			array('class' => 'custom-checkbox')
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_video_width', $this->lang['config.max_video_width'], $this->config->get_max_video_width(),
 			array('min' => 50, 'max' => 2000, 'required' => true),

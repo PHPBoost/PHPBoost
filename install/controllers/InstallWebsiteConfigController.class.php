@@ -101,13 +101,15 @@ class InstallWebsiteConfigController extends InstallController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $admin_user_lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password(),
+			array('class' => 'custom-checkbox')
+		));
 
 		if ($this->distribution_config['default_captcha'])
 		{
 			$fieldset = new FormFieldsetHTML('captcha_config', $this->lang['website.captcha.config']);
 			$this->form->add_fieldset($fieldset);
-			
+
 			$default_captcha = $this->distribution_config['default_captcha'];
 			$default_captcha::display_config_form_fields($fieldset);
 		}

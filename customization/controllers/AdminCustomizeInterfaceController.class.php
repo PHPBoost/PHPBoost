@@ -135,7 +135,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		));
 
 		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED,
-			array('class' => 'third-field')
+			array('class' => 'third-field top-field custom-checkbox')
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

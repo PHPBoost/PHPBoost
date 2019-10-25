@@ -82,7 +82,10 @@ class AdminReCaptchaConfig extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('invisible_mode_enabled', $this->lang['config.invisible_mode_enabled'], $this->config->is_invisible_mode_enabled(),
-			array('description' => $this->lang['config.invisible_mode_enabled.explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['config.invisible_mode_enabled.explain']
+			)
 		));
 	}
 

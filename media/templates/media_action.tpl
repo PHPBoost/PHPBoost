@@ -118,7 +118,10 @@
 					<div class="form-element">
 						<label>{L_APPROVED}</label>
 						<div class="form-field">
-							<input type="checkbox" name="approved" id="approved"{APPROVED} />
+							<label for="approved" class="checkbox">
+								<input type="checkbox" name="approved" id="approved"{APPROVED} />
+								<span>&nbsp</span>
+							</label>							
 						</div>
 					</div>
 					# ENDIF #

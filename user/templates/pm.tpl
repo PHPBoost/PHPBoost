@@ -97,7 +97,10 @@
 							# START convers.list #
 							<tr>
 								<td>
-									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
+									<label for="d{convers.list.INCR}" class="checkbox">
+										<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
+										<span>&nbsp;</span>
+									</label>
 								</td>
 								<td class="convers-announce">
 									<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
@@ -129,8 +132,11 @@
 							<tr>
 								<td colspan="6">
 									<div class="left">
-										&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
-										&nbsp;<input type="hidden" name="token" value="{TOKEN}">
+										<label for="validc" class="checkbox">
+											<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
+											<span>&nbsp;</span>
+										</label>
+										<input type="hidden" name="token" value="{TOKEN}" />
 										<button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button>
 									</div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #

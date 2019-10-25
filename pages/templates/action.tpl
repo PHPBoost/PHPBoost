@@ -99,7 +99,12 @@
 		</div>
 		<div class="form-element">
 			<label for="create_redirection">{L_CREATE_REDIRECTION}</label>
-			<div class="form-field"><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></div>
+			<div class="form-field">
+				<label class="checkbox">
+					<input type="checkbox" name="create_redirection" id="create_redirection">
+					<span>&nbsp;</span>
+				</label>
+			</div>
 		</div>
 		<input type="hidden" name="id_rename" value="{ID_RENAME}">
 	</fieldset>

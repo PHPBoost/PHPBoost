@@ -84,20 +84,20 @@ class AdminNewsConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['admin.config.news_number_view_enabled'], $this->config->get_nb_view_enabled(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled(),
-			array('class' => 'third-field')
+			array('class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(),
 			array(
-				'class' => 'third-field',
+				'class' => 'third-field custom-checkbox',
 				'events' => array('click' => '
 					if (HTMLForms.getField("display_condensed").getValue()) {
 						HTMLForms.getField("display_descriptions_to_guests").enable();
@@ -111,7 +111,7 @@ class AdminNewsConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['admin.config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
-			array('hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field')
+			array('hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(),

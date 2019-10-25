@@ -112,7 +112,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'],
 							array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
 								array(
-									'class' => 'third-field',
+									'class' => 'third-field custom-checkbox',
 									'description' => StringVars::replace_vars(($sn->authentication_client_secret_needed() ? $this->lang['authentication.config.authentication-enabled-explain'] : $this->lang['authentication.config.authentication-enabled-explain.key-only']
 								),
 								array(
@@ -146,7 +146,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 					else
 					{
 						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['authentication.config.authentication-enabled'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-							array('description' => $this->lang['authentication.config.no-identifier-needed'])
+							array('class' => 'custom-checkbox', 'description' => $this->lang['authentication.config.no-identifier-needed'])
 						));
 					}
 				}

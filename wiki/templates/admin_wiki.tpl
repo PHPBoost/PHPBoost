@@ -24,12 +24,14 @@
 		<fieldset>
 			<legend>{L_WHOLE_WIKI}</legend>
 			<div class="fieldset-inset">
-				<div class="form-element">
+				<div class="form-element custom-checkbox">
 					<label for="sticky_menu">{L_STICKY_MENU}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="sticky_menu" id="sticky_menu" {STICKY_MENU_SELECTED} />
-							<label for="sticky_menu"></label>
+							<label class="checkbox" for="sticky_menu">
+								<input type="checkbox" name="sticky_menu" id="sticky_menu" {STICKY_MENU_SELECTED} />
+								<span>&nbsp;</span>
+							</label>
 						</div>
 					</div>
 				</div>
@@ -39,12 +41,14 @@
 						<input type="text" maxlength="255" id="wiki_name" name="wiki_name" value="{WIKI_NAME}" />
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element custom-checkbox">
 					<label for="hits_counter">{L_HITS_COUNTER}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
-							<input type="checkbox" name="hits_counter" id="hits_counter" {HITS_SELECTED} />
-							<label for="hits_counter"></label>
+							<label class="checkbox" for="hits_counter">
+								<input type="checkbox" name="hits_counter" id="hits_counter" {HITS_SELECTED} />
+								<span>&nbsp;</span>
+							</label>
 					</div>
 				</div>
 			</div>

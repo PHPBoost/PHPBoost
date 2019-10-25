@@ -153,43 +153,46 @@
 						</thead>
 						<tbody>
 							# START poll_radio #
-							<tr>
-								<td>
-									<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
+									</td>
+								</tr>
 							# END poll_radio #
 							# START poll_checkbox #
-							<tr>
-								<td>
-									<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<label class="checkbox">
+											<input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}">
+											<span>{poll_checkbox.ANSWERS}</span>
+										</label>
+									</td>
+								</tr>
 							# END poll_checkbox #
 							# START poll_result #
-							<tr>
-								<td>
-									{poll_result.ANSWERS}
+								<tr>
+									<td>
+										{poll_result.ANSWERS}
 
-									{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
-									<div class="progressbar-container" aria-label="{poll_result.PERCENT}%">
-										<div class="progressbar-infos">{poll_result.PERCENT}%</div>
-										<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
-									</div>
-								</td>
-							</tr>
+										{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
+										<div class="progressbar-container" aria-label="{poll_result.PERCENT}%">
+											<div class="progressbar-infos">{poll_result.PERCENT}%</div>
+											<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
+										</div>
+									</td>
+								</tr>
 							# END poll_result #
 						</tbody>
 					</table>
 
 					# IF C_POLL_QUESTION #
-					<fieldset class="fieldset-submit">
-						<legend>{L_VOTE}</legend>
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_forum_poll" value="true" class="submit">{L_VOTE}</button>
-						<div class="spacer"></div>
-						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
-					</fieldset>
+						<fieldset class="fieldset-submit">
+							<legend>{L_VOTE}</legend>
+							<input type="hidden" name="token" value="{TOKEN}">
+							<button type="submit" name="valid_forum_poll" value="true" class="submit">{L_VOTE}</button>
+							<div class="spacer"></div>
+							<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
+						</fieldset>
 					# ENDIF #
 				</form>
 			</div>

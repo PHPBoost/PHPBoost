@@ -82,11 +82,13 @@
 							<label for="cookie_lenght">* {L_COOKIE_LENGHT} ({L_DAYS})</label>
 							<div class="form-field"><input type="text" maxlength="11" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> </div>
 						</div>
-						<div class="form-element">
+						<div class="form-element custom-checkbox">
 							<label for="display_results_before_polls_end">{L_DISPLAY_RESULTS_BEFORE_POLLS_END}</label>
 							<div class="form-field form-field-checkbox">
-								<input id="poll-results" type="checkbox" name="display_results_before_polls_end"# IF C_DISPLAY_RESULTS_BEFORE_POLLS_END # checked="checked"# ENDIF #>
-								<label for="poll-results"></label>
+								<label class="checkbox" for="poll-results">
+									<input id="poll-results" type="checkbox" name="display_results_before_polls_end"# IF C_DISPLAY_RESULTS_BEFORE_POLLS_END # checked="checked"# ENDIF #>
+									<span>&nbsp;</span>
+								</label>
 							</div>
 						</div>
 					</div>

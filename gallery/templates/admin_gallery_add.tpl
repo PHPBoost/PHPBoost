@@ -146,8 +146,22 @@
 												{list.CATEGORIES}
 											</select>
 										</li>
-										<li class="li-stretch">{L_SELECT} <input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1"></li>
-										<li class="li-stretch">{L_DELETE} <input type="checkbox" name="{list.ID}del" value="1"></li>
+										<li class="li-stretch mini-checkbox">
+											{L_SELECT}
+											<label class="checkbox" for="">
+												<input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
+												<span>&nbsp;</span>
+											</label>
+
+										</li>
+										<li class="li-stretch mini-checkbox">
+											{L_DELETE}
+											<label class="checkbox" for="">
+												<input type="checkbox" name="{list.ID}del" value="1">
+												<span>&nbsp;</span>
+											</label>
+
+										</li>
 									</ul>
 								</div>
 							</div>

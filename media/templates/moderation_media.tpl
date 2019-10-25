@@ -5,13 +5,15 @@
 				<div id="form" class="center fieldset-content">
 					{L_DISPLAY_FILE}&nbsp;
 					<select name="state" id="state" class="nav" onchange="change_order()">
-							<option value="all"{SELECTED_ALL}>{L_ALL}</option>
-							<option value="visible"{SELECTED_VISIBLE}>{L_FVISIBLE}</option>
-							<option value="unvisible"{SELECTED_UNVISIBLE}>{L_FUNVISIBLE}</option>
-							<option value="unaprobed"{SELECTED_UNAPROBED}>{L_FUNAPROBED}</option>
+						<option value="all"{SELECTED_ALL}>{L_ALL}</option>
+						<option value="visible"{SELECTED_VISIBLE}>{L_FVISIBLE}</option>
+						<option value="unvisible"{SELECTED_UNVISIBLE}>{L_FUNVISIBLE}</option>
+						<option value="unaprobed"{SELECTED_UNAPROBED}>{L_FUNAPROBED}</option>
 					</select>
-					&nbsp;{L_INCLUDE_SUB_CATS}&nbsp;
-					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
+					<label for="show_sub_cats" class="checkbox">
+						<span>{L_INCLUDE_SUB_CATS}</span>
+						<input type="checkbox" id="show_sub_cats" name="sub_cats" value="1"{SUB_CATS}>
+					</label>
 				</div>
 				<div class="spacer">&nbsp;</div>
 				<div class="fieldset-inset">

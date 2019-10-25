@@ -6,17 +6,17 @@
 
 		<p class="poll-question-mini-container">
 			# START question.radio #
-			<label class="infos-options" for="poll-radio-{question.radio.NAME}">
-				<input type="radio" id="poll-radio-{question.radio.NAME}" name="radio" value="{question.radio.NAME}">
-				<span class="smaller">{question.radio.ANSWERS}</span>
-			</label>
+				<label class="infos-options radio" for="poll-radio-{question.radio.NAME}">
+					<input type="radio" id="poll-radio-{question.radio.NAME}" name="radio" value="{question.radio.NAME}">
+					<span class="smaller">{question.radio.ANSWERS}</span>
+				</label>
 			# END question.radio #
 
 			# START question.checkbox #
-			<label class="infos-options" for="poll-checkbox-{question.checkbox.NAME}">
-				<input type="checkbox" id="poll-checkbox-{question.checkbox.NAME}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}">
-				<span class="smaller">{question.checkbox.ANSWERS}</span>
-			</label>
+				<label class="infos-options checkbox" for="poll-checkbox-{question.checkbox.NAME}">
+					<input type="checkbox" id="poll-checkbox-{question.checkbox.NAME}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}">
+					<span class="smaller">{question.checkbox.ANSWERS}</span>
+				</label>
 			# END question.checkbox #
 		</p>
 

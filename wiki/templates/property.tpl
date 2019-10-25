@@ -217,7 +217,7 @@
 				</div>
 				<div class="form-element">
 					<label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label>
-					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>
+					<div class="form-field"><label class="checkbox"><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>
 				</div>
 			</fieldset>
 

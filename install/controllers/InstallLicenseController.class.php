@@ -59,7 +59,7 @@ class InstallLicenseController extends InstallController
 		$fieldset->add_field($license);
 
 		$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
-		array('class' => 'full-field', 'required' => $this->lang['step.license.submit.alert']));
+		array('class' => 'full-field custom-checkbox', 'required' => $this->lang['step.license.submit.alert']));
 		$fieldset->add_field($agree_checkbox);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');

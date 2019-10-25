@@ -66,7 +66,12 @@
 				<legend>{L_PATH}</legend>
 				<div class="form-element">
 					<label for="is_cat">{L_IS_CAT}</label>
-					<div class="form-field"><label><input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}></label></div>
+					<div class="form-field">
+						<label class="checkbox">
+							<input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}>
+							<span></span>
+						</label>
+					</div>
 				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
@@ -88,15 +93,30 @@
 				<legend>{L_PROPERTIES}</legend>
 				<div class="form-element">
 					<label for="count_hits">{L_COUNT_HITS}</label>
-					<div class="form-field"><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED}></label></div>
+					<div class="form-field">
+						<label class="checkbox">
+							<input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED}>
+							<span>&nbsp;</span>
+						</label>
+					</div>
 				</div>
 				<div class="form-element">
 					<label for="comments_activated">{L_COMMENTS_ACTIVATED}</label>
-					<div class="form-field"><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}></label></div>
+					<div class="form-field">
+						<label class="checkbox">
+							<input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}>
+							<span></span>
+						</label>
+					</div>
 				</div>
 				<div class="form-element">
 					<label for="display_print_link">{L_DISPLAY_PRINT_LINK}</label>
-					<div class="form-field"><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}></label></div>
+					<div class="form-field">
+						<label class="checkbox">
+							<input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}>
+							<span></span>
+						</label>
+					</div>
 				</div>
 			</fieldset>
 
@@ -104,7 +124,12 @@
 				<legend>{L_AUTH}</legend>
 				<div class="form-element">
 					<label for="own_auth">{L_OWN_AUTH}</label>
-					<div class="form-field"><label><input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED}></label></div>
+					<div class="form-field">
+						<label class="checkbox">
+							<input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED}>
+							<span>&nbsp;</span>
+						</label>
+					</div>
 				</div>
 				<span id="own_auth_display" style="{DISPLAY}">
 					<div class="form-element">

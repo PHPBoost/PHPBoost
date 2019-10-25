@@ -63,12 +63,15 @@ class AdminDatabaseConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['config.database-tables-optimization-enabled'], $this->config->is_database_tables_optimization_enabled(),
-			array('class' => 'half-field', 'events' => array('change' => '
-				if (HTMLForms.getField("database_tables_optimization_enabled").getValue()) {
-					HTMLForms.getField("database_tables_optimization_day").enable();
-				} else {
-					HTMLForms.getField("database_tables_optimization_day").disable();
-				}')
+			array(
+				'class' => 'half-field custom-checkbox', 
+				'events' => array('change' => '
+					if (HTMLForms.getField("database_tables_optimization_enabled").getValue()) {
+						HTMLForms.getField("database_tables_optimization_day").enable();
+					} else {
+						HTMLForms.getField("database_tables_optimization_day").disable();
+					}'
+				)
 			)
 		));
 

@@ -69,12 +69,16 @@ class InstallCreateAdminController extends InstallController
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['admin.email'], '', array('required' => true)));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', LangLoader::get_message('login.custom', 'user-common'), false,
-			array('description'=> LangLoader::get_message('login.custom.explain', 'user-common'), 'events' => array('click' => '
-				if (HTMLForms.getField("custom_login").getValue()) {
-					HTMLForms.getField("login").enable();
-				} else {
-					HTMLForms.getField("login").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'description'=> LangLoader::get_message('login.custom.explain', 'user-common'),
+				'events' => array('click' => '
+					if (HTMLForms.getField("custom_login").getValue()) {
+						HTMLForms.getField("login").enable();
+					} else {
+						HTMLForms.getField("login").disable();
+					}'
+				)
 			)
 		));
 
@@ -97,9 +101,13 @@ class InstallCreateAdminController extends InstallController
 
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
-		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true));
+		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['admin.connectAfterInstall'], true,
+			array('class' => 'custom-checkbox')
+		));
 
-		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true));
+		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['admin.autoconnect'], true,
+			array('class' => 'custom-checkbox')
+		));
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::website(), 'fa fa-arrow-left');

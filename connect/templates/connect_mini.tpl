@@ -41,7 +41,7 @@
 							<span>{@password}</span>
 							<input type="password" id="password" name="password" placeholder="{@password}">
 						</label>
-						<label for="autoconnect">
+						<label class="checkbox" for="autoconnect">
 							<span>{@autoconnect}</span>
 							<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
 						</label>

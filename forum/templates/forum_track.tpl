@@ -21,19 +21,47 @@
 				<div class="content">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
 
-					<table class="tablemodule-table forum-table">
+					<table class="table module-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
 								<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
 								<th class="forum-fixed-topic"><i class="fa fa-heart" aria-hidden="true"></i></th>
-								<th class="forum-topic" aria-label="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-								<th class="forum-author" aria-label="{L_AUTHOR}"><i class="fa fa-user-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-								<th class="forum-message-nb" aria-label="{L_MESSAGE}"><i class="fa fa-comments-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_MESSAGE}</span></th>
-								<th class="forum-view" aria-label="{L_VIEW}"><i class="fa fa-eye hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-								<th class="forum-pm" aria-label="{L_PM}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> <i class="fa fa-envelope-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_PM}</span></th>
-								<th class="forum-mail" aria-label="{L_MAIL}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> <i class="fa fa-at hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_MAIL}</span></th>
-								<th class="forum-delete" aria-label="{L_DELETE}"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> <i class="fa fa-delete hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_DELETE}</span></th>
-								<th class="forum-last-topic" aria-label="{L_LAST_MESSAGE}"><i class="fa fa-clock-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+								<th class="forum-topic" aria-label="{L_TOPIC}">
+									<i class="fa fa-file-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span>
+								</th>
+								<th class="forum-author" aria-label="{L_AUTHOR}">
+									<i class="fa fa-user-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_AUTHOR}</span>
+								</th>
+								<th class="forum-message-nb" aria-label="{L_MESSAGE}">
+									<i class="fa fa-comments-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_MESSAGE}</span>
+								</th>
+								<th class="forum-view" aria-label="{L_VIEW}">
+									<i class="fa fa-eye hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_VIEW}</span>
+								</th>
+								<th class="forum-pm" aria-label="{L_PM}">
+									<label for="" class="checkbox">
+										<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');">
+										<span><i class="fa fa-envelope-o hidden-small-screens" aria-hidden="true"></i></span>
+									</label>
+									<span class="hidden-large-screens">{L_PM}</span>
+								</th>
+								<th class="forum-mail" aria-label="{L_MAIL}">
+									<label for="" class="checkbox">
+										<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');">
+										<span><i class="fa fa-at hidden-small-screens" aria-hidden="true"></i></span>
+									</label>
+									<span class="hidden-large-screens">{L_MAIL}</span>
+								</th>
+								<th class="forum-delete" aria-label="{L_DELETE}">
+									<label for="" class="checkbox">
+										<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');">
+										<span><i class="fa fa-delete hidden-small-screens" aria-hidden="true"></i></span>
+									</label>
+									<span class="hidden-large-screens">{L_DELETE}</span>
+								</th>
+								<th class="forum-last-topic" aria-label="{L_LAST_MESSAGE}">
+									<i class="fa fa-clock-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span>
+								</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -63,11 +63,11 @@ class AdminFilesConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('bandwidth_protect', $this->lang['bandwidth_protect'], $this->file_upload_config->get_enable_bandwidth_protect(),
-			array('description' => $this->lang['bandwidth_protect_explain'])
+			array('class' => 'custom-checkbox', 'description' => $this->lang['bandwidth_protect_explain'])
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['files_thumb'], $this->file_upload_config->get_display_file_thumbnail(),
-			array('description' => $this->lang['files_thumb_explain'])
+			array('class' => 'custom-checkbox', 'description' => $this->lang['files_thumb_explain'])
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('extend_extensions', $this->lang['extend_extensions'],  $extensions['extend_extensions'],

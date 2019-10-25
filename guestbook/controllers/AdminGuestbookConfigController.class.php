@@ -73,12 +73,15 @@ class AdminGuestbookConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['guestbook.max.links.number.per.message.enabled'], $this->config->is_max_links_number_per_message_enabled(),
-			array('class' => 'top-field', 'events' => array('click' => '
-				if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
-						HTMLForms.getField("max_links_number_per_message").enable();
-				} else {
-						HTMLForms.getField("max_links_number_per_message").disable();
-				}')
+			array(
+				'class' => 'top-field custom-checkbox', 
+				'events' => array('click' => '
+					if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
+							HTMLForms.getField("max_links_number_per_message").enable();
+					} else {
+							HTMLForms.getField("max_links_number_per_message").disable();
+					}'
+				)
 			)
 		));
 

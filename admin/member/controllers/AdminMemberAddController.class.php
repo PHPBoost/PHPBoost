@@ -72,12 +72,15 @@ class AdminMemberAddController extends AdminController
 		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
 
 		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
-			array('events' => array('click' => '
-				if (HTMLForms.getField("custom_login").getValue()) {
-					HTMLForms.getField("login").enable();
-				} else {
-					HTMLForms.getField("login").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'events' => array('click' => '
+					if (HTMLForms.getField("custom_login").getValue()) {
+						HTMLForms.getField("login").enable();
+					} else {
+						HTMLForms.getField("login").disable();
+					}'
+				)
 			)
 		));
 
@@ -89,14 +92,18 @@ class AdminMemberAddController extends AdminController
 		$fieldset->add_field(new FormFieldFree('2_separator', '', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['password.custom'], false,
-			array('description' => $this->lang['password.custom.explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("custom_password").getValue()) {
-					HTMLForms.getField("password").enable();
-					HTMLForms.getField("password_bis").enable();
-				} else {
-					HTMLForms.getField("password").disable();
-					HTMLForms.getField("password_bis").disable();
-				}')
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['password.custom.explain'],
+				'events' => array('click' => '
+					if (HTMLForms.getField("custom_password").getValue()) {
+						HTMLForms.getField("password").enable();
+						HTMLForms.getField("password_bis").enable();
+					} else {
+						HTMLForms.getField("password").disable();
+						HTMLForms.getField("password_bis").disable();
+					}'
+				)
 			)
 		));
 

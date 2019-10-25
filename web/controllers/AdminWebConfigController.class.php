@@ -101,7 +101,10 @@ class AdminWebConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
-			array('hidden' => $this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT)
+			array(
+				'class' => 'custom-checkbox',
+				'hidden' => $this->config->get_category_display_type() == WebConfig::DISPLAY_ALL_CONTENT
+			)
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),

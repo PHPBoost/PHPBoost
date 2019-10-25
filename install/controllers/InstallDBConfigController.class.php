@@ -101,7 +101,7 @@ class InstallDBConfigController extends InstallController
 		$overwrite_message = new FormFieldHTML('', $this->lang['phpboost.alreadyInstalled.explanation']);
 		$this->overwrite_fieldset->add_field($overwrite_message);
 		$this->overwrite_field = new FormFieldCheckbox('overwrite', $this->lang['phpboost.alreadyInstalled.overwrite'], false,
-			array('required' => $this->lang['phpboost.alreadyInstalled.overwrite.confirm']));
+			array('class' => 'custom-checkbox', 'required' => $this->lang['phpboost.alreadyInstalled.overwrite.confirm']));
 		$this->overwrite_fieldset->add_field($this->overwrite_field);
 		$this->overwrite_fieldset->disable();
 

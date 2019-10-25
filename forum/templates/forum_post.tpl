@@ -138,7 +138,12 @@
 								# IF C_DELETE_POLL #
 								<div class="form-element">
 									<label for="del_poll">{L_DELETE_POLL}</label>
-									<div class="form-field"><label><input type="checkbox" name="del_poll" id="del_poll" value="true"></label></div>
+									<div class="form-field">
+										<label class="checkbox">
+											<input type="checkbox" name="del_poll" id="del_poll" value="true">
+											<span></span>
+										</label>
+									</div>
 								</div>
 								# ENDIF #
 								<div class="form-element">
