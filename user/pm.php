@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -715,7 +715,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$i = 0;
 	$j = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
-		msg.id, msg.user_id, msg.timestamp, msg.view_status, msg.contents
+		msg.id, msg.user_id, msg.timestamp, msg.view_status, msg.contents,
 		m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, m.groups,
 		ext_field.user_avatar,
 		s.user_id AS connect
