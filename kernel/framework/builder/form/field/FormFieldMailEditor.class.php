@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 06 03
+ * @version     PHPBoost 5.2 - last update: 2019 10 25
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldMailEditor extends FormFieldTextEditor
@@ -37,6 +38,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 		else
 		{
 			$constraints[] = new FormFieldConstraintMailAddress();
+			$constraints[] = new FormFieldConstraintForbiddenMailDomains();
 		}
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-email');

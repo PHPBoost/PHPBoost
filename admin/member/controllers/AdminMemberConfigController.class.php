@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.2 - last update: 2019 10 25
  * @since   	PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -123,6 +123,10 @@ class AdminMemberConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['security.config.login-and-email-forbidden-in-password'], $this->security_config->are_login_and_email_forbidden_in_password()));
 
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['security.config.forbidden-mail-domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
+			array('description' => $this->lang['security.config.forbidden-mail-domains.explain'])
+		));
+
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 
@@ -212,6 +216,8 @@ class AdminMemberConfigController extends AdminController
 			$this->security_config->forbid_login_and_email_in_password();
 		else
 			$this->security_config->allow_login_and_email_in_password();
+
+		$this->security_config->set_forbidden_mail_domains(explode(',', str_replace(array(' ', ';'), array('', ','), $this->form->get_value('forbidden_mail_domains'))));
 
 		SecurityConfig::save();
 
