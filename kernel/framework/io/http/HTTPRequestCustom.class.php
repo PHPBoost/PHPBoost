@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2019 10 26
  * @since       PHPBoost 3.0 - 2009 10 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -352,7 +352,7 @@ class HTTPRequestCustom
 
 	public function get_is_localhost()
 	{
-		$patterns = array('localhost', 'local.dev', '127.0.0.1', '::1');
+		$patterns = array('localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1');
 
 		foreach ($patterns as $value)
 		{
