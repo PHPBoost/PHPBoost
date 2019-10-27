@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 06 11
+ * @version     PHPBoost 5.2 - last update: 2019 10 26
  * @since       PHPBoost 3.0 - 2010 07 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -24,6 +24,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const HSTS_SECURITY_SUBDOMAIN_ENABLED	= 'hsts_security_subdomain_enabled';
 	const HSTS_SECURITY_DURATION      = 'hsts_security_duration';
 	const HTACCESS_MANUAL_CONTENT     = 'htaccess_manual_content';
+	const NGINX_MANUAL_CONTENT        = 'nginx_manual_content';
 	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
 
 	public function is_url_rewriting_enabled()
@@ -142,6 +143,22 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
 	}
 
+	private function nginx_conf_exists()
+	{
+		$file = new File(PATH_TO_ROOT . '/nginx.conf');
+		return $file->exists();
+	}
+
+	public function get_nginx_manual_content()
+	{
+		return $this->get_property(self::NGINX_MANUAL_CONTENT);
+	}
+
+	public function set_nginx_manual_content($content)
+	{
+		$this->set_property(self::NGINX_MANUAL_CONTENT, $content);
+	}
+
 	public function is_output_gziping_enabled()
 	{
 		return $this->get_property(self::OUTPUT_GZIPING_ENABLED);
@@ -163,6 +180,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::HSTS_SECURITY_SUBDOMAIN_ENABLED	=> false,
 			self::HSTS_SECURITY_DURATION    => 2592000, // 30 days per default
 			self::HTACCESS_MANUAL_CONTENT   => '',
+			self::NGINX_MANUAL_CONTENT      => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
 		);
 	}

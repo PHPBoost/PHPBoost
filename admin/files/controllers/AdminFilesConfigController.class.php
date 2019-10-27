@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @version   	PHPBoost 5.2 - last update: 2019 10 27
  * @since   	PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -127,7 +127,8 @@ class AdminFilesConfigController extends AdminController
 
 		FileUploadConfig::save();
 
-		//Régénération du htaccess.
+		//Régénération du .htaccess et du nginx.conf.
+		HtaccessFileCache::regenerate();
 		HtaccessFileCache::regenerate();
 	}
 

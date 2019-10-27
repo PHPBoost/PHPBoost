@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 06 05
+ * @version   	PHPBoost 5.2 - last update: 2019 10 27
  * @since   	PHPBoost 3.0 - 2010 10 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,6 +44,7 @@ class InstallCreateAdminController extends InstallController
 			$this->form->get_value('email'), $this->form->get_value('createSession'),
 			$this->form->get_value('autoconnect'));
 			HtaccessFileCache::regenerate();
+			NginxFileCache::regenerate();
 			AppContext::get_response()->redirect(InstallUrlBuilder::finish());
 		}
 		return $this->create_response();

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 31
+ * @version   	PHPBoost 5.2 - last update: 2019 10 27
  * @since   	PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -292,6 +292,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		AppContext::get_cache_service()->clear_cache();
 		HtaccessFileCache::regenerate();
+		NginxFileCache::regenerate();
 	}
 
 	private function build_clean_syndication_cache()

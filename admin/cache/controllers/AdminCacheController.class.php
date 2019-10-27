@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 10 27
  * @since   	PHPBoost 2.0 - 2008 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -65,6 +65,7 @@ class AdminCacheController extends AdminController
 	{
 		AppContext::get_cache_service()->clear_cache();
 		HtaccessFileCache::regenerate();
+		NginxFileCache::regenerate();
 	}
 }
 ?>

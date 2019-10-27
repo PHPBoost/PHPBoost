@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 13
+ * @version     PHPBoost 5.2 - last update: 2019 10 27
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -381,7 +381,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Stop hotlinking');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
-			$this->add_line('RewriteRule \.(bmp|gif|jpe?g|png|swf)$ - [F,L,NC]');
+			$this->add_line('RewriteRule \.(ico|css|js|bmp|gif|jpe?g|png|swf)$ - [F,L,NC]');
 		}
 	}
 
@@ -457,7 +457,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('	ExpiresByType application/javascript "access plus 1 week"');
 			$this->add_line('	ExpiresByType application/x-javascript "access plus 1 week"');
 			$this->add_empty_line();
-			$this->add_line('	# Fonts expiration: 1 week after request');
+			$this->add_line('	# Fonts expiration: 1 month after request');
 			$this->add_line('	<IfModule mod_mime.c>');
 			$this->add_line('		AddType application/font-woff .woff');
 			$this->add_line('		AddType application/font-woff2 .woff2');
