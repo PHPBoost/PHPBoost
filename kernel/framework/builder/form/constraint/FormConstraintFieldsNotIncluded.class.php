@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 07 30
+ * @version     PHPBoost 5.2 - last update: 2019 10 27
  * @since       PHPBoost 5.2 - 2019 07 26
 */
 
@@ -44,7 +44,7 @@ class FormConstraintFieldsNotIncluded implements FormConstraint
 		$second_value = $this->second_field->get_value();
 		if ($first_value !== null && $second_value !== null)
 		{
-			if (!preg_match('/' . $first_value . '/i', $second_value))
+			if (strstr($first_value, $second_value) === false)
 			{
 				return true;
 			}
