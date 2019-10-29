@@ -1,5 +1,7 @@
 <script>
 <!--
+# IF C_AUTOMATIC_REFRESH_ENABLED #refreshInterval = setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
+
 function shoutbox_add_message()
 {
 	var pseudo = jQuery("#shout-pseudo").val();
@@ -87,19 +89,15 @@ function shoutbox_refresh_messages_box() {
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 		},
 		success: function(returnData){
-			jQuery('#shoutbox-messages-container').html(returnData);
-
+			jQuery('#shoutbox-messages-container').html(returnData.messages);
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		},
 		error: function(e){
-			jQuery('#shoutbox-messages-container').html(e.responseText);
-
+			# IF C_AUTOMATIC_REFRESH_ENABLED #clearInterval(refreshInterval);# ENDIF #
 			jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 		}
 	});
 }
-
-# IF C_AUTOMATIC_REFRESH_ENABLED #setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
 -->
 </script>
 # IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
