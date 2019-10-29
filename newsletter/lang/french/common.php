@@ -111,7 +111,7 @@ $lang['error.sender-mail-not-configured'] = 'L\'adresse email d\'envoi de la new
 $lang['error.sender-mail-not-configured-for-admin'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['error-subscriber-not-existed'] = 'L\'inscrit n\'existe pas';
-$lang['error-subscriber-exists'] = 'Cette addresse mail est déjà inscrite aux newsletters du site';
+$lang['error-subscriber-exists'] = 'Cette adresse mail est déjà inscrite aux newsletters du site';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
 $lang['newsletter.message.success.add'] = 'La newsletter a été envoyée';
