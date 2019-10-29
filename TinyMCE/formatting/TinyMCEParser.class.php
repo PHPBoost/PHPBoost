@@ -7,7 +7,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 24
+ * @version   	PHPBoost 5.2 - last update: 2019 10 29
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -560,7 +560,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Quote tag
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isuU', '$1<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$2</div></div>', $this->content);
+			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isuU', '$1<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$2</div></blockquote>', $this->content);
 		}
 
 		//Font tag
@@ -787,8 +787,8 @@ class TinyMCEParser extends ContentFormattingParser
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></div>', $this->content);
-			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>', $this->content);
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></blockquote>', $this->content);
+			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>', $this->content);
 		}
 
 		if (!in_array('feed', $this->forbidden_tags))

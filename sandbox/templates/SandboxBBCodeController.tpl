@@ -133,12 +133,12 @@
 			<header>
 				<h5>{@bbcode.quote}</h5>
 			</header>
-			<div class="formatter-container formatter-blockquote">
+			<blockquote class="formatter-container formatter-blockquote">
 				<span class="formatter-title title-perso">{@bbcode.quote} : Lorem Ipsum</span>
 				<div class="formatter-content">
 					{@lorem.medium.content}
 				</div>
-			</div>
+			</blockquote>
 		</article>
 	</div>
 

@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 24
+ * @version   	PHPBoost 5.2 - last update: 2019 10 28
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -230,9 +230,9 @@ class BBCodeParser extends ContentFormattingParser
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym class=\"formatter-acronym\">$1</acronym>",
-			'acronym2' => "<acronym aria-label=\"$1\" class=\"formatter-acronym\">$2</acronym>",
+			'acronym2' => "<acronym title=\"$1\" class=\"formatter-acronym\">$2</acronym>",
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
-			'abbr2' => "<abbr aria-label=\"$1\" class=\"formatter-abbr\">$2</abbr>",
+			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
 			'style' => "<span class=\"message-helper $1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
@@ -331,8 +331,8 @@ class BBCodeParser extends ContentFormattingParser
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></div>');
-				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
+				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></blockquote>');
+				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>');
 			}
 
 			//Hide tag
