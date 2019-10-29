@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 09 09
+ * @version   	PHPBoost 5.2 - last update: 2019 10 29
  * @since   	PHPBoost 4.1 - 2014 12 02
 */
 
@@ -15,7 +15,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_view();
-		return new SiteNodisplayResponse($this->view);
+		return new JSONResponse(array('messages' => $this->view->render()));
 	}
 
 	private function build_view()
