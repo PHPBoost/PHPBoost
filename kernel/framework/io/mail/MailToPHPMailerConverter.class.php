@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 27
+ * @version     PHPBoost 5.2 - last update: 2019 10 28
  * @since       PHPBoost 3.0 - 2010 03 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -35,7 +35,7 @@ class MailToPHPMailerConverter
 	public function convert(Mail $mail)
 	{
 		$this->mail_to_send = $mail;
-		$this->mailer = new PHPMailer(true);
+		$this->mailer = new PHPMailer();
 		$this->mailer->CharSet = 'utf-8';
 		$this->mailer->SMTPAutoTLS = false;
 		$this->convert_mail();
