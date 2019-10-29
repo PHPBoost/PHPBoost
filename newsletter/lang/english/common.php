@@ -110,7 +110,7 @@ $lang['stream.message.delete_confirmation'] = 'Do you really want to delete the 
 $lang['error.sender-mail-not-configured'] = 'The newsletter sender mail has not been configured by the administrator, please try again later.';
 $lang['error.sender-mail-not-configured-for-admin'] = 'The newsletter sender mail has not been configured. Please <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
 $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
-$lang['error-subscriber-not-existed'] = 'This registrant is not exist';
+$lang['error-subscriber-not-existed'] = 'This registrant does not exist';
 $lang['error-subscriber-exists'] = 'This email address is already subscribed to the site\'s newsletters';
 $lang['error-archive-not-existed'] = 'This archive does not exist';
 $lang['newsletter.success-send-test'] = 'The test email has been sent';
