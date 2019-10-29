@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @version   	PHPBoost 5.2 - last update: 2019 10 28
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -111,6 +111,7 @@ $lang['error.sender-mail-not-configured'] = 'L\'adresse email d\'envoi de la new
 $lang['error.sender-mail-not-configured-for-admin'] = 'L\'adresse email d\'envoi de la newsletter n\'a pas été configurée. Veuillez la <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configurer</a> avant de pouvoir envoyer une newsletter.';
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['error-subscriber-not-existed'] = 'L\'inscrit n\'existe pas';
+$lang['error-subscriber-exists'] = 'Cette addresse mail est déjà inscrite aux newsletters du site';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
 $lang['newsletter.message.success.add'] = 'La newsletter a été envoyée';

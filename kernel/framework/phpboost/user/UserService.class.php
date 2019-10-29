@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 09
+ * @version     PHPBoost 5.2 - last update: 2019 10 28
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -185,6 +185,26 @@ class UserService
 		try
 		{
 			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE display_name=:display_name', array('display_name' => $display_name));
+		}
+		catch (RowNotFoundException $e) 
+		{
+			return false;
+		}
+		$user = new User();
+		$user->set_properties($row);
+		return $user;
+	}
+
+	/**
+	 * Get user from his email
+	 * @param string $email Email of the user concerned
+	 * @return User The requested user if exists, false otherwise
+	 */
+	public static function get_user_by_email($email)
+	{
+		try
+		{
+			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE email=:email', array('email' => $email));
 		}
 		catch (RowNotFoundException $e) 
 		{
