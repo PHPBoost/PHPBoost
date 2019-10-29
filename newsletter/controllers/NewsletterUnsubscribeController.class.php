@@ -178,7 +178,7 @@ class NewsletterUnsubscribeController extends ModuleController
 				$streams[] = $option->get_id();
 			}
 
-			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email() && !empty($streams))
+			if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email() && ($streams != NewsletterService::get_member_id_streams($this->current_user->get_id())) && !empty($streams))
 			{
 				NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
 				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
