@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 01
+ * @version   	PHPBoost 5.2 - last update: 2019 10 28
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -14,6 +14,7 @@ class NewslettersubscribeController extends ModuleController
 	private $view;
 	private $form;
 	private $submit_button;
+	private $current_user;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -26,8 +27,10 @@ class NewslettersubscribeController extends ModuleController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			if ($this->save())
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+			else
+				$tpl->put('MSG', MessageHelper::display($this->lang['error-subscriber-exists'], MessageHelper::ERROR));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -38,6 +41,7 @@ class NewslettersubscribeController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->current_user = AppContext::get_current_user();
 	}
 
 	private function check_authorizations()
@@ -52,9 +56,9 @@ class NewslettersubscribeController extends ModuleController
 	private function build_form()
 	{
 		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
+		if ($this->current_user->check_level(User::MEMBER_LEVEL) && empty($mail_request))
 		{
-			$email = AppContext::get_current_user()->get_email();
+			$email = $this->current_user->get_email();
 		}
 		else
 		{
@@ -70,7 +74,7 @@ class NewslettersubscribeController extends ModuleController
 			array('required' => true)
 		));
 
-		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
+		$newsletter_subscribe = $this->current_user->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams($this->current_user->get_id()) : ($this->current_user->is_admin() ? NewsletterService::get_visitor_id_streams($email) : array());
 		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams(),
 			array('required' => true)
 		));
@@ -120,13 +124,28 @@ class NewslettersubscribeController extends ModuleController
 			$streams[] = $option->get_id();
 		}
 
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $this->form->get_value('mail') == $this->current_user->get_email())
 		{
-			NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_id());
+			NewsletterService::update_subscriptions_member_registered($streams, $this->current_user->get_id());
 		}
 		else
 		{
-			NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
+			if ($this->current_user->is_guest() && !UserService::get_user_by_email($this->form->get_value('mail')))
+			{
+				NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
+				return true;
+			}
+			else if ($this->current_user->is_admin())
+			{
+				if ($user = UserService::get_user_by_email($this->form->get_value('mail')))
+					NewsletterService::update_subscriptions_member_registered($user->get_id());
+				else
+					NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
+				
+				return true;
+			}
+			else
+				return false;
 		}
 	}
 }

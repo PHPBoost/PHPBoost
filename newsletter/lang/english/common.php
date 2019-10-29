@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 05
+ * @version   	PHPBoost 5.3 - last update: 2019 10 28
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -112,6 +112,7 @@ $lang['error.sender-mail-not-configured'] = 'The newsletter sender mail has not 
 $lang['error.sender-mail-not-configured-for-admin'] = 'The newsletter sender mail has not been configured. Please <a href="' . NewsletterUrlBuilder::configuration()->rel() . '">configure</a> it before sending a newsletter.';
 $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
 $lang['error-subscriber-not-existed'] = 'This registrant is not exist';
+$lang['error-subscriber-exists'] = 'This email address is already subscribed to the site\'s newsletters';
 $lang['error-archive-not-existed'] = 'This archive does not exist';
 $lang['newsletter.success-send-test'] = 'The test email has been sent';
 $lang['newsletter.message.success.add'] = 'The newsletter has been sent';

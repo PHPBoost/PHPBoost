@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 05
+ * @version   	PHPBoost 5.3 - last update: 2019 10 28
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -99,6 +99,26 @@ class NewsletterService
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscribers ON subscribers.id = subscriptions.subscriber_id
 		WHERE user_id = :user_id", array(
 			'user_id' => $user_id
+		));
+
+		while ($row = $result->fetch())
+		{
+			$id_streams[] = $row['stream_id'];
+		}
+		$result->dispose();
+
+		return $id_streams;
+	}
+
+	public static function get_visitor_id_streams($mail)
+	{
+		$id_streams = array();
+
+		$result = PersistenceContext::get_querier()->select("SELECT stream_id
+		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscriptions
+		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscribers ON subscribers.id = subscriptions.subscriber_id
+		WHERE mail = :mail", array(
+			'mail' => $mail
 		));
 
 		while ($row = $result->fetch())
