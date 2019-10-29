@@ -4,10 +4,9 @@
  * coming from a database) to the PHPBoost BBCode syntax.
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
- * @since   	PHPBoost 2.0 - 2008 07 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @version   	PHPBoost 5.2 - last update: 2019 10 27
+ * @since   	PHPBoost 5.1 - 2017 03 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -79,7 +78,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 			foreach ($smileys_cache as $code => $infos)
 			{
-				$smiley_img_url[] = '`<img class="smiley" />`suU';
+				$smiley_img_url[] = '`<img class="smiley" title="' . preg_quote($code) . '"(.*) />`suU';
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
@@ -113,25 +112,25 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'`<span id="([a-z0-9_-]+)" class="anchor"></span>`isuU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isuU',
 			'`<acronym class="formatter-acronym">(.*)</acronym>`isuU',
-			'`<acronym aria-label="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
+			'`<acronym title="([^"]+)?" class="formatter-acronym">(.*)</acronym>`isuU',
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
-			'`<abbr aria-label="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
+			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
-			'`<a(?: href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
+			'`<a(?: title="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
 			'`<h1 class="formatter-title">(.*)</h1>`isuU',
 			'`<h2 class="formatter-title">(.*)</h2>`isuU',
 			'`<h3 class="formatter-title">(.*)</h3>`isuU',
 			'`<h4 class="formatter-title">(.*)</h4>`isuU',
 			'`<h5 class="formatter-title">(.*)</h5>`isuU',
 			'`<h6 class="formatter-title">(.*)</h6>`isuU',
-			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isuU',
+			'`<span class="message-helper (success|question|notice|warning|error)">(.*)</span>`isuU',
 			'`<hr(?: class="([^"]+)?")? />`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`suU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
 			'`<script><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
-			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3}), ([^\']+)\);\[\[/MEDIA\]\]`suU',
+			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3}), \'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
 			'`<script><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
@@ -207,12 +206,18 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
+		//Container
+		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
+		{
+			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
+		}
+
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa fa-([a-z0-9-]+)( [a-z0-9- ]+)?"></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
@@ -232,28 +237,38 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 	private function unparse_img($matches)
 	{
-		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
+		$img_pathinfo = pathinfo($matches[1]);
+		$file_array = explode('.', $img_pathinfo['filename']);
+		$img_name = $file_array[0];
+		$alt = !empty($matches[2]) && $matches[2] != $img_name ? ' alt="' . $matches[2] . '"' : '';
+		$title = !empty($matches[3]) && $matches[3] != $img_name ? ' title="' . $matches[3] . '"' : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $style . $class . ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . $class . ']' . $matches[1] . '[/img]';
 	}
 
 	private function unparse_fa($matches)
 	{
 		$fa_code = "";
-		if ( !empty($matches[2]) ) {
-			$options = explode(' ', $matches[2]);
+		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's'));
+		$options_list = isset($matches[3]) ? $matches[3] : '';
+
+		if ( !empty($options_list) ) {
+			$options = explode(' ', $options_list);
 			foreach ($options as $index => $option) {
-				if ( $index == 0 ) {
-					$fa_code = "=" . $fa_code;
-				} else {
-					if ( $index > 1 ) { $fa_code = $fa_code . ","; }
-					$fa_code = $fa_code . $option;
+				if (!empty($option)) {
+					if ( $index == 1 && empty($fa_code) ) {
+						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
+					} else {
+						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
+						$fa_code = $fa_code . $option;
+					}
 				}
 			}
 		}
-		return '[fa' . $fa_code . ']' . $matches[1] . '[/fa]';
+
+		return '[fa' . $fa_code . ']' . $matches[2] . '[/fa]';
 	}
 
 	/**
@@ -358,6 +373,42 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		}
 
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
+	}
+
+	/**
+	 * @desc Callback which allows to unparse the div tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fieldset tag are parsed
+	 */
+	protected function unparse_container($matches)
+	{
+		$id = '';
+		$class = '';
+		$style = '';
+
+		if (!empty($matches[1]))
+		{
+			$id = ' id="' . $matches[1] . '"';
+		}
+
+		if (!empty($matches[2]))
+		{
+			$class = ' class="' . $matches[2] . '"';
+		}
+
+		if (!empty($matches[3]))
+		{
+			$style = ' style="' . $matches[3] . '"';
+		}
+
+		if (!empty($id) || !empty($class) || !empty($style))
+		{
+			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
+		}
+		else
+		{
+			return '[container]' . $matches[4] . '[/container]';
+		}
 	}
 }
 ?>
