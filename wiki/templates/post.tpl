@@ -85,7 +85,7 @@
 					</div>
 				</div>
 				# END create #
-				<div class="form-element-textarea">
+				<div class="form-element form-element-textarea">
 					<label for="contents">* {L_CONTENTS}</label>
 					# INCLUDE post_js_tools #
 					{KERNEL_EDITOR}
@@ -96,7 +96,7 @@
 
 				# IF C_EDIT #
 				<br />
-				<div class="form-element-textarea">
+				<div class="form-element form-element-textarea">
 					<label>{L_CHANGE_REASON_LABEL}</label>
 					<textarea maxlength="100" rows="2" id="change_reason" name="change_reason">{CHANGE_REASON}</textarea>
 				</div>

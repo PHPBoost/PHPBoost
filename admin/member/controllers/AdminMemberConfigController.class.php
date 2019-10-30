@@ -133,7 +133,7 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['security.config.forbidden-mail-domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
-			array('description' => $this->lang['security.config.forbidden-mail-domains.explain'])
+			array('class' => 'half-field', 'description' => $this->lang['security.config.forbidden-mail-domains.explain'])
 		));
 
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
@@ -239,7 +239,7 @@ class AdminMemberConfigController extends AdminController
 			$this->security_config->allow_login_and_email_in_password();
 
 		$this->security_config->set_forbidden_mail_domains(explode(',', str_replace(array(' ', ';'), array('', ','), $this->form->get_value('forbidden_mail_domains'))));
-		
+
 		SecurityConfig::save();
 
 		$this->user_accounts_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));

@@ -27,7 +27,7 @@
 						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_EDIT_MESSAGE}</legend>
-							<div class="form-element-textarea">
+							<div class="form-element form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
@@ -37,7 +37,7 @@
 						</fieldset>
 
 						<fieldset class="fieldset-submit">
-						<legend>{L_SUBMIT}</legend>
+							<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="p_update" value="{P_UPDATE}">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="edit_msg" value="true" class="submit">{L_SUBMIT}</button>

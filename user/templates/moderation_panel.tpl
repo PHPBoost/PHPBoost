@@ -139,7 +139,7 @@
 								<a href="{U_PM}" class="basic-button smaller">MP</a>
 							</div>
 						</div>
-						<div class="form-element-textarea">
+						<div class="form-element form-element-textarea">
 							<label for="action_contents">{L_ALTERNATIVE_PM}</label>
 							{KERNEL_EDITOR}
 							<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>

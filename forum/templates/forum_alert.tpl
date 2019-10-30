@@ -33,7 +33,7 @@
 								<input type="text" name="title" id="title" class="field-large">
 							</div>
 						</div>
-						<div class="form-element-textarea">
+						<div class="form-element form-element-textarea">
 							<label for="contents">* {L_ALERT_CONTENTS}</label>
 							{KERNEL_EDITOR}
 							<textarea rows="15" cols="40" id="contents" name="contents"></textarea>

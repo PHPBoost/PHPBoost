@@ -221,7 +221,7 @@
 		<span id="quote"></span>
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" class="post-pm">
 			<legend>{L_RESPOND}</legend>
-			<div class="form-element-textarea">
+			<div class="form-element form-element-textarea">
 				{KERNEL_EDITOR}
 				<div class="form-field-textarea">
 					<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
@@ -254,7 +254,7 @@
 								<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}"></label></div>
 							</div>
 							# END edit_pm.title #
-							<div class="form-element-textarea">
+							<div class="form-element form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">
@@ -310,7 +310,7 @@
 								<label for="title">* {L_TITLE}</label>
 								<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{post_convers.TITLE}"></label></div>
 							</div>
-							<div class="form-element-textarea">
+							<div class="form-element form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">

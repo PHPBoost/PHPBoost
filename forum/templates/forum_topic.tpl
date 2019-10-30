@@ -346,7 +346,7 @@
 		# IF C_AUTH_POST #
 			<div class="forum-post-form">
 				<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
-					<div class="form-element-textarea">
+					<div class="form-element form-element-textarea">
 						<label for="contents">{L_RESPOND}</label>
 						{KERNEL_EDITOR}
 						<div class="form-field-textarea">

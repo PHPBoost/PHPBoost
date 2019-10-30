@@ -251,7 +251,7 @@
 							<input type="text" name="entitled" id="entitled" value="{ENTITLED}">
 						</div>
 					</div>
-					<div class="form-element-textarea">
+					<div class="form-element form-element-textarea">
 						<label for="contents">{L_DESCRIPTION}</label>
 						{EDITOR}
 						<div class="form-field-textarea">

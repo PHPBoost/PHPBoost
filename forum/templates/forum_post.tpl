@@ -101,7 +101,7 @@
 								<label for="desc">{L_DESC}</label>
 								<div class="form-field"><label><input type="text" class="field-large" maxlength="75" id="desc" name="desc" value="{DESC}"></label></div>
 							</div>
-							<div class="form-element-textarea">
+							<div class="form-element form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}
 								<div class="form-field-textarea">

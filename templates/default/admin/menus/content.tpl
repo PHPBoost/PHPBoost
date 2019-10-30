@@ -60,7 +60,7 @@ function CheckForm() {
 						</div>
 					</div>
 				</div>
-				<div class="form-element-textarea">
+				<div class="form-element form-element-textarea">
 					<label for="contents" id="preview_description">* {L_CONTENT}</label>
 					{KERNEL_EDITOR}
 					<div class="form-field-textarea">

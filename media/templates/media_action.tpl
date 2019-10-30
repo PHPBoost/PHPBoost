@@ -107,7 +107,7 @@
 							# ENDIF #
 						</div>
 					</div>
-					<div class="form-element-textarea">
+					<div class="form-element form-element-textarea">
 						<label for="contents" id="preview_content">{L_CONTENTS}</label>
 						{KERNEL_EDITOR}
 						<div class="form-field-textarea">
@@ -121,7 +121,7 @@
 							<label for="approved" class="checkbox">
 								<input type="checkbox" name="approved" id="approved"{APPROVED} />
 								<span>&nbsp</span>
-							</label>							
+							</label>
 						</div>
 					</div>
 					# ENDIF #
@@ -130,7 +130,7 @@
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
 					<div class="message-helper notice">{L_NOTICE_CONTRIBUTION}</div>
-					<div class="form-element-textarea">
+					<div class="form-element form-element-textarea">
 						<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
 						{CONTRIBUTION_COUNTERPART_EDITOR}
 						<div class="form-field-textarea">

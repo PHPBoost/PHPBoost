@@ -53,7 +53,7 @@
 					<div class="form-field"><label><input type="text" id="title" name="title" maxlength="250" class="field-large" value="{PAGE_TITLE}"></label></div>
 				</div>
 				# END create #
-				<div class="form-element-textarea">
+				<div class="form-element form-element-textarea">
 					<label for="contents">* {L_CONTENTS}</label>
 					{KERNEL_EDITOR}
 					<div class="form-field-textarea">
