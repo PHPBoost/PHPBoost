@@ -16,41 +16,40 @@
 	</div>
 
 	# IF C_ADVANCED_AUTH #
-	<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-		<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
-			<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
-				# START members_list #
-				<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
-				# END members_list #
-			</optgroup>
-		</select>
-	</div>
+		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
+			<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
+				<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
+					# START members_list #
+					<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
+					# END members_list #
+				</optgroup>
+			</select>
+		</div>
 
-	<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-		<strong>{L_ADD_USER}</strong>
-		<br />
-		<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
-		<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" class="small">{L_GO}</button>
-		<br />
-		<span id="search_img{IDSELECT}"></span>
-		<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
-	</div>
+		<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
+			<span>{L_ADD_USER}</span>
+			<br />
+			<div class="input-btn">
+				<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
+				<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid">{L_GO}</button>
+			</div>
+			<span id="search_img{IDSELECT}"></span>
+			<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
+		</div>
 	# ENDIF #
 
-	<div class="advanced-auth-text">
-		<a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
-			# IF C_ADVANCED_AUTH_OPEN #
+</div>
+<div class="advanced-auth-text">
+	<a class="small" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
+	<span class="field-description">({L_EXPLAIN_SELECT_MULTIPLE})</span>
+	<a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
+		# IF C_ADVANCED_AUTH_OPEN #
 			<i id="advanced_auth_plus{IDSELECT}" class="fa fa-minus-square-o"></i>
-			# ELSE #
+		# ELSE #
 			<i id="advanced_auth_plus{IDSELECT}" class="fa fa-plus-square-o"></i>
-			# ENDIF #
-			{L_ADVANCED_AUTHORIZATION}
-		</a>
-		<br />
-		<a class="small" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
-		<br />
-		<span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-	</div>
+		# ENDIF #
+		{L_ADVANCED_AUTHORIZATION}
+	</a>
 </div>
 <script>
 <!--
@@ -65,7 +64,7 @@ function check_select_multiple(id, status)
 		if (selectidgroups[i])
 			selectidgroups[i].selected = status;
 	}
-	
+
 	//Sélection des membres.
 	var selectidmember = jQuery('#members_auth' + id)[0];
 	for(i = 0; i < selectidmember.length; i++)
@@ -112,7 +111,7 @@ function open_advanced_auth(id) {
 		}
 		else{
 			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-plus-square-o';
-			
+
 		}
 	});
 	jQuery('#advanced_authb' + id).fadeToggle();
