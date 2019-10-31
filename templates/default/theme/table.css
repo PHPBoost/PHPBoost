@@ -172,6 +172,21 @@ table tfoot tr td select {
 	display: none;
 }
 
+/* --- Sortable filters--- */
+.html-table-header-sortable {
+	display: none;
+}
+
+.html-table-header-sortable .fa {
+	margin-bottom: 0.228em;
+}
+
+@media (min-width: 769px) {
+	.html-table-header-sortable {
+		display: inline-block;
+	}
+}
+
 /* --- Options -------------------------------------------------------------- */
 .responsive-table {
 	max-width: 100%;
@@ -198,31 +213,31 @@ table tfoot tr td select {
 .col-larger  { width: 12em; }
 .col-xlarge  { width: 15em; }
 
-/* --- Bordered --- */
-.bordered td {
+/* --- bordered-table --- */
+.bordered-table td {
 	border-width: 1px 0 0 1px;
 	border-style: solid;
 	border-color: transparent;
 }
 
-.bordered td:last-child {
+.bordered-table td:last-child {
 	border-width: 1px 1px 0 1px;
 }
 
-.bordered tr:last-child td {
+.bordered-table tr:last-child td {
 	border-width: 1px 0 1px 1px;
 }
 
-.bordered tr:last-child td:last-child {
+.bordered-table tr:last-child td:last-child {
 	border-width: 1px;
 }
 
-.bordered .bt td,
-.bordered .bt tbody tr td:last-child,
-.bordered .bt tr:last-child td {
+.bordered-table .bt td,
+.bordered-table .bt tbody tr td:last-child,
+.bordered-table .bt tr:last-child td {
 	border-width: 1px 1px 0 1px;
 }
 
-.bordered .bt tr:last-child td:last-child {
+.bordered-table .bt tr:last-child td:last-child {
 	border-width: 1px;
 }

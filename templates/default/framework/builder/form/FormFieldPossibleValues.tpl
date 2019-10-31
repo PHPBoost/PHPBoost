@@ -11,12 +11,12 @@ FormFieldPossibleValues.prototype = {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			jQuery('<div/>', {id : id}).appendTo('#input_fields_' + this.id_input);
+			jQuery('<div/>', {id : id, class: 'custom-radio'}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
 			jQuery('<label/>', {class : 'radio', for : 'field_is_default_' + this.id_input + '_' + this.integer}).appendTo('#' + id + '_radio');
 			jQuery('<input/>', {type : 'radio', id : 'field_is_default_' + this.id_input + '_' + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio label');
-			jQuery('<span/>', {class : 'is-default-title hidden-large-screens'}).html('${LangLoader::get_message('field.possible_values.is_default', 'admin-user-common')}').appendTo('#' + id + '_radio label');
+			jQuery('<span/>', {class : 'is-default-title'}).html('&nbsp;').appendTo('#' + id + '_radio label');
 			jQuery('#' + id + '_radio').after(' ');
 
 			jQuery('<input/>', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
@@ -45,26 +45,26 @@ var FormFieldPossibleValues = new FormFieldPossibleValues();
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}" class="form-field-values">
-<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
-# START fieldelements #
-	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="custom-radio">
-		<div class="form-field-radio">
-			<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
-				<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
-				<span class="is-default-title">&nbsp;</span>
-			</label>
+	<span class="text-strong is-default-title hidden-small-screens">{@field.possible_values.is_default}</span>
+	# START fieldelements #
+		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="custom-radio">
+			<div class="form-field-radio">
+				<label class="radio" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
+					<input type="radio" name="field_is_default_${escape(HTML_ID)}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.ID}"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF #>
+					<span class="is-default-title">&nbsp;</span>
+				</label>
+			</div>
+			<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{@field.name}"/>
+			<a href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+			<script>
+			<!--
+			jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
+				jQuery("#uncheck_default_${escape(HTML_ID)}").show();
+			});
+			-->
+			</script>
 		</div>
-		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{@field.name}"/>
-		<a href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
-		<script>
-		<!--
-		jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
-			jQuery("#uncheck_default_${escape(HTML_ID)}").show();
-		});
-		-->
-		</script>
-	</div>
-# END fieldelements #
+	# END fieldelements #
 </div>
 <a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="form-field-more-values" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 <a href="" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small">${LangLoader::get_message('field.possible_values.delete_default', 'admin-user-common')}</a>

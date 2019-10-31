@@ -432,9 +432,7 @@ table tfoot nav.pagination a span.current-page {
     #      #####  #   #  #   #
 ----------------------------------------------------------------------------- */
 
-/* --- Buttons
------------------------------------------------------------------------------ */
-.bbcode.expand {
+.bbcode {
     background-color: #FFFFFF;
 }
 
@@ -455,17 +453,14 @@ table tfoot nav.pagination a span.current-page {
 	border-color: #DDDDDD !important;
 }
 
-.xmlhttprequest-preview {
-	border-color: #DDDDDD;
-}
-
 /* --- Highlight text --- */
 .highlight-search-word {
 	background-color: #FFFF00;
 	color: #000000;
 }
 
-
+/* --- Buttons
+----------------------------------------------------------------------------- */
 button,
 .button {
 	background-color: #FFFFFF;

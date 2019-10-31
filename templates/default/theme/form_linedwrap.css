@@ -1,0 +1,45 @@
+
+.linedwrap {
+	max-width: 100%;
+}
+
+.linedtextarea {
+	display: inline-block;
+	margin: 0;
+	padding: 0 0 0 0.618em;
+	width: calc(100% - 60px);
+	height: 100%;
+}
+
+.linedtextarea textarea,
+.linedwrap .codelines .lineno {
+	font-size: 10pt;
+	font-family: monospace;
+	line-height: normal !important;
+}
+
+.linedtextarea textarea {
+	margin: 0;
+	padding: 0.309em 0 0 0;
+	width: 100% !important;
+	height: 100%;
+	border: 0;
+}
+
+.linedwrap .lines {
+	display: inline-block;
+	overflow: hidden;
+	margin-top: 0;
+	padding: 0.309em 0 0 0;
+	width: 50px;
+	height: 100%;
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.linedwrap .codelines .lineno {
+	padding: 0 0.618em 0 0;
+	text-align: right;
+	white-space: nowrap;
+}

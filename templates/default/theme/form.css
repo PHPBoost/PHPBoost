@@ -1,269 +1,41 @@
-/* --------------------------------------
-		form.css
-Contient les elements :
- - button,
- - formulaire,
----------------------------------------- */
-
-
-/* -- Boutons et class boutons -- */
-/* ------------------------------ */
-
-/* --- Normal --- */
-button,
-.button {
-	height: auto;
-	margin: 0.618em;
-	padding: 0.309em 1em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	text-align: center;
-	white-space: nowrap;
-	transition: all 0.2s linear;
-}
-
-button:hover,
-.button-hover {
-	transition: all 0.3s linear;
-}
-
-button:active,
-.button-active {
-	transition: all 0.2s linear;
-}
-
-/* --- Petit bouton --- */
-button.small,
-.button-small {
-	padding: 0.228em 0.618em;
-	font-size: 0.809em;
-}
-
-/* --- Bouton basic --- */
-.basic-button {
-	display: inline-block;
-	margin: 0.1618em;
-	padding: 0.1618em 0.309em;
-	border: none;
-	font-weight: bold;
-}
-
-.basic-button:hover {
-	text-decoration: none;
-}
-
+/*
+ * Common styles for form elements
+*/
 
 /* -- Formulaires -- */
 /* ----------------- */
-.fieldset-mini {
-	margin: 1.309em auto auto auto;
-	width: 540px;
-}
-
-fieldset {
-	margin: 1.618em 0;
-	background: none;
-	border: none;
-}
-
-fieldset img {
-	max-width: 250px;
-}
-
-@media (min-width: 769px) {
-	fieldset img {
-		max-width: 320px;
-	}
-}
-
-@media (min-width: 1366px) {
-	fieldset img {
-		max-width: 420px;
-	}
-}
-
-.fieldset-submit {
-	text-align: center;
-}
-
-.fieldset-submit legend {
-	display: none;
-}
-
-.horizontal-fieldset-desc,
-.horizontal-fieldset-element  {
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 1em;
-}
-
-.horizontal-fieldset-desc + .horizontal-fieldset-element {
-	max-width: 100%;
-}
-
-.horizontal-fieldset-element .form-field-select {
-	max-width: none;
-}
-
-optgroup {
-	border: none;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-color: transparent;
-	font-weight: bold;
-}
-
-option {
-	padding: 0 0.228em;
-}
-
-legend {
-	display: block;
-	margin: 0 0 0.809em 0;
-	padding: 0 0.809em;
-	width: 100%;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-color: transparent;
-	text-transform: none;
-	font-size: 1.5em;
-}
-
-legend > h1 {
-	font-size: inherit;
-}
 
 /* --- Previsualisation AJAX --- */
 .xmlhttprequest-preview {
 	overflow: auto;
-	height: 220px;
-	margin: 0.228em auto .1618em auto;
-	padding: 0.1618em 0.228em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
+	height: auto;
+	margin: 0.228em 0;
 }
 
 .xmlhttprequest-preview img {
 	max-width: 600px;
 }
 
-/* --- Elements de saisie --- */
-[type=text],
-[type=email],
-[type=url],
-[type=number],
-[type=color],
-[type=tel],
-[type=search],
-[type=password],
-[type=file],
-textarea,
-select {
-	padding: 0.309em 0.618em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	margin-bottom: 0.1618em;
-	max-width: 100%;
-}
-
-[type=text]:focus,
-[type=email]:focus,
-[type=url]:focus,
-[type=number]:focus,
-[type=color]:focus,
-[type=tel]:focus,
-[type=search]:focus,
-[type=password]:focus,
-[type=file]:focus,
-textarea:focus,
-select:focus {
-	outline: 0;
-}
-
-[type=color] {
-	padding: 0 0.1618em;
-	width: 1.482em;
-}
-
+/* --- Input sizes --- */
 .field-smaller 	{ width: 29px;  }
 .field-small   	{ width: 77px;  }
 .field-large   	{ width: 200px; }
 .field-xlarge 	{ width: 250px; }
 
-.form-field-date,
-.form-field-datetime {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-}
-
-.form-field-date .input-date {
-	width: 80%;
-}
-
-.form-field-datetime .input-date {
-	width: 40%;
-}
-
-.form-field-datetime .label-time {
-	width: 18%;
-	position: relative;
-	display: inline-block;
-}
-
-.form-field-datetime .label-time input {
-	padding: 0.309em;
-	width: 100%;
-}
-
-.label-time:after {
-	position: absolute;
-	bottom: 18%;
-	left: 103%;
-	content: attr(data-time);
-}
-
-/* --- Cache le generateur de mot de passe sur chrome --- */
+/* --- Hide Chrome password generator --- */
 .cip-icon-key-small {
 	display: none !important;
 }
 
-/* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
+/* --- Form elements --- */
 .form-element,
 .form-element-textarea {
+	padding: 0.618em;
 	position: relative;
-	margin: 0 0.618em 0.618em 0.618em;
-}
-
-@media (min-width: 769px) {
-	#main.main-with-left.main-with-right section .form-element,
-	#main.main-with-left.main-with-right section .form-element-textarea {
-		margin: 0.309em 0;
-	}
 }
 
 .fieldset-description {
 	margin: 0 1em 0.618em 1em;
-}
-
-@media (min-width: 769px) {
-	.form-element,
-	.form-element-textarea {
-		margin: 0 1.618em 1em 1.618em;
-	}
-
-	.fieldset-description {
-		margin: 0 1.618em 1.482em 1.618em;
-	}
 }
 
 .form-element [id$="user_avatar"] img {
@@ -286,7 +58,7 @@ select:focus {
 }
 
 /* --- Label pour les checkbox et radio --- */
-.form-field label {
+.form-field > label {
 	display: block;
 	margin: 0 0.618em 0 0;
 }
@@ -300,73 +72,22 @@ select:focus {
 	vertical-align: top;
 }
 
-@media (min-width: 1025px) {
-	.form-field {
-		width: calc(60% - 0.309em);
-	}
-	.form-element > label {
-		width: 40%;
-	}
-}
-
 .field-description {
-	display: inline-block;
+	display: block;
 	font-size: 0.618em;
 	font-style: italic;
 }
 
-.form-field-select select,
-.form-field-multi-select select {
-	max-width: 100%;
-}
-
 @media (min-width: 769px) {
 	.field-description {
-		display: block;
 		font-size: 0.809em;
-		font-style: normal;
 	}
-}
-
-input[disabled=disabled],
-input[disabled=disabled]:hover,
-input[disabled=disabled]:focus,
-textarea[disabled=disabled],
-textarea[disabled=disabled]:hover,
-textarea[disabled=disabled]:focus,
-select[disabled=disabled],
-select[disabled=disabled]:hover,
-select[disabled=disabled]:focus,
-input[readonly=readonly],
-input[readonly=readonly]:hover,
-input[readonly=readonly]:focus,
-textarea[readonly=readonly],
-textarea[readonly=readonly]:hover,
-textarea[readonly=readonly]:focus,
-select[readonly=readonly],
-select[readonly=readonly]:hover,
-select[readonly=readonly]:focus {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	cursor: not-allowed;
 }
 
 /* --- Textarea --- */
 .form-field-textarea {
 	position: relative;
 	display: inline;
-	margin: 0.309em auto;
-	width: 99%;
-}
-
-textarea {
-	width: 100%;
-	overflow: auto;
-	resize: vertical;
-}
-
-.form-element-textarea textarea {
 	width: 100%;
 }
 
@@ -378,213 +99,13 @@ textarea {
 	display: inline-block;
 }
 
-.form-element-textarea .form-field-textarea div {
-	float: left;
-}
-
 .form-element-preview, .form-element-reset {
 	margin: 0.309em auto 0 auto;
 	text-align: center;
 	display: inline;
 }
 
-/* --- choix des permissions --- */
-.form-element-auth .form-field {
-	display: inline-block;
-	margin: 0.1618em 0 0 0;
-}
-
-.form-element-auth .form-field div[class^="advanced-auth"] {
-	float:left;
-}
-
-.form-element-auth .field-description {
-	display: inline;
-	font-style: italic;
-}
-
-.advanced-auth-group select {
-	padding-right: 0.309em;
-	margin-right: 0.618em;
-	overflow-x: auto;
-}
-
-.advanced-auth-select select {
-	padding-right: 0.309em;
-	max-width: 132px;
-	word-wrap: normal;
-	overflow-x: auto;
-}
-
-.advanced-auth-select {
-	margin-left:0.309em;
-}
-
-.advanced-auth-input {
-	margin-left: 0.309em;
-	width: auto;
-}
-
-.advanced-auth-input input {
-	padding: 0.228em 1.482em 0.228em 0.309em;
-}
-
-.advanced-auth-input button {
-	margin: 0 0 0.1618em -0.456em;
-	padding: 0.456em 0.309em 0.456em;
-}
-
-.advanced-auth-input-result {
-	margin: 0.1618em 0 0 0;
-	padding: 0.1618em;
-	height: 6.854em;
-}
-
-.bbcode ~ .form-field-textarea textarea {
-	border-width: 0 1px 1px 1px;
-}
-
-@media (min-width: 769px) {
-	.form-element-textarea-small {
-		width: 49%;
-	}
-
-	.form-element .form-field-textarea {
-		width: 59%;
-	}
-}
-
-@media (max-width: 480px) {
-	.form-element-auth .form-field .advanced-auth-input {
-		float: none;
-	}
-}
-
-/* --- Verification des contraintes de formulaire --- */
-
-/* texte d'erreur */
-.text-status-constraint {
-	position:absolute;
-	display: block;
-	z-index: 1;
-	padding: 0.309em;
-	top: 110%;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	font-size: 0.809em;
-	font-weight: bold;
-}
-
-.text-status-constraint:after,
-.text-status-constraint:before {
-	content: " ";
-	position: absolute;
-}
-
-.text-status-constraint:before {
-	left: 8px;
-	top: -9px;
-	border-width: 0 9px 9px 9px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.text-status-constraint:after {
-	left: 9px;
-	top: -8px;
-	border-width: 0 8px 8px 8px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-/* Icônes */
-.field-required:after,
-.picture-status-constraint:after {
-	display: inline-block;
-	position: absolute;
-	left: -14px;
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900;
-	font-size: inherit;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.constraint-status-right .field-required:after,
-.constraint-status-right .picture-status-constraint:after {
-	left: -18px;
-}
-
-.field-required:after {
-	top: 12px;
-	opacity: 0.6;
-	font-size: 0.809rem;
-	content: "\f069";
-	display: table;
-}
-
-.constraint-statuts-right .form-field-checkbox:after {
-	top: 4px;
-}
-
-.form-field-number input,
-.form-field-decimal input,
-.form-field-datetime input {
-	padding-right: 2px;
-}
-
-.form-field-textarea.field-required:after,
-.constraint-status-right .form-field-textarea.field-required:after,
-.constraint-status-right .form-field-textarea.field-required:after {
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.constraint-status-right .picture-status-constraint:after {
-	opacity: 1;
-	font-size: 1.5rem;
-	top: 6px;
-}
-
-.form-field-radio-button.field-required:after,
-.form-field-multiple-checkbox.field-required:after {
-	top: 8px;
-}
-
-.constraint-status-right .form-field-radio-button.field-required:after,
-.constraint-status-right .form-field-multiple-checkbox.field-required:after {
-	top: 4px;
-}
-
-.constraint-status-right .field-required:after {
-	content: " ";
-}
-
-.constraint-status-right .picture-status-constraint:after {
-	content: "\f00c";
-}
-
-.constraint-status-error i.picture-status-constraint {
-	content: "\f056";
-}
-
-.form-field-multi-select.field-required:after {
-	display: none;
-}
-
-.form-field-radio input[type="radio"] {
-	margin: 0 0 0.309em;
-}
-
-.inline-radio .form-field-radio {
-	display: inline-block;
-}
-
-.required-fields-text {
-	text-align: center;
-}
+/* ================================================================================================= */
 
 .form-field-upload-file a {
 	position: absolute;
@@ -592,21 +113,6 @@ textarea {
 	border-width: 1px 1px 1px 0;
 	border-style: solid;
 	border-color: transparent;
-}
-
-/* --- HTML Table--- */
-.html-table-header-sortable {
-	display: none;
-}
-
-.html-table-header-sortable .fa {
-	margin-bottom: 0.228em;
-}
-
-@media (min-width: 769px) {
-	.html-table-header-sortable {
-		display: inline-block;
-	}
 }
 
 /* --- Auto-completion --- */
@@ -637,71 +143,3 @@ div[id*='keyword'] .form-autocompleter-container input {
 }
 
 /* --- Lined textarea --- */
-.linedwrap {
-	max-width: 100%;
-}
-
-.linedtextarea {
-	display: inline-block;
-	margin: 0;
-	padding: 0 0 0 0.618em;
-	width: calc(100% - 60px);
-	height: 100%;
-}
-
-.linedtextarea textarea,
-.linedwrap .codelines .lineno {
-	font-size: 10pt;
-	font-family: monospace;
-	line-height: normal !important;
-}
-
-.linedtextarea textarea {
-	margin: 0;
-	padding: 0.309em 0 0 0;
-	width: 100% !important;
-	height: 100%;
-	border: 0;
-}
-
-.linedwrap .lines {
-	display: inline-block;
-	overflow: hidden;
-	margin-top: 0;
-	padding: 0.309em 0 0 0;
-	width: 50px;
-	height: 100%;
-	border-width: 0 1px 0 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.linedwrap .codelines .lineno {
-	padding: 0.0em 0.618em 0 0;
-	text-align: right;
-	white-space: nowrap;
-}
-
-.auth-setter {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-@media (min-width: 769px) {
-	.form-element-auth {
-		width: 50%;
-		margin: 0 0 2.618em;
-	}
-	.form-element-auth > label {
-		width: 100%;
-		display: block;
-		font-size: large;
-	}
-}

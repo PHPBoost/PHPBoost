@@ -1,244 +1,59 @@
+/*
+ * Specific dashboard styles for form elements
+*/
 
-/* --- ######################################################################
- *
- *							admin_form.css
- *
- *			Contient les css de mise en forme des boutons et des formulaires *
- *
- * --- ###################################################################### ---*/
+/* --- Buttons --- */
 
-/* -- Boutons ================================================= */
-
-/* --- Normal --- */
-button,
-.button {
-	height: auto;
-	margin: 0.618em;
-	padding: 0.618em 2em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	text-align: center;
-	white-space: nowrap;
-}
-
-button:hover,
-.button-hover {
-	transition: all 0.1s linear;
-}
-
-button:active,
-.button-active {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-button.small,
-.button-small {
-	padding: 2px 0.382em;
-	font-size: 0.95em;
-}
-
-/* --- Bouton submit avec couleur alternative --- */
-
-button[type=reset] {
-	font-weight: bold;
-}
-
-button[id*=menu_element] {
+button[id*="menu_element"] {
 	width: 100%;
 	margin-bottom: 0.618em;
 }
 
 @media (min-width: 769px) {
-	button[id*=menu_element] {
+	button[id*="menu_element"] {
 		width: auto;
 	}
 }
 
-/* --- Bouton basic --- */
-.basic-button {
-	display: inline-block;
-	margin: 0.1618em;
-	padding: 0.1618em 0.382em;
-	border-radius: 2px;
-	font-weight: bold;
-	text-align: center;
-}
+/* --- Fieldset --- */
 
-.basic-button:hover {
-	text-decoration: none;
-}
-
-/* --- Formulaires =========================================================*/
-.required-fields-text {
-	text-align: center;
-}
-
-.fieldset-mini {
-	width: 540px;
-	margin: 1.309em auto auto auto;
-}
-
-fieldset,
-.fieldset {
-	padding: 1.309em 0.309em 0;
-	border: none;
-	background: none;
-}
-
-fieldset img {
-	max-width: 250px;
-}
-
-@media (min-width: 769px) {
-	fieldset img {
-		max-width: 450px;
-	}
-}
-
-fieldset .table-cat img {
-	max-width: 100%;
-	margin-bottom: 0.618em;
-}
-
-fieldset[id*="_captcha_fieldset"] {
-	padding: 0 0.309em;
-}
-
-fieldset#AdminLoggedErrorsControllerList_fbuttons,
-fieldset#AdminErrorsController404List_fbuttons{
+#AdminLoggedErrorsControllerList_fbuttons,
+#AdminErrorsController404List_fbuttons{
 	padding: 0 0.309em;
 }
 
 @media (min-width: 769px) {
-	fieldset,
-	.fieldset {
-		padding: 1.309em 1.309em 0;
-	}
-
-	fieldset[id*="_captcha_fieldset"] {
-		padding: 0 1.309em;
-	}
-
-	fieldset#AdminErrorsController404List_fbuttons,
-	fieldset#AdminLoggedErrorsControllerList_fbuttons {
+	#AdminErrorsController404List_fbuttons,
+	#AdminLoggedErrorsControllerList_fbuttons {
 		padding: 0 1.309em;
 	}
 }
 
-.fieldset-inset {
-	overflow: hidden;
-	padding: 1em;
-}
-
-.fieldset-inset-user {
-	overflow: hidden;
-	padding: 1em 0;
-}
-
-.fieldset-inset-user table {
-	margin: 0;
-	width: 100% !important;
-}
-
-.fieldset-refresh {
-	text-align: center;
-}
-
-.fieldset-refresh a:hover {
-	text-decoration: none;
-}
-
-.fieldset-refresh a:hover span {
-	text-decoration: underline;
-}
-
-fieldset p {
-	margin: 0;
-	padding: 15px 0.618em;
-}
-
-.fieldset-inset p {
+fieldset[id*=advises] .form-element {
+	padding: 0.618em;
 	width: 100%;
 }
 
-.fieldset-inset h2 { width: 100%; }
-
-.fieldset-submit {
-	text-align: center;
+@media (min-width: 1367px) {
+	fieldset[id*=advises] .form-element {
+		width: calc(100% / 2);
+	}
 }
 
-.fieldset-submit legend {
-	display: none;
-}
-
-#system-report_copy_report {
-	height: 35px;
-	margin-top: 15px;
-}
-
-legend,
-.legend {
-	display: block;
-	margin: 0;
-	padding: 0 0 8px;
-	width: 100%;
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-	font-size: 1.6em;
-	text-transform: none;
-}
-
-legend > h1 {
-	font-size: inherit;
-}
-
-/* --- Elements de saisie --- */
-[type=text],
-[type=email],
-[type=url],
-[type=number],
-[type=color],
-[type=tel],
-[type=search],
-[type=password],
-[type=file],
+/* --- Inputs --- */
+[type="text"],
+[type="email"],
+[type="url"],
+[type="number"],
+[type="color"],
+[type="tel"],
+[type="search"],
+[type="password"],
+[type="file"],
 textarea,
 select {
-	padding: 0.618em 0.618em 0.618em 1.618em;
 	width: 100%;
-	border-width: 1px;
-	border-style: solid ;
-	border-color: transparent;
-}
-
-[type=text]:focus,
-[type=email]:focus,
-[type=url]:focus,
-[type=number]:focus,
-[type=color]:focus,
-[type=tel]:focus,
-[type=search]:focus,
-[type=password]:focus,
-[type=file]:focus,
-textarea:focus,
-select:focus {
-	outline: 0;
-}
-
-[type=color] {
-	padding: 0.618em 2px;
-	width: 100%;
-	height: 38px;
-}
-
-@media (min-width: 769px) {
-	[type=color] {
-		width: 150px;
-	}
+	padding: 0.618em;
 }
 
 @media (min-width:769px){
@@ -248,35 +63,17 @@ select:focus {
 	}
 }
 
-optgroup {
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-	font-weight: bold;
-}
-
-
 /* --- possible values --- */
 [id*="_possible_values_"] > div > div > div {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-justify-content: space-between;
-    -ms-justify-content: justify;
 	justify-content: space-between;
 	align-items: center;
 }
 
 @media (min-width: 769px) {
 	[id*="_possible_values_"] > div > div > div {
-	    -webkit-flex-wrap: nowrap;
-	    -ms-flex-wrap: nowrap;
 	    flex-wrap: nowrap;
 	}
 }
@@ -284,7 +81,6 @@ optgroup {
 /* --- input form-field-values --- */
 .form-field-values input[type="text"] {
 	width: 80%;
-	padding: 0.618em;
 }
 
 @media (min-width: 769px) {
@@ -301,108 +97,41 @@ optgroup {
 
 }
 
-
 .form-field-more-values {
 	float: right;
 }
-
-/* --- sizes --- */
-
-.field-smaller { width: 29px;	}
-.field-small 	{ width: 77px; 	}
-.field-large 	{ width: 200px; }
-.field-xlarge 	{ width: 300px; }
 
 .upload-input 	{
 	width: calc(100% - 43px);
 	vertical-align: top;
 }
 
-
-.form-field-date,
-.form-field-datetime {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-}
-
-.form-field-date .input-date { width: 80%; }
-
-.form-field-datetime .input-date { width: 45%; }
-.form-field-datetime .label-time {
-	width: 18%;
-
-	position: relative;
-	display: inline-block;
-}
-
-.form-field-datetime .label-time input {
-	padding: 0.618em;
-}
-
-.label-time:after {
-	position: absolute;
-	top: -0.618em;
-	right: 0.228em;
-	content: attr(data-time)
-}
-
-/* --- Hide Chrome password generator --- */
-.cip-icon-key-small {
-	display: none !important;
-}
-
-/* --- Form element (label + input) --- */
+/* --- Form elements --- */
 
 .fieldset-content .fieldset-inset,
 .fieldset-inset-user,
 .form-element {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 	width: 100%;
 }
 
+.form-element.form-element-textarea {
+	width: 100%;
+}
+
 .form-element {
-	-webkit-flex-direction: column;
-	-ms-flex-direction: column;
 	flex-direction: column;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-align-content: space-between;
-    -ms-flex-line-pack: justify;
     align-content: space-between;
-	padding: 0.618em;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
 }
 
 .form-element.top-field {
-	-webkit-justify-content: flex-start;
-	-ms-flex-pack: start;
 	justify-content: flex-start;
-}
-
-.fieldset-submit .fieldset-inset {
-	-webkit-justify-content: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-}
-
-.form-element-textarea {
-	width: 100%;
-	padding: 0.809em 0;
 }
 
 @media (min-width: 769px) {
@@ -414,13 +143,6 @@ optgroup {
 }
 
 @media (min-width: 769px) {
-	.form-element {
-		padding: 0.618em 1.618em 1.618em 0;
-		border-width: 0 0 1px 0;
-		border-style: solid;
-		border-color: transparent;
-	}
-
 	.form-element.form-subtitle {
 		padding: 1.618em 1.618em 0.618em 0;
 	}
@@ -449,17 +171,6 @@ optgroup {
 .form-element-preview {
 	margin: 0.618em;
 	text-align: center;
-}
-
-fieldset[id*=advises] .form-element {
-	padding: 0.618em;
-	width: 100%;
-}
-
-@media (min-width: 1367px) {
-	fieldset[id*=advises] .form-element {
-		width: calc(100% / 2);
-	}
 }
 
 .form-element [id$="user_avatar"] img {
@@ -541,57 +252,11 @@ div.advanced-auth-input input[id*=menu_element] {
 	width: 70%;
 }
 
-input[disabled=disabled],
-input[disabled=disabled]:hover,
-input[disabled=disabled]:focus,
-textarea[disabled=disabled],
-textarea[disabled=disabled]:hover,
-textarea[disabled=disabled]:focus,
-select[disabled=disabled],
-select[disabled=disabled]:hover,
-select[disabled=disabled]:focus {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	cursor: not-allowed;
-}
-
-input[readonly=readonly],
-input[readonly=readonly]:hover,
-input[readonly=readonly]:focus,
-textarea[readonly=readonly],
-textarea[readonly=readonly]:hover,
-textarea[readonly=readonly]:focus,
-select[readonly=readonly],
-select[readonly=readonly]:hover,
-select[readonly=readonly]:focus {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
 /* --- Textarea --- */
 .bbcode { width: 100% !important; }
 
-textarea {
-	display: block;
-	margin: 0.309em auto;
-	overflow: auto;
-	resize: vertical;
-}
-
-textarea#writing_pad_content {
-	height: 264px;
-}
-
-.form-element-textarea-small 	{ width: 49%; }
-
 .form-element-textarea .form-field-textarea {
 	display: block;
-}
-
-.form-element-textarea .form-field-textarea div {
-	float: left;
 }
 
 .form-element-preview, .form-element-reset {
@@ -600,174 +265,16 @@ textarea#writing_pad_content {
 	display: inline;
 }
 
-.form-element-auth .form-field {
-	display: inline-block;
-	margin: 2px 0 0 0;
-	width: 100%;
-}
+/* ================================================================================================= */
 
-.form-element-auth .field-description {
-	display: inline;
-	font-style: italic;
-}
-
-.advanced-auth-group select {
-	margin-bottom: 0.309em;
-	padding: 0.456em 0.1618em 0.309em 0.309em;
-	width: 100%;
-	overflow-x: auto;
-}
-
-@media (min-width: 769px) {
-	.advanced-auth-group {
-		display: inline-block;
-		vertical-align: top;
-	}
-
-	.advanced-auth-group select {
-		min-width: 150px;
-	}
-
-	.advanced-auth {
-		display: inline-block;
-		vertical-align: top;
-		margin: 0 0.1618em 0.1618em 0;
-	}
-}
-
-.advanced-auth-select select {
-	padding: 0.456em 0.1618em 0.309em 0.309em;
-	min-width: 150px;
-	overflow-x: auto;
-	word-wrap: normal;
-}
-
-.advanced-auth-select {
-	margin: 0 0 0.1618em 0;
-}
-
-@media (min-width: 769px) {
-	.advanced-auth-select {
-		margin-right: 0.1618em;
-	}
-}
-
-.advanced-auth-input {
-	margin-left: 0.309em;
-	width: 144px;
-}
-
-.advanced-auth-input input {
-	margin: 0 0 0.309em 0;
-	padding: 4px 24px 4px 6px;
-	width: 77%;
-}
-
-.advanced-auth-input button {
-	margin: 0 0 0.309em -4px;
-	padding: 6px 6px 5px 6px;
-	border-width: 0 0 0 1px;
-	border-radius: 0 4px 4px 0;
-}
-
-.advanced-auth-input-result {
-	margin: 2px 0 0 0;
-	width: 138px;
-	height: 100px;
-}
-
-.advanced-auth-text {
-	display: block;
-}
-
-/* --- CSS appliques aux écrans PC --- */
-@media (min-width: 769px) {
-	.form-element-textarea-small {
-		width: 49%;
-	}
-}
-
-/* --- CSS appliques aux smartphones --- */
-@media (max-width: 480px) {
-	.form-element-auth .form-field .advanced-auth-input {
-		float: none;
-		margin: 0.309em 0 0 0;
-	}
-}
-
-/* --- Verification des contraintes de formulaire --- */
-.text-status-constraint {
-	position:absolute;
-	display: block;
-	z-index: 1;
-	padding: 0.382em 0.309em;
-	min-width: 20em;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	border-radius: 3px;
-	font-size: 0.8em;
-	font-weight: bold;
-}
-
-input + .text-status-constraint {
-	top: 100%;
-}
-
-.text-status-constraint:before {
-	position: absolute;
-	left: 8px;
-	top: -9px;
-	border-width: 0 9px 9px 9px;
-	border-style: solid;
-	border-color: transparent;
-	content: " ";
-}
-
-.text-status-constraint:after {
-	position: absolute;
-	left: 9px;
-	top: -8px;
-	border-width: 0 8px 8px 8px;
-	border-style: solid;
-	border-color: transparent;
-	content: " ";
-}
-
-.field-required:after,
-.picture-status-constraint:after {
-	position: absolute;
-	display: inline-block;
-	left: 0.309em;
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900; /* Solid icons*/
-	font-size: inherit;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.field-required:after {
-	top: 40%;
-	opacity: 0.6;
-	content: "\f069";
-	font-size: 0.8rem;
-}
+/* --- Constraints --- */
 
 .form-field-checkbox.field-required:after {
 	left: 65px;
-	top: 3px;
 }
 
 .form-field-upload-file.field-required:after {
 	left: 45px;
-	top: 0.618em;
-}
-
-.form-field-number input,
-.form-field-decimal input,
-.form-field-datetime input {
-	padding-right: 2px;
 }
 
 .form-element-date .constraint-status-error .field-required:after,
@@ -775,173 +282,10 @@ input + .text-status-constraint {
 	left: 0.618em;
 }
 
-.form-field-textarea.field-required:after,
-.constraint-status-right .form-field-textarea.field-required:after,
-.constraint-status-right .form-field-textarea.field-required:after {
-	top: 45%;
-}
+/* --- Authorizations --- */
 
-.constraint-status-right .field-required:after {
-	content: " ";
-}
-
-.constraint-status-right .picture-status-constraint:after {
-	opacity: 1;
-	font-size: 1.5rem;
-}
-
-.constraint-status-error .form-field-textarea .picture-status-constraint:after,
-.constraint-status-right .form-field-textarea .picture-status-constraint:after {
-	top: 40%;
-}
-
-.constraint-status-right .picture-status-constraint:after {
-	top: 30%;
-	content: "\f00c";
-}
-
-.constraint-status-right .form-field-checkbox.picture-status-constraint:after {
-	top: 0;
-}
-
-.constraint-status-error i.picture-status-constraint {
-	content: "\f056";
-}
-
-.form-field-multi-select.field-required:after {
-	display: none;
-}
-
-.form-field-radio-button.field-required:after,
-.form-field-multiple-checkbox.field-required:after {
-	top: 3px;
-	right: 0;
-}
-
-/* --- HTML Table--- */
-.html-table-header-sortable {
-	display: none;
-}
-
-@media (min-width: 768px) {
-	.html-table-header-sortable {
-		display: block;
-	}
-
-	.html-table-header-sortable a {
-		padding: 0 0.382em;
-		display: inline-block;
-		border-radius: 0.256em
-	}
-}
-
-/* --- Auto-completion --- */
-.autocomplete-suggestions {
-	overflow: auto;
-	border-width: 0 1px 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.autocomplete-suggestion {
-	padding: 8px 0.309em;
-	overflow: hidden;
-	white-space: nowrap;
-	cursor: pointer;
-}
-
-.autocomplete-no-suggestion {
-	text-align: center;
-	padding: 8px 0.309em;
-}
-
-.field-button {
-	display: inline-block;
-	font-size: 0;
-	white-space: nowrap;
-}
-
-.field-button input {
-	border-radius: 4px 0 0 4px;
-}
-
-.field-button button {
-	margin-left: -1px;
-	padding: 4px 8px;
-	border-radius: 0 4px 4px 0;
-	font-size: 0.95em;
-}
-
-.form-element .fa-calendar {
-	cursor: pointer;
-}
-
-div[id*='keyword'] .form-autocompleter-container input {
-	max-width: calc(100% - 1.309em);
-}
-
-/* --- Lined textarea --- */
-.linedwrap {
-	width: 100%;
-}
-
-.linedtextarea {
-	display: inline-block;
-	margin: 0;
-	padding: 0 0 0 0.618em;
-	width: calc(100% - 60px);
-	height: 100%;
-	vertical-align: top;
-}
-
-.linedtextarea textarea,
-.linedwrap .codelines .lineno {
-	font-size: 10pt;
-	font-family: monospace;
-	line-height: normal !important;
-}
-
-.linedtextarea textarea {
-	margin: 0;
-	padding: 0.309em 0 0 0;
-	width: 100% !important;
-	height: 100%;
-	border: 0;
-}
-
-.linedwrap .lines {
-	display: inline-block;
-	overflow: hidden;
-	margin-top: 0;
-	padding: 0.309em 0 0 0;
-	width: 50px;
-	height: 100%;
-	border-width: 0 1px 0 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.linedwrap .codelines .lineno {
-	padding: 0.0em 0.5em 0 0;
-	text-align: right;
-	white-space: nowrap;
-}
-
-button.copy-to-clipboard {
-	display: block;
-	margin: 0 auto;
-}
-
-.auth-setter {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+.auth-setter,
+.form-element-auth {
 	width: 100%;
 }
 
@@ -950,19 +294,12 @@ button.copy-to-clipboard {
 }
 
 @media (min-width: 769px) {
+
 	.form-element-auth {
 		width: 50%;
 	}
-	.form-element-auth > label {
-		width: 100%;
-		display: block;
-		font-size: large;
-	}
-
 	.auth-setter[id=AdminFilesConfigController_authorizations] .form-element-auth {
 		width: 100%;
-	    -webkit-justify-content: flex-start;
-	    -ms-justify-content: start;
 		justify-content: flex-start;
 	}
 }

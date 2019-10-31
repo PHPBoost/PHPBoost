@@ -1,0 +1,90 @@
+input[disabled="disabled"],
+input[disabled="disabled"]:hover,
+input[disabled="disabled"]:focus,
+textarea[disabled="disabled"],
+textarea[disabled="disabled"]:hover,
+textarea[disabled="disabled"]:focus,
+select[disabled="disabled"],
+select[disabled="disabled"]:hover,
+select[disabled="disabled"]:focus,
+input[readonly="readonly"],
+input[readonly="readonly"]:hover,
+input[readonly="readonly"]:focus,
+textarea[readonly="readonly"],
+textarea[readonly="readonly"]:hover,
+textarea[readonly="readonly"]:focus,
+select[readonly="readonly"],
+select[readonly="readonly"]:hover,
+select[readonly="readonly"]:focus {
+	cursor: not-allowed;
+}
+
+[type="text"],
+[type="email"],
+[type="url"],
+[type="number"],
+[type="color"],
+[type="tel"],
+[type="search"],
+[type="password"],
+[type="file"],
+textarea,
+select {
+	padding: 0.309em 0.618em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	margin-bottom: 0.1618em;
+	max-width: 100%;
+}
+
+[type="color"] {
+	padding: 0;
+}
+
+textarea {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	resize: vertical;
+}
+
+.form-element-textarea textarea {
+	width: 100%;
+}
+
+.bbcode ~ .form-field-textarea textarea {
+	border-width: 1px;
+}
+
+.form-field-select select,
+.form-field-multi-select select {
+	max-width: 100%;
+}
+
+optgroup {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: transparent;
+	font-weight: bold;
+}
+
+option {
+	padding: 0 0.228em;
+}
+
+/* --- Grouped input --- */
+.input-element-button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.input-element-button input {
+    border-width: 1px 0 1px 1px;
+    flex: 1 1 auto;
+}
+
+.input-element-button button {
+	margin: 0 0 0.1618em 0;
+}

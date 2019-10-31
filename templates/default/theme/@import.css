@@ -3,22 +3,33 @@
 @import url('../../default/theme/font-awesome-animation.css');
 @import url('../../default/theme/lightcase.css') screen, print;
 
-@import url('../../default/theme/dashboard_shape.css') screen;
-@import url('../../default/theme/dashboard_content.css') screen, print;
-@import url('../../default/theme/table.css') screen, print;
-@import url('../../default/theme/dashboard_form.css') screen, print;
-@import url('../../default/theme/dashboard_global.css') screen, print;
-@import url('../../default/theme/dashboard_menus.css') screen, print;
-@import url('../../default/theme/dashboard_addons.css') screen, print;
 
-@import url('../../default/theme/scrollto.css') screen, print;
-@import url('../../default/theme/sortable.css') screen, print;
+@import url('../../default/theme/form.css') screen, print;
+@import url('../../default/theme/form_fieldset.css') screen, print;
+@import url('../../default/theme/form_button.css') screen, print;
+@import url('../../default/theme/form_input.css') screen, print;
+@import url('../../default/theme/form_datepicker.css') screen, print;
+@import url('../../default/theme/form_constraint.css') screen, print;
+@import url('../../default/theme/form_linedwrap.css') screen, print;
+@import url('../../default/theme/form_authorizations.css') screen, print;
 @import url('../../default/theme/checkbox.css') screen, print;
 @import url('../../default/theme/radio.css') screen, print;
+
+@import url('../../default/theme/table.css') screen, print;
+@import url('../../default/theme/scrollto.css') screen, print;
+@import url('../../default/theme/sortable.css') screen, print;
 @import url('../../default/theme/cssmenu.css') screen, print;
 @import url('../../default/theme/plugins.css') screen, print;
 @import url('../../default/theme/cell.css') screen, print;
 @import url('../../default/theme/cellflex.css') screen, print;
 
+@import url('../../default/theme/dashboard_shape.css') screen;
+@import url('../../default/theme/dashboard_menus.css') screen, print;
+@import url('../../default/theme/dashboard_addons.css') screen, print;
+
+@import url('../../default/theme/dashboard_form.css') screen, print;
+@import url('../../default/theme/dashboard_content.css') screen, print;
+@import url('../../default/theme/dashboard_global.css') screen, print;
 @import url('../../default/theme/dashboard.css') screen, print;
+
 @import url('../../default/theme/dashboard_colors.css') screen, print;

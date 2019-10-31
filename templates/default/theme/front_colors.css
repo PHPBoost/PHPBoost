@@ -277,7 +277,7 @@ table tbody td {
 
 /* --- Options BBCode--- */
 /* --- Bordures partout --- */
-.bordered td {
+.bordered-table td {
 	border-color: #D3D3D3;
 }
 /* --- Couleur des lignes --- */
@@ -455,10 +455,6 @@ form .constraint-status-right textarea {
 .constraint-status-right .form-field-multi-select select {
 	border-color: rgba(71, 137, 72, 0.3);
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
-}
-
-.xmlhttprequest-preview {
-    border-color: #FFFFFF;
 }
 
 .html-table-header-sortable .sort-active {

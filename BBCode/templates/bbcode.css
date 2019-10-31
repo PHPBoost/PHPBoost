@@ -6,8 +6,7 @@
 .bbcode {
 	position: relative;
 	display: table;
-	margin: 0.309em auto -0.309em auto;
-	width: 99%;
+	width: 100%;
 	border-width: 1px 1px 0;
 	border-style: solid;
 }

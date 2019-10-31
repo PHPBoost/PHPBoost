@@ -1,9 +1,26 @@
 /*
- * Contains all hacks for common css files
+ * Contains specific css properties for backend
 */
 
-/* --- multitabs --- */
+/* --- Dashboard homepage --- */
+.cell-body form { margin: -0.618em; }
 
+.cell-body fieldset,
+.cell-body .fieldset-inset,
+.cell-body .form-element { padding: 0; }
+
+.cell-body legend {
+    padding: 0.309em;
+    font-size: 1.482em;
+}
+
+.cell-body textarea {margin: 0;}
+
+#writing_pad_content {
+	height: 264px;
+}
+
+/* --- multitabs --- */
 .close-modal { width: calc(100% - 230px); }
 
 @media (min-width: 769px) {
@@ -19,21 +36,6 @@
 	}
 }
 
-/* --- cellflex -- dashboard homepage --- */
-.cell-body form { margin: -0.618em; }
-
-.cell-body fieldset,
-.cell-body .fieldset-inset,
-.cell-body .form-element { padding: 0; }
-
-.cell-body legend {
-    padding: 0.309em;
-    font-size: 1.482em;
-}
-
-.cell-body textarea {margin: 0;}
-
-
 /* --- Text helper --- */
 .text-helper {
     display: flex;
@@ -42,4 +44,10 @@
 
 .text-helper span {
     width: calc(100% / 2.1);
+}
+
+/*  */
+.copy-to-clipboard {
+	display: block;
+	margin: 0 auto;
 }

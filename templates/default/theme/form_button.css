@@ -1,0 +1,42 @@
+button,
+.button {
+	height: auto;
+	margin: 0.618em;
+	padding: 0.309em 1em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	text-align: center;
+	white-space: nowrap;
+	transition: all 0.2s linear;
+}
+
+button:hover,
+.button-hover {
+	transition: all 0.3s linear;
+}
+
+button:active,
+.button-active {
+	transition: all 0.2s linear;
+}
+
+/* --- Petit bouton --- */
+button.small,
+.button-small {
+	padding: 0.228em 0.618em;
+	font-size: 0.809em;
+}
+
+/* --- Bouton basic --- */
+.basic-button {
+	display: inline-block;
+	margin: 0.1618em;
+	padding: 0.1618em 0.309em;
+	border: none;
+	font-weight: bold;
+}
+
+.basic-button:hover {
+	text-decoration: none;
+}

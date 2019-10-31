@@ -2,26 +2,17 @@
  * css for checkboxes
 */
 
+.checkbox { padding: 0.228em; }
+
 .checkbox [type="checkbox"]:disabled + span { cursor: not-allowed;}
 
 .inline-checkbox .checkbox,
 .inline-checkbox .form-field-checkbox {
    display: inline-block;
- 	margin: 0 1em 0 0;
+ 	margin: 0 0.456em 0 0;
 }
 
-/* --- Constraints --- */
-.checkbox .text-status-constraint {
-   top: 1.618em;
-   left: -0.309em;
-}
-
-.custom-checkbox .checkbox .text-status-constraint {
-   top: 70%;
-   left: -0.309em;
-}
-
- /* --- checkbox mini ------------------------------------------------------- */
+ /* --- Mini checkbox ------------------------------------------------------- */
 .mini-checkbox .checkbox {
 	margin: 0;
 	position: relative;
