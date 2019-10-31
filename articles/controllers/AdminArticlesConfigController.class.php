@@ -78,8 +78,8 @@ class AdminArticlesConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_cols_display_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_cols_display_per_line(),
-			array('min' => 1, 'max' => 6, 'required' => true, 'description' => $this->admin_common_lang['config.columns_number_per_line.description']),
-			array(new FormFieldConstraintIntegerRange(1, 6))
+			array('min' => 1, 'max' => 4, 'required' => true, 'description' => $this->admin_common_lang['config.columns_number_per_line.description']),
+			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));

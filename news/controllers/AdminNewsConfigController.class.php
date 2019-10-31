@@ -71,8 +71,8 @@ class AdminNewsConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_columns_display_news', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_number_columns_display_news(),
-			array('min' => 1, 'max' => 6, 'required' => true, 'class' => 'third-field'),
-			array(new FormFieldConstraintIntegerRange(1, 6))
+			array('min' => 1, 'max' => 4, 'required' => true, 'class' => 'third-field'),
+			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
