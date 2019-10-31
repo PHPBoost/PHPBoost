@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 05
+ * @version   	PHPBoost 5.3 - last update: 2019 10 31
  * @since   	PHPBoost 3.0 - 2011 02 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,6 +20,7 @@ class AddNewsletterController extends ModuleController
 	 */
 	private $submit_button;
 
+	private $config;
 	private $send_test_button;
 
 	public function execute(HTTPRequestCustom $request)
@@ -56,6 +57,7 @@ class AddNewsletterController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+		$this->config = NewsletterConfig::load();
 	}
 
 	private function build_form($type)
@@ -67,11 +69,12 @@ class AddNewsletterController extends ModuleController
 
 		if (NewsletterConfig::load()->get_mail_sender())
 		{
-			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(),
+			$streams = $this->get_streams();
+			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], (count($streams) == 1 ? array('1') : array()), $streams,
 				array('required' => true)
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
+			$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], $this->config->get_newsletter_name(), array(
 				'required' => true)
 			));
 
@@ -111,12 +114,11 @@ class AddNewsletterController extends ModuleController
 
 	private function send_test($type)
 	{
-		$newsletter_config = NewsletterConfig::load();
 		$subscribers[] = array('user_id' => AppContext::get_current_user()->get_id(), 'display_name' => AppContext::get_current_user()->get_display_name());
 		NewsletterMailFactory::send_mail(
 			$subscribers,
 			$type,
-			$newsletter_config->get_mail_sender(),
+			$this->config->get_mail_sender(),
 			$this->form->get_value('title'),
 			$this->form->get_value('contents')
 		);
@@ -152,13 +154,13 @@ class AddNewsletterController extends ModuleController
 	{
 		if ($type == 'bbcode')
 		{
-			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], '', array(
+			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], $this->config->get_default_contents(), array(
 				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
 			);
 		}
 		else
 		{
-			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], '', array(
+			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], ($type == 'html' ? $this->config->get_default_contents() : ''), array(
 				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'], 'required' => true)
 			);
 		}
