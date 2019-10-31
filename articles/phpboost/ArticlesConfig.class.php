@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 10 31
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,6 +18,8 @@ class ArticlesConfig extends AbstractConfigData
 
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
+	
+	const DEFAULT_CONTENTS = 'default_contents';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
@@ -90,6 +92,16 @@ class ArticlesConfig extends AbstractConfigData
 	public function set_items_default_sort_mode($value)
 	{
 		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
+	}
+
+	public function get_default_contents()
+	{
+		return $this->get_property(self::DEFAULT_CONTENTS);
+	}
+
+	public function set_default_contents($value)
+	{
+		$this->set_property(self::DEFAULT_CONTENTS, $value);
 	}
 
 	public function get_display_type()
@@ -180,6 +192,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_CHARACTER_TO_CUT => 150,
 			self::ITEMS_DEFAULT_SORT_FIELD => Article::SORT_DATE,
 			self::ITEMS_DEFAULT_SORT_MODE => Article::DESC,
+			self::DEFAULT_CONTENTS => '',
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::DATE_UPDATED_DISPLAYED => false,

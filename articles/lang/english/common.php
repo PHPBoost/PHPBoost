@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 10 31
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,6 +34,7 @@ $lang['articles.display.type'] = 'Display type';
 $lang['articles.display.type.mosaic'] = 'Mosaic';
 $lang['articles.display.type.list'] = 'List';
 $lang['articles.display.decriptions.to.guests'] = 'Display condensed articles to guests if they don\'t have read authorization';
+$lang['articles.default.contents'] = 'Article default content';
 
 // Form
 $lang['articles.decription'] = 'Description (maximum :number characters)';

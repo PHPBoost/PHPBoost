@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 10 31
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -423,6 +423,7 @@ class Article
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
 		$this->id_category = $id_category;
+		$this->contents = ArticlesConfig::load()->get_default_contents();
 		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
 		$this->author_user = AppContext::get_current_user();
 		$this->published = self::PUBLISHED_NOW;
