@@ -61,17 +61,17 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		//Configuration
+		// Configuration
 		$fieldset = new FormFieldsetHTMLHeading('configuration_fieldset', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('class' => 'top-field','min' => 1, 'max' => 50, 'required' => true),
+			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
-			array('class' => 'top-field'),
+			array(),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 
