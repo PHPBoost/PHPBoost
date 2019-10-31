@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 28
+ * @version   	PHPBoost 5.2 - last update: 2019 10 31
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,6 +39,7 @@ $lang['admin.mail-sender'] = 'Adresse d\'envoi';
 $lang['admin.mail-sender-explain'] = 'Adresse mail valide';
 $lang['admin.newsletter-name'] = 'Nom de la newsletter';
 $lang['admin.newsletter-name-explain'] = 'Objet du mail envoyé';
+$lang['admin.default-contents'] = 'Contenu par défaut d\'une newsletter de type BBCode ou HTML';
 
 //Authorizations
 $lang['admin.newsletter-authorizations'] = 'Autorisations';

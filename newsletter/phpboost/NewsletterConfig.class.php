@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @version   	PHPBoost 5.2 - last update: 2019 10 31
  * @since   	PHPBoost 3.0 - 2011 02 01 11
 */
 
@@ -11,6 +11,7 @@ class NewsletterConfig extends AbstractConfigData
 {
 	const MAIL_SENDER = 'mail_sender';
 	const NEWSLETTER_NAME = 'newsletter_name';
+	const DEFAULT_CONTENTS = 'default_contents';
 	const AUTHORIZATIONS = 'authorizations';
 
 	public function get_mail_sender()
@@ -33,6 +34,16 @@ class NewsletterConfig extends AbstractConfigData
 		$this->set_property(self::NEWSLETTER_NAME, $name);
 	}
 
+	public function get_default_contents()
+	{
+		return $this->get_property(self::DEFAULT_CONTENTS);
+	}
+
+	public function set_default_contents($value)
+	{
+		$this->set_property(self::DEFAULT_CONTENTS, $value);
+	}
+
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -51,6 +62,7 @@ class NewsletterConfig extends AbstractConfigData
 		return array(
 			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
+			self::DEFAULT_CONTENTS => '',
 			self::AUTHORIZATIONS => array('r1' => 63, 'r0' => 35, 'r-1' => 35)
 		);
 	}
