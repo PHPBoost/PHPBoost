@@ -71,6 +71,10 @@
 		.admin-menu {
 			margin-bottom: 20px;
 		}
+
+		.cssmenu-title {
+		    white-space: normal;
+		}
 	}
 
 	.admin-menu ul {
