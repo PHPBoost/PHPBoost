@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 01
  * @since   	PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -120,7 +120,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			if (!empty($pmtomail_field) && $pmtomail_field['display'])
 			{
 				$contents = $contents . '<br /><br />' . $current_user->get_display_name() . '<br /><br /><a href="' . GeneralConfig::load()->get_complete_site_url() . '/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id, '&') . '#m' . $pm_msg_id . '">' . $LANG['pm_conversation_link'] . '</a>';
-				$send_mail = 0;
+				$send_mail = false;
 				try {
 					$send_mail = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_pmtomail', 'WHERE user_id = :id', array('id' => $user_id_dest));
 				} catch (RowNotFoundException $ex) {}
@@ -133,7 +133,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 					} catch (RowNotFoundException $ex) {}
 
 					if ($email_dest)
-						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), $contents, '', Mail::SENDER_USER);
+						AppContext::get_mail_service()->send_from_properties($email_dest, $LANG['new_pm'] . ' : ' . stripslashes($title), ContentSecondParser::export_html_text($contents), '', Mail::SENDER_USER);
 				}
 			}
 
@@ -594,7 +594,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la 
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 
 				$tpl->assign_block_vars('edit_pm', array(
-					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse(addslashes($pm['contents'])),
+					'CONTENTS' => ($prw_convers XOR $prw) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>'
 				));
