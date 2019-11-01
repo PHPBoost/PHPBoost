@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 01
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,7 +109,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['articles.default.contents'], $this->config->get_default_contents(),
-			array('rows' => 16, 'cols' => 47)
+			array('rows' => 8, 'cols' => 47)
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'),
