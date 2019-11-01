@@ -23,22 +23,6 @@ legend > h1 {
 	font-size: inherit;
 }
 
-fieldset img {
-	max-width: 250px;
-}
-
-@media (min-width: 769px) {
-	fieldset img {
-		max-width: 320px;
-	}
-}
-
-@media (min-width: 1366px) {
-	fieldset img {
-		max-width: 420px;
-	}
-}
-
 fieldset p {
 	margin: 0;
 	padding: 15px 0.618em;

@@ -73,23 +73,39 @@ option {
 	padding: 0 0.228em;
 }
 
-.upload-input 	{
-	width: calc(100% - 43px);
-	vertical-align: top;
-}
-
 /* --- Grouped input --- */
 .input-element-button {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+	margin: 0 0 0.309em;
 }
 
 .input-element-button input {
-    border-width: 1px 0 1px 1px;
-    flex: 1 1 auto;
+    border-width: 1px;
+	margin: 0;
 }
 
-.input-element-button button {
-	margin: 0 0 0.1618em 0;
+.input-element-button button,
+.input-element-button a {
+	display: flex;
+	margin: 0;
+}
+
+.input-element-button button i,
+.input-element-button a i,
+.input-element-button button span,
+.input-element-button a span {
+	align-self: center;
+}
+
+.input-element-button a {
+	text-decoration: none;
+	padding: 0 0.618em;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.input-element-button a:hover {
+	text-decoration: none;
 }

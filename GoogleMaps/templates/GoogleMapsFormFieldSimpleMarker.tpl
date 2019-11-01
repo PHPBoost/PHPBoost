@@ -1,4 +1,4 @@
-<div class="field-${escape(HTML_ID)} map-input-container">
+<div class="field-${escape(HTML_ID)} input-element-button map-input-container">
 	<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(ADDRESS)}" placeholder="{@form.marker.address}" class="marker-address-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 	<input type="text" name="name-${escape(NAME)}" id="name-${escape(HTML_ID)}" value="${escape(MARKER_NAME)}" placeholder="{@form.marker.name}" class="marker-desc-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ELSE # field-large# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 	<input type="hidden" id="latitude-${escape(HTML_ID)}" name="latitude-${escape(HTML_ID)}" value="${escape(LATITUDE)}" />

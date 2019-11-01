@@ -172,12 +172,6 @@ select {
 	font-weight: 700;
 }
 
-.form-field {
-	width: 100%;
-	position: relative;
-	display: block;
-}
-
 .module-mini-container .form-field {
 	display: block;
 	width: 100%;
@@ -246,30 +240,13 @@ div.advanced-auth-input input[id*=menu_element] {
 	display: inline;
 }
 
-/* --- Constraints --- */
-
-.form-field-checkbox.field-required:after {
-	left: 65px;
-}
-
-.form-field-upload-file.field-required:after {
-	left: 45px;
-}
-
-.form-element-date .constraint-status-error .field-required:after,
-.form-element-date .constraint-status-right .field-required:after {
-	left: 0.618em;
-}
-
 /* --- Authorizations --- */
-
 .auth-setter,
 .form-element-auth {
 	width: 100%;
 }
 
 @media (min-width: 769px) {
-
 	.form-element-auth {
 		width: 50%;
 	}

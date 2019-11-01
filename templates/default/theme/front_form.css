@@ -5,6 +5,11 @@
 /* --- Form elements --- */
 .form-element {
 	margin: 0.618em 0 0;
+	flex-direction: row;
+}
+
+.form-element-textarea {
+	flex-direction: column;
 }
 
 .fieldset-description {
@@ -23,8 +28,8 @@
 
 .form-field {
 	position: relative;
-	display: inline-block;
 	width: 100%;
+	align-self: flex-start;
 }
 
 .form-field-free-large {
@@ -50,7 +55,12 @@
 	}
 
 	.form-field {
-		width: calc(60% - 0.309em);
+		width: 60%;
+	}
+
+	.form-field-map,
+	.form-element-auth .form-field {
+		width: 80%;
 	}
 
 	.form-field-textarea {

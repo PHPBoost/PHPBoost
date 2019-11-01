@@ -6,32 +6,46 @@
     flex-wrap: nowrap;
 }
 
-.form-field-date .input-date {
+/* .form-field-date .input-date {
 	width: 80%;
 }
 
 .form-field-datetime .input-date {
 	width: 40%;
-}
+} */
 
 .form-field-datetime .label-time {
-	width: 18%;
+	max-width: 18%;
 	position: relative;
-	display: inline-block;
-}
-
-.form-field-datetime .label-time input {
-	padding: 0.309em;
-	width: 100%;
 }
 
 .label-time:after {
-	position: absolute;
-	bottom: 18%;
-	left: 103%;
-	content: attr(data-time);
+    position: absolute;
+    top: -0.618em;
+    right: 0.309em;
+    content: attr(data-time);
+    background-color: #fff;
+    padding: 0.228em;
+    line-height: 0.5;
 }
 
 .form-element .fa-calendar {
 	cursor: pointer;
+}
+
+/* --- Grouped input --- */
+.calendar-container > a {
+    height: 100%;
+}
+
+.calendar-container div a {
+    border: none;
+}
+
+.input-element-button span + label input {
+	border-left-width: 0;
+}
+
+.input-element-button label:last-child input {
+    border-width: 1px;
 }

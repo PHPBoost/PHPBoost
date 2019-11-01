@@ -278,6 +278,9 @@ class AdminSandboxFormController extends AdminModuleController
 		$fieldset->add_field(new FormFieldFree('03_separator', '', ''));
 
 		// Buttons
+		// Subtitle
+		$fieldset->add_field(new FormFieldSubTitle('button_subtitle', $this->lang['form.button'].'s', ''));
+
 		$fieldset->add_element(new FormButtonButton($this->lang['form.button'], '', '', 'button'));
 		$fieldset->add_element(new FormButtonButton($this->lang['form.button.small'], '', '', 'small'));
 		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic'], '', '', 'basic-button'));
@@ -306,7 +309,7 @@ class AdminSandboxFormController extends AdminModuleController
 
 		// DATE TIME
 		$fieldset2->add_field(new FormFieldDateTime('date_time', $this->lang['form.date.hm'], null,
-			array('required' => true, 'class' => 'form-field-css-class')
+			array('required' => true, 'class' => 'half-field form-field-css-class')
 		));
 
 		// COLOR PICKER
@@ -319,30 +322,39 @@ class AdminSandboxFormController extends AdminModuleController
 			array('class' => 'form-field-css-class')
 		));
 
+		// Separator
+		$fieldset2->add_field(new FormFieldFree('04_separator', '', ''));
+
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', $this->lang['form.file.picker'],
-			array('class' => 'form-field-css-class')
+			array('class' => 'half-field form-field-css-class')
 		));
 
 		// MULTIPLE FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('multiple_files', $this->lang['form.multiple.file.picker'],
-			array('class' => 'form-field-css-class', 'multiple' => true)
+			array('class' => 'half-field form-field-css-class', 'multiple' => true)
 		));
 
 		// UPLOAD FILE
 		$fieldset2->add_field(new FormFieldUploadFile('upload_file', $this->lang['form.file.upload'], '',
-			array('required' => true, 'class' => 'form-field-css-class')
+			array('required' => true, 'class' => 'half-field top-field form-field-css-class')
 		));
 
+		// Separator
+		$fieldset2->add_field(new FormFieldFree('05_separator', '', ''));
+
 		// List actionLinks
+		// Subtitle
+		$fieldset2->add_field(new FormFieldSubTitle('links_subtitle', $this->lang['form.action.link.list'], ''));
+
 		$fieldset2->add_field(new FormFieldActionLinkList('actionlink_list',
 			array(
-				new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', ''),
-				new FormFieldActionLinkElement($this->lang['form.action.link.2'], '#', ''),
+				new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', 'fa-share',),
+				new FormFieldActionLinkElement($this->lang['form.action.link.2'], '#', '', PATH_TO_ROOT.'/sandbox/sandbox_mini.png'),
 				new FormFieldActionLinkElement($this->lang['form.action.link.3'], '#', ''),
 				new FormFieldActionLinkElement($this->lang['form.action.link.4'], '#', '')
 			),
-			array('description'=> $this->lang['form.action.link.list'], 'class' => 'form-field-css-class')
+			array('class' => 'form-field-css-class')
 		));
 
 		// GOOGLE MAPS
@@ -352,16 +364,24 @@ class AdminSandboxFormController extends AdminModuleController
 			$form->add_fieldset($fieldset_maps);
 
 			// SIMPLE ADDRESS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], '', array('class' => 'form-field-css-class')));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], '',
+				array('class' => 'top-field half-field form-field-css-class')
+			));
 
 			// MAP ADDRESS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '',
+				array('class' => 'top-field half-field form-field-css-class', 'include_api' => false)
+			));
 
 			// SIMPLE MARKER
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '',
+				array('class' => 'top-field half-field form-field-css-class', 'include_api' => false)
+			));
 
 			// MULTIPLE MARKERS
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('class' => 'form-field-css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '',
+				array('class' => 'top-field half-field form-field-css-class', 'include_api' => false)
+			));
 		}
 
 		// AUTH

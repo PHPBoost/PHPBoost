@@ -3,32 +3,11 @@
 */
 
 
-/* --- Previsualisation AJAX --- */
-.xmlhttprequest-preview {
-	overflow: auto;
-	height: auto;
-	margin: 0.228em 0;
-}
-
-.xmlhttprequest-preview img {
-	max-width: 600px;
-}
-
-/* --- Input sizes --- */
-.field-smaller 	{ width: 29px;  }
-.field-small   	{ width: 77px;  }
-.field-large   	{ width: 200px; }
-.field-xlarge 	{ width: 250px; }
-
-/* --- Hide Chrome password generator --- */
-.cip-icon-key-small {
-	display: none !important;
-}
-
 /* --- Form elements --- */
 .form-element {
 	padding: 0.618em;
 	position: relative;
+	display: flex;
 }
 
 .fieldset-description {
@@ -52,7 +31,6 @@
 
 .form-field {
 	position: relative;
-	display: inline-block;
 	width: 100%;
 }
 
@@ -63,14 +41,6 @@
 
 .form-field-action-link {
 	text-align: center;
-}
-
-.form-field-upload-file a {
-	position: absolute;
-	padding: 0 0.618em;
-	border-width: 1px 1px 1px 0;
-	border-style: solid;
-	border-color: transparent;
 }
 
 /* --- Textarea --- */
@@ -119,4 +89,26 @@
 
 div[id*='keyword'] .form-autocompleter-container input {
 	max-width: calc(100% - 1.309em);
+}
+
+/* --- Previsualisation AJAX --- */
+.xmlhttprequest-preview {
+	overflow: auto;
+	height: auto;
+	margin: 0.228em 0;
+}
+
+.xmlhttprequest-preview img {
+	max-width: 600px;
+}
+
+/* --- Input sizes --- */
+.field-smaller 	{ width: 29px;  }
+.field-small   	{ width: 77px;  }
+.field-large   	{ width: 200px; }
+.field-xlarge 	{ width: 250px; }
+
+/* --- Hide Chrome password generator --- */
+.cip-icon-key-small {
+	display: none !important;
 }

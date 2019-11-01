@@ -575,6 +575,10 @@ optgroup {
 	border-color: #5B5A5A;
 }
 
+.label-time:after {
+	background-color: #ECF2F8;
+}
+
 /* --- Checkbox --- */
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
 	background: #FFFFFF;

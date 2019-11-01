@@ -386,6 +386,10 @@ select:focus {
 	background-color: #ECF2F8;
 }
 
+.label-time:after {
+	background-color: #FFFFFF;
+}
+
 form input:focus:invalid,
 form textarea:focus:invalid,
 form .constraint-status-error input,

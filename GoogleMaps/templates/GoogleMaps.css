@@ -12,25 +12,3 @@
 	width: 100%;
 	padding-bottom: 56.25%;
 }
-
-/* .form-field-map {
-	display: block;
-} */
-
-.map-address-input,
-.marker-address-input,
-.marker-container,
-.marker-desc-input.field-large {
-	width: 100%;
-}
-
-.marker-desc-input {
-	width: calc(100% - 1.618em);
-}
-
-/* @media (min-width: 769px) {
-	.form-field-map {
-		width: 59%;
-		display: inline-block;
-	}
-} */

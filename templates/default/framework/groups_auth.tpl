@@ -31,7 +31,7 @@
 			<br />
 			<div class="input-element-button">
 				<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
-				<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid">{L_GO}</button>
+				<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid"><span>{L_GO}</span></button>
 			</div>
 			<span id="search_img{IDSELECT}"></span>
 			<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
