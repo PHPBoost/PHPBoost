@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 01
  * @since   	PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -30,7 +30,13 @@ class UserCommentsController extends AbstractController
 				DispatchManager::redirect($error_controller);
 			}
 		}
-
+		
+		if ($user_id && !$this->user)
+		{
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		if (!empty($module_id))
 		{
 			$this->module = ModulesManager::get_module($module_id);
