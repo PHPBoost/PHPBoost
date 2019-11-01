@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 12 06
+ * @version     PHPBoost 5.2 - last update: 2019 11 01
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,7 +102,7 @@ class ContentSecondParser extends AbstractParser
 			</object>',
 		$html_content);
 
-		return Url::html_convert_root_relative2absolute($html_content);
+		return Url::html_convert_root_relative2absolute(FormatingHelper::second_parse($html_content));
 	}
 
 	/**
