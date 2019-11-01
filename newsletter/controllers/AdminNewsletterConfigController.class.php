@@ -19,7 +19,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	
+
 	private $config;
 
 	public function execute(HTTPRequestCustom $request)
@@ -55,15 +55,15 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_config);
 
 		$fieldset_config->add_field(new FormFieldMailEditor('mail_sender', $this->lang['admin.mail-sender'], $this->config->get_mail_sender(),
-			array('class' => 'top-field third-field', 'description' => $this->lang['admin.mail-sender-explain'], 'required' => true)
+			array('class' => 'third-field', 'description' => $this->lang['admin.mail-sender-explain'], 'required' => true)
 		));
 
 		$fieldset_config->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['admin.newsletter-name'], $this->config->get_newsletter_name(),
-			array('class' => 'top-field third-field', 'maxlength' => 255, 'description' => $this->lang['admin.newsletter-name-explain'], 'required' => true)
+			array('class' => 'third-field', 'maxlength' => 255, 'description' => $this->lang['admin.newsletter-name-explain'], 'required' => true)
 		));
 
 		$fieldset_config->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['admin.default-contents'], $this->config->get_default_contents(),
-			array('class' => 'top-field half-field', 'rows' => 16, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'])
+			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.contents.explain'])
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);
