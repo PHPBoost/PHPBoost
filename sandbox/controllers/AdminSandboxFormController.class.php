@@ -349,7 +349,7 @@ class AdminSandboxFormController extends AdminModuleController
 
 		$fieldset2->add_field(new FormFieldActionLinkList('actionlink_list',
 			array(
-				new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', 'fa-share',),
+				new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', 'fa-share'),
 				new FormFieldActionLinkElement($this->lang['form.action.link.2'], '#', '', PATH_TO_ROOT.'/sandbox/sandbox_mini.png'),
 				new FormFieldActionLinkElement($this->lang['form.action.link.3'], '#', ''),
 				new FormFieldActionLinkElement($this->lang['form.action.link.4'], '#', '')
