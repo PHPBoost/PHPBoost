@@ -73,6 +73,11 @@ option {
 	padding: 0 0.228em;
 }
 
+.upload-input 	{
+	width: calc(100% - 43px);
+	vertical-align: top;
+}
+
 /* --- Grouped input --- */
 .input-element-button {
     display: flex;

@@ -49,16 +49,6 @@ fieldset p {
 	padding: 1.618em 0;
 }
 
-.fieldset-inset-user {
-	overflow: hidden;
-	padding: 1em 0;
-}
-
-.fieldset-inset-user table {
-	margin: 0;
-	width: 100% !important;
-}
-
 .fieldset-refresh {
 	text-align: center;
 }

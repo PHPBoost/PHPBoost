@@ -236,9 +236,18 @@ class SandboxFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['form.input.user.completion'], '',
 			array('class' => 'form-field-css-class')
-		));
+		));		
 
-		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button']));
+		// Separator
+		$fieldset->add_field(new FormFieldFree('03_separator', '', ''));
+
+		// Buttons
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button'], '', '', 'button'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button.small'], '', '', 'small'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic'], '', '', 'basic-button'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic.alt'], '', '', 'basic-button alt'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button'], '', '', 'submit'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button.alt'], '', '', 'submit alt'));
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
 		$form->add_fieldset($fieldset2);

@@ -2,8 +2,6 @@
  * Common styles for form elements
 */
 
-/* -- Formulaires -- */
-/* ----------------- */
 
 /* --- Previsualisation AJAX --- */
 .xmlhttprequest-preview {
@@ -28,8 +26,7 @@
 }
 
 /* --- Form elements --- */
-.form-element,
-.form-element-textarea {
+.form-element {
 	padding: 0.618em;
 	position: relative;
 }
@@ -40,6 +37,17 @@
 
 .form-element [id$="user_avatar"] img {
 	max-width: 200px;
+}
+
+.form-element > label {
+	padding: 0 0.618em 0.618em 0;
+}
+
+.field-description {
+	display: block;
+	font-size: 0.809em;
+	font-style: italic;
+	font-weight: 300;
 }
 
 .form-field {
@@ -57,31 +65,12 @@
 	text-align: center;
 }
 
-/* --- Label pour les checkbox et radio --- */
-.form-field > label {
-	display: block;
-	margin: 0 0.618em 0 0;
-}
-
-/* --- Label pour les inputs [for] et pour les elements sans associations --- */
-.form-element > label {
-	display: inline-block;
-	padding: 0 0.618em 0.618em 0;
-	width: 100%;
-	text-align: left;
-	vertical-align: top;
-}
-
-.field-description {
-	display: block;
-	font-size: 0.618em;
-	font-style: italic;
-}
-
-@media (min-width: 769px) {
-	.field-description {
-		font-size: 0.809em;
-	}
+.form-field-upload-file a {
+	position: absolute;
+	padding: 0 0.618em;
+	border-width: 1px 1px 1px 0;
+	border-style: solid;
+	border-color: transparent;
 }
 
 /* --- Textarea --- */
@@ -103,16 +92,6 @@
 	margin: 0.309em auto 0 auto;
 	text-align: center;
 	display: inline;
-}
-
-/* ================================================================================================= */
-
-.form-field-upload-file a {
-	position: absolute;
-	padding: 0 0.618em;
-	border-width: 1px 1px 1px 0;
-	border-style: solid;
-	border-color: transparent;
 }
 
 /* --- Auto-completion --- */
@@ -141,5 +120,3 @@
 div[id*='keyword'] .form-autocompleter-container input {
 	max-width: calc(100% - 1.309em);
 }
-
-/* --- Lined textarea --- */

@@ -18,6 +18,7 @@
 $lang['module.title'] = 'Sandbox';
 
 $lang['title.config'] = 'Configuration';
+$lang['title.admin.form'] = 'Form in administration';
 $lang['title.form.builder'] = 'Form builder';
 $lang['title.css'] = 'CSS';
 $lang['title.plugins'] = 'Plugins';

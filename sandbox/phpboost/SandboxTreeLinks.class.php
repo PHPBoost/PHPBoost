@@ -16,6 +16,7 @@ class SandboxTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink($lang['title.config'], SandboxUrlBuilder::config()));
+		$tree->add_link(new AdminModuleLink($lang['title.admin.form'], SandboxUrlBuilder::admin_form()));
 		$tree->add_link(new ModuleLink($lang['title.form.builder'], SandboxUrlBuilder::form()));
 		$tree->add_link(new ModuleLink($lang['title.css'], SandboxUrlBuilder::css()));
 		$tree->add_link(new ModuleLink($lang['title.plugins'], SandboxUrlBuilder::plugins()));

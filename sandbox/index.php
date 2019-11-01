@@ -16,6 +16,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
     new UrlControllerMapper('AdminSandboxConfigController', '`^/admin(?:/config)?/?$`'),
+    new UrlControllerMapper('AdminSandboxFormController', '`^/admin(?:/form)?/?$`'),
 	new UrlControllerMapper('SandboxTableController', '`^/table/?$`'),
 	new UrlControllerMapper('SandboxStringTemplateController', '`^/template/?`'),
 	new UrlControllerMapper('SandboxFormController', '`^/form/?`'),

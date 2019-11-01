@@ -32,6 +32,15 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+
+	public static function admin_form()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/form/');
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function form()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/form');

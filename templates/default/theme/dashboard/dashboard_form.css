@@ -29,13 +29,13 @@ button[id*="menu_element"] {
 	}
 }
 
-fieldset[id*=advises] .form-element {
+fieldset[id*="advises"] .form-element {
 	padding: 0.618em;
 	width: 100%;
 }
 
 @media (min-width: 1367px) {
-	fieldset[id*=advises] .form-element {
+	fieldset[id*="advises"] .form-element {
 		width: calc(100% / 2);
 	}
 }
@@ -97,19 +97,8 @@ select {
 
 }
 
-.form-field-more-values {
-	float: right;
-}
-
-.upload-input 	{
-	width: calc(100% - 43px);
-	vertical-align: top;
-}
-
 /* --- Form elements --- */
-
 .fieldset-content .fieldset-inset,
-.fieldset-inset-user,
 .form-element {
     display: flex;
     flex-direction: row;
@@ -177,6 +166,12 @@ select {
 	max-width: 200px;
 }
 
+.form-element > label {
+	margin-bottom: 0.228em;
+	display: block;
+	font-weight: 700;
+}
+
 .form-field {
 	width: 100%;
 	position: relative;
@@ -209,20 +204,6 @@ select {
 
 .form-field-action-link ul li a {
 	text-decoration: none;
-}
-
-/* --- Label pour les inputs [for] et pour les elements sans associations--- */
-.form-element > label,
-.form-element-textarea > label {
-	margin-bottom: 0.228em;
-	display: block;
-	font-weight: 700;
-}
-
-.field-description {
-	display: block;
-	font-size: 0.809em;
-	font-weight: 300;
 }
 
 p[id*=filter] input,
@@ -265,8 +246,6 @@ div.advanced-auth-input input[id*=menu_element] {
 	display: inline;
 }
 
-/* ================================================================================================= */
-
 /* --- Constraints --- */
 
 .form-field-checkbox.field-required:after {
@@ -289,17 +268,9 @@ div.advanced-auth-input input[id*=menu_element] {
 	width: 100%;
 }
 
-.auth-setter[id=AdminFilesConfigController_authorizations] {
-	width: 50%;
-}
-
 @media (min-width: 769px) {
 
 	.form-element-auth {
 		width: 50%;
-	}
-	.auth-setter[id=AdminFilesConfigController_authorizations] .form-element-auth {
-		width: 100%;
-		justify-content: flex-start;
 	}
 }

@@ -8,7 +8,7 @@
 	{EDITOR}
 	# ENDIF #
 
-	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field-textarea picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
+	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field form-field-textarea picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
 		<textarea id="${escape(HTML_ID)}" name="${escape(HTML_ID)}" rows="{ROWS}" cols="{COLS}" class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)} " onblur="{ONBLUR}"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY #readonly="readonly" # ENDIF #>{VALUE}</textarea>
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>

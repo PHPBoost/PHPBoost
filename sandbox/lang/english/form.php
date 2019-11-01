@@ -15,6 +15,7 @@
 ####################################################
 
 $lang['form.title'] = 'Form';
+$lang['form.subtitle'] = 'Form subtitle';
 $lang['form.title.inputs'] = 'Text fields';
 $lang['form.title.textarea'] = 'Textarea';
 $lang['form.title.radio'] = 'Radio / checkbox';
@@ -80,7 +81,6 @@ $lang['form.input.choice.group.1'] = 'Group 1';
 $lang['form.input.choice.group.2'] = 'Group 2';
 $lang['form.input.timezone'] = 'TimeZone';
 $lang['form.input.user.completion'] = 'User completion';
-$lang['form.send.button'] = 'Send';
 
 $lang['form.title.2'] = 'Form 2';
 $lang['form.input.hidden'] = 'hidden field';
@@ -112,6 +112,11 @@ $lang['form.authorization.2'] = 'Action 2';
 $lang['form.vertical.desc'] = 'Vertical form';
 $lang['form.horizontal.desc'] = 'Horizontal form';
 
+$lang['form.send.button'] = 'Send';
+$lang['form.send.button.alt'] = 'Send .alt';
 $lang['form.preview'] = 'Preview';
 $lang['form.button'] = 'Button';
+$lang['form.button.small'] = 'Button .small';
+$lang['form.button.basic'] = 'Button .basic';
+$lang['form.button.basic.alt'] = 'Button .basic.alt';
 ?>

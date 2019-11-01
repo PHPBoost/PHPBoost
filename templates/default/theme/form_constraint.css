@@ -101,7 +101,7 @@
 	display: block;
 	z-index: 1;
 	padding: 0.309em;
-	top: 120%;
+	bottom: -2.618em;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;

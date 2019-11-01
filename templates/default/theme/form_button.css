@@ -31,7 +31,6 @@ button.small,
 /* --- Bouton basic --- */
 .basic-button {
 	display: inline-block;
-	margin: 0.1618em;
 	padding: 0.1618em 0.309em;
 	border: none;
 	font-weight: bold;

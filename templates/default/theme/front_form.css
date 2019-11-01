@@ -3,8 +3,7 @@
 */
 
 /* --- Form elements --- */
-.form-element,
-.form-element-textarea {
+.form-element {
 	margin: 0.618em 0 0;
 }
 
@@ -13,7 +12,6 @@
 }
 
 @media (min-width: 769px) {
-
 	.fieldset-description {
 		margin: 0 1.618em 1.482em 1.618em;
 	}
@@ -38,37 +36,24 @@
 	text-align: center;
 }
 
-/* --- Label pour les checkbox et radio --- */
-.form-field label {
-	display: block;
-	margin: 0 0.618em 0 0;
-}
-
 /* --- Label pour les inputs [for] et pour les elements sans associations --- */
 .form-element > label {
 	display: inline-block;
-	padding: 0 0.618em 0.618em 0;
 	width: 100%;
 	text-align: left;
 	vertical-align: top;
 }
 
 @media (min-width: 1025px) {
-	.form-field {
-		width: calc(60% - 0.309em);
-	}
 	.form-element > label {
 		width: 40%;
 	}
-}
 
+	.form-field {
+		width: calc(60% - 0.309em);
+	}
 
-/* ================================================================================================= */
-
-.form-field-upload-file a {
-	position: absolute;
-	padding: 0 0.618em;
-	border-width: 1px 1px 1px 0;
-	border-style: solid;
-	border-color: transparent;
+	.form-field-textarea {
+		width: 100%;
+	}
 }
