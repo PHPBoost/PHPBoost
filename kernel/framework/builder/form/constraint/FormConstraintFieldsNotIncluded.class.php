@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 27
+ * @version     PHPBoost 5.2 - last update: 2019 11 01
  * @since       PHPBoost 5.2 - 2019 07 26
 */
 
@@ -40,14 +40,12 @@ class FormConstraintFieldsNotIncluded implements FormConstraint
 
 	public function validate()
 	{
-		$first_value = $this->first_field->get_value();
-		$second_value = $this->second_field->get_value();
-		if ($first_value !== null && $second_value !== null)
+		$searched_string = $this->first_field->get_value();
+		$string = $this->second_field->get_value();
+		if ($searched_string !== null && $string !== null)
 		{
-			if (strstr($first_value, $second_value) === false)
-			{
+			if (empty($searched_string) || strpos($string, $searched_string) === false)
 				return true;
-			}
 		}
 		return false;
 	}
