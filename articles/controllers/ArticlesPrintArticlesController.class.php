@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2016 11 14
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ArticlesPrintArticlesController extends ModuleController
@@ -69,12 +70,12 @@ class ArticlesPrintArticlesController extends ModuleController
 	{
 		$article = $this->get_article();
 
-		$not_authorized = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 
 		switch ($article->get_publishing_state())
 		{
 			case Article::PUBLISHED_NOW:
-				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
+				if (!CategoriesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);

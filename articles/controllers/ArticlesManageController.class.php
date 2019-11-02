@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,7 @@ class ArticlesManageController extends ModuleController
 
 	private function build_table()
 	{
-		$display_categories = ArticlesService::get_categories_manager()->get_categories_cache()->has_categories();
+		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
 		$columns = array(
 			new HTMLTableColumn(LangLoader::get_message('form.title', 'common'), 'title'),
@@ -117,7 +117,7 @@ class ArticlesManageController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!ArticlesAuthorizationsService::check_authorizations()->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -226,12 +226,12 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$article = $this->get_article();
 
 		$current_user = AppContext::get_current_user();
-		$not_authorized = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() || $article->get_author_user()->get_id() != $current_user->get_id());
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() || $article->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($article->get_publishing_state())
 		{
 			case Article::PUBLISHED_NOW:
-				if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read())
+				if (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
@@ -305,7 +305,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
 
-		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

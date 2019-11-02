@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -105,7 +105,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION' => $pagination->display(),
 			'ID_CAT' => $this->get_category()->get_id(),
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
 		while($row = $result->fetch())
@@ -127,7 +127,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 
 	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
-		$subcategories = ArticlesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), ArticlesService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
 
 		$nbr_cat_displayed = 0;
@@ -218,7 +218,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -226,7 +226,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -284,7 +284,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		if (AppContext::get_current_user()->is_guest())
 		{
-			if (($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || (!$this->config->are_descriptions_displayed_to_guests() && !ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			if (($this->config->are_descriptions_displayed_to_guests() && !Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || (!$this->config->are_descriptions_displayed_to_guests() && !CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -292,7 +292,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 		else
 		{
-			if (!ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+			if (!CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -323,7 +323,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
 
-		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

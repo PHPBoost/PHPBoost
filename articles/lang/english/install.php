@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,7 @@ $lang['default.article.contents'] = 'This brief article will give you some simpl
 <br />
 <ul class="formatter-ul">
 <li class="formatter-li">To configure your module, <a href="' . ArticlesUrlBuilder::configuration()->rel() . '">click here</a>
-</li><li class="formatter-li">To add categories: <a href="' . ArticlesUrlBuilder::add_category()->rel() . '">click here</a> (categories and subcategories are infinitely)
+</li><li class="formatter-li">To add categories: <a href="' . CategoriesUrlBuilder::add_category()->rel() . '">click here</a> (categories and subcategories are infinitely)
 </li><li class="formatter-li">To add an item: <a href="' . ArticlesUrlBuilder::add_article()->rel() . '">click here</a>
 </li></ul>
 <ul class="formatter-ul">

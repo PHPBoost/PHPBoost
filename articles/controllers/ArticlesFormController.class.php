@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 18
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,7 +69,7 @@ class ArticlesFormController extends ModuleController
 			array('required' => true)
 		));
 
-		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array(
@@ -90,12 +90,12 @@ class ArticlesFormController extends ModuleController
 			));
 		}
 
-		if (ArticlesService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.decription.enabled'], $this->get_article()->get_description_enabled(),
@@ -153,7 +153,7 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_article()->get_sources()));
 
-		if (ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
@@ -267,7 +267,7 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
+		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_article()
@@ -330,7 +330,7 @@ class ArticlesFormController extends ModuleController
 
 		$article->set_title($this->form->get_value('title'));
 
-		if (ArticlesService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
@@ -345,7 +345,7 @@ class ArticlesFormController extends ModuleController
 
 		$article->set_sources($this->form->get_value('sources'));
 
-		if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->moderation())
 		{
 			if ($article->get_id() === null)
 				$article->set_date_created(new Date());
@@ -353,7 +353,7 @@ class ArticlesFormController extends ModuleController
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
 			$article->clean_publishing_start_and_end_date();
 
-			if (ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() && !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write())
+			if (CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->write())
 				$article->set_publishing_state(Article::NOT_PUBLISHED);
 		}
 		else
@@ -456,7 +456,7 @@ class ArticlesFormController extends ModuleController
 				$contribution->set_module('articles');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						ArticlesService::get_categories_manager()->get_heritated_authorizations($article->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($article->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -524,7 +524,7 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
-			$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($article->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($article->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)

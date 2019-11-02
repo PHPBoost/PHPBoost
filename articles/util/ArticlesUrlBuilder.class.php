@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 03 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -11,32 +11,6 @@
 class ArticlesUrlBuilder
 {
 	private static $dispatcher = '/articles';
-
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
-	}
-
-	public static function category_syndication($id)
-	{
-		return SyndicationUrlBuilder::rss('articles', $id);
-	}
-
-	public static function add_category($id_parent = null)
-	{
-		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
-	}
-
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
-	}
-
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
-	}
 
 	public static function display_category($id, $rewrited_name, $sort_field = '', $sort_mode = '', $page = 1, $subcategories_page = 1)
 	{

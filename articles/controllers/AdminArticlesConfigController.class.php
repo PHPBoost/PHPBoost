@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -196,7 +196,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		ArticlesConfig::save();
-		ArticlesService::get_categories_manager()->regenerate_cache();
+		CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -18,9 +18,11 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->delete_old_files_list = array(
 			'/phpboost/ArticlesNewContent.class.php',
 			'/phpboost/ArticlesNotation.class.php',
+			'/services/ArticlesAuthorizationsService.class.php',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
 		$this->delete_old_folders_list = array(
+			'/controllers/categories',
 			'/fields',
 			'/templates/images'
 		);

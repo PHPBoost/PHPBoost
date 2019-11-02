@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -13,6 +13,11 @@ class ArticlesCategoriesCache extends CategoriesCache
 	public function get_table_name()
 	{
 		return ArticlesSetup::$articles_cats_table;
+	}
+
+	public function get_table_name_containing_items()
+	{
+		return ArticlesSetup::$articles_table;
 	}
 
 	public function get_category_class()

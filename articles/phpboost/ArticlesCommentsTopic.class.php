@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 03 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ArticlesCommentsTopic extends CommentsTopic
@@ -20,7 +21,7 @@ class ArticlesCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->read());
+		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_article()->get_id_category(), 'articles')->read());
 		return $authorizations;
 	}
 

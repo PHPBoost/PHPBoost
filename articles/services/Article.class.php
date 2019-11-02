@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 31
+ * @version   	PHPBoost 5.3 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -88,7 +88,7 @@ class Article
 
 	public function get_category()
 	{
-		return ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
 	public function set_title($title)
@@ -250,7 +250,7 @@ class Article
 	public function is_published()
 	{
 		$now = new Date();
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED_NOW || ($this->get_publishing_state() == self::PUBLISHED_DATE && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->read() && ($this->get_publishing_state() == self::PUBLISHED_NOW || ($this->get_publishing_state() == self::PUBLISHED_DATE && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
@@ -345,17 +345,17 @@ class Article
 
 	public function is_authorized_to_add()
 	{
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->write() || ArticlesAuthorizationsService::check_authorizations($this->id_category)->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
@@ -507,7 +507,7 @@ class Article
 			'CATEGORY_NAME'        => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE'       => $category->get_image()->rel(),
-			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : ArticlesUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 			// Links
 			'U_COMMENTS'       => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
@@ -516,7 +516,7 @@ class Article
 			'U_ARTICLE'        => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_EDIT_ARTICLE'   => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
-			'U_SYNDICATION'    => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
+			'U_SYNDICATION'    => CategoriesUrlBuilder::category_syndication($category->get_id())->rel()
 			)
 		);
 	}

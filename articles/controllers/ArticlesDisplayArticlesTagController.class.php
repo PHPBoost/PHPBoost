@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 02
  * @since   	PHPBoost 4.0 - 2013 06 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -81,7 +81,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		else
 			$sort_field = $this->config->get_items_default_sort_field();
 
-		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->are_descriptions_displayed_to_guests());
 
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
@@ -223,7 +223,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!(ArticlesAuthorizationsService::check_authorizations()->read()))
+		if (!(CategoriesAuthorizationsService::check_authorizations()->read()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
