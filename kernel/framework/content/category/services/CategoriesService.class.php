@@ -3,7 +3,7 @@
  * @copyright	&copy; 2005-2019 PHPBoost
  * @license		https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author		Julien BRISWALTER <j1.seth@phpboost.com>
- * @version		PHPBoost 5.3 - last update: 2019 11 02
+ * @version		PHPBoost 5.3 - last update: 2019 11 03
  * @since		PHPBoost 5.3 - 2019 11 02
 */
 
@@ -25,7 +25,7 @@ class CategoriesService
 
 	public static function get_categories_manager($module_id = '')
 	{
-		if (self::$categories_manager === null)
+		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()))
 		{
 			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
 			$categories_cache_class = ucfirst($module_id) . 'CategoriesCache';
