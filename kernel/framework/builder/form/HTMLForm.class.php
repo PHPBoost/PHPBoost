@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 28
+ * @version     PHPBoost 5.2 - last update: 2019 11 03
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,6 +69,10 @@ class HTMLForm implements HTMLElement
 
 	private $enable_captcha_protection;
 
+	protected $captcha_fieldset_css_class = '';
+
+	protected $submit_button_class = 'FormFieldsetSubmit';
+
 	/**
 	 * Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
@@ -91,6 +95,7 @@ class HTMLForm implements HTMLElement
 	{
 		$captcha_protection_fieldset = new FormFieldsetHTML('captcha_fieldset');
 		$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
+		$captcha_protection_fieldset->set_css_class($this->captcha_fieldset_css_class);
 		$this->add_fieldset($captcha_protection_fieldset);
 	}
 
@@ -251,6 +256,7 @@ class HTMLForm implements HTMLElement
 		foreach ($this->fieldsets as $fieldset)
 		{
 			$template->assign_block_vars('fieldsets', array(), array(
+				'C_CAPTCHA' => $this->enable_captcha_protection,
 				'FIELDSET' => $fieldset->display()
 			));
 
@@ -268,7 +274,7 @@ class HTMLForm implements HTMLElement
 
 		if (count($this->buttons) > 0)
 		{
-			$buttons_fieldset = new FormFieldsetSubmit('fbuttons');
+			$buttons_fieldset = new $this->submit_button_class('fbuttons');
 			$buttons_fieldset->set_form_id($this->html_id);
 			foreach ($this->buttons as $button)
 			{
