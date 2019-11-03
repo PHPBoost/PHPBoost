@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 03
  * @since   	PHPBoost 3.0 - 2012 02 26
 */
 
@@ -166,7 +166,20 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	{
 		foreach ($this->content_tables as $table)
 		{
-			UpdateServices::update_table_content($table);
+			if (is_array($table) && isset($table['name']))
+			{
+				$name = $table['name'];
+				$contents = isset($table['contents']) ? $table['contents'] : 'contents';
+				$id = isset($table['id']) ? $table['id'] : 'id';
+			}
+			else
+			{
+				$name = $table;
+				$contents = 'contents';
+				$id = 'id';
+			}
+			
+			UpdateServices::update_table_content($name, $contents, $id);
 		}
 	}
 
