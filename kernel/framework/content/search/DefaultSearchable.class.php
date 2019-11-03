@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 08 20
+ * @version   	PHPBoost 5.3 - last update: 2019 11 03
  * @since   	PHPBoost 5.3 - 2019 08 20
 */
 
@@ -46,6 +46,8 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 	protected $field_validation_end_date = 'end_date';
 	protected $validation_period_value = 2;
 	
+	protected $group_by = 'id_content';
+	
 	protected $max_search_results = 100;
 	
 	public function __construct($module_id)
@@ -75,7 +77,7 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 				WHERE ( FT_SEARCH(" . ($this->field_title == 'name' ? $table_label . "." : "") . $this->field_title . ", '" . $args['search'] . "*' IN BOOLEAN MODE) OR FT_SEARCH(" . $this->field_contents . ", '" . $args['search'] . "*' IN BOOLEAN MODE)" . ($this->has_short_contents ? " OR FT_SEARCH_RELEVANCE(" . $this->field_short_contents . ", '" . $args['search'] . "*' IN BOOLEAN MODE)" : "") . " )" . ($this->use_keywords ? " OR keyword.rewrited_name = '" . Url::encode_rewrite($args['search']) . "'" : "") . "
 				" . ($this->cats_table_name ? "AND id_category IN (" . implode(", ", $this->authorized_categories) . ")" : "") . "
 				" . ($this->has_approbation ? "AND (" . $this->field_approbation_type . " = " . $this->approved_value . ($this->has_validation_period ? " OR (" . $this->field_approbation_type . " = " . $this->validation_period_value . " AND " . $this->field_validation_start_date . " < '" . $now->get_timestamp() . "' AND (" . $this->field_validation_end_date . " > '" . $now->get_timestamp() . "' OR " . $this->field_validation_end_date . " = 0))" : "") . ")" : "") . "
-				GROUP BY id_content
+				GROUP BY " . $this->group_by . "
 				ORDER BY relevance DESC
 				LIMIT " . $this->max_search_results . " OFFSET 0";
 		}
