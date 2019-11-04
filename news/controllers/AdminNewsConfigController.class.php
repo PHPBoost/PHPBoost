@@ -8,6 +8,7 @@
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class AdminNewsConfigController extends AdminModuleController
@@ -118,6 +119,10 @@ class AdminNewsConfigController extends AdminModuleController
 			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field'),
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
+                
+                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['news.default.contents'], $this->config->get_default_contents(),
+			array('rows' => 8, 'cols' => 47)
+		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => $this->admin_common_lang['config.authorizations.explain'])
@@ -158,6 +163,7 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
 		$this->config->set_nb_view_enabled($this->form->get_value('nb_view_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+                $this->config->set_default_contents($this->form->get_value('default_contents'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();

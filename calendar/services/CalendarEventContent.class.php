@@ -6,7 +6,7 @@
  * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <Mipel@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class CalendarEventContent
@@ -379,7 +379,7 @@ class CalendarEventContent
 	public function init_default_properties($category_id = Category::ROOT_CATEGORY)
 	{
 		$this->category_id = $category_id;
-        $this->contents = CalendarConfig::load()->get_default_contents();
+                $this->contents = CalendarConfig::load()->get_default_contents();
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
 		$this->picture_url = self::get_default_thumbnail();

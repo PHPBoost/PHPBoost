@@ -121,7 +121,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
         
-        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['download.default.contents'], $this->config->get_default_contents(),
+                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['download.default.contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));
 

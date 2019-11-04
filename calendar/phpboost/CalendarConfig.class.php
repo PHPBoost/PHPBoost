@@ -7,7 +7,7 @@
  * @since   	PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Mipel <Mipel@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
  * 
 */
 

@@ -112,7 +112,7 @@ class AdminWebConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
         
-        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['web.default.contents'], $this->config->get_default_contents(),
+                $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['web.default.contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -203,7 +203,7 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_partners_sort_field($partners_sort[0]);
 		$this->config->set_partners_sort_mode($partners_sort[1]);
 		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
-        $this->config->set_default_contents($this->form->get_value('default_contents'));
+                $this->config->set_default_contents($this->form->get_value('default_contents'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		WebConfig::save();

@@ -407,7 +407,7 @@ class WebLink
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
 		$this->id_category = $id_category;
-        $this->contents = WebConfig::load()->get_default_contents();
+                $this->contents = WebConfig::load()->get_default_contents();
 		$this->approbation_type = self::APPROVAL_NOW;
 		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();

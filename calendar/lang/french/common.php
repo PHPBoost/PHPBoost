@@ -6,7 +6,7 @@
  * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
@@ -19,7 +19,7 @@ $lang['module_title'] = 'Calendrier';
 $lang['module_config_title'] = 'Configuration du calendrier';
 
 //Config
-$lang['calendar.default.contents'] = 'Contenu par défaut d\'un évènement';
+$lang['calendar.default.contents'] = 'Contenu par défaut d\'un événement';
 
 //Messages divers
 $lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';

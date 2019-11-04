@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -41,6 +42,7 @@ $lang['admin.config.display_descriptions_to_guests'] = 'Afficher le condensé de
 $lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 $lang['admin.config.news_number_view_enabled'] = 'Activer l\'affichage du nombre de vues';
+$lang['news.default.contents'] = 'Contenu par défaut d\'une news';
 
 //Feed name
 $lang['feed.name'] = 'Actualités';

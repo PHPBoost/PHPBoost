@@ -473,7 +473,7 @@ class DownloadFile
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
 		$this->id_category = $id_category;
-        $this->contents = DownloadConfig::load()->get_default_contents();
+                $this->contents = DownloadConfig::load()->get_default_contents();
 		$this->url = new Url('');
 		$this->size = 0;
 		$this->approbation_type = self::APPROVAL_NOW;

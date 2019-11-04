@@ -18,7 +18,7 @@ class WebConfig extends AbstractConfigData
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
     
-    const DEFAULT_CONTENTS = 'default_contents';
+        const DEFAULT_CONTENTS = 'default_contents';
     
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -105,7 +105,7 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
     
-    public function get_default_contents()
+         public function get_default_contents()
 	{
 		return $this->get_property(self::DEFAULT_CONTENTS);
 	}
@@ -202,7 +202,7 @@ class WebConfig extends AbstractConfigData
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
-            self::DEFAULT_CONTENTS => '',
+                        self::DEFAULT_CONTENTS => '',
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
 			self::PARTNERS_SORT_FIELD => WebLink::SORT_ALPHABETIC,

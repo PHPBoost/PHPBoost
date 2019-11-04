@@ -7,6 +7,7 @@
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class NewsConfig extends AbstractConfigData
@@ -21,6 +22,8 @@ class NewsConfig extends AbstractConfigData
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const NB_VIEW_ENABLED = 'nb_view_enabled';
+        
+        const DEFAULT_CONTENTS = 'default_contents';
 
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_BLOCK = 'block';
@@ -124,6 +127,16 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
+        
+        public function get_default_contents()
+	{
+		return $this->get_property(self::DEFAULT_CONTENTS);
+	}
+        
+	public function set_default_contents($value)
+	{
+		$this->set_property(self::DEFAULT_CONTENTS, $value);
+	}
 
 	public function get_authorizations()
 	{
@@ -159,6 +172,7 @@ class NewsConfig extends AbstractConfigData
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
+                        self::DEFAULT_CONTENTS => '',
 			self::DISPLAY_TYPE => self::DISPLAY_LIST,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()
