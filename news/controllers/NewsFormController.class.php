@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,7 +65,7 @@ class NewsFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_news()->get_name(), array('required' => true)));
 
-		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_name_is_personalized(), array(
 			'events' => array('click' => '
@@ -82,12 +82,12 @@ class NewsFormController extends ModuleController
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))));
 		}
 
-		if (NewsService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->common_lang['form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
@@ -131,7 +131,7 @@ class NewsFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
 
-		if (NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
@@ -204,7 +204,7 @@ class NewsFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
+		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_news()
@@ -264,7 +264,7 @@ class NewsFormController extends ModuleController
 
 		$news->set_name($this->form->get_value('name'));
 
-		if (NewsService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 
 		$news->set_contents($this->form->get_value('contents'));
@@ -276,7 +276,7 @@ class NewsFormController extends ModuleController
 
 		$news->set_sources($this->form->get_value('sources'));
 
-		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->moderation())
 		{
 			if ($news->get_id() === null)
 				$news->set_creation_date(new Date());
@@ -284,7 +284,7 @@ class NewsFormController extends ModuleController
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
 			$news->clean_start_and_end_date();
 
-			if (NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write())
+			if (CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() && !CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->write())
 				$news->set_approbation_type(News::NOT_APPROVAL);
 		}
 		else
@@ -385,7 +385,7 @@ class NewsFormController extends ModuleController
 				$contribution->set_module('news');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						NewsService::get_categories_manager()->get_heritated_authorizations($news->get_id_cat(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($news->get_id_cat(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -460,7 +460,7 @@ class NewsFormController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id()));
 
-			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($news->get_id_cat(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($news->get_id_cat(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)

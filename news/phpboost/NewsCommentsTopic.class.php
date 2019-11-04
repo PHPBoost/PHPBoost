@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2014 12 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 05 30
 */
 
@@ -20,7 +20,7 @@ class NewsCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->read());
+		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_cat(), 'news')->read());
 		return $authorizations;
 	}
 

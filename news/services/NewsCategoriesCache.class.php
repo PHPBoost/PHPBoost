@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 24
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -13,6 +13,11 @@ class NewsCategoriesCache extends CategoriesCache
 	public function get_table_name()
 	{
 		return NewsSetup::$news_cats_table;
+	}
+
+	public function get_table_name_containing_items()
+	{
+		return NewsSetup::$news_table;
 	}
 
 	public function get_category_class()

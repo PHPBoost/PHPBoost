@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -50,7 +50,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 	public function sitemap()
 	{
-		return new NewsSitemapExtensionPoint();
+		return new DefaultSitemapCategoriesModule('news');
 	}
 
 	public function tree_links()

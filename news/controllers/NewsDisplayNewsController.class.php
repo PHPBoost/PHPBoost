@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,7 +146,7 @@ class NewsDisplayNewsController extends ModuleController
 		{
 			$this->tpl->assign_block_vars('suggested', array(
 				'NAME' => $row['name'],
-				'URL' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel()
+				'URL' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel()
 			));
 		}
 		$result->dispose();
@@ -177,7 +177,7 @@ class NewsDisplayNewsController extends ModuleController
 				'C_NEWS_NAVIGATION_LINKS' => true,
 				'C_'. $row['type'] .'_NEWS' => true,
 				$row['type'] . '_NEWS' => $row['name'],
-				'U_'. $row['type'] .'_NEWS' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
+				'U_'. $row['type'] .'_NEWS' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
 			));
 		}
 		$result->dispose();
@@ -188,11 +188,11 @@ class NewsDisplayNewsController extends ModuleController
 		$news = $this->get_news();
 
 		$current_user = AppContext::get_current_user();
-		$not_authorized = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() || $news->get_author_user()->get_id() != $current_user->get_id());
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && !CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->write() && (!CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->contribution() || $news->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($news->get_approbation_type()) {
 			case News::APPROVAL_NOW:
-				if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read())
+				if (!CategoriesAuthorizationsService::check_authorizations($news->get_id_cat())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
@@ -235,7 +235,7 @@ class NewsDisplayNewsController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 
-		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,7 +39,7 @@ class NewsDisplayCategoryController extends ModuleController
 	private function build_view()
 	{
 		$now = new Date();
-		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
+		$authorized_categories = CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests());
 
 		$comments_config = CommentsConfig::load();
 
@@ -73,7 +73,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : NewsUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -122,7 +122,7 @@ class NewsDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = NewsService::get_categories_manager()->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -130,7 +130,7 @@ class NewsDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = NewsService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -140,7 +140,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		if (AppContext::get_current_user()->is_guest())
 		{
-			if (($this->config->are_descriptions_displayed_to_guests() && (!Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || !$this->config->get_display_condensed_enabled())) || (!$this->config->are_descriptions_displayed_to_guests() && !NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			if (($this->config->are_descriptions_displayed_to_guests() && (!Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || !$this->config->get_display_condensed_enabled())) || (!$this->config->are_descriptions_displayed_to_guests() && !CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -148,7 +148,7 @@ class NewsDisplayCategoryController extends ModuleController
 		}
 		else
 		{
-			if (!NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
+			if (!CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->read())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -177,7 +177,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 
-		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

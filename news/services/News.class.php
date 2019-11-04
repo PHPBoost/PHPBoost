@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 29
+ * @version   	PHPBoost 5.3 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,7 +63,7 @@ class News
 
 	public function get_category()
 	{
-		return NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 	}
 
 	public function set_name($name)
@@ -138,7 +138,7 @@ class News
 	public function is_visible()
 	{
 		$now = new Date();
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->read() && ($this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true)));
 	}
 
 	public function get_status()
@@ -311,17 +311,17 @@ class News
 
 	public function is_authorized_to_add()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->write() || NewsAuthorizationsService::check_authorizations($this->id_cat)->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_cat)->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (CategoriesAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
@@ -461,7 +461,7 @@ class News
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image()->rel(),
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : NewsUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? NewsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),

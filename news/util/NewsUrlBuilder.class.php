@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 15
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,35 +20,9 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 
-	public static function add_category($id_parent = null)
-	{
-		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
-	}
-
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
-	}
-
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
-	}
-
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
-	}
-
 	public static function manage_news()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
-	}
-
-	public static function category_syndication($id)
-	{
-		return SyndicationUrlBuilder::rss('news', $id);
 	}
 
 	public static function display_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
