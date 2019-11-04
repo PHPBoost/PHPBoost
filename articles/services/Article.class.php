@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 02
+ * @version   	PHPBoost 5.3 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -516,7 +516,7 @@ class Article
 			'U_ARTICLE'        => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_EDIT_ARTICLE'   => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
-			'U_SYNDICATION'    => CategoriesUrlBuilder::category_syndication($category->get_id())->rel()
+			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('articles', $this->id_category)->rel()
 			)
 		);
 	}
