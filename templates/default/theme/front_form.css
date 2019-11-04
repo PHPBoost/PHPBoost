@@ -8,7 +8,7 @@
 	flex-direction: column;
 }
 
-.form-element-textarea {
+.form-element.form-element-textarea {
 	flex-direction: column;
 }
 
