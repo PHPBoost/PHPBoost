@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 18
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -23,6 +23,8 @@ class AdminCalendarConfigController extends AdminModuleController
 
 	private $lang;
 
+	private $user_born_field;
+
 	/**
 	 * @var CalendarConfig
 	 */
@@ -40,19 +42,19 @@ class AdminCalendarConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
+			if ($this->user_born_field['display'])
+				$this->form->get_field_by_id('birthday_color')->set_hidden(!$this->config->is_members_birthday_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
-		//Display the form on the template
 		$tpl->put('FORM', $this->form->display());
 
-		//Display the generated page
 		return new AdminCalendarDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
 
 	private function init()
 	{
+		$this->user_born_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_born');
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->config = CalendarConfig::load();
 	}
@@ -61,23 +63,20 @@ class AdminCalendarConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		// Configuration
 		$fieldset = new FormFieldsetHTMLHeading('configuration_fieldset', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			array('class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event_color'], $this->config->get_event_color(),
-			array(),
+			array('class' => 'top-field'),
 			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 		));
 
-		$user_born_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_born');
-
-		if (!empty($user_born_field) && !$user_born_field['display'])
+		if (!empty($this->user_born_field) && !$this->user_born_field['display'])
 		{
 			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.e_user_born_field_disabled'], MessageHelper::WARNING)->render()));
 		}
@@ -102,9 +101,6 @@ class AdminCalendarConfigController extends AdminModuleController
 			));
 		}
 
-
-
-
 		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
 		);
@@ -114,7 +110,6 @@ class AdminCalendarConfigController extends AdminModuleController
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
-		//Submit and reset buttons
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
