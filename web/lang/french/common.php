@@ -42,7 +42,7 @@ $lang['config.partners_sort'] = 'Ordre d\'affichage des partenaires';
 $lang['config.partners_sort.explain'] = 'Les partenaires privilégiés sont toujours affichés en premier';
 $lang['config.sort_type.visits'] = 'Nombre de visites';
 $lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés maximum';
-$lang['web.default.contents'] = 'Contenu par défault d\'un lien Web';
+$lang['web.default.contents'] = 'Contenu par défaut d\'un lien Web';
 
 //SEO
 $lang['web.seo.description.root'] = 'Tous les liens du site :site.';
