@@ -1,17 +1,13 @@
-/* --------------------------------------
-		cssmenu.css
-Contient les elements associes aux menus
--------------------------------------- */
+/*
+ * Contains links menu properties for menus built with MenuMaker
+*/
 
-/* --- Module-mini --- */
-/* ------------------- */
+/* --- Module-mini ---------------------------------------------------------- */
 .cssmenu-content .module-mini-contents {
 	padding: 0;
 }
 
-
-/* -- Classes generales cssmenu -- */
-/* ------------------------------- */
+/* --- General classes ------------------------------------------------------ */
 .cssmenu {
 	font-size: 0;
 }
@@ -84,13 +80,13 @@ Contient les elements associes aux menus
 	}
 }
 
-.cssmenu-title img {
+.cssmenu-title img,
+.cssmenu-title i {
 	margin-right: 0.456em;
 }
 
 
-/* -- Classes Items -- */
-/* --------------------*/
+/* --- Item classes --------------------------------------------------------- */
 .cssmenu-horizontal {
 	display: table;
 }
@@ -105,7 +101,7 @@ Contient les elements associes aux menus
 	display: block;
 }
 
-/* --- Indicateur de sous menu --- */
+/* --- Sub-menu Indicator --- */
 .cssmenu-horizontal li > .cssmenu-title {
 	padding: 0.618em;
 }
@@ -159,7 +155,7 @@ Contient les elements associes aux menus
 	content: '\f068';
 }
 
-/* --- Position des sous menu --- */
+/* --- Sub-menu position --- */
 .cssmenu ul ul {
 	position: absolute;
 	left: -9999px;
@@ -181,7 +177,7 @@ Contient les elements associes aux menus
 .cssmenu-right.small-screen li:hover > ul   { right: 0;               }
 .cssmenu-left.small-screen li:hover > ul    { left: 0;                }
 
-/* --- Uncomment to unfold the last top-level item to the left for a horizontal menu --- */
+/* Uncomment to unfold the last top-level item to the left for a horizontal menu */
 /*
 .cssmenu-horizontal > ul > li:hover:last-child > ul {
 	left: auto;
@@ -194,8 +190,9 @@ Contient les elements associes aux menus
 }
 */
 
-/* -- Small screens - change the viewprot limit in /templates/default/framework/menus/link.tpl -- */
-/* ---------------------------------------------------------------------------------------------- */
+/* --- Small screens  ------------------------------------------------------- */
+/* change the viewprot limit in /templates/default/framework/menus/link.tpl */
+
 .small-screen,
 .small-screen ul,
 .small-screen ul li {
@@ -259,7 +256,7 @@ Contient les elements associes aux menus
 	padding-left: 2.618em;
 }
 
-/* --- Responsive button --- */
+/* --- Small screens button --- */
 .menu-button {
 	display: none;
 	position: relative;
@@ -293,7 +290,7 @@ Contient les elements associes aux menus
 	content: '\f00d';
 }
 
-/* --- Responsive submenu button --- */
+/* --- Small screens sub-menu button --- */
 .cssmenu.small-screen ul li.has-sub > .cssmenu-title:after,
 .cssmenu-right.small-screen ul li.has-sub > .cssmenu-title:before {
 	display: none;
@@ -329,8 +326,7 @@ Contient les elements associes aux menus
 .small-screen .submenu-button.submenu-opened:after { content: '\f0d8'}
 
 
-/* -- Cssmenu-actionslinks variant -- */
-/* ---------------------------------- */
+/* --- Cssmenu-actionslinks variant ----------------------------------------- */
 .cssmenu-actionslinks {
 	float: right;
 	margin: 0.809rem 0.809rem 2.809rem 3.618rem;
@@ -380,7 +376,7 @@ Contient les elements associes aux menus
 	}
 }
 
-/* --- Cssmenu-actionslinks small-screen variant --- */
+/* --- Small screens cssmenu-actionslinks variant --- */
 .cssmenu-actionslinks.small-screen {
 	margin: 0;
 	float: none;
@@ -423,8 +419,7 @@ Contient les elements associes aux menus
 }
 
 
-/* -- Cssmenu-tools variant small-screen -- */
-/* ---------------------------------------- */
+/* --- Small screens cssmenu-tools variant ----------------------------------- */
 .cssmenu-tools.small-screen {
 	height: auto;
 }
@@ -439,8 +434,7 @@ Contient les elements associes aux menus
 }
 
 
-/* -- Cssmenu-group variant -- */
-/* --------------------------- */
+/* --- Cssmenu-group variant ------------------------------------------------ */
 .cssmenu-group {
 	text-align: center;
 	margin-bottom: 1.618rem;
@@ -464,14 +458,13 @@ Contient les elements associes aux menus
 	border-right-width: 1px;
 }
 
-/* --- Variante cssmenu-group small-screen --- */
+/* --- Small screens cssmenu-group variant --- */
 .cssmenu-group.small-screen ul li .cssmenu-title {
 	padding: 0.309em 0.618em;
 }
 
 
-/* -- Variantes cssmenu-statique -- */
-/* -------------------------------- */
+/* --- Cssmenu-static variant ----------------------------------------------- */
 .cssmenu-static > ul > li {
 	display: inline-block;
 	vertical-align: top;
@@ -511,7 +504,7 @@ Contient les elements associes aux menus
 }
 
 
-/* --- Variante Static small-screen --- */
+/* --- Small screens cssmenu-static --- */
 .cssmenu-static.small-screen > ul > li > .cssmenu-title {
     text-align: left;
 	margin: 0;

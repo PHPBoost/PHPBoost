@@ -107,20 +107,20 @@ a.wikipedia-link:before {
 	font-size: 1em; }
 
 /* --- Alignment --- */
-.inline 		{ display: inline !important; }
-.inline-block 	{ display: inline-block !important; }
+.inline 	  { display: inline !important; }
+.inline-block { display: inline-block !important; }
 
-.center 	{ text-align: center !important; }
-.left 		{ text-align: left !important; }
-.right 		{ text-align: right !important; }
-.justify 	{ text-align: justify !important; }
+.center  { text-align: center !important; }
+.left 	 { text-align: left !important; }
+.right 	 { text-align: right !important; }
+.justify { text-align: justify !important; }
 
 img.float-left,
 img.float-right {
 	padding: 0.809em 0; }
 
 @media (min-width: 481px) {
-	.float-left { float: left !important; }
+	.float-left  { float: left !important; }
 	.float-right { float: right !important; } }
 
 @media (min-width: 769px) {

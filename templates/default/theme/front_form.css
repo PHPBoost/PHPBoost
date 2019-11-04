@@ -5,7 +5,7 @@
 /* --- Form elements --- */
 .form-element {
 	margin: 0.618em 0 0;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .form-element-textarea {
@@ -17,6 +17,9 @@
 }
 
 @media (min-width: 769px) {
+	.form-element {
+		flex-direction: row;
+	}
 	.fieldset-description {
 		margin: 0 1.618em 1.482em 1.618em;
 	}
@@ -46,7 +49,6 @@
 	display: inline-block;
 	width: 100%;
 	text-align: left;
-	vertical-align: top;
 }
 
 @media (min-width: 1025px) {

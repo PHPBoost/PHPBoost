@@ -702,12 +702,6 @@ div.delay {
 	margin: 1.309em 0;
 }
 
-#global.global-maintain {
-	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
-}
-
 div#message-maintain {
 	position: absolute;
 	z-index: 20;
