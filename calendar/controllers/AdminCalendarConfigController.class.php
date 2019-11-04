@@ -6,7 +6,7 @@
  * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
@@ -100,6 +100,10 @@ class AdminCalendarConfigController extends AdminModuleController
 				array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
 			));
 		}
+        
+        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['calendar.default.contents'], $this->config->get_default_contents(),
+			array('rows' => 8, 'cols' => 47)
+		));
 
 		$fieldset = new FormFieldsetHTML('authorizations_fieldset', LangLoader::get_message('authorizations', 'common'),
 			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
@@ -131,7 +135,8 @@ class AdminCalendarConfigController extends AdminModuleController
 		else
 			$this->config->disable_members_birthday();
 
-		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+		$this->config->set_default_contents($this->form->get_value('default_contents'));
+        $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		CalendarConfig::save();
 		CalendarService::get_categories_manager()->regenerate_cache();

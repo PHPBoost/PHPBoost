@@ -3,10 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Mipel <Mipel@phpboost.com>
+ * 
 */
 
 class CalendarConfig extends AbstractConfigData
@@ -15,6 +17,8 @@ class CalendarConfig extends AbstractConfigData
 	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
 	const EVENT_COLOR = 'event_color';
 	const BIRTHDAY_COLOR = 'birthday_color';
+    
+    const DEFAULT_CONTENTS = 'default_contents';
 
 	const AUTHORIZATIONS = 'authorizations';
 
@@ -28,6 +32,16 @@ class CalendarConfig extends AbstractConfigData
 	public function set_items_number_per_page($value)
 	{
 		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+    
+    public function get_default_contents()
+	{
+		return $this->get_property(self::DEFAULT_CONTENTS);
+	}
+    
+	public function set_default_contents($value)
+	{
+		$this->set_property(self::DEFAULT_CONTENTS, $value);
 	}
 
 	public function enable_members_birthday()
@@ -95,6 +109,7 @@ class CalendarConfig extends AbstractConfigData
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
+            self::DEFAULT_CONTENTS => '',
 			self::EVENT_COLOR => '#81A4C8',
 			self::BIRTHDAY_COLOR => '#8F8ACF',
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 15)

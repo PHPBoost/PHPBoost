@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -17,6 +17,9 @@
 //Titre du module
 $lang['module_title'] = 'Calendrier';
 $lang['module_config_title'] = 'Configuration du calendrier';
+
+//Config
+$lang['calendar.default.contents'] = 'Contenu par défaut d\'un évènement';
 
 //Messages divers
 $lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';

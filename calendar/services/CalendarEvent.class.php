@@ -139,6 +139,7 @@ class CalendarEvent
 		$this->end_date = new Date($this->round_to_five_minutes($date + 3600), Timezone::SERVER_TIMEZONE);
 		$this->parent_id = 0;
 		$this->participants = array();
+        $this->contents = CalendarConfig::load()->get_default_contents();
 	}
 
 	public function get_array_tpl_vars()
