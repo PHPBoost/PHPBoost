@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 ####################################################
@@ -53,6 +54,7 @@ $lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
 $lang['admin.config.download_number_view_enabled'] = 'Activer l\'affichage du nombre de vues';
+$lang['download.default.contents'] = 'Contenu par défaut du Téléchargement';
 
 //authorizations
 $lang['authorizations.display_download_link'] = 'Autorisation d\'afficher le lien de téléchargement';

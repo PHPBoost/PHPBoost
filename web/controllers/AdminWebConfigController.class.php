@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 06
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class AdminWebConfigController extends AdminModuleController
@@ -110,6 +111,10 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
+        
+        $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['web.default.contents'], $this->config->get_default_contents(),
+			array('rows' => 8, 'cols' => 47)
+		));
 
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.partners_menu']);
 		$form->add_fieldset($fieldset);
@@ -198,6 +203,7 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_partners_sort_field($partners_sort[0]);
 		$this->config->set_partners_sort_mode($partners_sort[1]);
 		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
+        $this->config->set_default_contents($this->form->get_value('default_contents'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		WebConfig::save();

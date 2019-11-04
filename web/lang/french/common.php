@@ -3,9 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.1 - 2014 08 21
+ * @contributor Mipel <mipel@phpboost.com>
 */
+
 
 ####################################################
 #                      French                      #
@@ -40,6 +42,7 @@ $lang['config.partners_sort'] = 'Ordre d\'affichage des partenaires';
 $lang['config.partners_sort.explain'] = 'Les partenaires privilégiés sont toujours affichés en premier';
 $lang['config.sort_type.visits'] = 'Nombre de visites';
 $lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés maximum';
+$lang['web.default.contents'] = 'Contenu par défault d\'un lien Web';
 
 //SEO
 $lang['web.seo.description.root'] = 'Tous les liens du site :site.';

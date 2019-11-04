@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 03
+ * @version   	PHPBoost 5.2 - last update: 2019 11 04
  * @since   	PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class DownloadFile
@@ -472,6 +473,7 @@ class DownloadFile
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
 		$this->id_category = $id_category;
+        $this->contents = DownloadConfig::load()->get_default_contents();
 		$this->url = new Url('');
 		$this->size = 0;
 		$this->approbation_type = self::APPROVAL_NOW;
