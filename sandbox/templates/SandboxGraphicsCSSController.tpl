@@ -1,7 +1,7 @@
 <section id="sandbox-css">
 	<header>
 		<h1>
-			{@module.title} - {@title.css}
+			{@sandbox.module.title} - {@title.css}
 		</h1>
 	</header>
 	<div class="sandbox-summary">

@@ -15,7 +15,7 @@
 ####################################################
 
 // --- Module titles
-$lang['module.title'] = 'Bac à sable';
+$lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.form'] = 'Formulaires dans l\'admin';

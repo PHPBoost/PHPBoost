@@ -104,10 +104,10 @@ class SandboxBBCodeController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.bbcode'], $this->common_lang['module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.bbcode'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->common_lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->common_lang['title.bbcode'], SandboxUrlBuilder::css()->rel());
 
 		return $response;

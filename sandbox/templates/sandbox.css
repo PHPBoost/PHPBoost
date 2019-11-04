@@ -3,56 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* Aria-label Tooltip */
-/* [aria-label] {
-	position: relative;
-}
-
-[aria-label]:after {
-	content: attr(aria-label);
-	position: absolute;
-	top: 110%;
-	transform: translateX(-50%);
-	left: 50%;
-	z-index: 5000;
-	pointer-events: none;
-	padding: 8px 10px;
-	line-height: 15px;
-	white-space: normal;
-	font-size: .9em;
-	border-radius: 0.618em;
-	background-color: #fff;
-	box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
-	transition: 0.3s;
-	opacity: 0;
-}
-
-[aria-label]:hover:after {
-	transition: 0.3s;
-	opacity: 1;
-}
-
-.actions [aria-label]:after  {
-	transform: translateX(0);
-	left: auto;
-	right: 0;
-}
-
-.item-2x:nth-child(even)[aria-label]:after,
-.item-3x:nth-child(2n)[aria-label]:after,
-.item-4x:nth-child(4n+1)[aria-label]:after {
-	transform: translateX(0);
-	left: 0.309em;
-}
-
-.item-2x:nth-child(odd)[aria-label]:after,
-.item-3x:nth-child(3n+1)[aria-label]:after,
-.item-4x:nth-child(4n)[aria-label]:after {
-	transform: translateX(0);
-	left: auto;
-	right: 0.309em;
-} */
-
 /* --- Summary --- */
 
 body {
@@ -131,24 +81,12 @@ background-color: rgba(0, 0, 0, 0.05);
 	display: block;
 }
 
-
 /* --- Content --- */
 .sandbox-title {
 	padding: 0 0.809em;
 	border-bottom: 1px solid #366493;
 	margin-bottom: 1.618em
 }
-
-/* --- Summary
------------------------------------------------------------------------------ */
-
- .cssmenu-fixed {
- 	position: fixed;
-	float: none;
- 	top: 10%;
- 	right: 1.618em;
- 	z-index: 400;
- }
 
  /* --- Source code
  ----------------------------------------------------------------------------- */

@@ -99,10 +99,10 @@ class SandboxStringTemplateController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.string.template'], $this->lang['module.title']);
+		$graphical_environment->set_page_title($this->lang['title.string.template'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module.title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::mail()->rel());
 
 		return $response;

@@ -1,7 +1,7 @@
 <section>
 	<header>
 		<h1>
-			{@module.title} - {@title.form.builder}
+			{@sandbox.module.title} - {@title.form.builder}
 		</h1>
 	</header>
 

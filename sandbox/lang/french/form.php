@@ -14,8 +14,6 @@
 #                    French                        #
 ####################################################
 
-
-
 $lang['form.title'] = 'Formulaire';
 $lang['form.subtitle'] = 'Sous titre de formulaire';
 $lang['form.title.inputs'] = 'Champs texte';

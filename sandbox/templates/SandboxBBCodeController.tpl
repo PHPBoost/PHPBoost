@@ -1,7 +1,7 @@
 <section>
 	<header>
 		<h1>
-			{@module.title} - {@title.bbcode}
+			{@sandbox.module.title} - {@title.bbcode}
 		</h1>
 	</header>
 

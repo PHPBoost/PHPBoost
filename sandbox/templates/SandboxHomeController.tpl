@@ -1,6 +1,6 @@
 <section>
 	<header>
-		<h1>{@module.title}</h1>
+		<h1>{@sandbox.module.title}</h1>
 	</header>
 	<div class="content">
 		<article>

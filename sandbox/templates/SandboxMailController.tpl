@@ -1,6 +1,6 @@
 <section>
 	<header>
-		<h1>{@module.title} - {@title.mail.sender}</h1>
+		<h1>{@sandbox.module.title} - {@title.mail.sender}</h1>
 	</header>
 	<div class="content">
 		# IF C_MAIL_SENT # 

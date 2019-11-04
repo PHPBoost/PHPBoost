@@ -44,7 +44,7 @@ class SandboxHomeController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module.title']);
+		$graphical_environment->set_page_title($this->lang['sandbox.module.title']);
 
 		return $response;
 	}

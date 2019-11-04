@@ -1,7 +1,7 @@
 # IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
 		<span class="sbx-toggle-btn submit# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
-			<i class="fa fa-wrench" aria-hidden="true"></i> {@module.title}
+			<i class="fa fa-wrench" aria-hidden="true"></i> {@sandbox.module.title}
 		</span>
 		<div class="sbx-menu bkgd-main">
 			<span class="close-btn bkgd-sub"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
@@ -180,7 +180,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@module.title}</div>
+					<div class="sbx-item-title bkgd-title">{@sandbox.module.title}</div>
 					<div class="item-4x" aria-label="{@title.form.builder}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.form.builder}</span></a></div>
 					<div class="item-4x" aria-label="{@title.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.css}</span></a></div>
 					<div class="item-4x" aria-label="{@title.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.bbcode}</span></a></div>

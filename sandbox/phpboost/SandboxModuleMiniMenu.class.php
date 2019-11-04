@@ -28,7 +28,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('module.title', 'common', 'sandbox');
+		return LangLoader::get_message('sandbox.module.title', 'common', 'sandbox');
 	}
 
 	public function is_displayed()

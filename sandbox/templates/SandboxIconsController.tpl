@@ -5,7 +5,7 @@
 
 <section>
 	<header>
-		<h1>{@module.title} - {@title.icons}</h1>
+		<h1>{@sandbox.module.title} - {@title.icons}</h1>
 	</header>
 
 	<article class="content">

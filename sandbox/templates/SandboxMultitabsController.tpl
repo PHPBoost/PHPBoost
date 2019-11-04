@@ -1,7 +1,7 @@
 <section id="sandbox-css">
 	<header>
 		<h1>
-			{@module.title} - {@title.multitabs}
+			{@sandbox.module.title} - {@title.multitabs}
 		</h1>
 	</header>
 	<div class="sandbox-summary">

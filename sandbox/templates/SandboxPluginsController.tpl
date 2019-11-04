@@ -1,7 +1,7 @@
 <section id="sandbox-css">
 	<header>
 		<h1>
-			{@module.title} - {@title.plugins}
+			{@sandbox.module.title} - {@title.plugins}
 		</h1>
 	</header>
 	<div class="sandbox-summary">
@@ -9,13 +9,6 @@
         <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
       </div>
       <ul>
-        <li>
-			<a class="summary-link" href="#easytabs-example">Easytabs.js</a>
-			<ul>
-				<li><a href="#easytabs-html" class="summary-link">HTML</a></li>
-				<li><a href="#easytabs-form" class="summary-link">Form</a></li>
-			</ul>
-		</li>
         <li>
 			<a class="summary-link" href="#wizard-example">Wizard.js</a>
 			<ul>
@@ -32,52 +25,6 @@
         <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {@sandbox.summary}
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
-
-	<div id="easytabs-example" class="sandbox-title">
-		<h2>{@plugins.tabs.title}</h2>
-	</div>
-	<article id="easytabs-html" class="sandbox-title">
-		<header>
-			<h5>{@plugins.title.html}</h5>
-		</header>
-		<div class="tab-container">
-			<nav>
-				<ul>
-					<li><a href="#tab-01">{@plugins.menu.title} 01</a></li>
-					<li><a href="#tab-02">{@plugins.menu.title} 02</a></li>
-					<li><a href="#tab-03">{@plugins.menu.title} 03</a></li>
-				</ul>
-			</nav>
-			<div class="panel-container">
-				<div id="tab-01"> {@lorem.large.content} </div>
-				<div id="tab-02"> {@lorem.large.content} </div>
-				<div id="tab-03"> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image"> </div>
-			</div>
-		</div>
-	</article>
-
-	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
-		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-		<div class="formatter-content">
-			{PRE_TABS_HTML}
-		</div>
-	</div>
-
-	<article id="easytabs-form" class="sandbox-title">
-		<header>
-			<h5>{@plugins.title.form}</h5>
-		</header>
-		# INCLUDE TABS_PHP_FORM #
-	</article>
-
-	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
-		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-		<div class="formatter-content">
-			{PRE_TABS_FORM}
-		</div>
-	</div>
 
 	<div id="wizard-example" class="sandbox-title">
 		<h2>{@plugins.wizard.title}</h2>

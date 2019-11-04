@@ -1,6 +1,6 @@
 <section>
 	<header>
-		<h1>{@module.title} - {@title.string.template}</h1>
+		<h1>{@sandbox.module.title} - {@title.string.template}</h1>
 	</header>
 	<article class="content">
 		<div class="pbt-box-largest">
