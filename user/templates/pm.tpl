@@ -50,10 +50,10 @@
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<section id="module-user-convers">
 				<header>
+					<div class="cat-actions">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<h1>{convers.U_PM_BOX}</h1>
 				</header>
 				<div class="content">
-					<div class="right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<div class="spacer"></div>
 					<nav id="cssmenu-pmactions" class="cssmenu cssmenu-group">
 						<ul>
