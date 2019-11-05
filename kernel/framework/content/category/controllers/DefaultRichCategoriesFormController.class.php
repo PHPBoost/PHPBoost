@@ -7,7 +7,7 @@
  * @since		PHPBoost 5.3 - 2019 11 02
 */
 
-class DefaultCategoriesFormController extends AbstractCategoriesFormController
+class DefaultRichCategoriesFormController extends AbstractCategoriesFormController
 {
 	protected function get_id_category()
 	{
