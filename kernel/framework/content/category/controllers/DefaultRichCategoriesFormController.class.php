@@ -7,7 +7,7 @@
  * @since		PHPBoost 5.3 - 2019 11 02
 */
 
-class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
+class DefaultCategoriesFormController extends AbstractCategoriesFormController
 {
 	protected function get_id_category()
 	{
@@ -24,9 +24,14 @@ class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 		return CategoriesUrlBuilder::manage_categories();
 	}
 
-	protected function get_delete_category_url(Category $category)
+	protected function get_add_category_url()
 	{
-		return CategoriesUrlBuilder::delete_category($category->get_id());
+		return CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_parent', 0));
+	}
+
+	protected function get_edit_category_url(Category $category)
+	{
+		return CategoriesUrlBuilder::edit_category($category->get_id());
 	}
 
 	protected function get_module_home_page_url()
@@ -37,17 +42,6 @@ class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 	protected function get_module_home_page_title()
 	{
 		return ModulesManager::get_module(Environment::get_running_module_name())->get_configuration()->get_name();
-	}
-
-	protected function clear_cache()
-	{
-		$module_id = Environment::get_running_module_name();
-		$cache_classes = array(ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache');
-		foreach ($cache_classes as $cache_class)
-		{
-			if (class_exists($cache_class) && is_subclass_of($cache_class, 'CacheData'))
-				$categories_cache = call_user_func($cache_class .'::invalidate');
-		}
 	}
 
 	protected function check_authorizations()
