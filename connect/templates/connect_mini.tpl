@@ -32,7 +32,7 @@
 		# ENDIF #
 			<div class="connect-containers">
 				<div class="connect-input-container# IF C_VERTICAL # vertical-fieldset# ELSE # horizontal-fieldset# ENDIF #" >
-					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
+					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 						<label for="login">
 							<span>{@login}</span>
 							<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
@@ -72,8 +72,7 @@
 			</div>
 		</div>
 		# IF C_VERTICAL #
-		<div class="module-mini-bottom">
-		</div>
+		<div class="module-mini-bottom"></div>
 		# ENDIF #
 
 	# ELSE # <!-- User Connected -->
