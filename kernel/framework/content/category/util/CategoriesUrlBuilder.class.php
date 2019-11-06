@@ -13,7 +13,7 @@ class CategoriesUrlBuilder
 	
 	private static function get_module_id($module_id = '')
 	{
-		if (self::$module_id === null)
+		if (self::$module_id === null || (!empty($module_id) && $module_id != self::$module_id))
 			self::$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
 		return self::$module_id;
 	}
