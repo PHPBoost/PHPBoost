@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,7 +62,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$content_management_config = ContentManagementConfig::load();
 		$category = $this->get_category();
 
-		$subcategories = GalleryService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), GalleryService::get_authorized_categories($category->get_id()));
+		$subcategories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id(), true, 'gallery', 'idcat'));
 
 		$elements_number = $category->get_elements_number();
 		$nbr_pics = $elements_number['pics_aprob'];
@@ -102,7 +102,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$column_width_pics = floor(100/$nbr_column_pics);
 
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-		$is_modo = GalleryAuthorizationsService::check_authorizations($category->get_id())->moderation();
+		$is_modo = CategoriesAuthorizationsService::check_authorizations($category->get_id(), 'gallery', 'idcat')->moderation();
 
 		$module_data_path = $this->tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
@@ -150,7 +150,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats > 1,
 			'COLUMNS_NUMBER' => $config->get_columns_number(),
 			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : GalleryUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? GalleryUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 			'CAT_ID' => $category->get_id(),
 			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
 			'GALLERY' => $category->get_id() != Category::ROOT_CATEGORY ? $this->lang['module_title'] . ' - ' . $category->get_name() : $this->lang['module_title'],
@@ -339,7 +339,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-					$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['idcat'], $search_category_children_options);
+					$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['idcat'], $search_category_children_options);
 					$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 					$method->setAccessible(true);
 					$categories_tree_options = $method->invoke($categories_tree);
@@ -518,7 +518,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-					$categories_tree = GalleryService::get_categories_manager()->get_select_categories_form_field($row['id'] . 'cat', '', $row['idcat'], $search_category_children_options);
+					$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($row['id'] . 'cat', '', $row['idcat'], $search_category_children_options);
 					$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 					$method->setAccessible(true);
 					$categories_tree_options = $method->invoke($categories_tree);
@@ -602,7 +602,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = GalleryService::get_categories_manager()->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -610,7 +610,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = GalleryService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -619,7 +619,7 @@ class GalleryDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
-		if (!GalleryAuthorizationsService::check_authorizations($id_cat)->read())
+		if (!CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -647,7 +647,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], GalleryUrlBuilder::home());
 
-		$categories = array_reverse(GalleryService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager('gallery', 'idcat')->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

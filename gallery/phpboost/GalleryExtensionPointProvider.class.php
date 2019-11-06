@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 2.0 - 2008 07 07
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -48,7 +48,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 	public function sitemap()
 	{
-		return new GallerySitemapExtensionPoint();
+		return new DefaultSitemapCategoriesModule('gallery', 'idcat');
 	}
 
 	public function tree_links()

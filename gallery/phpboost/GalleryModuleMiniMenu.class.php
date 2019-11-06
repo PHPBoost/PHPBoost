@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return GalleryAuthorizationsService::check_authorizations()->read();
+		return CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'gallery', 'idcat')->read();
 	}
 
 	public function get_menu_content()
@@ -61,7 +61,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			$break = 0;
 			foreach ($array_random_pics as $array_pics_info)
 			{
-				if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
+				if (CategoriesAuthorizationsService::check_authorizations($array_pics_info['idcat'], 'gallery', 'idcat')->read())
 				{
 					$gallery_mini[] = $array_pics_info;
 					$break++;
@@ -89,7 +89,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$break = 0;
 				foreach ($array_random_pics as $key => $array_pics_info)
 				{
-					if (GalleryAuthorizationsService::check_authorizations($array_pics_info['idcat'])->read())
+					if (CategoriesAuthorizationsService::check_authorizations($array_pics_info['idcat'], 'gallery', 'idcat')->read())
 					{
 						$gallery_mini[] = $array_pics_info;
 						$break++;

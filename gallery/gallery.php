@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 03
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
+	if (!CategoriesAuthorizationsService::check_authorizations($id_category, 'gallery', 'idcat')->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -152,11 +152,11 @@ elseif ($g_add)
 		DispatchManager::redirect($controller);
 	}
 
-	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_categories();
 	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!GalleryAuthorizationsService::check_authorizations($id_category)->write())
+	if (!CategoriesAuthorizationsService::check_authorizations($id_category, 'gallery', 'idcat')->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -198,7 +198,7 @@ elseif ($g_add)
 	}
 
 	//Affichage du quota d'image uploadée.
-	$category_authorizations = GalleryService::get_categories_manager()->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
+	$category_authorizations = CategoriesService::get_categories_manager('gallery', 'idcat')->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	$quota = isset($category_authorizations['r-1']) ? ($category_authorizations['r-1'] != '3') : true;
 	if ($quota)
 	{
@@ -226,7 +226,7 @@ elseif ($g_add)
 	$tpl->put_all(array(
 		'CAT_ID' => $id_category,
 		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
-		'CATEGORIES_TREE' => GalleryService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
+		'CATEGORIES_TREE' => CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH' => $config->get_max_width(),
 		'MAX_HEIGHT' => $config->get_max_height(),
 		'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',

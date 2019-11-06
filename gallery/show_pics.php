@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ $g_idpics = $request->get_getint('id', 0);
 if (!empty($g_idpics))
 {
 	//Niveau d'autorisation de la catégorie
-	if (!GalleryAuthorizationsService::check_authorizations($id_category)->read())
+	if (!CategoriesAuthorizationsService::check_authorizations($id_category, 'gallery', 'idcat')->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -35,7 +35,7 @@ if (!empty($g_idpics))
 		DispatchManager::redirect($error_controller);
 	}
 
-$Gallery = new Gallery();
+	$Gallery = new Gallery();
 
 	list($width_s, $height_s, $weight_s, $ext) = $Gallery->Arg_pics('pics/' . $path);
 	$Gallery->Send_header($ext); //Header image.

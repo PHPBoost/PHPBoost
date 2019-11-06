@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2017 02 27
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 3.0 - 2011 08 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -19,38 +19,6 @@ class GalleryUrlBuilder
 	public static function configuration()
 	{
 		return new Url('/gallery/admin_gallery_config.php');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function add_category()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 26
+ * @version   	PHPBoost 5.2 - last update: 2019 11 05
  * @since   	PHPBoost 1.6 - 2007 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,14 +29,14 @@ $id_file = $request->get_postint('id_file', 0);
 //Notation.
 if (!empty($increment_view))
 {
-	$categories = GalleryService::get_categories_manager()->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_categories();
 	$g_idpics = $request->get_getint('id', 0);
 	$g_idcat = $request->get_getint('cat', 0);
 	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
 		exit;
 
 	//Niveau d'autorisation de la catégorie
-	if (!GalleryAuthorizationsService::check_authorizations($g_idcat)->read())
+	if (!CategoriesAuthorizationsService::check_authorizations($g_idcat, 'gallery', 'idcat')->read())
 		exit;
 
 	//Mise à jour du nombre de vues.
@@ -53,7 +53,7 @@ elseif (!empty($rename_pics)) //Renomme une image.
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
+	if (CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->moderation()) //Modo
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
@@ -79,7 +79,7 @@ elseif (!empty($aprob_pics))
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (GalleryAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
+	if (CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->moderation()) //Modo
 	{
 		$Gallery = new Gallery();
 

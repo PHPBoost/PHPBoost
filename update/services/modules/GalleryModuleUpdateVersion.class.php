@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 09
+ * @version   	PHPBoost 5.3 - last update: 2019 11 05
  * @since   	PHPBoost 5.1 - 2018 01 27
 */
 
@@ -14,8 +14,11 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('gallery');
 		
 		$this->delete_old_files_list = array(
+			'/controllers/categories/GalleryCategoriesManageController.class.php',
 			'/phpboost/GalleryNewContent.class.php',
-			'/phpboost/GalleryNotation.class.php'
+			'/phpboost/GalleryNotation.class.php',
+			'/phpboost/GallerySitemapExtensionPoint.class.php',
+			'/services/GalleryAuthorizationsService.class.php'
 		);
 	}
 }
