@@ -3,7 +3,7 @@
  * @copyright	&copy; 2005-2019 PHPBoost
  * @license		https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author		Julien BRISWALTER <j1.seth@phpboost.com>
- * @version		PHPBoost 5.3 - last update: 2019 11 05
+ * @version		PHPBoost 5.3 - last update: 2019 11 06
  * @since		PHPBoost 5.3 - 2019 11 02
 */
 
@@ -25,7 +25,7 @@ class CategoriesService
 
 	public static function get_categories_manager($module_id = '', $id_category = CategoriesItemsParameters::DEFAULT_FIELD_NAME)
 	{
-		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()))
+		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()) || (!empty($id_category) && $id_category != self::$categories_manager->get_categories_items_parameters()->get_field_name_id_category()))
 		{
 			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
 			$categories_cache_class = ucfirst($module_id) . 'CategoriesCache';
@@ -37,7 +37,7 @@ class CategoriesService
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
 			
-			if ($id_category != CategoriesItemsParameters::DEFAULT_FIELD_NAME)
+			if (!empty($id_category) && $id_category != CategoriesItemsParameters::DEFAULT_FIELD_NAME)
 				$categories_items_parameters->set_field_name_id_category($id_category);
 			
 			self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
