@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 06
  * @since   	PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -238,7 +238,7 @@ class AdminMemberConfigController extends AdminController
 		else
 			$this->security_config->allow_login_and_email_in_password();
 
-		$this->security_config->set_forbidden_mail_domains(explode(',', str_replace(array(' ', ';'), array('', ','), $this->form->get_value('forbidden_mail_domains'))));
+		$this->security_config->set_forbidden_mail_domains($this->form->get_value('forbidden_mail_domains') ? explode(',', str_replace(array(' ', ';'), array('', ','), $this->form->get_value('forbidden_mail_domains'))) : array());
 
 		SecurityConfig::save();
 

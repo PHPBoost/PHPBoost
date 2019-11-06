@@ -21,7 +21,7 @@ class FormFieldConstraintForbiddenMailDomains extends FormFieldConstraintRegex
 		
 		$forbidden_mail_domains = SecurityConfig::load()->get_forbidden_mail_domains();
 		
-		$regex = !empty($forbidden_mail_domains) ? '/^((?!' . implode('|', $forbidden_mail_domains) . ').)*$/iu' : '';
+		$regex = $forbidden_mail_domains ? '/^((?!' . implode('|', $forbidden_mail_domains) . ').)*$/i' : '//';
 
 		parent::__construct(
 			$regex,
