@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 07
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -48,7 +48,7 @@ if ($unvisible > 0)
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
-	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+	elseif (!CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -83,7 +83,7 @@ elseif ($delete > 0)
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
-	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+	elseif (!CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -100,7 +100,7 @@ elseif ($delete > 0)
 
 	MediaCategoriesCache::invalidate();
 
-	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
+	$category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
 
@@ -140,7 +140,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 	));
 
 	// Construction du tableau des catégories musicales.
-	$categories = MediaService::get_categories_manager()->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_categories();
 	$js_id_music = array();
 	foreach ($categories as $cat)
 	{
@@ -166,7 +166,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			DispatchManager::redirect($error_controller);
 		}
 
-		if (!MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->moderation())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -174,7 +174,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 		bread_crumb($media['idcat']);
 
-		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', $media['idcat'], $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('media', 'idcat')->get_select_categories_form_field('idcat', '', $media['idcat'], $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -189,7 +189,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
 			'NAME' => $media['name'],
-			'C_CATEGORIES' => MediaService::get_categories_manager()->get_categories_cache()->has_categories(),
+			'C_CATEGORIES' => CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
@@ -205,14 +205,14 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		$location_id = 'media-edit-'. $edit;
 	}
 	// Ajout.
-	elseif (($write = MediaAuthorizationsService::check_authorizations()->write()) || MediaAuthorizationsService::check_authorizations()->contribution())
+	elseif (($write = CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY,, 'media', 'idcat')->write()) || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY,, 'media', 'idcat')->contribution())
 	{
 		bread_crumb($add);
 
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('counterpart');
 
-		$categories_tree = MediaService::get_categories_manager()->get_select_categories_form_field('idcat', '', Category::ROOT_CATEGORY, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('media', 'idcat')->get_select_categories_form_field('idcat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -228,7 +228,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
 			'NAME' => '',
-			'C_CATEGORIES' => MediaService::get_categories_manager()->get_categories_cache()->has_categories(),
+			'C_CATEGORIES' => CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->has_categories(),
 			'CATEGORIES' => $categories_list,
 			'WIDTH' => '425',
 			'HEIGHT' => '344',
@@ -269,7 +269,7 @@ elseif ($submit)
 	$media = array(
 		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => stripslashes(retrieve(POST, 'name', '', TSTRING)),
-		'idcat' => MediaService::get_categories_manager()->get_categories_cache()->has_categories() ? retrieve(POST, 'idcat', 0, TINTEGER) : Category::ROOT_CATEGORY,
+		'idcat' => CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->has_categories() ? retrieve(POST, 'idcat', 0, TINTEGER) : Category::ROOT_CATEGORY,
 		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
 		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
 		'url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
@@ -280,7 +280,7 @@ elseif ($submit)
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
 	);
 
-	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
+	$category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
 
 	if ($media['idedit'])
@@ -374,9 +374,9 @@ elseif ($submit)
 	}
 
 	// Édition
-	if ($media['idedit'] && MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation())
+	if ($media['idedit'] && CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->moderation())
 	{
-		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'contents' => $media['contents'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		if ($media['approved'])
 		{
@@ -400,9 +400,9 @@ elseif ($submit)
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
-	elseif (!$media['idedit'] && (($auth_write = MediaAuthorizationsService::check_authorizations($media['idcat'])->write()) || MediaAuthorizationsService::check_authorizations($media['idcat'])->contribution()))
+	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->write()) || CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->contribution()))
 	{
-		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (MediaAuthorizationsService::check_authorizations($media['idcat'])->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => $media['contents'], 'url' => $media['url']->relative(), 'poster' => $media['poster']->relative(), 'mime_type' => $media['mime_type'], 'infos' => (CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->write() ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
 		$new_id_media = $result->get_last_inserted_id();
 		// Feeds Regeneration
@@ -421,7 +421,7 @@ elseif ($submit)
 			$media_contribution->set_module('media');
 			$media_contribution->set_auth(
 				Authorizations::capture_and_shift_bit_auth(
-					MediaService::get_categories_manager()->get_heritated_authorizations($media['idcat'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					CategoriesService::get_categories_manager('media', 'idcat')->get_heritated_authorizations($media['idcat'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 				)
 			);

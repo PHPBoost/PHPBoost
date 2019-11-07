@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 07
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -19,7 +19,7 @@ if (empty($id_media))
 {
 	bread_crumb($id_cat);
 
-	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($id_cat);
+	$category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($id_cat);
 	define('TITLE', $category->get_name());
 
 	require_once('../kernel/header.php');
@@ -60,7 +60,7 @@ elseif ($id_media > 0)
 		$LANG['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
-	elseif (!MediaAuthorizationsService::check_authorizations($media['idcat'])->read())
+	elseif (!CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->read())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -92,7 +92,7 @@ elseif ($id_media > 0)
 		'ID' => $id_media,
 		'C_DISPLAY_MEDIA' => true,
 		'C_ROOT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY,
-		'C_MODO' => MediaAuthorizationsService::check_authorizations($media['idcat'])->moderation(),
+		'C_MODO' => CategoriesAuthorizationsService::check_authorizations($media['idcat'], 'media', 'idcat')->moderation(),
 		'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 		'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 		'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['timestamp']),
@@ -117,8 +117,8 @@ elseif ($id_media > 0)
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
-		'CATEGORY_NAME' => $media['idcat'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat'])->get_name(),
-		'U_EDIT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : MediaUrlBuilder::edit_category($media['idcat'])->rel()
+		'CATEGORY_NAME' => $media['idcat'] == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($media['idcat'])->get_name(),
+		'U_EDIT_CATEGORY' => $media['idcat'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($media['idcat'])->rel()
 	)));
 
 	if (empty($mime_type_tpl[$media['mime_type']]))

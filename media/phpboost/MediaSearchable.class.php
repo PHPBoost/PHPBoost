@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 08 20
+ * @version   	PHPBoost 5.3 - last update: 2019 11 07
  * @since   	PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -12,7 +12,7 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 {
 	public function get_search_request($args)
 	{
-		$authorized_categories = MediaService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'media', 'idcat');
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
 		$request = "SELECT " . $args['id_search'] . " AS id_search,

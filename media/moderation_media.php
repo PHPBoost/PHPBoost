@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2017 03 19
+ * @version   	PHPBoost 5.2 - last update: 2019 11 07
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!MediaAuthorizationsService::check_authorizations()->moderation())
+if (!CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'media', 'idcat')->moderation())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -111,7 +111,7 @@ else
 {
 	// Filtre pour le panneau de modération.
 	$js_array = array();
-	$authorized_categories = MediaService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
+	$authorized_categories = CategoriesService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY, true, 'media', 'idcat');
 
 	if ($filter)
 	{
@@ -145,7 +145,7 @@ else
 
 	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
 
-	$categories_cache = MediaService::get_categories_manager()->get_categories_cache();
+	$categories_cache = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache();
 
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
