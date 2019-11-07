@@ -131,7 +131,7 @@
     }
 
     .modal.active-panel .content-panel {
-        top: 1.618em;
+        top: 2.618em;
         transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s;
     }
 
@@ -162,6 +162,10 @@
         .modal .content-panel {
             padding: 1.618em;
             width: 80%;
+        }
+
+        .modal.active-panel .content-panel {
+            top: 1.618em;
         }
     }
 

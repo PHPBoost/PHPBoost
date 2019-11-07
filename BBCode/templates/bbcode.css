@@ -43,6 +43,27 @@
 	font-size: 1.456rem;
 }
 
+.bbcode-elements .content-panel {
+	max-width: 400px;
+}
+
+.constraint-status-right .bbcode-elements input,
+.constraint-status-right .bbcode-elements textarea {
+	padding-left: 0.618em;
+}
+
+.bbcode-elements .content-panel .input-element-button input {
+	max-width: calc(100% - 2.618em);
+}
+
+.bbcode-elements .content-panel .fieldset-submit {
+	margin: 0;
+}
+
+.bbcode-elements .content-panel .fieldset-inset {
+	padding: 0;
+}
+
 @media (min-width: 769px) {
 	.bbcode-elements {
 		position: relative;

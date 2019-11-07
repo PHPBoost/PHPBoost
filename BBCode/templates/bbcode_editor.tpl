@@ -265,17 +265,85 @@ function XMLHttpRequest_preview(field)
 				</a>
 			</li>
 
-			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_lightbox}bbcode_lightbox('{FIELD}', ${escapejs(@bbcode.url.prompt)});return false;" aria-label="{@bbcode.lightbox}">
+			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
+				<a href="" data-trigger data-target="bb-block18{FIELD}" onclick="{DISABLED_lightbox}bb_display_block('18','{FIELD}');return false;" aria-label="{@bbcode.lightbox}">
 					<i class="fa fa-fw bbcode-icon-lightbox{AUTH_LIGHTBOX}" aria-hidden="true"></i>
 				</a>
+				<div id="bb-block18{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel">
+						<div class="form-element">
+							<label for="bbcode_lightbox{FIELD}">
+								{@bbcode.picture.url}
+							</label>
+							<div class="form-field input-element-button">
+								<input id="bbcode_lightbox{FIELD}" type="text" name="bbcode_lightbox{FIELD}" value="" />
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bbcode_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="bbcode_lightbox{FIELD}">
+								{@bbcode.picture.width}
+							</label>
+							<div class="form-field input-element-button">
+								<input id="bbcode_lightbox_width{FIELD}" type="number" value="150" name="bbcode_lightbox_width{FIELD}" value="" />
+							</div>
+						</div>
+						<fieldset class="fieldset-submit">
+							<div class="fieldset-inset">
+								<button class="submit" type="submit" onclick="{DISABLED_FIGURE}bbcode_lightbox('{FIELD}');bb_hide_block('18', '{FIELD}', 0);return false;">{@bbcode.picture.add}</button>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</li>
+
+			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
+				<a href="" data-trigger data-target="bb-block17{FIELD}" onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;" class="bbcode-hover{AUTH_FIGURE}" aria-label="{@bbcode.figure}">
+					<i class="fas fa-fw fa-square" aria-hidden="true"></i>
+				</a>
+				<div id="bb-block17{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel">
+						<div class="form-element">
+							<label for="bb_figure_img{FIELD}">
+								{@bbcode.picture.url}
+							</label>
+							<div class="form-field input-element-button">
+									<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" value="" />
+									<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="bb_alt_text{FIELD}">
+								{@bbcode.picture.alt}
+							</label>
+							<div class="form-field">
+								<input id="bb_figure_alt{FIELD}" type="text" name="bb_figure_alt{FIELD}" />
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="bb_alt_text{FIELD}">
+								{@bbcode.figure.caption}
+							</label>
+							<div class="form-field">
+								<textarea id="bb_figure_desc{FIELD}" rows="5" cols="33"></textarea>
+							</div>
+						</div>
+						<fieldset class="fieldset-submit">
+							<div class="fieldset-inset">
+								<button class="submit" type="submit" onclick="{DISABLED_FIGURE}bbcode_figure('{FIELD}');bb_hide_block('17', '{FIELD}', 0);return false;">{@bbcode.picture.add}</button>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 			</li>
 		</ul>
 
 		# IF C_UPLOAD_MANAGEMENT #
 		<ul id="bbcode-container-upload" class="bbcode-container dlt-color-op20-after">
 			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;">
+				<a aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
 					<i class="fa fa-fw bbcode-icon-upload" aria-hidden="true"></i>
 				</a>
 			</li>
@@ -398,15 +466,14 @@ function XMLHttpRequest_preview(field)
 
 		<ul id="bbcode-container-movies" class="bbcode-container bbcode-container-more dlt-color-op20-after">
 			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_POSITIONS}bb_display_block('31', '{FIELD}');return false;" onmouseover="{DISABLED_POSITIONS}bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bbcode.media}">
-					<!-- <i class="fa fa-fw bbcode-icon-movie" aria-hidden="true"></i> -->
+				<a href="" onclick="{DISABLED_POSITIONS}bb_display_block('16', '{FIELD}');return false;" onmouseover="{DISABLED_POSITIONS}bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bbcode.media}">
 					<span class="fa-stack bbcode-icons-stack">
 						<i class="fa fa-music fa-stack-1x"></i>
 						<i class="fas fa-film fa-stack-1x"></i>
 		            </span>
 				</a>
-				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block31{FIELD}">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('31', '{FIELD}', 1);" onmouseout="bb_hide_block('31', '{FIELD}', 0);">
+				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block16{FIELD}">
+					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);">
 						<li><a href="" onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" aria-label="{@bbcode.sound.label}"> {@bbcode.sound} </a></li>
 						<li><a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bbcode.movie.label}"> {@bbcode.movie} </a></li>
 						<li><a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bbcode.youtube.label}"> {@bbcode.youtube} </a></li>

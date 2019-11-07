@@ -271,6 +271,15 @@ function bbcode_list(field)
 	insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
 }
 
+function bbcode_figure(field)
+{
+	var figure_img = document.getElementById('bb_figure_img' + field).value;
+	var figure_alt = document.getElementById('bb_figure_alt' + field).value;
+	var figure_desc = document.getElementById('bb_figure_desc' + field).value;
+
+	insertbbcode('[figure="' + figure_desc + '"][img alt="'+figure_alt+'"]' + figure_img, '[/img][/figure]', field);
+}
+
 function bbcode_url(field, prompt_text)
 {
 	var url = prompt(prompt_text, '');
@@ -278,7 +287,7 @@ function bbcode_url(field, prompt_text)
 		insertbbcode('[url=' + url + ']', '[/url]', field);
 }
 
-function bbcode_quote(field, prompt_text)
+function bbcode_quote(field)
 {
 	var author = prompt(prompt_text, '');
 	if(author != null)
@@ -290,11 +299,12 @@ function bbcode_quote(field, prompt_text)
 	}
 }
 
-function bbcode_lightbox(field, prompt_text)
+function bbcode_lightbox(field)
 {
-	var url = prompt(prompt_text, '');
+	var url = document.getElementById('bbcode_lightbox' + field).value;
+	var picture_width = document.getElementById('bbcode_lightbox_width' + field).value;
 	if(url != '' && url != null)
-		insertbbcode('[lightbox=' + url + '][img style="max-width: 150px;"]' + url, '[/img][/lightbox]', field);
+		insertbbcode('[lightbox=' + url + '][img style="max-width: '+picture_width+'px;"]' + url, '[/img][/lightbox]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
