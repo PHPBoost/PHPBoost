@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 07
  * @since   	PHPBoost 4.1 - 2015 02 25
 */
 
@@ -71,6 +71,11 @@ class ForumCategoriesCache extends CategoriesCache
 	public function get_table_name()
 	{
 		return ForumSetup::$forum_cats_table;
+	}
+
+	public function get_table_name_containing_items()
+	{
+		return ForumSetup::$forum_topics_table;
 	}
 
 	public function get_category_class()

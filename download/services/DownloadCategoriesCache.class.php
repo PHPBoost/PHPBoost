@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 07
  * @since   	PHPBoost 4.0 - 2014 08 24
 */
 
@@ -12,6 +12,11 @@ class DownloadCategoriesCache extends CategoriesCache
 	public function get_table_name()
 	{
 		return DownloadSetup::$download_cats_table;
+	}
+
+	public function get_table_name_containing_items()
+	{
+		return DownloadSetup::$download_table;
 	}
 
 	public function get_category_class()
