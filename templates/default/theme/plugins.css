@@ -124,7 +124,7 @@
         position: absolute;
         padding: 0.618em;
         top: 0;
-        min-width: 80%;
+        width: 100%;
         left: 50%;
         transform: translateX(-50%);
         transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5);
@@ -157,6 +157,11 @@
         .close-modal:after {
             top: 0.618em;
             right: 1.618em;
+        }
+
+        .modal .content-panel {
+            padding: 1.618em;
+            width: 80%;
         }
     }
 
