@@ -276,8 +276,6 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_tinymce_formatting()
 	{
-		global $LANG;
-
 		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->content = str_replace(
 			array(
@@ -550,7 +548,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Quote tag
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isuU', '$1<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$2</div></blockquote>', $this->content);
+			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isuU', '$1<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('format_quote', 'editor-common') . ' :</span><div class="formatter-content">$2</div></blockquote>', $this->content);
 		}
 
 		//Font tag
@@ -779,7 +777,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></blockquote>', $this->content);
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('format_quote', 'editor-common') . ' :</span><div class="formatter-content">$1</div></blockquote>', $this->content);
 			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>', $this->content);
 		}
 

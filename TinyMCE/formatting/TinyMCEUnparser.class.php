@@ -207,7 +207,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isuU', array($this, 'unparse_size_tag'), $this->content);
 
 			//Citations
-			$this->content = preg_replace('`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'main') . ':</span><div class="formatter-content">(.*)</div></blockquote>`isuU', "\n" . '<blockquote><p>$1</p></blockquote>', $this->content);
+			$this->content = preg_replace('`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('format_quote', 'editor-common') . ':</span><div class="formatter-content">(.*)</div></blockquote>`isuU', "\n" . '<blockquote><p>$1</p></blockquote>', $this->content);
 			$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote]$2[/quote]', $this->content);
 			$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote=$1]$2[/quote]', $this->content);
 

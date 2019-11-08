@@ -154,8 +154,6 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	protected function parse_simple_tags()
 	{
-		global $LANG;
-
 		$array_preg = array(
 			'b' => '`\[b\](.+)\[/b\]`isuU',
 			'i' => '`\[i\](.+)\[/i\]`isuU',
@@ -322,7 +320,7 @@ class BBCodeParser extends ContentFormattingParser
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . $LANG['quotation'] . ' :</span><div class="formatter-content">$1</div></blockquote>');
+				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('format_quote', 'editor-common') . ' :</span><div class="formatter-content">$1</div></blockquote>');
 				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>');
 			}
 

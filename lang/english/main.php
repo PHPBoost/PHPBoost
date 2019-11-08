@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -125,7 +125,6 @@ $LANG['asc'] = 'Ascending';
 $LANG['desc'] = 'Decreasing';
 $LANG['list'] = 'List';
 $LANG['quote'] = 'Quote';
-$LANG['quotation'] = 'Quotation';
 $LANG['default'] = 'Default';
 $LANG['type'] = 'Type';
 $LANG['status'] = 'Status';
