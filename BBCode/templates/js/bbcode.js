@@ -302,7 +302,7 @@ function bbcode_url(field, prompt_text)
 		insertbbcode('[url=' + url + ']', '[/url]', field);
 }
 
-function bbcode_quote(field)
+function bbcode_quote(field, prompt_text)
 {
 	var author = prompt(prompt_text, '');
 	if(author != null)
