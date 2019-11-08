@@ -90,7 +90,7 @@
 						<div class="form-field">
 							<input type="text" maxlength="255" class="field-large" id="u_media" name="u_media" value="{U_MEDIA}" />
 							# IF C_AUTH_UPLOAD #
-								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;">
+								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=u_media&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 									<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
@@ -101,7 +101,7 @@
 						<div class="form-field# IF C_AUTH_UPLOAD # form-field-upload-file# ENDIF #">
 							<input type="text" maxlength="255" class="field-large" id="poster" name="poster" value="{POSTER}" />
 							# IF C_AUTH_UPLOAD #
-								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;">
+								<a aria-label="${LangLoader::get_message('files_management', 'main')}" href="" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=poster&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 									<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
 								</a>
 							# ENDIF #
