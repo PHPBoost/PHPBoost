@@ -209,7 +209,7 @@ class BBCodeParser extends ContentFormattingParser
 			'vimeo1' => '`\[vimeo=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://(?:([a-z0-9-]+\.)*)?[a-z0-9-]+\.[a-z]{2,4}(/[a-z0-9~_-]+)*)\[/vimeo\]`iuU',
 			'vimeo2' => '`\[vimeo\]((?:https?)://(?:([a-z0-9-]+\.)*)[a-z0-9-]+\.[a-z]{2,4}(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/vimeo\]`iuU',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
-			'figure' => '`\[figure="([^"]+)"\](.*)\[/figure\]`isuU',
+			'figure' => '`\[figure=([^"]+)\](.*)\[/figure\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);

@@ -674,7 +674,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`iu',
 			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/lightbox\]`isuU',
-			'figure' => '`\[figure="([^"]+)"\](.*)\[/figure\]`isuU',
+			'figure' => '`\[figure=([^"]+)\](.*)\[/figure\]`isuU',
 			'member' => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 		);

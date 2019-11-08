@@ -306,7 +306,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[float=$1]$2[/float]",
 			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]",
-			"[figure="$2"]$1[/figure]",
+			"[figure=$2]$1[/figure]",
 			"[member]$1[/member]",
 			"[moderator]$1[/moderator]",
 		);

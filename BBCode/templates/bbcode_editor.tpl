@@ -167,33 +167,33 @@ function XMLHttpRequest_preview(field)
 				</div>
 			</li>
 
-			<li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_LIST}bb_display_block('9', '{FIELD}');return false;" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode-hover{AUTH_LIST}" aria-label="{@bbcode.list}">
+			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
+				<a href="" data-trigger data-target="bb-block9{FIELD}" onclick="{DISABLED_LIST}bb_display_block('9', '{FIELD}');return false;" aria-label="{@bbcode.list}">
 					<i class="fa fa-fw bbcode-icon-list" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block9{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<div class="bbcode-block block-submenu-color bbcode-block-ul" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
+				<div id="bb-block9{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel">
 						<div class="form-element">
-							<label class="smaller" for="bb_list{FIELD}">{@bbcode.lines}</label>
+							<label for="bb_list{FIELD}">{@bbcode.lines}</label>
 							<div class="form-field">
-								<input id="bb_list{FIELD}" class="field-smaller" size="3" type="text" name="bb_list{FIELD}" maxlength="3" value="3">
+								<input id="bb_list{FIELD}" type="number" name="bb_list{FIELD}" value="3">
 							</div>
 						</div>
 						<div class="form-element">
-							<label class="smaller" for="bb_ordered_list{FIELD}">{@bbcode.ordered.list}</label>
+							<label for="bb_ordered_list{FIELD}">{@bbcode.ordered.list}</label>
 							<div class="form-field">
 								<label class="checkbox" for="bb_ordered_list{FIELD}">
-									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" >
+									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" />
 									<span></span>
 								</label>
-
 							</div>
 						</div>
-						<div class="bbcode-form-element-text">
-							<a class="small" href="" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');bb_hide_block('9', '{FIELD}', 0);return false;">
-								<i class="fa fa-fw bbcode-icon-list valign-middle"></i> {@bbcode.insert.list}
-							</a>
-						</div>
+						<fieldset class="fieldset-submit">
+							<div class="fieldset-inset">
+								<button class="submit" type="submit" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');bb_hide_block('9', '{FIELD}', 0);return false;">{@bbcode.insert.list}</button>
+							</div>
+						</fieldset>
 					</div>
 				</div>
 			</li>
@@ -259,12 +259,6 @@ function XMLHttpRequest_preview(field)
 		</ul>
 
 		<ul id="bbcode-container-pictures" class="bbcode-container dlt-color-op20-after">
-			<!-- <li class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');return false;" aria-label="{@bbcode.picture}">
-					<i class="fa fa-fw bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
-				</a>
-			</li> -->
-
 			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
 				<a href="" data-trigger data-target="bb-block18{FIELD}" onclick="{DISABLED_lightbox}bb_display_block('18','{FIELD}');return false;" aria-label="{@bbcode.lightbox}">
 					<i class="fa fa-fw bbcode-icon-lightbox{AUTH_LIGHTBOX}" aria-hidden="true"></i>
@@ -278,7 +272,7 @@ function XMLHttpRequest_preview(field)
 							</label>
 							<div class="form-field input-element-button">
 								<input id="bbcode_lightbox{FIELD}" type="text" name="bbcode_lightbox{FIELD}" value="" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bbcode_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bbcode_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
 						<div class="form-element">
@@ -311,7 +305,7 @@ function XMLHttpRequest_preview(field)
 							</label>
 							<div class="form-field input-element-button">
 									<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" value="" />
-									<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+									<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
 						<div class="form-element">

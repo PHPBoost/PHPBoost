@@ -280,17 +280,17 @@ function bbcode_figure(field)
 		img_width = '';
 
 	if (picture_width != '' && picture_width != null)
-		img_width = ' style="max-width:'+picture_width+'px"';
+		img_width = ' style="max-width:' + picture_width + 'px"';
 	else
 		img_width = '';
 
 	if (figure_alt != '' && figure_alt != null)
-		img_tag = '[img alt="'+figure_alt+'"' + img_width+']';
+		img_tag = '[img alt="' + figure_alt + '"' + img_width + ']';
 	else
-		img_tag = '[img' + img_width+']';
+		img_tag = '[img' + img_width + ']';
 
 	if(figure_desc != '' && figure_desc != null)
-		insertbbcode('[figure="' + figure_desc + '"]' + img_tag + figure_img, '[/img][/figure]', field);
+		insertbbcode('[figure=' + figure_desc + ']' + img_tag + figure_img, '[/img][/figure]', field);
 	else
 		insertbbcode(img_tag + figure_img, '[/img]', field);
 }
