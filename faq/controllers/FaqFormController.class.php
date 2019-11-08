@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -61,17 +61,17 @@ class FaqFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));
 
-		if (FaqService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(FaqService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_faq_question()->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_faq_question()->get_answer(), array('rows' => 15, 'required' => true)));
 
-		if (FaqAuthorizationsService::check_authorizations($this->get_faq_question()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_faq_question()->get_id_category())->moderation())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approve'], $this->get_faq_question()->is_approved()));
 		}
@@ -101,7 +101,7 @@ class FaqFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!FaqAuthorizationsService::check_authorizations()->write() && FaqAuthorizationsService::check_authorizations()->contribution());
+		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_faq_question()
@@ -162,7 +162,7 @@ class FaqFormController extends ModuleController
 		$faq_question->set_question($this->form->get_value('question'));
 		$faq_question->set_rewrited_question(Url::encode_rewrite($faq_question->get_question()));
 
-		if (FaqService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$faq_question->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$faq_question->set_answer($this->form->get_value('answer'));
@@ -173,14 +173,14 @@ class FaqFormController extends ModuleController
 			$faq_question->set_q_order($number_questions_in_category + 1);
 		}
 
-		if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($faq_question->get_id_category())->moderation())
 		{
 			if ($this->form->get_value('approved'))
 				$faq_question->approve();
 			else
 				$faq_question->unapprove();
 		}
-		else if (FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->contribution() && !FaqAuthorizationsService::check_authorizations($faq_question->get_id_category())->write())
+		else if (CategoriesAuthorizationsService::check_authorizations($faq_question->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($faq_question->get_id_category())->write())
 			$faq_question->unapprove();
 
 		if ($faq_question->get_id() === null)
@@ -215,7 +215,7 @@ class FaqFormController extends ModuleController
 				$contribution->set_module('faq');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						FaqService::get_categories_manager()->get_heritated_authorizations($faq_question->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($faq_question->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -290,7 +290,7 @@ class FaqFormController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id()));
 
-			$categories = array_reverse(FaqService::get_categories_manager()->get_parents($faq_question->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($faq_question->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)

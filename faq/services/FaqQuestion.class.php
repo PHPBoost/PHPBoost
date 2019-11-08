@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 05 17
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,7 @@ class FaqQuestion
 
 	public function get_category()
 	{
-		return FaqService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
 	public function get_q_order()
@@ -136,17 +136,17 @@ class FaqQuestion
 
 	public function is_authorized_to_add()
 	{
-		return FaqAuthorizationsService::check_authorizations($this->id_category)->write() || FaqAuthorizationsService::check_authorizations($this->id_category)->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return FaqAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((FaqAuthorizationsService::check_authorizations($this->id_category)->write() || (FaqAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return FaqAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((FaqAuthorizationsService::check_authorizations($this->id_category)->write() || (FaqAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
@@ -189,7 +189,7 @@ class FaqQuestion
 		$this->author_user = AppContext::get_current_user();
 		$this->creation_date = new Date();
 
-		if (FaqAuthorizationsService::check_authorizations()->write())
+		if (CategoriesAuthorizationsService::check_authorizations()->write())
 			$this->approve();
 		else
 			$this->unapprove();
@@ -229,7 +229,7 @@ class FaqQuestion
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image()->rel(),
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : FaqUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('faq', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),

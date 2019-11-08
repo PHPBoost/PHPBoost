@@ -3,15 +3,13 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
 class FaqService
 {
 	private static $db_querier;
-
-	private static $categories_manager;
 
 	public static function __static()
 	{
@@ -82,31 +80,6 @@ class FaqService
 	public static function update_position($id_question, $position)
 	{
 		self::$db_querier->update(FaqSetup::$faq_table, array('q_order' => $position), 'WHERE id=:id', array('id' => $id_question));
-	}
-
-	 /**
-	 * @desc Return the authorized categories.
-	 */
-	public static function get_authorized_categories($current_id_category)
-	{
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
-		return array_keys($categories);
-	}
-
-	 /**
-	 * @desc Return the categories manager.
-	 */
-	public static function get_categories_manager()
-	{
-		if (self::$categories_manager === null)
-		{
-			$categories_items_parameters = new CategoriesItemsParameters();
-			$categories_items_parameters->set_table_name_contains_items(FaqSetup::$faq_table);
-			self::$categories_manager = new CategoriesManager(FaqCategoriesCache::load(), $categories_items_parameters);
-		}
-		return self::$categories_manager;
 	}
 }
 ?>

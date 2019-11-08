@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -17,7 +17,7 @@ Two categories and some questions were created to show you how this module works
 <br /><br />
 <ul class="formatter-ul">
 	<li class="formatter-li"> To configure or customize the module homepage your module, go into the <a href="' . FaqUrlBuilder::configuration()->relative() . '">module administration</a></li>
-	<li class="formatter-li"> To create categories, <a href="' . FaqUrlBuilder::add_category()->relative() . '">clic here</a></li>
+	<li class="formatter-li"> To create categories, <a href="' . CategoriesUrlBuilder::add_category(Category::ROOT_CATEGORY, 'faq')->relative() . '">clic here</a></li>
 	<li class="formatter-li"> To create questions, <a href="' . FaqUrlBuilder::add()->relative() . '">clic here</a></li>
 </ul>
 <br />To learn more, don \'t hesitate to consult the documentation for the module on <a href="https://www.phpboost.com">PHPBoost</a> website.';

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 08 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -16,10 +16,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminFaqConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Categories
-	new UrlControllerMapper('FaqCategoriesManageController', '`^/categories/?$`'),
-	new UrlControllerMapper('FaqCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('FaqCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('FaqDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('DefaultCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('DefaultRichCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
+	new UrlControllerMapper('DefaultRichCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	//Management
 	new UrlControllerMapper('FaqManageController', '`^/manage/?$`'),

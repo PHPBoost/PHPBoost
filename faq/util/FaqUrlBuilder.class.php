@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -17,39 +17,6 @@ class FaqUrlBuilder
 	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function add_category($id_parent = null)
-	{
-		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/edit/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/delete/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 
 	/**

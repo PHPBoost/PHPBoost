@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -26,16 +26,18 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return FaqAuthorizationsService::check_authorizations()->read();
+		return CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'faq')->read();
 	}
 
 	public function get_menu_content()
 	{
+		$module_id = 'faq';
+		
 		//Create file template
 		$tpl = new FileTemplate('faq/FaqModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$tpl->add_lang(LangLoader::get('common', 'faq'));
+		$tpl->add_lang(LangLoader::get('common', $module_id));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($tpl, $this->get_block());
@@ -44,7 +46,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 		$faq_cache = FaqCache::load();
 
 		//Get authorized categories for the current user
-		$authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, $module_id);
 
 		$categories = array_intersect($faq_cache->get_categories(), $authorized_categories);
 
@@ -56,7 +58,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 			if (!empty($random_question))
 			{
-				$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($id_category);
+				$category = CategoriesService::get_categories_manager($module_id)->get_categories_cache()->get_category($id_category);
 
 				$tpl->put_all(array(
 					'C_QUESTION' => true,

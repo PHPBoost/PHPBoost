@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
 */
 
@@ -34,7 +34,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 
 	public function build_view(HTTPRequestCustom $request)
 	{
-		$authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 
@@ -51,7 +51,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id
 		WHERE approved = 0
 		AND faq.id_category IN :authorized_categories
-		' . (!FaqAuthorizationsService::check_authorizations()->moderation() ? ' AND faq.author_user_id = :user_id' : '') . '
+		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND faq.author_user_id = :user_id' : '') . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode, array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
@@ -107,7 +107,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!(FaqAuthorizationsService::check_authorizations()->write() || FaqAuthorizationsService::check_authorizations()->contribution() || FaqAuthorizationsService::check_authorizations()->moderation()))
+		if (!(CategoriesAuthorizationsService::check_authorizations()->write() || CategoriesAuthorizationsService::check_authorizations()->contribution() || CategoriesAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

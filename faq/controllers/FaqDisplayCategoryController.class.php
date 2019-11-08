@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -38,7 +38,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$config = FaqConfig::load();
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
-		$subcategories = FaqService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), FaqService::get_authorized_categories($this->get_category()->get_id()));
+		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id()));
 		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $config->get_categories_number_per_page(), $subcategories_page);
 
 		$nbr_cat_displayed = 0;
@@ -85,7 +85,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
-			'C_DISPLAY_REORDER_LINK' => $result->get_rows_count() > 1 && FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_DISPLAY_REORDER_LINK' => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
@@ -94,7 +94,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : FaqUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			'U_REORDER_QUESTIONS' => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
@@ -131,7 +131,7 @@ class FaqDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = FaqService::get_categories_manager()->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -139,7 +139,7 @@ class FaqDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = FaqService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -148,7 +148,7 @@ class FaqDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_category = $this->get_category()->get_id();
-		if (!FaqAuthorizationsService::check_authorizations($id_category)->read())
+		if (!CategoriesAuthorizationsService::check_authorizations($id_category)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -176,7 +176,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
 
-		$categories = array_reverse(FaqService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
