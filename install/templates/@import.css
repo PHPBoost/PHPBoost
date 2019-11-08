@@ -1,0 +1,20 @@
+@import url('../../templates/default/theme/default.css') screen, print;
+@import url('../../templates/default/theme/font-awesome/css/font-awesome.css');
+@import url('../../templates/default/theme/font-awesome-animation.css');
+
+@import url('../../templates/default/theme/form.css') screen, print;
+@import url('../../templates/default/theme/form_fieldset.css') screen, print;
+@import url('../../templates/default/theme/form_button.css') screen, print;
+@import url('../../templates/default/theme/form_input.css') screen, print;
+@import url('../../templates/default/theme/form_constraint.css') screen, print;
+
+@import url('../../templates/default/theme/checkbox.css') screen, print;
+@import url('../../templates/default/theme/cssmenu.css') screen, print;
+
+@import url('../../templates/default/theme/dashboard/dashboard_shape.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_menus.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_content.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_form.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_global.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_colors.css') screen, print;
+@import url('install.css') screen, print;

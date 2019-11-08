@@ -114,7 +114,7 @@ class InstallWebsiteConfigController extends InstallController
 			$default_captcha::display_config_form_fields($fieldset);
 		}
 
-		$action_fieldset = new FormFieldsetSubmit('actions');
+		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'website');

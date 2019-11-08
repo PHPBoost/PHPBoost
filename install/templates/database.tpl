@@ -20,7 +20,7 @@
 	</div>
 
 	<footer>
-		<div class="next-step">
+		<div class="content next-step">
 			# INCLUDE DATABASE_FORM #
 		</div>
 	</footer>

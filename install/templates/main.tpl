@@ -2,22 +2,13 @@ ${resources('install/install')}
 <!DOCTYPE html>
 <html lang="{L_XML_LANGUAGE}">
 	<head>
-		<title>{@installation.title} - {STEP_TITLE}</title>
 		<meta charset="UTF-8" />
+		<title>{@installation.title} - {STEP_TITLE}</title>
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome-animation/css/font-awesome-animation.css" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_cssmenu.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_form.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_colors.css" type="text/css" media="screen, print" />
-		<link rel="stylesheet" href="templates/install.css" type="text/css" media="screen, print" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/install/templates/@import.css" type="text/css" media="screen, print" />
 		# IF C_ADDITIONAL_STYLESHEET #<link rel="stylesheet" href="{PATH_TO_ROOT}{ADDITIONAL_STYLESHEET_URL}" type="text/css" media="screen, print" /> # ENDIF #
 
 		<script>
@@ -36,7 +27,6 @@ ${resources('install/install')}
 			<div class="header-admin-container">
 				<div id="top-header-admin">
 					<div id="site-name-container">
-						<div id="install-site-logo"></div>
 						<a id="site-name">PHPBoost CMS</a>
 						<span id="site-slogan">{@phpboost.slogan}</span>
 					</div>
@@ -44,10 +34,10 @@ ${resources('install/install')}
 				<div id="sub-header-admin">
 					# IF NOT C_HAS_PREVIOUS_STEP #
 					<div>
-						<h3 class="menu-title">
+						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							{@language.change}
-						</h3>
+							<span>{@language.change}</span>
+						</h5>
 						<form class="center" action="{U_CHANGE_LANG}" method="post">
 							<label for="change_lang">
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
@@ -62,19 +52,17 @@ ${resources('install/install')}
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 							<script>
-							<!--
 								jQuery('#button_change_lang').hide();
-							-->
 							</script>
 						</form>
 					</div>
 					# END IF #
 
 					<div>
-						<h3 class="menu-title">
+						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							{@steps.list}
-						</h3>
+							<span>{@steps.list}</span>
+						</h5>
 						<nav class="cssmenu cssmenu-vertical step-menu">
 							<ul>
 							# START step #
@@ -88,22 +76,22 @@ ${resources('install/install')}
 						</nav>
 					</div>
 
-					<div>
-						<h3 class="menu-title">
+					<!-- <div>
+						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							{@installation.progression}
-						</h3>
+							<span>{@installation.progression}</span>
+						</h5>
 						<div class="progressbar-container">
 							<span class="progressbar-infos">{PROGRESSION}%</span>
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
-					</div>
+					</div> -->
 
 					<div>
-						<h3 class="menu-title">
+						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							{@appendices}
-						</h3>
+							<span>{@appendices}</span>
+						</h5>
 						<nav class="cssmenu cssmenu-vertical help-menu">
 							<ul>
 								<li>
@@ -123,16 +111,23 @@ ${resources('install/install')}
 			</div>
 		</header>
 
-			<section id="global">
-				<header>
-					<h1><div class="site-logo"></div> {STEP_TITLE}</h1>
-				</header>
-				<article>
-					# INCLUDE installStep #
-				</article>
-				<footer>
-					{@poweredBy} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}
-				</footer>
-			</section>
+		<div id="global">
+			<div class="admin-main">
+				<div class="admin-content">
+					<section>
+						<header>
+							<h1><div class="site-logo"></div> {STEP_TITLE}</h1>
+						</header>
+						<article>
+							# INCLUDE installStep #
+						</article>
+						<footer></footer>
+					</section>
+				</div>
+			</div>
+			<footer id="footer">
+				<span>{@poweredBy} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
+			</footer>
+		</div>
 	</body>
 </html>

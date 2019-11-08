@@ -1,3 +1,4 @@
+
 	<header>
 		<h2>{@step.welcome.message}</h2>
 	</header>
@@ -6,16 +7,10 @@
 		<div class="float-right pbt-box center">
 			<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
 		</div>
-
-		{@H|step.welcome.explanation}
-		<div style="margin-bottom:60px;">&nbsp;</div>
-
+		<p>{@H|step.welcome.explanation}</p>
 		<h3>${set(@step.welcome.distribution, ['distribution': @distribution.name])}</h3>
-		${html(@step.welcome.distribution.explanation)}
-		<br />
-		${html(@distribution.description)}
-
-
+		<p>${html(@step.welcome.distribution.explanation)}</p>
+		<p>${html(@distribution.description)}</p>
 	</div>
 
 	<footer>
