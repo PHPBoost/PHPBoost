@@ -5,7 +5,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 28
+ * @version   	PHPBoost 5.2 - last update: 2019 11 08
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -142,6 +142,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU',
 			'`<a href="([^"]+)" rel="lightbox\[2\]"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
 			'`<a href="([^"]+)" data-lightbox="formatter"(?: class="formatter-lightbox")?>(.*)</a>`isuU',
+			'`<figure>(.*)<figcaption>(.*)</figcation></figure>`isuU',
 			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 		);
@@ -185,6 +186,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]",
+			"[figure=$2]$1[/figure]",
 			"[member]$1[/member]",
 			"[moderator]$1[/moderator]",
 		);
