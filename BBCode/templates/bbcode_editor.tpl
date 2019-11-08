@@ -259,11 +259,11 @@ function XMLHttpRequest_preview(field)
 		</ul>
 
 		<ul id="bbcode-container-pictures" class="bbcode-container dlt-color-op20-after">
-			<li class="bbcode-elements bkgd-color-op20-hover">
+			<!-- <li class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');return false;" aria-label="{@bbcode.picture}">
 					<i class="fa fa-fw bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
 				</a>
-			</li>
+			</li> -->
 
 			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
 				<a href="" data-trigger data-target="bb-block18{FIELD}" onclick="{DISABLED_lightbox}bb_display_block('18','{FIELD}');return false;" aria-label="{@bbcode.lightbox}">
@@ -283,7 +283,7 @@ function XMLHttpRequest_preview(field)
 						</div>
 						<div class="form-element">
 							<label for="bbcode_lightbox{FIELD}">
-								{@bbcode.picture.width}
+								{@bbcode.thumbnail.width}
 							</label>
 							<div class="form-field input-element-button">
 								<input id="bbcode_lightbox_width{FIELD}" type="number" value="150" name="bbcode_lightbox_width{FIELD}" value="" />
@@ -300,7 +300,7 @@ function XMLHttpRequest_preview(field)
 
 			<li class="bbcode-elements bkgd-color-op20-hover modal-container">
 				<a href="" data-trigger data-target="bb-block17{FIELD}" onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;" class="bbcode-hover{AUTH_FIGURE}" aria-label="{@bbcode.figure}">
-					<i class="fas fa-fw fa-square" aria-hidden="true"></i>
+					<i class="fa fa-fw  bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
 				</a>
 				<div id="bb-block17{FIELD}" class="modal modal-animation" style="display: none;">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
@@ -328,6 +328,14 @@ function XMLHttpRequest_preview(field)
 							</label>
 							<div class="form-field">
 								<textarea id="bb_figure_desc{FIELD}" rows="5" cols="33"></textarea>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="bb_picture_width{FIELD}">
+								{@bbcode.picture.width}
+							</label>
+							<div class="form-field">
+								<input id="bb_picture_width{FIELD}" type="number" name="bb_picture_width{FIELD}" value="" />
 							</div>
 						</div>
 						<fieldset class="fieldset-submit">

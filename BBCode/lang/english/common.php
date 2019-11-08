@@ -23,7 +23,8 @@ $lang['bbcode.link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the
 $lang['bbcode.picture'] = 'Add a picture: [img]picture url[/img]';
 $lang['bbcode.lightbox'] = 'Add a picture with lightbox effect: [lightbox=picture url][img]mini-picture url[/img][/lightbox]';
 $lang['bbcode.picture.url'] = 'Picture url';
-$lang['bbcode.picture.width'] = 'Max width of the thumbnail (px)';
+$lang['bbcode.thumbnail.width'] = 'Max width of the thumbnail (px)';
+$lang['bbcode.picture.width'] = 'Max width of the picture (px)';
 $lang['bbcode.picture.add'] = 'Add picture';
 $lang['bbcode.figure'] = 'Add a picture with description: [figure=description text][img alt=alternative text]picture url[/img][/figure]';
 $lang['bbcode.picture.alt'] = 'Alternative text';

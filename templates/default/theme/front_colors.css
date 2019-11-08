@@ -48,7 +48,7 @@ body {
 @media (max-width: 768px) {
 	.cookiebar-container {
 		background-color: rgb(215, 224, 233);
-		border-color: #CCCCCC;
+		border-color: #DDDDDD;
 	}
 }
 
@@ -484,7 +484,7 @@ form .constraint-status-right textarea {
 
 .linedwrap .lines {
 	background-color: #FFFFFF;
-	border-color: #C0C0C0;
+	border-color: #DDDDDD;
 }
 
 .linedwrap .codelines .lineno {
@@ -505,6 +505,15 @@ form .constraint-status-right textarea {
 ----------------------------------------------------------------------------- */
 hr {
 	background-color: #81A4C8;
+}
+
+figure {
+	border-color: #DDDDDD;
+}
+
+figcaption {
+	border-color: #DDDDDD;
+	background-color: #ECF2F8;
 }
 
 a,

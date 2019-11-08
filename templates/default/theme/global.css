@@ -1,0 +1,15 @@
+figure {
+    padding: 0.618em;
+    text-align: center;
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+figcaption {
+    padding: 0.618em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}

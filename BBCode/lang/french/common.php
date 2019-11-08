@@ -24,7 +24,8 @@ $lang['bbcode.link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du l
 $lang['bbcode.picture'] = 'Ajouter une image : [img]url image[/img]';
 $lang['bbcode.lightbox'] = 'Ajouter une image avec un effet lightbox :<br /> [lightbox=url image][img]url image réduite[/img][/lightbox]';
 $lang['bbcode.picture.url'] = 'Adresse de l\'image';
-$lang['bbcode.picture.width'] = 'Largeur max de la vignette (px)';
+$lang['bbcode.thumbnail.width'] = 'Largeur max de la vignette (px)';
+$lang['bbcode.picture.width'] = 'Largeur max de l\'image (px)';
 $lang['bbcode.picture.add'] = 'Ajouter l\'image';
 $lang['bbcode.figure'] = 'Ajouter une image avec description :<br /> [figure=description][img alt=texte alternatif]url image[/img][/figure]';
 $lang['bbcode.picture.alt'] = 'Texte alternatif';
