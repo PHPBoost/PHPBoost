@@ -186,7 +186,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]",
-			"[figure="$2"]$1[/figure]",
+			"[figure=\"$2\"]$1[/figure]",
 			"[member]$1[/member]",
 			"[moderator]$1[/moderator]",
 		);
@@ -251,8 +251,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
 		$alt = !empty($matches[2]) && $matches[2] != $img_name ? ' alt="' . $matches[2] . '"' : '';
-		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
-		$class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
+		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
+		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 
 		return '[img' . $alt . $style . $class . ']' . $matches[1] . '[/img]';
 	}

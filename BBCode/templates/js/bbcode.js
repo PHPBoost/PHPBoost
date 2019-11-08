@@ -277,7 +277,15 @@ function bbcode_figure(field)
 	var figure_alt = document.getElementById('bb_figure_alt' + field).value;
 	var figure_desc = document.getElementById('bb_figure_desc' + field).value;
 
-	insertbbcode('[figure="' + figure_desc + '"][img alt="'+figure_alt+'"]' + figure_img, '[/img][/figure]', field);
+	if (figure_alt != '' && figure_alt != null)
+		img_tag = '[img alt="'+figure_alt+'"]';
+	else
+		img_tag = '[img]';
+		
+	if(figure_desc != '' && figure_desc != null)
+		insertbbcode('[figure="' + figure_desc + '"]' + img_tag + figure_img, '[/img][/figure]', field);
+	else
+		insertbbcode(img_tag + figure_img, '[/img]', field);
 }
 
 function bbcode_url(field, prompt_text)
