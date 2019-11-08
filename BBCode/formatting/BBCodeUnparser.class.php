@@ -88,16 +88,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparsed module special tags if any.
-	 * The special tags are [link] for module pages or wiki for example.
-	 */
-	protected function unparse_module_special_tags()
-	{
-		foreach ($this->get_module_special_tags() as $pattern => $replacement)
-			$this->content = preg_replace($pattern, $replacement, $this->content);
-	}
-
-	/**
 	 * @desc Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
@@ -227,7 +217,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
@@ -236,7 +226,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		}
 
 		//Wikipedia link
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
 
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
@@ -255,35 +245,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 
 		return '[img' . $alt . $style . $class . ']' . $matches[1] . '[/img]';
-	}
-
-	private function unparse_fa($matches)
-	{
-		$fa_code = "";
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd'));
-		$options_list = isset($matches[3]) ? $matches[3] : '';
-		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
-
-		if ( !empty($options_list) ) {
-			$options = explode(' ', $options_list);
-			foreach ($options as $index => $option) {
-				if (!empty($option)) {
-					if ( $index == 1 && empty($fa_code) ) {
-						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
-					} else {
-						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
-						$fa_code = $fa_code . $option;
-					}
-				}
-			}
-		}
-		else
-		{
-			if ($special_fa)
-				$fa_code = "=" . 'fa' . $matches[1];
-		}
-
-		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
 	}
 
 	/**
@@ -358,36 +319,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			return '[fieldset]' . $matches[3] . '[/fieldset]';
 		}
-	}
-
-	/**
-	 * @desc Callback which allows to unparse the Wikipedia tag
-	 * @param string[] $matches Content matched by a regular expression
-	 * @return string The string in which the wikipedia tag are parsed
-	 */
-	protected function unparse_wikipedia_link($matches)
-	{
-		//On est dans la langue par défaut
-		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
-		{
-			$lang = '';
-		}
-		else
-		{
-			$lang = $matches[1];
-		}
-
-		//L'intitulé du lien est différent du nom de l'article
-		if ($matches[2] != $matches[3])
-		{
-			$page_name = $matches[2];
-		}
-		else
-		{
-			$page_name = '';
-		}
-
-		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 06 18
+ * @version     PHPBoost 5.2 - last update: 2019 11 08
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -142,6 +142,63 @@ abstract class ContentFormattingUnparser extends AbstractParser
 			}
 			return true;
 		}
+	}
+
+	/**
+	 * @desc Unparsed module special tags if any.
+	 * The special tags are [link] for module pages or wiki for example.
+	 */
+	protected function unparse_module_special_tags()
+	{
+		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+			$this->content = preg_replace($pattern, $replacement, $this->content);
+	}
+	
+	/**
+	 * @desc Callback which allows to unparse the font awasome icons tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fa tag are parsed
+	 */
+	protected function unparse_fa_tag($matches)
+	{
+		$fa_code = '';
+		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd'));
+		$options_list = isset($matches[3]) ? $matches[3] : '';
+		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
+
+		if ( !empty($options_list) ) {
+			$options = explode(' ', $options_list);
+			foreach ($options as $index => $option) {
+				if (!empty($option)) {
+					if ( $index == 1 && empty($fa_code) ) {
+						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
+					} else {
+						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
+						$fa_code = $fa_code . $option;
+					}
+				}
+			}
+		}
+		else
+		{
+			if ($special_fa)
+				$fa_code = "=" . 'fa' . $matches[1];
+		}
+
+		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
+	}
+	
+	/**
+	 * @desc Callback which allows to unparse the Wikipedia tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the wikipedia tag are parsed
+	 */
+	protected function unparse_wikipedia_tag($matches)
+	{
+		$lang = ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common')) ? '' : $matches[1];
+		$page_name = ($matches[2] != $matches[3]) ? $matches[2] : '';
+
+		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 }
 ?>

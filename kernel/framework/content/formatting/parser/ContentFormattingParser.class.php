@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 03 29
+ * @version     PHPBoost 5.2 - last update: 2019 11 08
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -290,11 +290,60 @@ abstract class ContentFormattingParser extends AbstractParser
 		return true;
 	}
 
+	/**
+	 * @desc Parses module special tags if any.
+	 * The special tags are [link] for module pages or wiki for example.
+	 */
+	protected function parse_module_special_tags()
+	{
+		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+			$this->content = preg_replace($pattern, $replacement, $this->content);
+	}
+
 	protected function parse_feed_tag()
 	{
 		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
 		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
 		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
+	}
+	
+	/**
+	 * @desc Callback which parses the font awasome icons tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fa tag are parsed
+	 */
+	protected function parse_fa_tag($matches)
+	{
+		$main_fa = (preg_match("/[\s]*(fa-)/i", $matches[3]) ? $matches[3] : 'fa-' . $matches[3]);
+		$fa_code = "";
+		$fa_prefix = "";
+		if ( !empty($matches[1]) ) {
+			$options = str_replace('=', '', explode(',', $matches[1]));
+			foreach ($options as $option) {
+				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fab', 'fal', 'fad')) ) {
+					$fa_prefix = ltrim($option);
+				} else {
+					$fa_code = $fa_code . ' ' . ltrim($option);
+				}
+			}
+		}
+		if ($fa_prefix)
+			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
+		else
+			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
+	}
+
+	/**
+	 * @desc Callback which parses the wikipedia tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the wikipedia tag are parsed
+	 */
+	protected function parse_wikipedia_tag($matches)
+	{
+		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('wikipedia_subdomain', 'editor-common');
+		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
+
+		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
 	}
 }
 ?>

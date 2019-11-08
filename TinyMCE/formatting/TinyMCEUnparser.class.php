@@ -134,16 +134,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparsed module special tags if any.
-	 * The special tags are [link] for module pages or wiki for example.
-	 */
-	protected function unparse_module_special_tags()
-	{
-		foreach ($this->get_module_special_tags() as $pattern => $replacement)
-			$this->content = preg_replace($pattern, $replacement, $this->content);
-	}
-
-	/**
 	 * @desc Function which unparses only the tags supported by TinyMCE
 	 */
 	private function unparse_tinymce_formatting()
@@ -334,7 +324,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		}
 
 		//Liens Wikipédia
-		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
 
 		//Div
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
@@ -385,37 +375,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		}
 	}
 
-	/**
-	 * @desc Unparses the wikipedia links (exists only in BBCode), so it
-	 * uses the BBCode syntax.
-	 * @param string[] $matches The matched elements
-	 * @return string The corresponding BBCode syntax
-	 */
-	private function unparse_wikipedia_link($matches)
-	{
-		//On est dans la langue par défaut
-		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
-		{
-			$lang = '';
-		}
-		else
-		{
-			$lang = $matches[1];
-		}
-
-		//L'intitulé du lien est différent du nom de l'article
-		if ($matches[2] != $matches[3])
-		{
-			$page_name = $matches[2];
-		}
-		else
-		{
-			$page_name = '';
-		}
-
-		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
-	}
-
 	private function unparse_img($matches)
 	{
 		$img_pathinfo = pathinfo($matches[1]);
@@ -450,35 +409,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			}
 		}
 		return '<img src="' . $matches[1] . '" alt="' . $alt . '"' . $style . ' ' . $params . '/>';
-	}
-
-	private function unparse_fa($matches)
-	{
-		$fa_code = "";
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd'));
-		$options_list = isset($matches[3]) ? $matches[3] : '';
-		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
-
-		if ( !empty($options_list) ) {
-			$options = explode(' ', $options_list);
-			foreach ($options as $index => $option) {
-				if (!empty($option)) {
-					if ( $index == 1 && empty($fa_code) ) {
-						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
-					} else {
-						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
-						$fa_code = $fa_code . $option;
-					}
-				}
-			}
-		}
-		else
-		{
-			if ($special_fa)
-				$fa_code = "=" . 'fa' . $matches[1];
-		}
-
-		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
 	}
 
 	/**

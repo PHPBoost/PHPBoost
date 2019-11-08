@@ -272,16 +272,6 @@ class TinyMCEParser extends ContentFormattingParser
 	}
 
 	/**
-	 * @desc Parses module special tags if any.
-	 * The special tags are [link] for module pages or wiki for example.
-	 */
-	protected function parse_module_special_tags()
-	{
-		foreach ($this->get_module_special_tags() as $pattern => $replacement)
-			$this->content = preg_replace($pattern, $replacement, $this->content);
-	}
-
-	/**
 	 * @desc Parses all the features provided by TinyMCE
 	 */
 	private function parse_tinymce_formatting()
@@ -750,7 +740,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//FA tag
 		if (!in_array('fa', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
+			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa_tag'), $this->content);
 		}
 
 		##Nested tags
@@ -783,7 +773,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Wikipedia tag
 		if (!in_array('wikipedia', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_links'), $this->content);
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_tag'), $this->content);
 		}
 
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
@@ -879,25 +869,6 @@ class TinyMCEParser extends ContentFormattingParser
 				$div = '<div style="' . trim($style) . ';">' . $div . '</div>';
 		}
 		return $div;
-	}
-
-	/**
-	 * @desc Parses the wikipedia links. This tag is a BBCode one.
-	 * @param string[] $matches The matched elements
-	 * @return string The PHPBoost HTML syntax
-	 */
-	private function parse_wikipedia_links($matches)
-	{
-		//Langue
-		$lang = LangLoader::get_message('wikipedia_subdomain', 'editor-common');
-		if (!empty($matches[2]))
-		{
-			$lang = $matches[2];
-		}
-
-		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
-
-		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
 	}
 
 	/**
@@ -1045,27 +1016,6 @@ class TinyMCEParser extends ContentFormattingParser
 		$style = !empty($style) ? ' style="' . implode(';', array_filter($style)) . '"' : '';
 
 		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
-	}
-
-	protected function parse_fa($matches)
-	{
-		$main_fa = (preg_match("/[\s]*(fa-)/i", $matches[3]) ? $matches[3] : 'fa-' . $matches[3]);
-		$fa_code = "";
-		$fa_prefix = "";
-		if ( !empty($matches[1]) ) {
-			$options = str_replace('=', '', explode(',', $matches[1]));
-			foreach ($options as $option) {
-				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fab', 'fal', 'fad')) ) {
-					$fa_prefix = ltrim($option);
-				} else {
-					$fa_code = $fa_code . ' ' . ltrim($option);
-				}
-			}
-		}
-		if ($fa_prefix)
-			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
-		else
-			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
 	}
 
 	/**

@@ -60,8 +60,7 @@ class BBCodeParser extends ContentFormattingParser
 		$this->parse_smilies();
 
 		//Interprétation des sauts de ligne
-		$this->content = nl2br($this->content);
-		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', $this->content);
+		$this->content = str_replace(array(' <br />', ' <br>', ' <br/>'), '<br />', nl2br($this->content));
 
 		//Module eventual special tags replacement
 		$this->parse_module_special_tags();
@@ -146,16 +145,6 @@ class BBCodeParser extends ContentFormattingParser
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
-	}
-
-	/**
-	 * @desc Parses module special tags if any.
-	 * The special tags are [link] for module pages or wiki for example.
-	 */
-	protected function parse_module_special_tags()
-	{
-		foreach ($this->get_module_special_tags() as $pattern => $replacement)
-			$this->content = preg_replace($pattern, $replacement, $this->content);
 	}
 
 	/**
@@ -320,13 +309,13 @@ class BBCodeParser extends ContentFormattingParser
 			//FA tag
 			if (!in_array('fa', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9- ]+)\[/fa\]`iuU', array($this, 'parse_fa'), $this->content);
+				$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9- ]+)\[/fa\]`iuU', array($this, 'parse_fa_tag'), $this->content);
 			}
 
 			//Wikipedia tag
 			if (!in_array('wikipedia', $this->forbidden_tags))
 			{
-				$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_links'), $this->content);
+				$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_tag'), $this->content);
 			}
 
 			##Parsage des balises imbriquées.
@@ -543,48 +532,6 @@ class BBCodeParser extends ContentFormattingParser
 			$matches[4] = 'data:' . $matches[4];
 
 		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $class . $style .' />';
-	}
-
-
-	protected function parse_fa($matches)
-	{
-		$main_fa = (preg_match("/[\s]*(fa-)/i", $matches[3]) ? $matches[3] : 'fa-' . $matches[3]);
-		$fa_code = "";
-		$fa_prefix = "";
-		if ( !empty($matches[1]) ) {
-			$options = str_replace('=', '', explode(',', $matches[1]));
-			foreach ($options as $option) {
-				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fab', 'fal', 'fad')) ) {
-					$fa_prefix = ltrim($option);
-				} else {
-					$fa_code = $fa_code . ' ' . ltrim($option);
-				}
-			}
-		}
-		if ($fa_prefix)
-			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
-		else
-			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
-	}
-
-
-	/**
-	 * @desc Callback which parses the wikipedia tag
-	 * @param string[] $matches Content matched by a regular expression
-	 * @return string The string in which the wikipedia tag are parsed
-	 */
-	protected function parse_wikipedia_links($matches)
-	{
-		global $LANG;
-
-		//Langue
-		$lang = LangLoader::get_message('wikipedia_subdomain', 'editor-common');
-		if (!empty($matches[2]))
-		$lang = $matches[2];
-
-		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
-
-		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
 	}
 
 	/**
