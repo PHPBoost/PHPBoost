@@ -86,6 +86,14 @@
 		${LangLoader::get_message('plugins.tooltip.example', 'plugins', 'sandbox')}
 	</article>
 
+	<!-- Source code -->
+	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
+		<div class="formatter-content">
+			{PRE_TOOTLTIP}
+		</div>
+	</div>
+
 	THIS PAGE IS STILL UNDER CONSTRUCTION
 
 	<footer></footer>

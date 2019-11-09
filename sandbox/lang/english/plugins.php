@@ -25,5 +25,13 @@ $lang['plugins.form.title']  = 'Panel title';
 $lang['plugins.form.subtitle']  = 'Subtitle';
 $lang['plugins.form.input']  = 'Text field';
 
-$lang['plugins.tooltip.example']  = 'On over this <span aria-label="This plugin allows the br attribute in description<br /><br />Line break test" style="color: #008800">word</span>, ';
+$lang['plugins.tooltip.example']  = '
+    On over this
+    <span aria-label="
+        This plugin allows the html tags without attribute in description
+        <br /><br />Line break<br /><br />
+        paragraph<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, enim.</p>
+        <i>Italic text</i>
+        <br />etc
+    " style="color: #FF8800">word</span>, the description declared in aria-label attribute appears';
 ?>

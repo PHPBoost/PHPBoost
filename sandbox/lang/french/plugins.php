@@ -25,5 +25,13 @@ $lang['plugins.form.title']  = 'Titre du Panneau';
 $lang['plugins.form.subtitle']  = 'Sous Titre';
 $lang['plugins.form.input']  = 'Champ texte';
 
-$lang['plugins.tooltip.example']  = 'Au survol de ce <span aria-label="ce plugin supporte les balise br dans la description.<br /><br /> Test de saut de ligne" style="color: #FF8800">mot</span>, la description déclarée dans le aria-label apparait. ';
+$lang['plugins.tooltip.example']  = '
+    Au survol de ce
+    <span aria-label="
+        ce plugin supporte les balises html sans attribut dans la description.
+        <br /><br />saut de ligne<br /><br />
+        paragraphe<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, enim.</p>
+        <i>Texte en italique</i>
+        <br />etc
+    " style="color: #FF8800">mot</span>, la description déclarée dans l\'attribut aria-label apparait.';
 ?>

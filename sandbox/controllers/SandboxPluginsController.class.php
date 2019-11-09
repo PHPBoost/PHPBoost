@@ -54,6 +54,7 @@ class SandboxPluginsController extends ModuleController
 		$this->tpl->put_all(array(
 			'PRE_WIZARD_FORM' => file_get_contents('html/plugins/wizard-form.tpl'),
 			'PRE_WIZARD_HTML' => file_get_contents('html/plugins/wizard-html.tpl'),
+			'PRE_TOOTLTIP' => file_get_contents('html/plugins/tooltip.tpl'),
 			'WIZARD_PHP_FORM' => $this->wizard_form->display()
 		));
 
