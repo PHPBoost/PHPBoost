@@ -297,7 +297,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		##Callbacks
 		//FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?(?: title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?(?: title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
 
 		##Remplacement des balises imbriquées
 
