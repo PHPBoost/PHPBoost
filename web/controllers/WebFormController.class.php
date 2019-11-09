@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -62,12 +62,12 @@ class WebFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_weblink()->get_name(), array('required' => true)));
 
-		if (WebService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(WebService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldUrlEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(), array('required' => true)));
@@ -117,7 +117,7 @@ class WebFormController extends ModuleController
 
 		$other_fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
-		if (WebAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->moderation())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
@@ -188,7 +188,7 @@ class WebFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!WebAuthorizationsService::check_authorizations()->write() && WebAuthorizationsService::check_authorizations()->contribution());
+		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_weblink()
@@ -249,7 +249,7 @@ class WebFormController extends ModuleController
 		$weblink->set_name($this->form->get_value('name'));
 		$weblink->set_rewrited_name(Url::encode_rewrite($weblink->get_name()));
 
-		if (WebService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$weblink->set_url(new Url($this->form->get_value('url')));
@@ -264,14 +264,14 @@ class WebFormController extends ModuleController
 			$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
 		}
 
-		if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation())
+		if (!CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation())
 		{
 			if ($weblink->get_id() === null )
 				$weblink->set_creation_date(new Date());
 
 			$weblink->clean_start_and_end_date();
 
-			if (WebAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() && !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write())
+			if (CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->write())
 				$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
 		}
 		else
@@ -366,7 +366,7 @@ class WebFormController extends ModuleController
 				$contribution->set_module('web');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						WebService::get_categories_manager()->get_heritated_authorizations($weblink->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+						CategoriesService::get_categories_manager()->get_heritated_authorizations($weblink->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -441,7 +441,7 @@ class WebFormController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id()));
 
-			$categories = array_reverse(WebService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
+			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)

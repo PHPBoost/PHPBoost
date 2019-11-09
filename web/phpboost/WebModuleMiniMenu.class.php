@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.1 - 2014 08 21
 */
 
@@ -26,7 +26,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return WebAuthorizationsService::check_authorizations()->read();
+		return CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORI, 'web')->read();
 	}
 
 	public function get_menu_content()

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.1 - 2014 08 21
 */
 
@@ -25,7 +25,7 @@ class WebVisitWebLinkController extends AbstractController
 			}
 		}
 
-		if ($this->weblink !== null && !WebAuthorizationsService::check_authorizations($this->weblink->get_id_category())->read())
+		if ($this->weblink !== null && !CategoriesAuthorizationsService::check_authorizations($this->weblink->get_id_category())->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

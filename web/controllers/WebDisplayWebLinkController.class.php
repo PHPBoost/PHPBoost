@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -106,11 +106,11 @@ class WebDisplayWebLinkController extends ModuleController
 		$weblink = $this->get_weblink();
 
 		$current_user = AppContext::get_current_user();
-		$not_authorized = !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() && !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write() && (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() || $weblink->get_author_user()->get_id() != $current_user->get_id());
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() && !CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution() || $weblink->get_author_user()->get_id() != $current_user->get_id());
 
 		switch ($weblink->get_approbation_type()) {
 			case WebLink::APPROVAL_NOW:
-				if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
+				if (!CategoriesAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
@@ -154,7 +154,7 @@ class WebDisplayWebLinkController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'],WebUrlBuilder::home());
 
-		$categories = array_reverse(WebService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

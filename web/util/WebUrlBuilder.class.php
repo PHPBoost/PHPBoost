@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -18,39 +18,6 @@ class WebUrlBuilder
 	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function add_category($id_parent = null)
-	{
-		$id_parent = !empty($id_parent) ? $id_parent . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/' . $id_parent);
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/edit/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/' . $id . '/delete/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 
 	/**

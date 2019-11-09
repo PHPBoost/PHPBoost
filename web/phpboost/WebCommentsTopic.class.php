@@ -3,7 +3,7 @@
   * @copyright 	&copy; 2005-2019 PHPBoost
   * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
   * @author      Julien BRISWALTER <j1.seth@phpboost.com>
-  * @version   	PHPBoost 5.2 - last update: 2016 02 11
+  * @version   	PHPBoost 5.2 - last update: 2019 11 09
   * @since   	PHPBoost 4.1 - 2014 08 21
  */
 
@@ -20,7 +20,7 @@ class WebCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(WebAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->read());
+		$authorizations->set_authorized_access_module(CategoriesAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category(), 'web')->read());
 		return $authorizations;
 	}
 
