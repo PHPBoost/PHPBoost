@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 4.0 - 2014 08 24
 */
 
@@ -47,7 +47,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 		$download_cache = DownloadCache::load();
 
 		//Load categories cache
-		$categories_cache = DownloadService::get_categories_manager()->get_categories_cache();
+		$categories_cache = CategoriesService::get_categories_manager('download')->get_categories_cache();
 
 		$downloadfiles = $download_cache->get_downloadfiles();
 
