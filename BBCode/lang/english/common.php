@@ -26,7 +26,7 @@ $lang['bbcode.picture.url'] = 'Picture url';
 $lang['bbcode.thumbnail.width'] = 'Max width of the thumbnail (px)';
 $lang['bbcode.picture.width'] = 'Max width of the picture (px)';
 $lang['bbcode.picture.add'] = 'Add picture';
-$lang['bbcode.figure'] = 'Add a picture with description: [figure=description text][img alt=alternative text]picture url[/img][/figure]';
+$lang['bbcode.figure'] = 'Add a picture with description: [figure=description text][img alt="alternative text"]picture url[/img][/figure]';
 $lang['bbcode.picture.alt'] = 'Alternative text';
 $lang['bbcode.figure.caption'] = 'Picture description';
 $lang['bbcode.size'] = 'Text size (X between 0 - 49): [size=X]text on size X[/size]';

@@ -27,7 +27,7 @@ $lang['bbcode.picture.url'] = 'Adresse de l\'image';
 $lang['bbcode.thumbnail.width'] = 'Largeur max de la vignette (px)';
 $lang['bbcode.picture.width'] = 'Largeur max de l\'image (px)';
 $lang['bbcode.picture.add'] = 'Ajouter l\'image';
-$lang['bbcode.figure'] = 'Ajouter une image avec description :<br /> [figure=description][img alt=texte alternatif]url image[/img][/figure]';
+$lang['bbcode.figure'] = 'Ajouter une image avec description :<br /> [figure=description][img alt="texte alternatif"]url image[/img][/figure]';
 $lang['bbcode.picture.alt'] = 'Texte alternatif';
 $lang['bbcode.figure.caption'] = 'Description de l\'image';
 $lang['bbcode.size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';

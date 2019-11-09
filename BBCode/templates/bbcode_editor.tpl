@@ -313,7 +313,7 @@ function XMLHttpRequest_preview(field)
 								{@bbcode.picture.alt}
 							</label>
 							<div class="form-field">
-								<input id="bb_figure_alt{FIELD}" type="text" name="bb_figure_alt{FIELD}" />
+								<input id="bb_picture_alt{FIELD}" type="text" name="bb_picture_alt{FIELD}" />
 							</div>
 						</div>
 						<div class="form-element">

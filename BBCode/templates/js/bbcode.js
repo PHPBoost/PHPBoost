@@ -274,7 +274,7 @@ function bbcode_list(field)
 function bbcode_figure(field)
 {
 	var figure_img = document.getElementById('bb_figure_img' + field).value,
-		figure_alt = document.getElementById('bb_figure_alt' + field).value,
+		picture_alt = document.getElementById('bb_picture_alt' + field).value,
 		figure_desc = document.getElementById('bb_figure_desc' + field).value,
 		picture_width = document.getElementById('bb_picture_width' + field).value,
 		img_width = '';
@@ -284,8 +284,8 @@ function bbcode_figure(field)
 	else
 		img_width = '';
 
-	if (figure_alt != '' && figure_alt != null)
-		img_tag = '[img alt="' + figure_alt + '"' + img_width + ']';
+	if (picture_alt != '' && picture_alt != null)
+		img_tag = '[img alt="' + picture_alt + '"' + img_width + ']';
 	else
 		img_tag = '[img' + img_width + ']';
 
