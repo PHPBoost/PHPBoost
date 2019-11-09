@@ -48,3 +48,6 @@ lang/*
 
 #Repertoire commencant par un .
 .*/
+
+#Fichier de configuration nginx
+nginx.conf
