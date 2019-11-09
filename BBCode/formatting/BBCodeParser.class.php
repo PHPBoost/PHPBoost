@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,14 +18,6 @@
 
 class BBCodeParser extends ContentFormattingParser
 {
-	/**
-	 * @desc Builds a BBCodeParser object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 	/**
 	 * @desc Parses the parser content from BBCode to XHTML.
 	 * @return void You will find the result by using the get_content method
@@ -497,24 +489,8 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	protected function parse_title($matches)
 	{
-		$level = (int)$matches[1];
-		switch ($level) {
-			case 1:
-				return '<h2 class="formatter-title">' . $matches[2] . '</h2>';
-			break;
-			case 2:
-				return '<h3 class="formatter-title">' . $matches[2] . '</h3>';
-			break;
-			case 3:
-				return '<h4 class="formatter-title">' . $matches[2] . '</h4>';
-			break;
-			case 4:
-				return '<h5 class="formatter-title">' . $matches[2] . '</h5>';
-			break;
-			case 5:
-				return '<h6 class="formatter-title">' . $matches[2] . '</h6>';
-			break;
-		}
+		$level = (int)$matches[1] + 1;
+		return '<h' . $level . ' class="formatter-title">' . $matches[2] . '</h' . $level . '>';
 	}
 
 

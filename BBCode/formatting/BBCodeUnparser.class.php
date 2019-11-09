@@ -5,7 +5,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.2 - last update: 2019 11 09
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,15 +15,6 @@
 
 class BBCodeUnparser extends ContentFormattingUnparser
 {
-	/**
-	 * @desc Builds a BBCodeUnparser object
-	 */
-	public function __construct()
-	{
-		//We call the parent constructor
-		parent::__construct();
-	}
-
 	/**
 	 * @desc Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
@@ -67,24 +58,14 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_smilies()
 	{
-		//Smilies
-		$smileys_cache = SmileysCache::load()->get_smileys();
-		if (!empty($smileys_cache))
+		$smiley_img_url = $smiley_code = array();
+		foreach (SmileysCache::load()->get_smileys() as $code => $infos)
 		{
-			//Création du tableau de remplacement
-			foreach ($smileys_cache as $code => $infos)
-			{
-				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
-				$smiley_code[] = $code;
-			}
-			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
-			foreach ($smileys_cache as $code => $infos)
-			{
-				$smiley_img_url[] = '`<img class="smiley"(.*) />`suU';
-				$smiley_code[] = $code;
-			}
-			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
+			$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
+			$smiley_code[] = $code;
 		}
+		if (!empty($smiley_img_url))
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 	}
 
 	/**
