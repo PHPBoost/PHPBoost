@@ -17,6 +17,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		$this->content_tables = array(PREFIX . 'calendar_events_content');
 		$this->delete_old_files_list = array(
 			'/controllers/categories/CalendarCategoriesManageController.class.php',
+			'/phpboost/CalendarComments.class.php',
 			'/phpboost/CalendarNewContent.class.php',
 			'/phpboost/CalendarSitemapExtensionPoint.class.php',
 			'/services/CalendarAuthorizationsService.class.php'

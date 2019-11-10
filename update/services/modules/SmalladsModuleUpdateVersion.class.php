@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 04 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 11
  * @since   	PHPBoost 5.1 - 2018 09 20
 */
 
@@ -20,6 +20,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/fields/SmalladsFormFieldSelectSources.class.php',
 			'/lang/english/smallads_english.php',
 			'/lang/english/smallads_french.php',
+			'/phpboost/SmalladsComments.class.php',
 			'/phpboost/SmalladsModuleMiniMenu.class.php',
 			'/templates/smallads.tpl',
 			'/templates/SmalladsModuleMiniMenu.tpl',

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 27
+ * @version   	PHPBoost 5.3 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -713,10 +713,19 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/PHPMailerAutoload.php');
 		$file->delete();
 
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/AbstractShare.class.php');
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/field/FormFieldMultipleFilePicker.class.php');
 		$file->delete();
 
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/field/FormFieldMultipleFilePicker.class.php');
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/comments/extension-point/AbstractCommentsExtensionPoint.class.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/AbstractShare.class.php');
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/FacebookLikeShare.class.php');
@@ -735,12 +744,6 @@ class UpdateServices
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php');
 		$file->delete();
 	}
 
