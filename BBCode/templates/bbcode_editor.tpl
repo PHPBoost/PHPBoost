@@ -86,21 +86,33 @@
 				</div>
 			</li>
 			<li id="format-font-size" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_SIZE}bb_display_block('6', '{FIELD}');return false;" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode-hover{AUTH_SIZE}" aria-label="{@bbcode.size}">
+				<a data-trigger data-target="bb-block6{FIELD}" href="" onclick="{DISABLED_SIZE}bb_display_block('6', '{FIELD}');return false;" class="bbcode-hover{AUTH_SIZE}" aria-label="{@bbcode.size}">
 					<i class="fa fa-fw bbcode-icon-size" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block6{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-size" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=5]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 05 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=10]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 10 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=15]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 15 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=20]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 20 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=25]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 25 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=30]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 30 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=35]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 35 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=40]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 40 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[size=45]', '[/size]', '{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;"> 45 </a></li>
-					</ul>
+				<div id="bb-block6{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.size}</div>
+						</div>
+						<div class="cell-form">
+							<label id="font_size_picker" class="cell-label" for="bb_font_size{FIELD}">{@bbcode.size.picker}</label>
+							<div class="cell-input">
+								<input id="bb_font_size{FIELD}" class="font-size-input" type="number" name="bb_font_size{FIELD}" value="16" min="10" max="49" />
+							</div>
+						</div>
+						<div class="cell-body">
+							<span class="font-size-sample">Lorem ipsum dolor sit amet</span>
+							<script>
+								$('.font-size-input').on('input',function(e){
+									$(".font-size-sample").css('font-size',$(this).val()+'px');
+								});
+							</script>
+						</div>
+						<div class="cell-footer cell-input">
+							<button class="submit" type="submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+						</div>
+					</div>
 				</div>
 			</li>
 			<li id="format-font-family" class="bbcode-elements bkgd-color-op20-hover">

@@ -24,7 +24,9 @@ $lang['bbcode.underline'] = 'Texte souligné : [u]texte[/u]';
 $lang['bbcode.strike'] = 'Texte barré : [s]texte[/s]';
 $lang['bbcode.color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
 $lang['bbcode.bgcolor'] = 'Couleur du fond : [bgcolor=X]texte de couleur X[/bgcolor]';
-$lang['bbcode.size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
+$lang['bbcode.size'] = 'Taille du texte';
+$lang['bbcode.size.tag'] = '[size=X]texte de taille X[/size]';
+$lang['bbcode.size.picker'] = 'Choisir la taille du texte (px)';
 $lang['bbcode.font'] = 'Police : [font=X]texte en police X[/font]';
 
 $lang['bbcode.align'] = 'Alignement';

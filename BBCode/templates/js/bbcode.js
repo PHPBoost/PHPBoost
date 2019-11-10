@@ -167,6 +167,18 @@ function bbcode_color(divID, field, type)
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
 
+function bbcode_size(field)
+{
+	var font_size = document.getElementById('bb_font_size' + field).value;
+	if(font_size <= 10)
+		font_size = 10;
+	else if(font_size >= 49)
+		font_size = 49;
+
+	insertbbcode('[size=' + font_size + ']', '[/size]', field);
+
+}
+
 function bbcode_table(field)
 {
 	var cols = document.getElementById('bb-cols' + field).value;
