@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -95,17 +95,17 @@ class CalendarEvent
 
 	public function is_authorized_to_add()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution();
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution();
 	}
 
 	public function is_authorized_to_edit()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function is_authorized_to_delete()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
@@ -218,7 +218,7 @@ class CalendarEvent
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CalendarUrlBuilder::edit_category($category->get_id())->rel(),
+			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),

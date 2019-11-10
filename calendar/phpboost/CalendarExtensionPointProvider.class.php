@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 2.0 - 2008 07 07
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,7 +55,7 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 
 	public function sitemap()
 	{
-		return new CalendarSitemapExtensionPoint();
+		return new DefaultSitemapCategoriesModule('calendar');
 	}
 
 	public function tree_links()

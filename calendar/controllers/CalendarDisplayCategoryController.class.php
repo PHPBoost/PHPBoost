@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 08 21
 */
 
@@ -58,7 +58,7 @@ class CalendarDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
-		if (!CalendarAuthorizationsService::check_authorizations($id_cat)->read())
+		if (!CategoriesAuthorizationsService::check_authorizations($id_cat)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -73,7 +73,7 @@ class CalendarDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -81,7 +81,7 @@ class CalendarDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = CalendarService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;

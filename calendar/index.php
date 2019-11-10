@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 19
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 11 20
 */
 
@@ -16,7 +16,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Categories
-	new UrlControllerMapper('CalendarCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('DefaultCategoriesManageController', '`^/categories/?$`'),
 	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/add/?$`'),
 	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -68,12 +68,12 @@ class CalendarFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $event_content->get_title(), array('required' => true)));
 
-		if (CalendarService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$fieldset->add_field(CalendarService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $event_content->get_category_id(), $search_category_children_options));
+			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $event_content->get_category_id(), $search_category_children_options));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
@@ -173,7 +173,7 @@ class CalendarFormController extends ModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$event_content->is_registration_authorized()));
 		$fieldset->add_field($auth_setter);
 
-		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
 			if ($this->get_event()->get_id() !== null)
 				$fieldset->add_field(new FormFieldCheckbox('cancelled', $this->lang['calendar.labels.cancel'], $this->get_event()->get_content()->is_cancelled()));
@@ -206,7 +206,7 @@ class CalendarFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!CalendarAuthorizationsService::check_authorizations()->write() && CalendarAuthorizationsService::check_authorizations()->contribution());
+		return (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_event()
@@ -274,7 +274,7 @@ class CalendarFormController extends ModuleController
 		$event_content->set_title($this->form->get_value('title'));
 		$event_content->set_rewrited_title(Url::encode_rewrite($this->form->get_value('title')));
 
-		if (CalendarService::get_categories_manager()->get_categories_cache()->has_categories())
+		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$event_content->set_category_id($this->form->get_value('category_id')->get_raw_value());
 
 		$event_content->set_contents($this->form->get_value('contents'));
@@ -289,7 +289,7 @@ class CalendarFormController extends ModuleController
 				$event_content->hide_map();
 		}
 
-		if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
+		if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->moderation())
 		{
 			if ($event->get_id() !== null && $this->form->get_value('cancelled'))
 				$event_content->cancel();
@@ -301,7 +301,7 @@ class CalendarFormController extends ModuleController
 			else
 				$event_content->unapprove();
 		}
-		else if (CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->contribution() && !CalendarAuthorizationsService::check_authorizations($event_content->get_category_id())->write())
+		else if (CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->contribution() && !CategoriesAuthorizationsService::check_authorizations($event_content->get_category_id())->write())
 			$event_content->unapprove();
 
 		if ($this->form->get_value('registration_authorized'))
@@ -472,25 +472,22 @@ class CalendarFormController extends ModuleController
 
 	private function contribution_actions(CalendarEvent $event, $id_event)
 	{
-		if ($event->get_id() === null)
+		if ($this->is_contributor_member() && $event->get_id() === null)
 		{
-			if ($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id_event);
-				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($event->get_content()->get_title());
-				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module('calendar');
-				$contribution->set_auth(
-					Authorizations::capture_and_shift_bit_auth(
-						CalendarService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-					)
-				);
-				ContributionService::save_contribution($contribution);
-			}
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($id_event);
+			$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
+			$contribution->set_entitled($event->get_content()->get_title());
+			$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module('calendar');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					CategoriesService::get_categories_manager()->get_heritated_authorizations($event->get_content()->get_category_id(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
+			ContributionService::save_contribution($contribution);
 		}
 		else
 		{

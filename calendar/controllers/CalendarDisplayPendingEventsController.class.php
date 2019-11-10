@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 31
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 09 29
 */
 
@@ -35,12 +35,12 @@ class CalendarDisplayPendingEventsController extends ModuleController
 
 	public function build_view(HTTPRequestCustom $request)
 	{
-		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories();
 
 		$condition = 'WHERE approved = 0
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
-		' . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
+		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
 		$parameters = array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
@@ -87,7 +87,7 @@ class CalendarDisplayPendingEventsController extends ModuleController
 
 	private function check_authorizations()
 	{
-		if (!(CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution() || CalendarAuthorizationsService::check_authorizations()->moderation()))
+		if (!(CategoriesAuthorizationsService::check_authorizations()->write() || CategoriesAuthorizationsService::check_authorizations()->contribution() || CategoriesAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

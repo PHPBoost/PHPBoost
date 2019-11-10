@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 19
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 11 20
 */
 
@@ -28,38 +28,6 @@ class CalendarUrlBuilder
 	public static function manage_events()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function add_category()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/add/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function edit_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/edit/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function delete_category($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/'. $id .'/delete/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function manage_categories()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/categories/');
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 28
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 11 24
 */
 
@@ -45,7 +45,7 @@ class CalendarAjaxCalendarController extends AbstractController
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$config = CalendarConfig::load();
-		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
+		$categories = CategoriesService::get_categories_manager('calendar')->get_categories_cache()->get_categories();
 
 		$year = $this->year ? $this->year : min($request->get_int('calendar_ajax_year', date('Y')), 2037);
 		$month = $this->month ? $this->month : min($request->get_int('calendar_ajax_month', date('n')), 12);
@@ -88,7 +88,7 @@ class CalendarAjaxCalendarController extends AbstractController
 
 		foreach ($events as $event)
 		{
-			if (CalendarAuthorizationsService::check_authorizations($event['id_category'])->read())
+			if (CategoriesAuthorizationsService::check_authorizations($event['id_category'], 'calendar')->read())
 			{
 				$start_date = new Date($event['start_date'], Timezone::SERVER_TIMEZONE);
 				$end_date = new Date($event['end_date'], Timezone::SERVER_TIMEZONE);

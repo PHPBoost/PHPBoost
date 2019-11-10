@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 04 13
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 11 22
 */
 
@@ -26,7 +26,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return !Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read();
+		return !Url::is_current_url('/calendar/') && CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'calendar')->read();
 	}
 
 	public function get_menu_content()

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,18 +12,19 @@ class CalendarFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		return CalendarService::get_categories_manager()->get_feeds_categories_module()->get_feed_list();
+		return CategoriesService::get_categories_manager('calendar')->get_feeds_categories_module()->get_feed_list();
 	}
 
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		if (CalendarService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
+		$module_id = 'calendar';
+		if (CategoriesService::get_categories_manager($module_id)->get_categories_cache()->category_exists($idcat))
 		{
 			$now = new Date();
 			$lang = LangLoader::get('common', 'calendar');
 			$querier = PersistenceContext::get_querier();
 
-			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($idcat);
+			$category = CategoriesService::get_categories_manager($module_id)->get_categories_cache()->get_category($idcat);
 
 			$site_name = GeneralConfig::load()->get_site_name();
 			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
@@ -38,7 +39,7 @@ class CalendarFeedProvider implements FeedProvider
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-			$categories = CalendarService::get_categories_manager()->get_children($idcat, new SearchCategoryChildrensOptions(), true);
+			$categories = CategoriesService::get_categories_manager($module_id)->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 
 			$result = $querier->select('SELECT *
@@ -72,7 +73,7 @@ class CalendarFeedProvider implements FeedProvider
 					$item->set_desc(FormatingHelper::second_parse($event->get_content()->get_contents()) . ($event->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
 					$item->set_date($event->get_start_date());
 					$item->set_image_url($event->get_content()->get_picture()->rel());
-					$item->set_auth(CalendarService::get_categories_manager()->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+					$item->set_auth(CategoriesService::get_categories_manager($module_id)->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 					$data->add_item($item);
 				}
 			}

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -67,7 +67,7 @@ class CalendarEventContent
 
 	public function get_category()
 	{
-		return CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->category_id);
+		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->category_id);
 	}
 
 	public function set_title($title)
@@ -391,7 +391,7 @@ class CalendarEventContent
 
 		$this->hide_map();
 
-		if (CalendarAuthorizationsService::check_authorizations()->write())
+		if (CategoriesAuthorizationsService::check_authorizations()->write())
 			$this->approve();
 		else
 			$this->unapprove();

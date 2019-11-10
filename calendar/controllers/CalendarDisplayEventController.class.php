@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2013 07 29
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,7 +94,7 @@ class CalendarDisplayEventController extends ModuleController
 		if (!$event->get_content()->is_approved())
 		{
 			$current_user = AppContext::get_current_user();
-			if ((!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->moderation() && !CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() && (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->contribution() || $event->get_content()->get_author_user()->get_id() != $current_user->get_id())) || ($current_user->get_id() == User::VISITOR_LEVEL))
+			if ((!CategoriesAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->moderation() && !CategoriesAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() && (!CategoriesAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->contribution() || $event->get_content()->get_author_user()->get_id() != $current_user->get_id())) || ($current_user->get_id() == User::VISITOR_LEVEL))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -102,7 +102,7 @@ class CalendarDisplayEventController extends ModuleController
 		}
 		else
 		{
-			if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read())
+			if (!CategoriesAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);

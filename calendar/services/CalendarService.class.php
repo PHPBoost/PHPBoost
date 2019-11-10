@@ -11,8 +11,6 @@ class CalendarService
 {
 	private static $db_querier;
 
-	private static $categories_manager;
-
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
@@ -220,7 +218,7 @@ class CalendarService
 	 */
 	public static function get_all_current_month_events($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
-		$authorized_categories = CalendarService::get_authorized_categories($id_category);
+		$authorized_categories = CategoriesService::get_authorized_categories($id_category);
 
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
 		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
@@ -241,31 +239,6 @@ class CalendarService
 			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year),
 			'authorized_categories' => $authorized_categories
 		));
-	}
-
-	 /**
-	 * @desc Return the authorized categories.
-	 */
-	public static function get_authorized_categories($current_id_category)
-	{
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = self::get_categories_manager()->get_children($current_id_category, $search_category_children_options, true);
-		return array_keys($categories);
-	}
-
-	 /**
-	 * @desc Return the categories manager.
-	 */
-	public static function get_categories_manager()
-	{
-		if (self::$categories_manager === null)
-		{
-			$categories_items_parameters = new CategoriesItemsParameters();
-			$categories_items_parameters->set_table_name_contains_items(CalendarSetup::$calendar_events_content_table);
-			self::$categories_manager = new CategoriesManager(CalendarCategoriesCache::load(), $categories_items_parameters);
-		}
-		return self::$categories_manager;
 	}
 }
 ?>
