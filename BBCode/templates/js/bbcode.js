@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 18
+ * @version     PHPBoost 5.2 - last update: 2019 11 09
  * @since       PHPBoost 1.2 - 2005 08 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,67 +146,6 @@ function insertbbcode(open_balise, close_balise, field)
 	return;
 }
 
-//Insertion dans le champs des codes de type select.
-function insertbbcode_select(id_select, close_balise, field)
-{
-	var select = document.getElementById(id_select + field);
-
-	if( select.value != '' )
-		insertbbcode('[' + id_select + '=' + select.value + ']', close_balise, field);
-
-	//On remet la valeur par défaut.
-	select.options[0].selected = true;
-
-	return;
-}
-
-//Insertion dans le champs des codes de type select.
-function insertbbcode_select2(id_select, field)
-{
-	var select = document.getElementById(id_select + field);
-
-	if( select.value != '' )
-		insertbbcode('[' + select.value + ']', '[/' + select.value + ']', field);
-
-	//On remet la valeur par défaut.
-	select.options[0].selected = true;
-
-	return;
-}
-
-//Conserve la configuration de la barre bbcode.
-function set_bbcode_preference(divID)
-{
-	if( getCookie('hide-bbcode') == 0 )
-	{
-		jQuery('#bbcode-expanded').removeClass('expand');
-		jQuery( "." + divID).each(function(){
-			jQuery( "." + divID).hide();
-		});
-	}
-}
-
-//Masquage du div.
-function show_bbcode_div(divID)
-{
-	if( getCookie('hide-bbcode') == 0 )
-	{
-		jQuery('#bbcode-expanded').addClass('expand');
-		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
-		jQuery( "." + divID).each(function(){
-			jQuery( "." + divID).fadeIn(300);
-		});
-	}
-	else
-	{
-		jQuery( "." + divID).each(function(){
-			jQuery( "." + divID).fadeOut(300);
-		});
-		jQuery('#bbcode-expanded').removeClass('expand');
-		sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
-	}
-}
-
 function bbcode_color(divID, field, type)
 {
 	var i;
@@ -295,16 +234,23 @@ function bbcode_figure(field)
 		insertbbcode(img_tag + figure_img, '[/img]', field);
 }
 
-function bbcode_url(field, prompt_text)
+function bbcode_link(field)
 {
-	var url = prompt(prompt_text, '');
-	if(url != '' && url != null)
-		insertbbcode('[url=' + url + ']', '[/url]', field);
+	var link_url = document.getElementById('bb_link_url' + field).value,
+		link_name = document.getElementById('bb_link_name' + field).value;
+	if(link_url != '' && link_url != null)
+	{
+		if(link_name != '' && link_url != null)
+			insertbbcode('[url=' + link_url + ']' + link_name, '[/url]', field);
+		else
+			insertbbcode('[url=' + link_url + ']', '[/url]', field);
+	}
+
 }
 
-function bbcode_quote(field, prompt_text)
+function bbcode_quote(field)
 {
-	var author = prompt(prompt_text, '');
+	var author = document.getElementById('bb_quote_author' + field).value;
 	if(author != null)
 	{
 		if(author != '')
@@ -316,8 +262,8 @@ function bbcode_quote(field, prompt_text)
 
 function bbcode_lightbox(field)
 {
-	var url = document.getElementById('bbcode_lightbox' + field).value;
-	var picture_width = document.getElementById('bbcode_lightbox_width' + field).value;
+	var url = document.getElementById('bb_lightbox' + field).value;
+	var picture_width = document.getElementById('bb_lightbox_width' + field).value;
 	if(url != '' && url != null)
 		insertbbcode('[lightbox=' + url + '][img style="max-width: '+picture_width+'px;"]' + url, '[/img][/lightbox]', field);
 }
@@ -331,43 +277,77 @@ function bbcode_anchor(field, prompt_text)
 		insertbbcode('[anchor]', '[/anchor]', field);
 }
 
-function bbcode_abbr(field, prompt_text)
+function bbcode_abbr(field)
 {
-	var desc = prompt(prompt_text, '');
+	var desc = document.getElementById('bb_abbr_desc' + field).value;
 	if(desc != '' && desc != null)
 		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
 	else
 		insertbbcode('[abbr]', '[/abbr]', field);
 }
 
-function bbcode_acronym(field, prompt_text)
+function bbcode_fieldset(field)
 {
-	var desc = prompt(prompt_text, '');
-	if(desc != '' && desc != null)
-		insertbbcode('[acronym=' + desc + ']', '[/acronym]', field);
-	else
-		insertbbcode('[acronym]', '[/acronym]', field);
-}
-
-function bbcode_fieldset(field, prompt_text)
-{
-	var legend = prompt(prompt_text, '');
+	var legend = document.getElementById('bb_legend' + field).value;
 	if(legend != '' && legend != null)
 		insertbbcode('[fieldset legend="' + legend + '"]', '[/fieldset]', field);
 	else
 		insertbbcode('[fieldset]', '[/fieldset]', field);
 }
 
-function bbcode_mail(field, prompt_text)
+function bbcode_mail(field)
 {
-	var mail = prompt(prompt_text, '');
-	if(mail != '' && mail != null)
-		insertbbcode('[mail=' + mail + ']', '[/mail]', field);
+	var mail_url = document.getElementById('bb_mail_url' + field).value,
+		mail_name = document.getElementById('bb_mail_name' + field).value;
+	if(mail_url != '' && mail_url != null)
+	{
+		if(mail_name != '' && mail_name != null)
+			insertbbcode('[mail=' + mail_url + ']' + mail_name, '[/mail]', field);
+		else
+			insertbbcode('[mail=' + mail_url + ']', '[/mail]', field);
+	}
+
 }
 
-function bbcode_feed(field, prompt_text)
+function bbcode_feed(field)
 {
-	var feed = prompt(prompt_text, '');
-	if(feed != '' && feed != null)
-		insertbbcode('[feed cat="0" number="5"]' + feed.toLowerCase(), '[/feed]', field);
+	var feed_module = document.getElementById('bb_module_name' + field).value,
+		feed_cat = document.getElementById('bb_feed_category' + field).value,
+		feed_number = document.getElementById('bb_feed_number' + field).value;
+
+	if(feed_cat <= 0 || feed_cat == '' || feed_cat == null)
+		feed_cat = 0;
+
+	if(feed_number <= 0 || feed_number == '' || feed_number == null)
+		feed_number = 1;
+
+	if(feed_module != '' && feed_module != null)
+		insertbbcode('[feed cat="' + feed_cat + '" number="' + feed_number + '"]' + feed_module.toLowerCase(), '[/feed]', field);
+}
+
+function bbcode_code(field)
+{
+	var code_name = document.getElementById('bb_code_name' + field).value,
+		code_custom_name = document.getElementById('bb_code_custom_name' + field).value,
+		code_line = document.getElementById('bb_code_line' + field).checked;
+
+		if(code_custom_name != '' && code_custom_name != null)
+		{
+			if(code_line)
+				insertbbcode('[code=' + code_custom_name + ',0,1]', '[/code]', field);
+			else
+				insertbbcode('[code=' + code_custom_name + ']', '[/code]', field);
+		}
+		else if(code_name != '' && code_name != null)
+		{
+			if(code_line)
+				insertbbcode('[code=' + code_name + ',0,1]', '[/code]', field);
+			else
+				insertbbcode('[code=' + code_name + ']', '[/code]', field);
+		}
+		else
+			insertbbcode('[code]', '[/code]', field);
+
+
+
 }

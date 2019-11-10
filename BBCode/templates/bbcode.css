@@ -12,7 +12,9 @@
 }
 
 .bbcode-containers {
-	display: table-cell;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	font-size: 0;
 }
 
@@ -35,6 +37,7 @@
 }
 
 @media (min-width: 769px) {
+	.bbcode-containers { flex-direction: row; }
 	.bbcode-container { position: relative; }
 }
 
@@ -43,25 +46,10 @@
 	font-size: 1.456rem;
 }
 
-.bbcode-elements .content-panel {
-	max-width: 400px;
-}
-
 .constraint-status-right .bbcode-elements input,
+.constraint-status-right .bbcode-elements select,
 .constraint-status-right .bbcode-elements textarea {
 	padding-left: 0.618em;
-}
-
-.bbcode-elements .content-panel .input-element-button input {
-	max-width: calc(100% - 2.618em);
-}
-
-.bbcode-elements .content-panel .fieldset-submit {
-	margin: 0;
-}
-
-.bbcode-elements .content-panel .fieldset-inset {
-	padding: 0;
 }
 
 @media (min-width: 769px) {
@@ -83,23 +71,6 @@
 	text-decoration: none;
 }
 
-.bbcode-elements-more {
-	display: table-cell;
-	margin: auto;
-	width: 1.309em;
-	vertical-align: middle;
-	font-size: 1rem;
-	text-align: center;
-}
-
-.bbcode-backspace {display: none;}
-
-@media (min-width: 769px) {
-	.bbcode-backspace {
-		display: block;
-	}
-}
-
 .bbcode-block-container {
 	position: absolute;
 	top: 120%;
@@ -111,21 +82,13 @@
 	text-align: center;
 }
 
-.bbcode-block {
-	margin: 0;
+.bbcode-right .bbcode-block-container {
+	left: auto;
+	right: 0;
 }
 
-.bbcode-block .form-element{
-	width: 100%;
-	-webkit-flex-direction: row;
-	-ms-flex-direction: row;
-	flex-direction: row;
-	-webkit-justify-content: space-between;
-	-ms-flex-pack: justify;
-	justify-content: space-between;
-	-webkit-align-content: space-between;
-	-ms-flex-line-pack: justify;
-	align-content: space-between;
+.bbcode-block {
+	margin: 0;
 }
 
 .bbcode-block a {
@@ -152,6 +115,11 @@
 		left: 5px;
 		top: -7px;
 		border-width: 0 8px 8px 8px;
+	}
+
+	.bbcode-right .bbcode-block-container:after {
+		left: auto;
+		right: 5px;
 	}
 }
 
@@ -216,47 +184,10 @@
 	text-align: center;
 }
 
-.bbcode-block-code {
-	height: 300px;
-	overflow-y: scroll;
-}
-
-.bbcode-block-code > ul {
-	margin-left: 0;
-}
-
-.bbcode-block-code li {
-	padding: 0.228em;
-}
-
 .bbcode-block-list li.bbcode-code-title {
 	padding: 0.309em 0 0;
 	font-weight: bold;
 }
-
-#bbcode-expanded .form-element {
-	margin: 0 !important;
-	padding: 0.309em;
-}
-
-.bbcode-block .form-element label.smaller {
-	font-size: 0.809em;
-	width: 70%;
-	padding: 0;
-}
-
-.bbcode-block .form-element .form-field {
-	width: 23%;
-}
-
-.bbcode-block .form-element input {
-	padding: 0 0.309em;
-}
-
-.bbcode-form-element-text {
-	padding: 0.309em;
-	text-align: center;
- }
 
 .bbcode-block-fonts {
 	height: 300px;
@@ -266,13 +197,9 @@
 @media (min-width: 769px){
 	.bbcode-block-fonts 	{ width: 120px; }
 	.bbcode-block-title 	{ width: 70px;  }
-	.bbcode-block-ul 		{ width: 170px; }
 	.bbcode-block-block 	{ width: 100px; }
-	.bbcode-block-message 	{ width: 120px; }
 	.bbcode-block-size 		{ width: 40px;  }
 	.bbcode-block-hide 		{ width: 90px;  }
-	.bbcode-block-table 	{ width: 190px; }
-	.bbcode-block-code 		{ width: 130px; }
 	.bbcode-block-smileys   { width: 188px; }
 	.bbcode-block-fa        { width: 272px; }
 	.bbcode-block-aligns    { width: 120px; }
@@ -338,6 +265,7 @@
 .bbcode-icon-mail:before        { content: "\f0e0"; } /* copy envelope */
 .bbcode-icon-feed:before        { content: "\f09e"; } /* copy rss */
 .bbcode-icon-bgcolor:before     { content: "\f1fc"; } /* copy paint-brush */
+.bbcode-icon-wikipedia:before   { content: "\f266"; } /* copy wikipedia */
 
 .bbcode-icon-flash,
 .bbcode-icon-image,
