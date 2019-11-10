@@ -209,30 +209,6 @@ function bbcode_list(field)
 	insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
 }
 
-function bbcode_figure(field)
-{
-	var figure_img = document.getElementById('bb_figure_img' + field).value,
-		picture_alt = document.getElementById('bb_picture_alt' + field).value,
-		figure_desc = document.getElementById('bb_figure_desc' + field).value,
-		picture_width = document.getElementById('bb_picture_width' + field).value,
-		img_width = '';
-
-	if (picture_width != '' && picture_width != null)
-		img_width = ' style="max-width:' + picture_width + 'px"';
-	else
-		img_width = '';
-
-	if (picture_alt != '' && picture_alt != null)
-		img_tag = '[img alt="' + picture_alt + '"' + img_width + ']';
-	else
-		img_tag = '[img' + img_width + ']';
-
-	if(figure_desc != '' && figure_desc != null)
-		insertbbcode('[figure=' + figure_desc + ']' + img_tag + figure_img, '[/img][/figure]', field);
-	else
-		insertbbcode(img_tag + figure_img, '[/img]', field);
-}
-
 function bbcode_link(field)
 {
 	var link_url = document.getElementById('bb_link_url' + field).value,
@@ -260,6 +236,34 @@ function bbcode_quote(field)
 	}
 }
 
+function bbcode_sound(field)
+{
+	var sound_url = document.getElementById('bb_sound_url' + field).value;
+	if(sound_url != '' && sound_url != null)
+		insertbbcode('[sound]' + sound_url, '[/sound]', field);
+}
+
+function bbcode_movie(field)
+{
+	var movie_url = document.getElementById('bb_movie_url' + field).value,
+		movie_width = document.getElementById('bb_movie_width' + field).value,
+		movie_height = document.getElementById('bb_movie_height' + field).value,
+		movie_poster = document.getElementById('bb_movie_poster' + field).value;
+	if(movie_width <= 100)
+		movie_width = 100;
+	if(movie_height <= 100)
+		movie_height = 100;
+
+	if(movie_url != '' && movie_url != null)
+	{
+		if(movie_poster != '' && movie_poster != null)
+			insertbbcode('[movie='+ movie_width +',' + movie_height + ' poster=' + movie_poster + ']' + movie_url, '[/movie]', field);
+		else
+			insertbbcode('[movie='+ movie_width +',' + movie_height + ']' + movie_url, '[/movie]', field);
+	}
+
+}
+
 function bbcode_lightbox(field)
 {
 	var picture_url = document.getElementById('bb_lightbox' + field).value,
@@ -268,11 +272,30 @@ function bbcode_lightbox(field)
 		insertbbcode('[lightbox=' + picture_url + '][img style="max-width: '+picture_width+'px;"]' + picture_url, '[/img][/lightbox]', field);
 }
 
-function bbcode_sound(field)
+function bbcode_figure(field)
 {
-	var sound_url = document.getElementById('bb_sound_url' + field).value;
-	if(sound_url != '' && sound_url != null)
-		insertbbcode('[sound]' + sound_url, '[/sound]', field);
+	var figure_img = document.getElementById('bb_figure_img' + field).value,
+		picture_alt = document.getElementById('bb_picture_alt' + field).value,
+		figure_desc = document.getElementById('bb_figure_desc' + field).value,
+		picture_width = document.getElementById('bb_picture_width' + field).value,
+		img_width = '';
+	if(picture_width <= 100)
+		picture_width = 100;
+
+	if (picture_width != '' && picture_width != null)
+		img_width = ' style="max-width:' + picture_width + 'px"';
+	else
+		img_width = '';
+
+	if (picture_alt != '' && picture_alt != null)
+		img_tag = '[img alt="' + picture_alt + '"' + img_width + ']';
+	else
+		img_tag = '[img' + img_width + ']';
+
+	if(figure_desc != '' && figure_desc != null)
+		insertbbcode('[figure=' + figure_desc + ']' + img_tag + figure_img, '[/img][/figure]', field);
+	else
+		insertbbcode(img_tag + figure_img, '[/img]', field);
 }
 
 function bbcode_anchor(field, prompt_text)

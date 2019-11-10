@@ -515,7 +515,11 @@
 				</a>
 			</li>
 			<li id="links-sound" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block26{FIELD}" href="" onclick="{DISABLED_SOUND}bb_display_block('26', '{FIELD}');return false;" class="bbcode-hover{AUTH_SOUND}" aria-label="{@bbcode.sound}<br />{@bbcode.sound.tag}">
+				<a data-trigger data-target="bb-block26{FIELD}"
+					href=""
+					onclick="{DISABLED_SOUND}bb_display_block('26', '{FIELD}');return false;"
+					class="bbcode-hover{AUTH_SOUND}"
+					aria-label="{@bbcode.sound}<br />{@bbcode.sound.tag}">
 					<i class="fa fa-fw bbcode-icon-sound{AUTH_SOUND}" aria-hidden="true"></i>
 				</a>
 				<div id="bb-block26{FIELD}" class="modal modal-animation" style="display: none;">
@@ -538,20 +542,55 @@
 				</div>
 			</li>
 			<li id="links-movie" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_MEDIA}bb_display_block('16', '{FIELD}');return false;" onmouseover="{DISABLED_MEDIA}bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bbcode.media}">
-					<span class="fa-stack bbcode-icons-stack">
-						<i class="fa fa-music fa-stack-1x"></i>
-						<i class="fas fa-film fa-stack-1x"></i>
-		            </span>
+				<a data-trigger data-target="bb-block16{FIELD}"
+					href=""
+					onclick="{DISABLED_SOUND}bb_display_block('16', '{FIELD}');return false;"
+					class="bbcode-hover{AUTH_MOVIE}"
+					aria-label="{@bbcode.movie}<br />{@bbcode.movie.tag}">
+					<i class="fa fa-fw bbcode-icon-movie{AUTH_MOVIE}" aria-hidden="true"></i>
 				</a>
-				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block16{FIELD}">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bbcode.movie.label}"> {@bbcode.movie} </a></li>
-						<li><a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bbcode.youtube.label}"> {@bbcode.youtube} </a></li>
-						<li><a href="" onclick="{DISABLED_DAILYMOTION}insertbbcode('[dailymotion]', '[/dailymotion]', '{FIELD}');return false;" aria-label="{@bbcode.dailymotion.label}"> {@bbcode.dailymotion} </a></li>
-						<li><a href="" onclick="{DISABLED_VIMEO}insertbbcode('[vimeo]', '[/vimeo]', '{FIELD}');return false;" aria-label="{@bbcode.vimeo.label}"> {@bbcode.vimeo} </a></li>
-						<li><a href="" onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');return false;" aria-label="{@bbcode.swf.label}"> {@bbcode.swf} </a></li>
-					</ul>
+				<div id="bb-block16{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div id="bbmovie{FIELD}" class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.movie}</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_movie_url{FIELD}">
+								{@bbcode.movie.url}
+
+							</label>
+							<div class="cell-input input-element-button">
+								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" value="" />
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+							</div>
+						</div>
+						<div class="cell-body">
+							<span class="field-description">{@bbcode.movie.format}</span>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_movie_width{FIELD}">{@bbcode.movie.width}</label>
+							<div class="cell-input">
+								<input id="bb_movie_width{FIELD}" type="number" name="bb_movie_width{FIELD}" min="100" value="800" />
+							</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_movie_height{FIELD}">{@bbcode.movie.height}</label>
+							<div class="cell-input">
+								<input id="bb_movie_height{FIELD}" type="number" name="bb_movie_height{FIELD}" min="100" value="450" />
+							</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_movie_poster{FIELD}">{@bbcode.movie.poster}</label>
+							<div class="cell-input input-element-button">
+								<input id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+							</div>
+						</div>
+						<div class="cell-footer cell-input">
+							<button class="submit" type="submit" onclick="{DISABLED_MOVIE}bbcode_movie('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+						</div>
+					</div>
 				</div>
 			</li>
 			<li id="link-lightbox" class="bbcode-elements bkgd-color-op20-hover">
@@ -588,7 +627,10 @@
 				</div>
 			</li>
 			<li id="link-figure" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" data-trigger data-target="bb-block17{FIELD}" onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;" class="bbcode-hover{AUTH_FIGURE}" aria-label="{@bbcode.figure} : <br />{@bbcode.figure.tag}">
+				<a href="" data-trigger data-target="bb-block17{FIELD}"
+					onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;"
+					class="bbcode-hover{AUTH_FIGURE}"
+					aria-label="{@bbcode.figure} : <br />{@bbcode.figure.tag}">
 					<i class="fa fa-fw  bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
 				</a>
 				<div id="bb-block17{FIELD}" class="modal modal-animation" style="display: none;">
