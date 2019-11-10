@@ -2,10 +2,10 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-themes-container">
 		<header class="legend">{@themes.installed_theme}</header>
-		<div class="cell-flex cell-flex-3">
+		<div class="cell-flex cell-columns-3">
 			# START themes_installed #
 				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-					<header class="cell-title">
+					<header class="cell-header">
 						# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 							# IF themes_installed.C_COMPATIBLE #
 								<div class="mini-checkbox">

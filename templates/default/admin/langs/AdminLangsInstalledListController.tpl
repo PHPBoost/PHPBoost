@@ -2,10 +2,10 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-langs-container">
 		<header class="legend">{@langs.installed_langs}</header>
-		<div class="cell-flex cell-flex-3">
+		<div class="cell-flex cell-columns-3">
 			# START langs_installed #
 			<article class="cell addon# IF langs_installed.C_IS_DEFAULT_LANG # default-addon# ENDIF ## IF NOT langs_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-				<header class="cell-title">
+				<header class="cell-header">
 					# IF C_MORE_THAN_ONE_LANG_INSTALLED #
 						# IF langs_installed.C_COMPATIBLE #
 							<div class="mini-checkbox">

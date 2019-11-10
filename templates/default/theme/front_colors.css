@@ -182,12 +182,20 @@ i.message-announce-new { color: #62CF5D; }
 .sharing-element-print > a    { background-color: #999999; }
 .sharing-element-sms > a      { background-color: #999999; }
 
+/* --- cell.css & co
+    #####  #####  #      #
+    #      #      #      #
+    #      ###    #      #
+    #      #      #      #
+    #####  #####  #####  #####
+----------------------------------------------------------------------------- */
 
-.cell-title,
+.cell-header,
 .cell-body,
 .cell-list,
 .cell-footer,
-.cell-table {
+.cell-table,
+.cell-form {
 	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
@@ -196,7 +204,7 @@ i.message-announce-new { color: #62CF5D; }
 	border-color: #366493;
 }
 
-.no-style .cell-title,
+.no-style .cell-header,
 .no-style .cell-body,
 .no-style .cell-list,
 .no-style .cell-table,
@@ -205,14 +213,14 @@ i.message-announce-new { color: #62CF5D; }
 	border-color: transparent!important;
 }
 
-.new-content .cell-title,
+.new-content .cell-header,
 .new-content .cell-body,
 .new-content .cell-list,
 .new-content .cell-footer {
 	border-color: #2F9674;
 }
 
-.not-compatible .cell-title,
+.not-compatible .cell-header,
 .not-compatible .cell-body,
 .not-compatible .cell-list,
 .not-compatible .cell-footer {
@@ -229,6 +237,10 @@ i.message-announce-new { color: #62CF5D; }
 
 .cell-thumbnail a:hover {
     color: #FFFFFF;
+}
+
+.cell-modal .content-panel.cell {
+	background-color: transparent;
 }
 
 /* -- table.css
@@ -926,6 +938,7 @@ a[class*='lightcase-icon-']:hover {
     #   #  #   #    #    #  #   #          #
     #   #  #####    #    #   #  #####  #####
 ----------------------------------------------------------------------------- */
+
 .user-card {
 	background-color: #EFEFEF;
 	border-color: #DDDDDD;

@@ -1,3 +1,7 @@
+.cell-modal .cell {
+	max-width: 512px;
+}
+
 .cell {
 	padding: 0.618em;
 	margin: 0;
@@ -13,39 +17,40 @@
 
 .cell header,
 .cell footer,
-.cell-title button {
+.cell-header button {
 	margin: 0;
 }
 
-.cell-title {
+.cell-header {
 	padding: 0.618em;
 	white-space: normal;
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
 }
 
-.cell-title .cell-name {
+.cell-header .cell-name {
 	display: inline-block;
 	font-size: 1.618em;
 	padding: 0 0.309em;
-}
-
-.cell-body,
-.cell-list,
-.cell-table {
-	border-style: solid;
-	border-width: 1px;
-	border-color: transparent;
-	flex: 1 1 auto;
 }
 
 .cell-body {
     padding: 0.618em;
 }
 
+.cell-header,
+.cell-body,
+.cell-list,
+.cell-table,
+.cell-form,
+.cell-footer {
+	border-style: solid;
+	border-width: 1px;
+	border-color: transparent;
+}
+
 [class*="cell-"] + .cell-body,
-[class*="cell-"] + .cell-list {
+[class*="cell-"] + .cell-list,
+[class*="cell-"] + .cell-table,
+[class*="cell-"] + .cell-form {
 	border-width: 0 1px 1px;
 }
 
@@ -98,9 +103,21 @@
 .cell-table table tbody tr td:first-child { border-width: 0 0 1px 0; }
 .cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
 
+.cell-form .cell-label,
+.cell-form .cell-input {
+	padding: 0.456em 0.618em
+}
+
+.cell-input input,
+.cell-input label,
+.cell-input button,
+.cell-input textarea,
+.cell-input.input-element-button {
+	margin: 0;
+}
+
 .cell-footer {
 	padding: 0.618em;
-	border-style: solid;
+	text-align: right;
 	border-width: 0 1px 1px;
-	border-color: transparent;
 }

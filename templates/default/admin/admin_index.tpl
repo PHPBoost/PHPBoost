@@ -29,7 +29,7 @@
 
 		<div id="admin-contents">
 
-			<div class="content cell-flex cell-flex-3">
+			<div class="content cell-flex cell-columns-3">
 				<div class="cell cell-2-3">
 					<div class="cell-body">
 						<div class="index-logo hidden-small-screens" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="cell">
-					<div class="cell-title">
+					<div class="cell-header">
 						<h2><i class="fa fa-bell" aria-hidden="true"></i> {L_ADMIN_ALERTS}</h2>
 					</div>
 					<div class="cell-body">
@@ -60,9 +60,9 @@
 
 			<div class="content quick-access hidden-small-screens">
 				<h2><i class="fa fa-angle-double-right" aria-hidden="true"></i> {L_QUICK_ACCESS}</h2>
-				<div class="cell-flex cell-flex-3">
+				<div class="cell-flex cell-columns-3">
 					<div class="cell">
-						<div class="cell-title">
+						<div class="cell-header">
 							<h3><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> {L_SITE_MANAGEMENT}</h3>
 						</div>
 						<div class="cell-list">
@@ -76,7 +76,7 @@
 						</div>
 					</div>
 					<div class="cell">
-						<div class="cell-title">
+						<div class="cell-header">
 							<h3><i class="fa fa-fw fa-image" aria-hidden="true"></i> {L_CUSTOMIZE_SITE}</h3>
 						</div>
 						<div class="cell-list">
@@ -90,7 +90,7 @@
 						</div>
 					</div>
 					<div class="cell">
-						<div class="cell-title">
+						<div class="cell-header">
 							<h3><i class="fa fa-fw fa-plus" aria-hidden="true"></i> {L_ADD_CONTENT}</h3	>
 						</div>
 						<div class="cell-list">
@@ -107,9 +107,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="content cell-flex cell-flex-2">
+			<div class="content cell-flex cell-columns-2">
 				<div class="cell dashboard-user-online">
-					<div class="cell-title">
+					<div class="cell-header">
 						<h2><i class="fa fa-user" aria-hidden="true"></i> {L_USER_ONLINE}</h2>
 					</div>
 					<div class="cell-table">
@@ -147,7 +147,7 @@
 				</div>
 
 				<div class="cell dashboard-comments">
-					<div class="cell-title">
+					<div class="cell-header">
 						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 					</div>
 					<div class="cell-list">
@@ -184,7 +184,7 @@
 
 				<div class="cell dashboard-writting-pad">
 					<form action="admin_index.php" method="post">
-						<div class="cell-title">
+						<div class="cell-header">
 							<h2><i class="fa fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
 						</div>
 						<div class="cell-body">

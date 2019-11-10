@@ -6,10 +6,10 @@
 	<section id="upgrade-modules-container">
 		<header class="legend">{@modules.updates_available}</header>
 		# IF C_UPDATES #
-			<div class="cell-flex cell-flex-3">
+			<div class="cell-flex cell-columns-3">
 				# START modules_upgradable #
 					<article class="cell addon">
-						<header class="cell-title">
+						<header class="cell-header">
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_upgradable.C_COMPATIBLE #
 									<div class="mini-checkbox">

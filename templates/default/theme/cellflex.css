@@ -1,4 +1,3 @@
-
 /* --- flex layout ---------------------------------------------------------- */
 .cell-flex {
 	display: flex;
@@ -20,9 +19,9 @@
 @media (min-width: 768px) {
 	.cell-flex { flex-direction: row; }
 
-	.cell-flex-2 .cell { width: calc(100% / 2); }
-	.cell-flex-3 .cell { width: calc(100% / 2); }
-	.cell-flex-4 .cell { width: calc(100% / 2); }
+	.cell-columns-2 .cell { width: calc(100% / 2); }
+	.cell-columns-3 .cell { width: calc(100% / 2); }
+	.cell-columns-4 .cell { width: calc(100% / 2); }
 
 	.cell-flex .cell-2-2,
 	.cell-flex .cell-3-3,
@@ -33,9 +32,9 @@
 }
 
 @media (min-width: 1024px) {
-	.cell-flex-2 .cell { width: calc(100% / 2); }
-	.cell-flex-3 .cell { width: calc(100% / 3); }
-	.cell-flex-4 .cell { width: calc(100% / 4); }
+	.cell-columns-2 .cell { width: calc(100% / 2); }
+	.cell-columns-3 .cell { width: calc(100% / 3); }
+	.cell-columns-4 .cell { width: calc(100% / 4); }
 
 	.cell-flex .cell-2-2,
 	.cell-flex .cell-3-3,
@@ -46,12 +45,13 @@
 }
 
 /* --- Cell structure ------------------------------------------------------- */
+
 .cell-flex .cell {
 	display: flex;
 	flex-direction: column;
 }
 
-.cell-flex .cell-title {
+.cell-flex .cell-header {
 	display: flex;
 	align-items: center;
 }
@@ -83,6 +83,36 @@
 .cell-flex .cell-list ul li.li-stretch {
 	display: flex;
 	justify-content: space-between;
+}
+
+.cell-flex .cell-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.cell-input input:not([type="checkbox"]):not([type="radio"]),
+.cell-input select,
+.cell-input textarea {
+	width: 100%;
+}
+
+.cell-input .input-element-button input {
+	width: calc(100% - 2.618em);
+}
+
+@media (min-width: 769px) {
+	.cell-flex .cell-form {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.cell-flex .cell-form .cell-label {
+		width: 40%;
+	}
+
+	.cell-flex .cell-form .cell-input {
+		width: 60%;
+	}
 }
 
 .cell-flex .cell-footer {

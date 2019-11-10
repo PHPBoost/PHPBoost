@@ -5,10 +5,10 @@
 	<section id="not-installed-themes-container" class="addons-container themes-elements-container not-installed-elements-container">
 		<header class="legend">{@themes.available_themes}</header>
 		# IF C_THEME_AVAILABLE #
-		<div class="cell-flex cell-flex-3">
+		<div class="cell-flex cell-columns-3">
 			# START themes_not_installed #
 			<article class="cell addon# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
-				<header class="cell-title">
+				<header class="cell-header">
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						# IF themes_not_installed.C_COMPATIBLE #
 							<div class="mini-checkbox">
