@@ -74,8 +74,7 @@
 					<i class="fa fa-fw bbcode-icon-color" aria-hidden="true"></i>
 				</a>
 				<div id="bb-block5{FIELD}" class="bbcode-block-container arrow-submenu-color color-picker" style="display: none;">
-					<div id="bb-color{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
-					</div>
+					<div id="bb-color{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);"></div>
 				</div>
 			</li>
 			<li id="format-bg-color" class="bbcode-elements bkgd-color-op20-hover">
@@ -168,17 +167,46 @@
 		</ul>
 		<ul id="bbcode-container-attr" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal">
 			<li id="html-title" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode-hover{AUTH_TITLE}" aria-label="{@bbcode.title}<br />{@bbcode.title.tag}">
+				<a data-trigger data-target="bb-block2{FIELD}" href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" class="bbcode-hover{AUTH_TITLE}" aria-label="{@bbcode.title}<br />{@bbcode.title.tag}">
 					<i class="fa fa-fw bbcode-icon-title" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block2{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-title" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;"> ${LangLoader::get_message('format_title', 'editor-common')} 1 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;"> ${LangLoader::get_message('format_title', 'editor-common')} 2 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;"> ${LangLoader::get_message('format_title', 'editor-common')} 3 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;"> ${LangLoader::get_message('format_title', 'editor-common')} 4 </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;"> ${LangLoader::get_message('format_title', 'editor-common')} 5 </a></li>
-					</ul>
+				<div id="bb-block2{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.title}</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h2 class="formatter-title">
+								<button class="smaller button float-right">{@bbcode.title.button}</button>
+								{@bbcode.title.label} 1
+							</h2>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h3 class="formatter-title">
+								<button class="smaller button float-right">{@bbcode.title.button}</button>
+								{@bbcode.title.label} 2
+							</h3>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h4 class="formatter-title">
+								<button class="smaller button float-right">{@bbcode.title.button}</button>
+								{@bbcode.title.label} 3
+							</h4>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h5 class="formatter-title">
+								<button class="smaller button float-right">{@bbcode.title.button}</button>
+								{@bbcode.title.label} 4
+							</h5>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h6 class="formatter-title">
+								<button class="smaller button float-right">{@bbcode.title.button}</button>
+								{@bbcode.title.label} 5
+							</h6>
+						</div>
+					</div>
 				</div>
 			</li>
 			<li id="html-list" class="bbcode-elements bkgd-color-op20-hover">
@@ -315,6 +343,12 @@
 								<input id="bb_quote_author{FIELD}" type="text" name="bb_quote_author{FIELD}">
 							</div>
 						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_quote_extract{FIELD}">{@bbcode.quote.extract}</label>
+							<div class="cell-input">
+								<textarea id="bb_quote_extract{FIELD}" rows="5" cols="32"></textarea>
+							</div>
+						</div>
 						<div class="cell-footer cell-input">
 							<button class="submit" type="submit" onclick="{DISABLED_QUOTE}bbcode_quote('{FIELD}');bb_hide_block('21', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
 						</div>
@@ -333,18 +367,42 @@
 					</ul>
 				</div>
 			</li>
-			<li id="html-message" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_STYLE}bb_display_block('4', '{FIELD}');return false;" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode-hover{AUTH_STYLE}" aria-label="{@bbcode.style}">
-					<i class="fa fa-fw bbcode-icon-style" aria-hidden="true"></i>
+			<li id="html-style" class="bbcode-elements bkgd-color-op20-hover">
+				<a data-trigger data-target="bb-block4{FIELD}" href="" onclick="{DISABLED_STYLE}bb_display_block('4', '{FIELD}');return false;" class="bbcode-hover{AUTH_STYLE}" aria-label="{@bbcode.style}<br />{@bbcode.style.tag}">
+					<i class="fa fa-fw bbcode-icon-style{AUTH_STYLE}" aria-hidden="true"></i>
 				</a>
-				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block4{FIELD}">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-message" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;"> ${LangLoader::get_message('success', 'main')} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;"> ${LangLoader::get_message('question', 'main')} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;"> ${LangLoader::get_message('notice', 'main')} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;"> ${LangLoader::get_message('warning', 'main')} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;"> ${LangLoader::get_message('error', 'main')} </a></li>
-					</ul>
+				<div id="bb-block4{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.style}</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+							<div class="message-helper notice">
+								<button class="button float-right">{@bbcode.style.button}</button>${LangLoader::get_message('notice', 'main')}
+							</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+							<div class="message-helper question">
+								<button class="button float-right">{@bbcode.style.button}</button>${LangLoader::get_message('question', 'main')}
+							</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+							<div class="message-helper success">
+								<button class="button float-right">{@bbcode.style.button}</button>${LangLoader::get_message('success', 'main')}
+							</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+							<div class="message-helper warning">
+								<button class="button float-right">{@bbcode.style.button}</button>${LangLoader::get_message('warning', 'main')}
+							</div>
+						</div>
+						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+							<div class="message-helper error">
+								<button class="button float-right">{@bbcode.style.button}</button>${LangLoader::get_message('error', 'main')}
+							</div>
+						</div>
+					</div>
 				</div>
 			</li>
 		</ul>
@@ -479,7 +537,7 @@
 					</div>
 				</div>
 			</li>
-			<li id="links-media" class="bbcode-elements bkgd-color-op20-hover">
+			<li id="links-movie" class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" onclick="{DISABLED_MEDIA}bb_display_block('16', '{FIELD}');return false;" onmouseover="{DISABLED_MEDIA}bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bbcode.media}">
 					<span class="fa-stack bbcode-icons-stack">
 						<i class="fa fa-music fa-stack-1x"></i>

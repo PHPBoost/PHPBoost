@@ -36,6 +36,10 @@
     padding: 0.618em;
 }
 
+.cell-body .message-helper {
+	margin: 0;
+}
+
 .cell-header,
 .cell-body,
 .cell-list,
@@ -108,12 +112,18 @@
 	padding: 0.456em 0.618em
 }
 
-.cell-input input,
-.cell-input label,
-.cell-input button,
-.cell-input textarea,
-.cell-input.input-element-button {
-	margin: 0;
+.cell input,
+.cell label,
+.cell button,
+.cell .button,
+.cell textarea,
+.cell .input-element-button,
+.cell .formatter-title {
+	margin: 0 !important;
+}
+
+.cell .formatter-title {
+	display: block;
 }
 
 .cell-footer {

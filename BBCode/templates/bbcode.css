@@ -27,15 +27,6 @@
 	border-color: transparent;
 }
 
-.bbcode-container:after {
-	position: absolute;
-	top: 0;
-	right: -2px;
-	height: 100%;
-	width: 1px;
-	content: "";
-}
-
 @media (min-width: 769px) {
 	.bbcode-containers { flex-direction: row; }
 	.bbcode-container { position: relative; }

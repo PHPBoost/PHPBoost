@@ -28,7 +28,6 @@ function textarea_resize(id, px, type)
 		if( new_width > 40 )
 			textarea.style.width = new_width + "px";
 	}
-
 	return false;
 }
 
@@ -250,13 +249,14 @@ function bbcode_link(field)
 
 function bbcode_quote(field)
 {
-	var author = document.getElementById('bb_quote_author' + field).value;
-	if(author != null)
+	var quote_author = document.getElementById('bb_quote_author' + field).value,
+		quote_extract = document.getElementById('bb_quote_extract' + field).value;
+	if(quote_author != null)
 	{
-		if(author != '')
-			insertbbcode('[quote=' + author + ']', '[/quote]', field);
+		if(quote_author != '')
+			insertbbcode('[quote=' + quote_author + ']' + quote_extract, '[/quote]', field);
 		else
-			insertbbcode('[quote]', '[/quote]', field);
+			insertbbcode('[quote]' + quote_extract, '[/quote]', field);
 	}
 }
 

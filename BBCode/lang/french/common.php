@@ -27,8 +27,10 @@ $lang['bbcode.color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]'
 $lang['bbcode.size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
 $lang['bbcode.font'] = 'Police : [font=X]texte en police X[/font]';
 
-$lang['bbcode.title'] = 'Titre';
+$lang['bbcode.title'] = 'Titrage';
+$lang['bbcode.title.label'] = 'Titre';
 $lang['bbcode.title.tag'] = '[title=1 à 5]texte[/title]';
+$lang['bbcode.title.button'] = 'Choisir ce titrage';
 $lang['bbcode.list'] = 'Liste';
 $lang['bbcode.list.tag'] = '[list]<br />&nbsp;[*] texte 1<br />&nbsp;[*] texte 2<br />[/list]';
 $lang['bbcode.list.ordered'] = 'Liste ordonnée';
@@ -54,13 +56,17 @@ $lang['bbcode.abbr.label'] = 'Définition de l\'abréviation';
 $lang['bbcode.quote'] = 'Citation';
 $lang['bbcode.quote.tag'] = '[quote=pseudo]texte[/quote]';
 $lang['bbcode.quote.author'] = 'Auteur de la citation';
+$lang['bbcode.quote.extract'] = 'Extrait de la citation';
 $lang['bbcode.hide'] = 'Texte Caché';
 $lang['bbcode.member'] = 'Membre';
 $lang['bbcode.moderator'] = 'Modérateur';
 $lang['bbcode.hide.all'] = 'Cache le texte et l\'affiche au clic [hide]text[/hide]';
 $lang['bbcode.hide.view.member'] = 'Cache le texte pour les visiteurs [member]text[/member]';
 $lang['bbcode.hide.view.moderator'] = 'Cache le texte pour les membres [moderator]text[/moderator]';
-$lang['bbcode.style'] = 'Style [style=x]texte[/style]';
+
+$lang['bbcode.style'] = 'Style';
+$lang['bbcode.style.tag'] = '[style=x]texte[/style]';
+$lang['bbcode.style.button'] = 'Choisir ce style';
 
 $lang['bbcode.link'] = 'Lien';
 $lang['bbcode.link.tag'] = '[url]adresse du lien[/url], ou [url=adresse du lien]nom du lien[/url]';
@@ -109,7 +115,7 @@ $lang['bbcode.anchor.prompt'] = 'Nom de l\'ancre (de la forme nom-de-l-ancre) ?'
 
 $lang['bbcode.media'] = 'Media';
 $lang['bbcode.sound'] = 'Son';
-$lang['bbcode.sound.tag'] = '[sound]adresse du son[/sound]';
+$lang['bbcode.sound.tag'] = '[sound]adresse du fichier audio[/sound]';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';
 $lang['bbcode.movie'] = 'Vidéo';
 $lang['bbcode.movie.label'] = '[movie=largeur,hauteur]adresse du fichier[/movie]';

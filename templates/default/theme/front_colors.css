@@ -971,10 +971,6 @@ a[class*='lightcase-icon-']:hover {
 .bkgd-color-op20-hover li:hover,
 .bkgd-color-op20-hover a:hover { background-color: rgba(54, 100, 147, 0.1); }
 
-@media (min-width: 769px) {
-	.dlt-color-op20-after:after { background-color: rgba(54, 100, 147, 0.1); }
-}
-
 .block-submenu-color {
 	background-color: #FFFFFF;
 	box-shadow: 0 0 0.618em rgba(0, 0, 0, 0.2);
