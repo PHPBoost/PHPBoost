@@ -109,7 +109,8 @@ $lang['bbcode.anchor.prompt'] = 'Nom de l\'ancre (de la forme nom-de-l-ancre) ?'
 
 $lang['bbcode.media'] = 'Media';
 $lang['bbcode.sound'] = 'Son';
-$lang['bbcode.sound.label'] = '[sound]adresse du son[/sound]';
+$lang['bbcode.sound.tag'] = '[sound]adresse du son[/sound]';
+$lang['bbcode.sound.url'] = 'Adresse du fichier audio';
 $lang['bbcode.movie'] = 'Vidéo';
 $lang['bbcode.movie.label'] = '[movie=largeur,hauteur]adresse du fichier[/movie]';
 $lang['bbcode.youtube'] = 'Youtube';
