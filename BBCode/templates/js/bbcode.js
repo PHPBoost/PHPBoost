@@ -32,7 +32,7 @@ function textarea_resize(id, px, type)
 	return false;
 }
 
-//Insertion dans le champs.
+// Insert BBCode code in textarea
 function simple_insert(open_balise, close_balise, field)
 {
 	var textarea = document.getElementById(field);
@@ -48,7 +48,25 @@ function simple_insert(open_balise, close_balise, field)
 	return;
 }
 
-//Récupération de la sélection sur netscape, ajout des balises autour.
+// Insert BBCode code in textarea, taking into account the used browser
+function insertbbcode(open_balise, close_balise, field)
+{
+	var area = document.getElementById(field);
+	var nav = navigator.appName; //Recupère le nom du navigateur
+
+	area.focus();
+
+	if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
+		ie_sel(area, open_balise, close_balise);
+	else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
+		netscape_sel(area, open_balise, close_balise);
+	else //insertion normale (autres navigateurs)
+		simple_insert(open_balise, close_balise, field);
+
+	return;
+}
+
+// Get the selected part on netscape, add tags around
 function netscape_sel(target, open_balise, close_balise)
 {
 	var sel_length = target.textLength;
@@ -89,7 +107,7 @@ function netscape_sel(target, open_balise, close_balise)
 	return;
 }
 
-//Récupération de la sélection sur IE, ajout des balises autour.
+// Get the selected part on IE, add tags around
 function ie_sel(target, open_balise, close_balise)
 {
 	selText = false;
@@ -110,7 +128,7 @@ function ie_sel(target, open_balise, close_balise)
 	return;
 }
 
-//Fonction de remplacement des caractères spéciaux
+// Replace special characters
 function url_encode_rewrite(link_name)
 {
 	link_name = link_name.toLowerCase(link_name);
@@ -126,24 +144,6 @@ function url_encode_rewrite(link_name)
 	link_name = link_name.replace(/([^a-z0-9]|[\s])/g, '-');
 	link_name = link_name.replace(/([-]{2,})/g, '-');
 	return link_name.replace(/(^\s*)|(\s*$)/g,'').replace(/(^-)|(-$)/g,'');
-}
-
-//Fonction d'insertion du BBcode dans le champs, tient compte du navigateur utilisé.
-function insertbbcode(open_balise, close_balise, field)
-{
-	var area = document.getElementById(field);
-	var nav = navigator.appName; //Recupère le nom du navigateur
-
-	area.focus();
-
-	if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
-		ie_sel(area, open_balise, close_balise);
-	else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
-		netscape_sel(area, open_balise, close_balise);
-	else //insertion normale (autres navigateurs)
-		simple_insert(open_balise, close_balise, field);
-
-	return;
 }
 
 function bbcode_color(divID, field, type)
@@ -168,7 +168,7 @@ function bbcode_color(divID, field, type)
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
 
-function bbcode_table(field, head_name)
+function bbcode_table(field)
 {
 	var cols = document.getElementById('bb-cols' + field).value;
 	var lines = document.getElementById('bb-lines' + field).value;
@@ -179,7 +179,7 @@ function bbcode_table(field, head_name)
 	{
 		var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
 		var pointor = head ? (59 + colspan.length) : 22;
-		code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']'+ head_name +'[/head]\n\t[/row]\n' : '[table]\n';
+		code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + '][/head]\n\t[/row]\n' : '[table]\n';
 
 		for(var i = 0; i < lines; i++)
 		{
@@ -262,10 +262,17 @@ function bbcode_quote(field)
 
 function bbcode_lightbox(field)
 {
-	var url = document.getElementById('bb_lightbox' + field).value;
-	var picture_width = document.getElementById('bb_lightbox_width' + field).value;
-	if(url != '' && url != null)
-		insertbbcode('[lightbox=' + url + '][img style="max-width: '+picture_width+'px;"]' + url, '[/img][/lightbox]', field);
+	var picture_url = document.getElementById('bb_lightbox' + field).value,
+		picture_width = document.getElementById('bb_lightbox_width' + field).value;
+	if(picture_url != '' && picture_url != null)
+		insertbbcode('[lightbox=' + picture_url + '][img style="max-width: '+picture_width+'px;"]' + picture_url, '[/img][/lightbox]', field);
+}
+
+function bbcode_sound(field)
+{
+	var sound_url = document.getElementById('bb_sound_url' + field).value;
+	if(sound_url != '' && sound_url != null)
+		insertbbcode('[sound]' + sound_url, '[/sound]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
@@ -320,6 +327,8 @@ function bbcode_feed(field)
 
 	if(feed_number <= 0 || feed_number == '' || feed_number == null)
 		feed_number = 1;
+	else if(feed_number >= 10)
+		feed_number = 10;
 
 	if(feed_module != '' && feed_module != null)
 		insertbbcode('[feed cat="' + feed_cat + '" number="' + feed_number + '"]' + feed_module.toLowerCase(), '[/feed]', field);

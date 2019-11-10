@@ -413,10 +413,10 @@
 				</a>
 			</li>
 			<li id="links-feed" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block20{FIELD}" href="" onclick="{DISABLED_FEED}bb_display_block('20', '{FIELD}');return false;" aria-label="{@bbcode.feed}<br />{@bbcode.feed.tag}">
+				<a data-trigger data-target="bb-block25{FIELD}" href="" onclick="{DISABLED_FEED}bb_display_block('25', '{FIELD}');return false;" aria-label="{@bbcode.feed}<br />{@bbcode.feed.tag}">
 					<i class="fa fa-fw bbcode-icon-feed{AUTH_FEED}" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block20{FIELD}" class="modal modal-animation" style="display: none;">
+				<div id="bb-block25{FIELD}" class="modal modal-animation" style="display: none;">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div id="bbfeed{FIELD}" class="content-panel cell">
 						<div class="cell-header">
@@ -436,17 +436,17 @@
 						<div class="cell-form">
 							<label for="bb_feed_category{FIELD}" class="cell-label">{@bbcode.feed.category}</label>
 							<div class="cell-input">
-								<input type="number" id="bb_feed_category{FIELD}" value="0">
+								<input type="number" id="bb_feed_category{FIELD}" min="0" value="0">
 							</div>
 						</div>
 						<div class="cell-form">
 							<label for="bb_feed_number{FIELD}" class="cell-label">{@bbcode.feed.number}</label>
 							<div class="cell-input">
-								<input type="number" id="bb_feed_number{FIELD}" value="5">
+								<input type="number" id="bb_feed_number{FIELD}" min="1" max="10" value="5">
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}');bb_hide_block('20', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<button class="submit" type="submit" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}');bb_hide_block('25', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
 						</div>
 					</div>
 				</div>
@@ -455,6 +455,29 @@
 				<a href="" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}', ${escapejs(@bbcode.anchor.prompt)});return false;" aria-label="{@bbcode.anchor}">
 					<i class="fa fa-fw bbcode-icon-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
 				</a>
+			</li>
+			<li id="links-sound" class="bbcode-elements bkgd-color-op20-hover">
+				<a data-trigger data-target="bb-block26{FIELD}" href="" onclick="{DISABLED_SOUND}bb_display_block('26', '{FIELD}');return false;" class="bbcode-hover{AUTH_SOUND}" aria-label="{@bbcode.sound}<br />{@bbcode.sound.tag}">
+					<i class="fa fa-fw bbcode-icon-sound{AUTH_SOUND}" aria-hidden="true"></i>
+				</a>
+				<div id="bb-block26{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div id="bbsound{FIELD}" class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.sound}</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
+							<div class="cell-input input-element-button">
+								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" value="" />
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+							</div>
+						</div>
+						<div class="cell-footer cell-input">
+							<button class="submit" type="submit" onclick="{DISABLED_SOUND}bbcode_sound('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+						</div>
+					</div>
+				</div>
 			</li>
 			<li id="links-media" class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" onclick="{DISABLED_MEDIA}bb_display_block('16', '{FIELD}');return false;" onmouseover="{DISABLED_MEDIA}bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);" class="bbcode-hover{AUTH_MEDIA}" aria-label="{@bbcode.media}">
@@ -465,7 +488,6 @@
 				</a>
 				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block16{FIELD}">
 					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-positions" onmouseover="bb_hide_block('16', '{FIELD}', 1);" onmouseout="bb_hide_block('16', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');return false;" aria-label="{@bbcode.sound.label}"> {@bbcode.sound} </a></li>
 						<li><a href="" onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');return false;" aria-label="{@bbcode.movie.label}"> {@bbcode.movie} </a></li>
 						<li><a href="" onclick="{DISABLED_YOUTUBE}insertbbcode('[youtube]', '[/youtube]', '{FIELD}');return false;" aria-label="{@bbcode.youtube.label}"> {@bbcode.youtube} </a></li>
 						<li><a href="" onclick="{DISABLED_DAILYMOTION}insertbbcode('[dailymotion]', '[/dailymotion]', '{FIELD}');return false;" aria-label="{@bbcode.dailymotion.label}"> {@bbcode.dailymotion} </a></li>
@@ -490,7 +512,7 @@
 							</label>
 							<div class="cell-input input-element-button">
 								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" value="" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bbcode_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
+								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
 						<div class="cell-form">
@@ -498,7 +520,7 @@
 								{@bbcode.thumbnail.width}
 							</label>
 							<div class="cell-input">
-								<input id="bb_lightbox_width{FIELD}" type="number" value="150" name="bb_lightbox_width{FIELD}" value="" />
+								<input id="bb_lightbox_width{FIELD}" type="number" min="0" value="150" name="bb_lightbox_width{FIELD}" value="" />
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
