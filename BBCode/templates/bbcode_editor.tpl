@@ -277,8 +277,8 @@
 							</div>
 						</li>
 						<li id="html-abbr" class="modal-container cell-flex cell-modal">
-							<a data-trigger data-target="bb-block18{FIELD}" href="" aria-label="{@bbcode.abbr.tag}"> {@bbcode.abbr} </a>
-							<div id="bb-block18{FIELD}" class="modal modal-animation">
+							<a data-trigger data-target="bb-block24{FIELD}" href="" aria-label="{@bbcode.abbr.tag}"> {@bbcode.abbr} </a>
+							<div id="bb-block24{FIELD}" class="modal modal-animation">
 								<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)"></div>
 								<div id="bbabbr{FIELD}" class="content-panel cell">
 									<div class="cell-header">
@@ -291,7 +291,7 @@
 										</div>
 									</div>
 									<div class="cell-footer cell-input" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)">
-										<button class="submit" type="submit" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');bb_hide_block('18', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+										<button class="submit" type="submit" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');bb_hide_block('24', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
 									</div>
 								</div>
 							</div>
@@ -474,7 +474,7 @@
 					</ul>
 				</div>
 			</li>
-			<li id="link-lightbox" class="bbcode-elements bkgd-color-op20-hover modal-container cell-flex cell-modal">
+			<li id="link-lightbox" class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" data-trigger data-target="bb-block18{FIELD}" onclick="{DISABLED_LIGHTBOX}bb_display_block('18','{FIELD}');return false;" class="bbcode-hover{AUTH_LIGHTBOX}" aria-label="{@bbcode.lightbox}:<br />{@bbcode.lightbox.tag}">
 					<i class="fa fa-fw bbcode-icon-lightbox{AUTH_LIGHTBOX}" aria-hidden="true"></i>
 				</a>
@@ -507,7 +507,7 @@
 					</div>
 				</div>
 			</li>
-			<li id="link-figure" class="bbcode-elements bkgd-color-op20-hover modal-container cell-flex cell-modal">
+			<li id="link-figure" class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" data-trigger data-target="bb-block17{FIELD}" onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;" class="bbcode-hover{AUTH_FIGURE}" aria-label="{@bbcode.figure} : <br />{@bbcode.figure.tag}">
 					<i class="fa fa-fw  bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
 				</a>
