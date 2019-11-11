@@ -859,14 +859,15 @@ td.alert-priority         { border-color: #D1D2D4;}
 .fa-trend-up:before 	{ color: #40b73a; }
 .fa-trend-down:before 	{ color: #E0464A; }
 .fa-forbidden:before 	{ color: #E0464A; }
-/* .fa-syndication:before 	{ color: #E27B47; }
-.fa-warning:before 		{ color: #C19954; }
-.fa-ban:before 			{ color: #BA4B49; }
-.fa-unban:before 		{ color: #478948; }
+.fa-syndication:before 	{ color: #E27B47; }
+.fa-warning:before 		{ color: #E27B47; }
+.fa-ban:before 			{ color: #E0464A; }
+.fa-unban:before 		{ color: #40b73a; }
 .fa-male:before 		{ color: #8DC3E9; }
 .fa-female:before 		{ color: #F49CC4; }
-.fa-online:before 		{ color: #52D132; }
-.fa-offline:before 		{ color: #E05759; } */
+.fa-online:before 		{ color: #40b73a; }
+.fa-offline:before 		{ color: #E0464A; }
+
 .message-helper { background-color: #FFFFFF }
 
 .notice, .notice:before             { color: #888888; }

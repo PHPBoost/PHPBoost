@@ -84,13 +84,22 @@
 
 .cell-list ul li {
 	list-style-type: none;
-	padding: 0.456em 0.618em 0;
+	padding: 0.456em 0.809em;
+}
+
+.cell-list ul li:first-child {
+    padding: 0.809em 0.809em 0.456em;
 }
 
 .cell-list ul li:last-child {
-    padding: 0.456em 0.618em;
+    padding: 0.456em 0.809em 0.809em;
 }
 
+.cell-list-icons ul li {
+	display: inline-block;
+}
+
+/* --- table --- */
 .cell-table {
     overflow: auto;
 }

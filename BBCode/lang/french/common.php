@@ -69,7 +69,7 @@ $lang['bbcode.abbr.label'] = 'Définition de l\'abréviation';
 
 $lang['bbcode.quote'] = 'Citation';
 $lang['bbcode.quote.author'] = 'Auteur de la citation';
-$lang['bbcode.quote.extract'] = 'Extrait de la citation';
+$lang['bbcode.quote.extract'] = 'Citation';
 
 $lang['bbcode.hide'] = 'Texte Caché';
 $lang['bbcode.member'] = 'Membre';
@@ -125,7 +125,8 @@ $lang['bbcode.upload'] = 'Attacher un fichier';
 
 // Right bottom block : Code
 $lang['bbcode.smileys'] = 'Smileys';
-$lang['bbcode.fa'] = 'Icônes Font Awesome 5 Free<br />[fa=fa-options]nom de l\'icône[/fa]';
+$lang['bbcode.fa'] = 'Icônes Font Awesome';
+$lang['bbcode.fa.tag'] = '[fa=fa-style,fa-option]nom de l\'icône[/fa]';
 $lang['bbcode.code'] = 'Code';
 $lang['bbcode.code.custom.name'] = 'Chemin vers un fichier';
 $lang['bbcode.code.name'] = 'Langage';

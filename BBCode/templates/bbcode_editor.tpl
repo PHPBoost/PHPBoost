@@ -594,7 +594,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">${@bbcode.anchor.url.desc}</span></div>
+						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">{@bbcode.anchor.url.desc}</span></div>
 						<div class="cell-footer cell-input">
 							<button class="submit" type="submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
 						</div>
@@ -775,35 +775,52 @@
 		</ul>
 		<ul id="bbcode-container-code" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal">
 			<li id="code-smileys" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" onmouseover="{DISABLED_SMILEYS}bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bbcode.smileys}">
+				<a data-trigger data-target="bb-block1{FIELD}" href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bbcode.smileys}">
 					<i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block1{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-smileys" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
-						# START smileys #
-							<li>
-								<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{smileys.CODE}">
-									<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="smiley" />
-								</a>
-							</li>
-						# END smileys #
-					</ul>
+				<div id="bb-block1{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.smileys}</div>
+						</div>
+						<div class="cell-list cell-list-icons">
+							<ul>
+								# START smileys #
+									<li>
+										<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{smileys.CODE}">
+											<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="smiley" />
+										</a>
+									</li>
+								# END smileys #
+							</ul>
+						</div>
+					</div>
 				</div>
 			</li>
 			<li id="code-fa" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_FA}bb_display_block('12', '{FIELD}');return false;" onmouseover="{DISABLED_FA}bb_hide_block('12', '{FIELD}', 1);" onmouseout="bb_hide_block('12', '{FIELD}', 0);" class="bbcode-hover{AUTH_FA}" aria-label="{@bbcode.fa}">
+				<a data-trigger data-target="bb-block12{FIELD}" href="" onclick="{DISABLED_FA}bb_display_block('12', '{FIELD}');return false;" class="bbcode-hover{AUTH_FA}" aria-label="{@bbcode.fa}">
 					<i class="fab fa-fw bbcode-icon-fa" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block12{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-fa" onmouseover="bb_hide_block('12', '{FIELD}', 1);" onmouseout="bb_hide_block('12', '{FIELD}', 0);">
-						# START code_fa #
-						<li>
-							<a href="" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');bb_hide_block('12', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{code_fa.CODE}">
-								<i class="{code_fa.PREFIX} fa-{code_fa.CODE}" aria-hidden="true" aria-label="{code_fa.CODE}"></i>
-							</a>
-						</li>
-						# END code_fa #
-					</ul>
+				<div id="bb-block12{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.fa}</div>
+						</div>
+						<div class="cell-body center">{@bbcode.fa.tag}</div>
+						<div class="cell-list cell-list-icons">
+							<ul>
+								# START code_fa #
+								<li>
+									<a href="" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');bb_hide_block('12', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{code_fa.CODE}">
+										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true" aria-label="{code_fa.CODE}"></i>
+									</a>
+								</li>
+								# END code_fa #
+							</ul>
+						</div>
+					</div>
 				</div>
 			</li>
 			<li id="code-language" class="bbcode-elements bkgd-color-op20-hover">
