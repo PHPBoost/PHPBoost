@@ -210,8 +210,12 @@
     }
 }
 
-@media all { /* --- tooltip ------------------------------------------------- */
+/* --- tooltip -------------------------------------------------------------- */
+.tooltip { opacity: 0 !important; }
+
+@media (min-width: 769px) {
     .tooltip {
+        opacity: 1 !important;
         padding: 0.228em 0.456em;
         font-size: 0.809em;
         max-width: 320px;

@@ -29,6 +29,7 @@
 
 @import url('../../default/theme/dashboard/dashboard_form.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard_content.css') screen, print;
+@import url('../../default/theme/global.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard_global.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard.css') screen, print;
 

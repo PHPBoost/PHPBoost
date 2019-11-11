@@ -17,6 +17,7 @@
 
 $lang['bbcode.tags.add'] = 'Insérer';
 $lang['bbcode.choice.button'] = 'Choisir';
+$lang['bbcode.preview.text'] = 'Aperçu du texte';
 
 // left top block : Text formatting
 $lang['bbcode.bold'] = 'Texte en gras';

@@ -114,7 +114,7 @@
 							</div>
 						</div>
 						<div class="cell-body">
-							<span class="font-size-sample">Lorem ipsum dolor sit amet</span>
+							<span class="font-size-sample">{@bbcode.preview.text}</span>
 						</div>
 						<div class="cell-footer cell-input">
 							<button class="submit" type="submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
@@ -161,19 +161,19 @@
 						<div class="cell-list">
 							<ul>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
-									<span> {@bbcode.left} </span>
+									<span><i class="fa fa-fw fa-align-left"></i> {@bbcode.left} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
-									<span> {@bbcode.center} </span>
+									<span><i class="fa fa-fw fa-align-center"></i> {@bbcode.center} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
-									<span> {@bbcode.right} </span>
+									<span><i class="fa fa-fw fa-align-right"></i> {@bbcode.right} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
-									<span> {@bbcode.justify} </span>
+									<span><i class="fa fa-fw fa-align-justify"></i> {@bbcode.justify} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 							</ul>
@@ -195,23 +195,23 @@
 						<div class="cell-list">
 							<ul>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=left]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_ALIGN}"> {@bbcode.float.left} </span>
+									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=right]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_ALIGN}"> {@bbcode.float.right} </span>
+									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[indent]', '[/indent]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_INDENT}"> {@bbcode.indent} </span>
+									<span class="{AUTH_INDENT}"><i class="fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sup]', '[/sup]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_SUP}">{@bbcode.sup}</span>
+									<span class="{AUTH_SUP}"><i class="fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sub]', '[/sub]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_SUB}"> {@bbcode.sub} </span>
+									<span class="{AUTH_SUB}"><i class="fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
 									<button>{@bbcode.choice.button}</button>
 								</li>
 							</ul>
@@ -219,8 +219,8 @@
 					</div>
 				</div>
 			</li>
-		</ul>
-		<ul id="bbcode-container-attr" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal">
+		<!-- </ul>
+		<ul id="bbcode-container-attr" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal"> -->
 			<li id="html-title" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block2{FIELD}" href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" class="bbcode-hover{AUTH_TITLE}" aria-label="{@bbcode.title}">
 					<i class="fa fa-fw bbcode-icon-title" aria-hidden="true"></i>
@@ -231,35 +231,25 @@
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.title}</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h2 class="formatter-title justify-between">
-								<span>{@bbcode.title.label} 1</span>
-								<button class="smaller button">{@bbcode.choice.button}</button>
-							</h2>
+						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
+							<button class="button">{@bbcode.choice.button}</button>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h3 class="formatter-title justify-between">
-								<span>{@bbcode.title.label} 2</span>
-								<button class="smaller button">{@bbcode.choice.button}</button>
-							</h3>
+						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
+							<button class="button">{@bbcode.choice.button}</button>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h4 class="formatter-title justify-between">
-								<span>{@bbcode.title.label} 3</span>
-								<button class="smaller button">{@bbcode.choice.button}</button>
-							</h4>
+						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
+							<button class="button">{@bbcode.choice.button}</button>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h5 class="formatter-title justify-between">
-								<span>{@bbcode.title.label} 4</span>
-								<button class="smaller button">{@bbcode.choice.button}</button>
-							</h5>
+						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
+							<button class="button">{@bbcode.choice.button}</button>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h6 class="formatter-title justify-between">
-								<span>{@bbcode.title.label} 5</span>
-								<button class="smaller button">{@bbcode.choice.button}</button>
-							</h6>
+						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+							<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
+							<button class="button">{@bbcode.choice.button}</button>
 						</div>
 					</div>
 				</div>
@@ -465,10 +455,10 @@
 					</div>
 				</div>
 			</li>
-		</ul>
+		<!-- </ul>
 	</div>
 	<div class="bbcode-containers">
-		<ul id="bbcode-container-links" class="bbcode-container dlt-color-op20-after bbcode-left modal-container cell-flex cell-modal">
+		<ul id="bbcode-container-links" class="bbcode-container dlt-color-op20-after bbcode-left modal-container cell-flex cell-modal"> -->
 			<li id="links-url" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block22{FIELD}" href="" onclick="{DISABLED_URL}bb_display_block('22', '{FIELD}');return false;" class="bbcode-hover{AUTH_URL}" aria-label="{@bbcode.link}">
 					<i class="fa fa-fw bbcode-icon-url{AUTH_URL}" aria-hidden="true"></i>
@@ -772,8 +762,8 @@
 					</a>
 				</li>
 			# ENDIF #
-		</ul>
-		<ul id="bbcode-container-code" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal">
+		<!-- </ul>
+		<ul id="bbcode-container-code" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal"> -->
 			<li id="code-smileys" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block1{FIELD}" href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bbcode.smileys}">
 					<i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true"></i>
