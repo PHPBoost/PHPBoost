@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 22
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 
 	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
 
-	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
+	$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
 
 	$nbr_msg = 0;
 

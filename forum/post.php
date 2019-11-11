@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ $id_get = (int)retrieve(GET, 'id', 0);
 $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 //Existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && !ForumService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
+if ($id_get != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
@@ -32,7 +32,7 @@ if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seu
 }
 
 try {
-	$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($id_get);
+	$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($id_get);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -42,7 +42,7 @@ $locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppCo
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
+$categories = array_reverse(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($id_get, true));
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
@@ -314,7 +314,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idt_get));
 
 					//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
-					$categories = array_keys(ForumService::get_categories_manager()->get_parents($topic['idcat'], true));
+					$categories = array_keys(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($topic['idcat'], true));
 					PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idt_get), 'WHERE id IN :categories_id', array('categories_id' => $categories));
 
 					//On supprime les marqueurs de messages lus pour ce message.

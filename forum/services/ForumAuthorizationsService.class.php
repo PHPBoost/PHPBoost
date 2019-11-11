@@ -3,11 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.1 - 2015 02 25
 */
 
-class ForumAuthorizationsService
+class ForumAuthorizationsService extends CategoriesAuthorizationsService
 {
 	const FLOOD_AUTHORIZATIONS = 16;
 	const HIDE_EDITION_MARK_AUTHORIZATIONS = 32;
@@ -21,21 +21,6 @@ class ForumAuthorizationsService
 		$instance = new self();
 		$instance->id_category = $id_category;
 		return $instance;
-	}
-
-	public function read()
-	{
-		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
-	}
-
-	public function write()
-	{
-		return $this->is_authorized(Category::WRITE_AUTHORIZATIONS);
-	}
-
-	public function moderation()
-	{
-		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 
 	public function flood()
@@ -58,22 +43,17 @@ class ForumAuthorizationsService
 		return $this->is_authorized(self::READ_TOPICS_CONTENT_AUTHORIZATIONS);
 	}
 
-	public function manage_categories()
-	{
-		return $this->is_authorized(self::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
-	}
-
 	public function multiple_posts()
 	{
 		return $this->is_authorized(self::MULTIPLE_POSTS_AUTHORIZATIONS);
 	}
 
-	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
+	protected function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
 		if (!in_array($bit, array(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS)))
 			$auth = ForumConfig::load()->get_authorizations();
 		else
-			$auth = ForumService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
+			$auth = CategoriesService::get_categories_manager('forum', 'idcat')->get_heritated_authorizations($this->id_category, $bit, $mode);
 
 		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}

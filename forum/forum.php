@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -17,7 +17,7 @@ require_once('../forum/forum_tools.php');
 $request = AppContext::get_request();
 
 $id_get = $request->get_getint('id', 0);
-$categories_cache = ForumService::get_categories_manager()->get_categories_cache();
+$categories_cache = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache();
 
 //Vérification de l'existance de la catégorie.
 if (empty($id_get) || ($id_get != Category::ROOT_CATEGORY && !$categories_cache->category_exists($id_get)))
@@ -51,7 +51,7 @@ if ($category->get_url())
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$categories = array_reverse(ForumService::get_categories_manager()->get_parents($id_get, true));
+$categories = array_reverse(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($id_get, true));
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
@@ -81,7 +81,7 @@ if (!empty($change_cat))
 {
 	$new_cat = '';
 	try {
-		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
+		$new_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
@@ -97,14 +97,14 @@ if (!empty($id_get))
 	$max_time_msg = forum_limit_time_msg();
 
 	//Affichage des sous forums s'il y en a.
-	if (ForumService::get_categories_manager()->get_categories_cache()->get_children($id_get))
+	if (CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_children($id_get))
 	{
 		$tpl->put_all(array(
 			'C_FORUM_SUB_CATS' => true
 		));
 
 		//Vérification des autorisations.
-		$authorized_categories = ForumService::get_authorized_categories($id_get);
+		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, 'forum', 'idcat');
 
 		//On liste les sous-catégories.
 		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
@@ -168,7 +168,7 @@ if (!empty($id_get))
 
 				//Vérirication de l'existance de sous forums.
 				$subforums = '';
-				$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
+				$children = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_children($row['cid']);
 				if ($children)
 				{
 					foreach ($children as $id => $child) //Listage des sous forums.
@@ -439,7 +439,7 @@ if (!empty($id_get))
 	//Liste des catégories.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -448,7 +448,7 @@ if (!empty($id_get))
 	{
 		if ($option->get_raw_value())
 		{
-			$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 			if (!$cat->get_url())
 				$cat_list .= $option->display()->render();
 		}

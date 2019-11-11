@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -27,7 +27,7 @@ class ForumHomeController extends ModuleController
 		global $LANG, $config, $nbr_msg_not_read, $tpl_top, $tpl_bottom;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
-		$categories_cache = ForumService::get_categories_manager()->get_categories_cache();
+		$categories_cache = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache();
 
 		try {
 			$this->category = $categories_cache->get_category($id_get);
@@ -52,7 +52,7 @@ class ForumHomeController extends ModuleController
 		$display_cat = !empty($id_get);
 
 		//Vérification des autorisations.
-		$authorized_categories = ForumService::get_authorized_categories($id_get);
+		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, 'forum', 'idcat');
 
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
@@ -135,7 +135,7 @@ class ForumHomeController extends ModuleController
 						'C_END_S_CATS' => false
 					));
 
-					$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
+					$children = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_children($row['cid']);
 					if ($children)
 					{
 						foreach ($children as $id => $child) //Listage des sous forums.
@@ -249,7 +249,7 @@ class ForumHomeController extends ModuleController
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -258,7 +258,7 @@ class ForumHomeController extends ModuleController
 		{
 			if ($option->get_raw_value())
 			{
-				$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}

@@ -12,6 +12,10 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('forum');
+		
+		$this->delete_old_files_list = array(
+			'/phpboost/ForumSitemapExtensionPoint.class.php'
+		);
 	}
 
 	protected function update_content()

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -66,7 +66,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		}
 		else
 		{
-			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			$option_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY || $option_cat->get_id() == $topic['idcat'])
 				$option->set_disable(true);
 
@@ -124,7 +124,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //Accès en édition
 	{
 		$to = (int)retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
+		$category_to = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($to);
 		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
@@ -193,7 +193,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -207,7 +207,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		}
 		else
 		{
-			$option_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			$option_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY)
 				$option->set_disable(true);
 
@@ -344,7 +344,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
         DispatchManager::redirect($controller);
 	}
 
-	$category_to = ForumService::get_categories_manager()->get_categories_cache()->get_category($to);
+	$category_to = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($to);
 	if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY)
 	{
 		$title = retrieve(POST, 'title', '');

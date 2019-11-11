@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 08 20
+ * @version   	PHPBoost 5.3 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $idcat, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $idcat, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -49,7 +49,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		{
 			if ($option->get_raw_value())
 			{
-				$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+				$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
@@ -105,7 +105,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
-		$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
 
 		if ($where == 'all')         // All
 			return "SELECT ".

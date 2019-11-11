@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 27
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,7 +32,7 @@ class Forum
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_id() . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
 
 		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
-		$categories = array_keys(ForumService::get_categories_manager()->get_parents($idcat, true));
+		$categories = array_keys(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($idcat, true));
 		PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
 
 		//Mise à jour du nombre de messages du membre.
@@ -520,7 +520,7 @@ class Forum
 		//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir Contribution::CONTRIBUTION_AUTH_BIT
 		//We shift the authorization bit to the one with which the contribution class works, Contribution::CONTRIBUTION_AUTH_BIT
 			Authorizations::capture_and_shift_bit_auth(
-				ForumService::get_categories_manager()->get_heritated_authorizations($topic_infos['idcat'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+				CategoriesService::get_categories_manager('forum', 'idcat')->get_heritated_authorizations($topic_infos['idcat'], Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 				Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 			)
 		);
@@ -609,8 +609,8 @@ class Forum
 	//Met à jour chaque catégories quelque soit le niveau de profondeur de la catégorie source. Cas le plus favorable et courant seulement 3 requêtes.
 	function Update_last_topic_id($idcat)
 	{
-		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
-		$children = ForumService::get_categories_manager()->get_categories_cache()->get_children($idcat);
+		$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($idcat);
+		$children = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_children($idcat);
 		$cat_ids = implode(', ', array_keys($children));
 		if (empty($cat_ids))
 			$cat_ids = $idcat;

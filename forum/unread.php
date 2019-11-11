@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 17
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,7 +26,7 @@ if (!empty($change_cat))
 {
 	$new_cat = '';
 	try {
-		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
+		$new_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
@@ -44,7 +44,7 @@ $idcat_unread = $request->get_getint('cat', 0);
 $max_time_msg = forum_limit_time_msg();
 
 //Vérification des autorisations.
-$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
+$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
 
 $nbr_topics = 0;
 
@@ -188,7 +188,7 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 //Liste des catégories.
 $search_category_children_options = new SearchCategoryChildrensOptions();
 $search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-$categories_tree = ForumService::get_categories_manager()->get_select_categories_form_field('cats', '', $idcat_unread, $search_category_children_options);
+$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $idcat_unread, $search_category_children_options);
 $method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 $method->setAccessible(true);
 $categories_tree_options = $method->invoke($categories_tree);
@@ -197,7 +197,7 @@ foreach ($categories_tree_options as $option)
 {
 	if ($option->get_raw_value())
 	{
-		$cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+		$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
 		if (!$cat->get_url())
 			$cat_list .= $option->display()->render();
 	}

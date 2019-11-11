@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,7 @@ if (!$is_guest) {
 	$max_time_msg = forum_limit_time_msg();
 
 	//Vérification des autorisations.
-	$authorized_categories = ForumService::get_authorized_categories(Category::ROOT_CATEGORY);
+	$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
 
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
 	$clause_topic = '';

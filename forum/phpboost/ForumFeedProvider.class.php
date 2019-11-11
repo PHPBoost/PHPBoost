@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 02
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -12,26 +12,27 @@ class ForumFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
 	{
-		return ForumService::get_categories_manager()->get_feeds_categories_module()->get_feed_list();
+		return CategoriesService::get_categories_manager('forum', 'idcat')->get_feeds_categories_module()->get_feed_list();
 	}
 
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		if (ForumService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
+		$module_id = 'forum';
+		if (CategoriesService::get_categories_manager($module_id, 'idcat')->get_categories_cache()->category_exists($idcat))
 		{
 			$config = ForumConfig::load();
-			$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($idcat);
+			$category = CategoriesService::get_categories_manager($module_id, 'idcat')->get_categories_cache()->get_category($idcat);
 
 			$data = new FeedData();
-			$data->set_title(LangLoader::get_message('xml_forum_desc', 'common', 'forum') . ' ' . $category->get_name());
+			$data->set_title(LangLoader::get_message('xml_forum_desc', 'common', $module_id) . ' ' . $category->get_name());
 			$data->set_date(new Date());
 			$data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
 			$data->set_host(HOST);
-			$data->set_desc(LangLoader::get_message('xml_forum_desc', 'common', 'forum'));
+			$data->set_desc(LangLoader::get_message('xml_forum_desc', 'common', $module_id));
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-			$categories = ForumService::get_categories_manager()->get_children($idcat, new SearchCategoryChildrensOptions(), true);
+			$categories = CategoriesService::get_categories_manager($module_id, 'idcat')->get_children($idcat, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 
 			$results = PersistenceContext::get_querier()->select('SELECT t.id, t.idcat, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents
@@ -66,7 +67,7 @@ class ForumFeedProvider implements FeedProvider
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse(stripslashes($row['contents'])));
 				$item->set_date(new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE));
-				$item->set_auth(ForumService::get_categories_manager()->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+				$item->set_auth(CategoriesService::get_categories_manager($module_id, 'idcat')->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 
 				$data->add_item($item);
 			}

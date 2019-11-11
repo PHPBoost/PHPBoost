@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 01 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -120,7 +120,7 @@ elseif (!empty($idt_get))
 	}
 
 	try {
-		$category = ForumService::get_categories_manager()->get_categories_cache()->get_category($topic['idcat']);
+		$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($topic['idcat']);
 	} catch (CategoryNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
