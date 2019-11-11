@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -17,9 +17,7 @@ class WebConfig extends AbstractConfigData
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
-    
-        const DEFAULT_CONTENTS = 'default_contents';
-    
+	const DEFAULT_CONTENTS = 'default_contents';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const PARTNERS_SORT_FIELD = 'partners_sort_field';
@@ -104,8 +102,8 @@ class WebConfig extends AbstractConfigData
 	{
 		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
 	}
-    
-         public function get_default_contents()
+
+	public function get_default_contents()
 	{
 		return $this->get_property(self::DEFAULT_CONTENTS);
 	}
@@ -202,7 +200,7 @@ class WebConfig extends AbstractConfigData
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
 			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
-                        self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENTS => '',
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
 			self::PARTNERS_SORT_FIELD => WebLink::SORT_ALPHABETIC,
