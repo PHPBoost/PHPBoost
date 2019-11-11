@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 11
  * @since   	PHPBoost 4.0 - 2014 08 24
 */
 
@@ -28,7 +28,7 @@ class DownloadAuthorizationsService extends CategoriesAuthorizationsService
 		if ($bit == self::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
 			$auth = DownloadConfig::load()->get_authorizations();
 		else
-			$auth = CategoriesService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
+			$auth = CategoriesService::get_categories_manager('download')->get_heritated_authorizations($this->id_category, $bit, $mode);
 
 		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
