@@ -594,7 +594,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">${LangLoader::get_message('bbcode.anchor.url.desc', 'common', 'bbcode')}</span></div>
+						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">${@bbcode.anchor.url.desc}</span></div>
 						<div class="cell-footer cell-input">
 							<button class="submit" type="submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
 						</div>
