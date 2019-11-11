@@ -205,7 +205,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		$location_id = 'media-edit-'. $edit;
 	}
 	// Ajout.
-	elseif (($write = CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY,, 'media', 'idcat')->write()) || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY,, 'media', 'idcat')->contribution())
+	elseif (($write = CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'media', 'idcat')->write()) || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'media', 'idcat')->contribution())
 	{
 		bread_crumb($add);
 
