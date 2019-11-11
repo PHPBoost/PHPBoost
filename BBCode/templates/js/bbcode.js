@@ -352,8 +352,8 @@ function bbcode_figure(field)
 		figure_desc = document.getElementById('bb_figure_desc' + field).value,
 		picture_width = document.getElementById('bb_picture_width' + field).value,
 		img_width = '';
-	if(picture_width <= 100)
-		picture_width = 100;
+	if(picture_width < 0 && picture_width != '')
+		picture_width = 10;
 
 	if (picture_width != '' && picture_width != null)
 		img_width = ' style="max-width:' + picture_width + 'px"';

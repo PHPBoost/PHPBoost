@@ -48,7 +48,7 @@
 
 <div id="bbcode-expanded" class="bbcode expand bkgd-color-op10 bdr-color-op20">
 	<div class="bbcode-containers">
-		<ul id="bbcode-container-format" class="bbcode-container dlt-color-op20-after bbcode-left modal-container cell-flex cell-modal">
+		<ul id="bbcode-container-format" class="bbcode-container dlt-color-op20-after modal-container cell-flex cell-modal">
 			<li id="format-bold" class="bbcode-elements bkgd-color-op20-hover">
 				<a href="" onclick="{DISABLED_B}insertbbcode('[b]', '[/b]', '{FIELD}');return false;" aria-label="{@bbcode.bold}">
 					<i class="fa fa-fw bbcode-icon-bold{AUTH_B}" aria-hidden="true"></i>
@@ -117,7 +117,7 @@
 							<span class="font-size-sample">{@bbcode.preview.text}</span>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -162,19 +162,19 @@
 							<ul>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
 									<span><i class="fa fa-fw fa-align-left"></i> {@bbcode.left} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
 									<span><i class="fa fa-fw fa-align-center"></i> {@bbcode.center} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
 									<span><i class="fa fa-fw fa-align-right"></i> {@bbcode.right} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
 									<span><i class="fa fa-fw fa-align-justify"></i> {@bbcode.justify} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 							</ul>
 						</div>
@@ -196,31 +196,30 @@
 							<ul>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=left]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
 									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=right]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
 									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[indent]', '[/indent]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
 									<span class="{AUTH_INDENT}"><i class="fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sup]', '[/sup]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
 									<span class="{AUTH_SUP}"><i class="fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sub]', '[/sub]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
 									<span class="{AUTH_SUB}"><i class="fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
-									<button>{@bbcode.choice.button}</button>
+									<span class="button">{@bbcode.choice.button}</span>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</li>
-		<!-- </ul>
-		<ul id="bbcode-container-attr" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal"> -->
+
 			<li id="html-title" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block2{FIELD}" href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" class="bbcode-hover{AUTH_TITLE}" aria-label="{@bbcode.title}">
 					<i class="fa fa-fw bbcode-icon-title" aria-hidden="true"></i>
@@ -233,23 +232,23 @@
 						</div>
 						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
 							<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
-							<button class="button">{@bbcode.choice.button}</button>
+							<span class="button">{@bbcode.choice.button}</span>
 						</div>
 						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
 							<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
-							<button class="button">{@bbcode.choice.button}</button>
+							<span class="button">{@bbcode.choice.button}</span>
 						</div>
 						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
 							<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
-							<button class="button">{@bbcode.choice.button}</button>
+							<span class="button">{@bbcode.choice.button}</span>
 						</div>
 						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
 							<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
-							<button class="button">{@bbcode.choice.button}</button>
+							<span class="button">{@bbcode.choice.button}</span>
 						</div>
 						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
 							<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
-							<button class="button">{@bbcode.choice.button}</button>
+							<span class="button">{@bbcode.choice.button}</span>
 						</div>
 					</div>
 				</div>
@@ -280,7 +279,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');bb_hide_block('9', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');bb_hide_block('9', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -317,7 +316,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_TABLE}bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);return false;">{@bbcode.insert.table}</button>
+							<span class="button submit" onclick="{DISABLED_TABLE}bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);return false;">{@bbcode.insert.table}</span>
 						</div>
 					</div>
 				</div>
@@ -344,7 +343,7 @@
 										<div class="cell-input"><input type="text" id="bb_legend{FIELD}"></div>
 									</div>
 									<div class="cell-footer cell-input" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)">
-										<button class="submit" type="submit" onclick="{DISABLED_FIELDSET}bbcode_fieldset('{FIELD}');bb_hide_block('19', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+										<span class="button submit" onclick="{DISABLED_FIELDSET}bbcode_fieldset('{FIELD}');bb_hide_block('19', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 							</div>
@@ -364,7 +363,7 @@
 										</div>
 									</div>
 									<div class="cell-footer cell-input" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)">
-										<button class="submit" type="submit" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');bb_hide_block('24', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+										<span class="button submit" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');bb_hide_block('24', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 							</div>
@@ -395,7 +394,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_QUOTE}bbcode_quote('{FIELD}');bb_hide_block('21', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_QUOTE}bbcode_quote('{FIELD}');bb_hide_block('21', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -425,40 +424,37 @@
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
 							<div class="message-helper notice justify-between">
 								<span>${LangLoader::get_message('notice', 'main')}</span>
-								<button class="button message-helper-button notice">{@bbcode.choice.button}</button>
+								<span class="button message-helper-button notice">{@bbcode.choice.button}</span>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
 							<div class="message-helper question justify-between">
 								<span>${LangLoader::get_message('question', 'main')}</span>
-								<button class="button message-helper-button question">{@bbcode.choice.button}</button>
+								<span class="button message-helper-button question">{@bbcode.choice.button}</span>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
 							<div class="message-helper success justify-between">
 								<span>${LangLoader::get_message('success', 'main')}</span>
-								<button class="button message-helper-button success">{@bbcode.choice.button}</button>
+								<span class="button message-helper-button success">{@bbcode.choice.button}</span>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
 							<div class="message-helper warning justify-between">
 								<span>${LangLoader::get_message('warning', 'main')}</span>
-								<button class="button message-helper-button warning">{@bbcode.choice.button}</button>
+								<span class="button message-helper-button warning">{@bbcode.choice.button}</span>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
 							<div class="message-helper error justify-between">
 								<span>${LangLoader::get_message('error', 'main')}</span>
-								<button class="button message-helper-button error">{@bbcode.choice.button}</button>
+								<span class="button message-helper-button error">{@bbcode.choice.button}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</li>
-		<!-- </ul>
-	</div>
-	<div class="bbcode-containers">
-		<ul id="bbcode-container-links" class="bbcode-container dlt-color-op20-after bbcode-left modal-container cell-flex cell-modal"> -->
+
 			<li id="links-url" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block22{FIELD}" href="" onclick="{DISABLED_URL}bb_display_block('22', '{FIELD}');return false;" class="bbcode-hover{AUTH_URL}" aria-label="{@bbcode.link}">
 					<i class="fa fa-fw bbcode-icon-url{AUTH_URL}" aria-hidden="true"></i>
@@ -482,7 +478,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" class="bbcode-hover{AUTH_URL}" onclick="{DISABLED_URL}bbcode_link('{FIELD}');bb_hide_block('22', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" class="bbcode-hover{AUTH_URL}" onclick="{DISABLED_URL}bbcode_link('{FIELD}');bb_hide_block('22', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -510,7 +506,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" class="bbcode-hover{AUTH_MAIL}" onclick="{DISABLED_MAIL}bbcode_mail('{FIELD}');bb_hide_block('23', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" class="bbcode-hover{AUTH_MAIL}" onclick="{DISABLED_MAIL}bbcode_mail('{FIELD}');bb_hide_block('23', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -554,7 +550,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}');bb_hide_block('25', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}');bb_hide_block('25', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -586,7 +582,7 @@
 						</div>
 						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">{@bbcode.anchor.url.desc}</span></div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -613,7 +609,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_SOUND}bbcode_sound('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_SOUND}bbcode_sound('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -635,7 +631,6 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_url{FIELD}">
 								{@bbcode.movie.url}
-
 							</label>
 							<div class="cell-input input-element-button">
 								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
@@ -665,7 +660,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_MOVIE}bbcode_movie('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_MOVIE}bbcode_movie('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -698,7 +693,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_LIGHTBOX}bbcode_lightbox('{FIELD}');bb_hide_block('18', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_LIGHTBOX}bbcode_lightbox('{FIELD}');bb_hide_block('18', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -750,7 +745,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_FIGURE}bbcode_figure('{FIELD}');bb_hide_block('17', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_FIGURE}bbcode_figure('{FIELD}');bb_hide_block('17', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -762,8 +757,7 @@
 					</a>
 				</li>
 			# ENDIF #
-		<!-- </ul>
-		<ul id="bbcode-container-code" class="bbcode-container dlt-color-op20-after bbcode-right modal-container cell-flex cell-modal"> -->
+
 			<li id="code-smileys" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block1{FIELD}" href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bbcode.smileys}">
 					<i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true"></i>
@@ -881,7 +875,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<button class="submit" type="submit" onclick="{DISABLED_CODE}bbcode_code('{FIELD}');bb_hide_block('8', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+							<span class="button submit" onclick="{DISABLED_CODE}bbcode_code('{FIELD}');bb_hide_block('8', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -907,7 +901,7 @@
 
 <script>
 	// bbcode size : resize lorem texte when input value is changing
-	jQuery('.font-size-input').on('input',function(e){
+	jQuery('.font-size-input').on('input', function(e){
 		jQuery(".font-size-sample").css('font-size',jQuery(this).val()+'px');
 	});
 
