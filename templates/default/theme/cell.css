@@ -104,8 +104,13 @@
 	border-style: solid;
 }
 
-.cell-table table tbody tr td:first-child { border-width: 0 0 1px 0; }
-.cell-table table tbody tr td:last-child  { border-width: 0 0 1px 1px; }
+.cell-table table tbody tr td { border-width: 0 0 1px 0; }
+.cell-table table tbody tr td:last-child { border-width: 0; }
+
+@media (min-width: 769px) {
+	.cell-table table tbody tr td:last-child { border-width: 0 0 1px 0; }
+	.cell-table table tbody tr:last-child td { border-width: 0; }
+}
 
 .cell-form .cell-label,
 .cell-form .cell-input {

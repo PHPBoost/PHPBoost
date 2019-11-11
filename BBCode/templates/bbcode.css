@@ -2,7 +2,6 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-
 .bbcode {
 	position: relative;
 	display: table;
@@ -156,13 +155,9 @@
 	}
 }
 
-.bbcode-block-container.color-picker table {
-	width: auto;
-}
-
-.bbcode-block-container.color-picker td a {
-	height: 32px;
-	width: 32px;
+.bbcode-container .cell-table.color-table td {
+	cursor: pointer;
+	border-width: 3px !important;
 }
 
 .bbcode-block-list li {

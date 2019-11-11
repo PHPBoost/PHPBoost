@@ -13,3 +13,9 @@ figcaption {
     border-style: solid;
     border-color: transparent;
 }
+
+/* --- flexbox --- */
+.justify-between {
+    display: flex !important;
+	justify-content: space-between;
+}

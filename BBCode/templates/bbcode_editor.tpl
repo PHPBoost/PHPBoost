@@ -70,19 +70,31 @@
 				</a>
 			</li>
 			<li id="format-color" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_COLOR}bbcode_color('5', '{FIELD}', 'color');bb_display_block('5', '{FIELD}');return false;" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
+				<a data-trigger data-target="bb-block5{FIELD}" href="" onclick="{DISABLED_COLOR}bbcode_color('5', '{FIELD}', 'color');bb_display_block('5', '{FIELD}');return false;" aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
 					<i class="fa fa-fw bbcode-icon-color" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block5{FIELD}" class="bbcode-block-container arrow-submenu-color color-picker" style="display: none;">
-					<div id="bb-color{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);"></div>
+				<div id="bb-block5{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.color}</div>
+						</div>
+						<div id="bb-color{FIELD}" class="cell-table color-table"></div>
+					</div>
 				</div>
 			</li>
 			<li id="format-bg-color" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');bb_display_block('15', '{FIELD}');return false;" onmouseout="{DISABLED_BGCOLOR}bb_hide_block('15', '{FIELD}', 0);" aria-label="{@bbcode.bgcolor}" class="{AUTH_BGCOLOR}">
+				<a data-trigger data-target="bb-block15{FIELD}" href="" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');bb_display_block('15', '{FIELD}');return false;" aria-label="{@bbcode.bgcolor}" class="{AUTH_BGCOLOR}">
 					<i class="fa fa-fw bbcode-icon-bgcolor" aria-hidden="true"></i>
 				</a>
-				<div id="bb-block15{FIELD}" class="bbcode-block-container arrow-submenu-color color-picker" style="display: none;">
-					<div id="bb-bgcolor{FIELD}" class="bbcode-block" onmouseover="bb_hide_block('15', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);"></div>
+				<div id="bb-block15{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.bgcolor}</div>
+						</div>
+						<div id="bb-bgcolor{FIELD}" class="cell-table color-table"></div>
+					</div>
 				</div>
 			</li>
 			<li id="format-font-size" class="bbcode-elements bkgd-color-op20-hover">
@@ -103,11 +115,6 @@
 						</div>
 						<div class="cell-body">
 							<span class="font-size-sample">Lorem ipsum dolor sit amet</span>
-							<script>
-								$('.font-size-input').on('input',function(e){
-									$(".font-size-sample").css('font-size',$(this).val()+'px');
-								});
-							</script>
 						</div>
 						<div class="cell-footer cell-input">
 							<button class="submit" type="submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
@@ -225,33 +232,33 @@
 							<div class="cell-name">{@bbcode.title}</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h2 class="formatter-title">
-								<button class="smaller button float-right">{@bbcode.choice.button}</button>
-								{@bbcode.title.label} 1
+							<h2 class="formatter-title justify-between">
+								<span>{@bbcode.title.label} 1</span>
+								<button class="smaller button">{@bbcode.choice.button}</button>
 							</h2>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h3 class="formatter-title">
-								<button class="smaller button float-right">{@bbcode.choice.button}</button>
-								{@bbcode.title.label} 2
+							<h3 class="formatter-title justify-between">
+								<span>{@bbcode.title.label} 2</span>
+								<button class="smaller button">{@bbcode.choice.button}</button>
 							</h3>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h4 class="formatter-title">
-								<button class="smaller button float-right">{@bbcode.choice.button}</button>
-								{@bbcode.title.label} 3
+							<h4 class="formatter-title justify-between">
+								<span>{@bbcode.title.label} 3</span>
+								<button class="smaller button">{@bbcode.choice.button}</button>
 							</h4>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h5 class="formatter-title">
-								<button class="smaller button float-right">{@bbcode.choice.button}</button>
-								{@bbcode.title.label} 4
+							<h5 class="formatter-title justify-between">
+								<span>{@bbcode.title.label} 4</span>
+								<button class="smaller button">{@bbcode.choice.button}</button>
 							</h5>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
-							<h6 class="formatter-title">
-								<button class="smaller button float-right">{@bbcode.choice.button}</button>
-								{@bbcode.title.label} 5
+							<h6 class="formatter-title justify-between">
+								<span>{@bbcode.title.label} 5</span>
+								<button class="smaller button">{@bbcode.choice.button}</button>
 							</h6>
 						</div>
 					</div>
@@ -426,28 +433,33 @@
 							<div class="cell-name">{@bbcode.style}</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
-							<div class="message-helper notice">
-								<button class="button float-right">{@bbcode.choice.button}</button>${LangLoader::get_message('notice', 'main')}
+							<div class="message-helper notice justify-between">
+								<span>${LangLoader::get_message('notice', 'main')}</span>
+								<button class="button message-helper-button notice">{@bbcode.choice.button}</button>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
-							<div class="message-helper question">
-								<button class="button float-right">{@bbcode.choice.button}</button>${LangLoader::get_message('question', 'main')}
+							<div class="message-helper question justify-between">
+								<span>${LangLoader::get_message('question', 'main')}</span>
+								<button class="button message-helper-button question">{@bbcode.choice.button}</button>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
-							<div class="message-helper success">
-								<button class="button float-right">{@bbcode.choice.button}</button>${LangLoader::get_message('success', 'main')}
+							<div class="message-helper success justify-between">
+								<span>${LangLoader::get_message('success', 'main')}</span>
+								<button class="button message-helper-button success">{@bbcode.choice.button}</button>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
-							<div class="message-helper warning">
-								<button class="button float-right">{@bbcode.choice.button}</button>${LangLoader::get_message('warning', 'main')}
+							<div class="message-helper warning justify-between">
+								<span>${LangLoader::get_message('warning', 'main')}</span>
+								<button class="button message-helper-button warning">{@bbcode.choice.button}</button>
 							</div>
 						</div>
 						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
-							<div class="message-helper error">
-								<button class="button float-right">{@bbcode.choice.button}</button>${LangLoader::get_message('error', 'main')}
+							<div class="message-helper error justify-between">
+								<span>${LangLoader::get_message('error', 'main')}</span>
+								<button class="button message-helper-button error">{@bbcode.choice.button}</button>
 							</div>
 						</div>
 					</div>
@@ -558,9 +570,36 @@
 				</div>
 			</li>
 			<li id="links-anchor" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}', ${escapejs(@bbcode.anchor.prompt)});return false;" aria-label="{@bbcode.anchor}">
+				<a data-trigger data-target="bb-block27{FIELD}" href="" onclick="{DISABLED_ANCHOR}bb_display_block('27', '{FIELD}');return false;" aria-label="{@bbcode.anchor}">
 					<i class="fa fa-fw bbcode-icon-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
 				</a>
+				<div id="bb-block27{FIELD}" class="modal modal-animation" style="display: none;">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div id="bbanchor{FIELD}" class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.anchor}</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_anchor_id{FIELD}">{@bbcode.anchor.name}</label>
+							<div class="cell-input">
+								<input id="bb_anchor_id{FIELD}" type="text" name="bb_anchor_id{FIELD}" />
+							</div>
+						</div>
+						<div class="cell-form">
+							<label class="cell-label" for="bb_anchor_url{FIELD}">{@bbcode.anchor.url}</label>
+							<div class="cell-input">
+								<label for="bb_anchor_url" class="checkbox">
+									<input class="checkbox-revealer" id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
+									<span></span>
+								</label>
+							</div>
+						</div>
+						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">${LangLoader::get_message('bbcode.anchor.url.desc', 'common', 'bbcode')}</span></div>
+						<div class="cell-footer cell-input">
+							<button class="submit" type="submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</button>
+						</div>
+					</div>
+				</div>
 			</li>
 			<li id="links-sound" class="bbcode-elements bkgd-color-op20-hover">
 				<a data-trigger data-target="bb-block26{FIELD}"
@@ -579,7 +618,7 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
 							<div class="cell-input input-element-button">
-								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" value="" />
+								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
@@ -609,7 +648,7 @@
 
 							</label>
 							<div class="cell-input input-element-button">
-								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" value="" />
+								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
@@ -656,7 +695,7 @@
 								{@bbcode.picture.url}
 							</label>
 							<div class="cell-input input-element-button">
-								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" value="" />
+								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
@@ -665,7 +704,7 @@
 								{@bbcode.thumbnail.width}
 							</label>
 							<div class="cell-input">
-								<input id="bb_lightbox_width{FIELD}" type="number" min="0" value="150" name="bb_lightbox_width{FIELD}" value="" />
+								<input id="bb_lightbox_width{FIELD}" type="number" min="0" value="150" name="bb_lightbox_width{FIELD}" />
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -692,7 +731,7 @@
 								{@bbcode.picture.url}
 							</label>
 							<div class="cell-input input-element-button">
-								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" value="" />
+								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
@@ -717,7 +756,7 @@
 								{@bbcode.picture.width}
 							</label>
 							<div class="cell-input">
-								<input id="bb_picture_width{FIELD}" type="number" name="bb_picture_width{FIELD}" value="" />
+								<input id="bb_picture_width{FIELD}" type="number" name="bb_picture_width{FIELD}" />
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -858,3 +897,20 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+	// bbcode size : resize lorem texte when input value is changing
+	jQuery('.font-size-input').on('input',function(e){
+		jQuery(".font-size-sample").css('font-size',jQuery(this).val()+'px');
+	});
+
+	$('.checkbox-revealer').on('click', checkbox_revealer);
+
+	// bbcode color : set td's height to width (setInterval needed because of the display:hidden)
+	setInterval(function() {
+		jQuery('.color-td').each(function(){
+			var td_width = jQuery(this).outerWidth();
+			jQuery(this).outerHeight(td_width + 'px');
+		});
+	}, 1);
+</script>

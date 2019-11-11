@@ -162,7 +162,7 @@ function bbcode_color(divID, field, type)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td><a href="" aria-label="' + color[i] + '" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;"></a></td>' + br;
+		contents += '<td class="color-td" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;" aria-label="' + color[i] + '"><a href=""></a></td>' + br;
 	}
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
@@ -176,7 +176,22 @@ function bbcode_size(field)
 		font_size = 49;
 
 	insertbbcode('[size=' + font_size + ']', '[/size]', field);
+}
 
+function bbcode_list(field)
+{
+	var elements = document.getElementById('bb_list' + field).value;
+	var ordered_list = document.getElementById('bb_ordered_list' + field).checked;
+	if( elements <= 0 )
+		elements = 1;
+
+	var pointor = ordered_list ? 19 : 11;
+
+	code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
+	for(var j = 0; j < elements; j++)
+		code += '\t[*]\n';
+	code += '[/list]';
+	insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
 }
 
 function bbcode_table(field)
@@ -205,20 +220,35 @@ function bbcode_table(field)
 	}
 }
 
-function bbcode_list(field)
+function bbcode_fieldset(field)
 {
-	var elements = document.getElementById('bb_list' + field).value;
-	var ordered_list = document.getElementById('bb_ordered_list' + field).checked;
-	if( elements <= 0 )
-		elements = 1;
+	var legend = document.getElementById('bb_legend' + field).value;
+	if(legend != '' && legend != null)
+		insertbbcode('[fieldset legend="' + legend + '"]', '[/fieldset]', field);
+	else
+		insertbbcode('[fieldset]', '[/fieldset]', field);
+}
 
-	var pointor = ordered_list ? 19 : 11;
+function bbcode_abbr(field)
+{
+	var desc = document.getElementById('bb_abbr_desc' + field).value;
+	if(desc != '' && desc != null)
+		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
+	else
+		insertbbcode('[abbr]', '[/abbr]', field);
+}
 
-	code = '[list' + (ordered_list ? '=ordered' : '') + ']\n';
-	for(var j = 0; j < elements; j++)
-		code += '\t[*]\n';
-	code += '[/list]';
-	insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
+function bbcode_quote(field)
+{
+	var quote_author = document.getElementById('bb_quote_author' + field).value,
+		quote_extract = document.getElementById('bb_quote_extract' + field).value;
+	if(quote_author != null)
+	{
+		if(quote_author != '')
+			insertbbcode('[quote=' + quote_author + ']' + quote_extract, '[/quote]', field);
+		else
+			insertbbcode('[quote]' + quote_extract, '[/quote]', field);
+	}
 }
 
 function bbcode_link(field)
@@ -232,19 +262,50 @@ function bbcode_link(field)
 		else
 			insertbbcode('[url=' + link_url + ']', '[/url]', field);
 	}
+}
+
+function bbcode_mail(field)
+{
+	var mail_url = document.getElementById('bb_mail_url' + field).value,
+		mail_name = document.getElementById('bb_mail_name' + field).value;
+	if(mail_url != '' && mail_url != null)
+	{
+		if(mail_name != '' && mail_name != null)
+			insertbbcode('[mail=' + mail_url + ']' + mail_name, '[/mail]', field);
+		else
+			insertbbcode('[mail=' + mail_url + ']', '[/mail]', field);
+	}
 
 }
 
-function bbcode_quote(field)
+function bbcode_feed(field)
 {
-	var quote_author = document.getElementById('bb_quote_author' + field).value,
-		quote_extract = document.getElementById('bb_quote_extract' + field).value;
-	if(quote_author != null)
+	var feed_module = document.getElementById('bb_module_name' + field).value,
+		feed_cat = document.getElementById('bb_feed_category' + field).value,
+		feed_number = document.getElementById('bb_feed_number' + field).value;
+
+	if(feed_cat <= 0 || feed_cat == '' || feed_cat == null)
+		feed_cat = 0;
+
+	if(feed_number <= 0 || feed_number == '' || feed_number == null)
+		feed_number = 1;
+	else if(feed_number >= 10)
+		feed_number = 10;
+
+	if(feed_module != '' && feed_module != null)
+		insertbbcode('[feed cat="' + feed_cat + '" number="' + feed_number + '"]' + feed_module.toLowerCase(), '[/feed]', field);
+}
+
+function bbcode_anchor(field)
+{
+	var anchor_name = document.getElementById('bb_anchor_id' + field).value,
+		anchor_url = document.getElementById('bb_anchor_url' + field).checked;
+	if(anchor_name != '' && anchor_name != null)
 	{
-		if(quote_author != '')
-			insertbbcode('[quote=' + quote_author + ']' + quote_extract, '[/quote]', field);
+		if(anchor_url)
+			insertbbcode('[url=#' + url_encode_rewrite(anchor_name) + '][/url]\n[anchor=' + url_encode_rewrite(anchor_name) + ']', '[/anchor]', field);
 		else
-			insertbbcode('[quote]' + quote_extract, '[/quote]', field);
+			insertbbcode('[anchor=' + url_encode_rewrite(anchor_name) + ']', '[/anchor]', field);
 	}
 }
 
@@ -310,65 +371,6 @@ function bbcode_figure(field)
 		insertbbcode(img_tag + figure_img, '[/img]', field);
 }
 
-function bbcode_anchor(field, prompt_text)
-{
-	var anchor = prompt(prompt_text, '');
-	if(anchor != '' && anchor != null)
-		insertbbcode('[anchor=' + url_encode_rewrite(anchor) + ']', '[/anchor]', field);
-	else
-		insertbbcode('[anchor]', '[/anchor]', field);
-}
-
-function bbcode_abbr(field)
-{
-	var desc = document.getElementById('bb_abbr_desc' + field).value;
-	if(desc != '' && desc != null)
-		insertbbcode('[abbr=' + desc + ']', '[/abbr]', field);
-	else
-		insertbbcode('[abbr]', '[/abbr]', field);
-}
-
-function bbcode_fieldset(field)
-{
-	var legend = document.getElementById('bb_legend' + field).value;
-	if(legend != '' && legend != null)
-		insertbbcode('[fieldset legend="' + legend + '"]', '[/fieldset]', field);
-	else
-		insertbbcode('[fieldset]', '[/fieldset]', field);
-}
-
-function bbcode_mail(field)
-{
-	var mail_url = document.getElementById('bb_mail_url' + field).value,
-		mail_name = document.getElementById('bb_mail_name' + field).value;
-	if(mail_url != '' && mail_url != null)
-	{
-		if(mail_name != '' && mail_name != null)
-			insertbbcode('[mail=' + mail_url + ']' + mail_name, '[/mail]', field);
-		else
-			insertbbcode('[mail=' + mail_url + ']', '[/mail]', field);
-	}
-
-}
-
-function bbcode_feed(field)
-{
-	var feed_module = document.getElementById('bb_module_name' + field).value,
-		feed_cat = document.getElementById('bb_feed_category' + field).value,
-		feed_number = document.getElementById('bb_feed_number' + field).value;
-
-	if(feed_cat <= 0 || feed_cat == '' || feed_cat == null)
-		feed_cat = 0;
-
-	if(feed_number <= 0 || feed_number == '' || feed_number == null)
-		feed_number = 1;
-	else if(feed_number >= 10)
-		feed_number = 10;
-
-	if(feed_module != '' && feed_module != null)
-		insertbbcode('[feed cat="' + feed_cat + '" number="' + feed_number + '"]' + feed_module.toLowerCase(), '[/feed]', field);
-}
-
 function bbcode_code(field)
 {
 	var code_name = document.getElementById('bb_code_name' + field).value,
@@ -394,4 +396,13 @@ function bbcode_code(field)
 
 
 
+}
+
+function checkbox_revealer()
+{
+	var checked = jQuery('.checkbox-revealer:checked').length;
+  	if(checked >= 1)
+		jQuery('.checkbox-revealer').closest('.cell').find('.cell-hidden').removeClass('hidden');
+	else
+		jQuery('.checkbox-revealer').closest('.cell').find('.cell-hidden').addClass('hidden');
 }

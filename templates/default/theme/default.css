@@ -94,17 +94,17 @@ a.wikipedia-link {
 	border-bottom-style: dotted;
 	border-bottom-color: transparent;
 	cursor: help;
-	padding-left: 1.309em; }
+	padding-right: 0.809em; }
 
-a.wikipedia-link:before {
+a.wikipedia-link:after {
 	position: absolute;
 	vertical-align: middle;
 	top: 1px;
-	left: 0;
+	right: 0;
 	content: "\f266" ;
 	font-family: 'Font Awesome 5 Brands';
 	font-weight: 900; /* Solid icons*/
-	font-size: 1em; }
+	font-size: 0.618em; }
 
 /* --- Alignment --- */
 .inline 	  { display: inline !important; }

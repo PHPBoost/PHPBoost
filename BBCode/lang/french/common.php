@@ -18,7 +18,7 @@
 $lang['bbcode.tags.add'] = 'Insérer';
 $lang['bbcode.choice.button'] = 'Choisir';
 
-// left top block
+// left top block : Text formatting
 $lang['bbcode.bold'] = 'Texte en gras';
 $lang['bbcode.italic'] = 'Texte en italique';
 $lang['bbcode.underline'] = 'Texte souligné';
@@ -43,7 +43,7 @@ $lang['bbcode.indent'] = 'Indentation';
 $lang['bbcode.sup'] = 'Exposant';
 $lang['bbcode.sub'] = 'Indice';
 
-// right top block
+// right top block : HTML formatting
 $lang['bbcode.title'] = 'Titrage';
 $lang['bbcode.title.label'] = 'Titre';
 
@@ -80,7 +80,7 @@ $lang['bbcode.hide.view.moderator'] = 'Cache le texte pour les membres [moderato
 
 $lang['bbcode.style'] = 'Style';
 
-// left bottom block
+// Left bottom block : Links
 $lang['bbcode.link'] = 'Lien';
 $lang['bbcode.link.url'] = 'Adresse du lien';
 $lang['bbcode.link.name'] = 'Nom du lien';
@@ -94,7 +94,12 @@ $lang['bbcode.feed.category'] = 'Id de la catégorie';
 $lang['bbcode.feed.number'] = 'Nombre d\'items';
 
 $lang['bbcode.anchor'] = 'Ancre vers un endroit de la page';
-$lang['bbcode.anchor.prompt'] = 'Nom de l\'ancre (de la forme nom-de-l-ancre) ?';
+$lang['bbcode.anchor.name'] = 'Nom de l\'ancre';
+$lang['bbcode.anchor.url'] = 'Ajouter le lien vers l\'ancre';
+$lang['bbcode.anchor.url.desc'] = '
+    il faudra ajouter l\'adresse de l\'item devant le #, après validation. <br />
+    exemple : [url=/news/1-categorie/1-article#nom-de-l-ancre]lien vers l\'ancre[/url]
+';
 
 $lang['bbcode.sound'] = 'Son';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';
@@ -118,12 +123,11 @@ $lang['bbcode.figure.caption'] = 'Description de l\'image';
 $lang['bbcode.picture'] = 'Ajouter une image : [img]url image[/img]';
 $lang['bbcode.upload'] = 'Attacher un fichier';
 
-
-
+// Right bottom block : Code
 $lang['bbcode.smileys'] = 'Smileys';
 $lang['bbcode.fa'] = 'Icônes Font Awesome 5 Free<br />[fa=fa-options]nom de l\'icône[/fa]';
 $lang['bbcode.code'] = 'Code';
-$lang['bbcode.code.custom.name'] = 'Chemin vers le fichier';
+$lang['bbcode.code.custom.name'] = 'Chemin vers un fichier';
 $lang['bbcode.code.name'] = 'Langage';
 $lang['bbcode.code.line'] = 'Afficher sur une seule ligne';
 $lang['bbcode.text'] = 'Texte';
