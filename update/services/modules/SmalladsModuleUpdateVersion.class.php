@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 12
  * @since   	PHPBoost 5.1 - 2018 09 20
 */
 
@@ -22,6 +22,8 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/english/smallads_french.php',
 			'/phpboost/SmalladsComments.class.php',
 			'/phpboost/SmalladsModuleMiniMenu.class.php',
+			'/phpboost/SmalladsSitemapExtensionPoint.class.php',
+			'/services/SmalladsAuthorizationsService.class.php',
 			'/templates/smallads.tpl',
 			'/templates/SmalladsModuleMiniMenu.tpl',
 			'/templates/images/default.png',
@@ -29,6 +31,9 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/smallads.class.php',
 			'/smallads.php',
 			'/smallads_begin.php'
+		);
+		$this->delete_old_folders_list = array(
+			'/controllers/categories'
 		);
 
 		$this->database_columns_to_add = array(
