@@ -53,10 +53,6 @@ textarea {
 	width: 100%;
 }
 
-.bbcode ~ .form-field-textarea textarea {
-	border-width: 1px;
-}
-
 .form-field-select select,
 .form-field-multi-select select {
 	max-width: 100%;

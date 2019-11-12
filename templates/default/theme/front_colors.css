@@ -305,6 +305,20 @@ table tbody td {
     #      #   #  #  #   #   #
     #      #####  #   #  #   #
 ----------------------------------------------------------------------------- */
+.bbcode-bar {
+	background-color: #ECF2F8;
+	border-color: #DDDDDD !important;
+}
+
+.bbcode-button {
+	color: #366493;
+}
+
+.bbcode-button:hover {
+	color: #0066CC;
+	background-color: rgba(54, 100, 147, 0.2);
+}
+
 button,
 .button {
 	background-color: rgba(54, 100, 147, 0.1);
@@ -929,9 +943,6 @@ a[class*='lightcase-icon-']:hover {
 	}
 }
 
-
-
-
 /* -- miscellaneous
      ###   #   #  #####  #####  #####  #####
     #   #  #   #    #    #   #  #      #
@@ -960,7 +971,7 @@ a[class*='lightcase-icon-']:hover {
 .constraint-status-right .bdr-color-op20 {  border-color: rgba(71, 137, 72, 1); }
 
 .bkgd-color-op10 { background-color: rgba(54, 100, 147, 0.1); }
-.bkgd-color-op20 { background-color: rgba(54, 100, 147, 0.1); }
+.bkgd-color-op20 { background-color: rgba(54, 100, 147, 0.2); }
 .bkgd-color-op40 { background-color: rgba(54, 100, 147, 0.4); }
 
 @media (max-width: 768px) {

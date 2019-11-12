@@ -46,34 +46,34 @@
 
 <div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display: none;"></div>
 
-<div id="bbcode-expanded" class="bbcode expand bkgd-color-op10 bdr-color-op20">
-	<div class="bbcode-containers">
-		<ul id="bbcode-container-format" class="bbcode-container dlt-color-op20-after modal-container cell-flex cell-modal">
-			<li id="format-bold" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_B}insertbbcode('[b]', '[/b]', '{FIELD}');return false;" aria-label="{@bbcode.bold}">
-					<i class="fa fa-fw bbcode-icon-bold{AUTH_B}" aria-hidden="true"></i>
-				</a>
+<div class="bbcode-bar">
+	<nav class="bbcode-containers">
+		<ul class="bbcode-container modal-container cell-flex cell-modal">
+			<li id="format-bold" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.bold}">
+					<i class="fa fa-fw fa-bold" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="format-italic" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_I}insertbbcode('[i]', '[/i]', '{FIELD}');return false;" aria-label="{@bbcode.italic}">
-					<i class="fa fa-fw bbcode-icon-italic{AUTH_I}" aria-hidden="true"></i>
-				</a>
+			<li id="format-italic" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_I}" # IF NOT C_DISABLED_I #onclick="insertbbcode('[i]', '[/i]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.italic}">
+					<i class="fa fa-fw fa-italic" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="format-underline" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_U}insertbbcode('[u]', '[/u]', '{FIELD}');return false;" aria-label="{@bbcode.underline}">
-					<i class="fa fa-fw bbcode-icon-underline{AUTH_U}" aria-hidden="true"></i>
-				</a>
+			<li id="format-underline" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.underline}">
+					<i class="fa fa-fw fa-underline{AUTH_U}" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="format-strike" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_S}insertbbcode('[s]', '[/s]', '{FIELD}');return false;" aria-label="{@bbcode.strike}">
-					<i class="fa fa-fw bbcode-icon-strike{AUTH_S}" aria-hidden="true"></i>
-				</a>
+			<li id="format-strike" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_S}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.strike}">
+					<i class="fa fa-fw fa-strikethrough{AUTH_S}" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="format-color" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block5{FIELD}" href="" onclick="{DISABLED_COLOR}bbcode_color('5', '{FIELD}', 'color');bb_display_block('5', '{FIELD}');return false;" aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
-					<i class="fa fa-fw bbcode-icon-color" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block5{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="format-color" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-trigger data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
+					<i class="fa fa-fw fa-tint" aria-hidden="true"></i>
+				</span>
+				<div id="block-color{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -83,11 +83,11 @@
 					</div>
 				</div>
 			</li>
-			<li id="format-bg-color" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block15{FIELD}" href="" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');bb_display_block('15', '{FIELD}');return false;" aria-label="{@bbcode.bgcolor}" class="{AUTH_BGCOLOR}">
-					<i class="fa fa-fw bbcode-icon-bgcolor" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block15{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="format-bg-color" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-trigger data-target="block-bgcolor{FIELD}" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
+					<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>
+				</span>
+				<div id="block-bgcolor{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -97,11 +97,11 @@
 					</div>
 				</div>
 			</li>
-			<li id="format-font-size" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block6{FIELD}" href="" onclick="{DISABLED_SIZE}bb_display_block('6', '{FIELD}');return false;" class="bbcode-hover{AUTH_SIZE}" aria-label="{@bbcode.size}">
-					<i class="fa fa-fw bbcode-icon-size" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block6{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="format-font-size" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_SIZE}" # IF NOT C_DISABLED_SIZE #data-trigger# ENDIF # data-target="block-size{FIELD}" aria-label="{@bbcode.size}">
+					<i class="fa fa-fw fa-text-height" aria-hidden="true"></i>
+				</span>
+				<div id="block-size{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -117,76 +117,83 @@
 							<span class="font-size-sample">{@bbcode.preview.text}</span>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_SIZE}bbcode_size('{FIELD}');bb_hide_block('6', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="format-font-family" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_FONT}bb_display_block('10', '{FIELD}');return false;" onmouseout="{DISABLED_FONT}bb_hide_block('10', '{FIELD}', 0);" class="bbcode-hover{AUTH_FONT}" aria-label="{@bbcode.font}">
-					<i class="fa fa-fw bbcode-icon-font" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block10{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-fonts" onmouseover="bb_hide_block('10', '{FIELD}', 1);" onmouseout="bb_hide_block('10', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: andale mono;">Andale Mono</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: arial;">Arial</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: arial black;">Arial Black</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: book antiqua;">Book Antiqua</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: comic sans ms;">Comic Sans MS</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: courier new;">Courier New</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: georgia;">Georgia</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: helvetica;">Helvetica</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: impact;">Impact</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: symbol;">Symbol</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: tahoma;">Tahoma</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: terminal;">Terminal</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: times new roman;">Times New Roman</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: trebuchet ms;">Trebuchet MS</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> <span style="font-family: verdana;">Verdana</span> </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> Webdings </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');bb_hide_block('10', '{FIELD}', 0);return false;"> Wingdings </a></li>
-					</ul>
+			<li id="format-font-family" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_FONT}" # IF NOT C_DISABLED_FONT #data-trigger# ENDIF # data-target="block-font{FIELD}" aria-label="{@bbcode.font}">
+					<i class="fa fa-fw fa-font" aria-hidden="true"></i>
+				</span>
+				<div id="block-font{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.font}</div>
+						</div>
+						<nav class="cell-list cell-list-inline">
+							<ul>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');"> <span style="font-family: andale mono;">Andale Mono</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}');"> <span style="font-family: arial;">Arial</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}');"> <span style="font-family: arial black;">Arial Black</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');"> <span style="font-family: book antiqua;">Book Antiqua</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');"> <span style="font-family: comic sans ms;">Comic Sans MS</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}');"> <span style="font-family: courier new;">Courier New</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}');"> <span style="font-family: georgia;">Georgia</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');"> <span style="font-family: helvetica;">Helvetica</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}');"> <span style="font-family: impact;">Impact</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}');"> <span style="font-family: symbol;">Symbol</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');"> <span style="font-family: tahoma;">Tahoma</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}');"> <span style="font-family: terminal;">Terminal</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');"> <span style="font-family: times new roman;">Times New Roman</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');"> <span style="font-family: trebuchet ms;">Trebuchet MS</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}');"> <span style="font-family: verdana;">Verdana</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}');"> <span style="font-family: webdings;">Webdings</span></li>
+								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');"> <span style="font-family: wingdings;">Wingdings</span></li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</li>
-			<li id="format-align" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block13{FIELD}" href="" onclick="{DISABLED_ALIGN}bb_display_block('13', '{FIELD}');return false;" class="bbcode-hover{AUTH_ALIGN}" aria-label="{@bbcode.align}">
-					<i class="fa fa-fw bbcode-icon-left" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block13{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="format-align" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_ALIGN}" # IF NOT C_DISABLED_ALIGN #data-trigger# ENDIF # data-target="block-align{FIELD}" aria-label="{@bbcode.align}">
+					<i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
+				</span>
+				<div id="block-align{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.align}</div>
 						</div>
-						<div class="cell-list">
+						<nav class="cell-list">
 							<ul>
-								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
+								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-left"></i> {@bbcode.left} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
+								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-center"></i> {@bbcode.center} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
+								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-right"></i> {@bbcode.right} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');bb_hide_block('13', '{FIELD}', 0);return false;">
+								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-justify"></i> {@bbcode.justify} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>
-						</div>
+						</nav>
 					</div>
-
 				</div>
 			</li>
-			<li id="format-position" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block14{FIELD}" href="" onclick="{DISABLED_POSITIONS}bb_display_block('14', '{FIELD}');return false;" class="bbcode-hover{AUTH_POSITIONS}" aria-label="{@bbcode.positions}">
-					<i class="fa fa-fw bbcode-icon-indent" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block14{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="format-position" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_POSITIONS}" # IF NOT C_DISABLED_POSITIONS #data-trigger# ENDIF # data-target="block-positions{FIELD}" aria-label="{@bbcode.positions}">
+					<i class="fa fa-fw fa-indent" aria-hidden="true"></i>
+				</span>
+				<div id="block-positions{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -194,25 +201,25 @@
 						</div>
 						<div class="cell-list">
 							<ul>
-								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=left]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+								<li class="li-stretch">
+									<span><i class="fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
+									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[float=left]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[float=right]', '[/float]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_ALIGN}"><i class="fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+								<li class="li-stretch">
+									<span><i class="fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
+									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[float=right]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[indent]', '[/indent]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_INDENT}"><i class="fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+								<li class="li-stretch">
+									<span><i class="fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
+									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[indent]', '[/indent]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sup]', '[/sup]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_SUP}"><i class="fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
-									<span class="button">{@bbcode.choice.button}</span>
+								<li class="li-stretch">
+									<span><i class="fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
+									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[sup]', '[/sup]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" onclick="{DISABLED_POSITIONS}insertbbcode('[sub]', '[/sub]', '{FIELD}');bb_hide_block('14', '{FIELD}', 0);return false;">
-									<span class="{AUTH_SUB}"><i class="fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
-									<span class="button">{@bbcode.choice.button}</span>
+								<li class="li-stretch">
+									<span><i class="fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
+									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[sub]', '[/sub]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>
 						</div>
@@ -220,44 +227,44 @@
 				</div>
 			</li>
 
-			<li id="html-title" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block2{FIELD}" href="" onclick="{DISABLED_TITLE}bb_display_block('2', '{FIELD}');return false;" class="bbcode-hover{AUTH_TITLE}" aria-label="{@bbcode.title}">
-					<i class="fa fa-fw bbcode-icon-title" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block2{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="html-title" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-trigger# ENDIF # data-target="block-title{FIELD}" aria-label="{@bbcode.title}">
+					<i class="fa fa-fw fa-list-alt" aria-hidden="true"></i>
+				</span>
+				<div id="block-title{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.title}</div>
 						</div>
-						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+						<div class="cell-body justify-between">
 							<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
-							<span class="button">{@bbcode.choice.button}</span>
+							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
-						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+						<div class="cell-body justify-between">
 							<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
-							<span class="button">{@bbcode.choice.button}</span>
+							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
-						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+						<div class="cell-body justify-between">
 							<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
-							<span class="button">{@bbcode.choice.button}</span>
+							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
-						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+						<div class="cell-body justify-between">
 							<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
-							<span class="button">{@bbcode.choice.button}</span>
+							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
-						<div class="cell-body justify-between" onclick="{DISABLED_B}insertbbcode('[title=5]', '[/title]', '{FIELD}');bb_hide_block('2', '{FIELD}', 0);return false;">
+						<div class="cell-body justify-between">
 							<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
-							<span class="button">{@bbcode.choice.button}</span>
+							<span class="button hide-modal" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="html-list" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" data-trigger data-target="bb-block9{FIELD}" onclick="{DISABLED_LIST}bb_display_block('9', '{FIELD}');return false;" class="bbcode-hover{AUTH_LIST}" aria-label="{@bbcode.list}">
-					<i class="fa fa-fw bbcode-icon-list{AUTH_LIST}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block9{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="html-list" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_LIST}" # IF NOT C_DISABLED_LIST #data-trigger# ENDIF # data-target="block-list{FIELD}" aria-label="{@bbcode.list}">
+					<i class="fa fa-fw fa-list{AUTH_LIST}" aria-hidden="true"></i>
+				</span>
+				<div id="block-list{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -279,18 +286,18 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_LIST}bbcode_list('{FIELD}');bb_hide_block('9', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_list('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="html-table" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block7{FIELD}" href="" onclick="{DISABLED_TABLE}bb_display_block('7', '{FIELD}');return false;" class="bbcode-hover{AUTH_TABLE}" aria-label="{@bbcode.table}">
-					<i class="fa fa-fw bbcode-icon-table" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block7{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="html-table" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_TABLE}" # IF NOT C_DISABLED_TABLE #data-trigger# ENDIF #  data-target="block-table{FIELD}" aria-label="{@bbcode.table}">
+					<i class="fa fa-fw fa-table" aria-hidden="true"></i>
+				</span>
+				<div id="block-table{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div id="bbtable{FIELD}" class="content-panel cell">
+					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.table}</div>
 						</div>
@@ -316,66 +323,114 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_TABLE}bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);return false;">{@bbcode.insert.table}</span>
+							<span class="button submit hide-modal" onclick="bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);">{@bbcode.insert.table}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="html-container" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');return false;" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode-hover{AUTH_BLOCK}" aria-label="{@bbcode.container}">
-					<i class="fa fa-fw bbcode-icon-subtitle" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block3{FIELD}" class="bbcode-block-container arrow-submenu-color" style="display: none;">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-block" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
-						<li id="html-paragraph"><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[p]', '[/p]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" aria-label="{@bbcode.container} {@bbcode.paragraph.title}"> {@bbcode.paragraph} </a></li>
-						<li id="html-div"><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[container]', '[/container]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" aria-label="{@bbcode.container.title}"> {@bbcode.container} </a></li>
-						<li id="html-div-block"><a href="" onclick="{DISABLED_BLOCK}insertbbcode('[block]', '[/block]', '{FIELD}');bb_hide_block('3', '{FIELD}', 0);return false;" aria-label="{@bbcode.container} {@bbcode.block.title}"> {@bbcode.block} </a></li>
-						<li id="html-fieldset" class="modal-container cell-flex cell-modal">
-							<a data-trigger data-target="bb-block19{FIELD}" href=""> {@bbcode.fieldset} </a>
-							<div id="bb-block19{FIELD}" class="modal modal-animation">
-								<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)"></div>
-								<div id="bbfieldset{FIELD}" class="content-panel cell">
-									<div class="cell-header">
-										<div class="cell-name">{@bbcode.fieldset}</div>
-									</div>
-									<div class="cell-form">
-										<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.lengend}</label>
-										<div class="cell-input"><input type="text" id="bb_legend{FIELD}"></div>
-									</div>
-									<div class="cell-footer cell-input" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)">
-										<span class="button submit" onclick="{DISABLED_FIELDSET}bbcode_fieldset('{FIELD}');bb_hide_block('19', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
-									</div>
-								</div>
+			<li id="html-container" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_CONTAINER}" # IF NOT C_DISABLED_CONTAINER #data-trigger# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
+					<i class="far fa-fw fa-square" aria-hidden="true"></i>
+				</span>
+				<div id="block-container{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.container}</div>
+						</div>
+						<nav class="cell-list">
+							<ul>
+								<li id="html-paragraph" class="li-stretch">
+									<span class="bbcode-label" aria-label="{@bbcode.paragraph.title}"> {@bbcode.paragraph} </span>
+									<span class="button hide-modal" onclick="insertbbcode('[p]', '[/p]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li id="html-div-block" class="li-stretch">
+									<span class="bbcode-label" aria-label=" {@bbcode.block.title}"> {@bbcode.block} </span>
+									<span class="button hide-modal" onclick="insertbbcode('[block]', '[/block]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li id="html-div-custom" class="li-stretch">
+									<span class="bbcode-label" aria-label=" {@bbcode.block.title}"> {@bbcode.container.custom} </span>
+									<span class="button" data-trigger data-target="block-container-custom{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" onclick="insertbbcode('[container]', '[/container]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li class="li-stretch" id="html-fieldset">
+									<span class="bbcode-label">{@bbcode.fieldset}</span>
+									<span class="button" data-trigger data-target="block-fieldset{FIELD}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" onclick="insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li class="li-stretch" id="html-abbr" class="modal-container cell-flex cell-modal">
+									<span class="bbcode-label"> {@bbcode.abbr} </span>
+									<span class="button" data-trigger data-target="block-abbr{FIELD}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" onclick="insertbbcode('[abbr]', '[/abbr]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div id="block-container-custom{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.container.custom}</div>
+						</div>
+						<div class="cell-body">
+							<span class="message-helper notice">{@bbcode.container.alert}</span>
+						</div>
+						<div class="cell-form">
+							<label for="bb_cc_id{FIELD}" class="cell-label">{@bbcode.container.id}</label>
+							<div class="cell-input"><input type="text" id="bb_cc_id{FIELD}"></div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_cc_class{FIELD}" class="cell-label">{@bbcode.container.class}</label>
+							<div class="cell-input"><input type="text" id="bb_cc_class{FIELD}"></div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_cc_style{FIELD}" class="cell-label">{@bbcode.container.style}</label>
+							<div class="cell-input"><textarea id="bb_cc_style{FIELD}" rows="3" cols="32"></textarea></div>
+						</div>
+						<div class="cell-footer cell-input">
+							<span class="button submit hide-modal" onclick="bbcode_container('{FIELD}');">{@bbcode.tags.add}</span>
+						</div>
+					</div>
+				</div>
+				<div id="block-fieldset{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.fieldset}</div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.lengend}</label>
+							<div class="cell-input"><input type="text" id="bb_legend{FIELD}"></div>
+						</div>
+						<div class="cell-footer cell-input">
+							<span class="button submit hide-modal" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
+						</div>
+					</div>
+				</div>
+				<div id="block-abbr{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.abbr}</div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_abbr_desc{FIELD" class="cell-label">{@bbcode.abbr.label}</label>
+							<div class="cell-input">
+								<textarea id="bb_abbr_desc{FIELD}" rows="3" cols="32"></textarea>
 							</div>
-						</li>
-						<li id="html-abbr" class="modal-container cell-flex cell-modal">
-							<a data-trigger data-target="bb-block24{FIELD}" href=""> {@bbcode.abbr} </a>
-							<div id="bb-block24{FIELD}" class="modal modal-animation">
-								<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)"></div>
-								<div id="bbabbr{FIELD}" class="content-panel cell">
-									<div class="cell-header">
-										<div class="cell-name">{@bbcode.abbr}</div>
-									</div>
-									<div class="cell-form">
-										<label for="bb_abbr_desc{FIELD" class="cell-label">{@bbcode.abbr.label}</label>
-										<div class="cell-input">
-											<textarea id="bb_abbr_desc{FIELD}" rows="5" cols="32"></textarea>
-										</div>
-									</div>
-									<div class="cell-footer cell-input" onclick="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0)">
-										<span class="button submit" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');bb_hide_block('24', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
+						</div>
+						<div class="cell-footer cell-input">
+							<span class="button submit hide-modal" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
+						</div>
+					</div>
 				</div>
 			</li>
-			<li id="html-quote" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" data-trigger data-target="bb-block21{FIELD}" onclick="{DISABLED_QUOTE}bb_display_block('21', '{FIELD}');return false;" class="bbcode-hover{AUTH_QUOTE}" aria-label="{@bbcode.quote}">
-					<i class="fa fa-fw bbcode-icon-quote{AUTH_QUOTE}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block21{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="html-quote" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_QUOTE}" # IF NOT C_DISABLED_QUOTE #data-trigger# ENDIF # data-target="block-quote{FIELD}" aria-label="{@bbcode.quote}">
+					<i class="fa fa-fw fa-quote-left{AUTH_QUOTE}" aria-hidden="true"></i>
+				</span>
+				<div id="block-quote{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -388,78 +443,95 @@
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_quote_extract{FIELD}">{@bbcode.quote.extract}</label>
+							<label class="cell-label" for="bb_quote_extract{FIELD}">{@bbcode.quote}</label>
 							<div class="cell-input">
-								<textarea id="bb_quote_extract{FIELD}" rows="5" cols="32"></textarea>
+								<textarea id="bb_quote_extract{FIELD}" rows="3" cols="32"></textarea>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_QUOTE}bbcode_quote('{FIELD}');bb_hide_block('21', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_quote('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="html-hidden" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_HIDE}bb_display_block('11', '{FIELD}');return false;" onmouseout="{DISABLED_HIDE}bb_hide_block('11', '{FIELD}', 0);" class="bbcode-hover{AUTH_HIDE}" aria-label="{@bbcode.hide}">
-					<i class="fa fa-fw bbcode-icon-hide" aria-hidden="true"></i>
-				</a>
-				<div class="bbcode-block-container arrow-submenu-color" style="display: none;" id="bb-block11{FIELD}">
-					<ul class="bbcode-block block-submenu-color bbcode-block-list bkgd-color-op20-hover bbcode-block-hide" onmouseover="bb_hide_block('11', '{FIELD}', 1);" onmouseout="bb_hide_block('11', '{FIELD}', 0);">
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[hide]', '[/hide]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" aria-label="{@bbcode.hide.all} "> {@bbcode.hide} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[member]', '[/member]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" aria-label="{@bbcode.hide.view.member}"> {@bbcode.member} </a></li>
-						<li><a href="" onclick="{DISABLED_B}insertbbcode('[moderator]', '[/moderator]', '{FIELD}');bb_hide_block('11', '{FIELD}', 0);return false;" aria-label="{@bbcode.hide.view.moderator}  "> {@bbcode.moderator} </a></li>
-					</ul>
+			<li id="html-hidden" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_HIDE}" # IF NOT C_DISABLED_HIDE #data-trigger# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
+					<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i>
+				</span>
+				<div id="block-hide{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.hide}</div>
+						</div>
+						<div class="cell-list">
+							<ul>
+								<li class="li-stretch" aria-label="{@bbcode.hide.all}">
+									<span><i class="far fa-fw fa-eye-slash"></i> {@bbcode.hide}</span>
+									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li class="li-stretch" aria-label="{@bbcode.hide.member}">
+									<span><i class="fa fa-fw fa-user-friends"></i> {@bbcode.member}</span>
+									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+								<li class="li-stretch" aria-label="{@bbcode.hide.moderator}">
+									<span><i class="fa fa-fw fa-user-shield"></i> {@bbcode.moderator}</span>
+									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</li>
-			<li id="html-style" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block4{FIELD}" href="" onclick="{DISABLED_STYLE}bb_display_block('4', '{FIELD}');return false;" class="bbcode-hover{AUTH_STYLE}" aria-label="{@bbcode.style}">
-					<i class="fa fa-fw bbcode-icon-style{AUTH_STYLE}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block4{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="html-style" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_STYLE}" # IF NOT C_DISABLED_STYLE #data-trigger# ENDIF # data-target="block-style{FIELD}" aria-label="{@bbcode.style}">
+					<i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+				</span>
+				<div id="block-style{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.style}</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+						<div class="cell-body">
 							<div class="message-helper notice justify-between">
 								<span>${LangLoader::get_message('notice', 'main')}</span>
-								<span class="button message-helper-button notice">{@bbcode.choice.button}</span>
+								<span class="button message-helper-button notice hide-modal" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+						<div class="cell-body">
 							<div class="message-helper question justify-between">
 								<span>${LangLoader::get_message('question', 'main')}</span>
-								<span class="button message-helper-button question">{@bbcode.choice.button}</span>
+								<span class="button message-helper-button question hide-modal" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+						<div class="cell-body">
 							<div class="message-helper success justify-between">
 								<span>${LangLoader::get_message('success', 'main')}</span>
-								<span class="button message-helper-button success">{@bbcode.choice.button}</span>
+								<span class="button message-helper-button success hide-modal" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+						<div class="cell-body">
 							<div class="message-helper warning justify-between">
 								<span>${LangLoader::get_message('warning', 'main')}</span>
-								<span class="button message-helper-button warning">{@bbcode.choice.button}</span>
+								<span class="button message-helper-button warning hide-modal" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
-						<div class="cell-body" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');bb_hide_block('4', '{FIELD}', 0);return false;">
+						<div class="cell-body">
 							<div class="message-helper error justify-between">
 								<span>${LangLoader::get_message('error', 'main')}</span>
-								<span class="button message-helper-button error">{@bbcode.choice.button}</span>
+								<span class="button message-helper-button error hide-modal" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</li>
 
-			<li id="links-url" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block22{FIELD}" href="" onclick="{DISABLED_URL}bb_display_block('22', '{FIELD}');return false;" class="bbcode-hover{AUTH_URL}" aria-label="{@bbcode.link}">
-					<i class="fa fa-fw bbcode-icon-url{AUTH_URL}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block22{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-url" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_URL}" # IF NOT C_DISABLED_URL #data-trigger# ENDIF # data-target="block-url{FIELD}" aria-label="{@bbcode.link}">
+					<i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+				</span>
+				<div id="block-url{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -478,16 +550,16 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" class="bbcode-hover{AUTH_URL}" onclick="{DISABLED_URL}bbcode_link('{FIELD}');bb_hide_block('22', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" class="bbcode-hover{AUTH_URL}" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="links-mail" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block23{FIELD}" href="" onclick="{DISABLED_MAIL}bb_display_block('23', '{FIELD}');return false;" class="bbcode-hover{AUTH_MAIL}" aria-label="{@bbcode.mail}">
-					<i class="fa fa-fw bbcode-icon-mail{AUTH_MAIL}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block23{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-mail" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-trigger# ENDIF # data-target="block-mail{FIELD}" aria-label="{@bbcode.mail}">
+					<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
+				</span>
+				<div id="block-mail{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -506,23 +578,23 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" class="bbcode-hover{AUTH_MAIL}" onclick="{DISABLED_MAIL}bbcode_mail('{FIELD}');bb_hide_block('23', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" class="bbcode-hover{AUTH_MAIL}" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="links-wikipedia" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_WIKIPEDIA}insertbbcode('[wikipedia]', '[/wikipedia]', '{FIELD}');return false;" class="bbcode-hover{AUTH_WIKIPEDIA}" aria-label="{@bbcode.wikipedia}">
-					<i class="fab fa-fw bbcode-icon-wikipedia{AUTH_WIKIPEDIA}" aria-hidden="true"></i>
-				</a>
+			<li id="links-wikipedia" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_WIKIPEDIA}" # IF NOT C_DISABLED_WIKIPEDIA #onclick="insertbbcode('[wikipedia]', '[/wikipedia]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.wikipedia}">
+					<i class="fab fa-fw fa-wikipedia-w{AUTH_WIKIPEDIA}" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="links-feed" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block25{FIELD}" href="" onclick="{DISABLED_FEED}bb_display_block('25', '{FIELD}');return false;" aria-label="{@bbcode.feed}">
-					<i class="fa fa-fw bbcode-icon-feed{AUTH_FEED}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block25{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-feed" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-trigger# ENDIF # data-target="block-feed{FIELD}" aria-label="{@bbcode.feed}">
+					<i class="fa fa-fw fa-rss" aria-hidden="true"></i>
+				</span>
+				<div id="block-feed{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div id="bbfeed{FIELD}" class="content-panel cell">
+					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.feed}</div>
 						</div>
@@ -550,18 +622,18 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_FEED}bbcode_feed('{FIELD}');bb_hide_block('25', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_feed('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="links-anchor" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block27{FIELD}" href="" onclick="{DISABLED_ANCHOR}bb_display_block('27', '{FIELD}');return false;" aria-label="{@bbcode.anchor}">
-					<i class="fa fa-fw bbcode-icon-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block27{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-anchor" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_ANCHOR}" # IF NOT C_DISABLED_ANCHOR #data-trigger# ENDIF # data-target="block-anchor{FIELD}" aria-label="{@bbcode.anchor}">
+					<i class="fa fa-fw fa-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
+				</span>
+				<div id="block-anchor{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div id="bbanchor{FIELD}" class="content-panel cell">
+					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.anchor}</div>
 						</div>
@@ -580,24 +652,20 @@
 								</label>
 							</div>
 						</div>
-						<div class="cell-body cell-hidden hidden"><span class="message-helper notice field-description">{@bbcode.anchor.url.desc}</span></div>
+						<div class="cell-body cell-hidden hidden"><span class="message-helper notice">{@bbcode.anchor.url.desc}</span></div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}');bb_hide_block('27', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="links-sound" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block26{FIELD}"
-					href=""
-					onclick="{DISABLED_SOUND}bb_display_block('26', '{FIELD}');return false;"
-					class="bbcode-hover{AUTH_SOUND}"
-					aria-label="{@bbcode.sound}">
-					<i class="fa fa-fw bbcode-icon-sound{AUTH_SOUND}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block26{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-sound" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-trigger# ENDIF # data-target="block-sound{FIELD}" aria-label="{@bbcode.sound}">
+					<i class="fa fa-fw fa-music" aria-hidden="true"></i>
+				</span>
+				<div id="block-sound{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div id="bbsound{FIELD}" class="content-panel cell">
+					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.sound}</div>
 						</div>
@@ -609,22 +677,18 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_SOUND}bbcode_sound('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_sound('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="links-movie" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block16{FIELD}"
-					href=""
-					onclick="{DISABLED_SOUND}bb_display_block('16', '{FIELD}');return false;"
-					class="bbcode-hover{AUTH_MOVIE}"
-					aria-label="{@bbcode.movie}">
-					<i class="fa fa-fw bbcode-icon-movie{AUTH_MOVIE}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block16{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="links-movie" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-trigger# ENDIF # data-target="block-movie{FIELD}" aria-label="{@bbcode.movie}">
+					<i class="fa fa-fw fa-film" aria-hidden="true"></i>
+				</span>
+				<div id="block-movie{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div id="bbmovie{FIELD}" class="content-panel cell">
+					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.movie}</div>
 						</div>
@@ -638,7 +702,7 @@
 							</div>
 						</div>
 						<div class="cell-body">
-							<span class="field-description">{@bbcode.movie.format}</span>
+							{@bbcode.movie.format}
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_width{FIELD}">{@bbcode.movie.width}</label>
@@ -660,16 +724,16 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_MOVIE}bbcode_movie('{FIELD}');bb_hide_block('26', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_movie('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="link-lightbox" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" data-trigger data-target="bb-block18{FIELD}" onclick="{DISABLED_LIGHTBOX}bb_display_block('18','{FIELD}');return false;" class="bbcode-hover{AUTH_LIGHTBOX}" aria-label="{@bbcode.lightbox}">
-					<i class="fa fa-fw bbcode-icon-lightbox{AUTH_LIGHTBOX}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block18{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="link-lightbox" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-trigger# ENDIF # data-target="block-lightbox{FIELD}" aria-label="{@bbcode.lightbox}">
+					<i class="fa fa-fw fa-camera" aria-hidden="true"></i>
+				</span>
+				<div id="block-lightbox{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -693,88 +757,77 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_LIGHTBOX}bbcode_lightbox('{FIELD}');bb_hide_block('18', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_lightbox('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="link-figure" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" data-trigger data-target="bb-block17{FIELD}"
-					onclick="{DISABLED_FIGURE}bb_display_block('17', '{FIELD}');return false;"
-					class="bbcode-hover{AUTH_FIGURE}"
-					aria-label="{@bbcode.figure}">
-					<i class="fa fa-fw  bbcode-icon-image{AUTH_IMG}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block17{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="link-figure" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-trigger# ENDIF # data-target="block-figure{FIELD}" aria-label="{@bbcode.figure}">
+					<i class="far fa-fw fa-image" aria-hidden="true"></i>
+				</span>
+				<div id="block-figure{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.figure}</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_figure_img{FIELD}">
-								{@bbcode.picture.url}
-							</label>
+							<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
 							<div class="cell-input input-element-button">
 								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_alt_text{FIELD}">
-								{@bbcode.picture.alt}
-							</label>
+							<label class="cell-label" for="bb_alt_text{FIELD}">{@bbcode.picture.alt}</label>
 							<div class="cell-input">
 								<input id="bb_picture_alt{FIELD}" type="text" name="bb_picture_alt{FIELD}" />
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_alt_text{FIELD}">
-								{@bbcode.figure.caption}
-							</label>
+							<label class="cell-label" for="bb_alt_text{FIELD}">{@bbcode.figure.caption}</label>
 							<div class="cell-input">
-								<textarea id="bb_figure_desc{FIELD}" rows="5" cols="32"></textarea>
+								<textarea id="bb_figure_desc{FIELD}" rows="3" cols="32"></textarea>
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_picture_width{FIELD}">
-								{@bbcode.picture.width}
-							</label>
+							<label class="cell-label" for="bb_picture_width{FIELD}">{@bbcode.picture.width}</label>
 							<div class="cell-input">
 								<input id="bb_picture_width{FIELD}" type="number" name="bb_picture_width{FIELD}" />
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_FIGURE}bbcode_figure('{FIELD}');bb_hide_block('17', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_figure('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
 			# IF C_UPLOAD_MANAGEMENT #
-				<li id="link-upload" class="bbcode-elements bkgd-color-op20-hover">
-					<a aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
-						<i class="fa fa-fw bbcode-icon-upload" aria-hidden="true"></i>
+				<li id="link-upload" class="bbcode-elements">
+					<a class="bbcode-button" href="#" aria-label="{@bbcode.upload}" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+						<i class="fa fa-fw fa-cloud-upload-alt" aria-hidden="true"></i>
 					</a>
 				</li>
 			# ENDIF #
 
-			<li id="code-smileys" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block1{FIELD}" href="" onclick="{DISABLED_SMILEYS}bb_display_block('1', '{FIELD}');return false;" class="bbcode-hover{AUTH_SMILEYS}" aria-label="{@bbcode.smileys}">
-					<i class="fa fa-fw bbcode-icon-smileys" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block1{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="code-smileys" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_SMILEYS}" # IF NOT C_DISABLED_SMILEYS #data-trigger# ENDIF # data-target="block-smileys{FIELD}" aria-label="{@bbcode.smileys}">
+					<i class="far fa-fw fa-smile" aria-hidden="true"></i>
+				</span>
+				<div id="block-smileys{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.smileys}</div>
 						</div>
-						<div class="cell-list cell-list-icons">
+						<div class="cell-list cell-list-inline">
 							<ul>
 								# START smileys #
 									<li>
-										<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{smileys.CODE}">
+										<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" aria-label="{smileys.CODE}">
 											<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="smiley" />
-										</a>
+										</span>
 									</li>
 								# END smileys #
 							</ul>
@@ -782,24 +835,24 @@
 					</div>
 				</div>
 			</li>
-			<li id="code-fa" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block12{FIELD}" href="" onclick="{DISABLED_FA}bb_display_block('12', '{FIELD}');return false;" class="bbcode-hover{AUTH_FA}" aria-label="{@bbcode.fa}">
-					<i class="fab fa-fw bbcode-icon-fa" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block12{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="code-fa" class="bbcode-elements">
+				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-trigger# ENDIF # data-target="block-fa{FIELD}" aria-label="{@bbcode.fa}">
+					<i class="far fa-fw fa-flag" aria-hidden="true"></i>
+				</span>
+				<div id="block-fa{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fa}</div>
 						</div>
 						<div class="cell-body center">{@bbcode.fa.tag}</div>
-						<div class="cell-list cell-list-icons">
+						<div class="cell-list cell-list-inline">
 							<ul>
 								# START code_fa #
 								<li>
-									<a href="" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');bb_hide_block('12', '{FIELD}', 0);return false;" class="bbcode-hover" aria-label="{code_fa.CODE}">
+									<span class="hide-modal" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" aria-label="{code_fa.CODE}">
 										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true" aria-label="{code_fa.CODE}"></i>
-									</a>
+									</span>
 								</li>
 								# END code_fa #
 							</ul>
@@ -807,11 +860,11 @@
 					</div>
 				</div>
 			</li>
-			<li id="code-language" class="bbcode-elements bkgd-color-op20-hover">
-				<a data-trigger data-target="bb-block8{FIELD}" href="" onclick="{DISABLED_CODE}bb_display_block('8', '{FIELD}');return false;" class="bbcode-hover{AUTH_CODE}" aria-label="{@bbcode.code}">
-					<i class="fa fa-fw bbcode-icon-code{AUTH_CODE}" aria-hidden="true"></i>
-				</a>
-				<div id="bb-block8{FIELD}" class="modal modal-animation" style="display: none;">
+			<li id="code-language" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_CODE}" # IF NOT C_DISABLED_CODE #data-trigger# ENDIF # data-target="block-code{FIELD}" aria-label="{@bbcode.code}">
+					<i class="fa fa-fw fa-code" aria-hidden="true"></i>
+				</span>
+				<div id="block-code{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
@@ -875,28 +928,28 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit" onclick="{DISABLED_CODE}bbcode_code('{FIELD}');bb_hide_block('8', '{FIELD}', 0);return false;">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_code('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
-			<li id="code-math" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');return false;" aria-label="{@bbcode.math}">
-					<i class="fab fa-fw bbcode-icon-math{AUTH_MATH}" aria-hidden="true"></i>
-				</a>
+			<li id="code-math" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_MATH}" # IF NOT C_DISABLED_MATH #onclick="insertbbcode('[math]', '[/math]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.math}">
+					<i class="fa fa-fw fa-calculator" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="code-html" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="" onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');return false;" aria-label="{@bbcode.html}">
-					<i class="fab fa-fw bbcode-icon-html{AUTH_HTML}" aria-hidden="true"></i>
-				</a>
+			<li id="code-html" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_HTML}" # IF NOT C_DISABLED_HTML #onclick="insertbbcode('[html]', '[/html]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.html}">
+					<i class="fab fa-fw fa-html5" aria-hidden="true"></i>
+				</span>
 			</li>
-			<li id="code-help" class="bbcode-elements bkgd-color-op20-hover">
-				<a href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />${LangLoader::get_message('new.window', 'main')}" target="_blank" rel="noopener">
-					<i class="fa fa-fw bbcode-icon-help" aria-hidden="true"></i>
+			<li id="code-help" class="bbcode-elements">
+				<a class="bbcode-button" href="https://www.phpboost.com/wiki/bbcode" aria-label="{@bbcode.help}<br />${LangLoader::get_message('new.window', 'main')}" target="_blank" rel="noopener">
+					<i class="far fa-fw fa-question-circle" aria-hidden="true"></i>
 				</a>
 			</li>
 		</ul>
-	</div>
+	</nav>
 </div>
 
 <script>

@@ -162,7 +162,7 @@ function bbcode_color(divID, field, type)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td class="color-td" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');bb_hide_block(\'' + divID + '\', \'' + field + '\', 0);return false;" aria-label="' + color[i] + '"><a href=""></a></td>' + br;
+		contents += '<td class="color-td hide-modal" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');" aria-label="' + color[i] + '"><a href=""></a></td>' + br;
 	}
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
@@ -218,6 +218,22 @@ function bbcode_table(field)
 
 		insertbbcode(code.substring(0, pointor), code.substring(pointor, code.length), field);
 	}
+}
+
+function bbcode_container(field)
+{
+	var cc_id = document.getElementById('bb_cc_id' + field).value,
+		cc_class = document.getElementById('bb_cc_class' + field).value,
+		cc_style = document.getElementById('bb_cc_style' + field).value;
+
+	if(cc_id != '' && cc_id != null)
+		insert_id = ' id="' + cc_id + '"';
+	if(cc_class != '' && cc_class != null)
+		insert_class = ' class="' + cc_class + '"';
+	if(cc_style != '' && cc_style != null)
+		insert_style = ' style="' + cc_style + '"';
+
+	insertbbcode('[container' + insert_id + insert_class + insert_style + ']', '[/container]', field);
 }
 
 function bbcode_fieldset(field)

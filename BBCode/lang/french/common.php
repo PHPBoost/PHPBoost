@@ -16,7 +16,8 @@
 ####################################################
 
 $lang['bbcode.tags.add'] = 'Insérer';
-$lang['bbcode.choice.button'] = 'Choisir';
+$lang['bbcode.tags.advanced'] = 'Avancé';
+$lang['bbcode.tags.options'] = 'Ajouter des options à la balise';
 $lang['bbcode.preview.text'] = 'Aperçu du texte';
 
 // left top block : Text formatting
@@ -29,7 +30,7 @@ $lang['bbcode.bgcolor'] = 'Couleur du fond';
 
 $lang['bbcode.size'] = 'Taille du texte';
 $lang['bbcode.size.picker'] = 'Choisir la taille du texte (px)';
-$lang['bbcode.font'] = 'Police : [font=X]texte en police X[/font]';
+$lang['bbcode.font'] = 'Police d\'écriture';
 
 $lang['bbcode.align'] = 'Alignement';
 $lang['bbcode.left'] = 'Aligner à gauche';
@@ -62,7 +63,11 @@ $lang['bbcode.paragraph'] = 'Paragraphe';
 $lang['bbcode.paragraph.title'] = 'Paragraphe : [p]texte[/p]';
 $lang['bbcode.block'] = 'Bloc';
 $lang['bbcode.block.title'] = 'Bloc : [block]texte[/block]';
-$lang['bbcode.container.title'] = 'Conteneur personnalisable : [container id="" class="" style=""]contenu[/container]';
+$lang['bbcode.container.custom'] = 'Conteneur personnalisable';
+$lang['bbcode.container.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
+$lang['bbcode.container.id'] = 'Identifiant';
+$lang['bbcode.container.class'] = 'Classe';
+$lang['bbcode.container.style'] = 'Style';
 $lang['bbcode.fieldset'] = 'Bloc champs';
 $lang['bbcode.fieldset.lengend'] = 'Titre du bloc champs';
 $lang['bbcode.abbr'] = 'Abréviation';
@@ -70,21 +75,20 @@ $lang['bbcode.abbr.label'] = 'Définition de l\'abréviation';
 
 $lang['bbcode.quote'] = 'Citation';
 $lang['bbcode.quote.author'] = 'Auteur de la citation';
-$lang['bbcode.quote.extract'] = 'Citation';
 
 $lang['bbcode.hide'] = 'Texte Caché';
 $lang['bbcode.member'] = 'Membre';
 $lang['bbcode.moderator'] = 'Modérateur';
-$lang['bbcode.hide.all'] = 'Cache le texte et l\'affiche au clic [hide]text[/hide]';
-$lang['bbcode.hide.view.member'] = 'Cache le texte pour les visiteurs [member]text[/member]';
-$lang['bbcode.hide.view.moderator'] = 'Cache le texte pour les membres [moderator]text[/moderator]';
+$lang['bbcode.hide.all'] = 'Cache le texte et l\'affiche au clic';
+$lang['bbcode.hide.member'] = 'Cache le texte pour les visiteurs';
+$lang['bbcode.hide.moderator'] = 'Cache le texte pour les membres';
 
 $lang['bbcode.style'] = 'Style';
 
 // Left bottom block : Links
 $lang['bbcode.link'] = 'Lien';
 $lang['bbcode.link.url'] = 'Adresse du lien';
-$lang['bbcode.link.name'] = 'Nom du lien';
+$lang['bbcode.link.name'] = 'Texte du lien';
 
 $lang['bbcode.wikipedia'] = 'Lien wikipedia';
 
@@ -106,10 +110,10 @@ $lang['bbcode.sound'] = 'Son';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';
 
 $lang['bbcode.movie'] = 'Vidéo';
-$lang['bbcode.movie.url'] = 'Adresse de la Vidéo';
+$lang['bbcode.movie.url'] = 'Adresse de la vidéo';
 $lang['bbcode.movie.format'] = 'Vous pouvez ajouter l\'adresse d\'une vidéo hébergée, youtube, dailymotion ou vimeo.';
-$lang['bbcode.movie.width'] = 'Largeur de la video';
-$lang['bbcode.movie.height'] = 'Hauteur de la video';
+$lang['bbcode.movie.width'] = 'Largeur de la vidéo';
+$lang['bbcode.movie.height'] = 'Hauteur de la vidéo';
 $lang['bbcode.movie.poster'] = 'Ajouter une vignette';
 
 $lang['bbcode.lightbox'] = 'Ajouter une image avec un effet lightbox';

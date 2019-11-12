@@ -71,23 +71,25 @@ class BBCodeEditor extends ContentEditor
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
-			if ($forbidden_tag == 'fieldset')
-				$forbidden_tag = 'block';
+			if ($forbidden_tag == 'fieldset' || $forbidden_tag == 'block' || $forbidden_tag == 'Paragraph' || $forbidden_tag == 'accronym')
+			{
+				$template->put_all(array(
+					'AUTH_CONTAINER' => ' bbcode-forbidden',
+					'C_DISABLED_CONTAINER' => true
+				));
+			}
 
-			if ($forbidden_tag == 'float' || $forbidden_tag == 'indent')
-				$this->forbidden_positions = $this->forbidden_positions + 1 ;
-
-			if ($this->forbidden_positions == 2)
+			if ($forbidden_tag == 'float' || $forbidden_tag == 'indent' || $forbidden_tag == 'sup' || $forbidden_tag == 'sub')
 			{
 				$template->put_all(array(
 					'AUTH_POSITIONS' => ' bbcode-forbidden',
-					'DISABLED_POSITIONS' => 'return false;'
+					'C_DISABLED_POSITIONS' => true
 				));
 			}
 
 			$template->put_all(array(
 				'AUTH_' . TextHelper::strtoupper($forbidden_tag) => ' bbcode-forbidden',
-				'DISABLED_' . TextHelper::strtoupper($forbidden_tag) => 'return false;'
+				'C_DISABLED_' . TextHelper::strtoupper($forbidden_tag) => true
 			));
 		}
 

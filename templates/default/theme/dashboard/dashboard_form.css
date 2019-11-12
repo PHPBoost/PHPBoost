@@ -228,7 +228,7 @@ div.advanced-auth-input input[id*=menu_element] {
 }
 
 /* --- Textarea --- */
-.bbcode { width: 100% !important; }
+.bbcode-bar { width: 100% !important; }
 
 .form-element-textarea .form-field-textarea {
 	display: block;

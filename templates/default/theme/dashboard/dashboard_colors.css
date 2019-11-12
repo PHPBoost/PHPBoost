@@ -444,26 +444,20 @@ table tfoot nav.pagination a span.current-page {
     #      #####  #   #  #   #
 ----------------------------------------------------------------------------- */
 
-.bbcode {
+.bbcode-bar {
     background-color: #FFFFFF;
-}
-
-.bbcode-block {
-    background-color: #ECF2F8;
-    box-shadow: 0 0 3px 1px rgba(54, 100, 147, 0.1);
-}
-.bbcode-block-list li a:hover {
-    background-color: #FFFFFF;
-}
-
-.bbcode-block-container::after {
-	border-color: transparent;
-	border-bottom-color: #366493;
-}
-
-.bbcode {
 	border-color: #DDDDDD !important;
 }
+
+.bbcode-button {
+	color: #366493
+}
+
+.bbcode-button:hover {
+	color: #0066CC;
+	background-color: rgba(54, 100, 147, 0.2);
+}
+
 
 /* --- Highlight text --- */
 .highlight-search-word {

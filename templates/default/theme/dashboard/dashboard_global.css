@@ -172,11 +172,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- Le selecteur de couleurs --- */
-.color-picker .bbcode-block table {
-	margin: 0;
-	border: none;
-}
-
 .color-picker td {
 	padding: 0;
 	border-width: 1px;

@@ -29,9 +29,10 @@
 .shout-spacing .bbcode-block-container {
 	top: 100%;
 }
-
-.shout-spacing .bbcode-block-smileys {
+.shout-spacing .shoutbox-smileys {
 	width: 100%;
+	position: absolute;
+	z-index: 10
 }
 .shout-spacing
 .bbcode-block-container::after {
