@@ -26,7 +26,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORI, 'web')->read();
+		return CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'web')->read();
 	}
 
 	public function get_menu_content()
