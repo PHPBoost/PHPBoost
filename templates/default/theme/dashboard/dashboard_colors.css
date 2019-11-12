@@ -888,6 +888,7 @@ td.alert-priority         { border-color: #D1D2D4;}
 .modo-only    { border-color: #48419D; background-color: rgba(72, 65, 157, 0.2); }
 .admin-only   { border-color: #353535; background-color: rgba(54, 54, 54, 0.2); }
 
+.message-helper-button       { color: #FFFFFF; }
 .message-helper-button.notice       { background-color: #888888; }
 .message-helper-button.question     { background-color: #0066cc; }
 .message-helper-button.success      { background-color: #40b73a; }

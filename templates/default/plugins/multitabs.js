@@ -43,7 +43,7 @@
 
             if(options.pluginType == 'modal') {
                 $('.modal-container').find(hashUrl).addClass('active-panel');
-                $('.close-modal').on('click', function() {
+                $('.modal-container').on('click', '.hide-modal, .close-modal', function() {
                     $('.modal-container ' + hashUrl).removeClass('active-panel'); // remove activation class from the target
                     history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                 });
@@ -83,7 +83,7 @@
                         history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         $(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         $(targetPanel).addClass('active-panel'); // add activation class to the target
-                        $('.close-modal').on('click', function() {
+                        $('.modal-container').on('click', '.close-modal, .hide-modal', function() {
                             $(targetPanel).removeClass('active-panel'); // remove activation class from the target
                             history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                         });
@@ -94,7 +94,7 @@
                         if(options.animation) { // if animate.css is active
                             $(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
                             $(targetPanel).addClass('modal active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
-                            $('.close-modal').on('click', function(){
+                            $('.modal-container').on('click', '.close-modal, .hide-modal', function(){
                                 $(this).parent().removeClass(options.animationIn).addClass(options.animationOut); // change animation classes to closing ones
                             });
                         }
