@@ -28,6 +28,10 @@ class CategoriesService
 		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()) || (!empty($id_category_field_name) && $id_category_field_name != self::$categories_manager->get_categories_items_parameters()->get_field_name_id_category()))
 		{
 			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
+			
+			if (preg_match('/^index\.php\?/suU', $module_id))
+				$module_id = GeneralConfig::load()->get_module_home_page();
+			
 			$categories_cache_class = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			if (class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache'))
 			{
