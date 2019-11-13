@@ -3,7 +3,7 @@
  * @copyright	&copy; 2005-2019 PHPBoost
  * @license		https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author		Julien BRISWALTER <j1.seth@phpboost.com>
- * @version		PHPBoost 5.3 - last update: 2019 11 06
+ * @version		PHPBoost 5.3 - last update: 2019 11 13
  * @since		PHPBoost 5.3 - 2019 11 11
 */
 
@@ -28,19 +28,20 @@ class CategoriesService
 		if (self::$categories_manager === null || (!empty($module_id) && $module_id != self::$categories_manager->get_module_id()) || (!empty($id_category_field_name) && $id_category_field_name != self::$categories_manager->get_categories_items_parameters()->get_field_name_id_category()))
 		{
 			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
-			$categories_cache_class = ucfirst($module_id) . 'CategoriesCache';
+			$categories_cache_class = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			if (class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache'))
+			{
 				$categories_cache = call_user_func($categories_cache_class .'::load');
-			else
+				$categories_items_parameters = new CategoriesItemsParameters();
+				$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
+				
+				if (!empty($id_category_field_name) && $id_category_field_name != CategoriesItemsParameters::DEFAULT_FIELD_NAME)
+					$categories_items_parameters->set_field_name_id_category($id_category_field_name);
+				
+				self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
+			}
+			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . Environment::get_running_module_name());
-			
-			$categories_items_parameters = new CategoriesItemsParameters();
-			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
-			
-			if (!empty($id_category_field_name) && $id_category_field_name != CategoriesItemsParameters::DEFAULT_FIELD_NAME)
-				$categories_items_parameters->set_field_name_id_category($id_category_field_name);
-			
-			self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
 		}
 		return self::$categories_manager;
 	}
