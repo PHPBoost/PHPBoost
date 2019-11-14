@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 11 01
+ * @version     PHPBoost 5.2 - last update: 2019 11 14
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -420,7 +420,7 @@ class ContentSecondParser extends AbstractParser
 	private static function inject_feed(array $matches)
 	{
 		$module = $matches[2];
-		$args = self::parse_feed_tag_args($matches[1]);
+		$args = parent::parse_tag_args($matches[1], array('name', 'cat', 'number'));
 		$name = !empty($args['name']) ? $args['name'] : Feed::DEFAULT_FEED_NAME;
 		$cat = !empty($args['cat']) ? $args['cat'] : 0;
 		$tpl = false;
@@ -445,32 +445,6 @@ class ContentSecondParser extends AbstractParser
 			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
 			return '<div class="message-helper error">' . $error . '</div>';
 		}
-	}
-
-	private static function parse_feed_tag_args($matches)
-	{
-		$args = explode(' ', trim($matches));
-		$result = array();
-
-		foreach ($args as $arg)
-		{
-			$param = array();
-
-			if (!preg_match('`([a-z]+)="([^"]+)"`uU', $arg, $param))
-			{
-				break;
-			}
-
-			$name = $param[1];
-			$value = $param[2];
-
-			if (in_array($name, array('name', 'cat', 'number')))
-			{
-				$result[$name] = $value;
-			}
-		}
-
-		return $result;
 	}
 }
 ?>

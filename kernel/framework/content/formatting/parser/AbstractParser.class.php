@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @version     PHPBoost 5.2 - last update: 2019 11 14
  * @since       PHPBoost 2.0 - 2007 11 29
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -127,6 +127,32 @@ abstract class AbstractParser implements FormattingParser
 		{
 			$this->content = preg_replace($regex, $replace, $this->content);
 		}
+	}
+	
+	/**
+	 * Parses tag args to get allowed ones
+	 * @param string $matches The regular expression which matches the tag args
+	 * @param string $allowed_args The args that are allowed to be present
+	 */
+	protected static function parse_tag_args($matches, $allowed_args = array())
+	{
+		$args = explode(' ', trim($matches));
+		$result = array();
+		foreach ($args as $arg)
+		{
+			$param = array();
+			if (!preg_match('`([a-z]+)="([^"]+)"`uU', $arg, $param))
+			{
+				break;
+			}
+			$name = $param[1];
+			$value = $param[2];
+			if (in_array($name, $allowed_args))
+			{
+				$result[$name] = $value;
+			}
+		}
+		return $result;
 	}
 }
 ?>
