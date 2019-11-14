@@ -41,7 +41,7 @@ function XMLHttpRequest_preview(field)
 		});
 	}
 	else
-		alert("{L_REQUIRE_TEXT}");
+		alert(${escapejs(LangLoader::get_message('require_text', 'main'))});
 }
 
 function insertTinyMceContent(content)

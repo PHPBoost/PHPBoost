@@ -4,7 +4,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 10
+ * @version   	PHPBoost 5.2 - last update: 2019 11 14
  * @since   	PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -33,11 +33,6 @@ class BBCodeEditor extends ContentEditor
 		array("fa","th"), array("fa","ticket-alt"), array("fa","undo"), array("fa","unlink"), array("fa","file"), array("far","file"), array("fa","file-alt"), array("far","file-alt"),
 		array("fa","user"), array("fa","users"), array("fa","offline"), array("fa","online"), array("fa","male"), array("fa","female"), array("fa","volume-up"), array("fa","wrench")
 	);
-
-	function __construct()
-	{
-		parent::__construct();
-	}
 
 	public function get_template()
 	{
@@ -71,7 +66,7 @@ class BBCodeEditor extends ContentEditor
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
-			if ($forbidden_tag == 'fieldset' || $forbidden_tag == 'block' || $forbidden_tag == 'Paragraph' || $forbidden_tag == 'accronym')
+			if ($forbidden_tag == 'fieldset' || $forbidden_tag == 'block' || $forbidden_tag == 'p' || $forbidden_tag == 'abbr')
 			{
 				$template->put_all(array(
 					'AUTH_CONTAINER' => ' bbcode-forbidden',
@@ -121,10 +116,6 @@ class BBCodeEditor extends ContentEditor
 				));
 			}
 		}
-
-		$template->put_all(array(
-			'L_SMILEY' => LangLoader::get_message('smiley', 'main'),
-		));
 
 		if (!self::$editor_already_included)
 		{

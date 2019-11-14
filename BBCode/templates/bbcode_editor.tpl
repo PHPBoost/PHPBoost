@@ -32,7 +32,7 @@
 				});
 			}
 			else
-				alert("${LangLoader::get_message('require_text', 'main')}");
+				alert(${escapejs(LangLoader::get_message('require_text', 'main'))});
 		}
 	</script>
 	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
@@ -60,7 +60,7 @@
 				</span>
 			</li>
 			<li id="format-underline" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.underline}">
+				<span class="bbcode-button{AUTH_U}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.underline}">
 					<i class="fa fa-fw fa-underline{AUTH_U}" aria-hidden="true"></i>
 				</span>
 			</li>
@@ -84,7 +84,7 @@
 				</div>
 			</li>
 			<li id="format-bg-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-trigger data-target="block-bgcolor{FIELD}" onclick="{DISABLED_BGCOLOR}bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
+				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-trigger data-target="block-bgcolor{FIELD}" onclick="bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
 					<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>
 				</span>
 				<div id="block-bgcolor{FIELD}" class="modal modal-animation">
@@ -134,23 +134,23 @@
 						</div>
 						<nav class="cell-list cell-list-inline">
 							<ul>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');"> <span style="font-family: andale mono;">Andale Mono</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=arial]', '[/font]', '{FIELD}');"> <span style="font-family: arial;">Arial</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=arial black]', '[/font]', '{FIELD}');"> <span style="font-family: arial black;">Arial Black</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');"> <span style="font-family: book antiqua;">Book Antiqua</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');"> <span style="font-family: comic sans ms;">Comic Sans MS</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=courier new]', '[/font]', '{FIELD}');"> <span style="font-family: courier new;">Courier New</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=georgia]', '[/font]', '{FIELD}');"> <span style="font-family: georgia;">Georgia</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');"> <span style="font-family: helvetica;">Helvetica</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=impact]', '[/font]', '{FIELD}');"> <span style="font-family: impact;">Impact</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=symbol]', '[/font]', '{FIELD}');"> <span style="font-family: symbol;">Symbol</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');"> <span style="font-family: tahoma;">Tahoma</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=terminal]', '[/font]', '{FIELD}');"> <span style="font-family: terminal;">Terminal</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');"> <span style="font-family: times new roman;">Times New Roman</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');"> <span style="font-family: trebuchet ms;">Trebuchet MS</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=verdana]', '[/font]', '{FIELD}');"> <span style="font-family: verdana;">Verdana</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=webdings]', '[/font]', '{FIELD}');"> <span style="font-family: webdings;">Webdings</span></li>
-								<li class="hide-modal" onclick="{DISABLED_B}insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');"> <span style="font-family: wingdings;">Wingdings</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');"> <span style="font-family: andale mono;">Andale Mono</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=arial]', '[/font]', '{FIELD}');"> <span style="font-family: arial;">Arial</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=arial black]', '[/font]', '{FIELD}');"> <span style="font-family: arial black;">Arial Black</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');"> <span style="font-family: book antiqua;">Book Antiqua</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');"> <span style="font-family: comic sans ms;">Comic Sans MS</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=courier new]', '[/font]', '{FIELD}');"> <span style="font-family: courier new;">Courier New</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=georgia]', '[/font]', '{FIELD}');"> <span style="font-family: georgia;">Georgia</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');"> <span style="font-family: helvetica;">Helvetica</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=impact]', '[/font]', '{FIELD}');"> <span style="font-family: impact;">Impact</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=symbol]', '[/font]', '{FIELD}');"> <span style="font-family: symbol;">Symbol</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');"> <span style="font-family: tahoma;">Tahoma</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=terminal]', '[/font]', '{FIELD}');"> <span style="font-family: terminal;">Terminal</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');"> <span style="font-family: times new roman;">Times New Roman</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');"> <span style="font-family: trebuchet ms;">Trebuchet MS</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=verdana]', '[/font]', '{FIELD}');"> <span style="font-family: verdana;">Verdana</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=webdings]', '[/font]', '{FIELD}');"> <span style="font-family: webdings;">Webdings</span></li>
+								<li class="hide-modal" onclick="insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');"> <span style="font-family: wingdings;">Wingdings</span></li>
 							</ul>
 						</nav>
 					</div>
@@ -170,19 +170,19 @@
 							<ul>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-left"></i> {@bbcode.left} </span>
-									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[align=left]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-center"></i> {@bbcode.center} </span>
-									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[align=center]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-right"></i> {@bbcode.right} </span>
-									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[align=right]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-align-justify"></i> {@bbcode.justify} </span>
-									<span class="button hide-modal" onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[align=justify]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>
 						</nav>
@@ -203,23 +203,23 @@
 							<ul>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
-									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[float=left]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[float=left]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
-									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[float=right]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[float=right]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
-									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[indent]', '[/indent]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
-									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[sup]', '[/sup]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch">
 									<span><i class="fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
-									<span class="button hide-modal" onclick="{DISABLED_POSITIONS}insertbbcode('[sub]', '[/sub]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>
 						</div>
@@ -239,19 +239,19 @@
 						</div>
 						<div class="cell-body justify-between">
 							<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
-							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 						<div class="cell-body justify-between">
 							<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
-							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 						<div class="cell-body justify-between">
 							<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
-							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 						<div class="cell-body justify-between">
 							<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
-							<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 						<div class="cell-body justify-between">
 							<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
@@ -421,7 +421,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="{DISABLED_ABBR}bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -468,15 +468,15 @@
 							<ul>
 								<li class="li-stretch" aria-label="{@bbcode.hide.all}">
 									<span><i class="far fa-fw fa-eye-slash"></i> {@bbcode.hide}</span>
-									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch" aria-label="{@bbcode.hide.member}">
 									<span><i class="fa fa-fw fa-user-friends"></i> {@bbcode.member}</span>
-									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 								<li class="li-stretch" aria-label="{@bbcode.hide.moderator}">
 									<span><i class="fa fa-fw fa-user-shield"></i> {@bbcode.moderator}</span>
-									<span class="button hide-modal" onclick="{DISABLED_B}insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
 							</ul>
 						</div>
@@ -496,31 +496,31 @@
 						<div class="cell-body">
 							<div class="message-helper notice justify-between">
 								<span>${LangLoader::get_message('notice', 'main')}</span>
-								<span class="button message-helper-button notice hide-modal" onclick="{DISABLED_B}insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<span class="button message-helper-button notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
 							<div class="message-helper question justify-between">
 								<span>${LangLoader::get_message('question', 'main')}</span>
-								<span class="button message-helper-button question hide-modal" onclick="{DISABLED_B}insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<span class="button message-helper-button question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
 							<div class="message-helper success justify-between">
 								<span>${LangLoader::get_message('success', 'main')}</span>
-								<span class="button message-helper-button success hide-modal" onclick="{DISABLED_B}insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<span class="button message-helper-button success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
 							<div class="message-helper warning justify-between">
 								<span>${LangLoader::get_message('warning', 'main')}</span>
-								<span class="button message-helper-button warning hide-modal" onclick="{DISABLED_B}insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<span class="button message-helper-button warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
 							<div class="message-helper error justify-between">
 								<span>${LangLoader::get_message('error', 'main')}</span>
-								<span class="button message-helper-button error hide-modal" onclick="{DISABLED_B}insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<span class="button message-helper-button error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 					</div>
@@ -850,7 +850,7 @@
 							<ul>
 								# START code_fa #
 								<li>
-									<span class="hide-modal" onclick="{DISABLED_FA}insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" aria-label="{code_fa.CODE}">
+									<span class="hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" aria-label="{code_fa.CODE}">
 										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true" aria-label="{code_fa.CODE}"></i>
 									</span>
 								</li>

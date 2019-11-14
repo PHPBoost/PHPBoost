@@ -4,7 +4,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 11 16
+ * @version   	PHPBoost 5.2 - last update: 2019 11 14
  * @since   	PHPBoost 2.0 - 2008 07 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,11 +17,6 @@ class TinyMCEEditor extends ContentEditor
 	private $array_tags = array('align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|1' => '|', '_fullscreen' => 'fullscreen', '|2' => '|', 'title' => 'formatselect', 'style' => 'styleselect', '|3' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|4' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', 'quote' => 'blockquote', '_search' => 'searchreplace', '|5' => '|', 'cut' => 'cut', 'copy' => 'copy', 'paste' => 'paste',
 	'|6' => '|', 'undo' => 'undo', 'redo' => 'redo', '|7' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|8' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|9' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|10' => '|', 'emotions' => 'smileys', 'table' => 'table', 'insertdatetime' => 'insertdatetime', '|11' => '|', 'sub' => 'subscript', 'sup' => 'superscript', 'line' => 'hr',
 	'|12' => '|', 'url1' => 'link', 'url2' => 'unlink', '|13' => '|', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|14' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', '15|' => '|', 'removeformat' => 'removeformat', '|16' => '|', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks');
-
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 	public function get_template()
 	{
@@ -81,7 +76,6 @@ class TinyMCEEditor extends ContentEditor
 			'FORM_NAME' => $form_name,
 			'FIELD_NAME' => $field_name,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
-			'L_REQUIRE_TEXT' => LangLoader::get_message('require_text', 'main'),
 			'C_TOOLBAR' => !empty($toolbar),
 			'TOOLBAR' => preg_replace('`\|(,\|)+`u', '|', trim($toolbar, ',')),
 			'LANGUAGE' => $language
