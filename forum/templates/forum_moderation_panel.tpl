@@ -81,7 +81,7 @@
 							</td>
 							<td class="forum-last-topic">
 								# IF action_list.C_USER_CONCERN #
-								<a href="{action_list.U_USER_CONCERN" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
+								<a href="{action_list.U_USER_CONCERN}" class="{action_list.USER_CONCERN_CSSCLASS}"# IF action_list.C_USER_CONCERN_GROUP_COLOR # style="color: {action_list.USER_CONCERN_GROUP_COLOR};"# ENDIF #>{action_list.USER_LOGIN}</a>
 								# ELSE #
 								-
 								# ENDIF #
