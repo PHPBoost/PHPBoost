@@ -68,7 +68,7 @@ function shoutbox_delete_message(id_message)
 				if(code > 0) {
 					jQuery('#shoutbox-message-' + code).remove();
 				} else {
-					alert("{@error.message.delete}");
+					alert(${escapejs(LangLoader::get_message('error.message.delete', 'common', 'shoutbox'))}));
 				}
 				jQuery('#shoutbox-refresh').html('<i class="fa fa-refresh"></i>');
 			},
