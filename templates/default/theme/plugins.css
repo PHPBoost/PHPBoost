@@ -211,19 +211,27 @@
 }
 
 /* --- tooltip -------------------------------------------------------------- */
-.tooltip { opacity: 0 !important; }
+#tooltip {
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    position:absolute;
+    padding: 0.309em 0.618em;
+    font-size: 0.809em;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    max-width: 250px;
+    z-index: 1000;
+}
 
-@media (min-width: 769px) {
-    .tooltip {
-        opacity: 1 !important;
-        padding: 0.228em 0.456em;
-        font-size: 0.809em;
-        max-width: 320px;
-        width: auto;
-        border-width: 1px;
-        border-style: solid;
-        border-color: transparent;
-    }
+#tooltip.position-t{ margin-top:  -9px; }
+#tooltip.position-b{ margin-top:   9px; }
+#tooltip.position-r{ margin-left:  9px; }
+#tooltip.position-l{ margin-left: -9px; }
+
+#tooltip.display-none {
+    display: none;
 }
 
 @media all { /* --- Wizard -------------------------------------------------- */

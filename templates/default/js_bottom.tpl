@@ -60,19 +60,6 @@
 
     jQuery('.wizard-container').wizard();
 
-// Tooltip
-	jQuery(document).ready(function () {
-		new jBox('Mouse', {
-			attach: '[aria-label]',
-			getTitle: 'aria-label',
-			position: {
-				x: 'center',
-				y: 'bottom'
-			},
-			addClass: 'tooltip',
-		});
-	});
-
 // Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
 	jQuery('.cssmenu-title').each(function(){
 		var link = jQuery(this).attr('href');
