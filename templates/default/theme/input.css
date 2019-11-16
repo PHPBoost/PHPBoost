@@ -78,8 +78,11 @@ option {
 }
 
 .input-element-button input {
-    border-width: 1px;
 	margin: 0;
+}
+
+.form-field-upload-file.input-element-button input {
+	max-width: calc(100% - 2.618em);
 }
 
 .input-element-button button,

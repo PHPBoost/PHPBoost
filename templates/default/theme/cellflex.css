@@ -96,14 +96,10 @@
 	flex-direction: column;
 }
 
-.cell-input input:not([type="checkbox"]):not([type="radio"]),
+.cell-input:not(.input-element-button):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
 .cell-input select,
 .cell-input textarea {
 	width: 100%;
-}
-
-.cell-input .input-element-button input {
-	width: calc(100% - 2.618em);
 }
 
 @media (min-width: 769px) {

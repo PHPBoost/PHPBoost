@@ -6,14 +6,6 @@
     flex-wrap: nowrap;
 }
 
-/* .form-field-date .input-date {
-	width: 80%;
-}
-
-.form-field-datetime .input-date {
-	width: 40%;
-} */
-
 .form-field-datetime .label-time {
 	max-width: 18%;
 	position: relative;
@@ -40,12 +32,4 @@
 
 .calendar-container div a {
     border: none;
-}
-
-.input-element-button span + label input {
-	border-left-width: 0;
-}
-
-.input-element-button label:last-child input {
-    border-width: 1px;
 }
