@@ -3,14 +3,15 @@
 @import url('../../default/theme/font-awesome-animation.css');
 @import url('../../default/theme/lightcase.css') screen, print;
 
+/* @import url('../../default/theme/@variables.css') screen, print; */
 @import url('../../default/theme/form.css') screen, print;
-@import url('../../default/theme/form_fieldset.css') screen, print;
-@import url('../../default/theme/form_button.css') screen, print;
-@import url('../../default/theme/form_input.css') screen, print;
-@import url('../../default/theme/form_datepicker.css') screen, print;
-@import url('../../default/theme/form_constraint.css') screen, print;
-@import url('../../default/theme/form_linedwrap.css') screen, print;
-@import url('../../default/theme/form_authorizations.css') screen, print;
+@import url('../../default/theme/fieldset.css') screen, print;
+@import url('../../default/theme/button.css') screen, print;
+@import url('../../default/theme/input.css') screen, print;
+@import url('../../default/theme/datepicker.css') screen, print;
+@import url('../../default/theme/constraint.css') screen, print;
+@import url('../../default/theme/linedwrap.css') screen, print;
+@import url('../../default/theme/authorizations.css') screen, print;
 @import url('../../default/theme/checkbox.css') screen, print;
 @import url('../../default/theme/radio.css') screen, print;
 
@@ -33,4 +34,6 @@
 @import url('../../default/theme/dashboard/dashboard_global.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard.css') screen, print;
 
+
+@import url('../../default/theme/colors.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard_colors.css') screen, print;

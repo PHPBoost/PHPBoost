@@ -221,18 +221,13 @@
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    max-width: 250px;
+    max-width: 320px;
     z-index: 1000;
 }
 
-#tooltip.position-t{ margin-top:  -9px; }
-#tooltip.position-b{ margin-top:   9px; }
-#tooltip.position-r{ margin-left:  9px; }
-#tooltip.position-l{ margin-left: -9px; }
+#tooltip.position-b { margin-top: 0.809em; }
 
-#tooltip.display-none {
-    display: none;
-}
+#tooltip.display-none { display: none; }
 
 @media all { /* --- Wizard -------------------------------------------------- */
     .wizard-container {

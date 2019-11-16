@@ -1,12 +1,11 @@
 /*
- * Contains all elements colors
+ * Contains all the elements colors of the dashboard if not in colors.css or if different
 */
 
  /* --- dashboard_shape.css ---------------------------------------------------- */
-@media {
 	body {
  		background-color: #ECF2F8;
- 		color: #555555;
+	    color: #555555;
  	}
 
  	#header-admin {
@@ -17,8 +16,6 @@
 
  	#header-admin a { color: #FFFFFF; }
 
- 	.robot { color: #FF6600; }
-
  	#footer {
  		background-color: #1c334a;
  		border-color: #366493;
@@ -26,147 +23,22 @@
 
  	#footer span { color: #FFFFFF; }
 
-	.scroll-to         	{ background-color: #366493; }
-	.scroll-to:hover	{ background-color: #0066cc; }
-
-	.scroll-to i       	{ color: rgba(255, 255, 255, 0.4); }
-	.scroll-to:hover i 	{ color: rgba(255, 255, 255, 1); }
-}
-
-/* -- Content
-    #####  #####  #   #  #####  #####  #   #  #####
-    #      #   #  ##  #    #    #      ##  #    #
-    #      #   #  # # #    #    ###    # # #    #
-    #      #   #  #  ##    #    #      #  ##    #
-    #####  #####  #   #    #    #####  #   #    #
------------------------------------------------------------------------------ */
-section header h1,
-article header h1 {
-	border-color: #366493;
-}
-
-section header h2,
-article header h2 {
-	border-color: #366493;
-}
-
-section header h3,
-article header h3 {
-	border-color: #366493;
-}
-
-ul.pagination-block li a {
-	background-color: #FFFFFF;
-	border-color:#DDDDDD;
-}
-
-ul.pagination-block li a:hover {
-	background-color: transparent;
-}
-
-ul.pagination-block li a.current-page {
-	background-color: #366493;
-	color: #FFFFFF;
-}
-
-ul.pagination-block li a.current-page:hover {
-	background-color: #0066CC;
-}
-
-.explorer h1 {
-	color: #666666;
-}
-
-.explorer .content {
-	border-color: #DDDDDD;
-}
-
-.explorer .content ul a {
-	color: #666666;
-}
-
-.explorer .content ul a:hover,
-.explorer .content ul a:hover+a {
-	background-color: #EEEEEE;
-}
-
-.explorer .selected {
-	background-color: #DDDDDD;
-}
+/* --- Content -------------------------------------------------------------- */
 
 .options {
 	background-color: #FFFFFF;
-	border-color: #DDDDDD;
 }
 
-.sortable-block .sortable-element {
-	background-color: #FEFEFE;
-	border-color: #D6DEE7;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-}
-
-.sortable-block .sortable-element:hover {
-	border-color: #d0d8e1;
-	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-}
-
-@media (min-width: 769px) {
-
-	.sortable-selector:after {
-		color: #81A4C8;
-	}
-}
-
-.sortable-block .sortable-element:hover {
-	background-color: #F2F5F8;
-}
-
-.sortable-block .sortable-element hr {
-	background-color: #999999;
-}
-
-.sortable-block .sortable-element label {
-	color: #1F507F;
-}
-
-.dragged {
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-}
-
-.dropzone {
-	border-color: #AAAAAA;
-	color: #AAAAAA;
-}
-
-div[class*="admin-index"] h2 {
-	border-color: #BBBBBB;
-}
-
-.db-operator-color 	{ color:#FF00FF; }
-.db-keywords-color 	{ color:#990099; }
-.db-text-color		{ color:#008000; }
-.db-number-color 	{ color:#008080; }
-
-.db-executed-query {
+.sortable-element {
 	background-color: #FFFFFF;
 }
 
-.db-executed-query p {
-	color: #000000;
+.sortable-element:hover {
+	background-color: #FFFFFF;
 }
 
-.cssmenu.cssmenu-group .menu-button	{
-	color: #676A74;
-}
-
-.cssmenu.cssmenu-group .menu-button:after {
-	border-color: #676A74;
-}
-
-@media (max-width: 768px) {
-	#menustats a.js-menu-button {
-		color: #555555;
-	}
+.db-executed-query {
+	background-color: #FFFFFF;
 }
 
 .dnd-dropzone {
@@ -965,14 +837,6 @@ ul.level-2 a {
 }
 
 #admin-quick-menu li .quick-link {
-	color: #FFFFFF;
-}
-
-.js-menu-button {
-	color: #EEEEEE;
-}
-
-.js-menu-button:hover {
 	color: #FFFFFF;
 }
 

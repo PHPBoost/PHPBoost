@@ -80,6 +80,12 @@
     align-items: center;
 }
 
+.cell-flex .cell-list-inline ul {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
 .cell-flex .cell-list ul li.li-stretch {
 	display: flex;
 	justify-content: space-between;

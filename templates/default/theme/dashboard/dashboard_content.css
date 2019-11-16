@@ -359,10 +359,8 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 /* --- Système de drag&Drop ================================================== */
-.sortable-block .sortable-element > .sortable-block {
+.sortable-element > .sortable-block {
 	flex: 1 0 calc(100% - 0.618em);
-	-ms-flex: 1 0 calc(100% - 0.618em);
-	-webkit-flex: 1 0 calc(100% - 0.618em);
 	padding: 0 0 0 1.618em;
 
 }
@@ -376,22 +374,12 @@ ul.pagination-block-bis li a.next-page:hover {
 	width: 100%;
 }
 
-.sortable-block .sortable-element {
+.sortable-element {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: row;
-	-ms-flex-direction: row;
-	-webkit-flex-direction: row;
 	align-items: center;
-	-webkit-align-items: center;
-	-ms-align-items: center;
 	align-content: center;
-	-webkit-align-content: center;
-	-ms-align-content: center;
 	flex-wrap: wrap;
-	-webkit-flex-wrap: center;
-	-ms-flex-wrap: center;
 	margin-bottom: 6px;
 	padding: 0;
 	width: 100%;
@@ -401,19 +389,13 @@ ul.pagination-block-bis li a.next-page:hover {
 	transition: box-shadow 0.2s;
 }
 
-.sortable-block .sortable-element:hover {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.sortable-block .sortable-selector {
+.sortable-selector {
 	padding: 0 0 0 0.309em;
 }
 
 
 @media (min-width: 769px) {
-	.sortable-block .sortable-element .sortable-selector {
+	.sortable-element .sortable-selector {
 		flex: 0 0 1.309em;
 		-ms-flex: 0 0 1.309em;
 		-webkit-flex: 0 0 1.309em;
@@ -429,22 +411,22 @@ ul.pagination-block-bis li a.next-page:hover {
 	}
 }
 
-.sortable-block .sortable-element:hover .sortable-actions {
+.sortable-element:hover .sortable-actions {
 	opacity: 1;
 }
 
-.sortable-block .sortable-element:hover .sortable-selector {
+.sortable-element:hover .sortable-selector {
 	width: 20px;
 	opacity: 0.6;
 }
 
 @media (min-width: 769px) {
-	.sortable-block .sortable-element .sortable-selector {
+	.sortable-element .sortable-selector {
 		width: 20px;
 		opacity: .6;
 	}
 
-	.sortable-block .sortable-element:hover .sortable-selector {
+	.sortable-element:hover .sortable-selector {
 		opacity: 1;
 	}
 }
@@ -481,11 +463,7 @@ ul.pagination-block-bis li a.next-page:hover {
 }
 
 .sortable-block .sortable-element hr {
-	margin-top: 5px;
-}
-
-.sortable-block .sortable-element label {
-	margin-left: 14px;
+	margin: 0.309em 0;
 }
 
 .sortable-block .sortable-actions img,
@@ -565,12 +543,6 @@ div[class*="admin-index"] h2 {
 	div[class*="admin-index"] {
 		margin: 20px 20px 0;
 	}
-}
-
-/* --- configuration generale --- */
-.admin-theme-img {
-	max-height: 180px;
-	max-width: 180px;
 }
 
 /* --- updates --- */

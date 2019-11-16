@@ -170,6 +170,14 @@ select {
 	margin-bottom: 0.228em;
 	display: block;
 	font-weight: 700;
+	width: 100%;
+}
+
+.form-field,
+.form-field-map,
+.form-element-auth .form-field,
+.form-field-textarea {
+	width: 100%;
 }
 
 .module-mini-container .form-field {

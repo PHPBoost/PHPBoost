@@ -60,10 +60,10 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 		if (splitPos.length == 1){
 			switch (splitPos[0]){
 				case 'all':
-					splitPos = ['b','t','r','l'];
+					splitPos = ['b','l','t','r'];
 					break;
 				case 'hor':
-					splitPos = ['r','l'];
+					splitPos = ['l','r'];
 					break;
 				case 'ver':
 					splitPos = ['b','t'];
@@ -72,10 +72,10 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 		}
 		// Calculate and store the available spaces...
 		var space = {
-				't' :   tooltipDim.t - $(window).scrollTop(),
-				'r' :   ( $(window).width() - tooltipDim.r ) + $(window).scrollLeft(),
 				'b' :   $(window).height() - ($(window).scrollTop() + tooltipDim.b),
-				'l' :   tooltipDim.l - $(window).scrollLeft()
+				'l' :   tooltipDim.l - $(window).scrollLeft(),
+				't' :   tooltipDim.t - $(window).scrollTop(),
+				'r' :   ( $(window).width() - tooltipDim.r ) + $(window).scrollLeft()
 			},
 			wRemain = (w - tooltipWidth)/ 2,
 			hRemain = (h - tooltipHeight)/2;
@@ -87,17 +87,17 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 
 			}
 			switch (splitPos[i]){
-				case 't':
-					if(h < space.t && wRemain < space.l && wRemain < space.r ){ return 't';}
-					break;
-				case 'r':
-					if(w < space.r && hRemain < space.t && hRemain < space.b ){ return 'r'; }
-					break;
 				case 'b':
 					if(h < space.b && wRemain < space.l && wRemain < space.r ){ return 'b';}
 					break;
 				case 'l':
 					if(w < space.l && hRemain < space.t && hRemain < space.b ){ return 'l';}
+					break;
+				case 't':
+					if(h < space.t && wRemain < space.l && wRemain < space.r ){ return 't';}
+					break;
+				case 'r':
+					if(w < space.r && hRemain < space.t && hRemain < space.b ){ return 'r'; }
 					break;
 			}
 		}
@@ -113,16 +113,16 @@ jQuery.fn.tooltip = function(content,pos,classes) {
 			left = parseInt(tooltipDim.l + tooltipWidth/2 - w/2);
 			top = parseInt( tooltipDim.t + tooltipHeight );
 			break;
+		case 'l':
+			left = parseInt(tooltipDim.l - w);
+			top = parseInt( tooltipDim.t + tooltipHeight/2 - h/2);
+			break;
 		case 't':
 			left = parseInt(tooltipDim.l + tooltipWidth/2 - w/2);
 			top = parseInt( tooltipDim.t - h);
 			break;
 		case 'r':
 			left = parseInt(tooltipDim.l + tooltipWidth);
-			top = parseInt( tooltipDim.t + tooltipHeight/2 - h/2);
-			break;
-		case 'l':
-			left = parseInt(tooltipDim.l - w);
 			top = parseInt( tooltipDim.t + tooltipHeight/2 - h/2);
 			break;
 		default : // b
