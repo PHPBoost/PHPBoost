@@ -1,25 +1,25 @@
 		# IF C_IMG #
-		<script>
-			function unselect_all_pictures() {
-				# START list #
-				jQuery('#' + '{list.ID}activ').prop('checked', false);
-				# END list #
-				jQuery('#change_all_pictures_selection_top').attr('onclick', "select_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_top').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
-				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "select_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_bottom').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
-			};
+			<script>
+				function unselect_all_pictures() {
+					# START list #
+					jQuery('#' + '{list.ID}activ').prop('checked', false);
+					# END list #
+					jQuery('#change_all_pictures_selection_top').attr('onclick', "select_all_pictures();return false;");
+					jQuery('#change_all_pictures_selection_top').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
+					jQuery('#change_all_pictures_selection_bottom').attr('onclick', "select_all_pictures();return false;");
+					jQuery('#change_all_pictures_selection_bottom').html('{L_SELECT_ALL_PICTURES} <i class="far fa-square"></i>');
+				};
 
-			function select_all_pictures() {
-				# START list #
-				jQuery('#' + '{list.ID}activ').prop('checked', 'checked');
-				# END list #
-				jQuery('#change_all_pictures_selection_top').attr('onclick', "unselect_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_top').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
-				jQuery('#change_all_pictures_selection_bottom').attr('onclick', "unselect_all_pictures();return false;");
-				jQuery('#change_all_pictures_selection_bottom').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
-			};
-		</script>
+				function select_all_pictures() {
+					# START list #
+					jQuery('#' + '{list.ID}activ').prop('checked', 'checked');
+					# END list #
+					jQuery('#change_all_pictures_selection_top').attr('onclick', "unselect_all_pictures();return false;");
+					jQuery('#change_all_pictures_selection_top').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
+					jQuery('#change_all_pictures_selection_bottom').attr('onclick', "unselect_all_pictures();return false;");
+					jQuery('#change_all_pictures_selection_bottom').html('{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i>');
+				};
+			</script>
 		# ENDIF #
 
 		<nav id="admin-quick-menu">
@@ -121,84 +121,84 @@
 
 			<form action="admin_gallery_add.php" method="post">
 				# IF C_IMG #
-				<article>
-					<header>
-						<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
-						<h2>{L_IMG_DISPO_GALLERY}</h2>
-					</header>
-					<div class="cell-flex cell-columns-4">
-						# START list #
-							<div class="cell">
-								<div class="cell-header">
-									<input type="text" name="{list.ID}name" value="{list.NAME}">
-									<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
-								</div>
-								<div class="cell-body">
-									<div class="cell-thumbnail">
-										<img src="pics/{list.NAME}" alt="{list.NAME}" />
+					<article>
+						<header>
+							<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+							<h2>{L_IMG_DISPO_GALLERY}</h2>
+						</header>
+						<div class="cell-flex cell-columns-4">
+							# START list #
+								<div class="cell">
+									<div class="cell-header">
+										<input type="text" name="{list.ID}name" value="{list.NAME}">
+										<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
+									</div>
+									<div class="cell-body">
+										<div class="cell-thumbnail">
+											<img src="pics/{list.NAME}" alt="{list.NAME}" />
+										</div>
+									</div>
+									<div class="cell-list">
+										<ul>
+											<li>
+												${LangLoader::get_message('form.category', 'common')}
+												<select name="{list.ID}cat" id="{list.ID}cat" class="select-cat">
+													{list.CATEGORIES}
+												</select>
+											</li>
+											<li class="li-stretch mini-checkbox">
+												{L_SELECT}
+												<label class="checkbox" for="{list.ID}activ">
+													<input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
+													<span>&nbsp;</span>
+												</label>
+
+											</li>
+											<li class="li-stretch mini-checkbox">
+												{L_DELETE}
+												<label class="checkbox" for="{list.ID}del">
+													<input type="checkbox" id="{list.ID}del" name="{list.ID}del" value="1">
+													<span>&nbsp;</span>
+												</label>
+
+											</li>
+										</ul>
 									</div>
 								</div>
-								<div class="cell-list">
-									<ul>
-										<li>
-											${LangLoader::get_message('form.category', 'common')}
-											<select name="{list.ID}cat" id="{list.ID}cat" class="select-cat">
-												{list.CATEGORIES}
-											</select>
-										</li>
-										<li class="li-stretch mini-checkbox">
-											{L_SELECT}
-											<label class="checkbox" for="">
-												<input type="checkbox" checked="checked" id="{list.ID}activ" name="{list.ID}activ" value="1">
-												<span>&nbsp;</span>
-											</label>
-
-										</li>
-										<li class="li-stretch mini-checkbox">
-											{L_DELETE}
-											<label class="checkbox" for="">
-												<input type="checkbox" name="{list.ID}del" value="1">
-												<span>&nbsp;</span>
-											</label>
-
-										</li>
-									</ul>
-								</div>
-							</div>
-						# END list #
-					</div>
-					<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
-				</article>
-
-
-				<div class="form-element half-field">
-					<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <span class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></label>
-					<div class="form-field">
-						<select name="root_cat" id="root_cat">
-							{ROOT_CATEGORIES}
-						</select>
-						<script>
-						jQuery('#root_cat').on('change', function() {
-							root_value = jQuery('#root_cat').val();
-							# START list #
-							jQuery('#' + '{list.ID}cat').val(root_value);
 							# END list #
-						});
-						</script>
-					</div>
-				</div>
+						</div>
+						<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+					</article>
 
-				<fieldset class="fieldset-submit">
-					<legend>{L_SUBMIT}</legend>
-					<div class="fieldset-inset">
-						<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
-					# ELSE #
-						<div class="message-helper notice">{L_NO_IMG}</div>
-					# ENDIF #
+
+					<div class="form-element half-field">
+						<label for="root_cat">{L_GLOBAL_CAT_SELECTION} <span class="field-description">{L_GLOBAL_CAT_SELECTION_EXPLAIN}</span></label>
+						<div class="form-field">
+							<select name="root_cat" id="root_cat">
+								{ROOT_CATEGORIES}
+							</select>
+							<script>
+							jQuery('#root_cat').on('change', function() {
+								root_value = jQuery('#root_cat').val();
+								# START list #
+									jQuery('#' + '{list.ID}cat').val(root_value);
+								# END list #
+							});
+							</script>
+						</div>
 					</div>
-				</fieldset>
+
+					<fieldset class="fieldset-submit">
+						<legend>{L_SUBMIT}</legend>
+						<div class="fieldset-inset">
+							<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
+							<input type="hidden" name="token" value="{TOKEN}">
+							<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+						</div>
+					</fieldset>
+				# ELSE #
+					<div class="message-helper notice">{L_NO_IMG}</div>
+				# ENDIF #
 			</form>
 		</div>
 		<script>

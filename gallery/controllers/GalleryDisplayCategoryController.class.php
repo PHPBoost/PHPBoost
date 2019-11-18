@@ -368,7 +368,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('gallery'),
 							'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('gallery'),
 							'ID' => $info_pics['id'],
-							'NAME' => stripslashes($info_pics['name']),
+							'NAME' => !empty(stripslashes($info_pics['name'])) ? stripslashes($info_pics['name']) : $info_pics['path'],
 							'C_POSTOR_EXIST' => !empty($info_pics['display_name']),
 							'POSTOR' => $info_pics['display_name'],
 							'POSTOR_LEVEL_CLASS' => UserService::get_level_class($info_pics['level']),

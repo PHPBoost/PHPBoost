@@ -3,11 +3,30 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* Surcharge de la classe notes pour passer à la ligne et ne pas deformer les tableaux */
-.notes {
-	white-space: nowrap;
+/* --- module mini ---------------------------------------------------------- */
+
+#scrolling_images {
+	position: relative;
+	margin: 1.309em auto;
+	height: 150px;
+	overflow: hidden;
 }
 
+#module-mini-gallery ul {
+	margin: 0 auto;
+	list-style: none;
+}
+
+#mini-gallery-slideshow li {
+	height: 150px;
+}
+
+#mini-gallery-slideshow.fade li 			{ display: none; 		 }
+#mini-gallery-slideshow.vertical li 		{ display: inline-block; }
+#mini-gallery-slideshow.horizontal li 		{ display: block; 		 }
+#mini-gallery-slideshow.fade ul:first-child { display: block; 		 }
+
+/* --- Tools menu for filters ----------------------------------------------- */
 @media (min-width: 769px) {
 	#cssmenu-galleryfilter ul {
 		min-width: 130px;
@@ -18,36 +37,16 @@
 	margin-bottom: 1.618em;
 }
 
-#scrolling_images {
-	position: relative;
-	margin: 1.309em auto;
-	height: 150px;
-	overflow: hidden;
+/* --- gallery list --------------------------------------------------------- */
+.cell-flex .cell-thumbnail {
+    align-items: center;
 }
 
-#module-gallery ul,
-#module-mini-gallery ul {
-	margin: 0 auto;
-	list-style: none;
+.pic-name-input {
+	width: 100%;
 }
 
-#mini-gallery-slideshow li {
-	height: 150px;
-}
-
-#mini-gallery-slideshow.fade li 			{ display: none; 			}
-#mini-gallery-slideshow.vertical li 		{ display: inline-block; 	}
-#mini-gallery-slideshow.horizontal li 		{ display: block; 			}
-#mini-gallery-slideshow.fade ul:first-child { display: block; 			}
-
-.td-end {
-	margin: 1em 0;
-}
-
-.thumbnails-list-container {
-	padding: 0 0.309em;
-}
-
+/* pics max */
 .bt td {
 	width: 100% !important;
 }
@@ -88,10 +87,9 @@
 }
 
 .move-pics-container {
-	z-index: 100;
 	float: left;
 	display: none;
-	margin-top: 0.618em;
+	padding: 0.618em;
 }
 
 .move-pics-block {
