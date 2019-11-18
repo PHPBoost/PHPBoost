@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2017 03 19
+ * @version   	PHPBoost 5.2 - last update: 2019 11 18
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,14 +42,15 @@ $mime_type_tpl = array(
 $host_ok = array(
 	'video' => array(
 		'www.dailymotion.com',
-		'www.youtube.com',
-		'video.google.fr',
-		'www.wat.tv',
-		'www.ptithom.net'
+		'www.netflix.com',
+		'www.primevideo.com',
+		'www.vimeo.com',
+		'www.youtube.com'
 	),
 	'audio' => array(
+		'music.amazon.com',
 		'www.deezer.com',
-		'widgets.jamendo.com'
+		'www.spotify.com'
 	)
 );
 
