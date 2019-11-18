@@ -669,32 +669,7 @@ tr td.alert-high-priority,
 .alert-high-priority      { background-color: #FFAF87; border-color: #FFAF87; color: #8C604A; }
 tr td.alert-very-high-priority,
 .alert-very-high-priority { background-color: #FF796F; border-color: #E86E65; color: #944641; }
-td.alert-priority         { border-color: #D1D2D4;}
-
-.calendar-block {
-	border-color: #999999;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.calendar-block .date-select-container {
-	background-color: #F5F5F5;
-}
-
-.calendar-block .date-select-next i,
-.calendar-block .date-select-previous i {
-	color: #666666;
-}
-
-.calendar-block .date-picker thead tr th {
-	border-color: #CCCCCC;
-	background-color: #FFFFFF;
-	color: #666666;
-}
-
-.calendar-block .date-picker tbody td.calendar-none    { background-color: #FFFFFF; }
-.calendar-block .date-picker tbody td.calendar-today   { background-color: #B5E5B9; }
-.calendar-block .date-picker tbody td.calendar-event   { background-color: #DBE5EE; }
-.calendar-block .date-picker tbody td.calendar-weekend { background-color: #FFE3B6; }
+td.alert-priority         { border-color: #DDDDDD;}
 
 .xmlhttprequest-result-search {
 	background-color: #FFFFFF;

@@ -1,3 +1,6 @@
+/*
+ * Contains css for datepicker input & calendar block
+*/
 
 .form-field-date,
 .form-field-datetime {
@@ -28,8 +31,36 @@
 /* --- Grouped input --- */
 .calendar-container > a {
     height: 100%;
+    font-size: 1.618em
 }
 
-.calendar-container div a {
-    border: none;
+/* --- calendar block ------------------------------------------------------- */
+.date-picker .square-cell {
+    position: relative;
+    width: calc(100% / 7);
+}
+
+.date-picker .square-cell .calendar-day {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-field .calendar-container {
+	display: inline-block;
+	position: relative;
+}
+
+.calendar-block .date-select-nav i {
+	padding: 0 0.618em;
+}
+
+.calendar-block .date-picker thead tr th {
+	padding: 0.618em 0;
+	font-weight: bold;
 }

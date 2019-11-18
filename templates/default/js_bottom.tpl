@@ -1,5 +1,4 @@
 <script>
-<!--
 // Delete confirmation
 	jQuery('[data-confirmation]').each(function() {
 		data_confirmation = jQuery(this).attr('data-confirmation');
@@ -60,38 +59,11 @@
 
     jQuery('.wizard-container').wizard();
 
-// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
-	jQuery('.cssmenu-title').each(function(){
-		var link = jQuery(this).attr('href');
-		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
-			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
-			if(jQuery(this).closest('.has-sub').length) { // if item is in subfolder
-				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
-				jQuery(this).closest('.cssmenu > ul > li').addClass('current'); // and to the first ancestor
-			}
-		}
-	});
-
-// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
-	jQuery('.modal-menu a').each(function(){
-		var link = jQuery(this).attr('href');
-		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
-			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
-			if(jQuery(this).closest('.modal-menu > li').length) { // if item is in subfolder
-				jQuery(this).closest('.modal-menu > li').addClass('current'); // and to the first ancestor in admin panel
-				var rootLink = jQuery(this).closest('.modal').attr('id'); // get the target
-				jQuery('[data-target="'+rootLink+'"]').parent().addClass('current');
-			}
-		}
-	});
-
 // sizes of .cell-thumbnail
 	jQuery('.cell-thumbnail').each(function() {
 		var widthRef = $(this).innerWidth();
 		$(this).outerHeight(widthRef * 9 / 16);
 	});
-
--->
 </script>
 
 # IF C_COOKIEBAR_ENABLED #

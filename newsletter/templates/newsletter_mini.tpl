@@ -18,7 +18,7 @@
 # ELSE #
 <div id="newsletter"# IF C_HIDDEN_WITH_SMALL_SCREENS # class="hidden-small-screens"# ENDIF #>
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-		<div class="newsletter-form input-element-button">
+		<div class="newsletter-form grouped-inputs">
 			<span class="newsletter-title">{@newsletter}</span>
 			<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
 			<input type="hidden" name="subscribe" value="subscribe">

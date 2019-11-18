@@ -29,7 +29,7 @@
 		<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 			<span>{L_ADD_USER}</span>
 			<br />
-			<div class="input-element-button">
+			<div class="grouped-inputs">
 				<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
 				<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid"><span>{L_GO}</span></button>
 			</div>

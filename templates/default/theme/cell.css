@@ -84,15 +84,15 @@
 
 .cell-list ul li {
 	list-style-type: none;
-	padding: 0.456em 0.809em;
+	padding: 0.228em 0.809em;
 }
 
 .cell-list ul li:first-child {
-    padding: 0.809em 0.809em 0.456em;
+    padding: 0.456em 0.809em 0.228em;
 }
 
 .cell-list ul li:last-child {
-    padding: 0.456em 0.809em 0.809em;
+    padding: 0.228em 0.809em 0.456em;
 }
 
 .cell-list-inline ul li {
@@ -131,7 +131,7 @@
 .cell button,
 .cell .button,
 .cell textarea,
-.cell .input-element-button,
+.cell .grouped-inputs,
 .cell .formatter-title {
 	margin: 0 !important;
 }

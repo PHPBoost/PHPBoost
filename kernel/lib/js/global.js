@@ -599,3 +599,11 @@ function eraseCookie(name) {
   	selectedClass: 'lineselect'
   };
 })(jQuery);
+
+// set cell's height to width (setInterval needed because of the display:hidden)
+setInterval(function() {
+	jQuery('.square-cell').each(function(){
+		var cell_width = jQuery(this).outerWidth();
+		jQuery(this).outerHeight(cell_width + 'px');
+	});
+}, 1);

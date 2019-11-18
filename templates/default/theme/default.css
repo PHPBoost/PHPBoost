@@ -77,7 +77,7 @@ p {
 pre {
 	white-space: pre-wrap; }
 
-abbr, acronym {
+abbr {
 	cursor: help;
 	font-variant: none;
 	text-decoration: none;

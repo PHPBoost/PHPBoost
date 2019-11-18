@@ -4,7 +4,7 @@
  * @license 	https://www.opensource.org/licenses/mit-license.php
  * @author      CssMenuMaker
  * @link        https://app.cssmenumaker.com/?theme_id=8
- * @version   	PHPBoost 5.3 - last update: 2018 08 09
+ * @version   	PHPBoost 5.3 - last update: 2019 11 18
  * @since   	PHPBoost 5.0 - 2016 03 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -95,3 +95,29 @@
 		});
 	};
 })(jQuery);
+
+
+// Current li - send class .current to an item from a cssmenu and it's parents if the item href correspond to the page url
+	jQuery('.cssmenu-title').each(function(){
+		var link = jQuery(this).attr('href');
+		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
+			if(jQuery(this).closest('.has-sub').length) { // if item is in subfolder
+				jQuery(this).closest('.has-sub').addClass('current');  // add class to the parent subfolder
+				jQuery(this).closest('.cssmenu > ul > li').addClass('current'); // and to the first ancestor
+			}
+		}
+	});
+
+// Current li - send class .current to an item from the admin menu and it's parents if the item href correspond to the page url
+	jQuery('.modal-menu a').each(function(){
+		var link = jQuery(this).attr('href');
+		if(window.location.href.indexOf(link) > -1) { // if page url contains href of one of the cssmenu items
+			jQuery(this).parent().addClass('current'); // add class to it's parent (should be 'li')
+			if(jQuery(this).closest('.modal-menu > li').length) { // if item is in subfolder
+				jQuery(this).closest('.modal-menu > li').addClass('current'); // and to the first ancestor in admin panel
+				var rootLink = jQuery(this).closest('.modal').attr('id'); // get the target
+				jQuery('[data-target="'+rootLink+'"]').parent().addClass('current');
+			}
+		}
+	});

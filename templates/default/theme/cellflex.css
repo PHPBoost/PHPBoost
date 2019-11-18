@@ -96,7 +96,7 @@
 	flex-direction: column;
 }
 
-.cell-input:not(.input-element-button):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
+.cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
 .cell-input select,
 .cell-input textarea {
 	width: 100%;

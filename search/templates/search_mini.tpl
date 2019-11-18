@@ -23,7 +23,7 @@
 	</script>
 
 	<form role="search" action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
-		<div id="mini-search-form" class="input-element-button">
+		<div id="mini-search-form" class="grouped-inputs">
 			<input type="search" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH_TITLE}..." aria-labelledby="SearchButton">
 			<input type="hidden" id="search-token" name="token" value="{TOKEN}">
 			<button id="SearchButton" class="submit" type="submit" name="search_submit" aria-label="{L_YOUR_SEARCH}"><i class="fa fa-search" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span></button>

@@ -70,41 +70,43 @@ option {
 }
 
 /* --- Grouped input --- */
-.input-element-button {
+.grouped-inputs {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 	margin: 0 0 0.309em;
 }
 
-.input-element-button input {
+.grouped-inputs input,
+.grouped-inputs select {
 	margin: 0;
+	width: 100%;
 }
 
-.form-field-upload-file.input-element-button input {
+.form-field-upload-file.grouped-inputs input {
 	max-width: calc(100% - 2.618em);
 }
 
-.input-element-button button,
-.input-element-button a {
+.grouped-inputs button,
+.grouped-inputs a {
 	display: flex;
 	margin: 0;
 }
 
-.input-element-button button i,
-.input-element-button a i,
-.input-element-button button span,
-.input-element-button a span {
+.grouped-inputs button i,
+.grouped-inputs a i,
+.grouped-inputs button span,
+.grouped-inputs a span {
 	align-self: center;
 }
 
-.input-element-button a {
+.grouped-inputs a {
 	text-decoration: none;
 	padding: 0 0.618em;
 	border-width: 1px;
 	border-style: solid;
 }
 
-.input-element-button a:hover {
+.grouped-inputs a:hover {
 	text-decoration: none;
 }
