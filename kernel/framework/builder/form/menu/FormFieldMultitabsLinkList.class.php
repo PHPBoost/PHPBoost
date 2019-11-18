@@ -42,6 +42,7 @@ class FormFieldMultitabsLinkList extends AbstractFormField
 				'C_IMG' => $action->has_img(),
 				'TITLE' => $action->get_title(),
 				'CSS_CLASS' => $action->get_css_class(),
+				'TRIGGER' => $action->get_trigger(),
 				'TARGET' => $action->get_target(),
 				'U_IMG' => $action->has_img() ? $action->get_img()->rel() : '',
 			));

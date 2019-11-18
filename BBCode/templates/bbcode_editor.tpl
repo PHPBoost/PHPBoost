@@ -70,7 +70,7 @@
 				</span>
 			</li>
 			<li id="format-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-trigger data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
+				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-modal data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
 					<i class="fa fa-fw fa-tint" aria-hidden="true"></i>
 				</span>
 				<div id="block-color{FIELD}" class="modal modal-animation">
@@ -84,7 +84,7 @@
 				</div>
 			</li>
 			<li id="format-bg-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-trigger data-target="block-bgcolor{FIELD}" onclick="bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
+				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-modal data-target="block-bgcolor{FIELD}" onclick="bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
 					<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>
 				</span>
 				<div id="block-bgcolor{FIELD}" class="modal modal-animation">
@@ -98,7 +98,7 @@
 				</div>
 			</li>
 			<li id="format-font-size" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SIZE}" # IF NOT C_DISABLED_SIZE #data-trigger# ENDIF # data-target="block-size{FIELD}" aria-label="{@bbcode.size}">
+				<span class="bbcode-button{AUTH_SIZE}" # IF NOT C_DISABLED_SIZE #data-modal# ENDIF # data-target="block-size{FIELD}" aria-label="{@bbcode.size}">
 					<i class="fa fa-fw fa-text-height" aria-hidden="true"></i>
 				</span>
 				<div id="block-size{FIELD}" class="modal modal-animation">
@@ -123,7 +123,7 @@
 				</div>
 			</li>
 			<li id="format-font-family" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_FONT}" # IF NOT C_DISABLED_FONT #data-trigger# ENDIF # data-target="block-font{FIELD}" aria-label="{@bbcode.font}">
+				<span class="bbcode-button{AUTH_FONT}" # IF NOT C_DISABLED_FONT #data-modal# ENDIF # data-target="block-font{FIELD}" aria-label="{@bbcode.font}">
 					<i class="fa fa-fw fa-font" aria-hidden="true"></i>
 				</span>
 				<div id="block-font{FIELD}" class="modal modal-animation">
@@ -157,7 +157,7 @@
 				</div>
 			</li>
 			<li id="format-align" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_ALIGN}" # IF NOT C_DISABLED_ALIGN #data-trigger# ENDIF # data-target="block-align{FIELD}" aria-label="{@bbcode.align}">
+				<span class="bbcode-button{AUTH_ALIGN}" # IF NOT C_DISABLED_ALIGN #data-modal# ENDIF # data-target="block-align{FIELD}" aria-label="{@bbcode.align}">
 					<i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
 				</span>
 				<div id="block-align{FIELD}" class="modal modal-animation">
@@ -190,7 +190,7 @@
 				</div>
 			</li>
 			<li id="format-position" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_POSITIONS}" # IF NOT C_DISABLED_POSITIONS #data-trigger# ENDIF # data-target="block-positions{FIELD}" aria-label="{@bbcode.positions}">
+				<span class="bbcode-button{AUTH_POSITIONS}" # IF NOT C_DISABLED_POSITIONS #data-modal# ENDIF # data-target="block-positions{FIELD}" aria-label="{@bbcode.positions}">
 					<i class="fa fa-fw fa-indent" aria-hidden="true"></i>
 				</span>
 				<div id="block-positions{FIELD}" class="modal modal-animation">
@@ -228,7 +228,7 @@
 			</li>
 
 			<li id="html-title" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-trigger# ENDIF # data-target="block-title{FIELD}" aria-label="{@bbcode.title}">
+				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-modal# ENDIF # data-target="block-title{FIELD}" aria-label="{@bbcode.title}">
 					<i class="fa fa-fw fa-list-alt" aria-hidden="true"></i>
 				</span>
 				<div id="block-title{FIELD}" class="modal modal-animation">
@@ -261,7 +261,7 @@
 				</div>
 			</li>
 			<li id="html-list" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_LIST}" # IF NOT C_DISABLED_LIST #data-trigger# ENDIF # data-target="block-list{FIELD}" aria-label="{@bbcode.list}">
+				<span class="bbcode-button{AUTH_LIST}" # IF NOT C_DISABLED_LIST #data-modal# ENDIF # data-target="block-list{FIELD}" aria-label="{@bbcode.list}">
 					<i class="fa fa-fw fa-list{AUTH_LIST}" aria-hidden="true"></i>
 				</span>
 				<div id="block-list{FIELD}" class="modal modal-animation">
@@ -292,7 +292,7 @@
 				</div>
 			</li>
 			<li id="html-table" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_TABLE}" # IF NOT C_DISABLED_TABLE #data-trigger# ENDIF #  data-target="block-table{FIELD}" aria-label="{@bbcode.table}">
+				<span class="bbcode-button{AUTH_TABLE}" # IF NOT C_DISABLED_TABLE #data-modal# ENDIF #  data-target="block-table{FIELD}" aria-label="{@bbcode.table}">
 					<i class="fa fa-fw fa-table" aria-hidden="true"></i>
 				</span>
 				<div id="block-table{FIELD}" class="modal modal-animation">
@@ -329,7 +329,7 @@
 				</div>
 			</li>
 			<li id="html-container" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_CONTAINER}" # IF NOT C_DISABLED_CONTAINER #data-trigger# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
+				<span class="bbcode-button{AUTH_CONTAINER}" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
 					<i class="far fa-fw fa-square" aria-hidden="true"></i>
 				</span>
 				<div id="block-container{FIELD}" class="modal modal-animation">
@@ -340,28 +340,28 @@
 						</div>
 						<nav class="cell-list">
 							<ul>
-								<li id="html-paragraph" class="li-stretch">
+								<li id="html-paragraph" class="li-stretch{AUTH_PARAGRAPH}">
 									<span class="bbcode-label" aria-label="{@bbcode.paragraph.title}"> {@bbcode.paragraph} </span>
-									<span class="button hide-modal" onclick="insertbbcode('[p]', '[/p]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_PARAGRAPH #onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li id="html-div-block" class="li-stretch">
-									<span class="bbcode-label" aria-label=" {@bbcode.block.title}"> {@bbcode.block} </span>
-									<span class="button hide-modal" onclick="insertbbcode('[block]', '[/block]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<li id="html-div-block" class="li-stretch{AUTH_PARAGRAPH}">
+									<span class="bbcode-label"> {@bbcode.block} </span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_BLOCK #onclick="insertbbcode('[block]', '[/block]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li id="html-div-custom" class="li-stretch">
-									<span class="bbcode-label" aria-label=" {@bbcode.block.title}"> {@bbcode.container.custom} </span>
-									<span class="button" data-trigger data-target="block-container-custom{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" onclick="insertbbcode('[container]', '[/container]', '{FIELD}');">{@bbcode.tags.add}</span>
+								<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER_CUSTOM}">
+									<span class="bbcode-label"> {@bbcode.container.custom} </span>
+									<span class="button" # IF NOT C_DISABLED_CONTAINER_CUSTOM #data-modal# ENDIF # data-target="block-container-custom{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_CONTAINER_CUSTOM #onclick="insertbbcode('[container]', '[/container]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" id="html-fieldset">
+								<li class="li-stretch" id="html-fieldset{AUTH_PARAGRAPH}">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
-									<span class="button" data-trigger data-target="block-fieldset{FIELD}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" onclick="insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button" # IF NOT C_DISABLED_PARAGRAPH #data-modal# ENDIF # data-target="block-fieldset{FIELD}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_PARAGRAPH #onclick="insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" id="html-abbr" class="modal-container cell-flex cell-modal">
+								<li class="li-stretch" id="html-abbr{AUTH_ABBR}" class="modal-container cell-flex cell-modal">
 									<span class="bbcode-label"> {@bbcode.abbr} </span>
-									<span class="button" data-trigger data-target="block-abbr{FIELD}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" onclick="insertbbcode('[abbr]', '[/abbr]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button" # IF NOT C_DISABLED_ABBR #data-modal# ENDIF # data-target="block-abbr{FIELD}"> {@bbcode.tags.advanced} </span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_ABBR #onclick="insertbbcode('[abbr]', '[/abbr]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
 							</ul>
 						</nav>
@@ -427,7 +427,7 @@
 				</div>
 			</li>
 			<li id="html-quote" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_QUOTE}" # IF NOT C_DISABLED_QUOTE #data-trigger# ENDIF # data-target="block-quote{FIELD}" aria-label="{@bbcode.quote}">
+				<span class="bbcode-button{AUTH_QUOTE}" # IF NOT C_DISABLED_QUOTE #data-modal# ENDIF # data-target="block-quote{FIELD}" aria-label="{@bbcode.quote}">
 					<i class="fa fa-fw fa-quote-left{AUTH_QUOTE}" aria-hidden="true"></i>
 				</span>
 				<div id="block-quote{FIELD}" class="modal modal-animation">
@@ -455,7 +455,7 @@
 				</div>
 			</li>
 			<li id="html-hidden" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_HIDE}" # IF NOT C_DISABLED_HIDE #data-trigger# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
+				<span class="bbcode-button{AUTH_HIDE}" # IF NOT C_DISABLED_HIDE #data-modal# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
 					<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i>
 				</span>
 				<div id="block-hide{FIELD}" class="modal modal-animation">
@@ -484,7 +484,7 @@
 				</div>
 			</li>
 			<li id="html-style" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_STYLE}" # IF NOT C_DISABLED_STYLE #data-trigger# ENDIF # data-target="block-style{FIELD}" aria-label="{@bbcode.style}">
+				<span class="bbcode-button{AUTH_STYLE}" # IF NOT C_DISABLED_STYLE #data-modal# ENDIF # data-target="block-style{FIELD}" aria-label="{@bbcode.style}">
 					<i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
 				</span>
 				<div id="block-style{FIELD}" class="modal modal-animation">
@@ -528,7 +528,7 @@
 			</li>
 
 			<li id="links-url" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_URL}" # IF NOT C_DISABLED_URL #data-trigger# ENDIF # data-target="block-url{FIELD}" aria-label="{@bbcode.link}">
+				<span class="bbcode-button{AUTH_URL}" # IF NOT C_DISABLED_URL #data-modal# ENDIF # data-target="block-url{FIELD}" aria-label="{@bbcode.link}">
 					<i class="fa fa-fw fa-globe" aria-hidden="true"></i>
 				</span>
 				<div id="block-url{FIELD}" class="modal modal-animation">
@@ -556,7 +556,7 @@
 				</div>
 			</li>
 			<li id="links-mail" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-trigger# ENDIF # data-target="block-mail{FIELD}" aria-label="{@bbcode.mail}">
+				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-modal# ENDIF # data-target="block-mail{FIELD}" aria-label="{@bbcode.mail}">
 					<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
 				</span>
 				<div id="block-mail{FIELD}" class="modal modal-animation">
@@ -589,7 +589,7 @@
 				</span>
 			</li>
 			<li id="links-feed" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-trigger# ENDIF # data-target="block-feed{FIELD}" aria-label="{@bbcode.feed}">
+				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-modal# ENDIF # data-target="block-feed{FIELD}" aria-label="{@bbcode.feed}">
 					<i class="fa fa-fw fa-rss" aria-hidden="true"></i>
 				</span>
 				<div id="block-feed{FIELD}" class="modal modal-animation">
@@ -628,7 +628,7 @@
 				</div>
 			</li>
 			<li id="links-anchor" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_ANCHOR}" # IF NOT C_DISABLED_ANCHOR #data-trigger# ENDIF # data-target="block-anchor{FIELD}" aria-label="{@bbcode.anchor}">
+				<span class="bbcode-button{AUTH_ANCHOR}" # IF NOT C_DISABLED_ANCHOR #data-modal# ENDIF # data-target="block-anchor{FIELD}" aria-label="{@bbcode.anchor}">
 					<i class="fa fa-fw fa-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
 				</span>
 				<div id="block-anchor{FIELD}" class="modal modal-animation">
@@ -660,7 +660,7 @@
 				</div>
 			</li>
 			<li id="links-sound" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-trigger# ENDIF # data-target="block-sound{FIELD}" aria-label="{@bbcode.sound}">
+				<span class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-modal# ENDIF # data-target="block-sound{FIELD}" aria-label="{@bbcode.sound}">
 					<i class="fa fa-fw fa-music" aria-hidden="true"></i>
 				</span>
 				<div id="block-sound{FIELD}" class="modal modal-animation">
@@ -671,7 +671,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
-							<div class="cell-input input-element-button form-field-upload-file">
+							<div class="cell-input input-element-button">
 								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
@@ -683,7 +683,7 @@
 				</div>
 			</li>
 			<li id="links-movie" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-trigger# ENDIF # data-target="block-movie{FIELD}" aria-label="{@bbcode.movie}">
+				<span class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-modal# ENDIF # data-target="block-movie{FIELD}" aria-label="{@bbcode.movie}">
 					<i class="fa fa-fw fa-film" aria-hidden="true"></i>
 				</span>
 				<div id="block-movie{FIELD}" class="modal modal-animation">
@@ -696,7 +696,7 @@
 							<label class="cell-label" for="bb_movie_url{FIELD}">
 								{@bbcode.movie.url}
 							</label>
-							<div class="cell-input input-element-button form-field-upload-file">
+							<div class="cell-input input-element-button">
 								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
@@ -718,7 +718,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_poster{FIELD}">{@bbcode.movie.poster}</label>
-							<div class="cell-input input-element-button form-field-upload-file">
+							<div class="cell-input input-element-button">
 								<input id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
@@ -730,7 +730,7 @@
 				</div>
 			</li>
 			<li id="link-lightbox" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-trigger# ENDIF # data-target="block-lightbox{FIELD}" aria-label="{@bbcode.lightbox}">
+				<span class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-modal# ENDIF # data-target="block-lightbox{FIELD}" aria-label="{@bbcode.lightbox}">
 					<i class="fa fa-fw fa-camera" aria-hidden="true"></i>
 				</span>
 				<div id="block-lightbox{FIELD}" class="modal modal-animation">
@@ -743,7 +743,7 @@
 							<label class="cell-label" for="bb_lightbox{FIELD}">
 								{@bbcode.picture.url}
 							</label>
-							<div class="cell-input input-element-button form-field-upload-file">
+							<div class="cell-input input-element-button">
 								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
@@ -763,7 +763,7 @@
 				</div>
 			</li>
 			<li id="link-figure" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-trigger# ENDIF # data-target="block-figure{FIELD}" aria-label="{@bbcode.figure}">
+				<span class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-modal# ENDIF # data-target="block-figure{FIELD}" aria-label="{@bbcode.figure}">
 					<i class="far fa-fw fa-image" aria-hidden="true"></i>
 				</span>
 				<div id="block-figure{FIELD}" class="modal modal-animation">
@@ -774,7 +774,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
-							<div class="cell-input input-element-button form-field-upload-file">
+							<div class="cell-input input-element-button">
 								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload"></i></a>
 							</div>
@@ -812,7 +812,7 @@
 			# ENDIF #
 
 			<li id="code-smileys" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SMILEYS}" # IF NOT C_DISABLED_SMILEYS #data-trigger# ENDIF # data-target="block-smileys{FIELD}" aria-label="{@bbcode.smileys}">
+				<span class="bbcode-button{AUTH_SMILEYS}" # IF NOT C_DISABLED_SMILEYS #data-modal# ENDIF # data-target="block-smileys{FIELD}" aria-label="{@bbcode.smileys}">
 					<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 				</span>
 				<div id="block-smileys{FIELD}" class="modal modal-animation">
@@ -836,7 +836,7 @@
 				</div>
 			</li>
 			<li id="code-fa" class="bbcode-elements">
-				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-trigger# ENDIF # data-target="block-fa{FIELD}" aria-label="{@bbcode.fa}">
+				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-fa{FIELD}" aria-label="{@bbcode.fa}">
 					<i class="far fa-fw fa-flag" aria-hidden="true"></i>
 				</span>
 				<div id="block-fa{FIELD}" class="modal modal-animation">
@@ -861,7 +861,7 @@
 				</div>
 			</li>
 			<li id="code-language" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_CODE}" # IF NOT C_DISABLED_CODE #data-trigger# ENDIF # data-target="block-code{FIELD}" aria-label="{@bbcode.code}">
+				<span class="bbcode-button{AUTH_CODE}" # IF NOT C_DISABLED_CODE #data-modal# ENDIF # data-target="block-code{FIELD}" aria-label="{@bbcode.code}">
 					<i class="fa fa-fw fa-code" aria-hidden="true"></i>
 				</span>
 				<div id="block-code{FIELD}" class="modal modal-animation">

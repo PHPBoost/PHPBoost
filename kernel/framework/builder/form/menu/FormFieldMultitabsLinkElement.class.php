@@ -15,6 +15,7 @@ class FormFieldMultitabsLinkElement
 {
 	private $title;
 	private $url;
+	private $trigger;
 	private $target;
 	private $css_class;
 	private $active_module;
@@ -28,9 +29,10 @@ class FormFieldMultitabsLinkElement
 	 * @param Url $img the action icon url
 	 * @param string $active_module the action active module
 	 */
-	public function __construct($title, $target = '', $css_class = '', $img = '', $active_module = '')
+	public function __construct($title, $trigger = '', $target = '', $css_class = '', $img = '', $active_module = '')
 	{
 		$this->title = $title;
+		$this->trigger = $trigger;
 		$this->target = $target;
 		$this->css_class = $css_class;
 		$this->img = !empty($img) ? $this->convert_url($img) : $img;
@@ -43,6 +45,14 @@ class FormFieldMultitabsLinkElement
 	public function get_title()
 	{
 		return $this->title;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_trigger()
+	{
+		return $this->trigger;
 	}
 
 	/**

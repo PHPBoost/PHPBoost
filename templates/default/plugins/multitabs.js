@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 201909 06
+ * @version   	PHPBoost 5.3 - last update: 2019 11 17
  * @since   	PHPBoost 5.3 - 2019 09 06
 */
 
@@ -57,13 +57,18 @@
                 if(hashUrl) {
                     if($('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').length) // if target is nested
                         $('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').addClass('active-panel').css('height', 'auto');
+
+                    if($('.tabs-container').find('[data-target="'+hashTarget+'"]').length) {
                         $('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
                         $('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
+                    } else {
+                        $('.tabs-container .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
+                    }
                 } else {
                     $('.tabs-container .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
-                    $('.tabs-container li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
+                    $('.tabs-container li:first-child [data-tab]').addClass('active-tab'); // and add activation class to the first target's trigger
                     $('.tabs-container .tabs .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when it's a nested tabs menu
-                    $('.tabs-container .tabs li:first-child [data-trigger]').addClass('active-tab'); // and add activation class to the first target's trigger
+                    $('.tabs-container .tabs li:first-child [data-tab]').addClass('active-tab'); // and add activation class to the first target's trigger
                 }
             }
 
@@ -109,7 +114,7 @@
                         var contentHeight = contentPanel.outerHeight(); // calculate height of target
                         if(options.accordionSiblings == true) {
                             $(this).closest('.accordion-container').find('.accordion').not(targetPanel).removeClass('active-panel').height(0);
-                            $(this).closest('.accordion-container').find('[data-trigger]').not(this).removeClass('active-tab');
+                            $(this).closest('.accordion-container').find('[data-accordion]').not(this).removeClass('active-tab');
                         }
                         if(targetPanel.hasClass('active-panel')) // if target is active
                         {

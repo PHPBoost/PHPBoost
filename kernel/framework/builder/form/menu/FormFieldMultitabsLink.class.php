@@ -25,9 +25,9 @@ class FormFieldMultitabsLink extends AbstractFormField
 	 * @param string $css_class, the action font awesome css class
 	 * @param Url $img the action icon url
 	 */
-	public function __construct($id, $title, $target, $css_class = '', $img = '')
+	public function __construct($id, $title, $trigger, $target, $css_class = '', $img = '')
 	{
-		$this->action = new FormFieldMultitabsLinkElement($title, $target, $css_class, $img);
+		$this->action = new FormFieldMultitabsLinkElement($title, $trigger, $target, $css_class, $img);
 		parent::__construct($id, '', '');
 	}
 

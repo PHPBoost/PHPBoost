@@ -62,7 +62,6 @@ $lang['bbcode.container'] = 'Conteneur';
 $lang['bbcode.paragraph'] = 'Paragraphe';
 $lang['bbcode.paragraph.title'] = 'Paragraphe : [p]texte[/p]';
 $lang['bbcode.block'] = 'Bloc';
-$lang['bbcode.block.title'] = 'Bloc : [block]texte[/block]';
 $lang['bbcode.container.custom'] = 'Conteneur personnalisable';
 $lang['bbcode.container.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
 $lang['bbcode.container.id'] = 'Identifiant';

@@ -53,10 +53,10 @@
 		jQuery('.captcha-element').removeClass('wizard-step');
 
 // Multitabs
-    jQuery('.modal-container [data-trigger]').multiTabs({ pluginType: 'modal' });
-    jQuery('.accordion-container.basic [data-trigger]').multiTabs({ pluginType: 'accordion'});
-    jQuery('.accordion-container.siblings [data-trigger]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
-    jQuery('.tabs-container [data-trigger]').multiTabs({ pluginType: 'tabs' });
+    jQuery('.modal-container [data-modal]').multiTabs({ pluginType: 'modal' });
+    jQuery('.accordion-container.basic [data-accordion]').multiTabs({ pluginType: 'accordion'});
+    jQuery('.accordion-container.siblings [data-accordion]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
+    jQuery('.tabs-container [data-tab]').multiTabs({ pluginType: 'tabs' });
 
     jQuery('.wizard-container').wizard();
 
