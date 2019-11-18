@@ -445,7 +445,7 @@
 			<footer>
 				<a href="index.php">{FORUM_NAME}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
 				<a href="moderation_forum.php">{L_MODERATION_FORUM}</a>
-				# IF NOT C_HOME # <i class="fa fa-angle-double-right aria-hidden="true""></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
+				# IF NOT C_HOME # <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_MODERATION_FORUM_ACTION}">{L_ALERT}</a># ENDIF #
 			</footer>
 		</article>
 
