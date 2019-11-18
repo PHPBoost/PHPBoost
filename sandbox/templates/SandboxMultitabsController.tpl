@@ -56,9 +56,9 @@
 			    </div>
 				<nav>
 					<ul>
-						<li><a href="" data-trigger data-target="tab-01">{@multitabs.menu.title} 01</a></li>
-						<li><a href="" data-trigger data-target="tab-02">{@multitabs.menu.title} 02</a></li>
-						<li><a href="" data-trigger data-target="tab-03">{@multitabs.menu.title} 03</a></li>
+						<li><a href="" data-accordion data-target="tab-01">{@multitabs.menu.title} 01</a></li>
+						<li><a href="" data-accordion data-target="tab-02">{@multitabs.menu.title} 02</a></li>
+						<li><a href="" data-accordion data-target="tab-03">{@multitabs.menu.title} 03</a></li>
 					</ul>
 				</nav>
 				<div class="panel-container">
@@ -110,7 +110,7 @@
 		<div id="modal-html">
 			<h5>{@multitabs.html}</h5>
 			<div class="modal-container">
-				<button class="modal-btn" data-trigger data-target="modal-01">{@multitabs.open.modal}</button>
+				<button class="modal-btn" data-modal data-target="modal-01">{@multitabs.open.modal}</button>
 				<div id="modal-01" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel">
@@ -149,9 +149,9 @@
 			<div class="tabs-container">
 				<nav>
 					<ul>
-						<li><a href="#" data-trigger data-target="tab-07">{@multitabs.menu.title} 07</a></li>
-						<li><a href="#" data-trigger data-target="tab-08">{@multitabs.menu.title} 08</a></li>
-						<li><a href="#" data-trigger data-target="tab-09">{@multitabs.menu.title} 09</a></li>
+						<li><a href="#" data-tab data-target="tab-07">{@multitabs.menu.title} 07</a></li>
+						<li><a href="#" data-tab data-target="tab-08">{@multitabs.menu.title} 08</a></li>
+						<li><a href="#" data-tab data-target="tab-09">{@multitabs.menu.title} 09</a></li>
 					</ul>
 				</nav>
 				<div id="tab-07" class="tabs tabs-animation first-tab">

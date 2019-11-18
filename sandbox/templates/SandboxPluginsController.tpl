@@ -83,7 +83,26 @@
 		<h2>{@plugins.tooltip.title}</h2>
 	</div>
 	<article>
-		${LangLoader::get_message('plugins.tooltip.example', 'plugins', 'sandbox')}
+		<p>
+			{@plugins.tooltip.desc}
+		</p>
+		<p>
+			<span aria-label="{@plugins.tooltip.label.basic}" class="warning">Tooltip</span>
+			{@plugins.tooltip.eg.basic}
+		</p>
+		<p>
+			<span
+		        data-tooltip="{@plugins.tooltip.label.options}"
+		        data-tooltip-pos="b"
+		        data-tooltip-class="error"
+		        aria-label="{@plugins.tooltip.label.basic}"
+				class="warning">Tooltip</span>
+			{@plugins.tooltip.eg.options}
+		</p>
+		<p>
+			${LangLoader::get_message('plugins.tooltip.options', 'plugins', 'sandbox')}
+		</p>
+
 	</article>
 
 	<!-- Source code -->

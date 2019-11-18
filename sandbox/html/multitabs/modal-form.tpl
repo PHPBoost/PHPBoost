@@ -8,7 +8,8 @@ $modal_form->add_fieldset($fieldset_modal_menu);
 
 $fieldset_modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
     array(
-        new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' modal', 'modal_form_modal-10', 'fa-cog'),
+        <!-- new FormFieldMultitabsLinkElement('itemTitle', 'modal', 'HTMLFormID_targetID', 'fa-icon'), -->
+        new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' modal', 'modal', 'modal_form_modal-10', 'fa-cog'),
     )
 ));
 

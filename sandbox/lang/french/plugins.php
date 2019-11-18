@@ -25,13 +25,26 @@ $lang['plugins.form.title']  = 'Titre du Panneau';
 $lang['plugins.form.subtitle']  = 'Sous Titre';
 $lang['plugins.form.input']  = 'Champ texte';
 
-$lang['plugins.tooltip.example']  = '
-    Au survol de ce
-    <span aria-label="
-        ce plugin supporte les balises html sans attribut dans la description.
-        <br /><br />saut de ligne<br /><br />
-        paragraphe<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, enim.</p>
-        <i>Texte en italique</i>
-        <br />etc
-    " style="color: #FF8800">mot</span>, la description déclarée dans l\'attribut aria-label apparait.';
+$lang['plugins.tooltip']  = 'Tooltip';
+$lang['plugins.tooltip.desc']  = 'Par défaut, le tooltip s\'applique à toute balise possendant un attribut [aria-label]';
+$lang['plugins.tooltip.eg.basic']  = 'Au survol, la description déclarée dans l\'attribut aria-label apparait.';
+$lang['plugins.tooltip.label.basic']  = 'ce plugin supporte les balises html sans attribut dans la description.
+    <br /><br />saut de ligne<br /><br />
+    paragraphe<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, enim.</p>
+    <i>Texte en italique</i>
+    <br />etc
+';
+$lang['plugins.tooltip.eg.options']  = '
+    Au survol, la description déclarée dans l\'attribut aria-label est remplacée par un texte alternatif
+    et des options ont été ajoutées.
+';
+$lang['plugins.tooltip.label.options']  = '
+    Texte alternatif<br />Position forcée à droite<br />Ajout de classes de personnalisation
+';
+$lang['plugins.tooltip.options']  = '
+    Options: <br />
+    <pre class="inline">data-tooltip</pre> pour ajouter un texte alternatif <br />
+    <pre class="inline">data-tooltip-pos</pre> pour forcer la position du tooltip ("t","r","b","l") <br />
+    <pre class="inline">data-tooltip-class</pre> pour ajouter des class de personnalisation ("display-none" pour ne pas afficher le tooltip mais laisser le aria-label)<br />
+';
 ?>

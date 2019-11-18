@@ -81,9 +81,9 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_accordion_menu->add_field(new FormFieldMultitabsLinkList('tab_menu_list',
 			array(
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 04', 'accordion_form_accordion-04', 'fa-cog'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 05', 'accordion_form_accordion-05', 'fa-image'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 06', 'accordion_form_accordion-06', '', '../../articles/articles_mini.png', 'articles'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 04', 'accordion', 'accordion_form_accordion-04', 'fa-cog'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 05', 'accordion', 'accordion_form_accordion-05', 'fa-image'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 06', 'accordion', 'accordion_form_accordion-06', '', '../../articles/articles_mini.png', 'articles'),
 			)
 		));
 
@@ -128,7 +128,7 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
 			array(
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' modal', 'modal_form_modal-10', 'fa-cog'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' modal', 'modal', 'modal_form_modal-10', 'fa-cog'),
 			)
 		));
 
@@ -156,9 +156,9 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tab_menu_list',
 			array(
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 10', 'tabs_form_tab-10', 'fa-cog'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 11', 'tabs_form_tab-11', 'fa-image'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 12', 'tabs_form_tab-12', '', '../../articles/articles_mini.png', 'articles'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 10', 'tab', 'tabs_form_tab-10', 'fa-cog'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 11', 'tab', 'tabs_form_tab-11', 'fa-image'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 12', 'tab', 'tabs_form_tab-12', '', '../../articles/articles_mini.png', 'articles'),
 			)
 		));
 
