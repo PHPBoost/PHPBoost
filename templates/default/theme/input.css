@@ -110,3 +110,7 @@ option {
 .grouped-inputs a:hover {
 	text-decoration: none;
 }
+
+.sources-link.grouped-inputs input {
+	width: 45%;
+}
