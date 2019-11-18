@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 18
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -235,7 +235,7 @@ class BBCodeParser extends ContentFormattingParser
 			'vimeo1' => '[[MEDIA]]insertVimeoPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'vimeo2' => '[[MEDIA]]insertVimeoPlayer(\'$1\', 560, 315);[[/MEDIA]]',
 			'lightbox' => '<a href="$1" data-lightbox="formatter" class="formatter-lightbox">$6</a>',
-			'figure' => '<figure>$2<figcaption>$1</figcation></figure>',
+			'figure' => '<figure>$2<figcaption>$1</figcaption></figure>',
 			'member' => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 		);
