@@ -294,10 +294,10 @@
 			</div>
 
 			# IF C_SUB_CATEGORIES #
-				<div class="cell-flex cell-flex-{COLUMNS_NUMBER}">
+				<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
 					# START sub_categories_list #
 						<div class="cell">
-							<div class="cell-title">
+							<div class="cell-header">
 								<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 							</div>
 							<div class="cell-body">
@@ -400,10 +400,10 @@
 							{COMMENTS}
 						# ENDIF #
 
-						<div class="cell-flex cell-flex-{COLUMNS_NUMBER}">
+						<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
 							# START pics_list #
 								<div class="cell# IF pics_list.C_NEW_CONTENT # new-content# ENDIF #">
-									<div class="cell-title">
+									<div class="cell-header">
 										<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-download"></i></a> -->
 										# IF C_PICTURE_NAME_DISPLAYED #
 											<a class="ellipsis" href="{pics_list.U_PICTURE_LINK}">

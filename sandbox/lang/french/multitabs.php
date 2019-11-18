@@ -23,19 +23,19 @@ $lang['multitabs.definition']  = '
         <li>Les fenêtres en "modal"</li>
         <li>Les menus tabulaires</li>
     </ul>
-    Pour les besoins de cette démo, les déclencheurs sont une liste de liens, mais les déclanchements sont basés sur les attributs "data-trigger",
+    Pour les besoins de cette démo, les déclencheurs sont une liste de liens, mais les déclanchements sont basés sur les attributs "data-[plugin]",
     ils peuvent donc être defini sur n\'importe quelle balise html.
 ';
 $lang['multitabs.js'] = '
     Par default, PHPBoost comporte 4 déclarations:
         <ul>
             <li><h6>Accordéon</h6></li>
-            <li>jQuery(\'.accordion-container.basic [data-trigger]\').multiTabs({ pluginType: \'accordion\'});</li>
-            <li>jQuery(\'.accordion-container.siblings [data-trigger]\').multiTabs({ pluginType: \'accordion\', accordionSiblings: true });</li>
+            <li>jQuery(\'.accordion-container.basic [data-accordion]\').multiTabs({ pluginType: \'accordion\'});</li>
+            <li>jQuery(\'.accordion-container.siblings [data-accordion]\').multiTabs({ pluginType: \'accordion\', accordionSiblings: true });</li>
             <li><h6>Modal</h6></li>
-            <li>jQuery(\'.modal-container [data-trigger]\').multiTabs({ pluginType: \'modal\' });</li>
+            <li>jQuery(\'.modal-container [data-modal]\').multiTabs({ pluginType: \'modal\' });</li>
             <li><h6>Tabulaire</h6></li>
-            <li>jQuery(\'.tabs-container [data-trigger]\').multiTabs({ pluginType: \'tabs\' });</li>
+            <li>jQuery(\'.tabs-container [data-tabs]\').multiTabs({ pluginType: \'tabs\' });</li>
         </ul>
         Pour l\'accordéon "basic", les panneaux sont indépendants (exemple html); pour le "siblings", les panneaux sont dépendants, un seul peut ête ouvert à la fois (exemple php).<br />
         Vous pouvez définir des animations avec les options du plugin et en ajoutant <a href="https://daneden.github.io/animate.css/">Animate.css</a> à votre thème.

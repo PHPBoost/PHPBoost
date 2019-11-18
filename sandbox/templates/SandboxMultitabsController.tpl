@@ -149,9 +149,9 @@
 			<div class="tabs-container">
 				<nav>
 					<ul>
-						<li><a href="#" data-tab data-target="tab-07">{@multitabs.menu.title} 07</a></li>
-						<li><a href="#" data-tab data-target="tab-08">{@multitabs.menu.title} 08</a></li>
-						<li><a href="#" data-tab data-target="tab-09">{@multitabs.menu.title} 09</a></li>
+						<li><a href="#" data-tabs data-target="tab-07">{@multitabs.menu.title} 07</a></li>
+						<li><a href="#" data-tabs data-target="tab-08">{@multitabs.menu.title} 08</a></li>
+						<li><a href="#" data-tabs data-target="tab-09">{@multitabs.menu.title} 09</a></li>
 					</ul>
 				</nav>
 				<div id="tab-07" class="tabs tabs-animation first-tab">

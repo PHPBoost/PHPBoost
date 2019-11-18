@@ -4,15 +4,9 @@
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
-		<div class="modal-container">
-			<div class="right">
-				<button class="modal-btn" data-trigger data-target="guestbook-add-message">{@guestbook.add}</button>
-			</div>
-			<div id="guestbook-add-message" class="modal modal-animation">
-				<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-				<div class="content-panel"># INCLUDE FORM #</div>
-			</div>
-		</div>
+		
+		# INCLUDE FORM #
+
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
 			<div class="spacer"></div>

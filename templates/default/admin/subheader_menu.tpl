@@ -2,19 +2,19 @@
 	<nav class="admin-menu">
 		<ul>
 			<li class="admin-li">
-				<a data-trigger data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
+				<a data-modal data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{L_ADMINISTRATION}</span></a>
 			</li>
 			<li class="admin-li">
-				<a data-trigger data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
+				<a data-modal data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-fw fa-wrench"></i><span>{L_TOOLS}</span></a>
 			</li>
 			<li class="admin-li">
-				<a data-trigger data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
+				<a data-modal data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-fw fa-user"></i><span>{L_USER}</span></a>
 			</li>
 			<li class="admin-li">
-				<a data-trigger data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{L_CONTENT}</span></a>
+				<a data-modal data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{L_CONTENT}</span></a>
 			</li>
 			<li class="admin-li">
-				<a data-trigger data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
+				<a data-modal data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{L_MODULES}</span></a>
 			</li>
 		</ul>
 	</nav>
@@ -24,8 +24,8 @@
 			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
-					<a data-trigger data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
-					<a data-trigger data-target="openmodal-{L_TOOLS}">{L_TOOLS} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
+					<a data-modal data-target="openmodal-{L_TOOLS}">{L_TOOLS} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>
@@ -77,8 +77,8 @@
 			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
-					<a data-trigger data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_ADMINISTRATION}</a>
-					<a data-trigger data-target="openmodal-{L_USER}">{L_USER} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_ADMINISTRATION}</a>
+					<a data-modal data-target="openmodal-{L_USER}">{L_USER} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>
@@ -117,8 +117,8 @@
 			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
-					<a data-trigger data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_TOOLS}</a>
-					<a data-trigger data-target="openmodal-{L_CONTENT}">{L_CONTENT} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_TOOLS}</a>
+					<a data-modal data-target="openmodal-{L_CONTENT}">{L_CONTENT} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>
@@ -157,8 +157,8 @@
 			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
-					<a data-trigger data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_USER}</a>
-					<a data-trigger data-target="openmodal-{L_MODULES}">{L_MODULES} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_USER}</a>
+					<a data-modal data-target="openmodal-{L_MODULES}">{L_MODULES} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>
@@ -207,8 +207,8 @@
 			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
-					<a data-trigger data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_CONTENT}</a>
-					<a data-trigger data-target="openmodal-{L_ADMINISTRATION}">{L_ADMINISTRATION} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+					<a data-modal data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_CONTENT}</a>
+					<a data-modal data-target="openmodal-{L_ADMINISTRATION}">{L_ADMINISTRATION} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
 				</div>
 				<ul class="modal-menu">
 					<li>

@@ -90,7 +90,7 @@
 										</span>
 									</div>
 									<div class="modal-container">
-										<button class="upload-help" data-trigger data-target="upload-helper"><i class="fa fa-question"></i></button>
+										<button class="upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
 										<div id="upload-helper" class="modal modal-animation">
 											<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 											<div class="content-panel">
@@ -126,10 +126,10 @@
 						<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
 						<h2>{L_IMG_DISPO_GALLERY}</h2>
 					</header>
-					<div class="cell-flex cell-flex-4">
+					<div class="cell-flex cell-columns-4">
 						# START list #
 							<div class="cell">
-								<div class="cell-title">
+								<div class="cell-header">
 									<input type="text" name="{list.ID}name" value="{list.NAME}">
 									<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
 								</div>

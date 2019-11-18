@@ -23,19 +23,19 @@ $lang['multitabs.definition']  = '
         <li>Modal windows</li>
         <li>Tabs menus</li>
     </ul>
-    For this demo, triggers are a list of links, but triggering are based on data attributes "data-trigger",
+    For this demo, triggers are a list of links, but triggering are based on data attributes "data-[plugin]",
     so they can be any html tag.
 ';
 $lang['multitabs.js'] = '
     By default, PHPBoost get 4 declarations:
         <ul>
             <li><h6>Accordion</h6></li>
-            <li>jQuery(\'.accordion-container.basic [data-trigger]\').multiTabs({ pluginType: \'accordion\'});</li>
-            <li>jQuery(\'.accordion-container.siblings [data-trigger]\').multiTabs({ pluginType: \'accordion\', accordionSiblings: true });</li>
+            <li>jQuery(\'.accordion-container.basic [data-accordion]\').multiTabs({ pluginType: \'accordion\'});</li>
+            <li>jQuery(\'.accordion-container.siblings [data-accordion]\').multiTabs({ pluginType: \'accordion\', accordionSiblings: true });</li>
             <li><h6>Modal</h6></li>
-            <li>jQuery(\'.modal-container [data-trigger]\').multiTabs({ pluginType: \'modal\' });</li>
+            <li>jQuery(\'.modal-container [data-modal]\').multiTabs({ pluginType: \'modal\' });</li>
             <li><h6>Tabs</h6></li>
-            <li>jQuery(\'.tabs-container [data-trigger]\').multiTabs({ pluginType: \'tabs\' });</li>
+            <li>jQuery(\'.tabs-container [data-tabs]\').multiTabs({ pluginType: \'tabs\' });</li>
         </ul>
         For the "basic" accordion, panels are independent (e.g html case); for the "siblings" one, panels are dependent, only one can be open at a time (e.g php).<br />
         You can define animations using the plugin options and with adding the <a href="https://daneden.github.io/animate.css/">Animate.css</a>framework to your theme.

@@ -9,7 +9,9 @@
 */
 
 /* --- Multitabs common */
-[data-trigger] { cursor: pointer; }
+[data-accordion],
+[data-modal],
+[data-tabs] { cursor: pointer; }
 .content-panel { padding: 0.618em; }
 
 @media all { /* --- Multitabs Accordion ------------------------------------- */

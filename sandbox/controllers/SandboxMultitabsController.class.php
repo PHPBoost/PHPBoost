@@ -156,9 +156,9 @@ class SandboxMultitabsController extends ModuleController
 
 		$fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tab_menu_list',
 			array(
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 10', 'tab', 'tabs_form_tab-10', 'fa-cog'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 11', 'tab', 'tabs_form_tab-11', 'fa-image'),
-				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 12', 'tab', 'tabs_form_tab-12', '', '../../articles/articles_mini.png', 'articles'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 10', 'tabs', 'tabs_form_tab-10', 'fa-cog'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 11', 'tabs', 'tabs_form_tab-11', 'fa-image'),
+				new FormFieldMultitabsLinkElement($this->lang['multitabs.menu.title'] . ' 12', 'tabs', 'tabs_form_tab-12', '', '../../articles/articles_mini.png', 'articles'),
 			)
 		));
 

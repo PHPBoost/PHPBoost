@@ -16,6 +16,7 @@
 ####################################################
 
 $lang['bbcode.tags.add'] = 'Insérer';
+$lang['bbcode.tags.choice'] = 'Choisir';
 $lang['bbcode.tags.advanced'] = 'Avancé';
 $lang['bbcode.tags.options'] = 'Ajouter des options à la balise';
 $lang['bbcode.preview.text'] = 'Aperçu du texte';

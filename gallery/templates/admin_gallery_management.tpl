@@ -245,10 +245,10 @@ function display_thumbnails(direction)
 						<h2>{L_CATEGORIES}</h2>
 						# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 					</header>
-					<div class="cell-flex cell-flex-{COLUMNS_NUMBER}">
+					<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
 						# START cat.list #
 						<div class="cell">
-							<div class="cell-title">
+							<div class="cell-header">
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
 							</div>
 							<div class="cell-body">
@@ -396,10 +396,10 @@ function display_thumbnails(direction)
 						<div class="cat-actions"> # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #</div>
 						<h2>{GALLERY}</h2>
 					</header>
-					<div class="cell-flex cell-flex-{COLUMNS_NUMBER}">
+					<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
 						# START pics.list #
 							<div class="cell">
-								<div class="cell-title"><a class="com" href="{pics.list.U_DISPLAY}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span></div>
+								<div class="cell-header"><a class="com" href="{pics.list.U_DISPLAY}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span></div>
 								<div class="cell-body">
 									<div class="cell-thumbnail">
 										<div id="pics{pics.list.ID}" class="pics-list-element">

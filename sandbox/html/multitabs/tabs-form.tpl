@@ -8,10 +8,10 @@ $tabs_form->add_fieldset($fieldset_tab_menu);
 <br />
 $fieldset_tab_menu->add_field(new FormFieldMultitabsLinkList('tabitemlistID',
     array(
-        //new FormFieldMultitabsLinkElement(ItemTitle, 'tab', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
-        new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'tab', 'HTMLFormID_targetID-01'),
-        new FormFieldMultitabsLinkElement($this->lang['multitabs.tabs.title.link'], 'tab', 'HTMLFormID_targetID-02'),
-        new FormFieldMultitabsLinkElement($this->lang['multitabs.tabs.title.link'] . ' 03', 'tab', 'HTMLFormID_targetID-03'),
+        //new FormFieldMultitabsLinkElement(ItemTitle, 'tabs', 'HTMLFormID_targetID', 'fa-icon', 'picture_url', 'active_module'),
+        new FormFieldMultitabsLinkElement($this->lang['Pannel 01 tabitem'], 'tabs', 'HTMLFormID_targetID-01'),
+        new FormFieldMultitabsLinkElement($this->lang['multitabs.tabs.title.link'], 'tabs', 'HTMLFormID_targetID-02'),
+        new FormFieldMultitabsLinkElement($this->lang['multitabs.tabs.title.link'] . ' 03', 'tabs', 'HTMLFormID_targetID-03'),
     )
 ));
 <br />

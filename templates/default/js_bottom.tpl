@@ -56,7 +56,7 @@
     jQuery('.modal-container [data-modal]').multiTabs({ pluginType: 'modal' });
     jQuery('.accordion-container.basic [data-accordion]').multiTabs({ pluginType: 'accordion'});
     jQuery('.accordion-container.siblings [data-accordion]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
-    jQuery('.tabs-container [data-tab]').multiTabs({ pluginType: 'tabs' });
+    jQuery('.tabs-container [data-tabs]').multiTabs({ pluginType: 'tabs' });
 
     jQuery('.wizard-container').wizard();
 
