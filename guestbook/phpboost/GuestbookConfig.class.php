@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2015 06 02
+ * @version   	PHPBoost 5.2 - last update: 2019 11 19
  * @since   	PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -106,7 +106,7 @@ class GuestbookConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_PER_PAGE => 10,
-			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed', 'youtube'),
+			self::FORBIDDEN_TAGS => array('movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => false,
 			self::MAXIMUM_LINKS_MESSAGE => 1,
 			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7)

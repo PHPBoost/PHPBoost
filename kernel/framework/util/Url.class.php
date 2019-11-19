@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 01 22
+ * @version     PHPBoost 5.2 - last update: 2019 11 19
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -542,7 +542,7 @@ class Url
 		{
 			$regex = array();
 			$nodes =      array('a',    'img', 'form',   'object', 'param name="movie"');
-			$attributes = array('href', 'src', 'action', 'data',   'value');
+			$attributes = array('href', 'src', 'action', 'data', 'value');
 
 			$nodes_length = count($nodes);
 			for ($i = 0; $i < $nodes_length; $i++)
@@ -556,7 +556,7 @@ class Url
 				$regex[] = $a_regex;
 			}
 
-			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie|Swf|Youtube)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isuU';
+			$regex[] = '`(<script><!--\s*insert(?:Sound|Movie)Player\\(")(' . ($only_match_relative ? '/' : '') . '[^"]+)("\\)\s*--></script>)`isuU';
 
 			// Update regex cache
 			if ($only_match_relative)
@@ -579,53 +579,53 @@ class Url
 		}
 	}
 
-    /**
-     * Returns an url relative from the server root
-     * @param mixed $url the url representation. Could be a string or an Url object
-     * @return string an url relative from the server root
-     */
-    public static function to_rel($url)
-    {
-        if (!($url instanceof Url))
-        {
-            $url = new Url($url);
-        }
-        return $url->rel();
-    }
+	/**
+	 * Returns an url relative from the server root
+	 * @param mixed $url the url representation. Could be a string or an Url object
+	 * @return string an url relative from the server root
+	 */
+	public static function to_rel($url)
+	{
+		if (!($url instanceof Url))
+		{
+			$url = new Url($url);
+		}
+		return $url->rel();
+	}
 
-    /**
-     * Returns an url relative from PHPBoost root
-     * @param mixed $url the url representation. Could be a string or an Url object
-     * @return string an url relative from PHPBoost root
-     */
-    public static function to_relative($url)
-    {
-        if (!($url instanceof Url))
-        {
-            $url = new Url($url);
-        }
-        return $url->relative();
-    }
+	/**
+	 * Returns an url relative from PHPBoost root
+	 * @param mixed $url the url representation. Could be a string or an Url object
+	 * @return string an url relative from PHPBoost root
+	 */
+	public static function to_relative($url)
+	{
+		if (!($url instanceof Url))
+		{
+			$url = new Url($url);
+		}
+		return $url->relative();
+	}
 
-    /**
-     * Returns an absolute url
-     * @param mixed $url the url representation. Could be a string or an Url object
-     * @return string an absolute url
-     */
-    public static function to_absolute($url)
-    {
-        if (!($url instanceof Url))
-        {
-            $url = new Url($url);
-        }
-        return $url->absolute();
-    }
+	/**
+	 * Returns an absolute url
+	 * @param mixed $url the url representation. Could be a string or an Url object
+	 * @return string an absolute url
+	 */
+	public static function to_absolute($url)
+	{
+		if (!($url instanceof Url))
+		{
+			$url = new Url($url);
+		}
+		return $url->absolute();
+	}
 
-    /**
-     * Returns true if $check_url is current url
-     * @param string $check_url check url
-     * @param bool $real_url true if check real url or false for verificate $check_url is containing in current url
-     */
+	/**
+	 * Returns true if $check_url is current url
+	 * @param string $check_url check url
+	 * @param bool $real_url true if check real url or false for verificate $check_url is containing in current url
+	 */
 	public static function is_current_url($check_url, $real_url = false)
 	{
 		$general_config = GeneralConfig::load();

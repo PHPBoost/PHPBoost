@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 07 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 19
  * @since   	PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -226,13 +226,13 @@ class ShoutboxConfig extends AbstractConfigData
 			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
 			self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED => true,
 			self::FORBIDDEN_FORMATTING_TAGS => array(
-				'title', 'style', 'url', 'img','quote',
+				'title', 'style', 'url', 'img', 'figure', 'quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',
 				'size', 'align', 'float', 'sup', 'sub',
-				'indent', 'pre', 'table', 'swf', 'movie',
-				'sound', 'code', 'math', 'anchor', 'acronym',
+				'indent', 'pre', 'table', 'movie', 'member', 'moderator'
+				'sound', 'code', 'math', 'anchor', 'abbr',
 				'block', 'fieldset', 'mail', 'line', 'wikipedia',
-				'html', 'feed', 'youtube', 'lightbox', 'charmap', 'insertdatetime'
+				'html', 'feed', 'lightbox', 'charmap', 'insertdatetime'
 			),
 			self::AUTOMATIC_REFRESH_ENABLED => true,
 			self::REFRESH_DELAY => 60000,
