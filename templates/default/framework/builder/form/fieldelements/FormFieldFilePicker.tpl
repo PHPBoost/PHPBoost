@@ -32,7 +32,7 @@
 <ul class="ulist"></ul>
 
 <script>
-	jQuery('#${escape(HTML_ID)}').parents('form:first')[0].enctype = "multipart/form-data";
+	jQuery('#${escape(HTML_ID)}').parents('form').first()[0].enctype = "multipart/form-data";
 	jQuery('#${escape(HTML_ID)}').dndfiles({
 		multiple:# IF C_MULTIPLE # true# ELSE # false# ENDIF #,
 		maxFileSize: '{MAX_FILE_SIZE}',

@@ -4,7 +4,7 @@
  * @license 	https://www.opensource.org/licenses/mit-license.php
  * @author      Jerry Low
  * @link        https://github.com/jerrylow/basictable
- * @version   	PHPBoost 5.3 - last update: 2019 07 18
+ * @version   	PHPBoost 5.3 - last update: 2019 11 19
  * @since   	PHPBoost 5.0 - 2016 03 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -30,10 +30,10 @@
           format = 'tbody tr th';
         }
         else if (table.find('th').length) {
-          format = 'tr:first th';
+          format = 'tr:first-child th';
         }
         else {
-          format = 'tr:first td';
+          format = 'tr:first-child td';
         }
 
         $.each(table.find(format), function() {
