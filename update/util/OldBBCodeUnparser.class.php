@@ -5,7 +5,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 27
+ * @version   	PHPBoost 5.2 - last update: 2019 11 19
  * @since   	PHPBoost 5.1 - 2017 03 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -152,8 +152,8 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[float=$1]$2[/float]",
 			"[anchor=$1][/anchor]",
 			"[anchor=$1]$2[/anchor]",
-			"[acronym]$1[/acronym]",
-			"[acronym=$1]$2[/acronym]",
+			"[abbr]$1[/abbr]",
+			"[abbr=$1]$2[/abbr]",
 			"[abbr]$1[/abbr]",
 			"[abbr=$1]$2[/abbr]",
 			"[mail=$1]$2[/mail]",
@@ -172,10 +172,10 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3,$4]$1[/movie]",
-			"[swf=$2,$3]$1[/swf]",
-			"[swf=$2,$3]$1[/swf]",
-			"[swf=$2,$3]$1[/swf]",
-			"[youtube=$2,$3]$1[/youtube]",
+			"[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]",
