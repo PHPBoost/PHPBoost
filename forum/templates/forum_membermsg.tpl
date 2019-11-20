@@ -77,7 +77,7 @@
 						<div class="msg-contents-container">
 							<div class="msg-contents-info bkgd-color-op20">
 								<span class="float-left">
-									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" aria-label="{list.DATE}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
+									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" aria-label="{list.DATE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
 								</span>
 
 							</div>

@@ -21,7 +21,7 @@
 								# START list #
 								<li class="sub">
 									# IF list.U_FOLDER #
-										<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i><i id ="img-folder-{list.ID}" class="fa fa-folder" ></i></a>
+										<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);"><i class="fa fa-plus-square" id="img-subfolder-{list.ID}"></i><i id ="img-folder-{list.ID}" class="fa fa-folder" ></i></a>
 										<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>
 									# ELSE #
 										<a id="class-{list.ID}" href="javascript:open_cat({list.ID});"><i class="fa fa-folder" aria-hidden="true"></i>{list.TITLE}</a>

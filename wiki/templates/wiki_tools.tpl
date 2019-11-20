@@ -3,7 +3,7 @@
 				<ul class="level-0 hidden">
 					# IF C_ACTIV_COM #
 						<li>
-							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments-o" aria-hidden="true"></i> {L_COM}</a>
+							<a href="{U_COM}" class="cssmenu-title"><i class="fa fa-fw fa-comments" aria-hidden="true"></i> {L_COM}</a>
 						</li>
 					# ENDIF #
 					<li><a href="{U_HISTORY}" class="cssmenu-title">

@@ -69,7 +69,7 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
-					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt fa-fw" aria-hidden="true"></i></a>
+					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt-alt fa-fw" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF IS_ADMIN #
 					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>

@@ -363,7 +363,7 @@
 
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
-					<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
+					<i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
 				</a>
 				<a href="javascript:display_new_folder();">
 					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}

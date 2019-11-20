@@ -31,16 +31,16 @@
 				</div>
 				<div class="more">
 					# IF news.C_AUTHOR_DISPLAYED #
-						<i class="fa fa-user-o" aria-hidden="true"></i>
+						<i class="fa fa-user" aria-hidden="true"></i>
 						# IF news.C_AUTHOR_CUSTOM_NAME #
 							{news.AUTHOR_CUSTOM_NAME}
 						# ELSE #
 							# IF news.C_AUTHOR_EXIST #<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a> | # ELSE #{news.PSEUDO} | # ENDIF #
 						# ENDIF #
 					# ENDIF #
-					<i class="fa fa-calendar" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE} | # ELSE #{news.DIFFERED_START_DATE} | # ENDIF #</time>
-					<i class="fa fa-folder-o" aria-hidden="true"></i> <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
-					# IF C_COMMENTS_ENABLED #| <i class="fa fa-comments-o" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}# ENDIF #
+					<i class="fa fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE} | # ELSE #{news.DIFFERED_START_DATE} | # ENDIF #</time>
+					<i class="fa fa-folder" aria-hidden="true"></i> <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
+					# IF C_COMMENTS_ENABLED #| <i class="fa fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}# ENDIF #
 					# IF news.C_NB_VIEW_ENABLED #| <span aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span> # ENDIF #
 				</div>
 

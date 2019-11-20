@@ -1,0 +1,477 @@
+/*
+ * Default CSS for all themes
+--------------------------------------*/
+
+/* --- Reset generic class for different browsers --------------------------- */
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	outline: none; }
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0; }
+
+img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {
+	max-width: 100%; }
+
+input, button, label, select, textarea, legend {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle; }
+
+optgroup, select, label, button, .button, input[type=radio], input[type=checkbox], input[type=color], .notation .star {
+	cursor: pointer; }
+
+input[type=checkbox] {
+	border: none;
+	background: none; }
+
+button::-moz-focus-inner, .button::-moz-focus-inner {
+	border: 0;
+	padding: 0; }
+
+div, textarea, table, td, th, code, pre, samp {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto; }
+
+/* --- Fix for no wrap for button --- */
+button, .button {
+	word-wrap: normal;
+	overflow-wrap: normal;
+	hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto; }
+
+/* --- Fix for chrome word-wrap --- */
+fieldset {
+	min-width: 0 !important; }
+
+hr {
+	border: none;
+	margin: 1px auto;
+	height: 1px;
+	width: 99%; }
+
+ul, ol {
+	line-height: normal;
+	margin-left: 2.618em;
+	margin-bottom: 0.809em; }
+
+.no-list {
+	list-style: none; }
+
+p {
+	margin-bottom: 0.618em;
+	font-size: 1em; }
+
+pre {
+	white-space: pre-wrap; }
+
+abbr {
+	cursor: help;
+	font-variant: none;
+	text-decoration: none;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: transparent; }
+
+/* --- PHPBoost specific classes -------------------------------------------- */
+
+/* --- Wikipedia link --- */
+a.wikipedia-link {
+	position: relative;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: transparent;
+	cursor: help;
+	padding-right: 0.809em; }
+
+a.wikipedia-link:after {
+	position: absolute;
+	vertical-align: middle;
+	top: 1px;
+	right: 0;
+	content: "\f266" ;
+	font-family: 'Font Awesome 5 Brands';
+	font-weight: 900; /* Solid icons*/
+	font-size: 0.618em; }
+
+/* --- Alignment --- */
+.inline 	  { display: inline !important; }
+.inline-block { display: inline-block !important; }
+
+.center  { text-align: center !important; }
+.left 	 { text-align: left !important; }
+.right 	 { text-align: right !important; }
+.justify { text-align: justify !important; }
+
+img.float-left,
+img.float-right {
+	padding: 0.809em 0; }
+
+@media (min-width: 481px) {
+	.float-left  { float: left !important; }
+	.float-right { float: right !important; } }
+
+@media (min-width: 769px) {
+	img.float-left, img.left   {
+		float: left !important;
+		padding: 0.618em 0.809em 0.618em 0;	}
+	img.float-right, img.right {
+		float: right !important;
+		padding: 0.618em 0 0.809em 0.618em;	} }
+
+/* --- Hidden --- */
+.hidden { display: none !important; }
+
+@media (max-width: 768px) {
+	.hidden-small-screens { display: none !important; } }
+
+@media (min-width: 769px) {
+	.hidden-large-screens { display: none !important; } }
+
+/* --- Text --- */
+.text-strong  { font-weight: bold !important; }
+.text-justify { text-align: justify !important; }
+.text-italic  { font-style: italic !important; }
+
+.valign-top		{ vertical-align: top !important; }
+.valign-middle 	{ vertical-align: middle !important; }
+.valign-bottom 	{ vertical-align: bottom !important; }
+
+.spacer {
+	clear: both; }
+
+/* --- Image --- */
+.img-link,
+.img-link:hover {
+	text-decoration: none; }
+
+/* --- Smileys --- */
+.smiley {
+	vertical-align: middle; }
+
+/* --- Icons --- */
+.icon-disabled {
+	opacity: 0.3;
+	cursor: default; }
+
+/* --- Fieldsets --- */
+.vertical-fieldset,
+.horizontal-fieldset {
+	margin: 1.309em 0; }
+
+.vertical-fieldset .form-element,
+.horizontal-fieldset .form-element {
+	margin: 0 0.309em 0 0.309em; }
+
+.horizontal-fieldset .form-element label {
+	display: inline; }
+
+.horizontal-fieldset .form-field {
+	display: block;
+	width: 100%; }
+
+.vertical-fieldset .form-element label,
+.horizontal-fieldset .form-element label {
+	width: auto;
+	vertical-align: middle;
+	font-weight: bold; }
+
+/* --- Fake fieldset / legend --- */
+.fieldset-content {
+	margin: auto;
+	margin-top: 1.309em; }
+
+@media (max-width: 768px) {
+	.fieldset-content {
+		margin-top: 0.618em; } }
+
+.module-mini-contents .fieldset-content {
+	width: 100%; }
+
+/* --- Opacity --- */
+.low-opacity {
+	opacity: 0.40; }
+
+/* --- Pagination --- */
+ul.pagination li {
+	display: inline; }
+ul.pagination .current-page {
+	text-decoration: underline; }
+
+/* --- Debug --- */
+.pbt-debug {
+	background-color: #FFA500 !important;
+	outline: 3px solid #FF4500 !important; }
+
+.error-handler {
+	width: auto;
+	max-width: 750px;
+	margin: 1em auto; }
+
+/* --- AJAX Preview --- */
+.xmlhttprequest-preview {
+	overflow: auto;
+	height: 16.18em; }
+
+/* --- Preview elements --- */
+.loading-preview-container {
+	position: relative; }
+
+.loading-preview {
+	position: absolute;
+	z-index: 10;
+	margin: 90px auto auto auto;
+	width: 100%;
+	text-align: center; }
+
+/* --- Print --- */
+@media print {
+	* {
+		background-color: transparent;
+		text-shadow: none;
+		box-shadow: none;
+		color: #000000;
+	} }
+
+/* --- Tables --- */
+.html-table-filters {
+	padding: 0.809em; }
+
+.html-table-nbr-elements {
+	float: left; }
+
+/* --- Blink animation effect ----------------------------------------------- */
+@keyframes blink {
+	0%   { opacity: 0; }
+	30%  { opacity: 1; }
+	70%  { opacity: 1; }
+	100% { opacity: 0; } }
+
+@-webkit-keyframes blink {
+	0%   { opacity: 0; }
+	30%  { opacity: 1; }
+	70%  { opacity: 1; }
+	100% { opacity: 0; } }
+
+.blink {
+	animation: blink 1.5s ease-in-out infinite;
+	-moz-animation: blink 1.5s ease-in-out infinite;
+	-webkit-animation: blink 1.5s ease-in-out infinite; }
+
+
+/* --- Basic font ----------------------------------------------------------- */
+/* --- open-sans-300 - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Open Sans Light'), local('OpenSans-Light'),
+		url('fonts/open-sans/open-sans-v13-latin-300.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-300.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-300.ttf') format('truetype'); }
+
+/* --- open-sans-300italic - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 300;
+	src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'),
+		url('fonts/open-sans/open-sans-v13-latin-300italic.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-300italic.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-300italic.ttf') format('truetype'); }
+
+/* --- open-sans-italic - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 400; /* normal */
+	src: local('Open Sans Italic'), local('OpenSans-Italic'),
+		url('fonts/open-sans/open-sans-v13-latin-italic.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-italic.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-italic.ttf') format('truetype'); }
+
+/* --- open-sans-regular - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400; /* normal */
+	src: local('Open Sans'), local('OpenSans'),
+		url('fonts/open-sans/open-sans-v13-latin-regular.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-regular.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-regular.ttf') format('truetype'); }
+
+/* --- open-sans-600 - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 600;
+	src: local('Open Sans Semibold'), local('OpenSans-Semibold'),
+		url('fonts/open-sans/open-sans-v13-latin-600.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-600.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-600.ttf') format('truetype'); }
+
+/* --- open-sans-600italic - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 600;
+	src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'),
+		url('fonts/open-sans/open-sans-v13-latin-600italic.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-600italic.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-600italic.ttf') format('truetype'); }
+
+/* --- open-sans-700 - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;  /* Bold */
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('fonts/open-sans/open-sans-v13-latin-700.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-700.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-700.ttf') format('truetype'); }
+
+/* --- open-sans-700italic - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 700;  /* Bold */
+	src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'),
+		url('fonts/open-sans/open-sans-v13-latin-700italic.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-700italic.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-700italic.ttf') format('truetype'); }
+
+/* --- open-sans-800 - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'),
+		url('fonts/open-sans/open-sans-v13-latin-800.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-800.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-800.ttf') format('truetype'); }
+
+/* --- open-sans-800italic - latin --- */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 800;
+	src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'),
+		url('fonts/open-sans/open-sans-v13-latin-800italic.woff2') format('woff2'),
+		url('fonts/open-sans/open-sans-v13-latin-800italic.woff') format('woff'),
+		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
+
+
+/* --- PHPBoost specific FA Classes ----------------------------------------- */
+
+/* --- Messages --- */
+.fa.fa-success:before { content: "\f00c"; } /* copy check */
+.fa.fa-error:before   { content: "\f00d"; } /* copy times */
+.fa.fa-warning:before { content: "\f071"; } /* copy exclamation-triangle */
+.fa.fa-notice :before { content: "\f12a"; } /* copy exclamation */
+
+/* --- Miscellaneous --- */
+.fa.fa-syndication:before  { content: "\f09e"; } /* copy rss */
+.fa.fa-unban:before        { content: "\f05e"; } /* copy ban */
+.fa.fa-online:before,
+.fa.fa-offline:before      { content: "\f007"; } /* copy user */
+.fa.fa-forbidden:before    { content: "\f056"; } /* copy minus-circle */
+.fa.fa-delete:before       { content: "\f2ed"; } /* copy trash-alt */
+.fa.fa-profil:before       { content: "\f3fd"; } /* copy tachometer-alt */
+.fa.fa-move:before         { content: "\f064"; } /* copy share */
+.fa.fa-refresh:before      { content: "\f021"; } /* copy sync */
+.fa.fa-remove:before       { content: "\f00d"; } /* copy times */
+.fa.fa-legal:before        { content: "\f0e3"; } /* copy gavel */
+.fa.fa-actions-menu:before { content: "\f141"; } /* copy ellipsis-h */
+
+/* --- Notation --- */
+.fa.fa-star-empty:before      { content: "\f005"; } /* copy star */
+.fa.fa-star-half-empty:before { content: "\f005"; } /* copy star */
+.fa-star-half-empty:after     { content: "\f089"; } /* copy star-half */
+.fa-star-half-empty {
+	position: relative;
+}
+
+.fa-star-half-empty:after {
+	position: absolute;
+	left: 0;
+}
+
+/* --- Filter --- */
+.fa-table-sort-up:before   { content: "\f062"; } /* copy arrow-up */
+.fa-table-sort-down:before { content: "\f063"; } /* copy arrow-down */
+
+/* --- Stats --- */
+.fa-trend-up:before   { content: "\f0d8"; } /* copy caret-up */
+.fa-trend-down:before { content: "\f0d7"; } /* copy caret-down */
+
+/* --- Upload --- */
+.fa-upload-audio:before   { content: "\f1c7"; } /* copie fa-file-audio-o */
+.fa-upload-exec:before    { content: "\f013"; } /* copie fa-cog */
+.fa-upload-html:before    { content: "\f13b"; } /* copie fa-html5 */
+.fa-upload-css:before     { content: "\f38b"; } /* copie fa-css3 */
+.fa-upload-pdf:before     { content: "\f1c1"; } /* copie fa-file-pdf-o */
+.fa-upload-picture:before { content: "\f1c5"; } /* copie fa-file-picture-o*/
+.fa-upload-script:before  { content: "\f1c9"; } /* copie fa-fa-code-o */
+.fa-upload-text:before    { content: "\f15c"; } /* copie fa-file-alt */
+.fa-upload-video:before   { content: "\f1c8"; } /* copie fa-file-video-o */
+.fa-upload-zip:before     { content: "\f1c6"; } /* copie fa-file-zip-o */
+.fa-upload-other:before   { content: "\f15b"; } /* copie fa-file */
+.fa-upload-sheet:before   { content: "\f1c3"; } /* copie fa-file-excel-o */
+.fa-upload-slide:before   { content: "\f1c4"; } /* copie fa-file-powerpoint-o */
+.fa-upload-doc:before     { content: "\f1c2"; } /* copie fa-file-word-o */
+
+.fa-upload-img.fa-upload-exec {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900; }
+
+.fa-upload-img.fa-upload-audio,
+.fa-upload-img.fa-upload-pdf,
+.fa-upload-img.fa-upload-picture,
+.fa-upload-img.fa-upload-script,
+.fa-upload-img.fa-upload-text,
+.fa-upload-img.fa-upload-video,
+.fa-upload-img.fa-upload-zip,
+.fa-upload-img.fa-upload-other,
+.fa-upload-img.fa-upload-sheet,
+.fa-upload-img.fa-upload-slide,
+.fa-upload-img.fa-upload-doc {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 400; }
+
+.fa-upload-img.fa-upload-html,
+.fa-upload-img.fa-upload-css {
+  font-family: 'Font Awesome 5 Brands';
+}
+
+/* --- Icons forced to "Regular" format --- */
+.fa.fa-calendar-alt,
+.fa.fa-clock,
+.fa.fa-comments,
+.fa.fa-delete,
+.fa.fa-edit,
+.fa.fa-envelope,
+.fa.fa-eye,
+.fa.fa-file,
+.fa.fa-copy,
+.fa.fa-file-alt,
+.fa.fa-folder,
+.fa.fa-hand-point-right,
+.fa.fa-lightbulb,
+.fa.fa-minus-square,
+.fa.fa-plus-square,
+.fa.fa-star-empty,
+.fa.fa-star-half-empty:before,
+.fa.fa-user {
+  font-weight: 400; }

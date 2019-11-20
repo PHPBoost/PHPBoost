@@ -24,21 +24,21 @@
 			# IF C_AUTHOR_DISPLAYED #
 				<span class="more-element more-element-author">
 					# IF C_AUTHOR_CUSTOM_NAME #
-						<i class="fa fa-user-o" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME} |
+						<i class="fa fa-user" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME} |
 					# ELSE #
 						# IF NOT C_ID_CARD #
-							<i class="fa fa-user-o" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF # |
+							<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF # |
 						# ENDIF #
 					# ENDIF #
 				</span>
 			# ENDIF #
 			<span class="more-element more-element-date">
-				<i class="fa fa-calendar" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
+				<i class="fa fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 			</span> |
 			<span class="more-element more-element-category">
-				<i class="fa fa-folder-o" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+				<i class="fa fa-folder" aria-hidden="true"></i> <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 			</span>
-			# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><i class="fa fa-comments-o" aria-hidden="true"></i> <a href="#comments-list"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
+			# IF C_COMMENTS_ENABLED # | <span class="more-element more-element-comments"><i class="fa fa-comments" aria-hidden="true"></i> <a href="#comments-list"># IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 			# IF C_NB_VIEW_ENABLED # | <span aria-label="{NUMBER_VIEW} {@news.view}" class="more-element more-element-view"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 
 		</div>
@@ -86,7 +86,7 @@
 
 			# IF C_SUGGESTED_NEWS #
 				<div id="news-suggested-container">
-					<span class="news-suggested-title"><i class="fa fa-lightbulb-o"></i> ${LangLoader::get_message('suggestions', 'common')} :</span>
+					<span class="news-suggested-title"><i class="fa fa-lightbulb"></i> ${LangLoader::get_message('suggestions', 'common')} :</span>
 					<ul>
 						# START suggested #
 						<li><a href="{suggested.URL}" class="news-suggested-item">{suggested.NAME}</a></li>

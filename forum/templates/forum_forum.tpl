@@ -55,7 +55,7 @@
 								<td class="forum-last-topic">
 									# IF subcats.C_LAST_TOPIC_MSG #
 										<span class="last-topic-title"><a href="{subcats.U_LAST_TOPIC}" class="last-topic-title">{subcats.LAST_TOPIC_TITLE}</a></span>
-										<span class="last-topic-user"><i class="fa fa-hand-o-right" aria-hidden="true"></i><a href="{subcats.U_LAST_MSG}"></a>
+										<span class="last-topic-user"><i class="fa fa-hand-point-right" aria-hidden="true"></i><a href="{subcats.U_LAST_MSG}"></a>
 										<br />${LangLoader::get_message('on', 'main')} {subcats.LAST_MSG_DATE_FULL}</span>
 										${LangLoader::get_message('by', 'main')}
 										# IF subcats.C_LAST_MSG_GUEST #
@@ -104,11 +104,11 @@
 						<tr>
 							<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
 							<th class="forum-fixed-topic"><i class="fa fa-check" aria-hidden="true"></i></th>
-							<th class="forum-topic" aria-label="{L_TOPIC}"><i class="fa fa-file-o hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-							<th class="forum-author"><i class="fa fa-user-o fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-							<th class="forum-message-nb"><i class="fa fa-comments-o fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
+							<th class="forum-topic" aria-label="{L_TOPIC}"><i class="fa fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-author"><i class="fa fa-user fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+							<th class="forum-message-nb"><i class="fa fa-comments fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
 							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-							<th class="forum-last-topic"><i class="fa fa-clock-o fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+							<th class="forum-last-topic"><i class="fa fa-clock fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -144,7 +144,7 @@
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a># ENDIF #
+							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
 							# IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF #
 							<a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<span class="smaller">{topics.DESC}</span>
@@ -164,10 +164,10 @@
 						</td>
 						<td class="forum-last-topic">
 							<span class="last-topic-title">
-								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}"><i class="fa fa-hand-o-right fa-fw" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
+								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
 							</span>
 							<span class="last-topic-user">
-								<i class="fa fa-user-o fa-fw" aria-hidden="true"></i>
+								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 								# IF topics.C_LAST_MSG_GUEST #
 								<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
 								# ELSE #

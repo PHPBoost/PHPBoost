@@ -130,7 +130,7 @@
 						<span aria-label="{downloadfiles.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {downloadfiles.NUMBER_DOWNLOADS}</span>
 						# IF C_NB_VIEW_ENABLED # | <span aria-label="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							| <i class="fa fa-comments-o" aria-hidden="true"></i>
+							| <i class="fa fa-comments" aria-hidden="true"></i>
 							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
 						# ENDIF #
 						# IF downloadfiles.C_KEYWORDS #

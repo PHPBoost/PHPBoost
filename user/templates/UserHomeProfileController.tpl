@@ -29,7 +29,7 @@
 			# IF C_USER_AUTH_FILES #
 			<li class="block">
 				<a href="{U_UPLOAD}">
-					<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
+					<i class="fa fa-cloud-upload-alt fa-2x" aria-hidden="true"></i><span class="profile-element-title">${LangLoader::get_message('files_management', 'main')}</span>
 				</a>
 			</li>
 			# ENDIF #
@@ -72,7 +72,7 @@
 			# END modules_messages #
 			<li class="block">
 				<a href="${relative_url(UserUrlBuilder::disconnect())}">
-					<i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+					<i class="fa fa-sign-out-alt fa-2x" aria-hidden="true"></i>
 					<span class="profile-element-title">{@disconnect}</span>
 				</a>
 			</li>

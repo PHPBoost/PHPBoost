@@ -24,7 +24,7 @@
 									<li class="sub">
 										# IF list.C_SUB_CAT #
 											<a class="parent" href="javascript:show_pages_cat_contents({list.ID}, 0);" aria-label="${LangLoader::get_message('display', 'common')}">
-												<i class="fa fa-plus-square-o" id="img-subfolder-{list.ID}"></i>
+												<i class="fa fa-plus-square" id="img-subfolder-{list.ID}"></i>
 												<i class="fa fa-folder" id ="img-folder-{list.ID}"></i>
 											</a>
 											<a id="class-{list.ID}" href="javascript:open_cat({list.ID});">{list.TITLE}</a>

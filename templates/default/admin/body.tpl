@@ -20,7 +20,7 @@
 			</li>
 			<li>
 				<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}">
-					<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+					<i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i>
 				</a>
 			</li>
 		</ul>

@@ -50,7 +50,7 @@
 							<a href="{messages.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
 							# ENDIF #
 						</span>
-						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> ${LangLoader::get_message('the', 'common')} {messages.DATE}
 					</div>
 
 					<div class="message-message">

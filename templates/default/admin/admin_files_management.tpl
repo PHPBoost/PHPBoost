@@ -322,7 +322,7 @@ $(document).ready(function(){
 					<i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}
 				</a>
 				<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
-					<i class="fa fa-level-up" aria-hidden="true"></i> {L_FOLDER_UP}
+					<i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
 				</a>
 				<a href="javascript:display_new_folder();">
 					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}

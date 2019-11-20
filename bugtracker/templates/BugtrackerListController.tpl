@@ -99,7 +99,7 @@
 				</td>
 				# IF C_IS_ADMIN #
 				<td class="bugtracker-actions" # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					<a href="{bug.U_CHANGE_STATUS}" aria-label="{@actions.change_status}"><i class="fa fa-gears" aria-hidden="true"></i></a>
+					<a href="{bug.U_CHANGE_STATUS}" aria-label="{@actions.change_status}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 					<a href="{bug.U_HISTORY}" aria-label="{@actions.history}"><i class="fa fa-history" aria-hidden="true"></i></a>
 					<a href="{bug.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 					<a href="{bug.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true"></i></a>

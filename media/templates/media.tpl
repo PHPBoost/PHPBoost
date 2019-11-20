@@ -80,10 +80,10 @@
 				# ENDIF #
 
 				<div class="more">
-						<i class="fa fa-user-o" aria-hidden="true"></i> {file.AUTHOR} |
+						<i class="fa fa-user" aria-hidden="true"></i> {file.AUTHOR} |
 						<i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}
 						# IF C_DISPLAY_COMMENTS #
-							 | <i class="fa fa-comments-o" aria-hidden="true"></i> {file.U_COM_LINK}
+							 | <i class="fa fa-comments" aria-hidden="true"></i> {file.U_COM_LINK}
 						# ENDIF #
 						# IF C_DISPLAY_NOTATION #
 							 | {L_NOTE} {file.NOTE}
@@ -126,7 +126,7 @@
 		<div id="article-media-{ID}" class="article-media# IF C_NEW_CONTENT # new-content# ENDIF #">
 			<div class="actions">
 				# IF C_DISPLAY_COMMENTS #
-					<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
+					<a href="{U_COM}"><i class="fa fa-comments"></i> {L_COM}</a>
 				# ENDIF #
 				# IF C_MODO #
 					<a href="{U_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-eye-slash"></i></a>

@@ -249,7 +249,7 @@
 						<div class="msg-contents-container{msg.CLASS_COLOR}">
 							<div class="msg-contents-info bkgd-color-op20">
 								<span class="float-left">
-									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-o-right" aria-hidden="true"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
+									<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" aria-label="{msg.TOPIC_DATE_FULL}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a> ${LangLoader::get_message('on', 'main')} {msg.TOPIC_DATE_FULL}
 								</span>
 								<span class="float-right">
 									# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #

@@ -260,19 +260,19 @@
 				<li><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
 					<ul class="level-1">
 						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag" aria-hidden="true"></i> {L_NAME}</a></li>
-						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock-o" aria-hidden="true"></i> {L_DATE}</a></li>
+						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock" aria-hidden="true"></i> {L_DATE}</a></li>
 						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_VIEWS}</a></li>
 						# IF C_NOTATION_ENABLED #
 						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_NOTES}</a></li>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
-						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments-o" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
+						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
 					</ul>
 				</li>
-				<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
+				<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-down"></i> {L_DIRECTION}</a>
 					<ul class="level-1">
-						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-asc" aria-hidden="true"></i> {L_ASC}</a></li>
-						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i> {L_DESC}</a></li>
+						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-down" aria-hidden="true"></i> {L_ASC}</a></li>
+						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-up" aria-hidden="true"></i> {L_DESC}</a></li>
 					</ul>
 				</li>
 			</ul>

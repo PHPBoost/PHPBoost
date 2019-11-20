@@ -17,7 +17,7 @@
 							<div class="wiki-list-content">
 								# START cat.list_cats #
 									<div class="wiki-list-item">
-										<i class="fa fa-folder-o" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+										<i class="fa fa-folder" aria-hidden="true"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 									</div>
 								# END cat.list_cats #
 								# START cat.no_sub_cat #
@@ -33,7 +33,7 @@
 						<div class="wiki-list-content">
 							# START cat.list_art #
 								<div class="wiki-list-item">
-									<i class="fa fa-file-o" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+									<i class="fa fa-file" aria-hidden="true"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 								</div>
 							# END cat.list_art #
 							# START cat.no_sub_article #

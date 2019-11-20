@@ -71,7 +71,7 @@ div[id*="calendar"] {
 		display: none !important;
 	}
 
-	table.version-list .fa-calendar {
+	table.version-list .fa-calendar-alt {
 		display: none !important;
 	}
 }

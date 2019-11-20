@@ -15,7 +15,7 @@
 							<a itemprop="url" href="{event.U_LINK}"></a>
 						</header>
 						<div class="actions">
-							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments-o" aria-hidden="true"></i> {event.L_COMMENTS}</a># ENDIF #
+							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_EDIT #
 								<a href="{event.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #

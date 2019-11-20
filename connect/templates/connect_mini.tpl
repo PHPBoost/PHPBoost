@@ -28,7 +28,7 @@
 		<div class="module-mini-contents connect-contents">
 		# ELSE #
 		<div class="connect-contents">
-			<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in" aria-hidden="true"></i><span>{@connection}</span></a>
+			<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i><span>{@connection}</span></a>
 		# ENDIF #
 			<div class="connect-containers">
 				<div class="connect-input-container# IF C_VERTICAL # vertical-fieldset# ELSE # horizontal-fieldset# ENDIF #" >
@@ -120,7 +120,7 @@
 				</li>
 				<li class="connect-element connect-disconnect">
 					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small">
-						<i class="fa fa-sign-out" aria-hidden="true"></i><span>{@disconnect}</span>
+						<i class="fa fa-sign-out-alt" aria-hidden="true"></i><span>{@disconnect}</span>
 					</a>
 				</li>
 			</ul>

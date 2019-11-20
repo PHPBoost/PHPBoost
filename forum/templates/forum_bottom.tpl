@@ -41,7 +41,7 @@
 				# IF C_FORUM_CONNEXION #
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out" aria-hidden="true"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
+						<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 					</span>
 				</li>
 				# ENDIF #
@@ -53,12 +53,12 @@
 			<ul>
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+						<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+						<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 					</span>
 				</li>
 			</ul>
@@ -123,7 +123,7 @@
 				{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 			</span>
 			<span class="float-right forum-stats">
-				<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> {L_STATS}</a>
+				<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-chart-bar" aria-hidden="true"></i> {L_STATS}</a>
 			</span>
 			<div class="spacer"></div>
 		</div>

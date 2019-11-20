@@ -9,7 +9,7 @@
                         &lt;li class="sub">&lt;a id="class_1" href="#">&lt;i class="fa fa-folder">&lt;/i>Category 1&lt;/a>&lt;span id="cat_1">&lt;/span>&lt;/li>
                         &lt;li class="sub">
                             &lt;a class="parent" href="javascript:show_cat_contents(2, 0);">
-                                &lt;span class="fa fa-minus-square-o" id="img2_2">&lt;/span>&lt;span class="fa fa-folder-open" id ="img_2">&lt;/span>
+                                &lt;span class="fa fa-minus-square" id="img2_2">&lt;/span>&lt;span class="fa fa-folder-open" id ="img_2">&lt;/span>
                             &lt;/a>
                             &lt;a class="selected" id="class_2" href="#">Category 2&lt;/a>
                             &lt;span id="cat_2">

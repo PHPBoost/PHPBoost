@@ -1,7 +1,7 @@
 <table id="table-mini-download">
 	<thead>
 		<tr>
-			<th><i class="fa # IF C_SORT_BY_DATE #fa-calendar# ELSE #fa-trophy# ENDIF #" aria-hidden="true"></i><span class="sr-only"># IF C_SORT_BY_DATE #{@download.sort.date}# ELSE #{@download.sort.trophy}# ENDIF #</span></th>
+			<th><i class="fa # IF C_SORT_BY_DATE #fa-calendar-alt# ELSE #fa-trophy# ENDIF #" aria-hidden="true"></i><span class="sr-only"># IF C_SORT_BY_DATE #{@download.sort.date}# ELSE #{@download.sort.trophy}# ENDIF #</span></th>
 			<th>${LangLoader::get_message('form.name', 'common')}</th>
 			# IF NOT C_SORT_BY_DATE #
 			<th><i class="# IF C_SORT_BY_NUMBER_DOWNLOADS #fa fa-download# ELSE #far fa-star# ENDIF #" aria-hidden="true"></i><span class="sr-only"># IF C_SORT_BY_NUMBER_DOWNLOADS #{@download.sort.dls}# ELSE #{@download.sort.notes}# ENDIF #</span></th>

@@ -118,7 +118,7 @@
 			<div class="more">
 				<span><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.NUMBER_VIEWS}</span>
 				# IF C_COMMENTS_ENABLED #
-					| <i class="fa fa-comments-o" aria-hidden="true"></i>
+					| <i class="fa fa-comments" aria-hidden="true"></i>
 					# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
 				# ENDIF #
 				# IF weblinks.C_KEYWORDS #

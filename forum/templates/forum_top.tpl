@@ -120,7 +120,7 @@
 					# IF C_FORUM_CONNEXION #
 					<li>
 						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
+							<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out-alt"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -132,12 +132,12 @@
 				<ul>
 					<li>
 						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+							<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+							<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
 						</span>
 					</li>
 				</ul>
