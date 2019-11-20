@@ -4,13 +4,14 @@
 		<input type="file" name="${escape(NAME)}# IF C_MULTIPLE #[]# ENDIF #" id="${escape(HTML_ID)}" class="ufiles"# IF C_DISABLED # disabled="disabled" # ENDIF # />
 	</div>
 	<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
-	# IF C_MULTIPLE #
 	<div class="ready-to-load">
 		<button type="button" class="clear-list">{@clear.list}</button>
-		<span class="fa-stack fa-lg">
-			<i class="far fa-file fa-stack-2x "></i>
-			<strong class="fa-stack-1x files-nbr"></strong>
-		</span>
+		# IF C_MULTIPLE #
+			<span class="fa-stack fa-lg">
+				<i class="far fa-file fa-stack-2x "></i>
+				<strong class="fa-stack-1x files-nbr"></strong>
+			</span>
+		# ENDIF #
 	</div>
 	<div class="modal-container">
 		<button class="upload-help" data-modal data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
@@ -27,7 +28,6 @@
 			</div>
 		</div>
 	</div>
-	# ENDIF #
 </div>
 <ul class="ulist"></ul>
 

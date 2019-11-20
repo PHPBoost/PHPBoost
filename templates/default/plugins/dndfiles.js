@@ -74,8 +74,8 @@
 
                 if ($input.attr('multiple')) { // if multiple parameter is true
                     $input.closest('.dnd-area').find(param.filesNbr).append(filesNbr); // send number of files to the icon and...
-                    if(filesNbr > 0) $('.clear-list').show(); // if it's > 0 then show the 'clear list' button
                 }
+                if(filesNbr > 0) $('.clear-list').css('display', 'inline-block'); // if it's > 0 then show the 'clear list' button
 
                 // For each file selected
                 for(var i=0; i < filesNbr; i++) {
@@ -153,19 +153,18 @@
                     });
                 });
 
-                if(param.multiple) { // if multiple is true
-                    // reset all when clicking on the 'clear list' button
-                    $('.clear-list').on('click', function(d) {
-                        d.preventDefault(); // deactivate the default button behaviour
-                        $input.val(''); // empty the input list of files
-                        $input.closest('.dnd-area').find(param.filesNbr).html('0'); // reset the display of the number of files
-                        $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the display of the list  of files
-                        $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
-                        $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
-                        $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
-                        $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
-                    });
-                }
+                // reset all when clicking on the 'clear list' button
+                $('.clear-list').on('click', function(d) {
+                    d.preventDefault(); // deactivate the default button behaviour
+                    $input.val(''); // empty the input list of files
+                    $input.closest('.dnd-area').find(param.filesNbr).html('0'); // reset the display of the number of files
+                    $input.closest('.dnd-area').siblings(param.filesList).empty(); // empty the display of the list  of files
+                    $input.closest('form').find('button[type="submit"]').prop("disabled", false); // remove the 'disabled' attribute from the upload button
+                    $input.closest('.dnd-area').find('label p').html(''); // remove the warning texts
+                    $input.closest('.dnd-area').find('label p').removeClass('message-helper warning small'); // remove the warning classes
+                    $input.closest('.dnd-area').find('.upload-help').removeClass(' warning');
+                    $input.closest('.dnd-area').find('.clear-list').css('display', 'none');
+                });
 
     		})
         }
