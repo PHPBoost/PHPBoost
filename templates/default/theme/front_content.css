@@ -1,14 +1,12 @@
 /*
  * content.css
  * Contains:
- * 	- Containers, module elements,
- * 	- Paging,
- * 	- Categories explorer,
- * 	- Categories managemnt,
- * 	- mini module,
- * 	- posted messages,
- * 	- maintenance,
- * 	- sharing elements
+ * 		- Containers, module elements,
+ * 		- Categories,
+ * 		- mini module,
+ * 		- posted messages,
+ * 		- maintenance,
+ * 		- sharing elements
 */
 
 /* -- Containers, module elements -- */
@@ -240,23 +238,23 @@ header h2 .actions {
 }
 
 /* --- Gestion des media --- */
-.thumbnail-item {
+.item-thumbnail {
 	padding: 0.309em 0;
 	display: block;
 }
 
 @media (min-width: 769px) {
-	.thumbnail-item {
+	.item-thumbnail {
 		max-width: 38%;
 		float: left;
 		padding: 0.309em 0.618em 0.309em 0;
 	}
 
-	.columns-3 .thumbnail-item,
-	.columns-4 .thumbnail-item,
-	.columns-5 .thumbnail-item,
-	.columns-6 .thumbnail-item,
-	.columns-7 .thumbnail-item {
+	.columns-3 .item-thumbnail,
+	.columns-4 .item-thumbnail,
+	.columns-5 .item-thumbnail,
+	.columns-6 .item-thumbnail,
+	.columns-7 .item-thumbnail {
 		float: none;
 		max-width: 100%;
 		padding: 0.309em 0;
@@ -304,142 +302,9 @@ header h2 .actions {
 
 /* -- Pagination des pages -- */
 /* -------------------------- */
-section footer ul.pagination {
-	text-align: center;
-}
-
-ul.pagination {
-	margin: 0;
-}
-
-ul.pagination .fa:before {
-	font-size: 0.809em;
-}
-
-ul.pagination-block {
-	margin: 0.309em 0;
-}
-
-ul.pagination-block li {
-	padding: 0.1618em;
-}
-
-ul.pagination-block li a {
-	display: inline-block;
-	padding: 0.1618em 0.618em;
-	outline: none;
-	font-weight: bold;
-	font-size: 0.809em;
-	text-align: center;
-	text-decoration: none;
-}
-
-ul.pagination-block li a {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	transition: all 0.2s linear;
-}
-
-ul.pagination-block li a:hover {
-	transition: all 0.1s linear;
-}
-
-ul.pagination-block li a:active {
-	transition: all 0.2s linear;
-}
-
-ul.pagination-block li a.current-page {
-	text-decoration: none;
-}
-
-ul.pagination-block-bis li a.prev-page:hover,
-ul.pagination-block-bis li a.next-page:hover {
-	text-decoration: underline;
-}
-
-.pages-pagination a {
-	text-decoration: none;
-}
-
 
 /* -- Exploreur des categories -- */
 /* ------------------------------ */
-.explorer .cats,
-.explorer .files {
-	width: 100%;
-	display: inline-block;
-	margin: 0.309em 0;
-	vertical-align: top;
-}
-
-.explorer h2 {
-	font-size: 1.618em;
-}
-
-@media (min-width: 481px) {
-	.explorer .cats,
-	.explorer .files {
-		width: calc(100% / 2.1);
-	}
-}
-
-.explorer .cats {
-	min-width: 200px;
-}
-
-.explorer .content {
-	padding: 0;
-	min-height: 120px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.explorer .content ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-.explorer .content ul ul {
-	margin-left: 1em;
-}
-
-.explorer .content ul a.parent {
-	float: left;
-	height: 0;
-}
-
-.explorer .content ul a.parent [id^="img2_"] {
-	margin-left: -1em;
-	margin-right: 0.1618em;
-}
-
-.explorer .content ul a {
-	display: block;
-	padding: 0.228em 0.309em;
-	text-decoration: none;
-	text-align: left;
-}
-
-.explorer .content ul i {
-	width: 1.309em;
-	vertical-align: top;
-	margin-right: 0.309em;
-}
-
-.explorer .content ul i:before {
-	vertical-align: middle;
-}
-
-.explorer .content ul a.parent i:first-child {
-	width: 0.809em;
-}
-
-.explorer .content ul a.parent i:first-child:before {
-	font-size: 0.809em;
-}
 
 .options {
 	margin: 0.309em 0;

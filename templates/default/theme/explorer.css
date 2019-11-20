@@ -1,0 +1,76 @@
+
+.explorer .cats,
+.explorer .files {
+	width: 100%;
+	display: inline-block;
+	margin: 0.309em 0;
+	vertical-align: top;
+}
+
+.explorer h2 {
+	font-size: 1.618em;
+}
+
+@media (min-width: 481px) {
+	.explorer .cats,
+	.explorer .files {
+		width: calc(100% / 2.1);
+	}
+}
+
+.explorer .cats {
+	min-width: 200px;
+}
+
+.explorer .content {
+	padding: 0;
+	min-height: 120px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.explorer .content ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.explorer .content ul ul {
+	margin-left: 1em;
+}
+
+.explorer .content ul a.parent {
+	float: left;
+	height: 0;
+}
+
+.explorer .content ul a.parent [id^="img2_"] {
+	margin-left: -1em;
+	margin-right: 0.1618em;
+}
+
+.explorer .content ul a {
+	display: block;
+	padding: 0.228em 0.309em;
+	text-decoration: none;
+	text-align: left;
+}
+
+.explorer .content ul i {
+	width: 1.309em;
+	vertical-align: top;
+	margin-right: 0.309em;
+}
+
+.explorer .content ul i:before {
+	vertical-align: middle;
+}
+
+.explorer .content ul a.parent i:first-child {
+	width: 0.809em;
+}
+
+.explorer .content ul a.parent i:first-child:before {
+	font-size: 0.809em;
+}

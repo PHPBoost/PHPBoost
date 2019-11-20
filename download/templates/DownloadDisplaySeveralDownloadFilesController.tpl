@@ -147,7 +147,7 @@
 					</div>
 					<div class="content">
 						# IF downloadfiles.C_PICTURE #
-						<a href="{downloadfiles.U_LINK}" class="thumbnail-item">
+						<a href="{downloadfiles.U_LINK}" class="item-thumbnail">
 							<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
 						</a>
 						# ENDIF #

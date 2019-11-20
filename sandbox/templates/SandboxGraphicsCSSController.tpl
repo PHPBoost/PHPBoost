@@ -69,7 +69,7 @@
 				<div class="more">{@css.more}</div>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				<div>{@lorem.large.content}</div>
 			</div>
 		</article>
@@ -627,7 +627,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.medium.content}
 			</div>
 		</article>
@@ -640,7 +640,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -649,7 +649,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -662,7 +662,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -671,7 +671,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>
@@ -680,7 +680,7 @@
 				<h2>{@css.block.title}</h2>
 			</header>
 			<div class="content">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="thumbnail-item" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />
 				{@lorem.short.content}
 			</div>
 		</article>

@@ -90,7 +90,7 @@
 						# ENDIF #
 				</div>
 				<div class="content">
-				# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="thumbnail-item" alt="{file.NAME}" /></a># ENDIF #
+				# IF file.C_HAS_PICTURE #<a href="{file.U_MEDIA_LINK}"><img itemprop="thumbnailUrl" src="{file.PICTURE}" class="item-thumbnail" alt="{file.NAME}" /></a># ENDIF #
 				# IF file.C_DESCRIPTION #
 					<div itemprop="text">
 					{file.DESCRIPTION}

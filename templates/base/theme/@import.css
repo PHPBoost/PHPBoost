@@ -24,9 +24,11 @@
 @import url('../../default/theme/plugins.css') screen;
 @import url('../../default/theme/cell.css') screen;
 @import url('../../default/theme/cellflex.css') screen;
+@import url('../../default/theme/explorer.css') screen;
 @import url('../../default/theme/messages.css') screen;
+@import url('../../default/theme/pagination.css') screen;
 
-@import url('../../default/theme/front_shape.css') screen;
+@import url('../../default/theme/shape.css') screen;
 
 @import url('../../default/theme/front_content.css') screen, print;
 @import url('../../default/theme/front_global.css') screen, print;

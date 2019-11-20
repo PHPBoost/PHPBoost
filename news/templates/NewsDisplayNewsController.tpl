@@ -51,7 +51,7 @@
 		# ENDIF #
 
 		<div class="content">
-			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" class="thumbnail-item" /># ENDIF #
+			# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" class="item-thumbnail" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
 			# IF C_AUTHOR_DISPLAYED #

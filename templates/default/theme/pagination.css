@@ -1,0 +1,58 @@
+
+section footer ul.pagination {
+	text-align: center;
+}
+
+ul.pagination {
+	margin: 0;
+}
+
+ul.pagination .fa:before {
+	font-size: 0.809em;
+}
+
+ul.pagination-block {
+	margin: 0.309em 0;
+}
+
+ul.pagination-block li {
+	padding: 0.1618em;
+}
+
+ul.pagination-block li a {
+	display: inline-block;
+	padding: 0.1618em 0.618em;
+	outline: none;
+	font-weight: bold;
+	font-size: 0.809em;
+	text-align: center;
+	text-decoration: none;
+}
+
+ul.pagination-block li a {
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	transition: all 0.2s linear;
+}
+
+ul.pagination-block li a:hover {
+	transition: all 0.1s linear;
+}
+
+ul.pagination-block li a:active {
+	transition: all 0.2s linear;
+}
+
+ul.pagination-block li a.current-page {
+	text-decoration: none;
+}
+
+ul.pagination-block-bis li a.prev-page:hover,
+ul.pagination-block-bis li a.next-page:hover {
+	text-decoration: underline;
+}
+
+.pages-pagination a {
+	text-decoration: none;
+}

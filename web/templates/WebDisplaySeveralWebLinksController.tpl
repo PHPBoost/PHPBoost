@@ -135,7 +135,7 @@
 			</div>
 			<div class="content">
 				# IF weblinks.C_PICTURE #
-				<a href="{weblinks.U_LINK}" class="thumbnail-item">
+				<a href="{weblinks.U_LINK}" class="item-thumbnail">
 					<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
 				</a>
 				# ENDIF #

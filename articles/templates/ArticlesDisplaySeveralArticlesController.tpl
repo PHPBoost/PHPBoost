@@ -90,7 +90,7 @@
 					<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
 
 					<div class="content">
-						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="thumbnail-item"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
+						# IF articles.C_HAS_PICTURE #<a href="{articles.U_ARTICLE}" class="item-thumbnail"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a># ENDIF #
 						<div itemprop="text">{articles.DESCRIPTION}# IF articles.C_READ_MORE #... <a href="{articles.U_ARTICLE}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #</div>
 					</div>
 

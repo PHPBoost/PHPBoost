@@ -11,7 +11,7 @@
         &lt;div class="more">John Doe | 01/01/1970 | 12 coms&lt;/div>
     &lt;/header>
     &lt;div class="content">
-        &lt;img src="link-to-picture-1.ext" alt="lorem" class="thumbnail-item" />
+        &lt;img src="link-to-picture-1.ext" alt="lorem" class="item-thumbnail" />
         &lt;div>Lorem ipsum&lt;/div>
     &lt;/div>
 &lt;/article>

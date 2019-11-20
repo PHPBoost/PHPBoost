@@ -5,7 +5,7 @@
             &lt;h2>Lorem&lt;/h2>
         &lt;/header>
         &lt;div class="content">
-            &lt;img src="link-to-picture.ext" alt="Lorem" class="thumbnail-item" />
+            &lt;img src="link-to-picture.ext" alt="Lorem" class="item-thumbnail" />
             Lorem ipsum
         &lt;/div>
     &lt;/article>
@@ -14,7 +14,7 @@
             &lt;h2>Lorem&lt;/h2>
         &lt;/header>
         &lt;div class="content">
-            &lt;img src="link-to-picture.ext" alt="Lorem" class="thumbnail-item" />
+            &lt;img src="link-to-picture.ext" alt="Lorem" class="item-thumbnail" />
             Lorem ipsum
         &lt;/div>
     &lt;/article>
