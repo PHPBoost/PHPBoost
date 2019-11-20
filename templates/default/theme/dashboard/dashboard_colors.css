@@ -451,3 +451,13 @@ nav.admin-index a {
 #mod_topfooter, #mod_footer {
 	border-color: #888888;
 }
+
+/* --- cssmenu in modal --- */
+#header-admin .modal-menu a,
+#header-admin .next-menu a {
+	color: #366493;
+}
+
+#header-admin .modal-menu > li > a {
+	color: #555555;
+}
