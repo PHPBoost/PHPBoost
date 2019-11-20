@@ -60,7 +60,8 @@
         content: '\f077';
     }
 
-    .accordion-animation {
+    .accordion-animation,
+    .accordion-animation:not(.active-panel) *  {
         height: 0;
         opacity: 0;
         visibility: hidden;
@@ -76,6 +77,8 @@
         visibility: visible;
         transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
     }
+
+
 
 }
 
@@ -192,7 +195,8 @@
     text-decoration: none;
 }
 
-.tabs-animation {
+.tabs-animation,
+.tabs-animation:not(.active-panel) * {
     height: 0;
     opacity: 0;
     visibility: hidden;
