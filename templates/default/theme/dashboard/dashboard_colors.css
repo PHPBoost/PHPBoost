@@ -14,8 +14,6 @@
 		color: #FFFFFF;
  	}
 
- 	#header-admin a { color: #FFFFFF; }
-
  	#footer {
  		background-color: #1c334a;
  		border-color: #366493;
@@ -322,6 +320,7 @@ nav.admin-index a {
 
 .modal-menu > li > a {
 	border-color: #DDDDDD;
+	color: #555555;
 }
 
 #admin-quick-menu {
@@ -450,14 +449,4 @@ nav.admin-index a {
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
 	border-color: #888888;
-}
-
-/* --- cssmenu in modal --- */
-#header-admin .modal-menu a,
-#header-admin .next-menu a {
-	color: #366493;
-}
-
-#header-admin .modal-menu > li > a {
-	color: #555555;
 }
