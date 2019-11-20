@@ -52,10 +52,8 @@
 							<div class="file-move-container">
 									<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
 									<script>
-									<!--
 										var path = '{PATH_TO_ROOT}/templates/{THEME}';
 										var selected_cat = {SELECTED_CAT};
-									-->
 									</script>
 									<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />

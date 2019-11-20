@@ -167,11 +167,7 @@ table.announce-legend td {
 /* ---------------- */
 .group-container {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
 }
 
 .groups-list-container > header {
@@ -180,8 +176,6 @@ table.announce-legend td {
 
 .list-members-container {
 	flex: 0 0 auto;
-	-ms-flex: 0 0 auto;
-	-webkit-flex: 0 0 auto;
 }
 
 .list-members-container > header {
@@ -195,8 +189,6 @@ table.announce-legend td {
 
 .list-members-container > .content {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	overflow: hidden;
 	padding: 0;
 	max-height: 0;
@@ -210,26 +202,18 @@ table.announce-legend td {
 
 .list-admins-container {
 	order : 2;
-	-ms-flex-order: 2;
-	-webkit-flex-order: 2;
 }
 
 .list-modos-container {
 	order : 3;
-	-ms-flex-order: 3;
-	-webkit-flex-order: 3;
 }
 
 .list-members-container {
 	order : 4;
-	-ms-flex-order: 4;
-	-webkit-flex-order: 4;
 }
 
 .list-group-container.reorder-top {
 	order : 1;
-	-ms-flex-order: 1;
-	-webkit-flex-order: 1;
 }
 
 .list-members-container-action {
@@ -286,8 +270,6 @@ table.announce-legend td {
 	#module-user-group-list .elements-container,
 	#module-user-groups-list .elements-container {
 		flex-direction: row;
-		-ms-flex-direction: row;
-		-webkit-flex-direction: row;
 	}
 	.elements-container > .user-card { width: calc(100% / 2.3); }
 }
@@ -298,8 +280,6 @@ table.announce-legend td {
 
 .user-card .content {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	height: 100%;
 }
 
@@ -311,8 +291,6 @@ table.announce-legend td {
 .user-card .avatar-container {
 	margin: 0.809em 0.456em 0.809em 0.456em;
 	flex: 0 0 90px;
-	-ms-flex: 0 0 90px;
-	-webkit-flex: 0 0 90px;
 }
 
 .user-level {
@@ -335,7 +313,5 @@ table.announce-legend td {
 	border-width: 0 0 0 8px;
 	border-style: solid;
 	flex: 1 1 auto;
-	-ms-flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
 	margin: -1px -1px -1px 0;
 }

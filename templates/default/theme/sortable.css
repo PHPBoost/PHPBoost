@@ -1,7 +1,5 @@
 .sortable-block .sortable-element > .sortable-block {
 	flex: 1 0 calc(100% - 0.618em);
-	-ms-flex: 1 0 calc(100% - 0.618em);
-	-webkit-flex: 1 0 calc(100% - 0.618em);
 	margin: 0 0 0 0.618em;
 }
 
@@ -36,8 +34,6 @@
 @media (min-width:769px){
 	.sortable-block .sortable-element .sortable-selector {
 		flex: 0 0 1.309em;
-		-ms-flex: 0 0 1.309em;
-		-webkit-flex: 0 0 1.309em;
 		opacity: 0.2;
 		transition: opacity 0.3s;
 		cursor: move;
@@ -62,8 +58,6 @@
 
 .sortable-block .sortable-title {
 	flex: 1 1 auto;
-	-ms-flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
 	padding: 0.618em;
 	max-width: calc(100% - 5.2em)
 }
@@ -92,8 +86,6 @@
 
 .sortable-block .sortable-actions {
 	flex: 0 1 auto;
-	-ms-flex: 0 1 auto;
-	-webkit-flex: 0 1 auto;
 	padding: 0.1618em;
 	opacity: 0.2;
 	transition: opacity 0.2s;

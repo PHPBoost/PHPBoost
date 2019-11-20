@@ -103,8 +103,6 @@ table tfoot tr td select {
 .bt tfoot td,
 .bt tbody td {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	vertical-align: top;
 }
 
@@ -113,7 +111,6 @@ table tfoot tr td select {
 .bt tbody td::before {
 	content: attr(data-th) ": ";
 	display: inline-block;
-	-webkit-flex-shrink: 0;
 	flex-shrink: 0;
 	font-weight: bold;
 	width: 6.5em;

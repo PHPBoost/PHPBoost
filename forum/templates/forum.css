@@ -359,11 +359,7 @@ a.forum-link-pseudo {
 .msg-container,
 .msg-container2 {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: row;
-	-ms-flex-direction: row;
-	-webkit-flex-direction: row;
 	height: auto !important;
 	overflow: hidden !important;
 	clear: both;
@@ -372,11 +368,7 @@ a.forum-link-pseudo {
 /* Barre superieur des messages */
 .msg-top {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
 	width: 135px;
 }
 
@@ -403,14 +395,8 @@ a.forum-link-pseudo {
 .msg-contents-container,
 .msg-contents-container2 {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
 	flex: 1 0 auto;
-	-ms-flex: 1 0 auto;
-	-webkit-flex: 1 0 auto;
 	width: calc(100% - 135px);
 }
 
@@ -428,8 +414,6 @@ a.forum-link-pseudo {
 .msg-contents{
 	padding: 0.309em;
 	flex: 1 1 auto;
-	-ms-flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
 }
 
 /* Signature du membre */
@@ -481,14 +465,10 @@ a.forum-link-pseudo {
 	.msg-container,
 	.msg-container2 {
 		flex-direction: column;
-		-ms-flex-direction: column;
-		-webkit-flex-direction: column;
 	}
 
 	.msg-top {
 		flex-direction: row;
-		-ms-flex-direction: row;
-		-webkit-flex-direction: row;
 		width: 100%;
 	}
 
@@ -496,11 +476,7 @@ a.forum-link-pseudo {
 
 	.msg-top-row {
 		flex: 1 0 auto;
-		-ms-flex: 1 0 auto;
-		-webkit-flex: 1 0 auto;
 		order: 2;
-		-ms-flex-order: 2;
-		-webkit-flex-order: 2;
 		text-align: center;
 	}
 
@@ -510,8 +486,6 @@ a.forum-link-pseudo {
 
 	.msg-avatar-mbr {
 		order: 1;
-		-ms-flex-order: 1;
-		-webkit-flex-order: 1;
 	}
 
 	.msg-avatar-mbr img {
@@ -564,15 +538,13 @@ a.forum-link-pseudo {
 	}
 }
 
-
-
 /* -- footer ==================================================================== */
-footer#forum-bottom {
+#forum-bottom {
 	margin: 1em 0 0.309em 0;
 	padding: 0.809em;
 }
 
-footer#forum-bottom .forum-message-options {
+#forum-bottom .forum-message-options {
 	border-bottom: none;
 }
 

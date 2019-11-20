@@ -267,8 +267,6 @@ ul.pagination .current-page {
 
 .blink {
 	animation: blink 1.5s ease-in-out infinite;
-	-moz-animation: blink 1.5s ease-in-out infinite;
-	-webkit-animation: blink 1.5s ease-in-out infinite; }
 
 
 /* --- Basic font ----------------------------------------------------------- */

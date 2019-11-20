@@ -4,35 +4,34 @@
 */
 /* Config */
 .fieldset-refresh .form-element {
-	-webkit-align-content: center;
-	-ms-flex-line-pack: center;
 	align-content: center;
 }
 
 /* -- Zone de saisie de la recherche
 -------------------------------------------*/
-div.search-field {
+.search-field {
 	text-align: center;
 }
 
-div#forms-selection {
+#forms-selection {
 	padding: 5px 0;
 }
 
-div#forms-selection a {
+#forms-selection a {
 	display: block;
 	padding: 2px 8px;
 	text-decoration: none;
 }
-div#forms-selection a:hover {
+
+#forms-selection a:hover {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-div#forms-selection a.SFL-current {
+#forms-selection a.SFL-current {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-div.SpecializedForm {
+.SpecializedForm {
 	padding: 0 5px;
 }
 
@@ -52,25 +51,25 @@ div.SpecializedForm {
 
 /* -- Zone des resultats
 -------------------------------------------*/
-div.resultsChoices {
+.resultsChoices {
 	position: relative;
 	top: 5px;
 	width: 100%;
 	text-align: right;
 }
 
-div.resultsChoices span {
+.resultsChoices span {
 	position: relative;
 	top: 2px;
 }
 
-div.results {
+.results {
 	margin-top: 30px;
 	min-height: 50px;
 	vertical-align: middle;
 }
 
-div.results span.title {
+.results span.title {
 	position: relative;
 	top: -25px;
 	font-weight: bold;
@@ -78,7 +77,7 @@ div.results span.title {
 	text-transform: uppercase;
 }
 
-div.results div.infosResults {
+.results .infosResults {
 	width: 90%;
 	padding-left: 10px;
 	font-size: 0.75em;
@@ -90,16 +89,16 @@ div.results div.infosResults {
 	width: 500px;
 }
 
-ul.search-results {
+.search-results {
 	margin-left: 30px;
 	padding: 10px;
 }
 
-ul.search-results li {
+.search-results li {
 	padding: 5px;
 }
 
-div.PaginationResults {
+.PaginationResults {
 	padding: 5px;
 	text-align: right;
 }

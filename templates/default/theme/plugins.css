@@ -241,11 +241,7 @@
 /* --- Wizard --------------------------------------------------------------- */
 .wizard-container {
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: column;
-	-ms-flex-direction: column;
-	-webkit-flex-direction: column;
 	transition-duration: 0.4s;
 }
 
@@ -263,19 +259,13 @@
 	list-style-type: none;
 	width: 100%;
 	display: flex;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	flex-direction: row;
-	-ms-flex-direction: row;
-	-webkit-flex-direction: row;
 	overflow: hidden;
 	position: relative;
 }
 
 .wizard-container .wizard-header li {
 	flex: 1;
-	-ms-flex: 1;
-	-webkit-flex: 1;
 	text-align: center;
 	position: relative;
 	transition-duration: 0.4s;
@@ -321,7 +311,5 @@
 @media (min-width: 768px) {
 	.wizard-container .wizard-header ul {
 		flex-direction: row;
-		-ms-flex-direction: row;
-		-webkit-flex-direction: row;
 	}
 }

@@ -340,7 +340,6 @@ $(document).ready(function(){
 			# IF C_EMPTY_FOLDER #
 				<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
 				<span id="new-folder"></span>
-
 			# ELSE #
 				# START folder #
 					<div class="upload-elements-repertory">
