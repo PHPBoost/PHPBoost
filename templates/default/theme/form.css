@@ -4,10 +4,10 @@
 
 /* --- Form elements --- */
 .form-element {
+	margin: 0.618em 0 0;
 	padding: 0.618em;
 	position: relative;
 	display: flex;
-	margin: 0.618em 0 0;
 	flex-direction: column;
 }
 
@@ -26,10 +26,6 @@
 	.fieldset-description {
 		margin: 0 1.618em 1.482em 1.618em;
 	}
-}
-
-.form-element [id$="user_avatar"] img {
-	max-width: 200px;
 }
 
 .form-element [id$="user_avatar"] img {
@@ -109,14 +105,14 @@
 }
 
 /* --- Auto-completion --- */
-.autocomplete-suggestions {
+.autocomplete-suggestion {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 	overflow: auto;
 }
 
-.autocomplete-suggestions strong {
+.autocomplete-suggestion strong {
 	font-weight: normal;
 }
 
@@ -155,4 +151,9 @@ div[id*='keyword'] .form-autocompleter-container input {
 /* --- Hide Chrome password generator --- */
 .cip-icon-key-small {
 	display: none !important;
+}
+
+.module-mini-container label {
+	display: block;
+	width: 100%;
 }

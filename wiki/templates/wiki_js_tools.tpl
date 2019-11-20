@@ -10,7 +10,7 @@
 
 <script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
-<div class="bbcode wiki-bbcode bkgd-color-op10 bdr-color-op20">
+<div class="bbcode wiki-bbcode">
 	<div class="bbcode-containers">
 		<ul id="wiki-link-container" class="bbcode-container">
 			<li class="bbcode-elements">

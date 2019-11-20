@@ -5,7 +5,7 @@
 	</label>
 
 	# IF C_EDITOR_ENABLED #
-	{EDITOR}
+		{EDITOR}
 	# ENDIF #
 
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field form-field-textarea picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
@@ -14,12 +14,12 @@
 	</div>
 
 	# IF C_EDITOR_ENABLED #
-	<div class="center">
-		<div class="form-element-preview">{PREVIEW_BUTTON}</div>
-		# IF C_RESET_BUTTON_ENABLED #
-		<div class="form-element-reset">{RESET_BUTTON}</div>
-		# ENDIF #
-	</div>
+		<div class="center">
+			<div class="form-element-preview">{PREVIEW_BUTTON}</div>
+			# IF C_RESET_BUTTON_ENABLED #
+				<div class="form-element-reset">{RESET_BUTTON}</div>
+			# ENDIF #
+		</div>
 	# ENDIF #
 
 </div>

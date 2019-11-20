@@ -1,28 +1,29 @@
 :root {
 
-    --txt-dark-color  : #202020;
-    --txt-medium-color: #353535;
-    --txt-lite-color  : #555555;
+    --txt-dark-color: #202020;
+    --txt-soft-color: #353535;
+    --txt-lite-color: #555555;
 
-    --bkgd-color:  #ECF2F8;
-    --bkgd-option: #FFFFFF;
+    --bkgd-main  : #FFFFFF;
+    --bkgd-option: #ECF2F8;
 
-    --bdr-color: #DDDDDD;
+    --bdr-main-color  : #DDDDDD;
+    --bdr-option-color: #366493;
 
     --notice-dark-color  : #888888;
     --notice-lite-color  : rgba(136, 136, 136, 0.2);
 
-    --question-dark-color: #0066cc;
+    --question-dark-color: #0066CC;
     --question-lite-color: rgba(0, 102, 204, 0.2);
 
-    --success-dark-color : #40b73a;
-    --success-lite-color : rgba(64, 184, 58, 0.2);
+    --success-dark-color : #4D9136;
+    --success-lite-color : rgba(77, 145, 54, 0.2);
 
-    --warning-dark-color : #E27B47;
-    --warning-lite-color : rgba(226, 123, 70, 0.2);
+    --warning-dark-color : #D36636;
+    --warning-lite-color : rgba(210, 102, 54, 0.2);
 
-    --error-dark-color   : #E0464A;
-    --error-lite-color   : rgba(224, 70, 74, 0.2);
+    --error-dark-color   : #913636;
+    --error-lite-color   : rgba(145, 54, 54, 0.2);
 
     --member-dark-color  : #2F9674;
     --member-lite-color  : rgba(47, 150, 116, 0.2);
@@ -40,11 +41,11 @@
      * hsl : hsl(160, 52%, 39%)
     */
 
-    --bc-prime-darker:  #096A4A;
-    --bc-prime-dark:    #168661;
-    --bc-prime-medium:  #2F9674;
-    --bc-prime-light:   #4CAA8B;
-    --bc-prime-lighter: #7CCAB0;
+    --bc-prime-darker: #096A4A;
+    --bc-prime-dark  : #168661;
+    --bc-prime-soft  : #2F9674;
+    --bc-prime-lite  : #4CAA8B;
+    --bc-prime-liter : #7CCAB0;
 
     /*
      * ad = tertiary adjacent color #paletton.com
@@ -53,11 +54,11 @@
      * hsl : hsl(245, 41%, 44%)
     */
 
-    --ad-prime-darker:  #1E186E;
-    --ad-prime-dark:    #2E278C;
-    --ad-prime-medium:  #48419D;
-    --ad-prime-light:   #635DB2;
-    --ad-prime-lighter: #8F8ACF;
+    --ad-prime-darker: #1E186E;
+    --ad-prime-dark  : #2E278C;
+    --ad-prime-soft  : #48419D;
+    --ad-prime-lite  : #635DB2;
+    --ad-prime-liter : #8F8ACF;
 
     /*
      * comp = complementary adjacent color #paletton.com
@@ -66,11 +67,11 @@
      * hsl : hsl(245, 41%, 44%)
     */
 
-    --comp-prime-darker:  #A96E16;
-    --comp-prime-dark:    #D38D24;
-    --comp-prime-medium:  #E2A447;
-    --comp-prime-light:   #FBC169;
-    --comp-prime-lighter: #FFD18C;
+    --comp-prime-darker: #A96E16;
+    --comp-prime-dark  : #D38D24;
+    --comp-prime-soft  : #E2A447;
+    --comp-prime-lite  : #FBC169;
+    --comp-prime-liter : #FFD18C;
 
     /*
      * Light on overlay
@@ -88,17 +89,17 @@
     --rgba-darker-90: rgba(0, 0, 0, 0.90);
     --rgba-darker-00: rgba(0, 0, 0, 1);
 
-    --rgba-lighter-05: rgba(255, 255, 255, 0.05);
-    --rgba-lighter-10: rgba(255, 255, 255, 0.10);
-    --rgba-lighter-20: rgba(255, 255, 255, 0.20);
-    --rgba-lighter-30: rgba(255, 255, 255, 0.30);
-    --rgba-lighter-40: rgba(255, 255, 255, 0.40);
-    --rgba-lighter-50: rgba(255, 255, 255, 0.50);
-    --rgba-lighter-60: rgba(255, 255, 255, 0.60);
-    --rgba-lighter-70: rgba(255, 255, 255, 0.70);
-    --rgba-lighter-80: rgba(255, 255, 255, 0.80);
-    --rgba-lighter-90: rgba(255, 255, 255, 0.90);
-    --rgba-lighter-00: rgba(255, 255, 255, 1);
+    --rgba-liter-05: rgba(255, 255, 255, 0.05);
+    --rgba-liter-10: rgba(255, 255, 255, 0.10);
+    --rgba-liter-20: rgba(255, 255, 255, 0.20);
+    --rgba-liter-30: rgba(255, 255, 255, 0.30);
+    --rgba-liter-40: rgba(255, 255, 255, 0.40);
+    --rgba-liter-50: rgba(255, 255, 255, 0.50);
+    --rgba-liter-60: rgba(255, 255, 255, 0.60);
+    --rgba-liter-70: rgba(255, 255, 255, 0.70);
+    --rgba-liter-80: rgba(255, 255, 255, 0.80);
+    --rgba-liter-90: rgba(255, 255, 255, 0.90);
+    --rgba-liter-00: rgba(255, 255, 255, 1);
 
     /*
      * prime = phpboost primary color :
@@ -120,56 +121,56 @@
     --rgba-prime-00: rgba(54, 100, 147, 1);
 
     /*
-     * lite-prime = lightness of primary color
+     * lite-prime = liteness of primary color
      * main = lite-prime-40
     */
 
-    --lite-prime-05:  #070d13;
-    --lite-prime-10:  #0e1a25;
+    --lite-prime-05:  #070D13;
+    --lite-prime-10:  #0E1A25;
     --lite-prime-15:  #152638;
-    --lite-prime-20:  #1c334a;
-    --lite-prime-25:  #22405d;
-    --lite-prime-30:  #294d70;
+    --lite-prime-20:  #1C334A;
+    --lite-prime-25:  #22405D;
+    --lite-prime-30:  #294D70;
     --lite-prime-35:  #305982;
     --lite-prime-40:  #366493;
-    --lite-prime-45:  #3e73a8;
-    --lite-prime-50:  #4580ba;
-    --lite-prime-55:  #578cc1;
-    --lite-prime-60:  #6a99c8;
-    --lite-prime-65:  #7da6cf;
-    --lite-prime-70:  #8fb3d6;
-    --lite-prime-75:  #a2bfdd;
-    --lite-prime-80:  #b5cce3;
-    --lite-prime-85:  #c7d9ea;
-    --lite-prime-90:  #dae6f1;
-    --lite-prime-95:  #ecf2f8;
+    --lite-prime-45:  #3E73A8;
+    --lite-prime-50:  #4580BA;
+    --lite-prime-55:  #578CC1;
+    --lite-prime-60:  #6A99C8;
+    --lite-prime-65:  #7DA6CF;
+    --lite-prime-70:  #8FB3D6;
+    --lite-prime-75:  #A2BFDD;
+    --lite-prime-80:  #B5CCE3;
+    --lite-prime-85:  #C7D9EA;
+    --lite-prime-90:  #DAE6F1;
+    --lite-prime-95:  #ECF2F8;
 
     /*
      * sat-prime = saturation of primary color
      * main = sat-prime-45
     */
 
-    --sat-prime-00:   #636363;
-    --sat-prime-05:   #5e6368;
-    --sat-prime-10:   #5a636d;
-    --sat-prime-15:   #556372;
-    --sat-prime-20:   #506377;
-    --sat-prime-25:   #4b637c;
-    --sat-prime-30:   #466381;
-    --sat-prime-35:   #416386;
-    --sat-prime-40:   #3c638b;
-    --sat-prime-45:   #366493;
-    --sat-prime-50:   #326395;
-    --sat-prime-55:   #2d639a;
-    --sat-prime-60:   #28639f;
-    --sat-prime-65:   #2363a4;
-    --sat-prime-70:   #1e63a9;
-    --sat-prime-75:   #1963ae;
-    --sat-prime-80:   #1463b3;
-    --sat-prime-85:   #0f63b8;
-    --sat-prime-90:   #0a63bd;
-    --sat-prime-95:   #0563c2;
-    --sat-prime-100:  #0066cc;
+    --sat-prime-00 : #636363;
+    --sat-prime-05 : #5E6368;
+    --sat-prime-10 : #5A636D;
+    --sat-prime-15 : #556372;
+    --sat-prime-20 : #506377;
+    --sat-prime-25 : #4B637C;
+    --sat-prime-30 : #466381;
+    --sat-prime-35 : #416386;
+    --sat-prime-40 : #3C638B;
+    --sat-prime-45 : #366493;
+    --sat-prime-50 : #326395;
+    --sat-prime-55 : #2D639A;
+    --sat-prime-60 : #28639F;
+    --sat-prime-65 : #2363A4;
+    --sat-prime-70 : #1E63A9;
+    --sat-prime-75 : #1963AE;
+    --sat-prime-80 : #1463B3;
+    --sat-prime-85 : #0F63B8;
+    --sat-prime-90 : #0A63BD;
+    --sat-prime-95 : #0563C2;
+    --sat-prime-100: #0066CC;
 
     /*
      * hue-prime = hue of primary color
@@ -177,30 +178,29 @@
     */
 
     --hue-prime-000: #913636;
-    --hue-prime-015: #d36636;
+    --hue-prime-015: #D36636;
     --hue-prime-030: #916336;
-    --hue-prime-045: #917a36;
+    --hue-prime-045: #917A36;
     --hue-prime-060: #919136;
-    --hue-prime-075: #7a9136;
+    --hue-prime-075: #7A9136;
     --hue-prime-090: #639136;
-    --hue-prime-105: #4d9136;
+    --hue-prime-105: #4D9136;
     --hue-prime-120: #369136;
-    --hue-prime-135: #36914d;
+    --hue-prime-135: #36914D;
     --hue-prime-150: #369163;
-    --hue-prime-165: #36917a;
+    --hue-prime-165: #36917A;
     --hue-prime-180: #369191;
-    --hue-prime-195: #367a91;
+    --hue-prime-195: #367A91;
     --hue-prime-210: #366493;
-    --hue-prime-225: #364d91;
+    --hue-prime-225: #364D91;
     --hue-prime-240: #363691;
-    --hue-prime-255: #4d3691;
+    --hue-prime-255: #4D3691;
     --hue-prime-270: #633691;
-    --hue-prime-285: #7a3691;
+    --hue-prime-285: #7A3691;
     --hue-prime-300: #913691;
-    --hue-prime-315: #91367a;
+    --hue-prime-315: #91367A;
     --hue-prime-330: #913663;
-    --hue-prime-345: #91364d;
-    --hue-prime-360: #913636;
+    --hue-prime-345: #91364D;
 
 
 }

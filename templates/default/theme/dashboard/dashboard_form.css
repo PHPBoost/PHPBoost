@@ -2,7 +2,7 @@
  * Specific dashboard styles for form elements
 */
 
-/* --- Buttons --- */
+/* --- Buttons -------------------------------------------------------------- */
 
 button[id*="menu_element"] {
 	width: 100%;
@@ -15,7 +15,7 @@ button[id*="menu_element"] {
 	}
 }
 
-/* --- Fieldset --- */
+/* --- Fieldset ------------------------------------------------------------- */
 
 #AdminLoggedErrorsControllerList_fbuttons,
 #AdminErrorsController404List_fbuttons{
@@ -40,7 +40,7 @@ fieldset[id*="advises"] .form-element {
 	}
 }
 
-/* --- Inputs --- */
+/* --- Inputs --------------------------------------------------------------- */
 [type="text"],
 [type="email"],
 [type="url"],
@@ -63,7 +63,7 @@ select {
 	}
 }
 
-/* --- possible values --- */
+/* --- possible values ------------------------------------------------------ */
 [id*="_possible_values_"] > div > div > div {
     display: flex;
     flex-direction: row;
@@ -72,18 +72,14 @@ select {
 	align-items: center;
 }
 
-@media (min-width: 769px) {
-	[id*="_possible_values_"] > div > div > div {
-	    flex-wrap: nowrap;
-	}
-}
-
-/* --- input form-field-values --- */
 .form-field-values input[type="text"] {
 	width: 80%;
 }
 
 @media (min-width: 769px) {
+	[id*="_possible_values_"] > div > div > div {
+	    flex-wrap: nowrap;
+	}
 
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::before,
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::before {
@@ -97,7 +93,7 @@ select {
 
 }
 
-/* --- Form elements --- */
+/* --- Form elements -------------------------------------------------------- */
 .fieldset-content .fieldset-inset,
 .form-element {
     display: flex;
@@ -111,7 +107,6 @@ select {
 }
 
 .form-element {
-	flex-direction: column;
     justify-content: space-between;
     align-content: space-between;
 	border-width: 0 0 1px 0;
@@ -123,25 +118,15 @@ select {
 	justify-content: flex-start;
 }
 
-@media (min-width: 769px) {
-	.form-element { width: calc(100% / 2); }
-}
-
-@media (min-width: 1281px) {
-	.form-element { width: calc(100% / 4); }
-}
-
-@media (min-width: 769px) {
-	.form-element.form-subtitle {
-		padding: 1.618em 1.618em 0.618em 0;
-	}
-}
-
 .form-element.full-field,
 .form-element.half-field,
 .form-element.third-field { width: 100%; }
 
 @media (min-width: 769px) {
+	.form-element { width: calc(100% / 2); }
+	.form-element.form-subtitle {
+		padding: 1.618em 1.618em 0.618em 0;
+	}
 	.form-element.half-field,
 	.form-element.third-field { width: calc(100% / 2); }
 }
@@ -151,19 +136,14 @@ select {
 	.form-element.third-field   { width: calc(100% / 3); }
 }
 
+@media (min-width: 1281px) {
+	.form-element { width: calc(100% / 4); }
+}
+
 .form-element[id*=_separator_field] {
 	width: 100%;
 	padding: 0;
 	border-width: 0;
-}
-
-.form-element-preview {
-	margin: 0.618em;
-	text-align: center;
-}
-
-.form-element [id$="user_avatar"] img {
-	max-width: 200px;
 }
 
 .form-element > label {
@@ -177,11 +157,6 @@ select {
 .form-field-map,
 .form-element-auth .form-field,
 .form-field-textarea {
-	width: 100%;
-}
-
-.module-mini-container .form-field {
-	display: block;
 	width: 100%;
 }
 
@@ -243,9 +218,9 @@ div.advanced-auth-input input[id*=menu_element] {
 }
 
 .form-element-preview, .form-element-reset {
-	margin: 0.309em auto 0 auto;
+	margin-top: 0.309em;
 	text-align: center;
-	display: inline;
+	display: inline-block;
 }
 
 /* --- Authorizations --- */
