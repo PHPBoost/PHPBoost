@@ -11,10 +11,15 @@
 
 .message-header-container,
 .message-content,
-.message-footer-container {
+.message-footer-container,
+.message-user-sign {
     border-width: 1px;
     border-style: solid;
     border-color: transparent;
+}
+
+.message-user-sign {
+    border-width: 0 1px;
 }
 
 .message-header-container {
@@ -25,22 +30,29 @@
     position: relative;
 }
 
+.message-header-infos,
+.message-content,
+.message-user-sign,
+.message-footer-container {
+    padding: 0.309em 0.618em;
+}
+
+.message-user-infos,
+.message-actions a,
+.message-user-sign,
+.message-footer-container {
+    font-size: 0.809em
+}
+
 .message-header-infos {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1 1 auto;
-    padding: 0.309em 0.618em;
 }
-
-.message-user-infos {
-    font-size: 0.809em
-}
-
 .message-content {
     border-width: 0 1px 1px;
     flex: 1 1 auto;
-    padding: 0.309em 0.618em;
 }
 
 .message-user,
@@ -68,6 +80,11 @@
     }
 }
 
+.message-user-sign {
+    max-height: 75px;
+    overflow: hidden;
+}
+
 .message-actions,
 .message-infos {
     text-align: right;
@@ -75,13 +92,11 @@
 
 .message-actions a {
     padding: 0 0.228em;
-    font-size: 0.809em;
 }
 
 .message-footer-container {
     border-width: 0 1px 1px;
     padding: 0.309em 0.618em;
-    font-size: 0.809em;
 }
 
 .message-user-management {
@@ -156,12 +171,14 @@
 
 .message-header-container,
 .message-content,
-.message-footer-container {
+.message-footer-container,
+.message-user-sign {
     border-color: #DDDDDD;
 }
 
 /* --- Current user --- */
 .current-user-message.message-content,
-.current-user-message.message-footer-container {
+.current-user-message.message-footer-container,
+.current-user-message.message-user-sign {
     background-color: #ECF2F8;
 }

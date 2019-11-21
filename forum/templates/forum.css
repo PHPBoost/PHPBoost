@@ -51,6 +51,10 @@
 	font-size: 1.482rem;
 }
 
+.reload-unread {
+	padding: 0 0 0 0.309em;
+}
+
 /* -- details des pages
 ============================================================================= */
 
@@ -103,7 +107,7 @@ article footer ul.pagination {
 	}
 }
 
-.del-msg {
+.delete-message {
 	cursor:pointer;
 }
 
@@ -344,104 +348,7 @@ a.forum-link-pseudo {
 	float: right;
 }
 
-/* Messages postes par les membres
---------------------------------------*/
 
-/* Conteneur des messages */
-.msg-position {
-	margin: 1.618em auto;
-}
-
-/* Case contenant l'ensemble du message */
-.msg-container,
-.msg-container2 {
-	display: flex;
-	flex-direction: row;
-	height: auto !important;
-	overflow: hidden !important;
-	clear: both;
-}
-
-/* Barre superieur des messages */
-.msg-top {
-	display: flex;
-	flex-direction: column;
-	width: 135px;
-}
-
-.msg-top-row p {
-	margin: 0;
-}
-
-/* Pseudo du membre */
-.msg-pseudo-mbr {
-	padding: 0.456em;
-}
-
-.msg-info-mbr { /* Case des informations du membre */
-	padding: 0.456em;
-	font-size: 0.618em;
-}
-
-.msg-avatar-mbr img {
-	margin: 0.309em 0;
-	max-width: 120px;
-}
-
-/* Case contenant l'ensemble du message, infos membre + contenu */
-.msg-contents-container,
-.msg-contents-container2 {
-	display: flex;
-	flex-direction: column;
-	flex: 1 0 auto;
-	width: calc(100% - 135px);
-}
-
-/* --- info case du message ---*/
-.msg-title,
-.msg-contents-info {
-	padding: 0.456em;
-}
-
-.msg-contents-info a {
-	padding: 0 0.382em 0 0.228em;
-}
-
-/* Case du message */
-.msg-contents{
-	padding: 0.309em;
-	flex: 1 1 auto;
-}
-
-/* Signature du membre */
-.msg-sign,
-.msg-sign2 {
-	padding: 0.228em;
-	width: 100%;
-	font-size: 0.809em;
-}
-
-.msg-sign img,
-.msg-sign2 img {
-	max-height: 75px;
-}
-
-/* Signature du membre, fixe la hauteur maximale */
-.msg-sign-mbr {
-	padding-top: 0.309em;
-	height: auto !important;
-	max-height: 80px;
-	overflow: hidden;
-}
-
-.msg-sign-mbr hr {
-	clear: both;
-	margin-bottom: 1em;
-}
-
-.msg-sign-info .float-right a {
-	padding: 0.1618em 0.456em;
-}
 
 @media (max-width: 768px) {
 	tfoot,
@@ -456,82 +363,6 @@ a.forum-link-pseudo {
 
 	td.forum-last-topic {
 		margin-bottom: 0.228em;
-	}
-
-	/* ---topic --- */
-	.msg-container,
-	.msg-container2 {
-		flex-direction: column;
-	}
-
-	.msg-top {
-		flex-direction: row;
-		width: 100%;
-	}
-
-	.msg-pseudo-mbr { background-color: transparent;}
-
-	.msg-top-row {
-		flex: 1 0 auto;
-		order: 2;
-		text-align: center;
-	}
-
-	a.msg-link-pseudo {
-		font-size: 1.2em;
-	}
-
-	.msg-avatar-mbr {
-		order: 1;
-	}
-
-	.msg-avatar-mbr img {
-		max-width: 60px;
-		margin: 0.309em;
-	}
-
-	.msg-contents-container,
-	.msg-contents-container2 {
-		width: 100%;
-	}
-
-	.msg-contents-info {
-		background-color: transparent;
-		font-size: 0.809em;
-		text-align: right;
-	}
-
-	.msg-contents-info span {
-		float: none !important;
-	}
-
-	.msg-contents-info a {
-		padding: 0 0.228em;
-
-	}
-
-	.msg-contents-info i {
-		margin-bottom: 0.309em;
-	}
-
-	.msg-contents-info .float-right a {
-		padding: 0.456em;
-	}
-
-	.msg-sign span a,
-	.msg-sign2 span a {
-		padding: 0.228em;
-	}
-
-	.msg-info-mbr,
-	.msg-sign-mbr {
-		display: none;
-	}
-
-	.msg-contents,
-	.msg-sign,
-	.msg-sign2 {
-		margin: 0;
 	}
 }
 

@@ -30,7 +30,7 @@
 						<div class="forum-refresh">
 							<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 						</div>
-						<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);"><i class="fa fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
+						<a href="" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);"><i class="fa fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
 					</span>
 				</li>
 				<li>

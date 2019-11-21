@@ -468,7 +468,7 @@ while ( $row = $result->fetch() )
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button = '<a href="mailto:' . $row[$field_type] . '" class="basic-button"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title = $parameters['title'];
 						$icon_fa = $parameters['picture'];
 						$unknown_field = false;
@@ -482,13 +482,13 @@ while ( $row = $result->fetch() )
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="basic-button user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
 
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button = '<a href="' . $row[$field_type] . '" class="basic-button smaller"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button = '<a href="' . $row[$field_type] . '" class="basic-button"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title = $parameters['title'];
 						$icon_fa = $parameters['picture'];
 						$unknown_field = false;

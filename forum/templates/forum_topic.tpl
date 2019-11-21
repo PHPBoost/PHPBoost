@@ -216,10 +216,10 @@
 						</div>
 		                <div class="message-user-links">
 							# IF msg.C_USER_PM #
-								<a href="{msg.U_USER_PM}" class="basic-button smaller user-pm">${LangLoader::get_message('pm', 'main')}</a>
+								<a href="{msg.U_USER_PM}" class="basic-button user-pm">${LangLoader::get_message('pm', 'main')}</a>
 							# ENDIF #
 							# IF msg.C_USER_MAIL #
-								<a href="{msg.U_USER_MAIL}" class="basic-button smaller user-mail">${LangLoader::get_message('mail', 'main')}</a>
+								<a href="{msg.U_USER_MAIL}" class="basic-button user-mail">${LangLoader::get_message('mail', 'main')}</a>
 							# ENDIF #
 							# START msg.ext_fields #
 								{msg.ext_fields.BUTTON}
@@ -244,7 +244,7 @@
 							# IF msg.C_FORUM_MSG_DEL #
 								# IF msg.C_FORUM_MSG_DEL_MSG #
 									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="del-msg"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="delete-message"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 									<script>
 										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
 										document.getElementById('dimg{msg.ID}').style.display = 'inline';
@@ -266,7 +266,7 @@
 	                </div>
 	            </div>
 	        </div>
-	        <div class="message-content# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #" >
+	        <div class="message-content" >
 				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
 
 				{msg.FORUM_MSG_CONTENTS}
@@ -282,10 +282,10 @@
 						{L_ON} {msg.TOPIC_EDIT_DATE_FULL}
 					</p>
 				# ENDIF #
-				<div class="message-user-sign">
-					# IF msg.C_USER_SIGN #<hr /><br />{msg.USER_SIGN}# ENDIF #
-				</div>
 	        </div>
+			<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+				# IF msg.C_USER_SIGN #{msg.USER_SIGN}# ENDIF #
+			</div>
 	        <div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 	            <div class="message-user-assoc">
 	                <div class="message-group-level">
