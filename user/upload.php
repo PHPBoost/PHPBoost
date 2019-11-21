@@ -425,7 +425,7 @@ else
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i  class="fa fa-edit"></i></a></span>',
-			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-move" aria-label="' . $LANG['moveto'] . '"></a>',
+			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-share" aria-label="' . $LANG['moveto'] . '"></a>',
 			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
 		));

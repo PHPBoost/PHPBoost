@@ -350,9 +350,9 @@
 							# IF C_GALLERY_PICS_MODO #
 								<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
 
-								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 								<div id="move{ID}" class="modal-container cell-modal inline-block">
-									<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+									<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 									<div id="gallery-pic-move-to" class="modal modal-animation">
 										<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 										<div class="cell content-panel">
@@ -462,9 +462,9 @@
 									<ul>
 										<li class="li-stretch">
 											<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit"></i></a>
-											<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+											<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt"></i></a>
 											<div id="move{pics_list.ID}" class="modal-container cell-modal">
-												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 												<div id="gallery-pic-move-to" class="modal modal-animation">
 													<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 													<div class="cell content-panel">

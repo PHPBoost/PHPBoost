@@ -102,7 +102,7 @@
 					<a href="{bug.U_CHANGE_STATUS}" aria-label="{@actions.change_status}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 					<a href="{bug.U_HISTORY}" aria-label="{@actions.history}"><i class="fa fa-history" aria-hidden="true"></i></a>
 					<a href="{bug.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-					<a href="{bug.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+					<a href="{bug.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 				</td>
 				# ENDIF #
 			</tr>

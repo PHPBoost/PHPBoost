@@ -24,7 +24,7 @@
 						# ENDIF #
 						# IF C_DELETE #
 						<li><a href="{U_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
-							<i class="fa fa-fw fa-delete" aria-hidden="true"></i> {L_DELETE}
+							<i class="fa fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
 						</a></li>
 						# ENDIF #
 						# IF C_RENAME #
@@ -39,7 +39,7 @@
 						# ENDIF #
 						# IF C_MOVE #
 						<li><a href="{U_MOVE}" class="cssmenu-title">
-							<i class="fa fa-fw fa-move" aria-hidden="true"></i> {L_MOVE}
+							<i class="fa fa-fw fa-share" aria-hidden="true"></i> {L_MOVE}
 						</a></li>
 						# ENDIF #
 						# IF C_STATUS #

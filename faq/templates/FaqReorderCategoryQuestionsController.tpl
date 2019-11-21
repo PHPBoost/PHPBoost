@@ -141,7 +141,7 @@
 								<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a>
 								# ENDIF #
 								<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>
-								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-delete fa-fw" aria-hidden="true"></i></a>
+								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-trash-alt fa-fw" aria-hidden="true"></i></a>
 							</div>
 
 							<script>

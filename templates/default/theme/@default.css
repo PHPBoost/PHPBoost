@@ -385,9 +385,9 @@ ul.pagination .current-page {
 .fa.fa-online:before,
 .fa.fa-offline:before      { content: "\f007"; } /* copy user */
 .fa.fa-forbidden:before    { content: "\f056"; } /* copy minus-circle */
-.fa.fa-delete:before       { content: "\f2ed"; } /* copy trash-alt */
+.fa.fa-trash-alt:before       { content: "\f2ed"; } /* copy trash-alt */
 .fa.fa-profil:before       { content: "\f3fd"; } /* copy tachometer-alt */
-.fa.fa-move:before         { content: "\f064"; } /* copy share */
+.fa.fa-share:before         { content: "\f064"; } /* copy share */
 .fa.fa-refresh:before      { content: "\f021"; } /* copy sync */
 .fa.fa-remove:before       { content: "\f00d"; } /* copy times */
 .fa.fa-legal:before        { content: "\f0e3"; } /* copy gavel */
@@ -457,7 +457,7 @@ ul.pagination .current-page {
 .fa.fa-calendar-alt,
 .fa.fa-clock,
 .fa.fa-comments,
-.fa.fa-delete,
+.fa.fa-trash-alt,
 .fa.fa-edit,
 .fa.fa-envelope,
 .fa.fa-eye,

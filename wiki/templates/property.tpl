@@ -251,7 +251,7 @@
 						{redirect.list.REDIRECTION_NAME}
 					</td>
 					<td>
-						<a href="{redirect.list.U_REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}" aria-label="{REDIRECTION_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}" aria-label="{REDIRECTION_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 					</td>
 				</tr>
 				# END redirect.list #

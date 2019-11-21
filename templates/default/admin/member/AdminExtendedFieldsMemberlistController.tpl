@@ -125,7 +125,7 @@ jQuery(document).ready(function() {
 							# ENDIF #
 							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# IF NOT list_extended_fields.C_FREEZE #
-							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 							# ELSE #
 							&nbsp;
 							# ENDIF #

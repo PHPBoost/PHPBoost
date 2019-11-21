@@ -22,7 +22,6 @@
 #module-forum table tbody td .bt-content span {
 	display: block;
 	text-align: left;
-	padding: 0.1618em
 }
 
 #module-forum table.bt tbody tr:last-child td:last-child {
@@ -268,9 +267,7 @@ a.forum-link-pseudo {
 .forum-textarea:focus,
 .forum-textarea:hover  {
 	padding: 0.228em 0.309em;
-	width: 99%;
 	min-height: 150px;
-	border-top: none;
 }
 
 /* --- taille des colonnes --- */
@@ -295,7 +292,7 @@ a.forum-link-pseudo {
 	.forum-pm 				{ width: 3.82em;  }
 	.forum-mail 			{ width: 3.82em;  }
 	.forum-delete 			{ width: 4.56em;  }
-	.forum-last-topic 		{ width: 10em;    }
+	.forum-last-topic 		{ width: 11em;    }
 
 	td.forum-last-topic {
 		font-size: 0.809em;

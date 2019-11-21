@@ -9,7 +9,7 @@
 		<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 		<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 		<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-		<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+		<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 	</div>
 	<script>
 	<!--

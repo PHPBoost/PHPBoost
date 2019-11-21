@@ -160,7 +160,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new-folder' + divid).innerHTML = '<a class="infos-options" href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fa fa-folder fa-2x"></i></a> &nbsp;<span class="infos-options" id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span>&nbsp;<span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a></span>&nbsp;<span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}" class="fa fa-move"></a></span><span id="img' + xhr_object.responseText + '"></span></div>';
+						document.getElementById('new-folder' + divid).innerHTML = '<a class="infos-options" href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="fa fa-folder fa-2x"></i></a> &nbsp;<span class="infos-options" id="f' + xhr_object.responseText + '"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span>&nbsp;<span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="fa fa-trash-alt"></i></a></span>&nbsp;<span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}" class="fa fa-share"></a></span><span id="img' + xhr_object.responseText + '"></span></div>';
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -391,10 +391,10 @@
 							<div class="upload-repertory-controls">
 								{folder.RENAME_FOLDER}
 								<span>
-									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+									<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 								</span>
 								<span>
-									<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+									<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 								</span>
 								<span id="img{folder.ID}"></span>
 							</div>
@@ -418,8 +418,8 @@
 						{files.BBCODE}
 						<div class="upload-file-controls">
 							{files.RENAME_FILE}
-							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
-							<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 							{files.INSERT}
 						</div>
 						<span class="infos-options text-strong">{files.FILETYPE}</span>

@@ -218,7 +218,7 @@
 							</li>
 							<li>
 								<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-									<i class="fa fa-fw fa-delete" aria-hidden="true"></i> {L_DELETE}
+									<i class="fa fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
 								</a>
 							</li>
 						</ul>
@@ -444,7 +444,7 @@
 								<td>{file.FILE_DATE}</td>
 								<td>
 									<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DOWNLOAD}"><i class="fa fa-download" aria-hidden="true"></i></a>
-									<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+									<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 								</td>
 							</tr>
 						# END file #

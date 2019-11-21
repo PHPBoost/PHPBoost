@@ -335,7 +335,7 @@ function display_thumbnails(direction)
 							<td colspan="2" class="small">
 								&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
-								<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+								<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 
 								<div id="move{pics.pics_max.ID}" class="move-pics-container">
 									<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
@@ -345,7 +345,7 @@ function display_thumbnails(direction)
 										</select>
 									</div>
 								</div>
-								<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-move" aria-hidden="true"></i></a>
+								<a href="javascript:pics_display_block({pics.pics_max.ID});" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 								<a id="img_aprob{pics.pics_max.ID}" href="javascript:pics_aprob({pics.pics_max.ID});" # IF pics.pics_max.C_APPROVED #aria-label="{L_APROB}" class="fa fa-eye"# ELSE #aria-label="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
 								&nbsp;<span id="img{pics.pics_max.ID}"></span>
 							</td>
@@ -417,7 +417,7 @@ function display_thumbnails(direction)
 								</div>
 								<div class="cell-footer">
 									<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
-									<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+									<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 
 									<div id="move{pics.list.ID}" class="move-pics-container">
 										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
@@ -427,7 +427,7 @@ function display_thumbnails(direction)
 											</select>
 										</div>
 									</div>
-									<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-move"></i></a>
+									<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" aria-label="{L_MOVETO}"><i class="fa fa-share"></i></a>
 
 									<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #aria-label="{L_APROB}" class="fa fa-eye"# ELSE #aria-label="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
 									&nbsp;<span id="img{pics.list.ID}"></span>

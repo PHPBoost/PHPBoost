@@ -154,7 +154,7 @@
 						<ul>
 							# START comments_list #
 								<li>
-									<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true" aria-label=""></i></a>
+									<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true" aria-label=""></i></a>
 									<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 										<i class="far fa-hand-point-right" aria-hidden="true"></i>
 									</a>

@@ -29,7 +29,7 @@
 					# IF subscribers_list.C_EDIT #
 					<a href="{subscribers_list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 					# ENDIF #
-					<a href="{subscribers_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+					<a href="{subscribers_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 			</td>
 		</tr>

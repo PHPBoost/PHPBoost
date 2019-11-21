@@ -64,7 +64,7 @@
 				</h2>
 				<span class="actions">
 					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
-					<a href="#" aria-label="{@css.delete}"><i class="fa fa-delete" aria-hidden="true" aria-label="{@css.delete}"></i></a>
+					<a href="#" aria-label="{@css.delete}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
 				</span>
 				<div class="more">{@css.more}</div>
 			</header>
@@ -285,9 +285,9 @@
 				<ul>
 					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" aria-label="{@css.rss_feed}"></a></li>
 					<li>{@css.edit} : <a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a></li>
-					<li>{@css.delete} : <a href="#" class="fa fa-delete" aria-label="{@css.delete}"></a></li>
-					<li>{@css.delete.confirm} : <a href="#" class="fa fa-delete" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
-					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}" aria-label="{@css.delete.confirm.custom}"></a></li>
+					<li>{@css.delete} : <a href="#" class="fa fa-trash-alt" aria-label="{@css.delete}"></a></li>
+					<li>{@css.delete.confirm} : <a href="#" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
+					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-trash-alt" data-confirmation="{@css.delete.custom_message}" aria-label="{@css.delete.confirm.custom}"></a></li>
 				</ul>
 			</div>
 		</article>
@@ -575,7 +575,7 @@
 							<span class="actions">
 								<a itemprop="url" href="#com2">#2</a>
 								<a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a>
-								<a href="#" class="fa fa-delete" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a>
+								<a href="#" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a>
 							</span>
 							<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 						</div>

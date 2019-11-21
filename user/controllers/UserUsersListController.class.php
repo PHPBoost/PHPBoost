@@ -76,9 +76,9 @@ class UserUsersListController extends AbstractController
 				$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 
 				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
-					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
 				else
-					$delete_link = new LinkHTMLElement('', '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-delete icon-disabled');
+					$delete_link = new LinkHTMLElement('', '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-trash-alt icon-disabled');
 
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}

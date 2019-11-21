@@ -15,7 +15,7 @@
 
 				# START list #
 				<div class="msg-position">
-					<div class="msg-title bkgd-color-op20">
+					<div class="msg-title">
 						<a href="{list.U_FORUM_CAT}" class="forum-mbrmsg-links">{list.FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{list.U_TITLE_T}" class="forum-mbrmsg-links">{list.TITLE_T}</a>
 						<span class="float-right">
 							<a href="#go-top" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
@@ -23,9 +23,9 @@
 						</span>
 					</div>
 					<div class="msg-container">
-						<div class="msg-top bkgd-color-op20-sc">
+						<div class="msg-top">
 							<div class="msg-top-row">
-								<div class="msg-pseudo-mbr bkgd-color-op20">
+								<div class="msg-pseudo-mbr">
 									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
 									# IF NOT list.C_GUEST #
 										<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
@@ -75,7 +75,7 @@
 						</div>
 
 						<div class="msg-contents-container">
-							<div class="msg-contents-info bkgd-color-op20">
+							<div class="msg-contents-info">
 								<span class="float-left">
 									&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" aria-label="{list.DATE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a>${LangLoader::get_message('on', 'main')} {list.TOPIC_DATE_FULL}
 								</span>

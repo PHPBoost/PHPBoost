@@ -73,7 +73,7 @@
 										# ENDIF #
 									</td>
 									<td>
-										# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
+										# IF rank.C_SPECIAL_RANK #<a href="{rank.U_DELETE}" class="fa fa-trash-alt" data-confirmation="delete-element"></a># ELSE #{rank.L_SPECIAL_RANK}# ENDIF #
 									</td>
 								</tr>
 								# END rank #

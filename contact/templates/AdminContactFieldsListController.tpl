@@ -112,7 +112,7 @@ jQuery(document).ready(function() {
 							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{fields_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# ENDIF #
 						<a href="{fields_list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-						# IF fields_list.C_DELETE #<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-delete" aria-hidden="true"></i></a># ELSE #&nbsp;# ENDIF #
+						# IF fields_list.C_DELETE #<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{fields_list.ID}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ELSE #&nbsp;# ENDIF #
 						# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change-display-{fields_list.ID}"# IF fields_list.C_DISPLAY # aria-label="{@field.display}"# ELSE #aria-label="{@field.not_display}"# ENDIF #><i aria-hidden="true" class="# IF fields_list.C_DISPLAY #fa fa-eye# ELSE #fa fa-eye-slash# ENDIF #"></i></a># ELSE #&nbsp;# ENDIF #
 					</div>
 					<div class="spacer"></div>

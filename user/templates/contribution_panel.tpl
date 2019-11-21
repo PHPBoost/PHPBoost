@@ -171,7 +171,7 @@
 			# IF C_WRITE_AUTH #
 				<div class="cat-actions">
 					<a href="{U_UPDATE}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-					<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+					<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 				</div>
 			# ENDIF #
 		</header>

@@ -59,7 +59,7 @@
 				<div style="width:30%;">
 				{redirect.REDIRECTED}
 					# START redirect.remove_redirection #
-						<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+						<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}" aria-label="{redirect.remove_redirection.L_REMOVE_REDIRECTION}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 					# END redirect.remove_redirection #
 				</div>
 				<div class="spacer"></div>

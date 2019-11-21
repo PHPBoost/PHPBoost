@@ -20,7 +20,7 @@
 								<a href="{event.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #
 							# IF event.C_DELETE #
-								<a href="{event.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete" aria-hidden="true"></i></a>
+								<a href="{event.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 							# ENDIF #
 						</div>
 						<div class="more">

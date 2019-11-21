@@ -6,7 +6,7 @@
         &lt;/h2>
         &lt;span class="actions">
             &lt;a href="#" class="fa fa-edit" aria-label="edit">&lt;/a>
-            &lt;a href="#" class="fa fa-delete" aria-label="delete">&lt;/a>
+            &lt;a href="#" class="fa fa-trash-alt" aria-label="delete">&lt;/a>
         &lt;/span>
         &lt;div class="more">John Doe | 01/01/1970 | 12 coms&lt;/div>
     &lt;/header>

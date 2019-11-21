@@ -17,7 +17,7 @@
 			<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 			# ENDIF #
 			# IF C_DELETE #
-			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a>
+			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt"></i></a>
 			# ENDIF #
 		</div>
 		<div class="more">

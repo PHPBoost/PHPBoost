@@ -102,13 +102,13 @@
 				<table class="table forum-table">
 					<thead>
 						<tr>
-							<th class="forum-announce-topic"><i class="fa fa-eye" aria-hidden="true"></i></th>
+							<th class="forum-announce-topic"><i class="far fa-eye" aria-hidden="true"></i></th>
 							<th class="forum-fixed-topic"><i class="fa fa-check" aria-hidden="true"></i></th>
-							<th class="forum-topic" aria-label="{L_TOPIC}"><i class="fa fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
-							<th class="forum-author"><i class="fa fa-user fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
-							<th class="forum-message-nb"><i class="fa fa-comments fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
-							<th class="forum-view"><i class="fa fa-eye fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
-							<th class="forum-last-topic"><i class="fa fa-clock fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
+							<th class="forum-topic" aria-label="{L_TOPIC}"><i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
+							<th class="forum-author"><i class="far fa-user fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
+							<th class="forum-message-nb"><i class="far fa-comments fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>
+							<th class="forum-view"><i class="far fa-eye fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_VIEW}"></i><span class="hidden-large-screens">{L_VIEW}</span></th>
+							<th class="forum-last-topic"><i class="far fa-clock fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_LAST_MESSAGE}"></i><span class="hidden-large-screens">{L_LAST_MESSAGE}</span></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -132,9 +132,9 @@
 						# ENDIF #
 						<td class="forum-announce-topic">
 							# IF NOT topics.C_HOT_TOPIC #
-								<i class="fa {topics.IMG_ANNOUNCE}" aria-hidden="true"></i>
+								<i class="far {topics.IMG_ANNOUNCE}" aria-hidden="true"></i>
 							# ELSE #
-								<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot" aria-hidden="true"></i>
+								<i class="far # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot" aria-hidden="true"></i>
 							# ENDIF #
 						</td>
 						<td class="forum-fixed-topic">
@@ -164,10 +164,10 @@
 						</td>
 						<td class="forum-last-topic">
 							<span class="last-topic-title">
-								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
+								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}"><i class="far fa-hand-point-right fa-fw" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
 							</span>
 							<span class="last-topic-user">
-								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+								<i class="far fa-user fa-fw" aria-hidden="true"></i>
 								# IF topics.C_LAST_MSG_GUEST #
 								<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
 								# ELSE #

@@ -18,7 +18,7 @@
 				<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
 			# IF C_DELETE #
-				<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-delete" aria-hidden="true"></i></a>
+				<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 			# ENDIF #
 		</div>
 		<a itemprop="url" href="{U_LINK}"></a>

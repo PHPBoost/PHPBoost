@@ -8,7 +8,7 @@
 			# IF C_TOOLS_AUTH #
 			<a href="{U_RENAME}" aria-label="{L_RENAME}"><i class="fa fa-magic" aria-hidden="true"></i></a>
 			<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-			<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-delete" aria-hidden="true"></i></a>
+			<a href="{U_DELETE}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 			# ENDIF #
 			# IF C_PRINT #<a href="{U_PRINT}" aria-label="{L_PRINT}"><i class="fa fa-print" aria-hidden="true"></i></a># ENDIF #
 		</div>

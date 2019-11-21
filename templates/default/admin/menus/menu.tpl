@@ -10,7 +10,7 @@
 			<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 		# ENDIF #
 		# IF C_DEL #
-			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{L_DEL}"><i class="fa fa-delete" aria-hidden="true"></i></a>
+			<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{L_DEL}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 		# ENDIF #
 
 		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" aria-label="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #"><i class="fa # IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>

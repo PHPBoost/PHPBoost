@@ -148,7 +148,7 @@
 								<li class="action"><a href="{questions.U_EDIT}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i> ${LangLoader::get_message('edit', 'common')}</a></li>
 								# ENDIF #
 								# IF questions.C_DELETE #
-								<li class="action"><a href="" onclick="delete_question({questions.ID});return false;"><i class="fa fa-delete" aria-hidden="true"></i> ${LangLoader::get_message('delete', 'common')}</a></li>
+								<li class="action"><a href="" onclick="delete_question({questions.ID});return false;"><i class="fa fa-trash-alt" aria-hidden="true"></i> ${LangLoader::get_message('delete', 'common')}</a></li>
 								# ENDIF #
 							</ul>
 						</span>

@@ -14,7 +14,7 @@
             &lt;span class="actions">
                 &lt;a itemprop="url" href="#com2" aria-label="#2">#id&lt;/a>
                 &lt;a href="#comments_message" class="fa fa-edit" aria-label="{@css.edit}">&lt;/a>
-                &lt;a href="#comments_message" class="fa fa-delete" data-confirmation="delete-element" aria-label="{@css.delete.confirm}">&lt;/a>
+                &lt;a href="#comments_message" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}">&lt;/a>
             &lt;/span>
             &lt;span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">01/01/1970&lt;/span>
         &lt;/div>

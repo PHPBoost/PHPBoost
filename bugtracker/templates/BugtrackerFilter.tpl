@@ -90,7 +90,7 @@ function toggle_filters_table() {
 		# START filters #
 			<tr id="filter{filters.ID}">
 				<td colspan="{FILTERS_NUMBER}">
-					<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-delete" aria-hidden="true"></i></a>
+					<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 					<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 				</td>
 			</tr>

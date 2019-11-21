@@ -1,12 +1,9 @@
 	{HEADER}
 	<script>
-	<!--
-	function close_popup()
-	{
-		opener=self;
-		self.close();
-	}
-	-->
+		function close_popup() {
+			opener=self;
+			self.close();
+		}
 	</script>
 	<section id="module-user-upload-move">
 		<header><h1>{L_FILES_MANAGEMENT}</h1></header>
@@ -41,15 +38,13 @@
 						<i class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>
 					<div class="upload-elements-move-to-cat">
-							<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
-							<script>
-							<!--
-								var path = '{PATH_TO_ROOT}/templates/{THEME}';
-								var selected_cat = {SELECTED_CAT};
-							-->
-							</script>
-							<span class="infos-options upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
-							{FOLDERS}
+						<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
+						<script>
+							var path = '{PATH_TO_ROOT}/templates/{THEME}';
+							var selected_cat = {SELECTED_CAT};
+						</script>
+						<span class="infos-options upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
+						{FOLDERS}
 					</div>
 				</div>
 				<div class="spacer"></div>
