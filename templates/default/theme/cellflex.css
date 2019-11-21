@@ -64,7 +64,8 @@
 
 .cell-flex .cell-body,
 .cell-flex .cell-list,
-.cell-flex .cell-table {
+.cell-flex .cell-table,
+.cell-flex .cell-textarea {
 	flex: 1 1 auto;
 }
 

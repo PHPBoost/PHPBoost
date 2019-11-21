@@ -154,7 +154,7 @@
 						<ul>
 							# START comments_list #
 								<li>
-									<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true" aria-label=""></i></a>
+									<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 									<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 										<i class="far fa-hand-point-right" aria-hidden="true"></i>
 									</a>
@@ -183,11 +183,11 @@
 				</div>
 
 				<div class="cell dashboard-writting-pad">
-					<form action="admin_index.php" method="post">
-						<div class="cell-header">
-							<h2><i class="fa fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
-						</div>
-						<div class="cell-body">
+					<div class="cell-header">
+						<h2><i class="fa fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
+					</div>
+					<div class="cell-textarea">
+						<form action="admin_index.php" class="form-content" method="post">
 							<div class="fieldset-inset">
 								<div class="form-element full-field">
 									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
@@ -198,8 +198,8 @@
 									<input type="hidden" name="token" value="{TOKEN}">
 								</p>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="spacer"></div>

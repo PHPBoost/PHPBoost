@@ -181,7 +181,8 @@ i.message-announce-new { color: #4D9136; }
 .cell-list,
 .cell-footer,
 .cell-table,
-.cell-form {
+.cell-form,
+.cell-textarea {
 	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }

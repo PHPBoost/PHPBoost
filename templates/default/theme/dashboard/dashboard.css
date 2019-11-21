@@ -7,7 +7,10 @@
 
 .cell-body fieldset,
 .cell-body .fieldset-inset,
-.cell-body .form-element { padding: 0; }
+.cell-body .form-element {
+    padding: 0;
+    margin: 0;
+}
 
 .cell-body legend {
     padding: 0.309em;

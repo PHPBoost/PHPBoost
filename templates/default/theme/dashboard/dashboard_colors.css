@@ -38,7 +38,8 @@
 .cell-list,
 .cell-footer,
 .cell-table,
-.cell-form {
+.cell-form,
+.cell-textarea {
 	background-color: #FFFFFF;
 }
 
@@ -52,6 +53,10 @@
 
 .cell-modal .content-panel.cell {
 	background-color: transparent;
+}
+
+.cell-textarea .form-element {
+	border-color: transparent;
 }
 
 /* --- Addons (themes/modules/langs) ---------------------------------------- */

@@ -45,6 +45,7 @@
 .cell-list,
 .cell-table,
 .cell-form,
+.cell-textarea,
 .cell-footer {
 	border-style: solid;
 	border-width: 1px;
