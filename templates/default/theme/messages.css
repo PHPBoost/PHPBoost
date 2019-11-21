@@ -1,9 +1,13 @@
-.message {
+.message-container {
     display: flex;
     flex-direction: column;
+    margin: 1.618em 0;
 }
 
-.message-header-container h2 { font-size: 1em; }
+.message-user-avatar { max-width: 90px; }
+.item-comments .message-user-avatar { max-width: 80px; }
+
+.message-header-container h3 { font-size: 1.618em; }
 
 .message-header-container,
 .message-content,
@@ -18,51 +22,133 @@
     flex-direction: row;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
-.message-header-infos { flex: 1 1 auto; }
+.message-header-infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    padding: 0.309em 0.618em;
+}
 
-.message-avatar {max-height: 5em}
+.message-user-infos {
+    font-size: 0.809em
+}
 
 .message-content {
     border-width: 0 1px 1px;
     flex: 1 1 auto;
-}
-
-.message-user,
-.message-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.message-user,
-.message-content {
     padding: 0.309em 0.618em;
 }
 
-.message-info {
-    padding: 0 0.618em 0.309em;
+.message-user,
+.message-infos,
+.message-user-management,
+.message-user-infos,
+.message-user-assoc {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 769px) {
+    .message-user-avatar { max-width: 120px; }
+
+    .message-header-container h3 { font-size: 2em; }
+
+    .message-user,
+    .message-infos,
+    .message-user-management,
+    .message-user-infos,
+    .message-user-assoc {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.message-actions,
+.message-infos {
+    text-align: right;
+}
+
+.message-actions a {
+    padding: 0 0.228em;
+    font-size: 0.809em;
 }
 
 .message-footer-container {
     border-width: 0 1px 1px;
     padding: 0.309em 0.618em;
+    font-size: 0.809em;
+}
+
+.message-user-management {
+    justify-content: flex-end;
 }
 
 /* --- Current user --- */
-.current-user .message-avatar { order: 2 }
-.current-user .message-header-infos { order: 1 }
+.current-user-message .message-user-avatar { order: 2 }
+.current-user-message .message-header-infos { order: 1 }
 
-.current-user .message-user,
-.current-user .message-info {
+.current-user-message .message-user,
+.current-user-message .message-infos {
     flex-direction: row-reverse;
 }
 
-@media (min-width: 769px) {
-    .message-header-container h2 { font-size: 2em; }
+/* --- Moderation --- */
+.message-moderate {
+	margin-bottom: 0.618em;
+	padding: 0.309em 0 0.309em 0;
+	width: 98%;
+	text-align: center;
+	vertical-align: middle;
 }
+
+.message-moderate a {
+	vertical-align: top;
+}
+
+/* --- view message --- */
+
+.view-topic {
+	padding: 0.809em 0;
+}
+
+.view-topic i {
+	margin: 0 0 0.1618em 0.309em;
+}
+
+/* hexagon  -- set img.-picture in div.-avatar*/
+/* .message-user-avatar {
+    width: 60px;
+    height: 120px;
+}
+
+.message-user-picture {
+    display: block;
+    top: 0;
+    left: -8%;
+    position: absolute;
+    -webkit-clip-path: polygon(5% 25%, 5% 75%, 50% 100%, 95% 75%, 95% 25%, 50% 0%);
+    clip-path: polygon(5% 25%, 5% 75%, 50% 100%, 95% 75%, 95% 25%, 50% 0%);
+    margin: 0 auto;
+}
+
+.message-user-picture::after {
+    content: "";
+    position: absolute;
+    top: 4%;
+    left: 4%;
+    right: 4%;
+    bottom: 4%;
+    margin: 0 auto;
+    clip-path: polygon(5% 25%, 5% 75%, 50% 100%, 95% 75%, 95% 25%, 50% 0%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+} */
 
 /*  colors.css */
 
@@ -75,16 +161,7 @@
 }
 
 /* --- Current user --- */
-.current-user-color .message-header-container,
-.current-user-color .message-content,
-.current-user-color .message-footer-container {
+.current-user-message.message-content,
+.current-user-message.message-footer-container {
     background-color: #ECF2F8;
-}
-
-/* content.css to delete */
-
-#module-guestbook .message-avatar {padding: 0;}
-
-#module-guestbook .message-message {
-    margin: 0;
 }

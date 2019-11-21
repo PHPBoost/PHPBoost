@@ -3135,7 +3135,7 @@ readers do not read off random characters that represent icons */
 .fa-registered:before {
   content: "\f25d"; }
 
-.fa-remove-format:before {
+.fa-times-format:before {
   content: "\f87d"; }
 
 .fa-renren:before {

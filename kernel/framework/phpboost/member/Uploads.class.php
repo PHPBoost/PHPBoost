@@ -334,7 +334,7 @@ class Uploads
 			case 'raw':
 			case 'ico':
 			case 'tif':
-			$img = 'fa-upload-picture fa-2x';
+			$img = 'fa-file-image fa-2x';
 			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Archives
@@ -342,12 +342,12 @@ class Uploads
 			case 'gz':
 			case 'zip':
 			case '7z':
-			$img = 'fa-upload-zip fa-2x';
+			$img = 'fa-file-archive fa-2x';
 			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Pdf
 			case 'pdf':
-			$img = 'fa-upload-pdf fa-2x';
+			$img = 'fa-file-pdf fa-2x';
 			$filetype = LangLoader::get_message('adobe_pdf', 'main');
 			break;
 			//Son
@@ -355,21 +355,17 @@ class Uploads
 			case 'midi':
 			case 'ogg':
 			case 'mp3':
-			$img = 'fa-upload-audio fa-2x';
+			$img = 'fa-file-audio fa-2x';
 			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), TextHelper::strtoupper($type));
 			break;
 			//Sripts
 			case 'html':
 			case 'tpl':
-			$img = 'fa-upload-html fa-2x';
-			break;
 			case 'css':
-			$img = 'fa-upload-css fa-2x';
-			break;
 			case 'js':
 			case 'php':
 			case 'swf':
-			$img = 'fa-upload-script fa-2x';
+			$img = 'fa-file-code fa-2x';
 			break;
 			//Vidéos
 			case 'wmv':
@@ -380,16 +376,16 @@ class Uploads
 			case 'flv':
 			case 'mpeg':
 			case 'mov':
-			$img = 'fa-upload-video fa-2x';
+			$img = 'fa-file-video fa-2x';
 			break;
 			//Executables
 			case 'exe':
-			$img = 'fa-upload-exec fa-2x';
+			$img = 'fa-cog fa-2x';
 			break;
 			//Text
 			case 'txt':
 			case 'csv':
-			$img = 'fa-upload-text fa-2x';
+			$img = 'fa-file-alt fa-2x';
 			break;
 			//Office
 			case 'xls':
@@ -397,23 +393,23 @@ class Uploads
 			case 'xlsm':
 			case 'gsheet':
 			case 'ods':
-			$img = 'fa-upload-sheet fa-2x';
+			$img = 'fa-file-exel fa-2x';
 			break;
 			case 'doc':
 			case 'docx':
 			case 'gdoc':
 			case 'odt':
-			$img = 'fa-upload-doc fa-2x';
+			$img = 'fa-file-word fa-2x';
 			break;
 			case 'ppt':
 			case 'pptx':
 			case 'gslides':
 			case 'odp':
-			$img = 'fa-upload-slide fa-2x';
+			$img = 'fa-file-powerpoint fa-2x';
 			break;
 			//Default
 			default:
-			$img = 'fa fa-upload-other fa-2x';
+			$img = 'fa fa-file-upload fa-2x';
 			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
 		}
 

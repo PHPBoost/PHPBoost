@@ -160,11 +160,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if ($internal_auth_connected)
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-success"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-check"></i>', LangLoader::get_message('edit_internal_connection', 'user-common')));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-error"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree('internal_auth', $this->lang['internal_connection'] . ' <i class="fa fa-times"></i>', '<a  href="" onclick="javascript:HTMLForms.getField(\'custom_login\').setValue(false);HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();return false;">' . LangLoader::get_message('create_internal_connection', 'user-common') . '</a>'));
 			}
 		}
 
@@ -219,11 +219,11 @@ class UserEditProfileController extends AbstractController
 		{
 			if (in_array($id, $this->user_auth_types))
 			{
-				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['dissociate_account_admin'] : $this->lang['dissociate_account']) . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-check"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'dissociate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['dissociate_account_admin'] : $this->lang['dissociate_account']) . '</a>'));
 			}
 			else
 			{
-				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['associate_account_admin'] : $this->lang['associate_account']) . '</a>'));
+				$connect_fieldset->add_field(new FormFieldFree($id .'_auth', $authentication->get_authentication_name() . ' <i class="fa fa-times"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id(), 'associate', $id)->absolute() . '">' . ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['associate_account_admin'] : $this->lang['associate_account']) . '</a>'));
 			}
 		}
 

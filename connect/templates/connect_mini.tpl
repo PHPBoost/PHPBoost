@@ -91,7 +91,7 @@
 			<ul class="connect-elements-container">
 				<li class="connect-element connect-profil">
 					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">
-						<i class="fa fa-profil" aria-hidden="true"></i><span class="pbt-small-screen">{@dashboard}</span>
+						<i class="fa fa-tachometer-alt" aria-hidden="true"></i><span class="pbt-small-screen">{@dashboard}</span>
 					</a>
 				</li>
 				<li class="connect-element connect-pm# IF C_HAS_PM # connect-event# ENDIF #">
@@ -109,7 +109,7 @@
 				# IF C_MODERATOR_AUTH #
 				<li class="connect-element connect-modo">
 					<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">
-						<i class="fa fa-legal" aria-hidden="true"></i><span>{L_MODO_PANEL}</span>
+						<i class="fa fa-gavel" aria-hidden="true"></i><span>{L_MODO_PANEL}</span>
 					</a>
 				</li>
 				# ENDIF #

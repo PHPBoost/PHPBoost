@@ -107,7 +107,11 @@ if (!empty($id_get))
 		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, 'forum', 'idcat');
 
 		//On liste les sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('SELECT
+			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status,
+			t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status,
+			m.user_id, m.display_name, m.level AS user_level, m.groups,
+			v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -312,7 +316,14 @@ if (!empty($id_get))
 	);
 
 	$nbr_topics_display = 0;
-	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack, msg.timestamp AS first_timestamp
+	$result = PersistenceContext::get_querier()->select("SELECT
+		m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups,
+		m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups,
+		t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg,
+		v.last_view_id,
+		p.question,
+		tr.id AS idtrack,
+		msg.timestamp AS first_timestamp
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id

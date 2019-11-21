@@ -16,7 +16,7 @@
 						# IF C_UNSOLVED #
 							<li# IF C_UNSOLVED # class="current"# ENDIF #>
 								<a class="cssmenu-title cssmenu-title-rss" href="{U_SYNDICATION_UNSOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
-									<i class="fa fa-syndication" aria-hidden="true"></i>
+									<i class="fa fa-rss" aria-hidden="true"></i>
 								</a>
 							</li>
 						# ENDIF #
@@ -28,7 +28,7 @@
 						# IF C_SOLVED #
 							<li# IF C_SOLVED # class="current"# ENDIF #>
 								<a class="cssmenu-title cssmenu-title-rss" href="{U_SYNDICATION_SOLVED}" aria-label="${LangLoader::get_message('syndication', 'common')}">
-									<i class="fa fa-syndication" aria-hidden="true"></i>
+									<i class="fa fa-rss" aria-hidden="true"></i>
 								</a>
 							</li>
 						# ENDIF #

@@ -82,9 +82,9 @@
 				</div>
 				<ul class="modal-menu">
 					<li>
-						<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i aria-hidden="true" class="fa fa-fw fa-refresh"></i>{L_CACHE}</a>
+						<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i aria-hidden="true" class="fa fa-fw fa-sync"></i>{L_CACHE}</a>
 						<ul class="level-2">
-							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i aria-hidden="true" class="fa fa-fw fa-refresh"></i>{L_CACHE}</a></li>
+							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><i aria-hidden="true" class="fa fa-fw fa-sync"></i>{L_CACHE}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_syndication_cache())}"><i aria-hidden="true" class="fa fa-fw fa-rss"></i>{L_SYNDICATION_CACHE}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::clear_css_cache())}"><i aria-hidden="true" class="fab fa-fw fa-css3"></i>{L_CSS_CACHE_CONFIG}</a></li>
 							<li><a href="${relative_url(AdminCacheUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i>{L_CONFIGURATION}</a></li>

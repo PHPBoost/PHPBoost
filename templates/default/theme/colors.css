@@ -533,17 +533,17 @@ table.calendar-table td a:hover {
 td.calendar-week { border-color: #0066cc; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
-.fa-syndication:before      { color: #D36636; }
-.fa-success:before          { color: #4D9136; }
-.fa-forbidden:before        { color: #913636; }
-.fa-error:before            { color: #913636; }
-.fa-warning:before          { color: #D36636; }
-.fa-ban:before              { color: #913636; }
-.fa-unban:before            { color: #4D9136; }
+.fa-rss:before      { color: #D36636; }
+.fa-check:before          { color: #4D9136; }
+.fa-minus-circle:before        { color: #913636; }
+.fa-times:before            { color: #913636; }
+.fa-exclamation-triangle:before          { color: #D36636; }
+.user-locked .fa-user-lock:before              { color: #913636; }
+.user-unlocked .fa-user-lock:before            { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }
 .fa-female:before           { color: #F49CC4; }
-.fa-online:before           { color: #4D9136; }
-.fa-offline:before          { color: #913636; }
+.fa-user-check:before           { color: #4D9136; }
+.fa-user-times:before          { color: #913636; }
 .fa-trend-up:before         { color: #4D9136; }
 .fa-trend-down:before       { color: #913636; }
 .fa-circle-alert            { color: #913636; }
@@ -650,6 +650,7 @@ h3.formatter-title {
 	background-color: #8FE18B;
 }
 
+.notation .star-width:before,
 .notation .star,
 .static-notation .star {
 	color: #E2A447;

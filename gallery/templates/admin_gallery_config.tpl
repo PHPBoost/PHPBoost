@@ -333,7 +333,7 @@
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<div class="fieldset-inset">
-						<i class="fa fa-2x fa-refresh mr5" aria-hidden="true"></i>
+						<i class="fa fa-2x fa-sync mr5" aria-hidden="true"></i>
 						{L_EXPLAIN_GALLERY_CACHE}
 					</div>
 				</fieldset>

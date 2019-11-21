@@ -66,7 +66,7 @@
 <section id="module-faq">
 	<header>
 		<div class="cat-actions">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
 					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.reorder_questions}"><i class="fa fa-exchange-alt-alt fa-fw" aria-hidden="true"></i></a>
@@ -141,7 +141,7 @@
 						<span class="actions"><a href="{questions.U_LINK}" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i></a></span>
 						# ELSE #
 						<span class="actions actions-menu question-actions" id="question-{questions.ID}-actions">
-							<a href="" aria-label="{@faq.actions.menu}" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-actions-menu"></i></a>
+							<a href="" aria-label="{@faq.actions.menu}" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-ellipsis-h"></i></a>
 							<ul class="actions-submenu">
 								<li class="action"><a href="{questions.U_LINK}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i> {questions.L_LINK_QUESTION}</a></li>
 								# IF questions.C_EDIT #

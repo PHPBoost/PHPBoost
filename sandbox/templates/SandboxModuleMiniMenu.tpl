@@ -52,7 +52,7 @@
 						<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
 							<span class="icon-stack">
 								<i class="fa fa-terminal icon-main" aria-hidden="true"></i>
-								<i class="fa fa-warning icon-sup" aria-hidden="true"></i>
+								<i class="fa fa-exclamation-triangle icon-sup" aria-hidden="true"></i>
 							</span> <span class="sr-only">{@mini.errors}</span>
 							<span class="item-number">
 								({ERRORS_NB})
@@ -63,7 +63,7 @@
 						<a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
 							<span class="icon-stack">
 								<i class="fa fa-unlink icon-main" aria-hidden="true"></i>
-								<i class="fa fa-warning icon-sup" aria-hidden="true"></i>
+								<i class="fa fa-exclamation-triangle icon-sup" aria-hidden="true"></i>
 							</span> <span class="sr-only">{@mini.404}</span>
 							<span class="item-number">
 								({404_NB})

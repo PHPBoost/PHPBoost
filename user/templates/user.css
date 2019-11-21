@@ -131,13 +131,13 @@ table.announce-legend td {
 	font-size: 1.482em;
 }
 
-#module-user-error-403 .fa-warning:before,
-#module-user-error-404 .fa-warning:before {
+#module-user-error-403 .fa-exclamation-triangle:before,
+#module-user-error-404 .fa-exclamation-triangle:before {
 	content: "\f071";
 }
 
-#module-user-error-403 .fa-warning,
-#module-user-error-404 .fa-warning {
+#module-user-error-403 .fa-exclamation-triangle,
+#module-user-error-404 .fa-exclamation-triangle {
 	display: block;
 	margin: 0.618em auto 0.309em auto;
 	color: #C19954;
@@ -314,4 +314,12 @@ table.announce-legend td {
 	border-style: solid;
 	flex: 1 1 auto;
 	margin: -1px -1px -1px 0;
+}
+
+/* --- PM --- */
+
+.message-announce,
+.message-announce-new,
+.message-announce-track {
+	font-size: 1.618em;
 }

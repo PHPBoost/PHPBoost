@@ -2,3 +2,7 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+
+#module-guestbook .message-user-avatar {
+    max-width: 80px;
+}

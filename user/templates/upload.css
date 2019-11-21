@@ -93,8 +93,7 @@
 
 }
 
-/* --- Files management ----------------------------------------------------- */
-
+/* --- Admin Files management --------------------------------------------- - */
 .upload-address-bar-links {
 	padding: 0.618em 1.618em 1.618em;
     text-align: right;
@@ -191,29 +190,18 @@
 	width: auto;
 }
 
-/* --- Moving files --- */
-.file-move-container {
-    display: -ms-flexbox;
-    display: -webkit-flex;
+/* --- Moving files --------------------------------------------------------- */
+.upload-move-container {
     display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
     flex-direction: column;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-	margin: 0.618em 0;
 }
 
-@media (min-width: 769px) {
-	.file-move-container:last-child {
-		-webkit-align-items: flex-start;
-	    -ms-flex-align: start;
-	    align-items: flex-start;
-	}
+.file-move-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+	margin: 0.618em 0;
 }
 
 .file-move-container img {
@@ -222,9 +210,14 @@
 }
 
 @media (min-width: 769px) {
+    .upload-move-container {
+        flex-direction: row;
+    }
 	.file-move-container{
-		float: left;
 		width: calc(100% / 3);
+	}
+	.file-move-container:last-child {
+	    align-items: flex-start;
 	}
 }
 

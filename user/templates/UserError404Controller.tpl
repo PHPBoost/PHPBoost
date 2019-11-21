@@ -4,7 +4,7 @@
 <section id="module-user-error-404">
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
-		<i class="fa fa-warning fa-4x"></i>
+		<i class="fa fa-exclamation-triangle fa-4x"></i>
 
 		<div class="type-error">
 			{MESSAGE}

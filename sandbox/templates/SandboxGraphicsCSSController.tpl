@@ -283,7 +283,7 @@
 			</header>
 			<div class="content">
 				<ul>
-					<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication" aria-label="{@css.rss_feed}"></a></li>
+					<li>{@css.rss_feed} : <a href="#" class="fa fa-rss" aria-label="{@css.rss_feed}"></a></li>
 					<li>{@css.edit} : <a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a></li>
 					<li>{@css.delete} : <a href="#" class="fa fa-trash-alt" aria-label="{@css.delete}"></a></li>
 					<li>{@css.delete.confirm} : <a href="#" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
@@ -410,20 +410,20 @@
 			</header>
 			<div class="content">{@css.notation.possible.values}
 				<div class="notation">
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a> <!-- 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a> <!-- 1 -->
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
 				</div>
 			</div>
 			<div class="content">{@css.notation.example}
 				<div class="notation">
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-25"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>
-					<a href="" onclick="return false;" class="fa star fa-star-empty"><span class="star-width star-width-0"></span></a>
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
+					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
 				</div>
 			</div>
 		</article>
@@ -484,9 +484,9 @@
 					<thead>
 						<tr>
 							<th>
-								<a href="#" class="fa fa-table-sort-up" aria-label="{@css.table.sort.up}"></a>
+								<a href="#" class="fa fa-arrow-up" aria-label="{@css.table.sort.up}"></a>
 								{@css.table.name} title
-								<a href="#" class="fa fa-table-sort-down" aria-label="{@css.table.sort.down}"></a>
+								<a href="#" class="fa fa-arrow-down" aria-label="{@css.table.sort.down}"></a>
 							</th>
 							<th>{@css.table.description} title</th>
 							<th>{@css.table.author} title</th>
@@ -555,36 +555,63 @@
 	</div>
 
 	<div class="no-style">
+
 		<article id="messages" class="block">
 			<header>
 				<h5>{@css.messages.and.coms}</h5>
 			</header>
 			<div class="content">
-				<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
-					<div class="message-container">
-
-						<div class="message-user-infos">
-							<div class="message-pseudo">
-								<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin">{@css.messages.login}</a>
-								<div class="message-level">{@css.messages.level}</div>
+				<div id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+			        <div class="message-header-container">
+			            <img class="message-user-avatar" src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="Text">
+			            <div class="message-header-infos">
+				            <div class="message-user-infos hidden-small-screens">
+				                <div></div>
+								<div class="message-user-links">
+									<a href="#" class="basic-button smaller">MP</a>
+									<a href="#" class="basic-button smaller">Facebook</a>
+									<a href="#" class="basic-button smaller">Twitter</a>
+									<a href="#" class="basic-button smaller"><i class="far fa-envelope"></i></a>
+								</div>
 							</div>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" alt="${LangLoader::get_message('avatar', 'user-common')}" />
-						</div>
-
-						<div class="message-date">
-							<span class="actions">
-								<a itemprop="url" href="#com2">#2</a>
-								<a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a>
-								<a href="#" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a>
-							</span>
-							<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
-						</div>
-
-						<div class="message-message">
-							<div itemprop="text" class="message-content">{@css.messages.content}</div>
-						</div>
-
-					</div>
+			                <div class="message-user">
+			                    <h3 class="message-user-pseudo">
+			                        <a class="Level" href="UrlProfil" itemprop="author">{@css.messages.login}</a>
+			                    </h3>
+			                    <div class="message-actions">
+			                        <a href="UrlAction" aria-label="ActionName"><i class="far fa-fw fa-edit"></i></a>
+			                        <a href="UrlAction" aria-label="ActionName"><i class="far fa-fw fa-trash-alt" data-confirmation="delete-element"></i></a>
+			                    </div>
+			                </div>
+			                <div class="message-infos">
+			                    <time datetime="{@css.messages.date}" itemprop="datePublished">{@css.messages.date}</time>
+			                    <a href="#ID" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#ID</a>
+			                </div>
+			            </div>
+			        </div>
+			        <div class="message-content">
+			            {@css.messages.content}
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi autem sequi quam ab amet culpa nobis vitae rerum laborum nulla!</p>
+			        </div>
+			        <div class="message-footer-container">
+			            <div class="message-user-assoc">
+							<div></div>
+							<div>
+								{@css.messages.level}
+				                <div class="message-group-level">
+									<i class="far fa-star"></i>
+					                <i class="far fa-star"></i>
+					                <i class="far fa-star"></i>
+					                <i class="far fa-star"></i>
+					                <i class="far fa-star"></i>
+								</div>
+							</div>
+			            </div>
+			            <div class="message-user-management">
+			                <div></div>
+			                <div class="message-moderation-level">0% <i class="fa fa-exclamation-triangle"></i> <i class="fa fa-user-lock"></i></div>
+			            </div>
+			        </div>
 				</div>
 			</div>
 		</article>

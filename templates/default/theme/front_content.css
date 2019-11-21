@@ -102,7 +102,7 @@ header h2 .actions {
 	}
 }
 
-.actions-menu.opened .fa-actions-menu:before {
+.actions-menu.opened .fa-ellipsis-h:before {
 	content: "\f00d";
 }
 
@@ -418,155 +418,17 @@ header h2 .actions {
 	height: 1em;
 }
 
-
-/* -- Messages postes par les membres -- */
-/* ------------------------------------- */
-#comments-list {
-	clear: both;
-}
-
-#comments-list > header {
-	display: none;
-}
-
-#comments-list .message > header {
-	display:none;
-}
-
-.message {
-	margin-bottom: 1.309em;
-	overflow: auto;
-}
-
-.message > footer {
-	clear: both;
-}
-
-.message-user-infos,
-.message-date {
-	overflow: hidden;
-	padding: 0.309em;
-}
-
-.message-pseudo {
-	float: left;
-}
-
-.message-avatar {
-	float: right;
-	max-width: 3.82em;
-}
-
-.view-topic {
-	padding: 0.809em 0;
-}
-
-.view-topic i {
-	margin: 0 0 0.1618em 0.309em;
-}
-
-/* --- infos du message --- */
-@media (min-width: 769px) {
-	.message-pseudo,
-	.message-avatar {
-		float: none;
-	}
-
-	.message-avatar {
-		max-width: 100%;
-		padding: 0.309em 0 0;
-	}
-
-	.message-user-infos {
-		float: left;
-		width: 120px;
-		text-align: center;
-		padding: 0;
-	}
-
-	.message-date {
-		padding: 0;
-	}
-
-	.message-date {
-		margin-left: 150px;
-	}
-
-	.message-message {
-		position: relative;
-		margin: 0.309em 0 0 150px;
-		min-height: 4.56em;
-		border-width: 1px;
-		border-style: solid;
-		border-color: transparent;
-	}
-
-	.message-message::before {
-		position: absolute;
-		top: 15px;
-		bottom: auto;
-		left: -20px;
-		display: block;
-		width: 0;
-		border-width: 15px 20px 15px 0;
-		border-style: solid;
-		border-color: transparent;
-		content: "";
-	}
-
-	.message-message::after {
-		position: absolute;
-		content: "";
-		top: 16px;
-		bottom: auto;
-		left: -19px;
-		display: block;
-		width: 0;
-		border-width: 14px 19px 14px 0;
-		border-style: solid;
-		border-color: transparent;
-	}
-
-	.message-content {
-		padding: 0.809em;
-	}
-
-	.view-topic {
-		padding: 0.809em;
-	}
-}
-
-/* --- Moderation des messages --- */
-.message-moderate {
-	margin-bottom: 0.618em;
-	padding: 0.309em 0 0.309em 0;
-	width: 98%;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.message-moderate a {
-	vertical-align: top;
-}
-
-i.message-announce,
-i.message-announce-new,
-i.message-announce-track {
-	font-size: 1.618em;
-}
-
-
 /* -- Le maintenance -- */
 /* -------------------- */
 #maintain {
 	margin: 0.618em 0;
 }
 
-div.delay {
+.delay {
 	margin: 1.309em 0;
 }
 
-div#message-maintain {
+#message-maintain {
 	position: absolute;
 	z-index: 20;
 	top: 1em;
@@ -575,11 +437,11 @@ div#message-maintain {
 	text-align: center;
 }
 
-div#message-maintain > div {
+#message-maintain > div {
 	margin: 0 auto;
 }
 
-div#release {
+#release {
 	margin-top: 1.309em;
 }
 

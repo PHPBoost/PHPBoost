@@ -346,7 +346,7 @@ function bbcode_movie(field)
 	if(movie_url != '' && movie_url != null)
 	{
 		if(movie_poster != '' && movie_poster != null)
-			insertbbcode('[movie='+ movie_width +',' + movie_height + ' poster=' + movie_poster + ']' + movie_url, '[/movie]', field);
+			insertbbcode('[movie='+ movie_width +',' + movie_height + ',' + movie_poster + ']' + movie_url, '[/movie]', field);
 		else
 			insertbbcode('[movie='+ movie_width +',' + movie_height + ']' + movie_url, '[/movie]', field);
 	}

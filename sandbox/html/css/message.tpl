@@ -1,28 +1,40 @@
 <pre>
-&lt;div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
-    &lt;div class="message-container">
-
-        &lt;div class="message-user-infos">
-            &lt;div class="message-pseudo">
-                &lt;a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" aria-label="{@css.messages.login}">John Doe&lt;/a>
-                &lt;div class="message-level">Member&lt;/div>
+&lt;div id="Id" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+    &lt;div class="message-header-container">
+        &lt;img class="message-user-avatar" src="Url" alt="Text">
+        &lt;div class="message-header-infos">
+            &lt;div class="message-user-infos hidden-small-screens">
+                &lt;div>&lt;/div>
+                &lt;div class="message-user-links">&lt;/div>
             &lt;/div>
-            &lt;img src="link-to-avatar-picture" class="message-avatar" alt="avatar" />
+            &lt;div class="message-user">
+                &lt;h3 class="message-user-pseudo">
+                    &lt;a class="Level" href="UrlProfil" itemprop="author">MemberName&lt;/a>
+                &lt;/h3>
+                &lt;div class="message-actions">
+                    &lt;a href="UrlAction" aria-label="ActionName">&lt;i class="fa fa-fw fa-action" data-confirmation="delete-element">&lt;/i>&lt;/a>
+            &lt;/div>
+            &lt;div class="message-infos">
+                &lt;time datetime="Date" itemprop="datePublished">Date&lt;/time>
+                &lt;a href="UrlAnchor" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">AnchorName&lt;/a>
+            &lt;/div>
         &lt;/div>
-
-        &lt;div class="message-date">
-            &lt;span class="actions">
-                &lt;a itemprop="url" href="#com2" aria-label="#2">#id&lt;/a>
-                &lt;a href="#comments_message" class="fa fa-edit" aria-label="{@css.edit}">&lt;/a>
-                &lt;a href="#comments_message" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}">&lt;/a>
-            &lt;/span>
-            &lt;span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">01/01/1970&lt;/span>
-        &lt;/div>
-
-        &lt;div class="message-message">
-            &lt;div itemprop="text" class="message-content">Lorem ipsum&lt;/div>
-        &lt;/div>
-
     &lt;/div>
+
+    &lt;div class="message-content">
+        ...
+        &lt;div class="message-user-sign">&lt;/div>
+    &lt;/div>
+    &lt;div class="message-footer-container">
+        &lt;div class="message-user-assoc">
+            &lt;div class="message-group-level">RankImg - GroupImg&lt;/div>
+            &lt;div class="message-user-rank">UserLevel&lt;/div>
+        &lt;/div>
+        &lt;div class="message-user-management">
+            &lt;div class="">&lt;/div>
+            &lt;div class="message-moderation-level">Lorem ipsum&lt;/div>
+        &lt;/div>
+    &lt;/div>
+
 &lt;/div>
 </pre>

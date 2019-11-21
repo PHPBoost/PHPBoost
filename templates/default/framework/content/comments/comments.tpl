@@ -1,27 +1,24 @@
 <script>
-<!--
-function refresh_comments() {
-	jQuery.ajax({
-		url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/',
-		type: "post",
-		dataType: "html",
-		data: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
-		success: function(returnData){
-			jQuery("#comments-list").append(returnData);
-			jQuery('#refresh-comments').remove();
-		}
-	});
-}
+	function refresh_comments() {
+		jQuery.ajax({
+			url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/',
+			type: "post",
+			dataType: "html",
+			data: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
+			success: function(returnData){
+				jQuery("#comments-list").append(returnData);
+				jQuery('#refresh-comments').remove();
+			}
+		});
+	}
 
-# IF C_DISPLAY_VIEW_ALL_COMMENTS #
-jQuery(document).ready(function(){
-	jQuery("#refresh-comments").click(function() {
-		refresh_comments();
-	});
-});
-# ENDIF #
-
--->
+	# IF C_DISPLAY_VIEW_ALL_COMMENTS #
+		jQuery(document).ready(function(){
+			jQuery("#refresh-comments").click(function() {
+				refresh_comments();
+			});
+		});
+	# ENDIF #
 </script>
 
 <section id="comments-list">
@@ -40,9 +37,9 @@ jQuery(document).ready(function(){
 		# IF C_MODERATE #
 			<div class="message-moderate">
 				# IF C_IS_LOCKED #
-				<a href="{U_UNLOCK}"><i class="fa fa-ban" aria-hidden="true"></i> {@unlock}</a>
+					<a href="{U_UNLOCK}" class="user-locked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@unlock}</a>
 				# ELSE #
-				<a href="{U_LOCK}"><i class="fa fa-unban" aria-hidden="true"></i> {@lock}</a>
+					<a href="{U_LOCK}" class="user-unlocked"><i class="fa fa-user-lock" aria-hidden="true"></i> {@lock}</a>
 				# ENDIF #
 			</div>
 		# ENDIF #
@@ -55,7 +52,7 @@ jQuery(document).ready(function(){
 </section>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
-<div class="center">
-	<button type="submit" class="submit" id="refresh-comments">{@allComments}</button>
-</div>
+	<div class="center">
+		<button type="submit" class="submit" id="refresh-comments">{@allComments}</button>
+	</div>
 # ENDIF #

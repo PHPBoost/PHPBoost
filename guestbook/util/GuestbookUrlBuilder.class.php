@@ -25,7 +25,7 @@ class GuestbookUrlBuilder
 	public static function home($page = 1, $id = null)
 	{
 		$page = $page !== 1 ? $page : '';
-		$id = $id !== null ? '#m' . $id : '';
+		$id = $id !== null ? '#G' . $id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page . $id);
 	}
 

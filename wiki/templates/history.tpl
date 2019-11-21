@@ -56,14 +56,14 @@
 				<thead>
 					<tr>
 						<th>
-							<a href="{TOP_TITLE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+							<a href="{TOP_TITLE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							{L_TITLE}
-							<a href="{BOTTOM_TITLE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+							<a href="{BOTTOM_TITLE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						</th>
 						<th>
-							<a href="{TOP_DATE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+							<a href="{TOP_DATE}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							{L_DATE}
-							<a href="{BOTTOM_DATE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+							<a href="{BOTTOM_DATE}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						</th>
 						<th>
 							{L_AUTHOR}

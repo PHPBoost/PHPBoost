@@ -369,8 +369,8 @@ nav.admin-index a {
 .admin-extend-menu .fa-bell 							{ color: #F1C40F; }
 .admin-extend-menu li:hover .fa-bell 					{ color: #D8B00E; }
 
-.admin-extend-menu .fa-refresh 							{ color: #DDDDDD; }
-.admin-extend-menu li:hover .fa-refresh 				{ color: #BBBBBB; }
+.admin-extend-menu .fa-sync 							{ color: #DDDDDD; }
+.admin-extend-menu li:hover .fa-sync 				{ color: #BBBBBB; }
 
 .admin-extend-menu .fa-exclamation-triangle 			{ color: #BA4B49; }
 .admin-extend-menu li:hover .fa-exclamation-triangle 	{ color: #880000; }

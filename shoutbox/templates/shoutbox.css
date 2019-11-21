@@ -3,6 +3,22 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#module-shoutbox .message > header {
-	display: none;
+.message-container {
+	justify-content: flex-start;
+}
+
+.message-user-avatar {
+	max-width: 80px;
+}
+
+.message-header-container,
+.message-content,
+.message-footer-container {
+	width: 90%;
+}
+
+.current-user-message.message-header-container,
+.current-user-message.message-content,
+.current-user-message.message-footer-container {
+	align-self: flex-end;
 }

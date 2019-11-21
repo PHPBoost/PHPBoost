@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 01
+ * @version   	PHPBoost 5.2 - last update: 2019 11 21
  * @since   	PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserCommentsController extends AbstractController
@@ -30,13 +31,13 @@ class UserCommentsController extends AbstractController
 				DispatchManager::redirect($error_controller);
 			}
 		}
-		
+
 		if ($user_id && !$this->user)
 		{
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
-		
+
 		if (!empty($module_id))
 		{
 			$this->module = ModulesManager::get_module($module_id);
@@ -103,6 +104,7 @@ class UserCommentsController extends AbstractController
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$template->assign_block_vars('comments', array(
+				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
 				'C_VISITOR' => empty($row['display_name']),
 				'C_VIEW_TOPIC' => true,

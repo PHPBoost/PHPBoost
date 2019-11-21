@@ -258,7 +258,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->clean_css_button = new FormButtonSubmit('
 			<span class="icon-stack">
 				<i class="fab fa-css3 icon-main" aria-hidden="true"></i>
-				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+				<i class="fa fa-sync icon-sup" aria-hidden="true"></i>
 			</span> <span class="sr-only">{@mini.clean.css.cache}</span>
 		', 'clean_css_cache');
 		$clean_css_cache->add_button($this->clean_css_button);
@@ -280,7 +280,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->clean_button = new FormButtonSubmit('
 			<span class="icon-stack">
 				<i class="fab fa-html5 icon-main" aria-hidden="true"></i>
-				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+				<i class="fa fa-sync icon-sup" aria-hidden="true"></i>
 			</span> <span class="sr-only">{@mini.clean.tpl.cache}</span>
 		', 'clean_cache');
 		$clean_cache->add_button($this->clean_button);
@@ -303,7 +303,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->clean_syndication_button = new FormButtonSubmit('
 			<span class="icon-stack">
 				<i class="fa fa-rss icon-main" aria-hidden="true"></i>
-				<i class="fa fa-refresh icon-sup" aria-hidden="true"></i>
+				<i class="fa fa-sync icon-sup" aria-hidden="true"></i>
 			</span> <span class="sr-only">{@mini.clean.rss.cache}</span>
 		', 'clean_syndication_cache');
 		$clean_syndication_cache->add_button($this->clean_syndication_button);

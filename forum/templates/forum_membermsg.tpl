@@ -26,7 +26,7 @@
 						<div class="msg-top">
 							<div class="msg-top-row">
 								<div class="msg-pseudo-mbr">
-									<i class="fa # IF list.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #" aria-hidden="true"></i>
+									<i class="fa # IF list.C_USER_ONLINE #fa-user-check# ELSE #fa-user-times# ENDIF #" aria-hidden="true"></i>
 									# IF NOT list.C_GUEST #
 										<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
 											{list.USER_PSEUDO}

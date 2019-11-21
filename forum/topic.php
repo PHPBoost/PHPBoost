@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 21
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -376,6 +376,7 @@ while ( $row = $result->fetch() )
 		Date::get_array_tpl_vars($topic_date,'TOPIC_DATE'),
 		Date::get_array_tpl_vars($topic_edit_date,'TOPIC_EDIT_DATE'),
 		Date::get_array_tpl_vars($user_registered_date,'USER_REGISTERED_DATE'), array(
+		'C_CURRENT_USER_MESSAGE' 	  => AppContext::get_current_user()->get_display_name() == $row['login'],
 		'ID'                          => $row['id'],
 		'CLASS_COLOR'                 => ($j%2 == 0) ? '' : 2,
 		'FORUM_USER_LOGIN'            => $row['login'],
@@ -421,7 +422,7 @@ while ( $row = $result->fetch() )
 		'U_FORUM_MSG_CUT'             => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE'                => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE'                => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-			'C_USER_PM'                   => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+		'C_USER_PM'                   => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 	)));
 

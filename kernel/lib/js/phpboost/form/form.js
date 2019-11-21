@@ -334,7 +334,7 @@ FormField.prototype = {
 		if (!this.isDisabled() && this.hasConstraints) {
 			var errorMessage = this.doValidate();
 			if (errorMessage != "") {
-				this.displayErrorMessage('<i class="fa fa-forbidden"></i> ' + errorMessage);
+				this.displayErrorMessage('<i class="fa fa-minus-circle"></i> ' + errorMessage);
 			} else {
 				this.displaySuccessMessage();
 			}
@@ -345,7 +345,7 @@ FormField.prototype = {
 			var errorMessage = this.doValidate();
 			if (errorMessage != "") {
 				this.enableValidationMessage();
-				this.displayErrorMessage('<i class="fa fa-forbidden"></i> ' + errorMessage);
+				this.displayErrorMessage('<i class="fa fa-minus-circle"></i> ' + errorMessage);
 			} 
 			return errorMessage;
 		}

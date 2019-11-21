@@ -9,7 +9,7 @@
 					<article itemscope="itemscope" itemtype="http://schema.org/Event" id="article-calendar-{event.ID}" class="article-calendar article-several# IF event.C_NEW_CONTENT # new-content# ENDIF #">
 						<header>
 							<h2>
-								<a href="{event.U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+								<a href="{event.U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 								<a href="{event.U_LINK}"><span itemprop="name">{event.TITLE}</span></a>
 							</h2>
 							<a itemprop="url" href="{event.U_LINK}"></a>

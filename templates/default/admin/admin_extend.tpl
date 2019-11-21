@@ -60,7 +60,7 @@
 					</li>
 					<li>
 						<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">
-							<i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+							<i class="fa fa-sync fa-2x" aria-hidden="true"></i>
 							<p>{@tools.cache}</p>
 						</a>
 					</li>

@@ -2,7 +2,7 @@
 <div id="feed-menu-{ID}" class="module-mini-container# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 	<div class="module-mini-top">
 		<div class="sub-title">
-			<a href="{U_LINK}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			<a href="{U_LINK}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_NAME #{NAME}# ELSE #{RAW_TITLE}# ENDIF #
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 <div id="feed-menu-{ID}" class="block-container# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 	<div class="block-contents">
 		<div class="sub-title">
-			<a href="{U_LINK}"><i class="fa fa-syndication" aria-hidden="true"></i></a>
+			<a href="{U_LINK}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_NAME #{NAME}# ELSE #{RAW_TITLE}# ENDIF #
 		</div>
 		<ul class="feed-list">

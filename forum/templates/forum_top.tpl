@@ -16,7 +16,7 @@
 			if (xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
 			{
 				if (document.getElementById('refresh_' + divID))
-					document.getElementById('refresh_' + divID).className = 'fa fa-refresh';
+					document.getElementById('refresh_' + divID).className = 'fa fa-sync';
 
 				var array_unread_topics = new Array('', '');
 				eval(xhr_object.responseText);
@@ -32,7 +32,7 @@
 			{
 				alert("{L_AUTH_ERROR}");
 				if (document.getElementById('refresh_' + divID))
-					document.getElementById('refresh_' + divID).className = 'fa fa-refresh';
+					document.getElementById('refresh_' + divID).className = 'fa fa-sync';
 			}
 		}
 		xmlhttprequest_sender(xhr_object, null);
@@ -109,7 +109,7 @@
 							<div class="forum-refresh">
 								<div id="forum_block_forum_unread_top" style="display: none;"></div>
 							</div>
-							<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-refresh" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
+							<a href="" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
 						</span>
 					</li>
 					<li>

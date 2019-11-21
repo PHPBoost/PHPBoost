@@ -370,89 +370,6 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-800italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
 
-
-/* --- PHPBoost specific FA Classes ----------------------------------------- */
-
-/* --- Messages --- */
-.fa.fa-success:before { content: "\f00c"; } /* copy check */
-.fa.fa-error:before   { content: "\f00d"; } /* copy times */
-.fa.fa-warning:before { content: "\f071"; } /* copy exclamation-triangle */
-.fa.fa-notice :before { content: "\f12a"; } /* copy exclamation */
-
-/* --- Miscellaneous --- */
-.fa.fa-syndication:before  { content: "\f09e"; } /* copy rss */
-.fa.fa-unban:before        { content: "\f05e"; } /* copy ban */
-.fa.fa-online:before,
-.fa.fa-offline:before      { content: "\f007"; } /* copy user */
-.fa.fa-forbidden:before    { content: "\f056"; } /* copy minus-circle */
-.fa.fa-trash-alt:before       { content: "\f2ed"; } /* copy trash-alt */
-.fa.fa-profil:before       { content: "\f3fd"; } /* copy tachometer-alt */
-.fa.fa-share:before         { content: "\f064"; } /* copy share */
-.fa.fa-refresh:before      { content: "\f021"; } /* copy sync */
-.fa.fa-remove:before       { content: "\f00d"; } /* copy times */
-.fa.fa-legal:before        { content: "\f0e3"; } /* copy gavel */
-.fa.fa-actions-menu:before { content: "\f141"; } /* copy ellipsis-h */
-
-/* --- Notation --- */
-.fa.fa-star-empty:before      { content: "\f005"; } /* copy star */
-.fa.fa-star-half-empty:before { content: "\f005"; } /* copy star */
-.fa-star-half-empty:after     { content: "\f089"; } /* copy star-half */
-.fa-star-half-empty {
-	position: relative;
-}
-
-.fa-star-half-empty:after {
-	position: absolute;
-	left: 0;
-}
-
-/* --- Filter --- */
-.fa-table-sort-up:before   { content: "\f062"; } /* copy arrow-up */
-.fa-table-sort-down:before { content: "\f063"; } /* copy arrow-down */
-
-/* --- Stats --- */
-.fa-trend-up:before   { content: "\f0d8"; } /* copy caret-up */
-.fa-trend-down:before { content: "\f0d7"; } /* copy caret-down */
-
-/* --- Upload --- */
-.fa-upload-audio:before   { content: "\f1c7"; } /* copie fa-file-audio-o */
-.fa-upload-exec:before    { content: "\f013"; } /* copie fa-cog */
-.fa-upload-html:before    { content: "\f13b"; } /* copie fa-html5 */
-.fa-upload-css:before     { content: "\f38b"; } /* copie fa-css3 */
-.fa-upload-pdf:before     { content: "\f1c1"; } /* copie fa-file-pdf-o */
-.fa-upload-picture:before { content: "\f1c5"; } /* copie fa-file-picture-o*/
-.fa-upload-script:before  { content: "\f1c9"; } /* copie fa-fa-code-o */
-.fa-upload-text:before    { content: "\f15c"; } /* copie fa-file-alt */
-.fa-upload-video:before   { content: "\f1c8"; } /* copie fa-file-video-o */
-.fa-upload-zip:before     { content: "\f1c6"; } /* copie fa-file-zip-o */
-.fa-upload-other:before   { content: "\f15b"; } /* copie fa-file */
-.fa-upload-sheet:before   { content: "\f1c3"; } /* copie fa-file-excel-o */
-.fa-upload-slide:before   { content: "\f1c4"; } /* copie fa-file-powerpoint-o */
-.fa-upload-doc:before     { content: "\f1c2"; } /* copie fa-file-word-o */
-
-.fa-upload-img.fa-upload-exec {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900; }
-
-.fa-upload-img.fa-upload-audio,
-.fa-upload-img.fa-upload-pdf,
-.fa-upload-img.fa-upload-picture,
-.fa-upload-img.fa-upload-script,
-.fa-upload-img.fa-upload-text,
-.fa-upload-img.fa-upload-video,
-.fa-upload-img.fa-upload-zip,
-.fa-upload-img.fa-upload-other,
-.fa-upload-img.fa-upload-sheet,
-.fa-upload-img.fa-upload-slide,
-.fa-upload-img.fa-upload-doc {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 400; }
-
-.fa-upload-img.fa-upload-html,
-.fa-upload-img.fa-upload-css {
-  font-family: 'Font Awesome 5 Brands';
-}
-
 /* --- Icons forced to "Regular" format --- */
 .fa.fa-calendar-alt,
 .fa.fa-clock,
@@ -469,7 +386,6 @@ ul.pagination .current-page {
 .fa.fa-lightbulb,
 .fa.fa-minus-square,
 .fa.fa-plus-square,
-.fa.fa-star-empty,
-.fa.fa-star-half-empty:before,
+.fa.fa-star,
 .fa.fa-user {
   font-weight: 400; }

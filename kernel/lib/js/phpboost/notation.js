@@ -8,7 +8,7 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
- function Note(id, notation_scale, default_note, already_post){
+function Note(id, notation_scale, default_note, already_post){
 	this.id = id;
 	this.timeout = null;
 	this.notation_scale = notation_scale;
@@ -39,7 +39,7 @@
 		var star_nbr = this.id.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
 		object.change_picture_status(star_nbr);
 	});
-};
+}
 
 Note.prototype = {
 	send_request: function (note) {
@@ -81,24 +81,24 @@ Note.prototype = {
 
 			decimal = 1 - (i - note); /* */
 			if(decimal >= 1) {
-				star_class = 'fa star star-hover fa-star-empty';
+				star_class = 'far star star-hover fa-star';
 				star_width = 'star-width star-width-100';
 			}
 			else if(decimal >= 0.75 && decimal < 1) {
-				star_class = 'fa star star-hover fa-star-empty';
+				star_class = 'far star star-hover fa-star';
 				star_width = 'star-width star-width-75';
 			}
 			else if(decimal >= 0.50 && decimal < 0.75) {
-				star_class = 'fa star star-hover fa-star-empty';
+				star_class = 'far star star-hover fa-star';
 				star_width = 'star-width star-width-50';
 				alert(decimal);
 			}
 			else if(decimal >= 0.05 && decimal < 0.50) {
-				star_class = 'fa star star-hover fa-star-empty';
+				star_class = 'far star star-hover fa-star';
 				star_width = 'star-width star-width-25';
 			}
 			else {
-				star_class = 'fa star star-hover fa-star-empty';
+				star_class = 'far star star-hover fa-star';
 				star_width = 'star-width star-width-0';
 			}
 

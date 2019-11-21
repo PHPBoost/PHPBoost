@@ -4,25 +4,25 @@
 		<tr>
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
-				<a href="{SORT_STREAM_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+				<a href="{SORT_STREAM_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 				{@archives.stream_name}
-				<a href="{SORT_STREAM_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+				<a href="{SORT_STREAM_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 			</th>
 			# ENDIF #
 			<th>
-				<a href="{SORT_SUBJECT_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+				<a href="{SORT_SUBJECT_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 				{@archives.name}
-				<a href="{SORT_SUBJECT_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+				<a href="{SORT_SUBJECT_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 			</th>
 			<th>
-				<a href="{SORT_DATE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+				<a href="{SORT_DATE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 				{@archives.date}
-				<a href="{SORT_DATE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+				<a href="{SORT_DATE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 			</th>
 			<th>
-				<a href="{SORT_SUBSCRIBERS_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-table-sort-up" aria-hidden="true"></i></a>
+				<a href="{SORT_SUBSCRIBERS_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 				{@archives.nbr_subscribers}
-				<a href="{SORT_SUBSCRIBERS_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-table-sort-down" aria-hidden="true"></i></a>
+				<a href="{SORT_SUBSCRIBERS_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 			</th>
 			# IF C_MODERATE #
 			<th></th>
