@@ -30,7 +30,7 @@ fieldset p {
 
 .fieldset-inset {
 	overflow: hidden;
-	padding: 1.618em 0;
+	padding: 0.618em 0;
 }
 
 .fieldset-refresh {
@@ -82,8 +82,10 @@ fieldset p {
 	max-width: none;
 }
 
-fieldset[id*="_captcha_fieldset"] {
+fieldset[id*="_captcha_fieldset"],
+fieldset[id*="_captcha_fieldset"] .fieldset-inset {
 	padding: 0 0.309em;
+	margin: 0;
 }
 
 @media (min-width: 769px) {
