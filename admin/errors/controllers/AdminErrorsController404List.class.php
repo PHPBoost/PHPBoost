@@ -56,7 +56,7 @@ class AdminErrorsController404List extends AdminController
 		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
 		{
-			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
 
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell(new LinkHTMLElement($row['requested_url'], $row['requested_url'])),

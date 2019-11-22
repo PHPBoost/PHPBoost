@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 01
+ * @version   	PHPBoost 5.3 - last update: 2019 11 22
  * @since   	PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -451,41 +451,51 @@ else
 		$size_img = '';
 		switch ($row['type'])
 		{
-			//Images
+			// Images
 			case 'jpg':
+			case 'jpeg':
 			case 'png':
 			case 'gif':
 			case 'bmp':
-			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
-			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
-			$width_source = !empty($width_source) ? $width_source + 30 : 0;
-			$height_source = !empty($height_source) ? $height_source + 30 : 0;
-			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
-			$link = '/upload/' . $row['path'];
-			break;
-			//Image svg
 			case 'svg':
-			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
-			$link = '/upload/' . $row['path'];
-			break;
-			//Sons
+			case 'nef':
+			case 'raw':
+			case 'ico':
+			case 'tif':
+				list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
+				$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+				$width_source = !empty($width_source) ? $width_source + 30 : 0;
+				$height_source = !empty($height_source) ? $height_source + 30 : 0;
+				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+				$tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
+				$link = '/upload/' . $row['path'];
+				break;
+			// Sounds
+			case 'wav':
+			case 'ogg':
 			case 'mp3':
-			$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-			$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
-			$link = '/upload/' . $row['path'];
-			break;
+				$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
+				$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
+				$link = '/upload/' . $row['path'];
+				break;
+			// Videos
+			case 'webm':
+			case 'mp4':
+				$bbcode = '[movie=100,100]/upload/' . $row['path'] . '[/movie]';
+				$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
+				$link = '/upload/' . $row['path'];
+				break;
 			default:
-			$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
-			$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
-			$link = '/upload/' . $row['path'];
+				$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
+				$tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
+				$link = '/upload/' . $row['path'];
 		}
 		$is_bbcode_editor = ($editor == 'BBCode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 		$tpl->assign_block_vars('files', array(
-			'C_IMG' => $get_img_mimetype['img'] == 'fa-upload-picture fa-2x' && FileUploadConfig::load()->get_display_file_thumbnail(),
+			'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
+			'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
 			'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Ficher ajouté il y a moins de 2 minutes
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],

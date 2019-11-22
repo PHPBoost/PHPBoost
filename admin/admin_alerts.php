@@ -44,11 +44,11 @@ foreach ($alerts_list as $alert)
 	switch ($alert->get_priority())
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$img_class = 'fa fa-warning';
+			$img_class = 'fa fa-exclamation-triangle';
 			$priority_css_class = 'alert-very-high-priority';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$img_class = 'fa fa-warning';
+			$img_class = 'fa fa-exclamation-triangle';
 			$priority_css_class = 'alert-high-priority';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:

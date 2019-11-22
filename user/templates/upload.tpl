@@ -384,9 +384,11 @@
 			# ELSE #
 				# START folder #
 					<div class="upload-elements-repertory">
-						<a class="infos-options" href="upload.php?f={folder.ID}{POPUP}">
-							<i class="fa # IF folder.C_MEMBER_FOLDER #fa-users # ELSE #fa-folder # ENDIF #fa-2x"></i>
-						</a>
+						<div class="upload-element-icon">
+							<a class="infos-options" href="upload.php?f={folder.ID}{POPUP}">
+								<i class="far fa-folder fa-4x"></i>
+							</a>
+						</div>
 						<span class="infos-options" id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></span>
 						<div class="upload-repertory-controls">
 							{folder.RENAME_FOLDER}
@@ -403,29 +405,42 @@
 				<span id="new-folder"></span>
 
 				# START files #
-				<div class="upload-elements-file">
-					# IF files.C_IMG #
-						<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-							<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-						</a>
-					# ELSE #
-						<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}>
-							<div class="upload-element-icon"><i class="far {files.IMG}"></i></div>
-						</a>
-					# ENDIF #
-					<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
-					<span id="fi{files.ID}"></span>
-					{files.BBCODE}
-					<div class="upload-file-controls">
-						{files.RENAME_FILE}
-						<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-						<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-						{files.INSERT}
+					<div class="upload-elements-file">
+						<div class="upload-element-status"></div>
+						# IF files.C_ENABLED_THUMBNAILS #
+							# IF files.C_IMG #
+								<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+									<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
+								</a>
+								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
+							# ELSE #
+								<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}>
+									<div class="upload-element-icon"><i class="{files.IMG} fa-fw fa-4x"></i></div>
+								</a>
+								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
+							# ENDIF #
+						# ELSE #
+							<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">
+								# IF files.C_IMG #
+									<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection"><i class="{files.IMG} fa-lg"></i></a>
+								# ELSE #
+									<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}><i class="{files.IMG} fa-lg"></i></a>
+								# ENDIF #
+								{files.NAME}
+							</div>
+						# ENDIF #
+						<span id="fi{files.ID}"></span>
+						{files.BBCODE}
+						<div class="upload-file-controls">
+							{files.RENAME_FILE}
+							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+							{files.INSERT}
+						</div>
+						<span class="infos-options text-strong">{files.FILETYPE}</span>
+						<span class="text-strong">{files.SIZE}</span>
+						<span id="imgf{files.ID}"></span>
 					</div>
-					<span class="infos-options text-strong">{files.FILETYPE}</span>
-					<span class="text-strong">{files.SIZE}</span>
-					<span id="imgf{files.ID}"></span>
-				</div>
 				# END files #
 			# ENDIF #
 			<div class="options infos">

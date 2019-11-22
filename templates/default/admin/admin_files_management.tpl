@@ -343,7 +343,9 @@ $(document).ready(function(){
 			# ELSE #
 				# START folder #
 					<div class="upload-elements-repertory">
-						<a href="admin_files.php{folder.U_FOLDER}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x" aria-hidden="true"></i></a><br />
+						<div class="upload-element-icon">
+							<a href="admin_files.php{folder.U_FOLDER}"><i class="# IF folder.C_MEMBER_FOLDER #fa fa-users# ELSE #far fa-folder# ENDIF # fa-4x" aria-hidden="true"></i></a>
+						</div>
 						<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 						<div class="upload-repertory-controls">
 							# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
@@ -360,29 +362,42 @@ $(document).ready(function(){
 				<span id="new-folder"></span>
 
 				# START files #
-				<div class="upload-elements-file">
-					# IF files.C_IMG #
-					<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection" aria-label="{files.NAME}">
-						<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-					</a>
-					# ELSE #
-					<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" aria-label="{files.NAME}"{files.LIGHTBOX}>
-						<div class="upload-element-icon"><i class="fa-upload-img {files.IMG}" aria-hidden="true"></i></div>
-					</a>
-					# ENDIF #
-					<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
-					<span id="fi{files.ID}"></span>
-					{files.BBCODE}
-					<div class="upload-file-controls">
-						<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
-						<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-						<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-						{files.INSERT}
+					<div class="upload-elements-file">
+						<div class="upload-element-status"></div>
+						# IF files.C_ENABLED_THUMBNAILS #
+							# IF files.C_IMG #
+								<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+									<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
+								</a>
+								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
+							# ELSE #
+								<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}>
+									<div class="upload-element-icon"><i class="{files.IMG} fa-fw fa-4x"></i></div>
+								</a>
+								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
+							# ENDIF #
+						# ELSE #
+							<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">
+								# IF files.C_IMG #
+									<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection"><i class="{files.IMG} fa-lg"></i></a>
+								# ELSE #
+									<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}><i class="{files.IMG} fa-lg"></i></a>
+								# ENDIF #
+								{files.NAME}
+							</div>
+						# ENDIF #
+						<span id="fi{files.ID}"></span>
+						{files.BBCODE}
+						<div class="upload-file-controls">
+							<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
+							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+							{files.INSERT}
+						</div>
+						<span class="text-strong">{files.FILETYPE}</span><br />
+						<span class="text-strong">{files.SIZE}</span>
+						<span id="imgf{files.ID}"></span>
 					</div>
-					<span class="text-strong">{files.FILETYPE}</span><br />
-					<span class="text-strong">{files.SIZE}</span>
-					<span id="imgf{files.ID}"></span>
-				</div>
 				# END files #
 			# ENDIF #
 		</div>

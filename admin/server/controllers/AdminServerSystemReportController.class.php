@@ -36,8 +36,8 @@ class AdminServerSystemReportController extends AdminController
 
 	private function build_form()
 	{
-		$picture_yes = '<i class="fa fa-success fa-2x" aria-hidden="true" title="' . LangLoader::get_message('yes', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('yes', 'common') . '</span>';
-		$picture_no = '<i class="fa fa-error fa-2x" aria-hidden="true" title="' . LangLoader::get_message('no', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('no', 'common') . '</span>';
+		$picture_yes = '<i class="fa fa-check fa-2x" aria-hidden="true" title="' . LangLoader::get_message('yes', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('yes', 'common') . '</span>';
+		$picture_no = '<i class="fa fa-times fa-2x" aria-hidden="true" title="' . LangLoader::get_message('no', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('no', 'common') . '</span>';
 		$picture_unknown = '<i class="fa fa-question fa-2x" aria-hidden="true" title="' . LangLoader::get_message('unknown', 'main') . '"></i><span class="sr-only">' . LangLoader::get_message('unknown', 'main') . '</span>';
 
 		$default_lang_config = LangsManager::get_lang(LangsManager::get_default_lang())->get_configuration();

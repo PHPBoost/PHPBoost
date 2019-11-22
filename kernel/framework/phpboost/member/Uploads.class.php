@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 05 05
+ * @version     PHPBoost 5.3 - last update: 2019 11 22
  * @since       PHPBoost 1.6 - 2007 04 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Uploads
@@ -323,7 +324,7 @@ class Uploads
 		$filetype = sprintf(LangLoader::get_message('file_type', 'main'), TextHelper::strtoupper($type));
 		switch ($type)
 		{
-			//Images
+			// Images
 			case 'jpg':
 			case 'jpeg':
 			case 'png':
@@ -334,40 +335,40 @@ class Uploads
 			case 'raw':
 			case 'ico':
 			case 'tif':
-			$img = 'fa-file-image fa-2x';
+			$img = 'far fa-file-image';
 			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), TextHelper::strtoupper($type));
 			break;
-			//Archives
+			// Archives
 			case 'rar':
 			case 'gz':
 			case 'zip':
 			case '7z':
-			$img = 'fa-file-archive fa-2x';
-			$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), TextHelper::strtoupper($type));
-			break;
-			//Pdf
+				$img = 'far fa-file-archive';
+				$filetype = sprintf(LangLoader::get_message('zip_type', 'main'), TextHelper::strtoupper($type));
+				break;
+			// Pdf
 			case 'pdf':
-			$img = 'fa-file-pdf fa-2x';
-			$filetype = LangLoader::get_message('adobe_pdf', 'main');
-			break;
-			//Son
+				$img = 'far fa-file-pdf';
+				$filetype = LangLoader::get_message('adobe_pdf', 'main');
+				break;
+			// Sound
 			case 'wav':
 			case 'midi':
 			case 'ogg':
 			case 'mp3':
-			$img = 'fa-file-audio fa-2x';
-			$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), TextHelper::strtoupper($type));
-			break;
-			//Sripts
+				$img = 'far fa-file-audio';
+				$filetype = sprintf(LangLoader::get_message('audio_type', 'main'), TextHelper::strtoupper($type));
+				break;
+			// Sripts
 			case 'html':
 			case 'tpl':
 			case 'css':
 			case 'js':
 			case 'php':
 			case 'swf':
-			$img = 'fa-file-code fa-2x';
-			break;
-			//Vidéos
+				$img = 'far fa-file-code';
+				break;
+			// Video
 			case 'wmv':
 			case 'avi':
 			case 'mp4':
@@ -376,41 +377,51 @@ class Uploads
 			case 'flv':
 			case 'mpeg':
 			case 'mov':
-			$img = 'fa-file-video fa-2x';
-			break;
-			//Executables
+				$img = 'far fa-file-video';
+				break;
+			// Executables
 			case 'exe':
-			$img = 'fa-cog fa-2x';
-			break;
-			//Text
+				$img = 'fa fa-cog';
+				break;
+			// Text
 			case 'txt':
 			case 'csv':
-			$img = 'fa-file-alt fa-2x';
-			break;
-			//Office
+				$img = 'far fa-file-alt';
+				break;
+			// Office
 			case 'xls':
 			case 'xlsx':
 			case 'xlsm':
 			case 'gsheet':
 			case 'ods':
-			$img = 'fa-file-exel fa-2x';
-			break;
+				$img = 'far fa-file-exel';
+				break;
 			case 'doc':
 			case 'docx':
 			case 'gdoc':
 			case 'odt':
-			$img = 'fa-file-word fa-2x';
-			break;
+				$img = 'far fa-file-word';
+				break;
 			case 'ppt':
 			case 'pptx':
 			case 'gslides':
 			case 'odp':
-			$img = 'fa-file-powerpoint fa-2x';
-			break;
+				$img = 'far fa-file-powerpoint';
+				break;
+			// 3D files
+			case 'blend':
+			case '3ds':
+			case 'obj':
+			case 'stl':
+			case 'fbx':
+			case 'dae':
+			case 'c4d':
+				$img = 'fa fa-cubes';
+				break;
 			//Default
 			default:
-			$img = 'fa fa-file-upload fa-2x';
-			$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
+				$img = 'fa fa-file-upload';
+				$filetype = sprintf(LangLoader::get_message('document_type', 'main'), TextHelper::strtoupper($type));
 		}
 
 		return array('img' => $img, 'filetype' => $filetype);
