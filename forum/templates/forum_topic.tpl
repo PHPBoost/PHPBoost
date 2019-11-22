@@ -199,9 +199,9 @@
 		</div>
 	# ENDIF #
 	# START msg #
-		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<article id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
 			<span id="m{msg.ID}"></span>
-	        <div class="message-header-container">
+	        <header class="message-header-container">
 				<img class="message-user-avatar" src="# IF msg.C_USER_AVATAR #{msg.U_USER_AVATAR}# ELSE #{msg.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}">
 	            <div class="message-header-infos">
 		            <div class="message-user-infos hidden-small-screens">
@@ -265,7 +265,7 @@
 	                    <a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" class="hidden-small-screens" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
 	                </div>
 	            </div>
-	        </div>
+	        </header>
 	        <div class="message-content" >
 				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
 
@@ -286,7 +286,7 @@
 			<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				# IF msg.C_USER_SIGN #{msg.USER_SIGN}# ENDIF #
 			</div>
-	        <div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+	        <footer class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 	            <div class="message-user-assoc">
 	                <div class="message-group-level">
 						# IF msg.C_USER_GROUPS #
@@ -314,8 +314,8 @@
 						# ENDIF #
 					</div>
 	            </div>
-	        </div>
-		</div>
+	        </footer>
+		</article>
 	# END msg #
 
 	<footer class="footer-forum">

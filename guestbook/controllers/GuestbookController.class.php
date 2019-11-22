@@ -53,7 +53,7 @@ class GuestbookController extends ModuleController
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
-				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_id() == $row['user_id'],
+				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'C_USER_GROUPS' => !empty($row['groups']),
 				'U_AVATAR' => $user_avatar

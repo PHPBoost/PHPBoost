@@ -14,9 +14,9 @@
 			<div class="content">
 
 				# START list #
-					<div id="d{list.ID}" class="message-container item-comments" itemscope="itemscope" itemtype="http://schema.org/Comment">
+					<article id="d{list.ID}" class="message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
 						<span id="m{list.ID}"></span>
-				        <div class="message-header-container">
+				        <header class="message-header-container">
 							<img class="message-user-avatar" src="# IF list.C_USER_AVATAR #{list.U_USER_AVATAR}# ELSE #{list.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}">
 				            <div class="message-header-infos">
 				                <div class="message-user">
@@ -36,14 +36,14 @@
 				                    <a href="topic{list.U_VARS_ANCRE}#m{list.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{list.ID}</i></a>
 				                </div>
 				            </div>
-				        </div>
+				        </header>
 				        <div class="message-content" >
 							{list.CONTENTS}
 				        </div>
 						<div class="message-user-sign# IF list.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 							# IF list.C_USER_SIGN #{list.USER_SIGN}# ENDIF #
 						</div>
-				        <div class="message-footer-container# IF list.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+				        <footer class="message-footer-container# IF list.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				            <div class="message-user-assoc">
 				                <div class="message-group-level">
 									# IF list.C_USER_GROUPS #
@@ -71,8 +71,8 @@
 									# ENDIF #
 								</div>
 				            </div>
-				        </div>
-					</div>
+				        </footer>
+					</article>
 				# END list #
 
 			</div>

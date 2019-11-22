@@ -208,8 +208,7 @@ $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en c
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;
 $j = 0;
-$result = PersistenceContext::get_querier()->select("
-SELECT
+$result = PersistenceContext::get_querier()->select("SELECT
 	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
 	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
 	p.question, p.answers, p.voter_id, p.votes, p.type,

@@ -158,8 +158,7 @@ article footer ul.pagination {
 }
 
 .forum-contents header h2,
-.footer-forum,
-.forum-contents footer {
+.footer-forum {
 	border: none;
 	font-weight: 300;
 	font-size: 1.382em;
@@ -204,18 +203,6 @@ ul.pagination a {
 .content {
 	padding: 0;
 	clear: both;
-}
-
-
-/* --- footer du contenu de la page --- */
-article footer {
-	margin-top: 0.618em;
-	padding: 0.456em;
-	min-height: 33px;
-}
-
-article footer a {
-	font-size: 0.809em;
 }
 
 /* --- Classe du lien du pseudo sur forum --- */

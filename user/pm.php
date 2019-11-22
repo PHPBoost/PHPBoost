@@ -758,7 +758,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$tpl->assign_block_vars('pm.msg', array_merge(
 			Date::get_array_tpl_vars($date,'date'),
 			array(
-			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_id() == $row['user_id'],
+			'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 			'C_MODERATION_TOOLS' => ($row['id'] === $convers['last_msg_id']) && !$row['view_status'], //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'C_VISITOR' => $is_admin,
 			'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),

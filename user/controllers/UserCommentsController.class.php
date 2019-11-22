@@ -104,7 +104,7 @@ class UserCommentsController extends AbstractController
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$template->assign_block_vars('comments', array(
-				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_id() == $row['user_id'],
+				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
 				'C_VISITOR' => empty($row['display_name']),
 				'C_VIEW_TOPIC' => true,
