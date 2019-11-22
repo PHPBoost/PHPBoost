@@ -1,11 +1,11 @@
 .message-container {
     display: flex;
     flex-direction: column;
-    margin: 1.618em 0;
+    margin: 0.809em 0;
 }
 
 .message-user-avatar { max-width: 90px; }
-.item-comments .message-user-avatar { max-width: 80px; }
+.message-small .message-user-avatar { max-width: 80px; }
 
 .message-header-container h3 { font-size: 1.618em; }
 
@@ -97,6 +97,7 @@
 .message-footer-container {
     border-width: 0 1px 1px;
     padding: 0.309em 0.618em;
+    margin: 0;
 }
 
 .message-user-management {
@@ -110,6 +111,22 @@
 .current-user-message .message-user,
 .current-user-message .message-infos {
     flex-direction: row-reverse;
+}
+/* --- message offset --- */
+.message-container.message-offset {
+	justify-content: flex-start;
+}
+
+.message-offset .message-header-container,
+.message-offset .message-content,
+.message-offset .message-footer-container {
+	width: 90%;
+}
+
+.message-offset .current-user-message.message-header-container,
+.message-offset .current-user-message.message-content,
+.message-offset .current-user-message.message-footer-container {
+	align-self: flex-end;
 }
 
 /* --- Moderation --- */
@@ -167,7 +184,7 @@
 
 /*  colors.css */
 
-.message-header-container {background-color: #ECF2F8;}
+.message-header-container { background-color: #ECF2F8; }
 
 .message-header-container,
 .message-content,

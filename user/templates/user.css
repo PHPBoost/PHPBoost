@@ -3,23 +3,22 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* -- Profile User -- */
-/* ------------------ */
-ul#profile-container {
+/* --- User Profile --- */
+#profile-container {
 	margin: 2em auto;
 	width: 99%;
 	list-style-type: none;
 	margin-left: -0.456em;
 }
 
-ul#profile-container li {
+#profile-container li {
 	margin: 0.618em 0 0 0.456em;
 	padding: 0.618em;
 	text-align: center;
 }
 
 @media (min-width: 769px) {
-	ul#profile-container li {
+	#profile-container li {
 		width: calc(100% / 3 - 0.456em);
 	}
 
@@ -60,8 +59,7 @@ ul#profile-container li {
 }
 
 
-/* -- Contribution -- */
-/* ------------------ */
+/* --- Contribution --- */
 #module-user-contribution-list hr {
 	margin: 1.309em 0;
 }
@@ -109,7 +107,6 @@ ul#profile-container li {
 }
 
 .convers-title {
-	width: 50%;
 	text-align: left;
 }
 
@@ -140,7 +137,6 @@ table.announce-legend td {
 #module-user-error-404 .fa-exclamation-triangle {
 	display: block;
 	margin: 0.618em auto 0.309em auto;
-	color: #C19954;
 }
 
 #module-user-error-403 .message-error,

@@ -1,50 +1,44 @@
 		<script>
-		<!--
-		function check_form_convers(){
-			if(document.getElementById('login').value == "") {
-				alert("{L_REQUIRE_RECIPIENT}");
-				return false;
-		    }
-			if(document.getElementById('contents').value == "") {
-				alert("{L_REQUIRE_MESSAGE}");
-				return false;
-		    }
-			if(document.getElementById('title').value == "") {
-				alert("{L_REQUIRE_TITLE}");
-				return false;
-		    }
-			return true;
-		}
-		function check_form_pm(){
-			if(document.getElementById('contents').value == "") {
-				alert("{L_REQUIRE_MESSAGE}");
-				return false;
-		    }
-			return true;
-		}
-		function Confirm_pm() {
-			return confirm("{L_DELETE_MESSAGE}");
-		}
-		-->
+			function check_form_convers() {
+				if(document.getElementById('login').value == "") {
+					alert("{L_REQUIRE_RECIPIENT}");
+					return false;
+			    }
+				if(document.getElementById('contents').value == "") {
+					alert("{L_REQUIRE_MESSAGE}");
+					return false;
+			    }
+				if(document.getElementById('title').value == "") {
+					alert("{L_REQUIRE_TITLE}");
+					return false;
+			    }
+				return true;
+			}
+			function check_form_pm() {
+				if(document.getElementById('contents').value == "") {
+					alert("{L_REQUIRE_MESSAGE}");
+					return false;
+			    }
+				return true;
+			}
+			function Confirm_pm() {
+				return confirm("{L_DELETE_MESSAGE}");
+			}
 		</script>
-
 
 		# START convers #
-		<script>
-		<!--
-			function check_convers(status, id)
-			{
-				var i;
-				for(i = 0; i < {convers.NBR_PM}; i++)
+			<script>
+				function check_convers(status, id)
 				{
-					if( document.getElementById(id + i) )
-						document.getElementById(id + i).checked = status;
+					var i;
+					for(i = 0; i < {convers.NBR_PM}; i++) {
+						if( document.getElementById(id + i) )
+							document.getElementById(id + i).checked = status;
+					}
+					document.getElementById('checkall').checked = status;
+					document.getElementById('validc').checked = status;
 				}
-				document.getElementById('checkall').checked = status;
-				document.getElementById('validc').checked = status;
-			}
-		-->
-		</script>
+			</script>
 		# INCLUDE message_helper #
 
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
@@ -174,39 +168,43 @@
 				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
 
 			# START pm.msg #
-				<article id="article-pm-{pm.msg.ID}" class="article-pm article-several message">
-					<div id="m{pm.msg.ID}" class="message-container">
-
-						<div class="message-user-infos">
-							<div class="message-pseudo">
-								# IF pm.msg.C_VISITOR #
-									<span>{pm.msg.PSEUDO}</span>
-								# ELSE #
-									<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
-										{pm.msg.PSEUDO}
-									</a>
-								# ENDIF #
-								<div class="message-level">{pm.msg.L_LEVEL}</div>
-							</div>
-							# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-avatar" /># ENDIF #
-						</div>
-
-						<div class="message-date">
-							<span class="actions">
-								<a href="#article-pm-{pm.msg.ID}">\#{pm.msg.ID}</a>
-								# IF pm.msg.C_MODERATION_TOOLS #
-								<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-								# ENDIF #
-							</span>
-							<span>${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</span>
-						</div>
-
-						<div class="message-message">
-							<div class="message-content">{pm.msg.CONTENTS}</div>
-						</div>
-
-					</div>
+				<article id="article-pm-{pm.msg.ID}" class="pm-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="http://schema.org/Comment">
+					<span id="m{pm.msg.ID}"></span>
+				    <header class="message-header-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+						# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-user-avatar" /># ENDIF #
+				        <div class="message-header-infos">
+				            <div class="message-user">
+				                <h3 class="message-user-pseudo">
+									# IF pm.msg.C_VISITOR #
+										<span>{pm.msg.PSEUDO}</span>
+									# ELSE #
+										<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
+											{pm.msg.PSEUDO}
+										</a>
+									# ENDIF #
+				                </h3>
+				                <div class="message-actions">
+									# IF pm.msg.C_MODERATION_TOOLS #
+										<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+										<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									# ENDIF #
+				            	</div>
+				            </div>
+				            <div class="message-infos">
+				                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">${LangLoader::get_message('on', 'main')} {pm.msg.DATE_FULL}</time>
+				                <a href="#article-pm-{pm.msg.ID}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{pm.msg.ID}</a>
+				            </div>
+				        </div>
+				    </header>
+				    <div class="message-content# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+				        {pm.msg.CONTENTS}
+				    </div>
+				    <footer class="message-footer-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+				        <div class="message-user-assoc">
+				            <div class="message-group-level"></div>
+				            <div class="message-user-rank">{pm.msg.L_LEVEL}</div>
+				        </div>
+				    </footer>
 				</article>
 			# END pm.msg #
 			</div>

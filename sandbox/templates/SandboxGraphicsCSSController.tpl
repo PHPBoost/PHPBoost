@@ -561,17 +561,17 @@
 				<h5>{@css.messages.and.coms}</h5>
 			</header>
 			<div class="content">
-				<div id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
-			        <div class="message-header-container">
+				<article id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+			        <header class="message-header-container">
 			            <img class="message-user-avatar" src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="Text">
 			            <div class="message-header-infos">
 				            <div class="message-user-infos hidden-small-screens">
 				                <div></div>
 								<div class="message-user-links">
-									<a href="#" class="basic-button smaller">MP</a>
-									<a href="#" class="basic-button smaller">Facebook</a>
-									<a href="#" class="basic-button smaller">Twitter</a>
-									<a href="#" class="basic-button smaller"><i class="far fa-envelope"></i></a>
+									<a href="#" class="basic-button">MP</a>
+									<a href="#" class="basic-button">Facebook</a>
+									<a href="#" class="basic-button">Twitter</a>
+									<a href="#" class="basic-button"><i class="far fa-envelope"></i></a>
 								</div>
 							</div>
 			                <div class="message-user">
@@ -588,31 +588,31 @@
 			                    <a href="#ID" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#ID</a>
 			                </div>
 			            </div>
-			        </div>
+			        </header>
 			        <div class="message-content">
 			            {@css.messages.content}
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi autem sequi quam ab amet culpa nobis vitae rerum laborum nulla!</p>
 			        </div>
-			        <div class="message-footer-container">
+			        <footer class="message-footer-container">
 			            <div class="message-user-assoc">
 							<div></div>
-							<div>
-								{@css.messages.level}
-				                <div class="message-group-level">
+							<div class="message-user-rank">
+								<p>{@css.messages.level}</p>
+				                <p class="message-group-level">
 									<i class="far fa-star"></i>
 					                <i class="far fa-star"></i>
 					                <i class="far fa-star"></i>
 					                <i class="far fa-star"></i>
 					                <i class="far fa-star"></i>
-								</div>
+								</p>
 							</div>
 			            </div>
 			            <div class="message-user-management">
 			                <div></div>
 			                <div class="message-moderation-level">0% <i class="fa fa-exclamation-triangle"></i> <i class="fa fa-user-lock"></i></div>
 			            </div>
-			        </div>
-				</div>
+			        </footer>
+				</article>
 			</div>
 		</article>
 	</div>

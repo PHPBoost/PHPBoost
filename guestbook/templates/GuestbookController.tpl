@@ -15,7 +15,7 @@
 			<div class="message-helper notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		# START messages #
-			<article id="m{messages.ID}" class="guestbook-item guestbook-items message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+			<article id="m{messages.ID}" class="guestbook-item guestbook-items message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
 				<header class="message-header-container">
 					# IF messages.C_AVATAR #
 						<img class="message-user-avatar" src="{messages.U_AVATAR}" alt="${LangLoader::get_message('avatar', 'user-common')}" />
