@@ -224,11 +224,11 @@ class CommentsService
 			$user_accounts_config = UserAccountsConfig::load();
 
 			$condition = !$display_from_number_comments ? ' LIMIT '. $number_comments_display : ' LIMIT ' . $number_comments_display . ',18446744073709551615';
-			$result = PersistenceContext::get_querier()->select("
-				SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
-				topic.is_locked, topic.path,
-				member.user_id, member.display_name, member.level, member.groups,
-				ext_field.user_avatar
+			$result = PersistenceContext::get_querier()->select("SELECT
+					comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+					topic.is_locked, topic.path,
+					member.user_id, member.display_name, member.level, member.groups,
+					ext_field.user_avatar
 				FROM " . DB_TABLE_COMMENTS . " comments
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 				LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
@@ -251,6 +251,7 @@ class CommentsService
 				$template->assign_block_vars('comments', array_merge(
 					Date::get_array_tpl_vars($timestamp,'date'),
 					array(
+					'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['display_name']),
 					'C_GROUP_COLOR' => !empty($group_color),

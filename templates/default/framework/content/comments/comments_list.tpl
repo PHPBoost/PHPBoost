@@ -36,12 +36,6 @@
 					</a>
 				</div>
 			# ENDIF #
-			<!--
-			<div id="message-rating">
-				<div class="positive_vote_button">+</div>
-				<div class="negative_vote_button">-</div>
-			</div>
-			 -->
         </div>
         <footer class="message-footer-container# IF comments.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
             <div class="message-user-management">
