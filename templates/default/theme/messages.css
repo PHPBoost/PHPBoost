@@ -163,7 +163,6 @@
     top: 0;
     left: -8%;
     position: absolute;
-    -webkit-clip-path: polygon(5% 25%, 5% 75%, 50% 100%, 95% 75%, 95% 25%, 50% 0%);
     clip-path: polygon(5% 25%, 5% 75%, 50% 100%, 95% 75%, 95% 25%, 50% 0%);
     margin: 0 auto;
 }

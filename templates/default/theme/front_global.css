@@ -468,6 +468,23 @@ li.small-block .fa-stack {
 .message-helper.modo-only:before   { content: "\f071"; } /* copy exclamation-triangle */
 .message-helper.admin-only:before  { content: "\f071"; } /* copy exclamation-triangle */
 
+/* --- Authorized reader --- */
+.authorized-reader {
+    border-width: 0 0 0 3px;
+    border-style: solid;
+    border-color: transparent;
+    position: relative;
+}
+
+.authorized-reader::before {
+    position: absolute;
+    content: attr(data-reader);
+    font-style: italic;
+    font-size: 0.618em;
+}
+
+/* --- Floating message --- */
+
 .floating-message-container {
 	position: fixed;
 	left: 50%;

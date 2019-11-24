@@ -229,7 +229,7 @@
 
 			<li id="html-title" class="bbcode-elements">
 				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-modal# ENDIF # data-target="block-title{FIELD}" aria-label="{@bbcode.title}">
-					<i class="fa fa-fw fa-list-alt" aria-hidden="true"></i>
+					<i class="fa fa-fw fa-heading" aria-hidden="true"></i>
 				</span>
 				<div id="block-title{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
@@ -340,56 +340,53 @@
 						</div>
 						<nav class="cell-list">
 							<ul>
-								<li id="html-paragraph" class="li-stretch{AUTH_PARAGRAPH}">
+								<li id="html-paragraph" class="li-stretch{AUTH_P}">
 									<span class="bbcode-label" aria-label="{@bbcode.paragraph.title}"> {@bbcode.paragraph} </span>
-									<span class="button hide-modal" # IF NOT C_DISABLED_PARAGRAPH #onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+									<span class="button hide-modal" # IF NOT C_DISABLED_P#onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li id="html-div-block" class="li-stretch{AUTH_PARAGRAPH}">
+								<li id="html-div-block" class="li-stretch{AUTH_BLOCK}">
 									<span class="bbcode-label"> {@bbcode.block} </span>
 									<span class="button hide-modal" # IF NOT C_DISABLED_BLOCK #onclick="insertbbcode('[block]', '[/block]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER_CUSTOM}">
-									<span class="bbcode-label"> {@bbcode.container.custom} </span>
-									<span class="button" # IF NOT C_DISABLED_CONTAINER_CUSTOM #data-modal# ENDIF # data-target="block-container-custom{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" # IF NOT C_DISABLED_CONTAINER_CUSTOM #onclick="insertbbcode('[container]', '[/container]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+								<li id="html-div-custom" class="li-stretch{AUTH_CUSTOM_DIV}">
+									<span class="bbcode-label"> {@bbcode.custom.div} </span>
+									<span class="button" # IF NOT C_DISABLED_CUSTOM_DIV #data-modal# ENDIF # data-target="block-custom-div{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 								</li>
-								<li class="li-stretch" id="html-fieldset{AUTH_PARAGRAPH}">
+								<li class="li-stretch" id="html-fieldset{AUTH_FIELDSET}">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
-									<span class="button" # IF NOT C_DISABLED_PARAGRAPH #data-modal# ENDIF # data-target="block-fieldset{FIELD}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" # IF NOT C_DISABLED_PARAGRAPH #onclick="insertbbcode('[fieldset]', '[/fieldset]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+									<span class="button" # IF NOT C_DISABLED_FIELDSET #data-modal# ENDIF # data-target="block-fieldset{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
 								<li class="li-stretch" id="html-abbr{AUTH_ABBR}" class="modal-container cell-flex cell-modal">
 									<span class="bbcode-label"> {@bbcode.abbr} </span>
-									<span class="button" # IF NOT C_DISABLED_ABBR #data-modal# ENDIF # data-target="block-abbr{FIELD}"> {@bbcode.tags.advanced} </span>
-									<span class="button hide-modal" # IF NOT C_DISABLED_ABBR #onclick="insertbbcode('[abbr]', '[/abbr]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+									<span class="button" # IF NOT C_DISABLED_ABBR #data-modal# ENDIF # data-target="block-abbr{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
 							</ul>
 						</nav>
 					</div>
 				</div>
-				<div id="block-container-custom{FIELD}" class="modal modal-animation">
+				<div id="block-custom-div{FIELD}" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
-							<div class="cell-name">{@bbcode.container.custom}</div>
+							<div class="cell-name">{@bbcode.custom.div}</div>
 						</div>
 						<div class="cell-body">
-							<span class="message-helper notice">{@bbcode.container.alert}</span>
+							<span class="message-helper notice">{@bbcode.custom.div.alert}</span>
 						</div>
 						<div class="cell-form">
-							<label for="bb_cc_id{FIELD}" class="cell-label">{@bbcode.container.id}</label>
-							<div class="cell-input"><input type="text" id="bb_cc_id{FIELD}"></div>
+							<label for="bb_cd_id{FIELD}" class="cell-label">{@bbcode.custom.div.id}</label>
+							<div class="cell-input"><input type="text" id="bb_cd_id{FIELD}"></div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_cc_class{FIELD}" class="cell-label">{@bbcode.container.class}</label>
-							<div class="cell-input"><input type="text" id="bb_cc_class{FIELD}"></div>
+							<label for="bb_cd_class{FIELD}" class="cell-label">{@bbcode.class}</label>
+							<div class="cell-input"><input type="text" id="bb_cd_class{FIELD}"></div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_cc_style{FIELD}" class="cell-label">{@bbcode.container.style}</label>
-							<div class="cell-input"><textarea id="bb_cc_style{FIELD}" rows="3" cols="32"></textarea></div>
+							<label for="bb_cd_style{FIELD}" class="cell-label">{@bbcode.style}</label>
+							<div class="cell-input"><textarea id="bb_cd_style{FIELD}" rows="3" cols="32"></textarea></div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_container('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button submit hide-modal" onclick="bbcode_custom_div('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -403,6 +400,10 @@
 							<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.lengend}</label>
 							<div class="cell-input"><input type="text" id="bb_legend{FIELD}"></div>
 						</div>
+						<div class="cell-form">
+							<label for="bb_fieldset_style{FIELD}" class="cell-label">{@bbcode.style}</label>
+							<div class="cell-input"><textarea id="bb_fieldset_style{FIELD}" rows="3" cols="32"></textarea></div>
+						</div>
 						<div class="cell-footer cell-input">
 							<span class="button submit hide-modal" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
@@ -415,10 +416,12 @@
 							<div class="cell-name">{@bbcode.abbr}</div>
 						</div>
 						<div class="cell-form">
+							<label for="bb_abbr_name{FIELD" class="cell-label">{@bbcode.abbr}</label>
+							<div class="cell-input"><input type="text" id="bb_abbr_name{FIELD}"></div>
+						</div>
+						<div class="cell-form">
 							<label for="bb_abbr_desc{FIELD" class="cell-label">{@bbcode.abbr.label}</label>
-							<div class="cell-input">
-								<textarea id="bb_abbr_desc{FIELD}" rows="3" cols="32"></textarea>
-							</div>
+							<div class="cell-input"><input type="text" id="bb_abbr_desc{FIELD}"></div>
 						</div>
 						<div class="cell-footer cell-input">
 							<span class="button submit hide-modal" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
@@ -455,7 +458,7 @@
 				</div>
 			</li>
 			<li id="html-hidden" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_HIDE}" # IF NOT C_DISABLED_HIDE #data-modal# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
+				<span class="bbcode-button{AUTH_HIDDEN}" # IF NOT C_DISABLED_HIDDEN #data-modal# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
 					<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i>
 				</span>
 				<div id="block-hide{FIELD}" class="modal modal-animation">
@@ -466,15 +469,15 @@
 						</div>
 						<div class="cell-list">
 							<ul>
-								<li class="li-stretch" aria-label="{@bbcode.hide.all}">
+								<li class="li-stretch{AUTH_HIDE}" aria-label="{@bbcode.hide.all}">
 									<span><i class="far fa-fw fa-eye-slash"></i> {@bbcode.hide}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" aria-label="{@bbcode.hide.member}">
+								<li class="li-stretch{AUTH_MEMBER}" aria-label="{@bbcode.hide.member}">
 									<span><i class="fa fa-fw fa-user-friends"></i> {@bbcode.member}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch" aria-label="{@bbcode.hide.moderator}">
+								<li class="li-stretch{AUTH_MODERATOR}" aria-label="{@bbcode.hide.moderator}">
 									<span><i class="fa fa-fw fa-user-shield"></i> {@bbcode.moderator}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
@@ -584,9 +587,37 @@
 				</div>
 			</li>
 			<li id="links-wikipedia" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_WIKIPEDIA}" # IF NOT C_DISABLED_WIKIPEDIA #onclick="insertbbcode('[wikipedia]', '[/wikipedia]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.wikipedia}">
+				<span class="bbcode-button{AUTH_WIKIPEDIA}" # IF NOT C_DISABLED_WIKIPEDIA #data-modal# ENDIF # data-target="block-wikipedia{FIELD}" aria-label="{@bbcode.wikipedia}">
 					<i class="fab fa-fw fa-wikipedia-w{AUTH_WIKIPEDIA}" aria-hidden="true"></i>
 				</span>
+				<div id="block-wikipedia{FIELD}" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.wikipedia}</div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_wikipedia_word{FIELD}" class="cell-label">{@bbcode.wikipedia.word}</label>
+							<div class="cell-input">
+								<input type="text" id="bb_wikipedia_word{FIELD}" name="bb_wikipedia_word{FIELD}">
+							</div>
+						</div>
+						<div class="cell-form">
+							<label for="bb_wikipedia_lang{FIELD}" class="cell-label">{@bbcode.wikipedia.lang}</label>
+							<div class="cell-input">
+								<select id="bb_wikipedia_lang{FIELD}">
+									<option value="">{@bbcode.wikipedia.digit}</option>
+									# START countries #
+										<option value="{countries.ID}">{countries.NAME}</option>
+									# END countries #
+								</select>
+							</div>
+						</div>
+						<div class="cell-footer cell-input">
+							<span class="button submit hide-modal" onclick="bbcode_wikipedia('{FIELD}');">{@bbcode.tags.add}</span>
+						</div>
+					</div>
+				</div>
 			</li>
 			<li id="links-feed" class="bbcode-elements">
 				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-modal# ENDIF # data-target="block-feed{FIELD}" aria-label="{@bbcode.feed}">
@@ -599,7 +630,7 @@
 							<div class="cell-name">{@bbcode.feed}</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_feed_module{FIELD}" class="cell-label">{@bbcode.feed.module}</label>
+							<label for="bb_module_name{FIELD}" class="cell-label">{@bbcode.feed.module}</label>
 							<div class="cell-input">
 								<select id="bb_module_name{FIELD}">
 									<option value="">{@bbcode.feed.select}</option>
@@ -671,7 +702,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
-							<div class="cell-input grouped-inputs">
+							<div class="cell-input form-field-upload-file grouped-inputs">
 								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
@@ -696,7 +727,7 @@
 							<label class="cell-label" for="bb_movie_url{FIELD}">
 								{@bbcode.movie.url}
 							</label>
-							<div class="cell-input grouped-inputs">
+							<div class="cell-input form-field-upload-file grouped-inputs">
 								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
@@ -718,7 +749,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_poster{FIELD}">{@bbcode.movie.poster}</label>
-							<div class="cell-input grouped-inputs">
+							<div class="cell-input form-field-upload-file grouped-inputs">
 								<input id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
@@ -743,7 +774,7 @@
 							<label class="cell-label" for="bb_lightbox{FIELD}">
 								{@bbcode.picture.url}
 							</label>
-							<div class="cell-input grouped-inputs">
+							<div class="cell-input form-field-upload-file grouped-inputs">
 								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
@@ -774,7 +805,7 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
-							<div class="cell-input grouped-inputs">
+							<div class="cell-input form-field-upload-file grouped-inputs">
 								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
 								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>

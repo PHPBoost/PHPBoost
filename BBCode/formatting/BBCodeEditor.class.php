@@ -19,19 +19,17 @@ class BBCodeEditor extends ContentEditor
 	private static $editor_already_included = false;
 	private $forbidden_positions = 0;
 	private $icon_fa = array(
-		array("fa","arrow-up"), array("fa","arrow-down"), array("fa","arrow-left"), array("fa","arrow-right"), array("fa","arrows-alt-h"), array("fa","arrows-alt"), array("fa","ban"), array("fa","unban"),
-		array("fa","chart-bar"), array("fa","bars"), array("fa","bell"), array("fa","book"), array("fa","calendar-alt"), array("fa","caret-left"), array("fa","caret-right"), array("far","clipboard"),
-		array("far","clock"), array("fa","cloud-upload-alt"), array("fa","download"), array("fa","code"), array("fa","code-branch"), array("fa","cog"), array("fa","cogs"), array("fa","comment"),
-		array("far","comment"), array("far","comments"), array("fa","cube"), array("fa","cubes"), array("fa","delete"), array("fa","edit"), array("fa","remove"), array("fa","envelope"),
-		array("far","envelope"), array("fa","eraser"), array("fa","check"), array("fa","success"), array("fa","error"), array("fa","warning"), array("fa","question"), array("fa","forbidden"),
-		array("fa","info-circle"), array("far","eye"), array("fa","eye-slash"), array("fab","facebook"), array("fa","fast-forward"), array("fa","filter"), array("fa","flag"), array("fab","font-awesome-flag"),
-		array("fa","folder"), array("fa","folder-open"), array("fa","gavel"), array("fa","gears"), array("fa","globe"), array("fab","google-plus-g"), array("fa","hand-point-right"), array("fa","heart"),
-		array("fa","home"), array("fa","key"), array("far","lightbulb"), array("fa","list-ul"), array("fa","lock"), array("fa","magic"), array("fa","minus"), array("fa","plus"),
-		array("fa","move"), array("fa","image"), array("fa","print"), array("fa","profil"), array("fa","quote-right"), array("fa","refresh"), array("fa","save"), array("fa","search"),
-		array("far","share-square"), array("fa","sign-in-alt"), array("fa","sign-out-alt"), array("fa","smile"), array("fa","sort"), array("fa","sort-alpha-up"), array("fa","sort-amount-up"), array("fa","sort-amount-down"),
-		array("fa","spinner"), array("fa","star"), array("fa","star-half-empty"), array("far","star"), array("fa","syndication"), array("fa","tag"), array("fa","tags"), array("fa","tasks"),
-		array("fa","th"), array("fa","ticket-alt"), array("fa","undo"), array("fa","unlink"), array("fa","file"), array("far","file"), array("fa","file-alt"), array("far","file-alt"),
-		array("fa","user"), array("fa","users"), array("fa","offline"), array("fa","online"), array("fa","male"), array("fa","female"), array("fa","volume-up"), array("fa","wrench")
+		array("fa","arrow-up"),array("fa","arrow-down"),array("fa","arrow-left"),array("fa","arrow-right"),array("fa","arrows-alt-h"),array("fa","arrows-alt"),array("fa","ban"),array("fa","bars"),array("fa","chart-bar"),
+		array("fa","bell"),array("fa","book"),array("fa","calendar-alt"),array("fa","caret-left"),array("fa","caret-right"),array("far","clipboard"),array("far","clock"),array("fa","cloud-upload-alt"),array("fa","download"),
+		array("fa","code"),array("fa","code-branch"),array("fa","cog"),array("fa","cogs"),array("fa","comment"),array("far","comment"),array("far","comments"),array("fa","cube"),array("fa","cubes"),
+		array("fa","times"),array("fa","edit"),array("fa","envelope"),array("far","envelope"),array("fa","eraser"),array("fa","check"),array("fa","exclamation-triangle"),array("fa","question"),array("fa","minus-circle"),
+		array("fa","info-circle"),array("far","eye"),array("fa","eye-slash"),array("fab","facebook"),array("fa","fast-forward"),array("fa","filter"),array("fa","flag"),array("fab","font-awesome-flag"),array("fa","folder"),
+		array("fa","folder-open"),array("fa","gavel"),array("fa","cogs"),array("fa","globe"),array("fa","hand-point-right"),array("fa","heart"),array("fa","home"),array("fa","key"),array("far","lightbulb"),
+		array("fa","list-ul"),array("fa","lock"),array("fa","magic"),array("fa","minus"),array("fa","plus"),array("fa","share"),array("fa","image"),array("fa","print"),array("fa","tachometer-alt"),
+		array("fa","quote-right"),array("fa","sync-alt"),array("fa","save"),array("fa","search"),array("far","share-square"),array("fa","sign-in-alt"),array("fa","sign-out-alt"),array("fa","smile"),array("fa","sort"),
+		array("fa","sort-alpha-up"),array("fa","sort-amount-up"),array("fa","sort-amount-down"),array("fa","spinner"),array("fa","star"),array("far","star"),array("fa","rss"),array("fa","tag"),array("fa","tags"),
+		array("fa","tasks"),array("fa","th"),array("fa","ticket-alt"),array("fa","undo"),array("fa","unlink"),array("fa","file"),array("far","file"),array("fa","file-alt"),array("far","file-alt"),
+		array("fa","user"),array("fa","user-shield"),array("fa","users"),array("fa","user-times"),array("fa","user-check"),array("fa","male"),array("fa","female"),array("fa","volume-up"),array("fa","wrench")
 	);
 
 	public function get_template()
@@ -53,6 +51,15 @@ class BBCodeEditor extends ContentEditor
 
 		$smileys_cache = SmileysCache::load();
 
+		$countries = LangLoader::get('countries');
+		foreach ($countries as $id => $name)
+		{
+			$template->assign_block_vars('countries', array(
+				'ID' => $id,
+				'NAME' => $name,
+			));
+		}
+
 		$bbcode_lang = LangLoader::get('common', 'BBCode');
 		$template->add_lang($bbcode_lang);
 
@@ -66,19 +73,26 @@ class BBCodeEditor extends ContentEditor
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
-			if ($forbidden_tag == 'fieldset' || $forbidden_tag == 'block' || $forbidden_tag == 'p' || $forbidden_tag == 'abbr')
+
+			if ($forbidden_tag == 'float' && $forbidden_tag == 'indent' && $forbidden_tag == 'sup' && $forbidden_tag == 'sub')
+			{
+				$template->put_all(array(
+					'AUTH_POSITIONS' => ' bbcode-forbidden',
+					'C_DISABLED_POSITIONS' => true
+				));
+			}
+			if ($forbidden_tag == 'p' && $forbidden_tag == 'block' && $forbidden_tag == 'custom_div' && $forbidden_tag == 'fieldset' && $forbidden_tag == 'abbr')
 			{
 				$template->put_all(array(
 					'AUTH_CONTAINER' => ' bbcode-forbidden',
 					'C_DISABLED_CONTAINER' => true
 				));
 			}
-
-			if ($forbidden_tag == 'float' || $forbidden_tag == 'indent' || $forbidden_tag == 'sup' || $forbidden_tag == 'sub')
+			if ($forbidden_tag == 'hide' && $forbidden_tag == 'member' && $forbidden_tag == 'moderator')
 			{
 				$template->put_all(array(
-					'AUTH_POSITIONS' => ' bbcode-forbidden',
-					'C_DISABLED_POSITIONS' => true
+					'AUTH_HIDDEN' => ' bbcode-forbidden',
+					'C_DISABLED_HIDDEN' => true
 				));
 			}
 

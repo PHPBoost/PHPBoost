@@ -45,7 +45,7 @@ $lang['bbcode.fieldset.title'] = 'Fieldset : [fieldset legend="title"]text[/fiel
 $lang['bbcode.fieldset.prompt'] = 'Legend of fieldset ?';
 $lang['bbcode.paragraph'] = 'Paragraph';
 $lang['bbcode.paragraph.title'] = 'Paragraph : [p]text[/p]';
-$lang['bbcode.container.title'] = 'Customizable container : [container id="" class="" style=""]contenu[/container]';
+$lang['bbcode.custom.div.title'] = 'Customizable container : [container id="" class="" style=""]contenu[/container]';
 $lang['bbcode.abbr'] = 'Abbreviation';
 $lang['bbcode.abbr.title'] = 'Abbreviation : [abbr=description]text[/abbr]';
 $lang['bbcode.abbr.prompt'] = 'Definition of abbreviation ?';

@@ -17,11 +17,12 @@
 
 $lang['bbcode.tags.add'] = 'Insérer';
 $lang['bbcode.tags.choice'] = 'Choisir';
-$lang['bbcode.tags.advanced'] = 'Avancé';
 $lang['bbcode.tags.options'] = 'Ajouter des options à la balise';
 $lang['bbcode.preview.text'] = 'Aperçu du texte';
+$lang['bbcode.class'] = 'Classes';
+$lang['bbcode.style'] = 'Style';
 
-// left top block : Text formatting
+// Text formatting
 $lang['bbcode.bold'] = 'Texte en gras';
 $lang['bbcode.italic'] = 'Texte en italique';
 $lang['bbcode.underline'] = 'Texte souligné';
@@ -46,7 +47,7 @@ $lang['bbcode.indent'] = 'Indentation';
 $lang['bbcode.sup'] = 'Exposant';
 $lang['bbcode.sub'] = 'Indice';
 
-// right top block : HTML formatting
+// HTML formatting
 $lang['bbcode.title'] = 'Titrage';
 $lang['bbcode.title.label'] = 'Titre';
 
@@ -63,34 +64,38 @@ $lang['bbcode.container'] = 'Conteneur';
 $lang['bbcode.paragraph'] = 'Paragraphe';
 $lang['bbcode.paragraph.title'] = 'Paragraphe : [p]texte[/p]';
 $lang['bbcode.block'] = 'Bloc';
-$lang['bbcode.container.custom'] = 'Conteneur personnalisable';
-$lang['bbcode.container.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
-$lang['bbcode.container.id'] = 'Identifiant';
-$lang['bbcode.container.class'] = 'Classe';
-$lang['bbcode.container.style'] = 'Style';
+$lang['bbcode.custom.div'] = 'Conteneur personnalisable';
+$lang['bbcode.custom.div.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
+$lang['bbcode.custom.div.id'] = 'Identifiant';
 $lang['bbcode.fieldset'] = 'Bloc champs';
 $lang['bbcode.fieldset.lengend'] = 'Titre du bloc champs';
 $lang['bbcode.abbr'] = 'Abréviation';
-$lang['bbcode.abbr.label'] = 'Définition de l\'abréviation';
+$lang['bbcode.abbr.label'] = 'Nom complet';
 
 $lang['bbcode.quote'] = 'Citation';
 $lang['bbcode.quote.author'] = 'Auteur de la citation';
 
 $lang['bbcode.hide'] = 'Texte Caché';
-$lang['bbcode.member'] = 'Membre';
-$lang['bbcode.moderator'] = 'Modérateur';
+$lang['bbcode.member'] = 'Texte pour les membres';
+$lang['bbcode.moderator'] = 'Texte pour les modérateurs';
 $lang['bbcode.hide.all'] = 'Cache le texte et l\'affiche au clic';
 $lang['bbcode.hide.member'] = 'Cache le texte pour les visiteurs';
 $lang['bbcode.hide.moderator'] = 'Cache le texte pour les membres';
 
 $lang['bbcode.style'] = 'Style';
 
-// Left bottom block : Links
+// Links
 $lang['bbcode.link'] = 'Lien';
 $lang['bbcode.link.url'] = 'Adresse du lien';
 $lang['bbcode.link.name'] = 'Texte du lien';
 
+$lang['bbcode.mail'] = 'Adresse email';
+$lang['bbcode.mail.name'] = 'Texte de la balise';
+
 $lang['bbcode.wikipedia'] = 'Lien wikipedia';
+$lang['bbcode.wikipedia.word'] = 'Mot';
+$lang['bbcode.wikipedia.lang'] = 'Langue';
+$lang['bbcode.wikipedia.digit'] = '[{@default_f__k__g_value!!}]';
 
 $lang['bbcode.feed'] = 'Flux RSS';
 $lang['bbcode.feed.module'] = 'Nom du module';
@@ -143,9 +148,6 @@ $lang['bbcode.script'] = 'Script';
 $lang['bbcode.prog'] = 'Programmation';
 $lang['bbcode.math'] = 'Insérer du code mathématique';
 $lang['bbcode.html'] = 'Insérer du code html';
-
-$lang['bbcode.mail'] = 'E-mail';
-$lang['bbcode.mail.name'] = 'Texte de l\'e-mail';
 
 $lang['bbcode.help'] = 'Aide BBcode';
 

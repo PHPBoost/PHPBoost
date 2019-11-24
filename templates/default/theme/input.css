@@ -85,6 +85,7 @@ option {
 
 .form-field-upload-file.grouped-inputs input {
 	max-width: calc(100% - 2.618em);
+	border-width: 1px 0 1px 1px;
 }
 
 .grouped-inputs button,
@@ -113,4 +114,5 @@ option {
 
 .sources-link.grouped-inputs input {
 	width: 45%;
+	border-width: 1px 0 1px 1px;
 }
