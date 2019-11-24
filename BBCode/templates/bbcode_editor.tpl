@@ -328,8 +328,8 @@
 					</div>
 				</div>
 			</li>
-			<li id="html-container" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_CONTAINER}" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
+			<li id="html-containers" class="bbcode-elements">
+				<span class="bbcode-button{AUTH_CONTAINERS}" # IF NOT C_DISABLED_CONTAINERS #data-modal# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
 					<i class="far fa-fw fa-square" aria-hidden="true"></i>
 				</span>
 				<div id="block-container{FIELD}" class="modal modal-animation">
@@ -348,9 +348,9 @@
 									<span class="bbcode-label"> {@bbcode.block} </span>
 									<span class="button hide-modal" # IF NOT C_DISABLED_BLOCK #onclick="insertbbcode('[block]', '[/block]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
-								<li id="html-div-custom" class="li-stretch{AUTH_CUSTOM_DIV}">
+								<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER}">
 									<span class="bbcode-label"> {@bbcode.custom.div} </span>
-									<span class="button" # IF NOT C_DISABLED_CUSTOM_DIV #data-modal# ENDIF # data-target="block-custom-div{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
+									<span class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 								</li>
 								<li class="li-stretch" id="html-fieldset{AUTH_FIELDSET}">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
@@ -606,7 +606,6 @@
 							<label for="bb_wikipedia_lang{FIELD}" class="cell-label">{@bbcode.wikipedia.lang}</label>
 							<div class="cell-input">
 								<select id="bb_wikipedia_lang{FIELD}">
-									<option value="">{@bbcode.wikipedia.digit}</option>
 									# START countries #
 										<option value="{countries.ID}">{countries.NAME}</option>
 									# END countries #
@@ -924,9 +923,9 @@
 										<option value="html">HTML</option>
 										<option value="css">CSS</option>
 										<option value="javascript">Javascript</option>
+										<option value="php">PHP</option>
 									</optgroup>
 									<optgroup label="{@bbcode.script}">
-										<option value="php">PHP</option>
 										<option value="asp">Asp</option>
 										<option value="python">Python</option>
 										<option value="pearl">Pearl</option>

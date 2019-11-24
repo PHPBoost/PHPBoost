@@ -51,7 +51,7 @@ class BBCodeEditor extends ContentEditor
 
 		$smileys_cache = SmileysCache::load();
 
-		$countries = LangLoader::get('countries');
+		$countries = LangLoader::get('languages');
 		foreach ($countries as $id => $name)
 		{
 			$template->assign_block_vars('countries', array(
@@ -81,11 +81,11 @@ class BBCodeEditor extends ContentEditor
 					'C_DISABLED_POSITIONS' => true
 				));
 			}
-			if ($forbidden_tag == 'p' && $forbidden_tag == 'block' && $forbidden_tag == 'custom_div' && $forbidden_tag == 'fieldset' && $forbidden_tag == 'abbr')
+			if ($forbidden_tag == 'p' && $forbidden_tag == 'block' && $forbidden_tag == 'container' && $forbidden_tag == 'fieldset' && $forbidden_tag == 'abbr')
 			{
 				$template->put_all(array(
-					'AUTH_CONTAINER' => ' bbcode-forbidden',
-					'C_DISABLED_CONTAINER' => true
+					'AUTH_CONTAINERS' => ' bbcode-forbidden',
+					'C_DISABLED_CONTAINERS' => true
 				));
 			}
 			if ($forbidden_tag == 'hide' && $forbidden_tag == 'member' && $forbidden_tag == 'moderator')

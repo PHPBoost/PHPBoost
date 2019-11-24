@@ -95,7 +95,6 @@ $lang['bbcode.mail.name'] = 'Texte de la balise';
 $lang['bbcode.wikipedia'] = 'Lien wikipedia';
 $lang['bbcode.wikipedia.word'] = 'Mot';
 $lang['bbcode.wikipedia.lang'] = 'Langue';
-$lang['bbcode.wikipedia.digit'] = '[{@default_f__k__g_value!!}]';
 
 $lang['bbcode.feed'] = 'Flux RSS';
 $lang['bbcode.feed.module'] = 'Nom du module';
