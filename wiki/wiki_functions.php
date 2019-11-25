@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 27
+ * @version   	PHPBoost 5.2 - last update: 2019 11 25
  * @since   	PHPBoost 1.6 - 2006 05 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -424,6 +424,8 @@ function wiki_pick_up_tag($content, $tag, $arguments = '')
 			}
 		}
 	}
+	else
+		$parsed_content = $content;
 	
 	return array('contents' => $parsed_content, 'array_tags' => $array_tags);
 }
