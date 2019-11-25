@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 04 04
+ * @version   	PHPBoost 5.2 - last update: 2019 11 25
  * @since   	PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -22,7 +22,8 @@ if (!empty($read_file) && (TextHelper::substr($read_file, -4) == '.sql' || TextH
 	{
 		ini_set('memory_limit', '500M');
 
-		header('Content-Type: text/sql');
+		header('Content-Type: ' . (TextHelper::substr($read_file, -4) == '.sql' ? 'text/sql' : 'application/zip'));
+		header('Content-Transfer-Encoding: binary');
 		header('Content-Disposition: attachment; filename="' . $read_file . '"');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate');
@@ -418,7 +419,7 @@ else
 		{
 			include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 			$archive = new PclZip(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.zip');
-			if ($archive->create(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql'))
+			if ($archive->create(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql', PCLZIP_OPT_REMOVE_PATH, PATH_TO_ROOT . '/cache/backup/'))
 			{
 				$file = new File(PATH_TO_ROOT . '/cache/backup/' . $file_basename . '.sql');
 				$file->delete();
