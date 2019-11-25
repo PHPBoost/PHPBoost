@@ -14,6 +14,10 @@
 		color: #FFFFFF;
  	}
 
+	#site-name {
+		color: #FFFFFF;
+	}
+
  	#footer {
  		background-color: #1c334a;
  		border-color: #366493;
@@ -137,7 +141,7 @@ span.not-compatible {
 	background-color: #0066CC;
 }
 
-/* -- Table ----------------------------------------------------------------- */
+/* --- Table ----------------------------------------------------------------- */
 table thead th {
 	background-color: #366493;
 	color: #FFFFFF;
@@ -149,7 +153,13 @@ tr:nth-child(even) td {
 	background-color: #FFFFFF;
 }
 
-/* -- Form elements --------------------------------------------------------- */
+.html-table-header-sortable:hover a,
+.html-table-header-sortable.sort-active a {
+	background-color: #FFFFFF;
+	color: #555555;
+}
+
+/* --- Form elements --------------------------------------------------------- */
 button,
 .button {
 	background-color: #FFFFFF;
@@ -269,14 +279,6 @@ select:focus {
 .custom-radio .radio [type="radio"]:checked + span:after {
 	background-color: #0066cc;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
-}
-
-.html-table-header-sortable.sort-active a {
-	background-color: #E5E6E6;
-}
-
-.html-table-header-sortable.sort-active i {
-	color: #4D4C50;
 }
 
 /* --- Lined textarea --- */

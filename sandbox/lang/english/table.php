@@ -11,6 +11,14 @@
 #                    English                       #
 ####################################################
 
+$lang['table.header.login'] = 'Login';
+$lang['table.header.email'] = 'email';
+$lang['table.header.registred'] = 'Registred the';
+$lang['table.header.messages'] = 'Messages';
+$lang['table.header.connected'] = 'Last connection';
+$lang['table.header.messaging'] = 'Messaging';
+
+$lang['table.member.list'] = 'Member list';
 $lang['table.login.equals'] = 'Pick a login';
 $lang['table.login.beguin.regex'] = 'Login starting with (regex)';
 $lang['table.login.beguin'] = 'Login starting with (no regex)';

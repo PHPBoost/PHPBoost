@@ -169,13 +169,14 @@ table tfoot tr td select {
 	display: none;
 }
 
-/* --- Sortable filters--- */
+/* --- Sortable filters ----------------------------------------------------- */
 .html-table-header-sortable {
 	display: none;
+	padding: 0.309em 0;
 }
 
-.html-table-header-sortable .fa {
-	margin-bottom: 0.228em;
+.html-table-header-sortable a {
+	padding: 0 0.309em;
 }
 
 @media (min-width: 769px) {

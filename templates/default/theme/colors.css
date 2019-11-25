@@ -13,33 +13,26 @@ body {
 #footer       { border-color: #366493; }
 .footer-infos { border-color: #366493; }
 
-#breadcrumb li:not(.current):after {
-	color: #616161;
-}
+#breadcrumb li:not(.current):after { color: #616161; }
 
-.scroll-to   { background-color: #366493; }
-.scroll-to:hover	{ background-color: #0066cc; }
-.scroll-to i { color: #FFFFFF; }
+.scroll-to   	 { background-color: #366493; }
+.scroll-to:hover { background-color: #0066cc; }
+.scroll-to i 	 { color: #FFFFFF; }
 
 .robot { color: #D36636;}
 
 /* --- Cookies -------------------------------------------------------------- */
-.cookiebar-container {
-	background-color: rgba(54, 100, 147, 0.1);
-}
+.cookiebar-container { background-color: rgba(54, 100, 147, 0.1); }
 
-.cookiebar-actions button {
-	color: #FFFFFF;
-}
+.cookiebar-actions button { color: #FFFFFF; }
 
-.cookiebar-button { border-color: transparent;}
+.cookiebar-button 					{ border-color: transparent;}
 .cookiebar-button-understand 		{ background-color: #366493; }
 .cookiebar-button-understand:hover 	{ background-color: rgba(0, 102, 204, 0.2); color: #0066CC; border-color: #0066CC; }
 .cookiebar-button-allowed 			{ background-color: #4D9136; }
 .cookiebar-button-allowed:hover 	{ background-color: rgba(77, 145, 54, 0.2); color: #4D9136; border-color: #4D9136; }
 .cookiebar-button-declined 			{ background-color: #913636; }
 .cookiebar-button-declined:hover 	{ background-color: rgba(145, 54, 54, 0.2); color: #913636; border-color: #913636; }
-
 
 @media (max-width: 768px) {
 	.cookiebar-container {
@@ -49,9 +42,7 @@ body {
 }
 
 /* --  */
-.block {
-	border-color: rgba(54, 100, 147, 1);
-}
+.block { border-color: rgba(54, 100, 147, 1); }
 
 .block header {
 	background-color: rgba(54, 100, 147, 0.05);
@@ -246,6 +237,12 @@ table tfoot tr th,
 
 table tbody td {
 	border-color: #DDDDDD;
+}
+
+.html-table-header-sortable:hover a,
+.html-table-header-sortable.sort-active a {
+	background-color: #366493;
+	color: #FFFFFF;
 }
 
 .calendar-block .date-picker thead th {
@@ -598,7 +595,8 @@ td.calendar-week { border-color: #0066cc; }
 .message-helper-button.modo-only    { background-color: #48419D; }
 .message-helper-button.admin-only   { background-color: #353535; }
 
-.floating-message-container { background-color: #FFFFFF; }
+.member-only.authorized-reader { border-color: #2F9674; }
+.modo-only.authorized-reader   { border-color: #48419D; }
 
 /* --- Classes for/from bbcode -------------------------------------------------- */
 .bbcode-bar {
@@ -606,9 +604,7 @@ td.calendar-week { border-color: #0066cc; }
 	border-color: #DDDDDD !important;
 }
 
-.bbcode-button {
-	color: #366493;
-}
+.bbcode-button { color: #366493; }
 
 .bbcode-button:hover {
 	color: #0066CC;
@@ -627,9 +623,7 @@ td.calendar-week { border-color: #0066cc; }
 }
 
 h2.formatter-title,
-h3.formatter-title {
-	border-color: #366393;
-}
+h3.formatter-title { border-color: #366393; }
 
 .copy-code-content span[style*="color: #0000FF;"] {color: #888888 !important;}
 .copy-code-content span[style*="color: #000080;"] {color: #91367a !important;}

@@ -1,44 +1,28 @@
     /* Push the body and the nav over by 285px over */
 jQuery('.open-summary').on('click', function(f) {
-    jQuery('.sandbox-summary').animate({
-      left: "0px"
-    }, 200);
-
-    jQuery('body').animate({
-      left: "285px"
-    }, 200);
+    jQuery('.sandbox-summary').animate({left: '0px'}, 200);
+    jQuery('body').animate({ left: '285px'}, 200);
 	f.stopPropagation();
 });
 jQuery(document).on('click', function(f) {
     if (jQuery(f.target).is('.open-summary') === false) {
-        jQuery('.sandbox-summary').animate({
-          left: "-285px"
-        }, 200);
-
-        jQuery('body').animate({
-          left: "0px"
-        }, 200);
+        jQuery('.sandbox-summary').animate({left: '-285px'}, 200);
+        jQuery('body').animate({left: '0'}, 200);
     }
 });
 
     /* Then push them back */
 jQuery('.close-summary, .summary-link').on('click', function() {
-    jQuery('.sandbox-summary').animate({
-      left: "-285px"
-    }, 200);
-
-    jQuery('body').animate({
-      left: "0px"
-    }, 200);
+    jQuery('.sandbox-summary').animate({left: '-285px'}, 200);
+    jQuery('body').animate({left: '0'}, 200);
 });
 
 // smooth scroll
 jQuery('.summary-link').on('click',function(){
-	var the_id = jQuery(this).attr("href");
+	var targetId = jQuery(this).attr("href");
 
-	jQuery('html, body').animate({
-		scrollTop:jQuery(the_id).offset().top
-	}, 'slow');
+    history.pushState('', '', targetId);
+	jQuery('html, body').animate({scrollTop:jQuery(targetId).offset().top}, 'slow');
 	return false;
 });
 
@@ -53,6 +37,8 @@ jQuery(document).on('click', function(e) {
       jQuery('#module-mini-sandbox').removeClass('toggle');
     }
 });
+
+jQuery('#sandbox-css a').on('click', function(){return false;});
 
 jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
 setInterval(function() {

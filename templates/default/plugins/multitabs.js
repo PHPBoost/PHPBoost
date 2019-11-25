@@ -45,7 +45,7 @@
                 $('.modal-container').find(hashUrl).addClass('active-panel');
                 $('.modal-container').on('click', '.hide-modal, .close-modal', function() {
                     $('.modal-container ' + hashUrl).removeClass('active-panel'); // remove activation class from the target
-                    history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
+                    history.pushState('', '', ' '); // delete the hash of the url without apllying it
                 });
             } else if(options.pluginType == 'accordion') {
                 if($('.accordion-container').find('[data-target="'+hashTarget+'"]').closest('.accordion').length){ // if target is nested

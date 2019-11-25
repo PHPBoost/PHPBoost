@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 30
+ * @version   	PHPBoost 5.3 - last update: 2019 11 25
  * @since   	PHPBoost 3.0 - 2009 12 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -39,18 +39,18 @@ class SandboxTableController extends ModuleController
 	private function build_table()
 	{
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
-			new HTMLTableColumn('pseudo', 'display_name'),
-			new HTMLTableColumn('email'),
-			new HTMLTableColumn('inscrit le', 'registration_date'),
-			new HTMLTableColumn('messages'),
-			new HTMLTableColumn('derniere connexion'),
-			new HTMLTableColumn('messagerie')
+			new HTMLTableColumn($this->lang['table.header.login'], 'display_name','col-large'),
+			new HTMLTableColumn($this->lang['table.header.email']),
+			new HTMLTableColumn($this->lang['table.header.registred'], 'registration_date'),
+			new HTMLTableColumn($this->lang['table.header.messages']),
+			new HTMLTableColumn($this->lang['table.header.connected']),
+			new HTMLTableColumn($this->lang['table.header.messaging'])
 		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
 
 
-		$table_model->set_caption('Liste des membres');
+		$table_model->set_caption($this->lang['table.member.list']);
 
-		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
+		$options = array('jod' => 'John Doe', 'jad' => 'Jane Doe', 'jid' => 'Jim Doe');
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', $this->lang['table.login.equals'], $options));
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', $this->lang['table.login.beguin.regex'], '`^(?!%).+$`u'));
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', $this->lang['table.login.beguin']));

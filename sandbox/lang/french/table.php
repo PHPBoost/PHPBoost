@@ -11,6 +11,14 @@
 #                    French                        #
 ####################################################
 
+$lang['table.header.login'] = 'Pseudo';
+$lang['table.header.email'] = 'email';
+$lang['table.header.registred'] = 'Inscrit le';
+$lang['table.header.messages'] = 'Messages';
+$lang['table.header.connected'] = 'Dernière connexion';
+$lang['table.header.messaging'] = 'Messagerie';
+
+$lang['table.member.list'] = 'Liste des membres';
 $lang['table.login.equals'] = 'Choisir un pseudo';
 $lang['table.login.beguin.regex'] = 'Pseudo commençant par (regex)';
 $lang['table.login.beguin'] = 'Pseudo commençant par (sans regex)';
