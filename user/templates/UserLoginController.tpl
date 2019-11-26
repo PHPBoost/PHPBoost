@@ -78,13 +78,14 @@
 
 			# IF NOT C_HAS_ERROR #
 			<p class="center">
-				<a href="" id="connect" onclick="jQuery('#loginForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
+				<a href="" id="connect" onclick="jQuery('#loginForm').toggle();jQuery('#externalAuthForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
 
 			<script>
 			<!--
 				jQuery(document).ready(function() {
 					jQuery('#loginForm').hide();
+					jQuery('#externalAuthForm').hide();
 				});
 			-->
 			</script>
@@ -93,6 +94,13 @@
 
 		# INCLUDE ERROR_MESSAGE #
 		# INCLUDE LOGIN_FORM #
+		<div id="externalAuthForm" class="center">
+			# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
+				# START external_auth #
+					<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>
+				# END external_auth #
+			# ENDIF #
+		</div>
 	</div>
 
 # ENDIF #
