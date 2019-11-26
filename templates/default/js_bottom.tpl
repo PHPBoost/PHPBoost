@@ -4,6 +4,8 @@
 		data_confirmation = jQuery(this).attr('data-confirmation');
 		if (data_confirmation == 'delete-element')
 			var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
+		else if (data_confirmation == 'delete-elements')
+			var message = ${escapejs(LangLoader::get_message('confirm.delete.elements', 'status-messages-common'))};
 		else
 			var message = data_confirmation;
 		this.onclick = function () { return confirm(message); }

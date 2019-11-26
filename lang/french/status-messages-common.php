@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 26
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -53,6 +53,7 @@ $lang['process.success'] = 'L\'opération s\'est déroulée avec succès';
 $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';
 
 $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
+$lang['confirm.delete.elements'] = 'Voulez-vous vraiment supprimer ces éléments ?';
 
 $lang['message.success.config'] = 'La configuration a été modifiée';
 $lang['message.success.position.update'] = 'Les éléments ont été repositionnés';

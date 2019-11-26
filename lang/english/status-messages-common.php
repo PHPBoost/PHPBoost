@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 25
+ * @version   	PHPBoost 5.2 - last update: 2019 11 26
  * @since   	PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,8 @@ $lang['misfit.phpboost'] = 'Inadequate PHPBoost version';
 $lang['process.success'] = 'The operation is a success';
 $lang['process.error'] = 'An error occurred during the operation';
 
-$lang['confirm.delete'] = 'Do you really want to delete this item ?';
+$lang['confirm.delete'] = 'Do you really want to delete this item?';
+$lang['confirm.delete.elements'] = 'Do you really want to delete these items?';
 
 $lang['message.success.config'] = 'The configuration has been modified';
 $lang['message.success.position.update'] = 'The position of the items has been updated';
