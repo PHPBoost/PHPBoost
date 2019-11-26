@@ -70,7 +70,7 @@ class AdminFaqConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['config.display_type.answers_hidden'], FaqConfig::DISPLAY_TYPE_ANSWERS_HIDDEN),
 				new FormFieldSelectChoiceOption($this->lang['config.display_type.display_all_answers'], FaqConfig::DISPLAY_TYPE_ALL_ANSWERS)

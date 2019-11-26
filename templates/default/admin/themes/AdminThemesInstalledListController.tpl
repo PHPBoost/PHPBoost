@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-themes-container">
 		<header class="legend">{@themes.installed_theme}</header>
-		<div class="cell-flex cell-columns-3">
+		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_installed #
 				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 					<header class="cell-header">
@@ -61,7 +61,7 @@
 								# END themes_installed.pictures #
 							# ENDIF #
 						</div>
-					</div>
+					</div>					
 					<div class="cell-list">
 						<ul>
 							<li class="li-stretch">
@@ -75,7 +75,7 @@
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
-									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a> # ENDIF #
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a> # ENDIF #
 								</span>
 							</li>
 							<li class="li-stretch">

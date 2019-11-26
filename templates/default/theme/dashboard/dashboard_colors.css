@@ -37,17 +37,17 @@
 
 /* --- cell.css ------------------------------------------------------------- */
 
-.cell-header,
-.cell-body,
-.cell-list,
-.cell-footer,
-.cell-table,
-.cell-form,
-.cell-textarea {
+.cell-tile .cell-header,
+.cell-tile .cell-body,
+.cell-tile .cell-list,
+.cell-tile .cell-footer,
+.cell-tile .cell-table,
+.cell-tile .cell-form,
+.cell-tile .cell-textarea {
 	background-color: #FFFFFF;
 }
 
-.cell-table tr:nth-child(even) td {
+.cell-tile .cell-table tr:nth-child(even) td {
 	background-color: #ECF2F8;
 }
 

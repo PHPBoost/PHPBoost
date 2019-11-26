@@ -29,7 +29,7 @@
 
 		<div id="admin-contents">
 
-			<div class="content cell-flex cell-columns-3">
+			<div class="content cell-flex cell-columns-3 cell-tile">
 				<div class="cell cell-2-3">
 					<div class="cell-body">
 						<div class="index-logo hidden-small-screens" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
@@ -60,7 +60,7 @@
 
 			<div class="content quick-access hidden-small-screens">
 				<h2><i class="fa fa-angle-double-right" aria-hidden="true"></i> {L_QUICK_ACCESS}</h2>
-				<div class="cell-flex cell-columns-3">
+				<div class="cell-flex cell-columns-3 cell-tile">
 					<div class="cell">
 						<div class="cell-header">
 							<h3><i class="fa fa-fw fa-cogs" aria-hidden="true"></i> {L_SITE_MANAGEMENT}</h3>
@@ -107,7 +107,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="content cell-flex cell-columns-2">
+			<div class="content cell-flex cell-columns-2 cell-tile">
 				<div class="cell dashboard-user-online">
 					<div class="cell-header">
 						<h2><i class="fa fa-user" aria-hidden="true"></i> {L_USER_ONLINE}</h2>
@@ -202,5 +202,4 @@
 					</div>
 				</div>
 			</div>
-			<div class="spacer"></div>
-		</div><!-- admin-contents -->
+		</div>

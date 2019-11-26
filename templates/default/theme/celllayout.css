@@ -44,41 +44,17 @@
 	.cell-flex .cell-3-4 { width: calc(100% * 3 / 4) !important;}
 }
 
-/* --- Cell structure ------------------------------------------------------- */
-
 .cell-flex .cell {
 	display: flex;
 	flex-direction: column;
 }
 
-.cell-flex .cell-header {
-	display: flex;
-	align-items: center;
-}
-
-.cell-flex .cell-name {
-	flex: 1 1 auto;
-	min-width: 0;
-	display: flex;
-}
-
+.cell-flex .cell-header,
 .cell-flex .cell-body,
 .cell-flex .cell-list,
 .cell-flex .cell-table,
 .cell-flex .cell-textarea {
 	flex: 1 1 auto;
-}
-
-.cell-flex .cell-thumbnail {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-}
-
-.cell-flex .cell-thumbnail-caption {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .cell-flex .cell-list-inline ul {
@@ -120,4 +96,26 @@
 
 .cell-flex .cell-footer {
 	flex: 0 1 auto;
+}
+
+/* --- List layout ---------------------------------------------------------- */
+
+.cell-row .cell-body {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.cell-row .cell-thumbnail {
+	max-width: 30%;
+	padding: 0.618em;
+}
+
+.cell-row .cell-content {
+	max-width: 70%;
+}
+
+/* --- Modal ---------------------------------------------------------------- */
+.cell-modal .cell {
+	max-width: 512px;
 }

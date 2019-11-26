@@ -7,7 +7,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-modules-container">
 		<header class="legend">{@modules.installed_modules}</header>
-		<div class="cell-flex cell-columns-3">
+		<div class="cell-flex cell-columns-3 cell-tile">
 			# START modules_installed #
 				<article class="cell addon# IF NOT modules_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 					<header class="cell-header">

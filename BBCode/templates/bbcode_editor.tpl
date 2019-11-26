@@ -48,7 +48,7 @@
 
 <div class="bbcode-bar">
 	<nav class="bbcode-containers">
-		<ul class="bbcode-container modal-container cell-flex cell-modal">
+		<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
 			<li id="format-bold" class="bbcode-elements">
 				<span class="bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.bold}">
 					<i class="fa fa-fw fa-bold" aria-hidden="true"></i>
@@ -117,7 +117,7 @@
 							<span class="font-size-sample">{@bbcode.preview.text}</span>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -286,7 +286,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_list('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_list('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -323,7 +323,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);">{@bbcode.insert.table}</span>
+							<span class="button hide-modal" onclick="bbcode_table('{FIELD}');bb_hide_block('7', '{FIELD}', 0);">{@bbcode.insert.table}</span>
 						</div>
 					</div>
 				</div>
@@ -352,11 +352,11 @@
 									<span class="bbcode-label"> {@bbcode.custom.div} </span>
 									<span class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 								</li>
-								<li class="li-stretch" id="html-fieldset{AUTH_FIELDSET}">
+								<li id="html-fieldset{AUTH_FIELDSET}" class="li-stretch">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
 									<span class="button" # IF NOT C_DISABLED_FIELDSET #data-modal# ENDIF # data-target="block-fieldset{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
-								<li class="li-stretch" id="html-abbr{AUTH_ABBR}" class="modal-container cell-flex cell-modal">
+								<li id="html-abbr{AUTH_ABBR}" class="li-stretch">
 									<span class="bbcode-label"> {@bbcode.abbr} </span>
 									<span class="button" # IF NOT C_DISABLED_ABBR #data-modal# ENDIF # data-target="block-abbr{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
@@ -386,7 +386,7 @@
 							<div class="cell-input"><textarea id="bb_cd_style{FIELD}" rows="3" cols="32"></textarea></div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_custom_div('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_custom_div('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -405,7 +405,7 @@
 							<div class="cell-input"><textarea id="bb_fieldset_style{FIELD}" rows="3" cols="32"></textarea></div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -424,7 +424,7 @@
 							<div class="cell-input"><input type="text" id="bb_abbr_desc{FIELD}"></div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -452,7 +452,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_quote('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_quote('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -553,7 +553,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" class="bbcode-hover{AUTH_URL}" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" class="bbcode-hover{AUTH_URL}" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -581,7 +581,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" class="bbcode-hover{AUTH_MAIL}" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" class="bbcode-hover{AUTH_MAIL}" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -613,7 +613,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_wikipedia('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_wikipedia('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -652,7 +652,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_feed('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_feed('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -684,7 +684,7 @@
 						</div>
 						<div class="cell-body cell-hidden hidden"><span class="message-helper notice">{@bbcode.anchor.url.desc}</span></div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -707,7 +707,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_sound('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_sound('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -754,7 +754,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_movie('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_movie('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -787,7 +787,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_lightbox('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_lightbox('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -828,7 +828,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_figure('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_figure('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
@@ -958,7 +958,7 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button submit hide-modal" onclick="bbcode_code('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_code('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>

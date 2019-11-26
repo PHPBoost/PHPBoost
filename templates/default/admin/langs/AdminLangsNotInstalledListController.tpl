@@ -5,7 +5,7 @@
 	<section id="not-installed-langs-container" class="addons-container langs-elements-container not-installed-elements-container">
 		<header class="legend">{@langs.available_langs}</header>
 		# IF C_LANG_AVAILABLE #
-		<div class="cell-flex cell-columns-3">
+		<div class="cell-flex cell-columns-3 cell-tile">
 			# START langs_not_installed #
 				<article class="cell addon# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 					<header class="cell-header">

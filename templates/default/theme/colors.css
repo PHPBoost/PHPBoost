@@ -167,18 +167,18 @@ i.message-announce-new { color: #4D9136; }
     #####  #####  #####  #####
 ----------------------------------------------------------------------------- */
 
-.cell-header,
-.cell-body,
-.cell-list,
-.cell-footer,
-.cell-table,
-.cell-form,
-.cell-textarea {
+.cell-tile .cell-header,
+.cell-tile .cell-body,
+.cell-tile .cell-list,
+.cell-tile .cell-table,
+.cell-tile .cell-form,
+.cell-tile .cell-textarea,
+.cell-tile .cell-footer {
 	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
-.cell-table table thead th {
+.cell-tile .cell-table table thead th {
 	border-color: #366493;
 }
 
@@ -191,11 +191,8 @@ i.message-announce-new { color: #4D9136; }
 	border-color: transparent!important;
 }
 
-.new-content .cell-header,
-.new-content .cell-body,
-.new-content .cell-list,
-.new-content .cell-footer {
-	border-color: #2F9674;
+.new-content .cell-header {
+	border-left-color: #2F9674;
 }
 
 .not-compatible .cell-header,
@@ -209,7 +206,7 @@ i.message-announce-new { color: #4D9136; }
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.cell-thumbnail a:hover {
+.cell-thumbnail-caption:hover {
     color: #FFFFFF;
 }
 

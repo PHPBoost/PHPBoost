@@ -134,7 +134,7 @@
 
 		<div class="elements-container">
 			# START questions #
-			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq article-several# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
+			<article id="article-faq-{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="article-faq several-items# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF questions.C_ACTION_USER #

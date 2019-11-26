@@ -22,12 +22,12 @@ class NewsConfig extends AbstractConfigData
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const NB_VIEW_ENABLED = 'nb_view_enabled';
-        
-        const DEFAULT_CONTENTS = 'default_contents';
+
+    const DEFAULT_CONTENTS = 'default_contents';
 
 	const DISPLAY_TYPE = 'display_type';
-	const DISPLAY_BLOCK = 'block';
-	const DISPLAY_LIST = 'list';
+	const DISPLAY_GRID_VIEW = 'grid';
+	const DISPLAY_LIST_VIEW = 'list';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
@@ -127,12 +127,12 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
-        
+
         public function get_default_contents()
 	{
 		return $this->get_property(self::DEFAULT_CONTENTS);
 	}
-        
+
 	public function set_default_contents($value)
 	{
 		$this->set_property(self::DEFAULT_CONTENTS, $value);
@@ -172,8 +172,8 @@ class NewsConfig extends AbstractConfigData
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
-                        self::DEFAULT_CONTENTS => '',
-			self::DISPLAY_TYPE => self::DISPLAY_LIST,
+            self::DEFAULT_CONTENTS => '',
+			self::DISPLAY_TYPE => self::DISPLAY_LIST_VIEW,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()
 		);

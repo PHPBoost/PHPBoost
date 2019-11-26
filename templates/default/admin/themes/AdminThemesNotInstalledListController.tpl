@@ -5,7 +5,7 @@
 	<section id="not-installed-themes-container" class="addons-container themes-elements-container not-installed-elements-container">
 		<header class="legend">{@themes.available_themes}</header>
 		# IF C_THEME_AVAILABLE #
-		<div class="cell-flex cell-columns-3">
+		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_not_installed #
 			<article class="cell addon# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header class="cell-header">
@@ -28,7 +28,6 @@
 						# ENDIF #
 					</div>
 				</header>
-
 				<div class="cell-body">
 					<div class="cell-thumbnail" >
 						# IF themes_not_installed.C_PICTURES #

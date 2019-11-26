@@ -6,7 +6,7 @@
 	<section id="not-installed-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
 		<header><h1>{@modules.available_modules}</h1></header>
 		# IF C_MODULE_AVAILABLE #
-			<div class="cell-flex cell-columns-3">
+			<div class="cell-flex cell-columns-3 cell-tile">
 				# START modules_not_installed #
 					<article class="cell addon# IF NOT modules_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 						<header class="cell-header">

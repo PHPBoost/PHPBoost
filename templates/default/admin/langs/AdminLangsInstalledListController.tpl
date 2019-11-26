@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-langs-container">
 		<header class="legend">{@langs.installed_langs}</header>
-		<div class="cell-flex cell-columns-3">
+		<div class="cell-flex cell-columns-3 cell-tile">
 			# START langs_installed #
 			<article class="cell addon# IF langs_installed.C_IS_DEFAULT_LANG # default-addon# ENDIF ## IF NOT langs_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible# ENDIF #">
 				<header class="cell-header">

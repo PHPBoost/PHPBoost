@@ -126,7 +126,7 @@
 							<div class="cat-actions"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
 							<h2>{L_IMG_DISPO_GALLERY}</h2>
 						</header>
-						<div class="cell-flex cell-columns-4">
+						<div class="cell-flex cell-columns-4 cell-tile">
 							# START list #
 								<div class="cell">
 									<div class="cell-header">

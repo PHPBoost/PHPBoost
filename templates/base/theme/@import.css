@@ -23,7 +23,7 @@
 @import url('../../default/theme/cssmenu.css') screen;
 @import url('../../default/theme/plugins.css') screen;
 @import url('../../default/theme/cell.css') screen;
-@import url('../../default/theme/cellflex.css') screen;
+@import url('../../default/theme/celllayout.css') screen;
 @import url('../../default/theme/explorer.css') screen;
 @import url('../../default/theme/messages.css') screen;
 @import url('../../default/theme/pagination.css') screen;

@@ -61,10 +61,9 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
-			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
-			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
+			'C_DISPLAY_GRID_VIEW' => $news_config->get_display_type() == NewsConfig::DISPLAY_GRID_VIEW,
+			'C_DISPLAY_LIST_VIEW' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST_VIEW,
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('news'),
 
@@ -73,8 +72,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 
 			'PAGINATION' => $pagination->display(),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_news
+			'NUMBER_COLUMNS' => $news_config->get_number_columns_display_news()
 		));
 
 		while ($row = $result->fetch())
@@ -83,7 +81,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			$news->set_properties($row);
 
 			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
-			
+
 			foreach ($news->get_sources() as $name => $url)
 			{
 				$this->tpl->assign_block_vars('news.sources', $news->get_array_tpl_source_vars($name));

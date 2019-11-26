@@ -40,10 +40,10 @@ $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';
 $lang['config.notation_scale'] = 'Echelle de notation';
 $lang['config.forbidden-tags'] = 'Formats interdits';
-$lang['config.display_type'] = 'Type d\'affichage';
-$lang['config.display_type.block'] = 'Affichage en bloc';
-$lang['config.display_type.list'] = 'Affichage en liste';
-$lang['config.display_type.inline'] = 'Affichage en ligne';
+$lang['config.display.type'] = 'Type d\'affichage';
+$lang['config.display.type.grid'] = 'Affichage en grille';
+$lang['config.display.type.list'] = 'Affichage en liste';
+$lang['config.display.type.table'] = 'Affichage en tableau';
 $lang['config.root_category_description'] = 'Description de la catégorie racine';
 
 $lang['config.authorizations.explain'] = 'Autorisations globales du module. Vous pouvez changer ces autorisations localement sur chaque catégorie.';

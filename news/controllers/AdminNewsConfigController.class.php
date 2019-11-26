@@ -76,10 +76,10 @@ class AdminNewsConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.list'], NewsConfig::DISPLAY_LIST),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], NewsConfig::DISPLAY_GRID_VIEW),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], NewsConfig::DISPLAY_LIST_VIEW),
 			),
 			array('class' => 'third-field')
 		));
@@ -119,7 +119,7 @@ class AdminNewsConfigController extends AdminModuleController
 			array('min' => 20, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled(), 'class' => 'third-field'),
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
-                
+
                 $fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['news.default.contents'], $this->config->get_default_contents(),
 			array('rows' => 8, 'cols' => 47)
 		));

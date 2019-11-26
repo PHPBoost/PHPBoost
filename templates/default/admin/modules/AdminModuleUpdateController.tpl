@@ -6,7 +6,7 @@
 	<section id="upgrade-modules-container">
 		<header class="legend">{@modules.updates_available}</header>
 		# IF C_UPDATES #
-			<div class="cell-flex cell-columns-3">
+			<div class="cell-flex cell-columns-3 cell-tile">
 				# START modules_upgradable #
 					<article class="cell addon">
 						<header class="cell-header">
