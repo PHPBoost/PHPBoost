@@ -8,7 +8,7 @@
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
-	<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{NUMBER_COLUMNS}# ELSE # cell-row# ENDIF #">
+	<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{NUMBER_COLUMNS}# ELSE #cell-row# ENDIF #">
 		# IF C_NEWS_NO_AVAILABLE #
 			<div class="center">
 				${LangLoader::get_message('no_item_now', 'common')}
