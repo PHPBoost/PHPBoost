@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 26
  * @since   	PHPBoost 5.1 - 2018 04 16
 */
 
@@ -112,10 +112,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 							return UserService::create($user, $auth_method, $fields_data, $data);
 						}
 						else
-						{
-							$error_controller = PHPBoostErrors::registration_disabled();
-							DispatchManager::redirect($error_controller);
-						}
+							$this->error_msg = LangLoader::get_message('error.auth.registration_disabled', 'user-common');
 					}
 				}
 				else
@@ -129,8 +126,34 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 
 		if (!$this->error_msg)
 		{
-			$this->update_user_last_connection_date($user_id);
-			return $user_id;
+			$maintain_config = MaintenanceConfig::load();
+			
+			if ($maintain_config->is_under_maintenance())
+			{
+				$session = AppContext::get_session();
+				if ($session != null)
+				{
+					Session::delete($session);
+				}
+				$session_data = Session::create($user_id, true);
+				AppContext::set_session($session_data);
+				
+				$current_user = CurrentUser::from_session();
+				
+				if (!$current_user->check_auth($maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
+				{
+					$session = AppContext::get_session();
+					Session::delete($session);
+					$this->error_msg = LangLoader::get_message('user.not_authorized_during_maintain', 'status-messages-common');
+				}
+				else
+					AppContext::get_response()->redirect(Environment::get_home_page());
+			}
+			else
+			{
+				$this->update_user_last_connection_date($user_id);
+				return $user_id;
+			}
 		}
 	}
 

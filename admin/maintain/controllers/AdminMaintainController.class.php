@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 11 26
  * @since   	PHPBoost 4.1 - 2014 09 11
 */
 
@@ -124,7 +124,7 @@ class AdminMaintainController extends AdminController
 		));
 
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['maintain_authorization'], MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($this->lang['maintain_authorization'], MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS),
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->maintenance_config->get_auth());
