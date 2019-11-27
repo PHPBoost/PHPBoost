@@ -43,15 +43,16 @@ class IdcardService
         }
 
         $tpl->put_all(array(
-            'C_USER_GROUP_COLOR'   => !empty($user_group_color),
+            'C_USER_GROUP_COLOR' => !empty($user_group_color),
+            'C_AUTHOR_IS_MEMBER'    => $user_id !== User::VISITOR_LEVEL,
 
-            'AUTHOR_NAME' => $author_name,
-            'BIOGRAPHY' => $biography,
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
+            'AUTHOR_NAME'        => $author_name,
+            'BIOGRAPHY'          => $biography,
+			'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR'   => $user_group_color,
 
-            'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
-            'U_AVATAR' => Url::to_rel($avatar),
+            'U_AUTHOR_PROFILE'   => UserUrlBuilder::profile($user_id)->rel(),
+            'U_AVATAR'           => Url::to_rel($avatar),
         ));
 
         return $tpl->render();
