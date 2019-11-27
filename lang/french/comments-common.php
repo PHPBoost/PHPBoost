@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 17
+ * @version   	PHPBoost 5.2 - last update: 2019 11 27
  * @since   	PHPBoost 3.0 - 2011 09 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -28,6 +28,7 @@ $lang['lock'] = 'Verrouiller';
 $lang['unlock'] = 'Déverrouiller';
 
 $lang['allComments'] = 'Voir les autres commentaires';
+$lang['select.all.comments'] = 'Sélectionner tous les commentaires';
 
 $lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
 

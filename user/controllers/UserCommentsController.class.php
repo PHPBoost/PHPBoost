@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 21
+ * @version   	PHPBoost 5.2 - last update: 2019 11 27
  * @since   	PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,7 +15,10 @@ class UserCommentsController extends AbstractController
 	private $user;
 	private $tpl;
 	private $lang;
-	private $number_comments_per_page = 15;
+	private $current_user;
+	private $number_comments_per_page;
+	private $number_comments;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -52,9 +55,25 @@ class UserCommentsController extends AbstractController
 	{
 		$this->tpl = new FileTemplate('user/UserCommentsController.tpl');
 		$this->lang = LangLoader::get('comments-common');
+		$this->current_user = AppContext::get_current_user();
+		$this->number_comments_per_page = CommentsConfig::load()->get_number_comments_display();
 		$this->tpl->add_lang($this->lang);
 		$this->tpl->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
 		$this->tpl->put('COMMENTS', $this->build_view($request));
+		
+		if ($request->get_string('delete-selected-comments', false))
+		{
+			for ($i = 1 ; $i <= $this->number_comments ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]))
+						CommentsManager::delete_comment($this->ids[$i]);
+				}
+			}
+			$this->tpl->put('COMMENTS', $this->build_view($request));
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
+		}
 	}
 
 	private function build_view($request)
@@ -90,22 +109,27 @@ class UserCommentsController extends AbstractController
 		$user_accounts_config = UserAccountsConfig::load();
 		$comments_authorizations = new CommentsAuthorizations();
 
-		$number_comment = 0;
+		$display_delete_button = false;
+		$this->number_comments = 0;
 		while ($row = $result->fetch())
 		{
 			$id = $row['id_comment'];
 			$path = $row['path'];
-
+			$this->ids[$this->number_comments + 1] = $id;
+			
+			if ($row['user_id'] == $this->current_user->get_id())
+				$display_delete_button = true;
+			
 			//Avatar
-			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
+			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . $this->current_user->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
 			$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
 			$template->assign_block_vars('comments', array(
-				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
-				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
+				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
+				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation() || $row['user_id'] == $this->current_user->get_id(),
 				'C_VISITOR' => empty($row['display_name']),
 				'C_VIEW_TOPIC' => true,
 				'C_GROUP_COLOR' => !empty($group_color),
@@ -117,6 +141,7 @@ class UserCommentsController extends AbstractController
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_AVATAR' => $user_avatar,
 
+				'COMMENT_NUMBER' => $this->number_comments + 1,
 				'ID_COMMENT' => $id,
 				'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
@@ -136,18 +161,24 @@ class UserCommentsController extends AbstractController
 				'ID_IN_MODULE' => $row['id_in_module'],
 				'L_VIEW_TOPIC' => $this->lang['view-topic']
 			));
-			$number_comment++;
+			$this->number_comments++;
 		}
 		$result->dispose();
 
-		$this->tpl->put('C_NO_COMMENT', $number_comment == 0);
+		$this->tpl->put_all(array(
+			'C_NO_COMMENT'    => $this->number_comments == 0,
+			'C_MODERATOR'     => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
+			'COMMENTS_NUMBER' => $this->number_comments
+		));
 
 		$comments_tpl = new FileTemplate('framework/content/comments/comments.tpl');
 		$comments_tpl->put_all(array(
 			'COMMENTS_LIST' => $template,
 			'MODULE_ID' => $row['module_id'],
-			'ID_IN_MODULE' => $row['id_in_module']
+			'ID_IN_MODULE' => $row['id_in_module'],
+			'COMMENTS_NUMBER' => $this->number_comments
 		));
+		
 		return $comments_tpl;
 	}
 

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 01 04
+ * @version     PHPBoost 5.2 - last update: 2019 11 27
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,6 +20,7 @@ class CommentsService
 	private static $comments_lang;
 	private static $comments_cache;
 	private static $template;
+	private static $display_delete_button;
 
 	public static function __static()
 	{
@@ -30,6 +31,7 @@ class CommentsService
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 		self::$template->add_lang(self::$comments_lang);
+		self::$display_delete_button = false;
 	}
 
 	/**
@@ -78,14 +80,14 @@ class CommentsService
 
 			if (!empty($delete_comment_id))
 			{
-				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
+				self::verify_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
 
 				CommentsManager::delete_comment($delete_comment_id);
 				AppContext::get_response()->redirect($return_path ? $return_path : $topic->get_path());
 			}
 			elseif (!empty($edit_comment_id))
 			{
-				self::verificate_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
+				self::verify_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
 
 				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id, $topic->get_path());
 				self::$template->put_all(array(
@@ -127,15 +129,55 @@ class CommentsService
 
 			self::$template->put_all(array(
 				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations),
+				'FORM_URL' => TextHelper::htmlspecialchars($topic->get_url()) . '#comments-list',
 				'MODULE_ID' => $module_id,
 				'ID_IN_MODULE' => $id_in_module,
+				'COMMENTS_NUMBER' => $number_comments,
 				'TOPIC_IDENTIFIER' => $topic_identifier,
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
+				'C_DISPLAY_DELETE_BUTTON' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
+				'C_DISPLAY_FORM' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
 				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
 				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),
 				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),
 			));
+		}
+		
+		$request = AppContext::get_request();
+		if ($request->get_string('delete-selected-comments', false))
+		{
+			$ids = array();
+			
+			$result = PersistenceContext::get_querier()->select("SELECT
+					comments.id
+				FROM " . DB_TABLE_COMMENTS . " comments
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+				WHERE topic.module_id = '". $module_id ."' AND topic.id_in_module = '". $id_in_module ."' AND topic.topic_identifier = '". $topic_identifier ."'
+				ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments()
+			);
+
+			$number_comment = 0;
+			while ($row = $result->fetch())
+			{
+				$ids[$number_comment + 1] = $row['id'];
+				$number_comment++;
+			}
+			$result->dispose();
+			
+			for ($i = 1 ; $i <= $number_comments ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($ids[$i]))
+					{
+						self::verify_authorized_edit_or_delete_comment($authorizations, $ids[$i]);
+
+						CommentsManager::delete_comment($ids[$i]);
+					}
+				}
+			}
+			AppContext::get_response()->redirect($return_path ? $return_path : $topic->get_path(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 
 		return self::$template;
@@ -237,10 +279,14 @@ class CommentsService
 				ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
 			);
 
+			$number_comment = $display_from_number_comments ? $number_comments_display : 0;
 			while ($row = $result->fetch())
 			{
 				$id = $row['id_comment'];
 				$path = $row['path'];
+			
+				if ($row['user_id'] == self::$user->get_id())
+					self::$display_delete_button = true;
 
 				//Avatar
 				$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
@@ -260,6 +306,7 @@ class CommentsService
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_AVATAR' => $user_avatar,
+					'COMMENT_NUMBER' => $number_comment + 1,
 					'ID_COMMENT' => $id,
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
@@ -273,6 +320,7 @@ class CommentsService
 					'L_UPDATE' => self::$common_lang['edit'],
 					'L_DELETE' => self::$common_lang['delete'],
 				));
+				$number_comment++;
 			}
 			$result->dispose();
 		}
@@ -287,7 +335,7 @@ class CommentsService
 		return $template;
 	}
 
-	private static function verificate_authorized_edit_or_delete_comment($authorizations, $comment_id)
+	private static function verify_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
 		$is_authorized = self::is_authorized_edit_or_delete_comment($authorizations, $comment_id);
 
