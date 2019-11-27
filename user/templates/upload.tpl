@@ -303,164 +303,256 @@
 			}
 		}
 	}
+    
+    function change_status(id, status)
+    {
+        jQuery.ajax({
+            url: "{PATH_TO_ROOT}/user/upload.php",
+            type: "post",
+            data: {
+                token: '{TOKEN}',
+                item_id: id,
+                status: status
+            },
+            success: function(returnData)
+                {
+                    if (status === 0)
+                        {
+                            $('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user-shield');
+                            $('#status_function_' + id).attr("onclick", "change_status(" + id + ", 1)");
+                        } else
+                        {
+                            $('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-user');
+                            $('#status_function_' + id).attr("onclick", "change_status(" + id + ", 0)");
+                        }
+                    location.reload();
+                }
+        });
+    }
+    
 </script>
 
 <section id="module-user-upload">
-	<header>
-		<h1>{L_FILES_ACTION}</h1>
-	</header>
+    <header>
+        <h1>{L_FILES_ACTION}</h1>
+    </header>
+    <div class="content">
+        <div class="tabs-container">
+            <nav>
+                <ul>
+                    <li><a href="#" data-tabs data-target="upload-personal">{L_PERSONAL_TITLE}</a></li>
+                    <li><a href="#" data-tabs data-target="upload-public">{L_PUBLIC_TITLE}</a></li>
+                </ul>
+            </nav>
+            <div id="upload-personal" class="tabs tabs-animation first-tab">
+                <div class="content-panel">
+                    <div id="new-multiple-files">
+                        # INCLUDE message_helper #
+                        <form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
+                            <fieldset>
+                                <legend>{L_ADD_FILES}</legend>
+                                <div class="dnd-area">
+                                    <div class="dnd-dropzone">
+                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+                                        <input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
+                                    </div>
+                                    <input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
+                                    <div class="ready-to-load">
+                                        <button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+                                        <span class="fa-stack fa-lg">
+                                            <i class="far fa-file fa-stack-2x "></i>
+                                            <strong class="fa-stack-1x files-nbr"></strong>
+                                        </span>
+                                    </div>
+                                    <div class="modal-container">
+                                        <button class="upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
+                                        <div id="upload-helper" class="modal modal-animation">
+                                            <div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+                                            <div class="content-panel">
+                                                <h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+                                                # IF IS_ADMIN #
+                                                <p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+                                                # ELSE #
+                                                <p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
+                                                # ENDIF #
+                                                <p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="ulist"></ul>
+                            </fieldset>
+                            <div class="form-element">
+                                <label for="is_public_checkbox">{L_PUBLIC_CHECKBOX}</label>
+                                <div class="form-field form-field-checkbox">
+                                    <label class="checkbox" for="is_public_checkbox">
+                                        <input type="checkbox" id="is_public_checkbox" name='is_public_checkbox' />
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <fieldset class="fieldset-submit">
+                                <div class="fieldset-inset">
+                                    <input type="hidden" name="token" value="{TOKEN}">
+                                    <button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
 
-	<div class="content">
+                    <div class="upload-address-bar">
+                        <a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
+                    </div>
 
-		<div id="new-multiple-files">
-			# INCLUDE message_helper #
-			<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
-				<fieldset>
-					<legend>{L_ADD_FILES}</legend>
-					<div class="dnd-area">
-						<div class="dnd-dropzone">
-							<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
-							<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
-						</div>
-						<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
-						<div class="ready-to-load">
-							<button type="button" class="clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
-							<span class="fa-stack fa-lg">
-								<i class="far fa-file fa-stack-2x "></i>
-								<strong class="fa-stack-1x files-nbr"></strong>
-							</span>
-						</div>
-						<div class="modal-container">
-							<button class="upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
-							<div id="upload-helper" class="modal modal-animation">
-								<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-								<div class="content-panel">
-									<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
-									# IF IS_ADMIN #
-										<p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
-									# ELSE #
-										<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
-									# ENDIF #
-									<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<ul class="ulist"></ul>
-				</fieldset>
-				<fieldset class="fieldset-submit">
-					<div class="fieldset-inset">
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
-					</div>
-				</fieldset>
-			</form>
-		</div>
+                    <div class="upload-address-bar-links">
+                        <a href="upload.php?fup={FOLDER_ID}{POPUP}">
+                            <i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
+                        </a>
+                        <a href="javascript:display_new_folder();">
+                            <i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
+                        </a>
+                        <a href="javascript:document.getElementById('inputfiles').click();">
+                            <i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
+                        </a>
+                    </div>
+                    <div class="spacer"></div>
 
-		<div class="upload-address-bar">
-			<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
-		</div>
+                    <legend>{L_FOLDER_CONTENT}</legend>
 
-		<div class="upload-address-bar-links">
-			<a href="upload.php?fup={FOLDER_ID}{POPUP}">
-				<i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
-			</a>
-			<a href="javascript:display_new_folder();">
-				<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
-			</a>
-			<a href="javascript:document.getElementById('inputfiles').click();">
-				<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
-			</a>
-		</div>
-		<div class="spacer"></div>
+                    <div class="upload-elements-container">
 
-		<legend>{L_FOLDER_CONTENT}</legend>
+                        # IF C_EMPTY_FOLDER #
+                        <div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
+                        <span id="new-folder"></span>
+                        # ELSE #
+                        # START folder #
+                        <div class="upload-elements-repertory">
+                            <div class="upload-element-icon">
+                                <a class="infos-options" href="upload.php?f={folder.ID}{POPUP}">
+                                    <i class="far fa-folder fa-4x"></i>
+                                </a>
+                            </div>
+                            <span class="infos-options" id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></span>
+                            <div class="upload-repertory-controls">
+                                {folder.RENAME_FOLDER}
+                                <span>
+                                    <a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+                                </span>
+                                <span>
+                                    <a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+                                </span>
+                                <span id="img{folder.ID}"></span>
+                            </div>
+                        </div>
+                        # END folder #
+                        <span id="new-folder"></span>
 
-		<div class="upload-elements-container">
-
-			# IF C_EMPTY_FOLDER #
-				<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
-				<span id="new-folder"></span>
-			# ELSE #
-				# START folder #
-					<div class="upload-elements-repertory">
-						<div class="upload-element-icon">
-							<a class="infos-options" href="upload.php?f={folder.ID}{POPUP}">
-								<i class="far fa-folder fa-4x"></i>
-							</a>
-						</div>
-						<span class="infos-options" id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}">{folder.NAME}</a></span>
-						<div class="upload-repertory-controls">
-							{folder.RENAME_FOLDER}
-							<span>
-								<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-							</span>
-							<span>
-								<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-							</span>
-							<span id="img{folder.ID}"></span>
-						</div>
-					</div>
-				# END folder #
-				<span id="new-folder"></span>
-
-				# START files #
-					<div class="upload-elements-file">
-						<div class="upload-element-status"></div>
-						# IF files.C_ENABLED_THUMBNAILS #
-							# IF files.C_IMG #
-								<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-									<div class="upload-element-picture" style="background-image: url({files.URL})"></div>
-								</a>
-								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
-							# ELSE #
-								<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}>
-									<div class="upload-element-icon"><i class="{files.IMG} fa-fw fa-4x"></i></div>
-								</a>
-								<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">{files.NAME}</div>
-							# ENDIF #
-						# ELSE #
-							<div class="upload-element-name# IF files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{files.ID}">
-								# IF files.C_IMG #
-									<a href="{files.URL}" data-lightbox="formatter" data-rel="lightcase:collection"><i class="{files.IMG} fa-lg"></i></a>
-								# ELSE #
-									<a class="# IF files.C_RECENT_FILE #upload-recent-file# END IF #" href="{files.URL}" {files.LIGHTBOX}><i class="{files.IMG} fa-lg"></i></a>
-								# ENDIF #
-								{files.NAME}
-							</div>
-						# ENDIF #
-						<span id="fi{files.ID}"></span>
-						{files.BBCODE}
-						<div class="upload-file-controls">
-							{files.RENAME_FILE}
-							<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-							<a href="upload{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-							{files.INSERT}
-						</div>
-						<span class="infos-options text-strong">{files.FILETYPE}</span>
-						<span class="text-strong">{files.SIZE}</span>
-						<span id="imgf{files.ID}"></span>
-					</div>
-				# END files #
-			# ENDIF #
-			<div class="options infos">
-				<span class="infos-options" id="total-folder">{L_FOLDERS} : <strong>{TOTAL_FOLDERS}</strong></span>
-				<span class="infos-options">{L_FILES} : <strong>{TOTAL_FILES}</strong></span>
-				<span class="infos-options">{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong></span>
-				<span class="infos-options">{L_DATA} : <strong>{TOTAL_SIZE}</strong></span>
-			</div>
-		</div>
-
-	</div>
-
-	<footer>
-		# IF C_DISPLAY_CLOSE_BUTTON #
-		<fieldset class="fieldset-submit">
-			<legend>${LangLoader::get_message('close', 'main')}</legend>
-			<button type="reset" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
-		</fieldset>
-		# ENDIF #
-	</footer>
+                        # START personal_files #
+                        <div class="upload-elements-file">
+                            <div class="upload-element-status"></div>
+                            # IF personal_files.C_ENABLED_THUMBNAILS #
+                            # IF personal_files.C_IMG #
+                            # IF personal_files.C_IS_PUBLIC_FILE #
+                            <div id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0)">
+                                <i id="status_{personal_files.ID}" class="fas fa-user"></i>
+                                <button type="button" name="change-status" class="submit small" aria-label="{L_CHANGE_PERSONAL}"><i class="fas fa-exchange-alt"></i></button>
+                            </div>
+                            # ELSE #
+                            <div id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1)">
+                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
+                                <button type="button" name="change-status" class="submit small" aria-label="{L_CHANGE_PUBLIC}"><i class="fas fa-exchange-alt"></i></button>
+                            </div>
+                            # ENDIF #
+                            <a href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+                                <div class="upload-element-picture" style="background-image: url({personal_files.URL})"></div>
+                            </a>
+                            # ELSE #
+                            # IF personal_files.C_IS_PUBLIC_FILE #
+                            <div id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0)">
+                                <i id="status_{personal_files.ID}" class="fas fa-user"></i>
+                                <button type="button" name="change-status" class="submit small" aria-label="{L_CHANGE_PERSONAL}"><i class="fas fa-exchange-alt"></i></button>
+                            </div>
+                            # ELSE #
+                            <div id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1)">
+                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
+                                <button type="button" name="change-status" class="submit small" aria-label="{L_CHANGE_PUBLIC}"><i class="fas fa-exchange-alt"></i></button>
+                            </div>
+                            # ENDIF #    
+                            <a class="# IF personal_files.C_RECENT_FILE #upload-recent-file# END IF #" href="{personal_files.URL}" {personal_files.LIGHTBOX}>
+                                <div class="upload-element-icon"><i class="far {personal_files.IMG}"></i></div>
+                            </a>
+                            # ENDIF #
+                            <div class="upload-element-name# IF personal_files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{personal_files.ID}">{personal_files.NAME}</div>
+                            <span id="fi{personal_files.ID}"></span>
+                            {personal_files.BBCODE}
+                            <div class="upload-file-controls">
+                                {personal_files.RENAME_FILE}
+                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+                                <a href="upload{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+                                    {personal_files.INSERT}
+                            </div>
+                            <span class="infos-options text-strong">{personal_files.FILETYPE}</span>
+                            <span class="text-strong">{personal_files.SIZE}</span>
+                            <span id="imgf{personal_files.ID}"></span>
+                        </div>
+                        # ENDIF #
+                        # END personal_files #
+                        # ENDIF #
+                        <div class="options infos">
+                            <span class="infos-options" id="total-folder">{L_FOLDERS} : <strong>{TOTAL_FOLDERS}</strong></span>
+                            <span class="infos-options">{L_FILES} : <strong>{TOTAL_FILES}</strong></span>
+                            <span class="infos-options">{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong></span>
+                            <span class="infos-options">{L_DATA} : <strong>{TOTAL_SIZE}</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="upload-public" class="tabs tabs-animation">
+                <div class="content-panel">
+                    <div class="upload-elements-container">
+                        # START public_files #
+                        <div class="upload-elements-file">
+                            # IF public_files.C_IMG #
+                            <div id="public_div">
+                                <a href="{public_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+                                    <div class="upload-element-picture" style="background-image: url({public_files.URL})"></div>
+                                </a>
+                            </div>
+                            # ELSE #
+                            <a class="# IF public_files.C_RECENT_FILE #upload-recent-file # END IF #" href="{public_files.URL}" {public_files.LIGHTBOX}>
+                                <div class="upload-element-icon"><i class="far {public_files.IMG}"></i></div>
+                            </a>
+                            # ENDIF #
+                            <div class="upload-element-name# IF public_files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{public_files.ID}">{public_files.NAME}</div>
+                            <span id="fi{public_files.ID}"></span>
+                            {public_files.BBCODE}
+                            <div class="upload-file-controls">
+                                    {public_files.INSERT}
+                            </div>
+                            <span class="infos-options text-strong">{public_files.FILETYPE}</span>
+                            <span class="text-strong">{public_files.SIZE}</span>
+                            <span id="imgf{public_files.ID}"></span>
+                        </div>
+                        # END public_files #
+                        <div class="options infos">
+                            <span class="infos-options" id="total-folder">{L_FOLDERS} : <strong>{TOTAL_FOLDERS}</strong></span>
+                            <span class="infos-options">{L_FILES} : <strong>{TOTAL_FILES}</strong></span>
+                            <span class="infos-options">{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong></span>
+                            <span class="infos-options">{L_DATA} : <strong>{TOTAL_SIZE}</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        # IF C_DISPLAY_CLOSE_BUTTON #
+        <fieldset class="fieldset-submit">
+            <legend>${LangLoader::get_message('close', 'main')}</legend>
+            <button type="reset" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
+        </fieldset>
+        # ENDIF #
+    </footer>
 
 </section>
 <script>
