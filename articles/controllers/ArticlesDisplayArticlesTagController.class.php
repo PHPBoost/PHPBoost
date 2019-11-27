@@ -126,7 +126,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_ARTICLES_FILTERS' => true,
 			'CATEGORY_NAME' => $this->get_keyword()->get_name(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_per_line
+			'COLUMNS_NUMBER' => $number_columns_display_per_line
 		));
 
 		while ($row = $result->fetch())

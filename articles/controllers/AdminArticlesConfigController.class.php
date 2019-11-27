@@ -88,10 +88,10 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.display.type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
-				new FormFieldSelectChoiceOption($this->lang['articles.display.type.list'], ArticlesConfig::DISPLAY_LIST)
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], ArticlesConfig::DISPLAY_GRID_VIEW),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], ArticlesConfig::DISPLAY_LIST_VIEW)
 			)
 		));
 

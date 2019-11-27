@@ -341,7 +341,7 @@
 						<nav class="cell-list">
 							<ul>
 								<li id="html-paragraph" class="li-stretch{AUTH_P}">
-									<span class="bbcode-label" aria-label="{@bbcode.paragraph.title}"> {@bbcode.paragraph} </span>
+									<span class="bbcode-label"> {@bbcode.paragraph} </span>
 									<span class="button hide-modal" # IF NOT C_DISABLED_P#onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 								</li>
 								<li id="html-div-block" class="li-stretch{AUTH_BLOCK}">

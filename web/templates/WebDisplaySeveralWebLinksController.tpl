@@ -15,7 +15,7 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF #">
+	<div class="subcat-container elements-container# IF C_SEVERAL_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
 		# START sub_categories_list #
 		<div class="subcat-element block">
 			<div class="subcat-content">
@@ -42,7 +42,7 @@
 		# INCLUDE SORT_FORM #
 		<div class="spacer"></div>
 		# ENDIF #
-	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{NUMBER_COLUMNS}# ENDIF #">
+	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{COLUMNS_NUMBER}# ENDIF #">
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table class="table">
 				<thead>
@@ -99,7 +99,7 @@
 			</table>
 		# ELSE #
 		# START weblinks #
-		<article id="article-web-{weblinks.ID}" class="article-web article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		<article id="article-web-{weblinks.ID}" class="article-web several-items# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 				<span class="actions">
 					# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #

@@ -20,7 +20,7 @@
 									</div>
 								# ENDIF #
 							# ENDIF #
-							<div class="cell-name">{modules_upgradable.NAME}</div>
+							<h3 class="cell-name">{modules_upgradable.NAME}</h3>
 							<div class="addon-menu-container">
 								# IF modules_upgradable.C_COMPATIBLE #
 									<button type="submit" class="submit addon-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>

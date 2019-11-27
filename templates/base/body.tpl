@@ -10,34 +10,34 @@
 			</div>
 		</div>
 		<div id="top-header-content">
-		# IF C_MENUS_HEADER_CONTENT #
-			# START menus_header #
-			{menus_header.MENU}
-			# END menus_header #
-		# ENDIF #
+			# IF C_MENUS_HEADER_CONTENT #
+				# START menus_header #
+					{menus_header.MENU}
+				# END menus_header #
+			# ENDIF #
 		</div>
 
 		# IF C_VISIT_COUNTER #
-		<div id="visit-counter" class="hidden-small-screens">
-			<div class="visit-counter-total">
-				<span class="text-strong">{L_VISIT} : </span>
-				{VISIT_COUNTER_TOTAL}
+			<div id="visit-counter" class="hidden-small-screens">
+				<div class="visit-counter-total">
+					<span class="text-strong">{L_VISIT} : </span>
+					{VISIT_COUNTER_TOTAL}
+				</div>
+				<div class="visit-counter-today">
+					<span class="text-strong">{L_TODAY} : </span>
+					{VISIT_COUNTER_DAY}
+				</div>
 			</div>
-			<div class="visit-counter-today">
-				<span class="text-strong">{L_TODAY} : </span>
-				{VISIT_COUNTER_DAY}
-			</div>
-		</div>
 		# ENDIF #
 
 	</div>
 	<div id="sub-header">
 		<div id="sub-header-content">
-		# IF C_MENUS_SUB_HEADER_CONTENT #
-			# START menus_sub_header #
-			{menus_sub_header.MENU}
-			# END menus_sub_header #
-		# ENDIF #
+			# IF C_MENUS_SUB_HEADER_CONTENT #
+				# START menus_sub_header #
+					{menus_sub_header.MENU}
+				# END menus_sub_header #
+			# ENDIF #
 		</div>
 		<div class="spacer"></div>
 	</div>
@@ -46,21 +46,21 @@
 
 <div id="global" role="main">
 	# IF C_MENUS_LEFT_CONTENT #
-	<aside id="menu-left"# IF C_MENUS_RIGHT_CONTENT # class="narrow-menu-left"# ENDIF #>
-		# START menus_left #
-		{menus_left.MENU}
-		# END menus_left #
-	</aside>
+		<aside id="menu-left"# IF C_MENUS_RIGHT_CONTENT # class="narrow-menu-left"# ENDIF #>
+			# START menus_left #
+				{menus_left.MENU}
+			# END menus_left #
+		</aside>
 	# ENDIF #
 
 	<div id="main" class="# IF C_MENUS_LEFT_CONTENT #main-with-left# ENDIF ## IF C_MENUS_RIGHT_CONTENT # main-with-right# ENDIF #" role="main">
 		# IF C_MENUS_TOPCENTRAL_CONTENT #
-		<div id="top-content">
-			# START menus_top_central #
-			{menus_top_central.MENU}
-			# END menus_top_central #
-		</div>
-		<div class="spacer"></div>
+			<div id="top-content">
+				# START menus_top_central #
+					{menus_top_central.MENU}
+				# END menus_top_central #
+			</div>
+			<div class="spacer"></div>
 		# ENDIF #
 
 		<div id="main-content" itemprop="mainContentOfPage">
@@ -86,20 +86,20 @@
 		</div>
 
 		# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-		<div id="bottom-content">
-			# START menus_bottom_central #
-			{menus_bottom_central.MENU}
-			# END menus_bottom_central #
-		</div>
+			<div id="bottom-content">
+				# START menus_bottom_central #
+					{menus_bottom_central.MENU}
+				# END menus_bottom_central #
+			</div>
 		# ENDIF #
 	</div>
 
 	# IF C_MENUS_RIGHT_CONTENT #
-	<aside id="menu-right"# IF C_MENUS_LEFT_CONTENT # class="narrow-menu-right"# ENDIF #>
-		# START menus_right #
-		{menus_right.MENU}
-		# END menus_right #
-	</aside>
+		<aside id="menu-right"# IF C_MENUS_LEFT_CONTENT # class="narrow-menu-right"# ENDIF #>
+			# START menus_right #
+				{menus_right.MENU}
+			# END menus_right #
+		</aside>
 	# ENDIF #
 
 	<div class="spacer"></div>

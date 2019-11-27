@@ -13,7 +13,7 @@
 class NewsConfig extends AbstractConfigData
 {
 	const NUMBER_NEWS_PER_PAGE = 'number_news_per_page';
-	const NUMBER_COLUMNS_DISPLAY_NEWS = 'number_columns_display_news';
+	const COLUMNS_NUMBER_DISPLAY_NEWS = 'number_columns_display_news';
 
 	const DISPLAY_CONDENSED_ENABLED = 'display_condensed_enabled';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
@@ -45,12 +45,12 @@ class NewsConfig extends AbstractConfigData
 
 	public function get_number_columns_display_news()
 	{
-		return $this->get_property(self::NUMBER_COLUMNS_DISPLAY_NEWS);
+		return $this->get_property(self::COLUMNS_NUMBER_DISPLAY_NEWS);
 	}
 
 	public function set_number_columns_display_news($number_columns_display_news)
 	{
-		$this->set_property(self::NUMBER_COLUMNS_DISPLAY_NEWS, $number_columns_display_news);
+		$this->set_property(self::COLUMNS_NUMBER_DISPLAY_NEWS, $number_columns_display_news);
 	}
 
 	public function get_display_condensed_enabled()
@@ -165,7 +165,7 @@ class NewsConfig extends AbstractConfigData
 	{
 		return array(
 			self::NUMBER_NEWS_PER_PAGE => 10,
-			self::NUMBER_COLUMNS_DISPLAY_NEWS => 1,
+			self::COLUMNS_NUMBER_DISPLAY_NEWS => 1,
 			self::DISPLAY_CONDENSED_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::NUMBER_CHARACTER_TO_CUT => 150,

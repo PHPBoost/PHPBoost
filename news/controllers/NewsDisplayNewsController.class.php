@@ -99,7 +99,7 @@ class NewsDisplayNewsController extends ModuleController
 		{
 			$this->tpl->assign_block_vars('sources', $news->get_array_tpl_source_vars($name));
 		}
-		
+
 		$this->build_keywords_view($news);
 		$this->build_suggested_news($news);
 		$this->build_navigation_links($news);
@@ -128,9 +128,9 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$now = new Date();
 
-		$result = PersistenceContext::get_querier()->select('
-		SELECT id, name, id_category, rewrited_name,
-		(2 * FT_SEARCH_RELEVANCE(name, :search_content) + FT_SEARCH_RELEVANCE(contents, :search_content) / 3) AS relevance
+		$result = PersistenceContext::get_querier()->select('SELECT
+			id, name, id_category, rewrited_name, picture_url,
+			(2 * FT_SEARCH_RELEVANCE(name, :search_content) + FT_SEARCH_RELEVANCE(contents, :search_content) / 3) AS relevance
 		FROM ' . NewsSetup::$news_table . '
 		WHERE (FT_SEARCH(name, :search_content) OR FT_SEARCH(contents, :search_content)) AND id <> :excluded_id
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
@@ -146,7 +146,8 @@ class NewsDisplayNewsController extends ModuleController
 		{
 			$this->tpl->assign_block_vars('suggested', array(
 				'NAME' => $row['name'],
-				'URL' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel()
+				'U_ITEM' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
+				'U_THUMBNAIL' => !empty($row['picture_url']) ? Url::to_rel($row['picture_url']) : $news->get_default_thumbnail()->rel()
 			));
 		}
 		$result->dispose();
@@ -158,11 +159,11 @@ class NewsDisplayNewsController extends ModuleController
 		$timestamp_news = $news->get_creation_date()->get_timestamp();
 
 		$result = PersistenceContext::get_querier()->select('
-		(SELECT id, name, id_category, rewrited_name, \'PREVIOUS\' as type
+		(SELECT id, name, id_category, rewrited_name, picture_url, \'PREVIOUS\' as type
 		FROM '. NewsSetup::$news_table .'
 		WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0)
 		UNION
-		(SELECT id, name, id_category, rewrited_name, \'NEXT\' as type
+		(SELECT id, name, id_category, rewrited_name, picture_url, \'NEXT\' as type
 		FROM '. NewsSetup::$news_table .'
 		WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0)
 		', array(
@@ -174,10 +175,11 @@ class NewsDisplayNewsController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$this->tpl->put_all(array(
-				'C_NEWS_NAVIGATION_LINKS' => true,
-				'C_'. $row['type'] .'_NEWS' => true,
-				$row['type'] . '_NEWS' => $row['name'],
-				'U_'. $row['type'] .'_NEWS' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
+				'C_NAVIGATION_LINKS' => true,
+				'C_'. $row['type'] .'_ITEM' => true,
+				$row['type'] . '_ITEM' => $row['name'],
+				'U_'. $row['type'] .'_ITEM' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
+				'U_'. $row['type'] .'_THUMBNAIL' => !empty($row['picture_url']) ? Url::to_rel($row['picture_url']) : $news->get_default_thumbnail()->rel()
 			));
 		}
 		$result->dispose();

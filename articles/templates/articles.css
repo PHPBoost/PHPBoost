@@ -13,12 +13,12 @@
 	margin-bottom: 0.618em;
 }
 
-.article-articles.article-several h2,
-.article-articles.article-several .more {
+.article-articles.several-items h2,
+.article-articles.several-items .more {
 	margin: 0;
 }
 
-.article-articles.article-several img {
+.article-articles.several-items img {
 	padding: 0 0 0.618em 0;
 }
 

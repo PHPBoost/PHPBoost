@@ -19,12 +19,12 @@
 								</div>
 							# ENDIF #
 						# ENDIF #
-						<div class="cell-name">
+						<h3 class="cell-name">
 							# IF langs_not_installed.C_HAS_PICTURE #
 								<img src="{langs_not_installed.PICTURE_URL}" alt="{langs_not_installed.NAME}" class="valign-middle" />
 							# ENDIF #
 							{langs_not_installed.NAME}
-						</div>
+						</h3>
 						<div class="addon-menu-container">
 							# IF langs_not_installed.C_COMPATIBLE #
 								<button type="submit" class="submit addon-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>

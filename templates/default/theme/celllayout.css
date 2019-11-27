@@ -12,9 +12,7 @@
 	content: "";
 }
 
-.cell {
-	width: 100%;
-}
+.cell { width: 100%; }
 
 @media (min-width: 768px) {
 	.cell-flex { flex-direction: row; }
@@ -84,18 +82,12 @@
 		justify-content: space-between;
 	}
 
-	.cell-flex .cell-form .cell-label {
-		width: 40%;
-	}
+	.cell-flex .cell-form .cell-label { width: 40%; }
 
-	.cell-flex .cell-form .cell-input {
-		width: 60%;
-	}
+	.cell-flex .cell-form .cell-input { width: 60%; }
 }
 
-.cell-flex .cell-footer {
-	flex: 0 1 auto;
-}
+.cell-flex .cell-footer { flex: 0 1 auto; }
 
 /* --- List layout ---------------------------------------------------------- */
 
@@ -105,13 +97,13 @@
 	flex-wrap: wrap;
 }
 
-.cell-row .cell-thumbnail {
-	max-width: 30%;
-	padding: 0.618em;
-}
+@media (min-width: 769px) {
+	.cell-row .cell-thumbnail {
+		max-width: 30%;
+		padding: 0.618em;
+	}
 
-.cell-row .cell-content {
-	max-width: 70%;
+	.cell-row .cell-content { max-width: 70%; }
 }
 
 /* --- Modal ---------------------------------------------------------------- */

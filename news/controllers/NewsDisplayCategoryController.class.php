@@ -78,7 +78,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 
-			'NUMBER_COLUMNS' => $this->config->get_number_columns_display_news()
+			'COLUMNS_NUMBER' => $this->config->get_number_columns_display_news()
 		));
 
 		while ($row = $result->fetch())

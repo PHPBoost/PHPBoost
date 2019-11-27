@@ -382,7 +382,7 @@ class News
 	public function init_default_properties($id_cat = Category::ROOT_CATEGORY)
 	{
 		$this->id_cat = $id_cat;
-                $this->contents = NewsConfig::load()->get_default_contents();
+        $this->contents = NewsConfig::load()->get_default_contents();
 		$this->approbation_type = self::APPROVAL_NOW;
 		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();

@@ -117,7 +117,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_per_line,
+			'COLUMNS_NUMBER' => $number_columns_display_per_line,
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('download'),
 			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('download'),

@@ -18,7 +18,7 @@ class ArticlesConfig extends AbstractConfigData
 
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
-	
+
 	const DEFAULT_CONTENTS = 'default_contents';
 
 	const CATS_ICON_ENABLED = 'cats_icon_enabled';
@@ -27,8 +27,8 @@ class ArticlesConfig extends AbstractConfigData
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 
 	const DISPLAY_TYPE = 'display_type';
-	const DISPLAY_MOSAIC = 'mosaic';
-	const DISPLAY_LIST = 'list';
+	const DISPLAY_GRID_VIEW = 'grid';
+	const DISPLAY_LIST_VIEW = 'list';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
@@ -196,7 +196,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::CATS_ICON_ENABLED => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::DATE_UPDATED_DISPLAYED => false,
-			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
+			self::DISPLAY_TYPE => self::DISPLAY_GRID_VIEW,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'articles'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()

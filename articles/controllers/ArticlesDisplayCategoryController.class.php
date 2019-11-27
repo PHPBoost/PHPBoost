@@ -92,7 +92,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$this->view->put_all(array(
 			'C_ARTICLES' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
-			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_DISPLAY_LIST_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
 			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
 			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),
 			'C_ARTICLES_FILTERS' => true,
@@ -100,7 +101,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_per_line,
+			'COLUMNS_NUMBER' => $number_columns_display_per_line,
 			'C_ONE_ARTICLE_AVAILABLE' => $result->get_rows_count() == 1,
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION' => $pagination->display(),
@@ -151,9 +152,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 			}
 		}
 
-		$nbr_column_cats_per_line = ($nbr_cat_displayed > $this->config->get_number_cols_display_per_line()) ? $this->config->get_number_cols_display_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
-
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
@@ -167,8 +165,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
-			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line
+			'NUMBER_CATS_COLUMNS' => $this->config->get_number_cols_display_per_line()
 		));
 	}
 

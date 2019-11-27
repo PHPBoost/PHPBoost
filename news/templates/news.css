@@ -2,26 +2,3 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-
-#news-tags-container,
-#news-sources-container,
-#news-suggested-container {
-	margin: 1em 1em 1em 2em;
-}
-
-.news-tags-title,
-.news-sources-title,
-.news-suggested-title {
-	font-weight: bold;
-}
-
-.news-separator {
-	margin: 1.618em auto;
-	width: 68%;
-}
-
-.navigation-link-previous 	{ float: left;  }
-.navigation-link-next 		{ float: right; }
-
-.navigation-link-previous i { margin-right: 0.309em; }
-.navigation-link-next i 	{ margin-left: 0.309em;  }

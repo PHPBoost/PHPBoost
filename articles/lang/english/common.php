@@ -30,9 +30,6 @@ $lang['articles.print.item'] = 'Print an article';
 $lang['articles.module.config.title'] = 'Configuration : Articles';
 $lang['articles.display.categories.icon'] = 'Dipslay categories icon';
 $lang['articles.characters.number.to.cut'] = 'Maximum number of characters to cut the article\'s description';
-$lang['articles.display.type'] = 'Display type';
-$lang['articles.display.type.mosaic'] = 'Mosaic';
-$lang['articles.display.type.list'] = 'List';
 $lang['articles.display.decriptions.to.guests'] = 'Display condensed articles to guests if they don\'t have read authorization';
 $lang['articles.default.contents'] = 'Article default content';
 

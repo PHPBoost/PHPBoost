@@ -1,74 +1,78 @@
 /*
- * content.css
  * Contains:
- * 		- Containers, module elements,
  * 		- Categories,
+ * 		- Contents,
  * 		- mini module,
- * 		- posted messages,
  * 		- maintenance,
- * 		- sharing elements
 */
 
-/* -- Containers, module elements -- */
-/* ------------------------------------ */
-section,
-article {
+section {
 	position: relative;
 	margin: 0 auto;
 	width: 100%;
-	vertical-align: top;
 	padding: 0 0 0.809em;
 }
 
 @media (min-width: 769px) {
-	section,
-	article {
+	section {
 		margin: 0.809em auto;
 	}
 }
 
-/* --- Page title / Module element title --- */
-section header,
-article header {
-	padding: 0 0.809em;
+/* --- Categories --- */
+.cat-description {
+	margin: 0.618em 0.309em;
+	text-align: left;
 }
 
-@media (min-width: 769px) {
-	article header {
-		margin: 0 0 0.809em 0;
-	}
+.subcat-element {
+	text-align: center;
 }
 
-section header a:hover {
-	text-decoration: none;
+.subcat-thumbnail,
+.subcat-title,
+.subcat-options {
+	display: block;
+}
+
+.subcat-thumbnail {
+	margin-bottom: 0.309em;
 }
 
 .cat-actions {
 	text-align: right;
 }
 
-.elements-container {
-	padding: 1.618em 0 0
+/* --- Item infos --- */
+.item-infos {
+	display: flex;
+	justify-content: space-between;
 }
 
-/* --- Footer title --- */
-@media (min-width: 769px) {
-	section footer,
-	article footer {
-		margin-bottom: 1.618em;
-	}
+.more {
+	font-size: 0.809em;
+	font-style: italic;
 }
 
-section footer,
-article footer {
-	clear: both;
+.pinned {
+	display: inline-block;
+	padding: 0 0.228em;
+	margin: 0 0 0.228em 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
-/* --- Icones actions (edition, suppression, etc) --- */
-.actions {
-	float: right;
+.more .pinned {
+	border: none;
+	background-color: transparent !important;
 }
 
+aside {
+	padding: 0.809em;
+}
+
+/* --- Control Icons (edit, delete, etc) --- */
 .actions a {
 	display: inline-block;
 	padding: 0 0.456em;
@@ -80,10 +84,244 @@ article footer {
 	}
 }
 
-header h2 .actions {
-	font-size: 0.456em;
+/* --- Main content --- */
+.content {
+	padding: 0.809em;
+	margin-bottom: 1.618em;
 }
 
+.content::after,
+.content::before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* --- Id Card --- */
+.id-card {
+	margin: 1.618em 0 0;
+}
+
+.id-card::after,
+.id-card::before {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* --- Sibling links --- */
+.sources-container {}
+.tags-container {}
+	
+.suggested-links li {
+	list-style-type: none;
+}
+
+.navigation-links,
+.suggested-item,
+.navigation-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.suggested-item,
+.navigation-item { flex-direction: row; }
+
+.navigation-item {
+	flex-wrap: nowrap;
+}
+
+.suggested-item:hover,
+.navigation-item:hover { text-decoration: none; }
+
+.suggested-item img,
+.navigation-item img {
+	max-height: 50px;
+}
+
+.suggested-item img,
+.navigation-item.previous-item img,
+.navigation-item.previous-item i { padding: 0 0.309em 0 0;}
+.navigation-item.next-item img,
+.navigation-item.next-item i 	 { padding: 0 0 0 0.309em;}
+
+@media (min-width: 769px) {
+	.navigation-links {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.navigation-item { max-width: 35%; }
+}
+
+/* --- Media --- */
+.item-thumbnail {
+	padding: 0.309em 0;
+	display: block;
+}
+
+@media (min-width: 769px) {
+	.item-thumbnail {
+		max-width: 38%;
+		float: left;
+		padding: 0.309em 0.618em 0.309em 0;
+	}
+}
+
+@media (max-width: 768px) {
+	.media-content {
+		clear: both;
+		position: relative;
+		padding-bottom: 56.25%;
+		height: 0;
+	}
+
+	.media-content object,
+	.media-content embed,
+	.media-content video,
+	.media-content iframe,
+	.media-content .video-player {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@media (min-width:769px) {
+	.media-content embed,
+	.media-content iframe {
+		width: auto;
+		height: auto;
+	}
+}
+
+/* --- Options block --- */
+.options {
+	margin: 0.309em 0;
+	padding: 0.456em 0.809em;
+	max-width: 100%;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	font-size: 0.809em;
+}
+
+@media (min-width: 769px) {
+	.options {
+		float: right;
+		margin: 0.309em 0 0.309em 1em;
+	}
+}
+
+.options .horizontal-fieldset,
+.options .horizontal-fieldset-element,
+.options .horizontal-fieldset .form-element {
+	margin: 0;
+}
+
+.options h6 {
+	margin: 0 auto;
+	vertical-align: middle;
+	font-weight: 400;
+	padding: 0.228em;
+}
+
+.infos {
+	width: 100%;
+}
+
+.infos img {
+	padding: 0 0 0.618em 0;
+	display: block;
+	margin: auto;
+}
+
+@media (min-width: 769px) {
+	.infos {
+		max-width: 38%;
+	}
+}
+
+.infos-options {
+	display: block;
+}
+
+/* --- Mini modules --- */
+.block-container {
+	margin-top: 1em;
+}
+
+.module-mini-container {
+	margin: 0 0 0.809em 0;
+	clear: both;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
+.module-mini-top {
+	padding: 0.1618em 0;
+	min-height: 1.482em;
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: transparent;
+	text-align: center;
+}
+
+.module-mini-container .sub-title {
+	display: block;
+	margin-top: 0.309em;
+	font-weight: bold;
+}
+
+.module-mini-contents {
+	padding: 0.309em;
+	text-align: center;
+}
+
+.module-mini-bottom {
+	height: 1em;
+}
+
+/* --- Maintain --- */
+#maintain {
+	margin: 0.618em 0;
+}
+
+.delay {
+	margin: 1.309em 0;
+}
+
+#message-maintain {
+	position: absolute;
+	z-index: 20;
+	top: 1em;
+	width: 100%;
+	opacity: 0.98;
+	text-align: center;
+}
+
+#message-maintain > div {
+	margin: 0 auto;
+}
+
+#release {
+	margin-top: 1.309em;
+}
+
+/* --- Friends content (e.g web) --- */
+.content-friends {
+	border-width: 7px 1px 1px 1px;
+}
+
+.content-privileged-friends {
+	border-width: 7px 1px 1px 1px;
+}
+
+/* --- Alternate action menu (e.g faq)  */
 .actions-menu {
 	position: relative;
 }
@@ -138,41 +376,24 @@ header h2 .actions {
 	width: 20px;
 }
 
-/* --- Contenu --- */
-.content {
-	padding: 0.809em;
-}
 
-.content::after,
-.content::before {
-    content: '';
-    display: block;
-    clear: both;
-}
 
-.content + aside {
-	clear: both;
-	padding: 0.809em;
-}
 
-.ellipsis {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
 
-/* --- Id Card --- */
-.id-card {
-	margin: 1.618em 0 0;
-}
 
-.id-card::after,
-.id-card::before {
-    content: '';
-    display: block;
-    clear: both;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* --- Block --- */
 .elements-container {
@@ -235,273 +456,4 @@ header h2 .actions {
 	.columns-7 .block { width: calc(100% / 7.1); }
 
 	.block-xlarge { width: 100% !important; }
-}
-
-/* --- Gestion des media --- */
-.item-thumbnail {
-	padding: 0.309em 0;
-	display: block;
-}
-
-@media (min-width: 769px) {
-	.item-thumbnail {
-		max-width: 38%;
-		float: left;
-		padding: 0.309em 0.618em 0.309em 0;
-	}
-
-	.columns-3 .item-thumbnail,
-	.columns-4 .item-thumbnail,
-	.columns-5 .item-thumbnail,
-	.columns-6 .item-thumbnail,
-	.columns-7 .item-thumbnail {
-		float: none;
-		max-width: 100%;
-		padding: 0.309em 0;
-	}
-}
-
-@media (max-width: 768px) {
-	.media-content {
-		clear: both;
-		position: relative;
-		padding-bottom: 56.25%;
-		height: 0;
-	}
-
-	.media-content object,
-	.media-content embed,
-	.media-content video,
-	.media-content iframe,
-	.media-content .video-player {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
-}
-
-@media (min-width:769px) {
-	.media-content embed,
-	.media-content iframe {
-		width: auto;
-		height: auto;
-	}
-}
-
-/* --- Friends content --- */
-.content-friends {
-	border-width: 7px 1px 1px 1px;
-}
-
-.content-privileged-friends {
-	border-width: 7px 1px 1px 1px;
-}
-
-
-/* -- Pagination des pages -- */
-/* -------------------------- */
-
-/* -- Exploreur des categories -- */
-/* ------------------------------ */
-
-.options {
-	margin: 0.309em 0;
-	padding: 0.456em 0.809em;
-	max-width: 100%;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	font-size: 0.809em;
-}
-
-@media (min-width: 769px) {
-	.options {
-		float: right;
-		margin: 0.309em 0 0.309em 1em;
-	}
-}
-
-.options .horizontal-fieldset,
-.options .horizontal-fieldset-element,
-.options .horizontal-fieldset .form-element {
-	margin: 0;
-}
-
-.options h6 {
-	margin: 0 auto;
-	vertical-align: middle;
-	font-weight: 400;
-	padding: 0.228em;
-}
-
-.infos {
-	width: 100%;
-}
-
-.infos img {
-	padding: 0 0 0.618em 0;
-	display: block;
-	margin: auto;
-}
-
-@media (min-width: 769px) {
-	.infos {
-		max-width: 38%;
-	}
-}
-
-.infos-options {
-	display: block;
-}
-
-
-/* -- Gestion des categories -- */
-/* ---------------------------- */
-.cat-description {
-	margin: 0.618em 0.309em;
-	text-align: left;
-}
-
-.subcat-element {
-	text-align: center;
-}
-
-.subcat-thumbnail,
-.subcat-title,
-.subcat-options {
-	display: block;
-}
-
-.subcat-thumbnail {
-	margin-bottom: 0.309em;
-}
-
-
-
-/* -- Modules minis -- */
-/* ------------------- */
-.block-container {
-	margin-top: 1em;
-}
-
-.module-mini-container {
-	margin: 0 0 0.809em 0;
-	clear: both;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.module-mini-top {
-	padding: 0.1618em 0;
-	min-height: 1.482em;
-	border-width: 0 0 1px;
-	border-style: solid;
-	border-color: transparent;
-	text-align: center;
-}
-
-.module-mini-container .sub-title {
-	display: block;
-	margin-top: 0.309em;
-	font-weight: bold;
-}
-
-.module-mini-contents {
-	padding: 0.309em;
-	text-align: center;
-}
-
-.module-mini-bottom {
-	height: 1em;
-}
-
-/* -- Le maintenance -- */
-/* -------------------- */
-#maintain {
-	margin: 0.618em 0;
-}
-
-.delay {
-	margin: 1.309em 0;
-}
-
-#message-maintain {
-	position: absolute;
-	z-index: 20;
-	top: 1em;
-	width: 100%;
-	opacity: 0.98;
-	text-align: center;
-}
-
-#message-maintain > div {
-	margin: 0 auto;
-}
-
-#release {
-	margin-top: 1.309em;
-}
-
-
-/* -- Elements .more d'un contenu -- */
-/* --------------------------------- */
-
-/* --- General --- */
-.more {
-	font-size: 0.809em;
-	font-style: italic;
-}
-
-/* --- Sharing items --- */
-.more-element-sharing {
-	position: relative;
-	margin: 0.309em 0 0 0;
-	padding: 0;
-}
-
-@media (min-width: 769px) {
-	.more-element-sharing {
-		margin: 1.309em 0 0.309em 0;
-	}
-}
-
-.sharing-button {
-	display: none;
-}
-
-.sharing-elements-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: row;
-	text-align: center;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-@media (min-width: 769px) {
-	.sharing-elements-list {
-		justify-content: flex-start;
-	}
-}
-
-.sharing-element {
-	flex: 0 0 auto;
-}
-
-@media (min-width: 769px) {
-	.sharing-element {
-		margin: 0 0.309em 0.309em 0;
-	}
-}
-
-.sharing-element a {
-	display: block;
-	padding: 0.618em 1.228em;
-	display: block;
-	margin: 0 0.1em 0.309em 0;
 }

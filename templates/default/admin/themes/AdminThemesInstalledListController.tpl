@@ -16,7 +16,7 @@
 								</div>
 							# ENDIF #
 						# ENDIF #
-						<div class="cell-name">{themes_installed.NAME}</div>
+						<h3 class="cell-name">{themes_installed.NAME}</h3>
 						<div class="addon-menu-container">
 							# IF themes_installed.C_IS_DEFAULT_THEME #
 								<div class="addon-menu-container">
@@ -61,7 +61,7 @@
 								# END themes_installed.pictures #
 							# ENDIF #
 						</div>
-					</div>					
+					</div>
 					<div class="cell-list">
 						<ul>
 							<li class="li-stretch">

@@ -16,11 +16,12 @@
 							</div>
 						# ENDIF #
 					# ENDIF #
-					<div class="cell-name">
+					<h3 class="cell-name">
 						# IF langs_installed.C_HAS_PICTURE #
 							<img src="{langs_installed.PICTURE_URL}" alt="{langs_installed.NAME}" class="valign-middle" />
 						# ENDIF #
-						{langs_installed.NAME}</div>
+						{langs_installed.NAME}
+					</h3>
 					# IF langs_installed.C_IS_DEFAULT_LANG #
 						<div class="addon-menu-container">
 							<span class="addon-menu-title">{@langs.default}</span>

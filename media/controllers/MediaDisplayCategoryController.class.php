@@ -193,7 +193,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'PAGINATION' => $pagination->display(),
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
 			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_per_line
+			'COLUMNS_NUMBER' => $number_columns_display_per_line
 		));
 
 		while ($row = $result->fetch())

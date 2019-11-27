@@ -20,7 +20,7 @@
 									</div>
 								# ENDIF #
 							# ENDIF #
-							<div class="cell-name">{modules_not_installed.NAME}</div>
+							<h3 class="cell-name">{modules_not_installed.NAME}</h3>
 							<div class="addon-menu-container">
 								# IF modules_not_installed.C_COMPATIBLE #
 									<button type="submit" class="submit addon-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>

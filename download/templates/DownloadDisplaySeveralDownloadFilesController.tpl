@@ -15,7 +15,7 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-	<div class="subcat-container elements-container# IF C_SEVERAL_COLUMNS # columns-{NUMBER_COLUMNS}# ENDIF #">
+	<div class="subcat-container elements-container# IF C_SEVERAL_COLUMNS # columns-{COLUMNS_NUMBER}# ENDIF #">
 		# START sub_categories_list #
 		<div class="subcat-element block">
 			<div class="subcat-content">
@@ -41,7 +41,7 @@
 		<div class="spacer"></div>
 	# ENDIF #
 
-	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{NUMBER_COLUMNS}# ENDIF #">
+	<div class="elements-container# IF C_CATEGORY_DISPLAYED_SUMMARY # columns-{COLUMNS_NUMBER}# ENDIF #">
 	# IF C_FILES #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table class="table">
@@ -109,7 +109,7 @@
 			</table>
 		# ELSE #
 			# START downloadfiles #
-			<article id="article-download-{downloadfiles.ID}" class="article-download article-several# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<article id="article-download-{downloadfiles.ID}" class="article-download several-items# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h2><a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a></h2>
 				</header>

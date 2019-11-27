@@ -21,7 +21,7 @@
 								</div>
 							# ENDIF #
 						# ENDIF #
-						<div class="cell-name">{modules_installed.NAME}</div>
+						<h3 class="cell-name">{modules_installed.NAME}</h3>
 						<div class="addon-menu-container addon-with-menu">
 							<a href="#" id="addon-menu-title-{modules_installed.MODULE_NUMBER}" class="addon-menu-title">
 								# IF modules_installed.C_COMPATIBLE #

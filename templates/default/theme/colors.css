@@ -159,6 +159,11 @@ i.message-announce-new { color: #4D9136; }
 .sharing-element-print > a    { background-color: #888888; }
 .sharing-element-sms > a      { background-color: #888888; }
 
+.sharing-element-comments > a:hover { border-color: #888888; color: #888888; background-color: rgba(136, 136, 136, 0.4); }
+.sharing-element-mail > a:hover     { border-color: #366393; color: #366393; background-color: rgba(54, 99, 147, 0.4); }
+.sharing-element-print > a:hover    { border-color: #888888; color: #888888; background-color: rgba(136, 136, 136, 0.4); }
+.sharing-element-sms > a:hover      { border-color: #888888; color: #888888; background-color: rgba(136, 136, 136, 0.4); }
+
 /* --- cell.css & co
     #####  #####  #      #
     #      #      #      #
@@ -191,7 +196,7 @@ i.message-announce-new { color: #4D9136; }
 	border-color: transparent!important;
 }
 
-.new-content .cell-header {
+.several-items.new-content .cell-header {
 	border-left-color: #2F9674;
 }
 
@@ -482,12 +487,27 @@ figcaption {
 }
 
 a,
-.link-color         { color: #366493; }
+.link-color         {
+	color: #366493;
+	border-color: #366493;
+}
 a:hover,
-.link-color:hover   { color: #0066cc; }
-.admin              { color: #353535; }
-.modo               { color: #48419D; }
-.member             { color: #2F9674; }
+.link-color:hover   {
+	color: #0066cc;
+	border-color: #0066cc;
+}
+.admin              {
+	color: #353535;
+	border-color: #353535;
+}
+.modo               {
+	color: #48419D;
+	border-color: #48419D;
+}
+.member             {
+	color: #2F9674;
+	border-color: #2F9674;
+}
 
 .color-alert        { color: #913636; }
 .color-notavailable { color: #913636; }

@@ -62,7 +62,6 @@ $lang['bbcode.cols'] = 'Nombre de colonnes';
 
 $lang['bbcode.container'] = 'Conteneur';
 $lang['bbcode.paragraph'] = 'Paragraphe';
-$lang['bbcode.paragraph.title'] = 'Paragraphe : [p]texte[/p]';
 $lang['bbcode.block'] = 'Bloc';
 $lang['bbcode.custom.div'] = 'Conteneur personnalisable';
 $lang['bbcode.custom.div.alert'] = 'Ces critères nécessitent la connaissance des langages HTML/CSS et les propriétés du thème utilisé.';
@@ -129,7 +128,6 @@ $lang['bbcode.figure'] = 'Ajouter une image avec description';
 $lang['bbcode.picture.alt'] = 'Texte alternatif';
 $lang['bbcode.figure.caption'] = 'Description de l\'image';
 
-$lang['bbcode.picture'] = 'Ajouter une image : [img]url image[/img]';
 $lang['bbcode.upload'] = 'Attacher un fichier';
 
 // Right bottom block : Code

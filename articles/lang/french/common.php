@@ -30,9 +30,6 @@ $lang['articles.print.item'] = 'Impression d\'un article';
 $lang['articles.module.config.title'] = 'Configuration : Articles';
 $lang['articles.display.categories.icon'] = 'Afficher l\'icône des catégories';
 $lang['articles.characters.number.to.cut'] = 'Nombre de caractères pour couper le condensé de l\'article';
-$lang['articles.display.type'] = 'Type d\'affichage des articles';
-$lang['articles.display.type.mosaic'] = 'Mosaïque';
-$lang['articles.display.type.list'] = 'Liste';
 $lang['articles.display.decriptions.to.guests'] = 'Afficher le condensé des articles aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 $lang['articles.default.contents'] = 'Contenu par défaut d\'un article';
 

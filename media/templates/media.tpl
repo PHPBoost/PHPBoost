@@ -65,7 +65,7 @@
 
 		<div class="content elements-container">
 			# START file #
-			<article id="article-media-{file.ID}" class="article-media article-several# IF file.C_NEW_CONTENT # new-content# ENDIF #">
+			<article id="article-media-{file.ID}" class="article-media several-items# IF file.C_NEW_CONTENT # new-content# ENDIF #">
 				<header>
 					<h2>
 						<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>

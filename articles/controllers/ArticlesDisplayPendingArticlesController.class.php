@@ -113,10 +113,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
 		$this->view->put_all(array(
-			'C_ARTICLES' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
-			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_DISPLAY_LIST_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
+			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
 		));
 
@@ -131,7 +131,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
 				'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-				'NUMBER_COLUMNS' => $number_columns_display_per_line
+				'COLUMNS_NUMBER' => $number_columns_display_per_line
 			));
 
 			while($row = $result->fetch())
