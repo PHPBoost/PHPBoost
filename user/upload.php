@@ -125,7 +125,7 @@ elseif ( ! empty($_FILES['upload_file']['name']) && AppContext::get_request() ->
             else { // Insertion in database
                 foreach ($Upload -> get_files_parameters() as $parameters)
                 {
-                    $result = PersistenceContext::get_querier() -> insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => AppContext::get_current_user() -> get_id(), 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
+                    $result = PersistenceContext::get_querier() -> insert(DB_TABLE_UPLOAD, array('public' => $is_public_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => AppContext::get_current_user() -> get_id(), 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
                     $id_file = $result -> get_last_inserted_id();
                 }
             }
