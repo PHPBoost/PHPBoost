@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 02
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,12 +13,17 @@ class AdminViewAllMembersController extends AdminController
 {
 	private $view;
 	private $lang;
+	
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
 		$current_page = $this->build_table();
+
+		$this->execute_multiple_delete_if_needed($request);
 
 		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-user-common'), $current_page);
 	}
@@ -65,6 +70,10 @@ class AdminViewAllMembersController extends AdminController
 		{
 			$user = new User();
 			$user->set_properties($row);
+			
+			$this->elements_number++;
+			$this->ids[$this->elements_number] = $user->get_id();
+			
 			$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 
 			if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
@@ -92,6 +101,31 @@ class AdminViewAllMembersController extends AdminController
 		));
 
 		return $table->get_page_number();
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]))
+					{
+						$user = UserService::get_user($this->ids[$i]);
+						if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
+						{
+							try
+							{
+								UserService::delete_by_id($user->get_id());
+							}
+							catch (RowNotFoundException $ex) {}
+						}
+				}
+			}
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 	}
 }
 ?>

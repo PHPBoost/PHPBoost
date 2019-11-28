@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -174,4 +174,7 @@ $lang['pagination.next'] = 'To next page';
 $lang['pagination.last'] = 'To last page';
 $lang['pagination.current'] = 'The Current page';
 $lang['pagination.page'] = 'To Page';
+
+//Multiple select
+$lang['select.all.elements'] = 'Select all elements';
 ?>

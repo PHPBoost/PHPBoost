@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -13,6 +13,9 @@ class UserUsersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $groups_cache;
+	
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -20,6 +23,9 @@ class UserUsersListController extends AbstractController
 		$this->build_select_group_form();
 		$current_page = $this->build_table();
 
+		if (AppContext::get_current_user()->is_admin())
+			$this->execute_multiple_delete_if_needed($request);
+		
 		return $this->generate_response($current_page);
 	}
 
@@ -50,11 +56,16 @@ class UserUsersListController extends AbstractController
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', $sql_html_table_model, new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
+		if (!AppContext::get_current_user()->is_admin())
+			$table->hide_multiple_delete();
 
 		$results = array();
 		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
 		{
+			$this->elements_number++;
+			$this->ids[$this->elements_number] = $row['user_id'];
+			
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
@@ -90,6 +101,31 @@ class UserUsersListController extends AbstractController
 		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]))
+					{
+						$user = UserService::get_user($this->ids[$i]);
+						if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
+						{
+							try
+							{
+								UserService::delete_by_id($user->get_id());
+							}
+							catch (RowNotFoundException $ex) {}
+						}
+				}
+			}
+			AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 	}
 
 	private function build_select_group_form()

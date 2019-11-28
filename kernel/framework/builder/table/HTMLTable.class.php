@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 10 23
+ * @version     PHPBoost 5.2 - last update: 2019 11 28
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -16,6 +16,7 @@ class HTMLTable extends AbstractHTMLElement
 	private $arg_id = 1;
 	private $nb_rows = 0;
 	private $page_number = 1;
+	private $multiple_delete_displayed = true;
 
 	/**
 	 * @var HTMLTableParameters
@@ -147,7 +148,7 @@ class HTMLTable extends AbstractHTMLElement
 		$this->tpl->put_all(array(
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
-			'NUMBER_OF_COLUMNS' => count($this->columns),
+			'NUMBER_OF_COLUMNS' => !empty($this->rows) && $this->multiple_delete_displayed ? count($this->columns) + 1 : count($this->columns),
 			'C_CSS_CLASSES' => $this->has_css_class(),
 			'CSS_CLASSES' => $this->get_css_class(),
 			'C_CSS_STYLE' => $this->has_css_style(),
@@ -159,6 +160,7 @@ class HTMLTable extends AbstractHTMLElement
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
 			'C_HAS_ROWS' => !empty($this->rows),
+			'C_MULTIPLE_DELETE_DISPLAYED' => !empty($this->rows) && $this->multiple_delete_displayed,
 			'C_DISPLAY_FOOTER' => $this->model->is_footer_displayed() && !empty($this->rows),
 			'C_FOOTER_CSS_CLASSES' => $this->model->has_footer_css_class(),
 			'FOOTER_CSS_CLASSES' => $this->model->get_footer_css_class()
@@ -227,7 +229,7 @@ class HTMLTable extends AbstractHTMLElement
 				$row_number++;
 				if ($row_number >= $this->get_first_row_index() && $row_number < $last_displayed_row)
 				{
-					$this->generate_row($row);
+					$this->generate_row($row, $row_number);
 				}
 				else if ($row_number >= $last_displayed_row)
 					break;
@@ -237,17 +239,20 @@ class HTMLTable extends AbstractHTMLElement
 		{
 			foreach ($this->rows as $row)
 			{
-				$this->generate_row($row);
+				$row_number++;
+				$this->generate_row($row, $row_number);
 			}
 		}
 	}
 
-	protected final function generate_row(HTMLTableRow $row)
+	protected final function generate_row(HTMLTableRow $row, $element_number)
 	{
 		$row_values = array();
 		$this->add_css_vars($row, $row_values);
 		$this->add_id_vars($row, $row_values);
-		$this->tpl->assign_block_vars('row', $row_values);
+		$this->tpl->assign_block_vars('row', array_merge($row_values, array(
+			'ELEMENT_NUMBER' => $element_number
+		)));
 
 		foreach ($row->get_cells() as $cell)
 		{
@@ -291,7 +296,8 @@ class HTMLTable extends AbstractHTMLElement
 			'total' => $this->nb_rows
 		));
 		$this->tpl->put_all(array(
-			'NUMBER_OF_ELEMENTS' => $elements
+			'ELEMENTS_NUMBER' => $this->nb_rows,
+			'ELEMENTS_NUMBER_LABEL' => $elements
 		));
 	}
 
@@ -326,6 +332,16 @@ class HTMLTable extends AbstractHTMLElement
 	public function get_first_row_index()
 	{
 		return ($this->page_number - 1) * $this->get_nb_rows_per_page();
+	}
+
+	public function hide_multiple_delete()
+	{
+		$this->multiple_delete_displayed = false;
+	}
+
+	public function display_multiple_delete()
+	{
+		$this->multiple_delete_displayed = true;
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 25
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2009 12 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -68,6 +68,7 @@ class SandboxTableController extends ModuleController
 		$table_model->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', $this->lang['table.id.equal']));
 
 		$table = new HTMLTable($table_model);
+		$table->hide_multiple_delete();
 
 		$results = array();
 		$result = $table_model->get_sql_results();

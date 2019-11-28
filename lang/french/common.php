@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -158,7 +158,7 @@ $lang['deadlink.confirmation'] = 'Etes-vous sûr de vouloir signaler ce lien com
 $lang['contribution.deadlink'] = 'Lien mort : :link_name';
 $lang['contribution.deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
-// Autorisations
+//Autorisations
 $lang['authorizations'] = 'Autorisations';
 $lang['authorizations.read'] = 'Autorisation de lecture';
 $lang['authorizations.write'] = 'Autorisation d\'écriture';
@@ -174,4 +174,7 @@ $lang['pagination.next'] = 'Vers la page suivante';
 $lang['pagination.last'] = 'Vers la dernière page';
 $lang['pagination.current'] = 'Page courante';
 $lang['pagination.page'] = 'Vers la page';
+
+//Multiple select
+$lang['select.all.elements'] = 'Sélectionner tous les éléments';
 ?>

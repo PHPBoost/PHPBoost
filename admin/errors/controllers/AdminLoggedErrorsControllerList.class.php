@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -47,6 +47,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
 		$table = new HTMLTable($table_model, 'error-list');
+		$table->hide_multiple_delete();
 
 		$table_model->set_caption($this->lang['logged_errors_list']);
 		$table_model->set_footer_css_class('footer-error-list');
