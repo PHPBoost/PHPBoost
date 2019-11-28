@@ -101,17 +101,17 @@
 			</aside>
 		# ENDIF #
 
-		# IF C_NAVIGATION_LINKS #
-			<aside class="navigation-links">
+		# IF C_RELATED_LINKS #
+			<aside class="related-links">
 				# IF C_PREVIOUS_ITEM #
-					<a class="navigation-item previous-item" href="{U_PREVIOUS_ITEM}">
+					<a class="related-item previous-item" href="{U_PREVIOUS_ITEM}">
 						<i class="fa fa-chevron-left"></i>
 						<img src="{U_PREVIOUS_THUMBNAIL}" alt="{PREVIOUS_ITEM}">
 						{PREVIOUS_ITEM}
 					</a>
 				# ENDIF #
 				# IF C_NEXT_ITEM #
-					<a class="navigation-item next-item" href="{U_NEXT_ITEM}">
+					<a class="related-item next-item" href="{U_NEXT_ITEM}">
 						{NEXT_ITEM}
 						<img src="{U_NEXT_THUMBNAIL}" alt="{NEXT_ITEM}">
 						<i class="fa fa-chevron-right"></i>

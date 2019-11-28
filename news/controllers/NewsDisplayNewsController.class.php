@@ -175,7 +175,7 @@ class NewsDisplayNewsController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$this->tpl->put_all(array(
-				'C_NAVIGATION_LINKS' => true,
+				'C_RELATED_LINKS' => true,
 				'C_'. $row['type'] .'_ITEM' => true,
 				$row['type'] . '_ITEM' => $row['name'],
 				'U_'. $row['type'] .'_ITEM' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),

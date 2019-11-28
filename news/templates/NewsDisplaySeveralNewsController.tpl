@@ -84,17 +84,17 @@
 								{news.CONTENTS}
 							# ENDIF #
 						</div>
+					</div>
+
+					<footer class="cell-footer">
 						# IF news.C_SOURCES #
-							<div class="cell-content">
+							<div class="sources-container">
 								<span class="text-strong">${LangLoader::get_message('form.sources', 'common')}</span> :
 								# START news.sources #
 									<a itemprop="isBasedOnUrl" href="{news.sources.URL}" class="pinned question" rel="nofollow">{news.sources.NAME}</a># IF news.sources.C_SEPARATOR ## ENDIF #
 								# END news.sources #
 							</div>
 						# ENDIF #
-					</div>
-
-					<footer class="cell-footer">
 						<meta itemprop="url" content="{news.U_LINK}">
 						<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
 						# IF C_COMMENTS_ENABLED #
