@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 27
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,7 @@ $display_close_button = false;
 
 // Personal or public files
 $request = AppContext::get_request();
-$is_public_checkbox = ($request->get_postvalue('is_public_checkbox', 'off') === 'on' ? 1 : 0);
+$is_public_checkbox = ($request->get_postvalue('is_public_checkbox', 'off') == 'on' ? 1 : 0);
 $item_id = $request->get_int('item_id', 0);
 $status = $request->get_int('status', 0);
 if ($item_id) {
