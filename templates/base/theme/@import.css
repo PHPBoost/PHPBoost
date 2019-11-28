@@ -13,8 +13,6 @@
 @import url('../../default/theme/constraint.css') screen, print;
 @import url('../../default/theme/linedwrap.css') screen, print;
 @import url('../../default/theme/authorizations.css') screen, print;
-@import url('../../default/theme/checkbox.css') screen;
-@import url('../../default/theme/radio.css') screen;
 
 @import url('../../default/theme/table.css') screen, print;
 @import url('../../default/theme/cookies.css') screen;
