@@ -144,7 +144,7 @@ class CalendarEventsListController extends ModuleController
 			{
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
-					if (isset($this->ids[$i]))
+					if (isset($this->ids[$i]) && !in_array($this->ids[$i], $this->hide_delete_input))
 					{
 						try {
 							$event = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
@@ -177,7 +177,7 @@ class CalendarEventsListController extends ModuleController
 
 			Feed::clear_cache('calendar');
 			CalendarCurrentMonthEventsCache::invalidate();
-			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
