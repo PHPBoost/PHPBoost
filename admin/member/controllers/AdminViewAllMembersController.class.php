@@ -122,6 +122,7 @@ class AdminViewAllMembersController extends AdminController
 							}
 							catch (RowNotFoundException $ex) {}
 						}
+					}
 				}
 			}
 			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('process.success', 'status-messages-common'));
