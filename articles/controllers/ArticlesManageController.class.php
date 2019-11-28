@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 02
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,6 +14,9 @@ class ArticlesManageController extends ModuleController
 {
 	private $lang;
 	private $view;
+	
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -22,6 +25,8 @@ class ArticlesManageController extends ModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
+
+		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
 	}
@@ -68,6 +73,9 @@ class ArticlesManageController extends ModuleController
 			$category = $article->get_category();
 			$user = $article->get_author_user();
 
+			$this->elements_number++;
+			$this->ids[$this->elements_number] = $article->get_id();
+			
 			$edit_link = new LinkHTMLElement(ArticlesUrlBuilder::edit_article($article->get_id()), '', array('title' => LangLoader::get_message('edit', 'common')), 'far fa-edit');
 			$delete_link = new LinkHTMLElement(ArticlesUrlBuilder::delete_article($article->get_id()), '', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
 
@@ -113,6 +121,35 @@ class ArticlesManageController extends ModuleController
 		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]))
+					{
+						AdminError404Service::delete_404_error($this->ids[$i]);
+						ArticlesService::delete('WHERE id=:id', array('id' => $this->ids[$i]));
+						ArticlesService::get_keywords_manager()->delete_relations($this->ids[$i]);
+
+						PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $this->ids[$i]));
+
+						CommentsService::delete_comments_topic_module('articles', $this->ids[$i]);
+						NotationService::delete_notes_id_in_module('articles', $this->ids[$i]);
+					}
+				}
+			}
+
+			Feed::clear_cache('articles');
+			ArticlesCategoriesCache::invalidate();
+			ArticlesKeywordsCache::invalidate();
+			AppContext::get_response()->redirect(ArticlesUrlBuilder::manage_articles(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 	}
 
 	private function check_authorizations()
