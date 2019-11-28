@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 26
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,14 +36,18 @@ $result = PersistenceContext::get_querier()->select("
 	ORDER BY comments.timestamp DESC
 	LIMIT 30"
 );
-$i = 0;
+$comments_number = 0;
+$ids = array();
 while ($row = $result->fetch())
 {
+	$comments_number++;
+	$ids[$comments_number] = $row['id'];
 	$group_color = User::get_group_color($row['groups'], $row['level']);
 
 	$tpl->assign_block_vars('comments_list', array(
 		'C_VISITOR' => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
 		'C_GROUP_COLOR' => !empty($group_color),
+		'COMMENT_NUMBER' => $comments_number,
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
 		'PSEUDO' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $LANG['guest']),
 		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
@@ -52,9 +56,23 @@ while ($row = $result->fetch())
 		'U_DELETE' => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
 		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
 	));
-	$i++;
 }
 $result->dispose();
+
+//Multiple comments delete
+$request = AppContext::get_request();
+if ($request->get_string('delete-selected-comments', false))
+{
+	for ($i = 1 ; $i <= $comments_number ; $i++)
+	{
+		if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+		{
+			if (isset($ids[$i]))
+				CommentsManager::delete_comment($ids[$i]);
+		}
+	}
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, LangLoader::get_message('process.success', 'status-messages-common'));
+}
 
 //Advises
 $advises_form = new HTMLForm('advises_list', '', false);
@@ -91,7 +109,8 @@ $tpl->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_HEADER_LOGO' => !empty($header_logo_path),
 	'HEADER_LOGO' => Url::to_rel($header_logo_path),
-	'C_NO_COM' => $i == 0,
+	'C_NO_COMMMENT' => $comments_number == 0,
+	'COMMENTS_NUMBER' => $comments_number,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'C_MODULE_DATABASE_INSTALLED' => $module_database_installed,
 	'C_MODULE_CUSTOMIZATION_INSTALLED' => $module_customization_installed,

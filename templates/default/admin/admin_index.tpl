@@ -151,28 +151,33 @@
 						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 					</div>
 					<div class="cell-list">
-						<ul>
-							# START comments_list #
-								<li>
-									<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-									<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
-										<i class="far fa-hand-point-right" aria-hidden="true"></i>
-									</a>
-									<span class="smaller">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
-									{comments_list.CONTENT}
-								</li>
-							# END comments_list #
-							# IF C_NO_COM #
-								<li>
-									<p class="center"><em>{L_NO_COMMENT}</em></p>
-								</li>
-							# ELSE #
-								<li>
-									<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
-								</li>
+						<form id="comments_list_form" method="post" class="fieldset-content">
+							<ul>
+								# START comments_list #
+									<li>
+										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" />
+										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+										<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
+											<i class="far fa-hand-point-right" aria-hidden="true"></i>
+										</a>
+										<span class="smaller">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
+										{comments_list.CONTENT}
+									</li>
+								# END comments_list #
+								# IF C_NO_COMMENT #
+									<li>
+										<p class="center"><em>{L_NO_COMMENT}</em></p>
+									</li>
+								# ELSE #
+									<li>
+										<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+									</li>
+								# ENDIF #
+							</ul>
+							# IF NOT C_NO_COMMENT #
+							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});" aria-label="{@select.all.comments}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
 							# ENDIF #
-						</ul>
-
+						</form>
 					</div>
 				</div>
 
