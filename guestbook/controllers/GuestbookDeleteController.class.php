@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2012 11 30
 */
 
@@ -41,7 +41,7 @@ class GuestbookDeleteController extends ModuleController
 
 	private function check_authorizations(GuestbookMessage $message)
 	{
-		if (!$message->is_authorized_delete())
+		if (!$message->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

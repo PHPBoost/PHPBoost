@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 26
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 06 27
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -76,12 +76,12 @@ class GuestbookMessage
 		return $this->author_user;
 	}
 
-	public function is_authorized_edit()
+	public function is_authorized_to_edit()
 	{
 		return GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
-	public function is_authorized_delete()
+	public function is_authorized_to_delete()
 	{
 		return GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
@@ -132,8 +132,8 @@ class GuestbookMessage
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			array(
-			'C_EDIT' => $this->is_authorized_edit(),
-			'C_DELETE' => $this->is_authorized_delete(),
+			'C_EDIT' => $this->is_authorized_to_edit(),
+			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 
