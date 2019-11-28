@@ -133,7 +133,6 @@ class ArticlesManageController extends ModuleController
 				{
 					if (isset($this->ids[$i]))
 					{
-						AdminError404Service::delete_404_error($this->ids[$i]);
 						ArticlesService::delete('WHERE id=:id', array('id' => $this->ids[$i]));
 						ArticlesService::get_keywords_manager()->delete_relations($this->ids[$i]);
 
