@@ -47,7 +47,7 @@
 			# IF row.C_ID # id="{row.ID}"# ENDIF #
 			# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
 			# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-				# IF C_MULTIPLE_DELETE_DISPLAYED #<td><input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" /></td># ENDIF #
+				# IF C_MULTIPLE_DELETE_DISPLAYED #<td># IF row.C_DISPLAY_DELETE_INPUT #<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" /># ENDIF #</td># ENDIF #
 				# START row.cell #
 				<td
 				# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #

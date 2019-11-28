@@ -251,6 +251,7 @@ class HTMLTable extends AbstractHTMLElement
 		$this->add_css_vars($row, $row_values);
 		$this->add_id_vars($row, $row_values);
 		$this->tpl->assign_block_vars('row', array_merge($row_values, array(
+			'C_DISPLAY_DELETE_INPUT' => $row->is_delete_input_displayed(),
 			'ELEMENT_NUMBER' => $element_number
 		)));
 
