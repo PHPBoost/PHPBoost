@@ -122,6 +122,7 @@ class UserUsersListController extends AbstractController
 							}
 							catch (RowNotFoundException $ex) {}
 						}
+					}
 				}
 			}
 			AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
