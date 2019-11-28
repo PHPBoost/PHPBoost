@@ -14,6 +14,7 @@
 		# IF C_NO_MESSAGE #
 			<div class="message-helper notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
+		<form method="post" class="fieldset-content">
 		# START messages #
 			<article id="m{messages.ID}" class="guestbook-item guestbook-items message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
 				<header class="message-header-container">
@@ -30,6 +31,9 @@
 								# ENDIF #
 							</h3>
 							<div class="message-actions">
+								# IF messages.C_DELETE #
+								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" />
+								# ENDIF #
 								# IF messages.C_EDIT #
 									<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 								# ENDIF #
@@ -64,6 +68,17 @@
 				# ENDIF #
 			</article>
 		# END messages #
+		# IF C_MULTIPLE_DELETE_DISPLAYED #
+			<div class="mini-checkbox">
+				<label for="delete-all-checkbox" class="checkbox">
+					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MESSAGES_NUMBER});">
+					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
+				</label>
+				<input type="hidden" name="token" value="{TOKEN}" />
+				<button type="submit" name="delete-selected-elements" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+			</div>
+		# ENDIF #
+		</form>
 	</div>
 	<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
 </section>

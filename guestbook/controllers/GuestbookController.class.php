@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 15
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,6 +12,11 @@ class GuestbookController extends ModuleController
 {
 	private $lang;
 	private $view;
+	
+	private $elements_number = 0;
+	private $ids = array();
+	private $hide_delete_input = array();
+	private $display_multiple_delete = true;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -20,6 +25,9 @@ class GuestbookController extends ModuleController
 		$this->init();
 
 		$this->build_view();
+
+		if ($this->display_multiple_delete)
+			$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response();
 	}
@@ -44,11 +52,21 @@ class GuestbookController extends ModuleController
 			)
 		);
 
+		$delete_link_number = 0;
 		while ($row = $result->fetch())
 		{
 			$message = new GuestbookMessage();
 			$message->set_properties($row);
 
+			if ($message->is_authorized_to_delete())
+			{
+				$delete_link_number++;
+				$this->elements_number++;
+				$this->ids[$this->elements_number] = $message->get_id();
+			}
+			else
+				$this->hide_delete_input[] = $message->get_id();
+			
 			//Avatar
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
@@ -56,6 +74,7 @@ class GuestbookController extends ModuleController
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'C_USER_GROUPS' => !empty($row['groups']),
+				'MESSAGE_NUMBER' => $this->elements_number,
 				'U_AVATAR' => $user_avatar
 			)));
 
@@ -80,10 +99,15 @@ class GuestbookController extends ModuleController
 		}
 		$result->dispose();
 
+		if (empty($delete_link_number))
+			$this->display_multiple_delete = false;
+
 		$this->view->put_all(array(
 			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
+			'C_MULTIPLE_DELETE_DISPLAYED' => $this->display_multiple_delete,
 			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
-			'PAGINATION' => $pagination->display()
+			'PAGINATION' => $pagination->display(),
+			'MESSAGES_NUMBER' => $this->elements_number
 		));
 
 		if (GuestbookAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
@@ -105,6 +129,32 @@ class GuestbookController extends ModuleController
 		$this->lang = LangLoader::get('common', 'guestbook');
 		$this->view = new FileTemplate('guestbook/GuestbookController.tpl');
 		$this->view->add_lang($this->lang);
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			$deleted_messages_number = 0;
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]) && !in_array($this->ids[$i], $this->hide_delete_input))
+					{
+						GuestbookService::delete('WHERE id=:id', array('id' => $this->ids[$i]));
+						$deleted_messages_number++;
+					}
+				}
+			}
+
+			GuestbookMessagesCache::invalidate();
+			$page = AppContext::get_request()->get_getint('page', 1);
+			if ($page > 1 && $deleted_messages_number == GuestbookConfig::load()->get_items_per_page())
+				$page--;
+			
+			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($page), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 	}
 
 	private function check_authorizations()
