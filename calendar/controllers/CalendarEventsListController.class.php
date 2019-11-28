@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -12,6 +12,11 @@ class CalendarEventsListController extends ModuleController
 {
 	private $lang;
 	private $view;
+	
+	private $elements_number = 0;
+	private $ids = array();
+	private $hide_delete_input = array();
+	private $display_multiple_delete = true;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -20,6 +25,9 @@ class CalendarEventsListController extends ModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
+
+		if ($this->display_multiple_delete)
+			$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
 	}
@@ -71,11 +79,21 @@ class CalendarEventsListController extends ModuleController
 			$event->set_properties($row);
 			$events[] = $event;
 			if ($event->is_authorized_to_edit() || $event->is_authorized_to_delete())
+			{
 				$moderation_link_number++;
+				$this->elements_number++;
+				$this->ids[$this->elements_number] = $event->get_id();
+			}
+			else
+				$this->hide_delete_input[] = $event->get_id();
 		}
 
 		if (empty($moderation_link_number))
+		{
 			$table_model->delete_last_column();
+			$table->hide_multiple_delete();
+			$this->display_multiple_delete = false;
+		}
 
 		foreach ($events as $event)
 		{
@@ -105,13 +123,62 @@ class CalendarEventsListController extends ModuleController
 			if (!$display_categories)
 				unset($row[1]);
 
-			$results[] = new HTMLTableRow($row);
+			$table_row = new HTMLTableRow($row);
+			if (in_array($event->get_id(), $this->hide_delete_input))
+				$table_row->hide_delete_input();
+			
+			$results[] = $table_row;
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
 		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]))
+					{
+						try {
+							$event = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
+						} catch (RowNotFoundException $e) {}
+						
+						if ($event)
+						{
+							$events_list = CalendarService::get_serie_events($event->get_content()->get_id());
+							
+							if (!$event->belongs_to_a_serie() || count($events_list) == 1)
+							{
+								CalendarService::delete_event_content('WHERE id = :id', array('id' => $event->get_id()));
+							}
+
+							//Delete event
+							CalendarService::delete_event('WHERE id_event = :id', array('id' => $event->get_id()));
+
+							if (!$this->event->get_parent_id())
+								PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $event->get_id()));
+
+							//Delete event comments
+							CommentsService::delete_comments_topic_module('calendar', $event->get_id());
+
+							//Delete participants
+							CalendarService::delete_all_participants($event->get_id());
+						}
+					}
+				}
+			}
+
+			Feed::clear_cache('calendar');
+			CalendarCurrentMonthEventsCache::invalidate();
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events(), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
 	}
 
 	private function check_authorizations()
