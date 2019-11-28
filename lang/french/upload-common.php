@@ -16,3 +16,4 @@ $lang['public.title'] = 'Fichiers Publics';
 $lang['personal.title'] = 'Fichiers Personnels';
 $lang['change.to.personal'] = 'Changer en Personnel';
 $lang['change.to.public'] = 'Changer en Public';
+?>
