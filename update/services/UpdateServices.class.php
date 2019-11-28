@@ -283,7 +283,7 @@ class UpdateServices
 			$extended_field->set_is_freeze(true);
 			ExtendedFieldsService::add($extended_field);
 		}
-		
+
 		$columns = self::$db_utils->desc_table(PREFIX . 'upload');
 
 		if (!isset($columns['public']))

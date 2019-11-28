@@ -1,4 +1,10 @@
 /* --- Menus ---------------------------------------------------------------- */
+.lang-selector {
+	padding-left: 3.309em;
+	background-position: 0.309em;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
 
 .step-menu .cssmenu-title {
     border-width: 0 0 3px 0;
@@ -23,40 +29,27 @@
     }
 }
 
-.progressbar-container {
-	margin: 0.809em auto;
-	width: 90%;
-}
-
-.progressbar[style*="100"] {
-	border-radius: 3px;
+.help-menu .cssmenu-title {
+    color: #FFFFFF;
 }
 
 @media (max-width: 768px) {
 
-	.cssmenu > ul > li {
-		display: block;
-		float: left;
-		width: calc(100% / 2);
-	}
-
 	.step-menu.cssmenu > ul > li {
+        display: inline-block;
 		width: calc(100% / 7);
 	}
 
-	.cssmenu > ul > li > .cssmenu-title {
-		padding: 5px;
+	.step-menu .cssmenu-title {
+		display: block;
+		padding: 0.309em;
+		text-align: center;
 		white-space: normal;
 	}
 
-	.step-menu.cssmenu > ul > li > .cssmenu-title {
-		display: block;
-		padding: 5px;
-		text-align: center;
-	}
-
-	.help-menu.cssmenu > ul > li > .cssmenu-title i {
-		vertical-align: top;
+	.help-menu li {
+		display: inline-block;
+		width: calc(100% / 2);
 	}
 
 	.step-menu.cssmenu > ul > li > .cssmenu-title i {
@@ -69,7 +62,7 @@
 	}
 }
 
-/* --- contenu -------------------------------------------------------------- */
+/* --- content -------------------------------------------------------------- */
 #global h1 {
 	padding: 0.809em;
 	border-width: 0 0 2px;
@@ -91,17 +84,6 @@ section header h2 {
 	font-weight: 400;
 }
 
-h3 {
-	padding: 15px;
-}
-
-.content > a > img {
-	margin: 0 0 5px 0.809em;
-}
-
-.form-field-checkbox.field-required::after { left: -1.618em; }
-.constraint-status-right .form-field-checkbox.field-required::after { left: -1em; }
-
 .next-step button {
 	margin: 0;
     padding: 1em 2em;
@@ -115,50 +97,38 @@ h3 {
     border-width: 1px;
 }
 
-/* --- welcome --- */
+/* --- Welcome -------------------------------------------------------------- */
 @media (min-width: 769px) {
 	.pbt-box {
-		padding: 0 8px 8px 25px;
+		padding: 0 0.456em 0.456em 6.18em;
 	}
 }
 
-/* --- Bloc License --- */
+/* --- License -------------------------------------------------------------- */
 .license-container {
 	margin-bottom: 0.809em;
-	padding: 15px 0;
+	padding: 1em 0;
 	background-color: #FFFFFF;
 	border: 1px solid #DFDFDF;
 }
 
 .license-content {
-	padding: 0 15px;
+	padding: 0 1em;
 	width: auto;
 	height: 340px;
 	overflow-y: scroll;
 }
 
-/* --- config serveurs --- */
-.success-block,
-.failure-block {
-	float: left;
-	margin-left: 5px;
-	padding: 2px;
+/* --- Server configuration ------------------------------------------------- */
+#chmod .message-helper {
+	display: inline-block;
 	width: calc(50% - 0.809em);
-	font-weight: bold;
-	text-align: center;
 }
 
-.success-block { background: #8AC77F; color: #008000; }
-.failure-block { background: #EE8D8D; color: #FF0000; }
-
-#chmod .form-element {
-	padding: 2px;
-}
-
-/* --- finish --- */
+/* --- Finish --------------------------------------------------------------- */
 .finish-menu ul {
 	display: table;
-	margin: 20px auto;
+	margin: 1.309em auto;
 	padding: 0;
 	list-style-type: none;
 }

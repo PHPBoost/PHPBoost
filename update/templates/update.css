@@ -1,112 +1,49 @@
-#update-site-logo {
-	display: inline-block;
-	margin-bottom: 10px;
-	width: 25px;
-	height: 25px;
-	background-image: url(images/logo.png);
-	background-repeat: no-repeat;
-	background-position: center ;
-	background-size: cover;
-	vertical-align: middle;
-}
-
-
-#site-slogan {
-	display: none;
-}
-
-@media (min-width: 769px) {
-	#site-slogan {
-		display: block;
-	}
-}
-
-#sub-header-admin .cssmenu > ul > li > .cssmenu-title {
-    display: block;
-	font-size: 1.228rem;
-}
-
 /* --- Menus ---------------------------------------------------------------- */
-
-.site-logo {
-	float: left;
-	margin-right: 5px;
+.lang-selector {
+	padding-left: 3.309em;
+	background-position: 0.309em;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
-.cssmenu > ul > li {
-	width: 100%;
-	border-width: 0 0 0 3px;
+.step-menu .cssmenu-title {
+    border-width: 0 0 3px 0;
 	border-style: solid;
 	border-color: transparent;
 }
 
-@media (min-width: 769px) {
-	.cssmenu > ul > li {
-		border-width: 0 0 0 5px;
-	}
+.row-current .cssmenu-title {
+	border-color: #E27B47;
+    background-color: rgba(54, 100, 147, 0.5);
 }
 
-.cssmenu > ul > li > .cssmenu-title {
-	display: table;
-	padding: 0.809em 1.228em;
+.row-next .cssmenu-title {}
+.row-success .cssmenu-title {
+	border-color: #40b73a;
+	background-color: rgba(54, 100, 147, 0.5);
 }
-
-.cssmenu > ul > li > .cssmenu-title i,
-.cssmenu > ul > li > .cssmenu-title span {
-	display: table-cell;
-	color: #DDDDDD;
-}
-
-.cssmenu > ul > li > .cssmenu-title i{
-	padding-right: 8px;
-}
-
-.row-next {}
 
 @media (min-width: 769px) {
-	.cssmenu > ul > li.row-current {
-		border-color: #E27B47;
-    	background-color: rgba(54, 100, 147, 0.5);
-	}
-
-	.cssmenu > ul > li.row-success {
-		border-color: #40b73a;
-	}
-}
-
-.cssmenu > ul > li.row-current > .cssmenu-title span {
-	color: #FFFFFF;
-}
-
-.progressbar-container {
-	margin: 10px auto;
-	width: 90%;
+    .step-menu .cssmenu-title {
+        border-width: 0 0 0 5px;
+    }
 }
 
 @media (max-width: 768px) {
-	.cssmenu ul {
-		display: block;
-	}
 
 	.step-menu.cssmenu > ul > li.no-database-step {
-		display: block;
-		float: left;
+        display: inline-block;
 		width: calc(100% / 4);
 	}
 
 	.step-menu.cssmenu > ul > li {
+        display: inline-block;
 		width: calc(100% / 5);
 	}
 
 	.cssmenu > ul > li > .cssmenu-title {
-		padding: 5px;
+		padding: 0.309em;
 		white-space: normal;
-	}
-
-	.step-menu.cssmenu > ul > li > .cssmenu-title {
-		display: block;
-		padding: 5px;
-		text-align: center;
 	}
 
 	.step-menu.cssmenu > ul > li > .cssmenu-title i {
@@ -120,114 +57,54 @@
 }
 
 /* --- Content -------------------------------------------------------------- */
+#global h1 {
+	padding: 0.809em;
+	border-width: 0 0 2px;
+    border-style: solid;
+    border-color: #DDDDDD;
+}
 
-
-#global,
-article {
-	margin: 0;
-	width: 100%;
-	position: relative;
+.admin-main {
+    flex: 1 1 auto;
 }
 
 section header {
-	margin-bottom: 10px
+	margin-bottom: 0.809em;
 }
 
-section header h1 {
-	padding: 0.618em;
-	border-bottom: 1px solid #DDDDDD;
-}
-
-article header h2 {
-	padding: 10px;
+section header h2 {
+	padding: 0.809em;
 	border-bottom: none;
 	font-weight: 400;
 }
 
-article h3 {
-	padding: 15px;
-}
-
-article {
-	padding: 10px;
-}
-
-.content > a > img {
-	margin: 0 0 5px 10px;
-}
-
-.next-step .fieldset-inset {
-	overflow: visible;
-	padding: 0;
+.next-step button {
+	margin: 0;
+    padding: 1em 2em;
 }
 
 .next-step button {
-	margin: 5px 0;
+    border-width: 1px 0 1px 1px;
 }
 
-#footer {
-	width: 100%;
-	margin: 0;
+.next-step button:last-child {
+    border-width: 1px;
 }
 
-@media (min-width: 769px) {
-	#global {
-		padding-left: 230px;
-		width: 100%;
-	}
-
-	article {
-		padding: 20px;
-	}
-
-	article header h2 {
-		font-size: 2.5em;
-	}
-
-	/* #footer { width: calc(100% - 230px); } */
-}
-
-/* --- welcome --- */
+/* --- Welcome -------------------------------------------------------------- */
 @media (min-width: 769px) {
 	.pbt-box {
-		padding: 0 8px 8px 25px;
+		padding: 0 0.456em 0.456em 6.18em;
 	}
 }
 
-/* --- Bloc License --- */
-.license-container {
-	margin-bottom: 10px;
-	padding: 15px 0;
-	background-color: #FFFFFF;
-	border: 1px solid #DFDFDF;
+/* --- Server configuration ------------------------------------------------- */
+#chmod .message-helper {
+	display: inline-block;
+	width: calc(50% - 0.809em);
 }
 
-.license-content {
-	padding: 0 15px;
-	width: auto;
-	height: 340px;
-	overflow-y: scroll;
-}
-
-/* --- config serveurs --- */
-.success-block,
-.failure-block {
-	float: left;
-	margin-left: 5px;
-	padding: 2px;
-	width: calc(50% - 10px);
-	font-weight: bold;
-	text-align: center;
-}
-
-.success-block { background-color: #8AC77F; color: #008000; }
-.failure-block { background-color: #EE8D8D; color: #FF0000; }
-
-#chmod .form-element {
-	padding: 2px;
-}
-
-/* --- execute --- */
+/* --- Execute -------------------------------------------------------------- */
 
 #update-in-progress-container {
 	display: none;
@@ -265,18 +142,17 @@ article {
 	display: block;
 }
 
-/* --- finish --- */
-
+/* --- Finish --------------------------------------------------------------- */
 .finish-menu ul {
 	display: table;
-	margin: 20px auto;
+	margin: 1.309em auto;
 	padding: 0;
 	list-style-type: none;
 }
 
 .finish-menu ul li {
 	display: inline-block;
-	padding: 10px;
+	padding: 0.809em;
 	width: 100%;
 	text-align: center;
 }
@@ -301,14 +177,3 @@ article {
 		display: block;
 	}
 }
-
-/* --- footer --- */
-/* section > footer {
-	margin: 0;
-	padding: 0.618em;
-	min-height: 5vh;
-	background-color: #404040;
-	border-top: 5px solid #366393;
-	color: #FFFFFF;
-	text-align: right;
-} */

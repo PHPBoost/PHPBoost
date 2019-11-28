@@ -109,7 +109,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			$hide_database_page = true;
 		}
 
-		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'refresh');
+		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'sync-alt');
 		$steps[] = array('name' => $this->lang['step.list.end'], 'img' => 'check');
 
 		$this->nb_steps = count($steps) - 1;

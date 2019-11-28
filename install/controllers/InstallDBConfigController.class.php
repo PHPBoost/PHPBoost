@@ -111,7 +111,7 @@ class InstallDBConfigController extends InstallController
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
 		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
-		$this->check_button = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'check_database');
+		$this->check_button = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-sync', 'check_database');
 		$action_fieldset->add_element($this->check_button);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
