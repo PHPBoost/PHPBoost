@@ -80,7 +80,7 @@
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
 						<td>
-							# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
+							# IF weblinks.C_COMMENTS # {weblinks.COMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
 						</td>
 						# ENDIF #
 						# IF C_MODERATE #
@@ -110,7 +110,7 @@
 				<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>
 				# IF C_COMMENTS_ENABLED #
 				<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">
-				<meta itemprop="interactionCount" content="{weblinks.NUMBER_COMMENTS} UserComments">
+				<meta itemprop="interactionCount" content="{weblinks.COMMENTS_NUMBER} UserComments">
 				# ENDIF #
 			</header>
 
@@ -119,7 +119,7 @@
 				<span><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.NUMBER_VIEWS}</span>
 				# IF C_COMMENTS_ENABLED #
 					| <i class="fa fa-comments" aria-hidden="true"></i>
-					# IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}
+					# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
 				# ENDIF #
 				# IF weblinks.C_KEYWORDS #
 					| <i class="fa fa-tags" aria-hidden="true"></i>
@@ -190,7 +190,7 @@
 					</span>
 					# ENDIF #
 					# IF C_COMMENTS_ENABLED #
-					<span class="infos-options"># IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}</span>
+					<span class="infos-options"># IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}</span>
 					# ENDIF #
 					# IF C_NOTATION_ENABLED #
 					<div class="spacer"></div>

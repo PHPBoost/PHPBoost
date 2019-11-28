@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -361,7 +361,7 @@ class Bug
 
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$number_comments = CommentsService::get_number_comments('bugtracker', $this->id);
+		$comments_number = CommentsService::get_comments_number('bugtracker', $this->id);
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->submit_date, 'submit_date'),
@@ -376,7 +376,7 @@ class Bug
 			'C_REPRODUCTION_METHOD' => $this->reproduction_method,
 			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'C_MORE_THAN_ONE_COMMENT'=> $number_comments > 1,
+			'C_MORE_THAN_ONE_COMMENT'=> $comments_number > 1,
 
 			//Bug
 			'ID' => $this->id,
@@ -394,7 +394,7 @@ class Bug
 			'AUTHOR' => $user->get_display_name(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'AUTHOR_GROUP_COLOR' => $user_group_color,
-			'NUMBER_COMMENTS' => $number_comments,
+			'COMMENTS_NUMBER' => $comments_number,
 
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel(),

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -440,7 +440,7 @@ class WebLink
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$number_comments = CommentsService::get_number_comments('web', $this->id);
+		$comments_number = CommentsService::get_comments_number('web', $this->id);
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
@@ -474,9 +474,9 @@ class WebLink
 			'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
 			'NOTATION' => NotationService::display_active_image($this->get_notation()),
 
-			'C_COMMENTS' => !empty($number_comments),
+			'C_COMMENTS' => !empty($comments_number),
 			'L_COMMENTS' => CommentsService::get_lang_comments('web', $this->id),
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('web', $this->id),
+			'COMMENTS_NUMBER' => $comments_number,
 
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

@@ -20,7 +20,7 @@
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
 		# IF C_COMMENTS_ENABLED #
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+		<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 		# ENDIF #
 
 		<div class="content">
@@ -63,7 +63,7 @@
 					</span>
 				# ENDIF #
 				# IF C_COMMENTS_ENABLED #
-					<span class="infos-options"># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
+					<span class="infos-options"># IF C_COMMENTS # {COMMENTS_NUMBER} # ENDIF # {L_COMMENTS}</span>
 				# ENDIF #
 				# IF C_VISIBLE #
 					# IF C_NOTATION_ENABLED #

@@ -50,7 +50,7 @@
 		<meta itemprop="datePublished" content="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #">
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
-		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+		<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 
 		<div class="content">
 			# IF C_PAGINATION #

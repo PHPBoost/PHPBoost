@@ -29,7 +29,7 @@
 			<meta itemprop="about" content="{CATEGORY_NAME}">
 			# IF C_COMMENTS_ENABLED #
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-				<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+				<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 			# ENDIF #
 
 			# IF C_CANCELLED #

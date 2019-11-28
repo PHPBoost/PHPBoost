@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 04
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -417,7 +417,7 @@ class News
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$number_comments = CommentsService::get_number_comments('news', $this->id);
+		$comments_number = CommentsService::get_comments_number('news', $this->id);
 		$sources = $this->get_sources();
 		$nbr_sources = count($sources);
 
@@ -454,9 +454,9 @@ class News
 			'USER_GROUP_COLOR' => $user_group_color,
 			'ID_CARD' => IdcardService::display_idcard($user),
 
-			'C_COMMENTS' => !empty($number_comments),
+			'C_COMMENTS' => !empty($comments_number),
 			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
+			'COMMENTS_NUMBER' => $comments_number,
 			'NUMBER_VIEW' => $this->get_number_view(),
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

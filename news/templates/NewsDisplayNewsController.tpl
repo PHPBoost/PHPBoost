@@ -31,7 +31,7 @@
 				<span class="pinned question">
 					<a itemprop="about" href="{U_CATEGORY}"><i class="fa fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 				</span>
-				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{NUMBER_COMMENTS}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
+				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 				# IF C_NB_VIEW_ENABLED #<span class="pinned notice" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 			</div>
 			<div class="actions">
@@ -132,7 +132,7 @@
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
 		# IF C_COMMENTS_ENABLED #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-			<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 		# ENDIF #
 	</footer>
 

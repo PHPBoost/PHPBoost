@@ -30,7 +30,7 @@
 							<meta itemprop="about" content="{event.CATEGORY_NAME}">
 							# IF C_COMMENTS_ENABLED #
 								<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
-								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
+								<meta itemprop="interactionCount" content="{event.COMMENTS_NUMBER} UserComments">
 							# ENDIF #
 
 							# IF event.C_CANCELLED #

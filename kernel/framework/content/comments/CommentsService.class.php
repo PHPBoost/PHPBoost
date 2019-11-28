@@ -124,17 +124,17 @@ class CommentsService
 				}
 			}
 
-			$number_comments_display = $topic->get_number_comments_display();
-			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
+			$comments_number_to_display = $topic->get_number_comments_display();
+			$comments_number = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
 
 			self::$template->put_all(array(
-				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations),
+				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $comments_number_to_display, $authorizations),
 				'FORM_URL' => TextHelper::htmlspecialchars($topic->get_url()) . '#comments-list',
 				'MODULE_ID' => $module_id,
 				'ID_IN_MODULE' => $id_in_module,
-				'COMMENTS_NUMBER' => $number_comments,
+				'COMMENTS_NUMBER' => $comments_number,
 				'TOPIC_IDENTIFIER' => $topic_identifier,
-				'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display,
+				'C_DISPLAY_VIEW_ALL_COMMENTS' => $comments_number > $comments_number_to_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_DISPLAY_DELETE_BUTTON' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
 				'C_DISPLAY_FORM' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
@@ -165,7 +165,7 @@ class CommentsService
 			}
 			$result->dispose();
 			
-			for ($i = 1 ; $i <= $number_comments ; $i++)
+			for ($i = 1 ; $i <= $comments_number ; $i++)
 			{
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
@@ -184,18 +184,18 @@ class CommentsService
 	}
 
 	/**
-	 * Returns number comments and lang (example : Comments (number_comments)
+	 * Returns number comments and lang (example : Comments (comments_number)
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
-	 * @return string number comments (example : Comments (number_comments)
+	 * @return string number comments (example : Comments (comments_number)
 	 */
 	public static function get_number_and_lang_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
-		$lang = $number_comments > 1 ? self::$lang['com_s'] : self::$lang['com'];
+		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
+		$lang = $comments_number > 1 ? self::$lang['com_s'] : self::$lang['com'];
 
-		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
+		return !empty($comments_number) ? $lang . ' (' . $comments_number . ')' : self::$lang['post_com'];
 	}
 
 	/**
@@ -207,10 +207,10 @@ class CommentsService
 	 */
 	public static function get_lang_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
-		$lang = $number_comments > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
+		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
+		$lang = $comments_number > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
 
-		return !empty($number_comments) ? ' ' .$lang : self::$comments_lang['no_comment'];
+		return !empty($comments_number) ? ' ' .$lang : self::$comments_lang['no_comment'];
 	}
 
 	/**
@@ -245,9 +245,9 @@ class CommentsService
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
 	 * @return string number comments
 	 */
-	public static function get_number_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	public static function get_comments_number($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		return CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
+		return CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 	}
 
 	/**
@@ -255,9 +255,12 @@ class CommentsService
 	 * @param string $module_id the module identifier
 	 * @param integer $id_in_module id in module used in comments system
 	 * @param string $topic_identifier topic identifier (use if you have several comments system)
+	 * @param string $comments_number_to_display number of comments to display the first time
+	 * @param array $authorizations comments topic authorizations
+	 * @param bool $display_from_comments_number true if need to display from the number of comments to display (used in ajax to show all comments of an element)
 	 * @return object View is a view
 	 */
-	public static function display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations, $display_from_number_comments = false)
+	public static function display_comments($module_id, $id_in_module, $topic_identifier, $comments_number_to_display, $authorizations, $display_from_comments_number = false)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 
@@ -265,7 +268,7 @@ class CommentsService
 		{
 			$user_accounts_config = UserAccountsConfig::load();
 
-			$condition = !$display_from_number_comments ? ' LIMIT '. $number_comments_display : ' LIMIT ' . $number_comments_display . ',18446744073709551615';
+			$condition = !$display_from_comments_number ? ' LIMIT '. $comments_number_to_display : ' LIMIT ' . $comments_number_to_display . ',18446744073709551615';
 			$result = PersistenceContext::get_querier()->select("SELECT
 					comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 					topic.is_locked, topic.path,
@@ -279,9 +282,10 @@ class CommentsService
 				ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
 			);
 
-			$number_comment = $display_from_number_comments ? $number_comments_display : 0;
+			$comments_number = $display_from_comments_number ? $comments_number_to_display : 0;
 			while ($row = $result->fetch())
 			{
+				$comments_number++;
 				$id = $row['id_comment'];
 				$path = $row['path'];
 			
@@ -306,7 +310,7 @@ class CommentsService
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_AVATAR' => $user_avatar,
-					'COMMENT_NUMBER' => $number_comment + 1,
+					'COMMENT_NUMBER' => $comments_number,
 					'ID_COMMENT' => $id,
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
@@ -320,7 +324,6 @@ class CommentsService
 					'L_UPDATE' => self::$common_lang['edit'],
 					'L_DELETE' => self::$common_lang['delete'],
 				));
-				$number_comment++;
 			}
 			$result->dispose();
 		}

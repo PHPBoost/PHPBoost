@@ -51,7 +51,7 @@
 								</span>
 								# IF C_COMMENTS_ENABLED #
 									<span class="pinned notice">
-										<i class="fa fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.NUMBER_COMMENTS} # ENDIF # {news.L_COMMENTS}
+										<i class="fa fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.COMMENTS_NUMBER} # ENDIF # {news.L_COMMENTS}
 									</span>
 								# ENDIF #
 								# IF news.C_NB_VIEW_ENABLED #
@@ -99,7 +99,7 @@
 						<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
 						# IF C_COMMENTS_ENABLED #
 							<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
-							<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
+							<meta itemprop="interactionCount" content="{news.COMMENTS_NUMBER} UserComments">
 						# ENDIF #
 					</footer>
 				</article>

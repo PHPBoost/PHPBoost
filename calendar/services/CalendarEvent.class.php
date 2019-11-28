@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -203,7 +203,7 @@ class CalendarEvent
 			'PICTURE' => $this->content->get_picture()->rel(),
 			'LOCATION' => $location,
 			'LOCATION_MAP' => $location_map,
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
+			'COMMENTS_NUMBER' => CommentsService::get_comments_number('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
 			'AUTHOR' => $author->get_display_name(),

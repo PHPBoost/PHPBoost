@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 04
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -489,7 +489,7 @@ class Article
 			'TITLE'                         => $this->get_title(),
 			'STATUS'                        => $this->get_status(),
 			'L_COMMENTS'                    => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
-			'NUMBER_COMMENTS'               => CommentsService::get_number_comments('articles', $this->get_id()),
+			'COMMENTS_NUMBER'               => CommentsService::get_comments_number('articles', $this->get_id()),
 			'NUMBER_VIEW'                   => $this->get_number_view(),
 			'NOTE'                          => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'AUTHOR_CUSTOM_NAME' 			=> $this->author_custom_name,

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 1.6 - 2007 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -157,11 +157,11 @@ if (!empty($encoded_title) && $num_rows == 1)
 	//Affichage des commentaires si il y en a la possibilité
 	if ($page_infos['activ_com'] == 1 && (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_COM))))
 	{
-		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
+		$comments_number = CommentsService::get_comments_number('pages', $page_infos['id']);
 		$tpl->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
-			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
+			'L_COM' => $comments_number > 0 ? sprintf($LANG['pages_display_coms'], $comments_number) : $LANG['pages_post_com']
 		));
 	}
 

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -511,7 +511,7 @@ class DownloadFile
 		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		$number_comments = CommentsService::get_number_comments('download', $this->id);
+		$comments_number = CommentsService::get_comments_number('download', $this->id);
 		$sources = $this->get_sources();
 		$nbr_sources = count($sources);
 		$config = DownloadConfig::load();
@@ -555,9 +555,9 @@ class DownloadFile
 			'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
 			'NOTATION' => NotationService::display_active_image($this->get_notation()),
 
-			'C_COMMENTS' => !empty($number_comments),
+			'C_COMMENTS' => !empty($comments_number),
 			'L_COMMENTS' => CommentsService::get_lang_comments('download', $this->id),
-			'NUMBER_COMMENTS' => $number_comments,
+			'COMMENTS_NUMBER' => $comments_number,
 
 			//Category
 			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,

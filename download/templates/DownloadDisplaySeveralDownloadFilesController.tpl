@@ -90,7 +90,7 @@
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
 						<td>
-							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
+							# IF downloadfiles.C_COMMENTS # {downloadfiles.COMMENTS_NUMBER} # ENDIF # {downloadfiles.L_COMMENTS}
 						</td>
 						# ENDIF #
 						# IF C_MODERATION #
@@ -122,7 +122,7 @@
 				<meta itemprop="description" content="${escape(downloadfiles.DESCRIPTION)}"/>
 				# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
-					<meta itemprop="interactionCount" content="{downloadfiles.NUMBER_COMMENTS} UserComments">
+					<meta itemprop="interactionCount" content="{downloadfiles.COMMENTS_NUMBER} UserComments">
 				# ENDIF #
 
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
@@ -131,7 +131,7 @@
 						# IF C_NB_VIEW_ENABLED # | <span aria-label="{downloadfiles.NUMBER_VIEW} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.NUMBER_VIEW}</span># ENDIF #
 						# IF C_COMMENTS_ENABLED #
 							| <i class="fa fa-comments" aria-hidden="true"></i>
-							# IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}
+							# IF downloadfiles.C_COMMENTS # {downloadfiles.COMMENTS_NUMBER} # ENDIF # {downloadfiles.L_COMMENTS}
 						# ENDIF #
 						# IF downloadfiles.C_KEYWORDS #
 							| <i class="fa fa-tags" aria-hidden="true"></i>
@@ -206,7 +206,7 @@
 								</span>
 							# ENDIF #
 							# IF C_COMMENTS_ENABLED #
-								<span class="infos-options"># IF downloadfiles.C_COMMENTS # {downloadfiles.NUMBER_COMMENTS} # ENDIF # {downloadfiles.L_COMMENTS}</span>
+								<span class="infos-options"># IF downloadfiles.C_COMMENTS # {downloadfiles.COMMENTS_NUMBER} # ENDIF # {downloadfiles.L_COMMENTS}</span>
 							# ENDIF #
 							# IF downloadfiles.C_VISIBLE #
 								# IF C_NOTATION_ENABLED #

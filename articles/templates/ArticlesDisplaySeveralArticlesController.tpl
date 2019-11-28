@@ -115,7 +115,7 @@
 						<meta itemprop="description" content="${escape(articles.DESCRIPTION)}"/>
 						# IF C_COMMENTS_ENABLED #
 							<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
-							<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
+							<meta itemprop="interactionCount" content="{articles.COMMENTS_NUMBER} UserComments">
 						# ENDIF #
 					</footer>
 				</article>
