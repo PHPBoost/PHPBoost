@@ -32,10 +32,12 @@
 			<div class="content cell-flex cell-columns-3 cell-tile">
 				<div class="cell cell-2-3">
 					<div class="cell-body">
-						<div class="index-logo hidden-small-screens" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
-						<div class="welcome-desc">
-							<h2>{L_WELCOME_TITLE}</h2>
-							<p>{L_WELCOME_DESC}</p>
+						<div class="cell-content">
+							<div class="index-logo hidden-small-screens" # IF C_HEADER_LOGO #style="background-image: url({HEADER_LOGO});"# ENDIF #></div>
+							<div class="welcome-desc">
+								<h2>{L_WELCOME_TITLE}</h2>
+								<p>{L_WELCOME_DESC}</p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -44,16 +46,18 @@
 						<h2><i class="fa fa-bell" aria-hidden="true"></i> {L_ADMIN_ALERTS}</h2>
 					</div>
 					<div class="cell-body">
-						# IF C_UNREAD_ALERTS #
-							<div class="message-helper warning">{L_UNREAD_ALERT}</div>
-						# ELSE #
-							<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
-						# ENDIF #
-						# IF C_UNREAD_ALERTS #
-						<p class="smaller center">
-							<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-						</p>
-						# ENDIF #
+						<div class="cell-content">
+							# IF C_UNREAD_ALERTS #
+								<div class="message-helper warning">{L_UNREAD_ALERT}</div>
+							# ELSE #
+								<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
+							# ENDIF #
+							# IF C_UNREAD_ALERTS #
+							<p class="smaller center">
+								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
+							</p>
+							# ENDIF #
+						</div>
 					</div>
 				</div>
 			</div>
@@ -173,17 +177,26 @@
 										<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 									</li>
 								# ENDIF #
+								# IF NOT C_NO_COMMENT #
+									<li class="mini-checkbox">
+										<label for="delete-all-checkbox" class="checkbox">
+											<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">
+											<span aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}">&nbsp;</span>
+										</label>
+										<input type="hidden" name="token" value="{TOKEN}" />
+										<button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+									</li>
+								# ENDIF #
 							</ul>
-							# IF NOT C_NO_COMMENT #
-							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});" aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
-							# ENDIF #
 						</form>
 					</div>
 				</div>
 
 				<div class="cell dashboard-advices">
 					<div class="cell-body">
-						# INCLUDE ADVISES #
+						<div class="cell-content">
+							# INCLUDE ADVISES #
+						</div>
 					</div>
 				</div>
 

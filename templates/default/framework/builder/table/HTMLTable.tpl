@@ -47,13 +47,22 @@
 			# IF row.C_ID # id="{row.ID}"# ENDIF #
 			# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
 			# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-				# IF C_MULTIPLE_DELETE_DISPLAYED #<td># IF row.C_DISPLAY_DELETE_INPUT #<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" /># ENDIF #</td># ENDIF #
+				# IF C_MULTIPLE_DELETE_DISPLAYED #
+					<td class="mini-checkbox">
+						# IF row.C_DISPLAY_DELETE_INPUT #
+							<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox">
+								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" />
+								<span>&nbsp;</span>
+							</label>
+						# ENDIF #
+					</td>
+				# ENDIF #
 				# START row.cell #
 				<td
-				# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
-				# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
-				# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-				# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+					# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+					# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
+					# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+					# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
 					{row.cell.VALUE}
 				</td>
 				# END row.cell #
@@ -99,7 +108,14 @@
 		# ENDIF #
 	</table>
 	# IF C_MULTIPLE_DELETE_DISPLAYED #
-	<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});" aria-label="${LangLoader::get_message('select.all.elements', 'common')}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-elements" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+		<div class="mini-checkbox">
+			<label for="delete-all-checkbox" class="checkbox">
+				<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
+				<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
+			</label>
+			<input type="hidden" name="token" value="{TOKEN}" />
+			<button type="submit" name="delete-selected-elements" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+		</div>
 	# ENDIF #
 </form>
 # IF C_FILTERS #
