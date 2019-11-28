@@ -14,21 +14,17 @@
 # ELSE #
 	# IF C_JS_NOT_ALREADY_INCLUDED #
 		<script>
-		<!--
 			var NOTATION_LANG_AUTH = ${escapejs(L_AUTH_ERROR)};
 			var NOTATION_LANG_ALREADY_VOTE = ${escapejs(L_ALREADY_NOTE)};
 			var NOTATION_LANG_NOTE = ${escapejs(L_NOTE)};
 			var NOTATION_LANG_NOTES = ${escapejs(L_NOTES)};
 			var NOTATION_USER_CONNECTED = ${escapejs(IS_USER_CONNECTED)};
-		-->
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/notation.js"></script>
 	# ENDIF #
 
 	<script>
-	<!--
 		jQuery(document).ready(function() { new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', '{AVERAGE_NOTES}', '{ALREADY_NOTE}'); });
-	-->
 	</script>
 
 	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>

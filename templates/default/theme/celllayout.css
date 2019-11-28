@@ -110,3 +110,11 @@
 .cell-modal .cell {
 	max-width: 512px;
 }
+
+/* --- Options -------------------------------------------------------------- */
+@media (min-width:769px) {
+	.cell-options {
+		float: right;
+		max-width: 38%;
+	}	
+}
