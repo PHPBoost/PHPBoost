@@ -175,7 +175,7 @@
 								# ENDIF #
 							</ul>
 							# IF NOT C_NO_COMMENT #
-							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});" aria-label="{@select.all.comments}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+							<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});" aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
 							# ENDIF #
 						</form>
 					</div>
