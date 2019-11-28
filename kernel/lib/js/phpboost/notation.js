@@ -81,24 +81,23 @@ Note.prototype = {
 
 			decimal = 1 - (i - note); /* */
 			if(decimal >= 1) {
-				star_class = 'far star star-hover fa-star';
+				star_class = 'far star fa-star';
 				star_width = 'star-width star-width-100';
 			}
 			else if(decimal >= 0.75 && decimal < 1) {
-				star_class = 'far star star-hover fa-star';
+				star_class = 'far star fa-star';
 				star_width = 'star-width star-width-75';
 			}
 			else if(decimal >= 0.50 && decimal < 0.75) {
-				star_class = 'far star star-hover fa-star';
+				star_class = 'far star fa-star';
 				star_width = 'star-width star-width-50';
-				alert(decimal);
 			}
 			else if(decimal >= 0.05 && decimal < 0.50) {
-				star_class = 'far star star-hover fa-star';
+				star_class = 'far star fa-star';
 				star_width = 'star-width star-width-25';
 			}
 			else {
-				star_class = 'far star star-hover fa-star';
+				star_class = 'far star fa-star';
 				star_width = 'star-width star-width-0';
 			}
 
