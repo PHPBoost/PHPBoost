@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -283,6 +283,11 @@ class UpdateServices
 			$extended_field->set_is_freeze(true);
 			ExtendedFieldsService::add($extended_field);
 		}
+		
+		$columns = self::$db_utils->desc_table(PREFIX . 'upload');
+
+		if (!isset($columns['public']))
+			self::$db_utils->add_column(PREFIX . 'upload', 'public', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
 
 		self::$db_querier->inject('UPDATE ' . PREFIX . 'authentication_method SET method = replace(method, \'fb\', \'facebook\')');
 		self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'sessions CHANGE location_script location_script VARCHAR(200) NOT NULL DEFAULT ""');

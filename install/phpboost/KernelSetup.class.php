@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 21
+ * @version   	PHPBoost 5.2 - last update: 2019 11 28
  * @since   	PHPBoost 3.0 - 2010 05 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -559,7 +559,8 @@ class KernelSetup
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'size' => array('type' => 'float', 'length' => 1, 'notnull' => 1),
 			'type' => array('type' => 'string', 'length' => 10, 'default' => "''"),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'public' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id')
