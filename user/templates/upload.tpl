@@ -511,7 +511,7 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
-									<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_FILES}</strong></li>
+									<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
 									<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
 									<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
 								</ul>
@@ -572,13 +572,7 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch">
-										<span class="infos-options" id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong>
-									</li>
-									<li class="li-stretch">
-										<span class="infos-options">{L_FILES} :</span> <strong>{TOTAL_FILES}</strong>
-									</li>
-									<li class="li-stretch">
-										<span class="infos-options">{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong>
+										<span class="infos-options">{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
 									</li>
 									<li class="li-stretch">
 										<span class="infos-options">{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
