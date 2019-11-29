@@ -14,7 +14,7 @@
 
 .cell { width: 100%; }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	.cell-flex { flex-direction: row; }
 
 	.cell-columns-2 .cell { width: calc(100% / 2); }
@@ -116,5 +116,12 @@
 	.cell-options {
 		float: right;
 		max-width: 38%;
-	}	
+	}
+}
+
+/* --- Inline --------------------------------------------------------------- */
+@media (min-width: 769px) {
+	.cell-inline .cell {
+		max-width: 235px;
+	}
 }

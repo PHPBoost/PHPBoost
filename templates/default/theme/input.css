@@ -69,23 +69,30 @@ option {
 	padding: 0 0.228em;
 }
 
-/* --- Grouped input --- */
+/* --- Grouped input -------------------------------------------------------- */
 .grouped-inputs {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+	align-items: stretch;
 	margin: 0 0 0.309em;
 }
 
 .grouped-inputs input,
 .grouped-inputs select {
 	margin: 0;
-	width: 100%;
 }
 
-.form-field-upload-file.grouped-inputs input {
-	max-width: calc(100% - 2.618em);
+.input-with-button.grouped-inputs input {
+	flex: 1 1 auto;
+	width: 1%;
+	border-width: 1px;
+}
+
+.grouped-inputs label:not(:last-child) input {
 	border-width: 1px 0 1px 1px;
+}
+
+.grouped-inputs input:focus {
+	border-width: 1px;
 }
 
 .grouped-inputs button,
@@ -110,9 +117,4 @@ option {
 
 .grouped-inputs a:hover {
 	text-decoration: none;
-}
-
-.sources-link.grouped-inputs input {
-	width: 45%;
-	border-width: 1px 0 1px 1px;
 }

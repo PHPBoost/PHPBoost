@@ -127,10 +127,6 @@
 	text-align: center;
 }
 
-div[id*='keyword'] .form-autocompleter-container input {
-	max-width: calc(100% - 1.309em);
-}
-
 /* --- Previsualisation AJAX --- */
 .xmlhttprequest-preview {
 	overflow: auto;

@@ -22,7 +22,7 @@
 @import url('../../default/theme/plugins.css') screen, print;
 
 @import url('../../default/theme/cell.css') screen, print;
-@import url('../../default/theme/celllayout.css') screen, print;
+@import url('../../default/theme/cell_layout.css') screen, print;
 @import url('../../default/theme/pagination.css') screen, print;
 
 @import url('../../default/theme/dashboard/dashboard_shape.css') screen;

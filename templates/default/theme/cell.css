@@ -48,6 +48,11 @@
 	margin: 0;
 }
 
+.cell-name a,
+.cell-name span {
+	display: block;
+}
+
 .cell-infos {
 	width: 100%;
 	display: flex;

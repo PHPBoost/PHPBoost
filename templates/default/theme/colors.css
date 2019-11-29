@@ -196,7 +196,7 @@ i.message-announce-new { color: #4D9136; }
 	border-color: transparent!important;
 }
 
-.several-items.new-content .cell-header {
+.new-content .cell-header {
 	border-left-color: #2F9674;
 }
 
@@ -696,7 +696,7 @@ h3.formatter-title { border-color: #366393; }
 	border-color: #DDDDDD;
 }
 
-.upload-elements-repertory {
+/* .upload-elements-repertory {
 	background-color: #FFFFFF;
 	border-color: #DDDDDD;
 }
@@ -713,7 +713,7 @@ h3.formatter-title { border-color: #366393; }
 .upload-selected-cat {
 	background-color: #FFFFFF;
 	border-color: #366493;
-}
+} */
 
 /* -- cssmenu.css
     #####  #####  #####  #   #  #####  #   #  #   #

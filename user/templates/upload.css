@@ -8,7 +8,7 @@
 .dnd-area { position: relative;}
 
 .dnd-dropzone {
-    min-height: 200px;
+    min-height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,6 +94,10 @@
 }
 
 /* --- Admin Files management --------------------------------------------- - */
+.change-name input {
+    width: 100%;
+}
+/*  */
 .upload-address-bar-links {
 	padding: 0.618em 1.618em 1.618em;
     text-align: right;
