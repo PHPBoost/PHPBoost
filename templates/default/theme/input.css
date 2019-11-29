@@ -78,11 +78,13 @@ option {
 
 .grouped-inputs input,
 .grouped-inputs select {
+	flex: 1 1 auto;
 	margin: 0;
 }
 
-.input-with-button.grouped-inputs input {
-	flex: 1 1 auto;
+.input-with-button.grouped-inputs input,
+.input-with-input.grouped-inputs input,
+.inputs-with-button.grouped-inputs input {
 	width: 1%;
 	border-width: 1px;
 }

@@ -70,6 +70,10 @@
 	flex-direction: column;
 }
 
+.cell-flex .cell-form.grouped-inputs {
+	flex-direction: row;
+}
+
 .cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
 .cell-input select,
 .cell-input textarea {

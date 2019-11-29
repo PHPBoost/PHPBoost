@@ -247,8 +247,8 @@ table tbody td {
 	color: #FFFFFF;
 }
 
-.calendar-block .date-picker thead th {
-	border-color: transparent;
+.calendar-block table.date-picker thead th {
+	border-color: #DDDDDD;
 }
 
 .calendar-block .date-select-nav:hover,

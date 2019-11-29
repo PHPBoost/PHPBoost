@@ -35,6 +35,10 @@
 }
 
 /* --- calendar block ------------------------------------------------------- */
+.calendar-block table.date-picker thead th {
+    border-width: 0 0 1px;
+}
+
 .date-picker .square-cell {
     position: relative;
     width: calc(100% / 7);
