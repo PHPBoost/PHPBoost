@@ -151,7 +151,7 @@ elseif ( ! empty($del_folder))
         try {
             $check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
         } catch (RowNotFoundException $ex) {
-            
+
         }
 
         // folder and all content delete
@@ -192,7 +192,7 @@ elseif ( ! empty($del_folder))
     try {
         $folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
     } catch (RowNotFoundException $ex) {
-        
+
     }
 
     if ($folder_owner == AppContext::get_current_user()->get_id())
@@ -495,9 +495,9 @@ elseif ( ! empty($del_folder))
                 'NAME' => $name_cut,
                 'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="fa fa-edit" aria-hidden="true"></i></a></span>',
                 'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-                'BBCODE' => '<input type="text" readonly="readonly" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" class="upload-input-bbcode" value="' . $displayed_code . '">',
+                'BBCODE' => '<input type="text" readonly="readonly" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" class="grouped-element" value="' . $displayed_code . '">',
                 'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-                'INSERT' => ! empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" aria-label="' . $LANG['popup_insert'] . '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>' : '',
+                'INSERT' => ! empty($popup) ? '<a class="grouped-element" href="javascript:insert_popup(\'' . $inserted_code . '\')" aria-label="' . $LANG['popup_insert'] . '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>' : '',
                 'LIGHTBOX' => ! empty($size_img) ? ' data-lightbox="1"' : '',
                 'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
             ));
@@ -515,7 +515,7 @@ elseif ( ! empty($del_folder))
     try {
         $total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
     } catch (RowNotFoundException $ex) {
-        
+
     }
 
     $total_size = ! empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;

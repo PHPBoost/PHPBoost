@@ -320,7 +320,7 @@
                         $('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user-shield');
                         $('#status_function_' + id).attr("onclick", "change_status(" + id + ", 1)");
                     } else {
-                        $('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-user');
+                        $('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-users');
                         $('#status_function_' + id).attr("onclick", "change_status(" + id + ", 0)");
                     }
                     location.reload();
@@ -486,7 +486,7 @@
 			                                <a href="upload{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 				                            # IF personal_files.C_IS_PUBLIC_FILE #
 					                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
-					                                <i id="status_{personal_files.ID}" class="fas fa-user"></i>
+					                                <i id="status_{personal_files.ID}" class="fas fa-users"></i>
 					                            </a>
 				                            # ELSE #
 					                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
