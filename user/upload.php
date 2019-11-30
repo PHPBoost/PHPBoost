@@ -31,7 +31,7 @@ if ($item_id)
     PersistenceContext::get_querier()->update(PREFIX . "upload", array('public' => $status), 'WHERE id = :id', array('id' => $item_id));
 }
 
-if ( ! empty($popup))
+if ( !empty($popup))
 { //Popup.
     $env = new SiteDisplayFrameGraphicalEnvironment();
     Environment::set_graphical_environment($env);
@@ -51,7 +51,7 @@ if ( ! empty($popup))
     $popup_noamp = '';
 }
 
-if ( ! AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+if ( !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 { // No visitors !
     $error_controller = PHPBoostErrors::unexisting_page();
     DispatchManager::redirect($error_controller);
@@ -60,7 +60,7 @@ if ( ! AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 $files_upload_config = FileUploadConfig::load();
 
 // access authorization ?
-if ( ! AppContext::get_current_user()->check_auth($files_upload_config->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT))
+if ( !AppContext::get_current_user()->check_auth($files_upload_config->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT))
 {
     $error_controller = PHPBoostErrors::unexisting_page();
     DispatchManager::redirect($error_controller);
@@ -77,7 +77,7 @@ $move_folder = (int)retrieve(GET, 'movefd', 0);
 $move_file = (int)retrieve(GET, 'movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
-if ( ! empty($parent_folder))
+if ( !empty($parent_folder))
 { // folder change
     if (empty($parent_folder)) AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 
@@ -96,7 +96,7 @@ if ( ! empty($parent_folder))
 }
 elseif ($home_folder) // Root return
     AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?' . $popup_noamp, '', '&'));
-elseif ( ! empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('f'))
+elseif ( !empty($_FILES['upload_file']['name']) && AppContext::get_request()->has_getparameter('f'))
 { // Adding a file
     $error = '';
     // Groups upload authorizations
@@ -104,13 +104,13 @@ elseif ( ! empty($_FILES['upload_file']['name']) && AppContext::get_request()->h
     $unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 
     $member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_id());
-    if ($member_memory_used >= $group_limit && ! $unlimited_data) $error = 'e_max_data_reach';
+    if ($member_memory_used >= $group_limit && !$unlimited_data) $error = 'e_max_data_reach';
     else
     {
         // if folder is not writable, try CHMOD 777
         @clearstatcache();
         $dir = PATH_TO_ROOT . '/upload/';
-        if ( ! is_writable($dir)) $is_writable = (@chmod($dir, 0777));
+        if ( !is_writable($dir)) $is_writable = (@chmod($dir, 0777));
 
         @clearstatcache();
         if (is_writable($dir))
@@ -137,10 +137,10 @@ elseif ( ! empty($_FILES['upload_file']['name']) && AppContext::get_request()->h
         } else $error = 'e_upload_failed_unwritable';
     }
 
-    $anchor = ! empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp . ( ! empty($id_file) ? '#fifl' . $id_file : '');
+    $anchor = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp . ( !empty($id_file) ? '#fifl' . $id_file : '');
     AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . $anchor, '', '&'));
 }
-elseif ( ! empty($del_folder))
+elseif ( !empty($del_folder))
 { // delete one folder
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
@@ -166,7 +166,7 @@ elseif ( ! empty($del_folder))
     }
 
     AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
-} elseif ( ! empty($del_file))
+} elseif ( !empty($del_file))
 { // File delete
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
@@ -176,7 +176,7 @@ elseif ( ! empty($del_folder))
     } else
     {
         $error = Uploads::Del_file($del_file, AppContext::get_current_user()->get_id());
-        if ( ! empty($error))
+        if ( !empty($error))
         {
             $error_controller = PHPBoostErrors::unexisting_page();
             DispatchManager::redirect($error_controller);
@@ -184,7 +184,7 @@ elseif ( ! empty($del_folder))
     }
 
     AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
-} elseif ( ! empty($move_folder) && $to != -1)
+} elseif ( !empty($move_folder) && $to != -1)
 { // folder move
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
@@ -202,7 +202,7 @@ elseif ( ! empty($del_folder))
         upload_find_subcats($sub_cats, $move_folder, AppContext::get_current_user()->get_id());
         $sub_cats[] = $move_folder;
         // If we don't move the file to one of his sons or to himself
-        if ( ! in_array($to, $sub_cats))
+        if ( !in_array($to, $sub_cats))
         {
             if (AppContext::get_current_user()->get_id() || $to == 0)
             {
@@ -216,7 +216,7 @@ elseif ( ! empty($del_folder))
         $error_controller = PHPBoostErrors::unexisting_page();
         DispatchManager::redirect($error_controller);
     }
-} elseif ( ! empty($move_file) && $to != -1)
+} elseif ( !empty($move_file) && $to != -1)
 { // file move
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
@@ -247,7 +247,7 @@ elseif ( ! empty($del_folder))
         $error_controller = PHPBoostErrors::unexisting_page();
         DispatchManager::redirect($error_controller);
     }
-} elseif ( ! empty($move_folder) || ! empty($move_file))
+} elseif ( !empty($move_folder) || !empty($move_file))
 {
     $tpl = new FileTemplate('user/upload_move.tpl');
 
@@ -255,7 +255,7 @@ elseif ( ! empty($del_folder))
         'POPUP' => $popup,
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
         'FIELD' => $field,
-        'FOLDER_ID' => ! empty($folder) ? $folder : '0',
+        'FOLDER_ID' => !empty($folder) ? $folder : '0',
         'URL' => Uploads::get_url($folder, '', '&amp;' . $popup),
         'L_FILES_MANAGEMENT' => $LANG['files_management'],
         'L_MOVE_TO' => $LANG['moveto'],
@@ -270,7 +270,7 @@ elseif ( ! empty($del_folder))
     include_once('upload_functions.php');
     $cats = array();
 
-    $is_folder = ! empty($move_folder);
+    $is_folder = !empty($move_folder);
     // Displaying the folder / file to move
     if ($is_folder)
     {
@@ -355,11 +355,12 @@ elseif ( ! empty($del_folder))
     if (isset($LANG[$get_l_error])) $tpl->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
 
     $tpl->put_all(array(
+        'C_POPUP' => !empty($popup),
         'POPUP' => $popup,
         'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE',
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
         'FIELD' => $field,
-        'FOLDER_ID' => ! empty($folder) ? $folder : '0',
+        'FOLDER_ID' => !empty($folder) ? $folder : '0',
         'USER_ID' => AppContext::get_current_user()->get_id(),
         'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
         'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
@@ -454,8 +455,8 @@ elseif ( ! empty($del_folder))
                 case 'tif':
                     list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
                     $size_img = ' (' . $width_source . 'x' . $height_source . ')';
-                    $width_source = ! empty($width_source) ? $width_source + 30 : 0;
-                    $height_source = ! empty($height_source) ? $height_source + 30 : 0;
+                    $width_source = !empty($width_source) ? $width_source + 30 : 0;
+                    $height_source = !empty($height_source) ? $height_source + 30 : 0;
                     $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
                     $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
                     $link = '/upload/' . $row['path'];
@@ -482,7 +483,7 @@ elseif ( ! empty($del_folder))
             }
             $is_bbcode_editor = ($editor == 'BBCode');
             $displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-            $inserted_code = ! empty($parse) ? ( ! empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
+            $inserted_code = !empty($parse) ? ( !empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
             $tpl->assign_block_vars($loop_id, array(
                 'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
                 'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
@@ -495,10 +496,10 @@ elseif ( ! empty($del_folder))
                 'NAME' => $name_cut,
                 'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="fa fa-edit" aria-hidden="true"></i></a></span>',
                 'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-                'BBCODE' => '<input type="text" readonly="readonly" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" class="grouped-element" value="' . $displayed_code . '">',
+                'DISPLAYED_CODE' => $displayed_code,
                 'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-                'INSERT' => ! empty($popup) ? '<a class="grouped-element" href="javascript:insert_popup(\'' . $inserted_code . '\')" aria-label="' . $LANG['popup_insert'] . '"><i class="fa fa-clipboard" aria-hidden="true"></i></a>' : '',
-                'LIGHTBOX' => ! empty($size_img) ? ' data-lightbox="1"' : '',
+                'INSERTED_CODE' => $inserted_code,
+                'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1"' : '',
                 'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
             ));
 
@@ -518,11 +519,11 @@ elseif ( ! empty($del_folder))
 
     }
 
-    $total_size = ! empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
+    $total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
     $tpl->put_all(array(
-        'PERCENT' => ! $unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
-        'SIZE_LIMIT' => ! $unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],
-        'MAX_FILES_SIZE' => ! $unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
+        'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
+        'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],
+        'MAX_FILES_SIZE' => !$unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
         'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
         'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
         'TOTAL_FOLDERS' => $total_directories,

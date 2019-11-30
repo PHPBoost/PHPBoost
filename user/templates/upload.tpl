@@ -420,7 +420,7 @@
                         <div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
                         <span id="new-folder"></span>
                     # ELSE #
-						<div class="cell-flex cell-inline cell-tile">
+						<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 	                        # START folder #
 		                        <div class="cell">
 	                                <span id="img{folder.ID}"></span>
@@ -442,7 +442,7 @@
 	                        <div id="new-folder" class="cell"></div>
 						</div>
                     # ENDIF #
-					<div class="cell-flex cell-tile cell-inline">
+					<div class="cell-flex cell-tile  # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
                         # START personal_files #
 	                        <div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF #">
 								<span id="imgf{personal_files.ID}"></span>
@@ -475,8 +475,12 @@
 									</div>
 		                        # ENDIF #
 	                            <div class="cell-form input-with-button grouped-inputs">
-	                            	{personal_files.BBCODE}
-									{personal_files.INSERT}
+									<input type="text" readonly="readonly" onclick="select_div(text_{personal_files.ID});" id="text_{personal_files.ID}" class="grouped-element" value="{personal_files.DISPLAYED_CODE}">
+	                            	# IF C_POPUP #
+										<a class="grouped-element" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+									# ELSE #
+										<a class="grouped-element" href="" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+									# ENDIF #
 	                            </div>
 	                            <div class="cell-list">
 									<ul>
@@ -522,12 +526,12 @@
             </div>
             <div id="upload-public" class="tabs tabs-animation">
                 <div class="content-panel">
-                    <div class="cell-flex cell-tile cell-inline">
+                    <div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
                         # START public_files #
 	                        <div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
 								<span id="imgf{public_files.ID}"></span>
 								<div class="cell-header">
-									<div id="fifl{public_files.ID}" class="cell-name">{public_files.NAME}</div>
+									<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
 									# IF NOT public_files.C_ENABLED_THUMBNAILS #
 			                            <a href="{public_files.URL}" {public_files.LIGHTBOX}>
 			                                <i class="far {public_files.IMG}"> </i>
@@ -553,8 +557,12 @@
 									</div>
 								# ENDIF #
 	                            <div class="cell-form input-with-button grouped-inputs">
-                        			{public_files.BBCODE}
-                                	{public_files.INSERT}
+									<input type="text" readonly="readonly" onclick="select_div(text_{public_files.ID});" id="text_{public_files.ID}" class="grouped-element" value="{public_files.DISPLAYED_CODE}">
+	                            	# IF C_POPUP #
+										<a class="grouped-element" href="javascript:insert_popup('{public_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+									# ELSE #
+										<a class="grouped-element" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+									# ENDIF #
 								</div>
 	                            <div class="cell-list">
 									<ul class="small">
