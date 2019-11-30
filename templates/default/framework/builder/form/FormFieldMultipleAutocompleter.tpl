@@ -12,12 +12,12 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 
 		jQuery('<div/>', {'id': id, 'class': 'form-autocompleter-container input-with-button grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
 
-		jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
+		jQuery('<input/>', {'type': 'text', 'id': 'field_' + id, class : 'grouped-element', 'name': 'field_' + id, 'onfocus': 'javascript:FormFieldMultipleAutocompleter.load_autocompleter(\'' + id + '\');', 'autocomplete': 'off'}).attr('size', ${escapejs(SIZE)}).appendTo('#' + id);
 		jQuery('#' + id).append(' ');
 
 		this.load_autocompleter('field_' + id);
 
-		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'aria-label' : ${escapejs(@delete)}}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+		jQuery('<a/>', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', class : 'grouped-element', 'aria-label' : ${escapejs(@delete)}}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 		this.integer++;
 	}
@@ -49,8 +49,8 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 <div id="input_fields_${escape(HTML_ID)}">
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="form-autocompleter-container input-with-button grouped-inputs">
-		<input type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
-		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@delete}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+		<input class="grouped-element" type="text" name="field_${escape(HTML_ID)}_{fieldelements.ID}" id="field_${escape(HTML_ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(HTML_ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
+		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" class="grouped-element" data-confirmation="delete-element" aria-label="{@delete}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 	</div>
 # END fieldelements #
 </div>

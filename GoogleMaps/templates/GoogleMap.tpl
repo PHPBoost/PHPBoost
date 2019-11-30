@@ -5,7 +5,6 @@
 <div id="{MAP_ID}" class="googlemap"></div>
 
 <script>
-<!--
 	var locations = Array();
 	# START markers #
 		locations.push([${escapejs(markers.LABEL)}, ${escapejs(markers.ADDRESS)}, ${escapejs(markers.LATITUDE)}, ${escapejs(markers.LONGITUDE)}, {markers.ZOOM}]);
@@ -27,16 +26,16 @@
 			position: new google.maps.LatLng(locations[i][2], locations[i][3]),
 			map: map
 		});
-		
+
 		markers.push(marker);
-		
+
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 			return function() {
 				infowindow.setContent(locations[i][0]);
 				infowindow.open(map, marker);
 			}
 		})(marker, i));
-		
+
 		# IF NOT C_MULTIPLE_MARKERS #google.maps.event.trigger(marker, 'click');# ENDIF #
 	}
 
@@ -47,7 +46,6 @@
 		});
 		# IF C_MULTIPLE_MARKERS #map.fitBounds(bounds);# ELSE #map.setCenter(bounds.getCenter());# ENDIF #
 	}
-	
+
 	AutoCenter();
--->
-</script> 
+</script>

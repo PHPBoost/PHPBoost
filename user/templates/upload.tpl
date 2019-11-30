@@ -572,10 +572,10 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch">
-										<span class="infos-options">{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
+										<span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
 									</li>
 									<li class="li-stretch">
-										<span class="infos-options">{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
+										<span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
 									</li>
 								</ul>
 							</div>

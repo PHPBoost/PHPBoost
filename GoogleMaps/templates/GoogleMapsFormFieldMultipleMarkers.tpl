@@ -13,19 +13,19 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 
 			jQuery('<div/>', {id : 'marker-' + id, class: 'marker-container'}).appendTo('#input-fields-' + this.id_input);
 
-			jQuery('<div/>', {id : 'field-' + id, class: 'grouped-inputs map-input-container'}).appendTo('#marker-' + id);
+			jQuery('<div/>', {id : 'field-' + id, class: 'grouped-inputs inputs-with-button map-input-container'}).appendTo('#marker-' + id);
 
-			jQuery('<input/> ', {type : 'text', id : id, name : id, required : "required", placeholder : '{@form.marker.address}', class: 'marker-address-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
+			jQuery('<input/> ', {type : 'text', id : id, name : id, required : "required", placeholder : '{@form.marker.address}', class: 'marker-address-input grouped-element# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
 
-			jQuery('<input/> ', {type : 'text', id : 'name-' + id, name : 'name-' + id, placeholder : '{@form.marker.name}', class: 'marker-desc-input# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
+			jQuery('<input/> ', {type : 'text', id : 'name-' + id, name : 'name-' + id, placeholder : '{@form.marker.name}', class: 'marker-desc-input grouped-element# IF C_CLASS # ${escape(CLASS)}# ENDIF #'}).appendTo('#field-' + id);
 			jQuery('#field-' + id).append(' ');
 
 			jQuery('<input/> ', {type : 'hidden', id : 'latitude-' + id, name : 'latitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'longitude-' + id, name : 'longitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'zoom-' + id, name : 'zoom-' + id}).appendTo('#field-' + id);
 
-			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#field-' + id);
+			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', class : 'grouped-element', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#field-' + id);
 
 			jQuery('<div/>', {id : 'map-' + id, class: 'map-canvas'}).appendTo('#marker-' + id);
 
@@ -52,13 +52,13 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 <div id="input-fields-${escape(HTML_ID)}" class="multiple-markers-container">
 # START fieldelements #
 	<div id="marker-${escape(HTML_ID)}-{fieldelements.ID}" class="marker-container">
-		<div class="grouped-inputs map-input-container" id="field-${escape(HTML_ID)}-{fieldelements.ID} map-input-container">
-			<input type="text" name="${escape(HTML_ID)}-{fieldelements.ID}" id="${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ADDRESS}" placeholder="{@form.marker.address}" class="marker-address-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
-			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.MARKER_NAME}" placeholder="{@form.marker.name}" class="marker-desc-input# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+		<div class="grouped-inputs inputs-with-button map-input-container" id="field-${escape(HTML_ID)}-{fieldelements.ID} map-input-container">
+			<input type="text" name="${escape(HTML_ID)}-{fieldelements.ID}" id="${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ADDRESS}" placeholder="{@form.marker.address}" class="marker-address-input grouped-element# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+			<input type="text" name="name-${escape(HTML_ID)}-{fieldelements.ID}" id="name-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.MARKER_NAME}" placeholder="{@form.marker.name}" class="marker-desc-input grouped-element# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
-			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" class="grouped-element" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 		</div>
 		<div class="map-canvas" id="map-${escape(HTML_ID)}-{fieldelements.ID}"></div>
 		<script>

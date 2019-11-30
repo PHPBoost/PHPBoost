@@ -2,6 +2,16 @@
  * Contains css for datepicker input & calendar block
 */
 
+.form-element-date-time {
+    flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+    .form-element-date-time {
+        flex-direction: row;
+    }
+}
+
 .form-field-date,
 .form-field-datetime {
     display: flex;

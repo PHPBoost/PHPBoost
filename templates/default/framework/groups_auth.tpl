@@ -17,24 +17,23 @@
 
 	# IF C_ADVANCED_AUTH #
 		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-			<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
+			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input">
+				<div class="grouped-inputs">
+					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
+					<button class="grouped-element" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid">
+						<i class="fa fa-search-plus"></i>
+					</button>
+				</div>
+				<span id="search_img{IDSELECT}"></span>
+				<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
+			</div>
+			<select id="members_auth{IDSELECT}" class="advanced-auth-select advanced-auth-input" name="members_auth{IDSELECT}[]" size="6" multiple="multiple">
 				<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 					# START members_list #
 					<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 					# END members_list #
 				</optgroup>
 			</select>
-		</div>
-
-		<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-			<span>{L_ADD_USER}</span>
-			<br />
-			<div class="grouped-inputs">
-				<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
-				<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid"><span>{L_GO}</span></button>
-			</div>
-			<span id="search_img{IDSELECT}"></span>
-			<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
 		</div>
 	# ENDIF #
 

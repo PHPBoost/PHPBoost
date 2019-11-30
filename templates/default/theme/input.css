@@ -86,15 +86,21 @@ option {
 .input-with-input.grouped-inputs input,
 .inputs-with-button.grouped-inputs input {
 	width: 1%;
-	border-width: 1px;
 }
 
-.grouped-inputs label:not(:last-child) input {
+.grouped-element:not(:last-child) {
 	border-width: 1px 0 1px 1px;
+	border-style: solid;
 }
 
-.grouped-inputs input:focus {
+.grouped-element:last-child,
+.grouped-element:focus {
 	border-width: 1px;
+	border-style: solid;
+}
+
+.grouped-element * {
+	border: none;
 }
 
 .grouped-inputs button,
@@ -113,8 +119,6 @@ option {
 .grouped-inputs a {
 	text-decoration: none;
 	padding: 0 0.618em;
-	border-width: 1px;
-	border-style: solid;
 }
 
 .grouped-inputs a:hover {

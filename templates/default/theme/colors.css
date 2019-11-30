@@ -114,27 +114,27 @@ body {
 	border-color: #DDDDDD;
 }
 
-@media (max-width: 768px) {
-	.message-user-infos,
-	.message-date {
-		background-color: rgba(54, 100, 147, 0.1);
-	}
+
+/* --- messages ------------------------------------------------------------- */
+
+.message-header-container { background-color: #ECF2F8; }
+
+.message-header-container,
+.message-content,
+.message-footer-container,
+.message-user-sign {
+    border-color: #DDDDDD;
 }
 
-.message-message {
-	border-color: rgba(54, 100, 147, 0.5);
+/* --- Current user --- */
+.current-user-message.message-content,
+.current-user-message.message-footer-container,
+.current-user-message.message-user-sign {
+    background-color: #ECF2F8;
 }
 
-.message-message::before {
-	border-color: transparent rgba(54, 100, 147, 0.5);
-}
-
-.message-message::after {
-	border-color: transparent rgba(54, 100, 147, 0.5);
-}
-
-i.message-announce     { color: #517BA6; }
-i.message-announce-new { color: #4D9136; }
+.message-announce     { color: #517BA6; }
+.message-announce-new { color: #4D9136; }
 
 .actions-menu.opened .actions-title {
 	background-color: #FFFFFF;
@@ -266,8 +266,8 @@ table tbody td {
 
 button,
 .button {
-	background-color: rgba(54, 100, 147, 0.1);
-	border-color: rgba(54, 100, 147, 0.6);
+	background-color: rgba(54, 100, 147, 0.2);
+	border-color: #366493;
 }
 
 button:hover,
@@ -320,6 +320,13 @@ optgroup {
 
 legend {
 	border-color: #DDDDDD;
+}
+
+button.grouped-element,
+a.grouped-element,
+.grouped-element a {
+	border-color: #366493;
+	background-color: rgba(54, 100, 147, 0.2);
 }
 
 /* --- Input ---------------------------------------------------------------- */
