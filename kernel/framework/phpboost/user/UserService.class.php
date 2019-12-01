@@ -166,7 +166,7 @@ class UserService
 		{
 			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
-		catch (RowNotFoundException $e) 
+		catch (RowNotFoundException $e)
 		{
 			return false;
 		}
@@ -186,7 +186,7 @@ class UserService
 		{
 			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE display_name=:display_name', array('display_name' => $display_name));
 		}
-		catch (RowNotFoundException $e) 
+		catch (RowNotFoundException $e)
 		{
 			return false;
 		}
@@ -206,7 +206,7 @@ class UserService
 		{
 			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE email=:email', array('email' => $email));
 		}
-		catch (RowNotFoundException $e) 
+		catch (RowNotFoundException $e)
 		{
 			return false;
 		}
@@ -277,10 +277,10 @@ class UserService
 				return 'member';
 			break;
 			case User::MODERATOR_LEVEL:
-				return 'modo';
+				return 'moderator';
 			break;
 			case User::ADMIN_LEVEL:
-				return 'admin';
+				return 'administrator';
 			break;
 			default:
 				return '';
