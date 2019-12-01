@@ -531,7 +531,7 @@ elseif ( !empty($del_folder))
         'TOTAL_PUBLIC_FILES' => $total_public_files
     ));
 
-    if ($total_directories == 0 && $total_personal_files == 0 && $total_public_files == 0)
+    if ($total_directories == 0 && $total_personal_files == 0)
     {
         $tpl->put_all(array(
             'C_EMPTY_FOLDER' => true,
