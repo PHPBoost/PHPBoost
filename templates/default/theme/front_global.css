@@ -24,8 +24,8 @@ a:hover,
 }
 
 /* --- Tailles de polices --- */
-.smaller { font-size: 0.618em;  }
-.small   { font-size: 0.809em;  }
+.smaller { font-size: 0.618em; vertical-align: middle; }
+.small   { font-size: 0.809em; vertical-align: middle; }
 .normal  { font-size: 1.000em;  }
 .big     { font-size: 1.228em;  }
 .bigger  { font-size: 1.456em;  }

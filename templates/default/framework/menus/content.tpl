@@ -1,19 +1,12 @@
-# IF C_VERTICAL_BLOCK #
-<div id="content-menu-{ID}" class="module-mini-container# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
-	<div class="module-mini-top">
-		# IF C_DISPLAY_TITLE #<div class="sub-title">{TITLE}</div># ENDIF #
-	</div>
-	<div class="module-mini-contents">
-		{CONTENT}
-	</div>
-	<div class="module-mini-bottom">
-	</div>
-</div>
-# ELSE #
-<div id="content-menu-{ID}" class="block-container# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
-	<div class="block-contents">
-		# IF C_DISPLAY_TITLE #<div class="sub-title">{TITLE}</div># ENDIF #
-		<div>{CONTENT}</div>
+<div id="content-menu-{ID}" class="cell-tile cell-mini# IF C_VERTICAL_BLOCK # cell-mini-vertical# ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
+	<div class="cell">
+		# IF C_DISPLAY_TITLE #
+			<div class="cell-header">
+				<h6 class="cell-name">{TITLE}</h6>
+			</div>
+		# ENDIF #
+		<div class="cell-body">
+			<div class="cell-content">{CONTENT}</div>
+		</div>
 	</div>
 </div>
-# ENDIF #

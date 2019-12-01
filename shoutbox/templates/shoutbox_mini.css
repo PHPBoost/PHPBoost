@@ -44,17 +44,11 @@
 }
 
 .shout-form-container {
-	margin: 0.1618em 0 0.309em 0;
 	text-align: center;
 }
 
 .shout-form-container label {
 	display: block;
-}
-
-#module-mini-shoutbox textarea,
-#module-mini-shoutbox textarea:valid {
-	width: 90%;
 }
 
 #shoutbox-bbcode-container ul {

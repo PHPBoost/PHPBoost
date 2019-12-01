@@ -219,13 +219,13 @@ class ShoutboxConfig extends AbstractConfigData
 	private function get_default_forbidden_formatting_tags()
 	{
 		$tags_list = array();
-		
+
 		foreach (ContentFormattingService::get_tags_list() as $tag => $parameters)
 		{
 			if (!in_array($tag, array('b', 'i', 'fa', 'p', 's', 'u')))
 				$tags_list[] = $tag;
 		}
-		
+
 		return $tags_list;
 	}
 

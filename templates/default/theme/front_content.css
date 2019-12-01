@@ -54,7 +54,7 @@ section {
 	background-color: transparent !important;
 }
 
-aside {
+aside:not(#menu-left):not(#menu-right) {
 	padding: 0.809em;
 }
 

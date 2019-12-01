@@ -183,10 +183,6 @@ body {
 	border-color: #DDDDDD;
 }
 
-.cell-tile .cell-table table thead th {
-	border-color: #366493;
-}
-
 .no-style .cell-header,
 .no-style .cell-body,
 .no-style .cell-list,
@@ -319,6 +315,10 @@ optgroup {
 }
 
 legend {
+	border-color: #DDDDDD;
+}
+
+.grouped-element {
 	border-color: #DDDDDD;
 }
 
@@ -498,23 +498,30 @@ a,
 	color: #366493;
 	border-color: #366493;
 }
+
 a:hover,
 .link-color:hover   {
 	color: #0066cc;
 	border-color: #0066cc;
 }
-.admin              {
+
+.administrator {
 	color: #353535;
 	border-color: #353535;
 }
-.modo               {
+.pinned.administrator {background-color: rgba(54, 54, 54, 0.2);}
+
+.moderator               {
 	color: #48419D;
 	border-color: #48419D;
 }
+.pinned.moderator { background-color: rgba(72, 65, 157, 0.2); }
+
 .member             {
 	color: #2F9674;
 	border-color: #2F9674;
 }
+.pinned.member { background-color: rgba(47, 150, 116, 0.2); }
 
 .color-alert        { color: #913636; }
 .color-notavailable { color: #913636; }
@@ -536,7 +543,7 @@ tr td.bkgd-color-processing { background-color: rgba(210, 102, 54, 0.2); }
 tr td.bkgd-color-unknown    { background-color: rgba(145, 54, 54, 0.2); }
 
 tbody td.calendar-none      { background-color: transparent; }
-tbody td.calendar-today     { border-color: #DDDDDD; }
+tbody td.calendar-today     { background-color: rgba(0, 102, 204, 0.2); }
 tbody td.calendar-weekend   { background-color: rgba(54, 100, 147, 0.1); }
 
 .bkgd-main	{ background-color: #FFFFFF; }
@@ -555,7 +562,7 @@ table.calendar-table td a:hover {
 td.calendar-week { border-color: #0066cc; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
-.fa-rss:before      { color: #D36636; }
+.syndication .fa-rss:before      { color: #D36636; }
 .fa-check:before          { color: #4D9136; }
 .fa-minus-circle:before        { color: #913636; }
 .fa-times:before            { color: #913636; }

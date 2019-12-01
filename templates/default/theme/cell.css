@@ -57,6 +57,7 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 0.618em;
 }
 
@@ -128,8 +129,9 @@
 }
 
 .cell-table table thead th {
-	border-width: 0 1px;
+	border-width: 1px;
 	border-style: solid;
+	border-color: transparent;
 }
 
 .cell-table table tbody tr td { border-width: 0 0 1px 0; }

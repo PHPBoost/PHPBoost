@@ -7,7 +7,6 @@
 
 #scrolling_images {
 	position: relative;
-	margin: 1.309em auto;
 	height: 150px;
 	overflow: hidden;
 }

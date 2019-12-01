@@ -1,8 +1,14 @@
-# IF C_QUESTION #
-	<a href="{U_LINK}" class="mini-faq-question">
-		<img src="{PATH_TO_ROOT}/faq/faq.png" alt="{@module_title}" height="32" width="32" itemprop="image" />
-		<span class="small">{QUESTION}</span>
-	</a>
-# ELSE #
-	${LangLoader::get_message('no_item_now', 'common')}
-# ENDIF #
+<div class="cell-body">
+	# IF C_QUESTION #
+		<a href="{U_LINK}">
+			<div class="cell-infos">
+				<i class="far fa-question-circle fa-2x"></i>
+				<span class="small mini-faq-question">{QUESTION}</span>
+			</div>
+		</a>
+	# ELSE #
+		<div class="cell-content">
+			${LangLoader::get_message('no_item_now', 'common')}
+		</div>
+	# ENDIF #
+</div>

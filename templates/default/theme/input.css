@@ -72,6 +72,7 @@ option {
 /* --- Grouped input -------------------------------------------------------- */
 .grouped-inputs {
     display: flex;
+	justify-content: center;
 	align-items: stretch;
 	margin: 0 0 0.309em;
 }

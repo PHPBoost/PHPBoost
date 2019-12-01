@@ -1,110 +1,108 @@
 <script>
-<!--
-# IF C_AUTOMATIC_REFRESH_ENABLED #refreshInterval = setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
+	# IF C_AUTOMATIC_REFRESH_ENABLED #refreshInterval = setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
 
-function shoutbox_add_message()
-{
-	var pseudo = jQuery("#shout-pseudo").val();
-	var contents = jQuery("#shout-contents").val();
-
-	if (pseudo && contents)
+	function shoutbox_add_message()
 	{
-		jQuery.ajax({
-			url: '${relative_url(ShoutboxUrlBuilder::ajax_add())}',
-			type: "post",
-			dataType: "json",
-			data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
-			beforeSend: function(){
-				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
-			},
-			success: function(returnData){
-				if(returnData.code > 0) {
-					shoutbox_refresh_messages_box();
-					jQuery('#shout-contents').val('');
-				} else {
-					switch(returnData.code)
-					{
-						case -1:
-							alert(${escapejs(LangLoader::get_message('e_flood', 'errors'))});
-						break;
-						case -2:
-							alert("{L_ALERT_LINK_FLOOD}");
-						break;
-						case -3:
-							alert(${escapejs(LangLoader::get_message('e_incomplete', 'errors'))});
-						break;
-						case -4:
-							alert(${escapejs(LangLoader::get_message('error.auth', 'status-messages-common'))});
-						break;
+		var pseudo = jQuery("#shout-pseudo").val();
+		var contents = jQuery("#shout-contents").val();
+
+		if (pseudo && contents)
+		{
+			jQuery.ajax({
+				url: '${relative_url(ShoutboxUrlBuilder::ajax_add())}',
+				type: "post",
+				dataType: "json",
+				data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
+				beforeSend: function(){
+					jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
+				},
+				success: function(returnData){
+					if(returnData.code > 0) {
+						shoutbox_refresh_messages_box();
+						jQuery('#shout-contents').val('');
+					} else {
+						switch(returnData.code)
+						{
+							case -1:
+								alert(${escapejs(LangLoader::get_message('e_flood', 'errors'))});
+							break;
+							case -2:
+								alert("{L_ALERT_LINK_FLOOD}");
+							break;
+							case -3:
+								alert(${escapejs(LangLoader::get_message('e_incomplete', 'errors'))});
+							break;
+							case -4:
+								alert(${escapejs(LangLoader::get_message('error.auth', 'status-messages-common'))});
+							break;
+						}
 					}
+					jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
+				},
+				error: function(e){
+					alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
 				}
-				jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
-			},
-			error: function(e){
-				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
-			}
-		});
-	} else {
-		alert("${LangLoader::get_message('require_text', 'main')}");
-		return false;
+			});
+		} else {
+			alert("${LangLoader::get_message('require_text', 'main')}");
+			return false;
+		}
 	}
-}
 
-function shoutbox_delete_message(id_message)
-{
-	if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
+	function shoutbox_delete_message(id_message)
 	{
+		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
+		{
+			jQuery.ajax({
+				url: '${relative_url(ShoutboxUrlBuilder::ajax_delete())}',
+				type: "post",
+				dataType: "json",
+				data: {'id' : id_message, 'token' : '{TOKEN}'},
+				beforeSend: function(){
+					jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
+				},
+				success: function(returnData){
+					var code = returnData.code;
+
+					if(code > 0) {
+						jQuery('#shoutbox-message-' + code).remove();
+					} else {
+						alert(${escapejs(LangLoader::get_message('error.message.delete', 'common', 'shoutbox'))});
+					}
+					jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
+				},
+				error: function(e){
+					alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
+				}
+			});
+		}
+	}
+
+	function shoutbox_refresh_messages_box() {
 		jQuery.ajax({
-			url: '${relative_url(ShoutboxUrlBuilder::ajax_delete())}',
+			url: '${relative_url(ShoutboxUrlBuilder::ajax_refresh())}',
 			type: "post",
 			dataType: "json",
-			data: {'id' : id_message, 'token' : '{TOKEN}'},
+			data: {'token' : '{TOKEN}'},
 			beforeSend: function(){
 				jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
 			},
 			success: function(returnData){
-				var code = returnData.code;
-
-				if(code > 0) {
-					jQuery('#shoutbox-message-' + code).remove();
-				} else {
-					alert(${escapejs(LangLoader::get_message('error.message.delete', 'common', 'shoutbox'))});
-				}
+				jQuery('#shoutbox-messages-container').html(returnData.messages);
 				jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
 			},
 			error: function(e){
-				alert(${escapejs(LangLoader::get_message('csrf_invalid_token', 'status-messages-common'))});
+				# IF C_AUTOMATIC_REFRESH_ENABLED #clearInterval(refreshInterval);# ENDIF #
+				jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
 			}
 		});
 	}
-}
-
-function shoutbox_refresh_messages_box() {
-	jQuery.ajax({
-		url: '${relative_url(ShoutboxUrlBuilder::ajax_refresh())}',
-		type: "post",
-		dataType: "json",
-		data: {'token' : '{TOKEN}'},
-		beforeSend: function(){
-			jQuery('#shoutbox-refresh').html('<i class="fa fa-spin fa-spinner"></i>');
-		},
-		success: function(returnData){
-			jQuery('#shoutbox-messages-container').html(returnData.messages);
-			jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
-		},
-		error: function(e){
-			# IF C_AUTOMATIC_REFRESH_ENABLED #clearInterval(refreshInterval);# ENDIF #
-			jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
-		}
-	});
-}
--->
 </script>
 # IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
 
-<div id="shoutbox-messages-container"# IF C_HORIZONTAL # class="shout-horizontal" # ENDIF #># INCLUDE SHOUTBOX_MESSAGES #</div>
+<div id="shoutbox-messages-container" class="cell-body cell-content# IF C_HORIZONTAL # shout-horizontal# ENDIF #"># INCLUDE SHOUTBOX_MESSAGES #</div>
 # IF C_DISPLAY_FORM #
-	<form action="#" method="post">
+	<form class="cell-form" action="#" method="post">
 		<div class="shout-form-container shout-pseudo-container">
 			# IF NOT C_MEMBER #
 				<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
@@ -147,19 +145,22 @@ function shoutbox_refresh_messages_box() {
 			</ul>
 			# ENDIF #
 		</nav>
-		<p class="shout-spacing">
-			<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
-			<input type="hidden" name="token" value="{TOKEN}">
-			<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
-		</p>
+		<div class="shout-spacing small">
+			<div class="grouped-inputs">
+				<button class="grouped-element" onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
+				<input type="hidden" name="token" value="{TOKEN}">
+				<a class="grouped-element" href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
+			</div>
+		</div>
 	</form>
 # ELSE #
 	# IF C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE #
-		<div class="spacer"></div>
 		<span class="message-helper warning">{@error.post.unauthorized}</span>
 		<p class="shout-spacing">
 			<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
 		</p>
 	# ENDIF #
 # ENDIF #
-<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}">{@archives}</a>
+<div class="cell-body">
+	<div class="cell-content center"><a class="button small" href="${relative_url(ShoutboxUrlBuilder::home())}">{@archives}</a></div>
+</div>

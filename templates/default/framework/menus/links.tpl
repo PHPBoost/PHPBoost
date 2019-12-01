@@ -3,19 +3,18 @@
 	# IF C_FIRST_MENU # <!-- Menu container NAV -->
 
 		# IF C_MENU_CONTAINER # <!-- Open mini-module-container -->
-		<div id="links-menu-{ID}" class="module-mini-container cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
-			<div class="module-mini-top menu-vertical-{DEPTH} hidden-small-screens">
-				# IF RELATIVE_URL #
-					<a href="{REL_URL}" class="sub-title">
-						# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF # {TITLE}
-					</a>
-				# ELSE #
-					<span class="sub-title">
-						# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF # {TITLE}
-					</span>
-				# ENDIF #
-			</div>
-			<div class="module-mini-contents">
+			<div id="links-menu-{ID}" class="cell-mini cell-mini-vertical cell-tile cssmenu-content# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
+				<div class="cell">
+					<div class="cell-header menu-vertical-{DEPTH} hidden-small-screens">
+						# IF RELATIVE_URL #
+							<h6 class="cell-name"><a href="{REL_URL}">{TITLE}</a></h6>
+							# IF C_IMG #<a href="{REL_URL}"><img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /></a># ENDIF #
+						# ELSE #
+							<h6 class="cell-name">{TITLE}</h6>
+							# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
+						# ENDIF #
+					</div>
+					<div class="cell-body">
 		# ENDIF #
 
 		<nav role="navigation" id="cssmenu-{ID}" class="cssmenu# IF C_MENU_HORIZONTAL # cssmenu-horizontal# ENDIF ## IF C_MENU_VERTICAL # cssmenu-vertical# ENDIF ## IF C_MENU_STATIC # cssmenu-static# ENDIF ## IF C_MENU_LEFT # cssmenu-left# ENDIF ## IF C_MENU_RIGHT # cssmenu-right# ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # cssmenu-with-submenu# ENDIF #">
@@ -32,8 +31,8 @@
 		</nav>
 
 		# IF C_MENU_CONTAINER # <!-- Close mini-module-container -->
+				</div>
 			</div>
-			<div class="module-mini-bottom hidden-small-screens"></div>
 		</div>
 		# ENDIF #
 		<script>jQuery("#cssmenu-${escape(ID)}").menumaker({ title: "{TITLE}", format: "multitoggle", breakpoint: 768# IF C_MENU_STATIC #, static: true# ENDIF # }); </script>

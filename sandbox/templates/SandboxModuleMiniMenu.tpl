@@ -133,7 +133,7 @@
 					<div class="item-4x" aria-label="{@mini.mod}/{@mini.manage}">
 						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
 							<span class="icon-stack">
-								<i class="fa fa-cube icon-main" aria-hidden="true"></i>
+								<i class="fa fa-cubes icon-main" aria-hidden="true"></i>
 								<i class="fa fa-list icon-sup" aria-hidden="true"></i>
 							</span> <span class="sr-only">{@mini.mod}/{@mini.manage}</span>
 						</a>
@@ -141,7 +141,7 @@
 					<div class="item-4x" aria-label="{@mini.mod}/{@mini.add}">
 						<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
 							<span class="icon-stack">
-								<i class="fa fa-cube icon-main" aria-hidden="true"></i>
+								<i class="fa fa-cubes icon-main" aria-hidden="true"></i>
 								<i class="fa fa-plus icon-sup" aria-hidden="true"></i>
 							</span> <span class="sr-only">{@mini.mod}/{@mini.add}</span>
 						</a>

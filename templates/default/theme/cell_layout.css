@@ -119,7 +119,8 @@
 @media (min-width:769px) {
 	.cell-options {
 		float: right;
-		max-width: 38%;
+		min-width: 235px;
+		max-width: 50%;
 	}
 }
 
@@ -128,4 +129,9 @@
 	.cell-inline .cell {
 		max-width: 235px;
 	}
+}
+
+/* --- Mini module ---------------------------------------------------------- */
+.cell-mini-vertical .cell {
+	padding:  0.618em 0 0;
 }

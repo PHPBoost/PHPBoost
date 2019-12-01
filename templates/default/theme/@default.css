@@ -16,7 +16,7 @@ html, body {
 	margin: 0;
 	padding: 0; }
 
-img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {
+img, table, td, blockquote, code, pre, textarea, input, audio, video, object, .video-player {
 	max-width: 100%; }
 
 input, button, label, select, textarea, legend {

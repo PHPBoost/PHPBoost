@@ -1,5 +1,5 @@
 <div class="menus-block-container" data-id="{IDMENU}" id="menu_{IDMENU}"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
-	# IF C_UP #<div class="menus-block-move menus-block-move-top"><a href="{U_UP}" aria-label="{L_MOVE_UP}"></a></div># ENDIF #
+	# IF C_UP #<div class="menus-block-move menus-block-move-top"><a href="{U_UP}" aria-label="{L_MOVE_UP}"><i class="fa fa-chevron-up"></i></a></div># ENDIF #
 	<div class="menus-block-top">
 
 		<span id="m{IDMENU}"></span>
@@ -17,5 +17,5 @@
 	</div>
 
 	{CONTENTS}
-	# IF C_DOWN #<div class="menus-block-move menus-block-move-bot"><a href="{U_DOWN}" aria-label="{L_MOVE_DOWN}"></a></div># ENDIF #
+	# IF C_DOWN #<div class="menus-block-move menus-block-move-bot"><a href="{U_DOWN}" aria-label="{L_MOVE_DOWN}"><i class="fa fa-chevron-down"></i></a></div># ENDIF #
 </div>
