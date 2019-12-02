@@ -91,7 +91,7 @@ span.social-connect { padding: 1em 1.618em; }
 
 a.social-connect i:before { font-size: 1.618em; }
 
-a.social-connect { padding: 1em 1.618em; }
+a.social-connect { padding: 0.809em 1.618em; }
 
 a.social-connect span {
 	display: none;

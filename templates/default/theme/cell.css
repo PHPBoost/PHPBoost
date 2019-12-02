@@ -115,8 +115,22 @@
     padding: 0.228em 0.809em 0.456em;
 }
 
-.cell-list-inline ul li {
-	display: inline-block;
+.cell-list ul li.li-stretch {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cell-list-inline ul {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.cell-list-inline ul li:first-child {
+	padding: 0.228em 0.809em;
 }
 
 /* --- table --- */

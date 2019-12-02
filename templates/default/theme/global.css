@@ -39,6 +39,21 @@ figcaption {
     width: 1px;
 }
 
+.stacked {
+    position: relative;
+}
+
+.stacked .stack-event {
+    position: absolute;
+    top: -0.809em;
+    left: -0.309em;
+    border-radius: 100%;
+    padding: 0 0.309em;
+    font-size: 0.618em;
+    border: 1px;
+    border-style: solid;
+}
+
 /* --- flexbox --- */
 .justify-between {
     display: flex !important;

@@ -161,9 +161,7 @@ tr:nth-child(even) td {
 
 /* --- Form elements --------------------------------------------------------- */
 button,
-.button,
-.submit:hover,
-.basic-button:hover {
+.button {
 	background-color: #FFFFFF;
 	border-color: #DDDDDD;
 }

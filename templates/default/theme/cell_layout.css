@@ -60,11 +60,6 @@
 	flex-wrap: wrap;
 }
 
-.cell-flex .cell-list ul li.li-stretch {
-	display: flex;
-	justify-content: space-between;
-}
-
 .cell-flex .cell-form {
 	display: flex;
 	flex-direction: column;
@@ -139,4 +134,8 @@
 .cell-mini .cell-form .cell-label,
 .cell-mini .cell-form .cell-input {
 	padding: 0;
+}
+
+.cell-mini-vertical input:not([type="checkbox"]):not([type="radio"]) {
+	width: 100%;
 }

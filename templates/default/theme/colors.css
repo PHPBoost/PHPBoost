@@ -266,11 +266,13 @@ button,
 }
 
 button:hover,
+.button:hover,
 .button-hover {
 	background-color: rgba(54, 100, 147, 0.1);
 }
 
 button:active,
+.button:active,
 .button-active {
 	background-color: rgba(54, 100, 147, 0.3);
 }
@@ -317,7 +319,7 @@ legend {
 	border-color: #DDDDDD;
 }
 
-.grouped-element {
+span.grouped-element {
 	border-color: #DDDDDD;
 }
 
