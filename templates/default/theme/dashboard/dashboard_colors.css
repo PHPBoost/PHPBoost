@@ -161,7 +161,9 @@ tr:nth-child(even) td {
 
 /* --- Form elements --------------------------------------------------------- */
 button,
-.button {
+.button,
+.submit:hover,
+.basic-button:hover {
 	background-color: #FFFFFF;
 	border-color: #DDDDDD;
 }
@@ -229,15 +231,10 @@ select:focus {
 	background-color: #ECF2F8;
 }
 
-[disabled=disabled],
-[disabled=disabled]:hover,
-[disabled=disabled]:focus {
-	background-color: #ECF2F8;
-}
-
-[readonly=readonly],
-[readonly=readonly]:hover,
-[readonly=readonly]:focus {
+[disabled],
+[disabled]:hover,
+[readonly],
+[readonly]:hover, {
 	background-color: #ECF2F8;
 }
 

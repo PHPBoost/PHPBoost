@@ -65,7 +65,6 @@ option {
 .grouped-inputs select {
 	flex: 1 1 auto;
 	margin: 0;
-
 }
 
 .grouped-inputs input {
@@ -78,11 +77,12 @@ option {
 .grouped-right { justify-content: flex-end;   }
 .grouped-left  { justify-content: flex-start; }
 
-.grouped-element:not(:last-child) {
+.grouped-element {
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
 }
 
+a.grouped-element,
 .grouped-element:last-child,
 .grouped-element:focus {
 	border-width: 1px;

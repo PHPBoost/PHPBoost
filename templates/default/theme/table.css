@@ -26,16 +26,19 @@ table caption {
 	text-align: left;
 }
 
-table thead th,
+th,
 .table-head {
 	padding: 0.228em;
 	font-size: 1.2em;
 	text-align: center;
 	font-weight: normal;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 /* --- Content --- */
-table tbody td,
+td,
 .table-element-container {
 	padding: 0.456em;
 	text-align: center;
@@ -44,32 +47,32 @@ table tbody td,
 	border-color: transparent;
 }
 
-.bt tbody tr td {
+.bt td {
 	border-bottom-width: 0;
 }
 
-.bt tbody tr td:last-child {
+.bt td:last-child {
 	border-width: 0 0 1px;
 }
 
 /* --- Footer --- */
-table tfoot tr td {
+tfoot td {
 	padding: 0.228em;
 	font-size: 0.9em;
 }
 
-table tfoot tr td * {
+tfoot td * {
 	vertical-align: middle;
 }
 
-table tfoot tr td select {
+tfoot td select {
 	padding: 0.1618 0.309em;
 }
 
 @media (min-width: 769px) {
-	table thead th,
-	table tbody td,
-	table tfoot tr td {
+	th,
+	td,
+	tfoot td {
 		padding: 0.618em;
 		font-size: 1em;
 	}

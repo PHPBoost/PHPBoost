@@ -3,6 +3,9 @@
 @import url('../../default/theme/font-awesome-animation.css');
 @import url('../../default/theme/lightcase.css') screen, print;
 
+@import url('../../default/theme/dashboard/dashboard_shape.css') screen;
+@import url('../../default/theme/dashboard/dashboard_menus.css') screen, print;
+
 /* @import url('../../default/theme/@variables.css') screen, print; */
 @import url('../../default/theme/form.css') screen, print;
 @import url('../../default/theme/fieldset.css') screen, print;
@@ -25,8 +28,6 @@
 @import url('../../default/theme/cell_layout.css') screen, print;
 @import url('../../default/theme/pagination.css') screen, print;
 
-@import url('../../default/theme/dashboard/dashboard_shape.css') screen;
-@import url('../../default/theme/dashboard/dashboard_menus.css') screen, print;
 @import url('../../default/theme/dashboard/dashboard_addons.css') screen, print;
 
 @import url('../../default/theme/dashboard/dashboard_form.css') screen, print;

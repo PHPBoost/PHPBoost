@@ -32,7 +32,6 @@ button.small,
 .basic-button {
 	display: inline-block;
 	padding: 0.1618em 0.309em;
-	border: none;
 	font-weight: bold;
 }
 

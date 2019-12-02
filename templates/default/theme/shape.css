@@ -217,8 +217,17 @@ body {
 	}
 }
 
-#top-footer {
-	padding: 0.809em;
+section {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	padding: 0 0 0.809em;
+}
+
+@media (min-width: 769px) {
+	section {
+		margin: 0.809em auto;
+	}
 }
 
 /* --- Up and under main content --- */
@@ -230,8 +239,11 @@ body {
 	margin: 1.618em 0 0;
 }
 
-
 /* --- Footer --------------------------------------------------------------- */
+#top-footer {
+	padding: 0.809em;
+}
+
 #footer {
 	clear: both;
 	border-width: 4px 0 0 0;

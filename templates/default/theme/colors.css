@@ -183,13 +183,17 @@ body {
 	border-color: #DDDDDD;
 }
 
+.cell-mini [class*="cell-"] {
+	background-color: transparent;
+}
+
 .no-style .cell-header,
 .no-style .cell-body,
 .no-style .cell-list,
 .no-style .cell-table,
 .no-style .cell-footer {
-	background-color: transparent!important;
-	border-color: transparent!important;
+	background-color: transparent !important;
+	border-color: transparent !important;
 }
 
 .new-content .cell-header {
@@ -215,55 +219,50 @@ body {
 	background-color: transparent;
 }
 
-/* -- table.css
-    #####   ###   ###    #      #####
-      #    #   #  #  #   #      #
-      #    #####  ####   #      ###
-      #    #   #  #   #  #      #
-      #    #   #  ####   #####  #####
------------------------------------------------------------------------------ */
+/* -- table.css ------------------------------------------------------------- */
 table caption {
 	border-color: #DDDDDD;
 }
 
-table thead th,
-.table-head,
-table tfoot tr th,
+th,
 .formatter-table .formatter-table-head {
-	background-color: rgba(54, 100, 147, 0.1);
+	background-color: #366493;
+	color: #FFFFFF;
+	border-color: #366493;
 }
 
-table tbody td {
+th a,
+.formatter-table .formatter-table-head a {
+	color: #FFFFFF;
+}
+
+td,
+.bordered-table td {
 	border-color: #DDDDDD;
 }
 
 .html-table-header-sortable:hover a,
 .html-table-header-sortable.sort-active a {
-	background-color: #366493;
-	color: #FFFFFF;
+	background-color: #FFFFFF;
+	color: #366493;
 }
 
-.calendar-block table.date-picker thead th {
+.calendar-block table.date-picker th {
 	border-color: #DDDDDD;
 }
 
 .calendar-block .date-select-nav:hover,
-.calendar-block .date-picker tbody td:hover,
-.calendar-block .date-picker  tbody td.calendar-event {
+.calendar-block .date-picker td:hover,
+.calendar-block .date-picker  td.calendar-event {
 	background-color: rgba(54, 100, 147, 0.4);
-}
-
-/* --- Bordered cells --- */
-.bordered-table td {
-	border-color: #DDDDDD;
 }
 
 /* -- Form elements --------------------------------------------------------- */
 
 button,
 .button {
-	background-color: rgba(54, 100, 147, 0.2);
-	border-color: #366493;
+	background-color: #FFFFFF;
+	border-color: #DDDDDD;
 }
 
 button:hover,
@@ -273,7 +272,7 @@ button:hover,
 
 button:active,
 .button-active {
-	background-color: rgba(54, 100, 147, 0.1);
+	background-color: rgba(54, 100, 147, 0.3);
 }
 
 .submit {
@@ -322,13 +321,6 @@ legend {
 	border-color: #DDDDDD;
 }
 
-button.grouped-element,
-a.grouped-element,
-.grouped-element a {
-	border-color: #366493;
-	background-color: rgba(54, 100, 147, 0.2);
-}
-
 /* --- Input ---------------------------------------------------------------- */
 [type=text],
 [type=email],
@@ -341,7 +333,7 @@ a.grouped-element,
 [type=file],
 textarea,
 select {
-	background-color: #FFFFFF;
+	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 	color: #555555;
 }
@@ -492,34 +484,42 @@ figcaption {
 }
 
 a,
-.link-color         {
+.link-color {
 	color: #366493;
 	border-color: #366493;
 }
+.bgc.link-color { background-color: rgba(54, 100, 147, 0.2);}
 
 a:hover,
-.link-color:hover   {
+.link-color:hover {
 	color: #0066cc;
 	border-color: #0066cc;
 }
+.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.2);}
 
 .administrator {
 	color: #353535;
 	border-color: #353535;
 }
-.pinned.administrator {background-color: rgba(54, 54, 54, 0.2);}
+.bgc.administrator { background-color: rgba(54, 54, 54, 0.2);}
 
-.moderator               {
+.moderator {
 	color: #48419D;
 	border-color: #48419D;
 }
-.pinned.moderator { background-color: rgba(72, 65, 157, 0.2); }
+.bgc.moderator { background-color: rgba(72, 65, 157, 0.2);}
 
-.member             {
+.member {
 	color: #2F9674;
 	border-color: #2F9674;
 }
-.pinned.member { background-color: rgba(47, 150, 116, 0.2); }
+.bgc.member { background-color: rgba(47, 150, 116, 0.2);}
+
+.visitor {
+	color: #888888;
+	border-color: #888888;
+}
+.bgc.visitor { background-color: rgba(136, 136, 136, 0.2);}
 
 .color-alert        { color: #913636; }
 .color-notavailable { color: #913636; }
@@ -708,32 +708,7 @@ h3.formatter-title { border-color: #366393; }
 	border-color: #DDDDDD;
 }
 
-/* .upload-elements-repertory {
-	background-color: #FFFFFF;
-	border-color: #DDDDDD;
-}
-
-.upload-element-icon {
-	background-color: #FFFFFF;
-	border-color: #DDDDDD;
-}
-
-.upload-recent-file {
-	color: #2F9674;
-}
-
-.upload-selected-cat {
-	background-color: #FFFFFF;
-	border-color: #366493;
-} */
-
-/* -- cssmenu.css
-    #####  #####  #####  #   #  #####  #   #  #   #
-    #      #      #      ## ##  #      ##  #  #   #
-    #      #####  #####  # # #  ###    # # #  #   #
-    #          #      #  #   #  #      #  ##  #   #
-    #####  #####  #####  #   #  #####  #   #  #####
------------------------------------------------------------------------------ */
+/* -- cssmenu.css ----------------------------------------------------------- */
 .cssmenu ul ul,
 .cssmenu-actionslinks > ul {
 	background-color: #FFFFFF;

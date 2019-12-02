@@ -88,6 +88,12 @@
 .cell-flex .cell-footer { flex: 0 1 auto; }
 
 /* --- List layout ---------------------------------------------------------- */
+.cell-row::after,
+.cell-row::before {
+    content: '';
+    display: block;
+    clear: both;
+}
 
 .cell-row .cell-body {
 	display: flex;

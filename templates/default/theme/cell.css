@@ -128,18 +128,12 @@
     margin: -2px 0 0;
 }
 
-.cell-table table thead th {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.cell-table table tbody tr td { border-width: 0 0 1px 0; }
-.cell-table table tbody tr td:last-child { border-width: 0; }
+.cell-table td { border-width: 0 0 1px 0; }
+.cell-table td:last-child { border-width: 0; }
 
 @media (min-width: 769px) {
-	.cell-table table tbody tr td:last-child { border-width: 0 0 1px 0; }
-	.cell-table table tbody tr:last-child td { border-width: 0; }
+	.cell-table td:last-child { border-width: 0 0 1px 0; }
+	.cell-table tr:last-child td { border-width: 0; }
 }
 
 .cell-form .cell-label,
