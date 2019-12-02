@@ -2,28 +2,3 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-
-#newsletter {
-	float: right;
-}
-
-.newsletter-link {
-	margin: 0.618em 0 0 0;
-}
-
-.newsletter-form {
-	white-space: nowrap;
-	vertical-align: middle;
-}
-
-.newsletter-title {
-	padding: 0.309em 0.618em;
-	vertical-align: middle;
-	display: block;
-}
-
-@media (min-width: 769px) {
-	.newsletter-title {
-		display: inline-block;
-	}
-}

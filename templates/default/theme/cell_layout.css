@@ -74,12 +74,6 @@
 	flex-direction: row;
 }
 
-.cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
-.cell-input select,
-.cell-input textarea {
-	width: 100%;
-}
-
 @media (min-width: 769px) {
 	.cell-flex .cell-form {
 		flex-direction: row;
@@ -134,4 +128,9 @@
 /* --- Mini module ---------------------------------------------------------- */
 .cell-mini-vertical .cell {
 	padding:  0.618em 0 0;
+}
+
+.cell-mini .cell-form .cell-label,
+.cell-mini .cell-form .cell-input {
+	padding: 0;
 }

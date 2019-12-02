@@ -38,7 +38,7 @@ class SandboxTableController extends ModuleController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, '', array(
 			new HTMLTableColumn($this->lang['table.header.login'], 'display_name','col-large'),
 			new HTMLTableColumn($this->lang['table.header.email']),
 			new HTMLTableColumn($this->lang['table.header.registred'], 'registration_date'),

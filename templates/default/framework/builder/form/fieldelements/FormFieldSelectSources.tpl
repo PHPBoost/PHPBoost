@@ -11,7 +11,7 @@ FormFieldSelectSources.prototype = {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			jQuery('<div/>', {'id' : id, class : 'sources-link input-with-button grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
+			jQuery('<div/>', {'id' : id, class : 'sources-link grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, class : 'grouped-element', placeholder : '{@form.source.name}'}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
@@ -41,7 +41,7 @@ var FormFieldSelectSources = new FormFieldSelectSources();
 
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
-	<div class="sources-link input-with-button grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
+	<div class="sources-link grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
 		<input class="grouped-element" type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
 		<input class="grouped-element" type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}"/>
 		<a class="grouped-element" href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.del.source}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>

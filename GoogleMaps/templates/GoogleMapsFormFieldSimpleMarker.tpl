@@ -1,4 +1,4 @@
-<div class="field-${escape(HTML_ID)} grouped-inputs input-with-input map-input-container">
+<div class="field-${escape(HTML_ID)} grouped-inputs map-input-container">
 	<input type="hidden" id="latitude-${escape(HTML_ID)}" name="latitude-${escape(HTML_ID)}" value="${escape(LATITUDE)}" />
 	<input type="hidden" id="longitude-${escape(HTML_ID)}" name="longitude-${escape(HTML_ID)}" value="${escape(LONGITUDE)}" />
 	<input type="hidden" id="zoom-${escape(HTML_ID)}" name="zoom-${escape(HTML_ID)}" value="${escape(ZOOM)}" />

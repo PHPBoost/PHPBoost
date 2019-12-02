@@ -378,16 +378,14 @@ select:focus {
 	background-color: #FFFFFF;
 }
 
-[disabled=disabled],
-[disabled=disabled]:hover,
-[disabled=disabled]:focus {
+[disabled],
+[disabled]:hover {
 	background-color: rgba(0, 0, 0, 0.2);
 	border-color: rgba(0, 0, 0, 0.6);
 }
 
-[readonly=readonly],
-[readonly=readonly]:hover,
-[readonly=readonly]:focus {
+[readonly],
+[readonly]:hover {
 	background-color: #FFFFFF;
 	border-color: #888888;
 	color: #888888;

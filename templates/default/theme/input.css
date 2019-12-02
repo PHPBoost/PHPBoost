@@ -1,21 +1,5 @@
-input[disabled="disabled"],
-input[disabled="disabled"]:hover,
-input[disabled="disabled"]:focus,
-textarea[disabled="disabled"],
-textarea[disabled="disabled"]:hover,
-textarea[disabled="disabled"]:focus,
-select[disabled="disabled"],
-select[disabled="disabled"]:hover,
-select[disabled="disabled"]:focus,
-input[readonly="readonly"],
-input[readonly="readonly"]:hover,
-input[readonly="readonly"]:focus,
-textarea[readonly="readonly"],
-textarea[readonly="readonly"]:hover,
-textarea[readonly="readonly"]:focus,
-select[readonly="readonly"],
-select[readonly="readonly"]:hover,
-select[readonly="readonly"]:focus {
+[disabled],
+[readonly] {
 	cursor: not-allowed;
 }
 
@@ -38,7 +22,7 @@ select {
 	max-width: 100%;
 }
 
-input[type="color"] {
+[type="color"] {
 	padding: 0;
 }
 
@@ -81,13 +65,18 @@ option {
 .grouped-inputs select {
 	flex: 1 1 auto;
 	margin: 0;
+
 }
 
-.input-with-button.grouped-inputs input,
-.input-with-input.grouped-inputs input,
-.inputs-with-button.grouped-inputs input {
+.grouped-inputs input {
 	width: 1%;
 }
+
+.grouped-auto select,
+.grouped-auto input { flex: 0 1 auto; width: auto; }
+
+.grouped-right { justify-content: flex-end;   }
+.grouped-left  { justify-content: flex-start; }
 
 .grouped-element:not(:last-child) {
 	border-width: 1px 0 1px 1px;
@@ -105,9 +94,14 @@ option {
 }
 
 .grouped-inputs button,
+.grouped-inputs span,
 .grouped-inputs a {
 	display: flex;
 	margin: 0;
+	align-items: center;
+}
+.grouped-inputs span{
+	padding: 0 0.618em;
 }
 
 .grouped-inputs button i,

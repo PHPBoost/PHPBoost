@@ -701,9 +701,9 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
-							<div class="cell-input input-with-button grouped-inputs">
-								<input id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+							<div class="cell-input grouped-inputs">
+								<input class="grouped-element" id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
+								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -726,13 +726,15 @@
 							<label class="cell-label" for="bb_movie_url{FIELD}">
 								{@bbcode.movie.url}
 							</label>
-							<div class="cell-input input-with-button grouped-inputs">
-								<input id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+							<div class="cell-input grouped-inputs">
+								<input class="grouped-element" id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
+								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
 						</div>
 						<div class="cell-body">
-							{@bbcode.movie.format}
+							<div class="cell-content">
+								{@bbcode.movie.format}
+							</div>
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_width{FIELD}">{@bbcode.movie.width}</label>
@@ -748,9 +750,9 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_movie_poster{FIELD}">{@bbcode.movie.poster}</label>
-							<div class="cell-input input-with-button grouped-inputs">
-								<input id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+							<div class="cell-input grouped-inputs">
+								<input class="grouped-element" id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
+								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -773,9 +775,9 @@
 							<label class="cell-label" for="bb_lightbox{FIELD}">
 								{@bbcode.picture.url}
 							</label>
-							<div class="cell-input input-with-button grouped-inputs">
-								<input id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+							<div class="cell-input grouped-inputs">
+								<input class="grouped-element" id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
+								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
 						</div>
 						<div class="cell-form">
@@ -804,9 +806,9 @@
 						</div>
 						<div class="cell-form">
 							<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
-							<div class="cell-input input-with-button grouped-inputs">
-								<input id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
-								<a href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+							<div class="cell-input grouped-inputs">
+								<input class="grouped-element" id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
+								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
 							</div>
 						</div>
 						<div class="cell-form">

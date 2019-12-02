@@ -2,21 +2,3 @@
 * Surchargez ce fichier dans votre thème pour personnaliser le module
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-
-.poll-container-title {
-	font-size: 1em;
-}
-
-#module-mini-poll hr {
-	width: 90%;
-	margin: 0.618em auto;
-}
-
-.poll-question-mini-container {
-	padding-left: 0.382em;
-	text-align: left;
-}
-
-#module-mini-poll button.submit {
-	margin-bottom: 0.618em;
-}

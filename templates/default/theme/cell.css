@@ -147,10 +147,17 @@
 	padding: 0.456em 0.618em
 }
 
+.cell-input:not(.grouped-inputs):not(.input-element-date) input:not([type="checkbox"]):not([type="radio"]),
+.cell-input select,
+.cell-input textarea {
+	width: 100%;
+}
+
 .cell input,
 .cell label,
 .cell button,
 .cell .button,
+.cell select,
 .cell textarea,
 .cell .grouped-inputs,
 .cell .formatter-title {

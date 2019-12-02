@@ -4,7 +4,7 @@
 		# IF C_DISPLAY_ROBOTS #
 			<span class="small pinned warning">{TOTAL_ROBOT_CONNECTED} {L_ROBOT}</span>
 		# ENDIF #
-		<span class="small pinned notice">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}</span>
+		<span class="small pinned visitor">{TOTAL_VISITOR_CONNECTED} {L_VISITOR}</span>
 		<span class="small pinned member">{TOTAL_MEMBER_CONNECTED} {L_MEMBER}</span>
 		<span class="small pinned moderator">{TOTAL_MODERATOR_CONNECTED} {L_MODO}</span>
 		<span class="small pinned administrator">{TOTAL_ADMINISTRATOR_CONNECTED} {L_ADMIN}</span>

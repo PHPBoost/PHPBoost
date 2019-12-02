@@ -21,6 +21,13 @@ figcaption {
 	white-space: nowrap;
 }
 
+.flag-selector {
+	padding-left: 3.309em;
+	background-position: 0.309em;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
 /* --- flexbox --- */
 .justify-between {
     display: flex !important;

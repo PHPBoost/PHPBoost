@@ -1,6 +1,6 @@
 # IF C_VERTICAL #
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-		<div class="cell-form grouped-inputs input-with-button">
+		<div class="cell-form grouped-inputs">
 			<input class="grouped-element" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
 			<input type="hidden" name="token" value="{TOKEN}">
 			<button class="grouped-element" type="submit" name="" value="true" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
@@ -18,9 +18,9 @@
 		</div>
 	</form>
 # ELSE #
-	<div id="newsletter" class="cell-options# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
+	<div id="newsletter" class="cell-mini# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 		<div class="cell">
-			<form class="cell-form grouped-inputs" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+			<form class="cell-form grouped-inputs grouped-auto grouped-right" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 				<span class="newsletter-title grouped-element">{@newsletter}</span>
 				<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
 				<input type="hidden" name="subscribe" value="subscribe">

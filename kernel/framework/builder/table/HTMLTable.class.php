@@ -45,7 +45,7 @@ class HTMLTable extends AbstractHTMLElement
 
 	private $filters_fieldset_class = 'FormFieldsetHorizontal';
 
-	public function __construct(HTMLTableModel $model, $css_class = 'table', $tpl_path = '')
+	public function __construct(HTMLTableModel $model, $css_class = '', $tpl_path = '')
 	{
 		if ($tpl_path === '')
 		{
