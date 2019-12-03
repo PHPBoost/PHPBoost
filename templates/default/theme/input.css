@@ -65,12 +65,13 @@ option {
 .grouped-inputs select {
 	flex: 1 1 auto;
 	margin: 0;
+	width: 1%;
 }
 
 .grouped-auto select,
 .grouped-auto input {
 	flex: 0 1 auto;
-	width: 1%;
+	width: auto;
 }
 
 .grouped-right { justify-content: flex-end;   }
