@@ -534,8 +534,8 @@ elseif ( !empty($del_folder))
     $tpl->put_all(array(
         'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) ? true : false,
         'C_PERSONAL_FILES' => ($total_personal_files > 0) ? true : false,
-        'C_PUBLIC_FILES' => ($total_directories == 0) ? true : false,
-        'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
+        'C_PUBLIC_FILES' => ($total_public_files > 0) ? true : false,
+        'L_NO_ITEM' => LangLoader::get_message('no_item_now', 'common')
     ));
 
     $tpl->display();

@@ -503,7 +503,7 @@
 		                        </div>
 	                        # END personal_files #
 						# ELSE #
-							<span class="message-helper bgc notice">{L_EMPTY_FOLDER}</span>
+							<span class="message-helper bgc notice">{L_NO_ITEM}</span>
 						# ENDIF #
                     </div>
 					# IF C_PERSONAL_SUMMARY #
@@ -524,69 +524,73 @@
             </div>
             <div id="upload-public" class="tabs tabs-animation">
                 <div class="content-panel">
-                    <div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
-                        # START public_files #
-	                        <div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-								<span id="imgf{public_files.ID}"></span>
-								<div class="cell-header">
-									<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
-									# IF NOT public_files.C_ENABLED_THUMBNAILS #
-			                            <a href="{public_files.URL}" {public_files.LIGHTBOX}>
-			                                <i class="far {public_files.IMG}"> </i>
-			                            </a>
-									# ENDIF #
-		                            <span id="fi{public_files.ID}"></span>
-								</div>
-	                            # IF public_files.C_ENABLED_THUMBNAILS #
-									<div class="cell-body">
-										<div class="cell-thumbnail">
-				                            # IF public_files.C_IMG #
-												<img src="{public_files.URL}" alt="{public_files.NAME}">
-				                                <a class="cell-thumbnail-caption" href="{public_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-				                                    <i class="fa fa-eye"></i>
-				                                </a>
-				                            # ELSE #
-												<i class="far {public_files.IMG} fa-4x"></i>
-					                            <a class="cell-thumbnail-caption" href="{public_files.URL}" {public_files.LIGHTBOX}>
-					                                <i class="far {public_files.IMG}"></i>
-					                            </a>
-				                            # ENDIF #
-										</div>
+					# IF C_PUBLIC_FILES #
+                    	<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
+	                        # START public_files #
+		                        <div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
+									<span id="imgf{public_files.ID}"></span>
+									<div class="cell-header">
+										<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
+										# IF NOT public_files.C_ENABLED_THUMBNAILS #
+				                            <a href="{public_files.URL}" {public_files.LIGHTBOX}>
+				                                <i class="far {public_files.IMG}"> </i>
+				                            </a>
+										# ENDIF #
+			                            <span id="fi{public_files.ID}"></span>
 									</div>
-								# ENDIF #
-	                            <div class="cell-form grouped-inputs">
-									<input type="text" readonly="readonly" onclick="select_div(text_{public_files.ID});" id="text_{public_files.ID}" class="grouped-element" value="{public_files.DISPLAYED_CODE}">
-	                            	# IF C_POPUP #
-										<a class="grouped-element" href="javascript:insert_popup('{public_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
-									# ELSE #
-										<a class="grouped-element" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+		                            # IF public_files.C_ENABLED_THUMBNAILS #
+										<div class="cell-body">
+											<div class="cell-thumbnail">
+					                            # IF public_files.C_IMG #
+													<img src="{public_files.URL}" alt="{public_files.NAME}">
+					                                <a class="cell-thumbnail-caption" href="{public_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+					                                    <i class="fa fa-eye"></i>
+					                                </a>
+					                            # ELSE #
+													<i class="far {public_files.IMG} fa-4x"></i>
+						                            <a class="cell-thumbnail-caption" href="{public_files.URL}" {public_files.LIGHTBOX}>
+						                                <i class="far {public_files.IMG}"></i>
+						                            </a>
+					                            # ENDIF #
+											</div>
+										</div>
 									# ENDIF #
-								</div>
-	                            <div class="cell-list">
+		                            <div class="cell-form grouped-inputs">
+										<input type="text" readonly="readonly" onclick="select_div(text_{public_files.ID});" id="text_{public_files.ID}" class="grouped-element" value="{public_files.DISPLAYED_CODE}">
+		                            	# IF C_POPUP #
+											<a class="grouped-element" href="javascript:insert_popup('{public_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+										# ELSE #
+											<a class="grouped-element" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+										# ENDIF #
+									</div>
+		                            <div class="cell-list">
+										<ul class="small">
+											<li class="li-stretch">
+												<span>{public_files.FILETYPE}</span>
+												<span>{public_files.SIZE}</span>
+											</li>
+										</ul>
+		                            </div>
+		                        </div>
+	                        # END public_files #
+	                    </div>
+	                    <div class="cell-flex cell-options cell-tile">
+							<div class="cell">
+								<div class="cell-list">
 									<ul class="small">
 										<li class="li-stretch">
-											<span>{public_files.FILETYPE}</span>
-											<span>{public_files.SIZE}</span>
+											<span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
+										</li>
+										<li class="li-stretch">
+											<span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
 										</li>
 									</ul>
-	                            </div>
-	                        </div>
-                        # END public_files #
-                    </div>
-                    <div class="cell-flex cell-options cell-tile">
-						<div class="cell">
-							<div class="cell-list">
-								<ul class="small">
-									<li class="li-stretch">
-										<span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong>
-									</li>
-									<li class="li-stretch">
-										<span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong>
-									</li>
-								</ul>
+								</div>
 							</div>
-						</div>
-                    </div>
+	                    </div>
+					# ELSE #
+						<span class="message-helper bgc notice">{L_NO_ITEM}</span>
+					# ENDIF #
                 </div>
             </div>
         </div>
