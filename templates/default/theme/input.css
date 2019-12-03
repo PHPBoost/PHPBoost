@@ -67,12 +67,11 @@ option {
 	margin: 0;
 }
 
-.grouped-inputs input {
+.grouped-auto select,
+.grouped-auto input {
+	flex: 0 1 auto;
 	width: 1%;
 }
-
-.grouped-auto select,
-.grouped-auto input { flex: 0 1 auto; width: auto; }
 
 .grouped-right { justify-content: flex-end;   }
 .grouped-left  { justify-content: flex-start; }
