@@ -77,7 +77,7 @@ $move_folder = (int)retrieve(GET, 'movefd', 0);
 $move_file = (int)retrieve(GET, 'movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
-if ( !empty($parent_folder))
+if(!empty($parent_folder))
 { // folder change
     if (empty($parent_folder)) AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 
@@ -531,13 +531,12 @@ elseif ( !empty($del_folder))
         'TOTAL_PUBLIC_FILES' => $total_public_files
     ));
 
-    if ($total_directories == 0 && $total_personal_files == 0)
-    {
-        $tpl->put_all(array(
-            'C_EMPTY_FOLDER' => true,
-            'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
-        ));
-    }
+    $tpl->put_all(array(
+        'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) ? true : false,
+        'C_PERSONAL_FILES' => ($total_personal_files > 0) ? true : false,
+        'C_PUBLIC_FILES' => ($total_directories == 0) ? true : false,
+        'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
+    ));
 
     $tpl->display();
 }
