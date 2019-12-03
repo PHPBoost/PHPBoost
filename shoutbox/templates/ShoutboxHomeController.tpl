@@ -11,7 +11,7 @@
 			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
-			<div class="message-helper notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
+			<div class="message-helper bgc notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		<form method="post" class="fieldset-content">
 		# START messages #

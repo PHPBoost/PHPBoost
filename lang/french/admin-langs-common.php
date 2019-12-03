@@ -29,8 +29,8 @@ $lang['langs.default_lang_visibility'] = 'La langue par défaut est visible par 
 $lang['langs.select_all_langs'] = 'Selectionner toutes les langues';
 
 //Avertissements
-$lang['langs.warning_before_delete'] = '<span class="message-helper warning">Une langue doit être activée, désactivée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les langues ajoutées sont automatiquement activées. Pensez à les désactiver si besoin.</span>';
-$lang['langs.add.warning_before_install'] = '<span class="message-helper notice">Les langues ajoutées sont automatiquement activées. Pensez à les désactiver si besoin.</span>';
+$lang['langs.warning_before_delete'] = '<span class="message-helper bgc warning">Une langue doit être activée, désactivée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper bgc notice">Les langues ajoutées sont automatiquement activées. Pensez à les désactiver si besoin.</span>';
+$lang['langs.add.warning_before_install'] = '<span class="message-helper bgc notice">Les langues ajoutées sont automatiquement activées. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['langs.upload_lang'] = 'Uploader une langue';

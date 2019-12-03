@@ -42,7 +42,7 @@ table.version-list input[id*="release_date"] {
 	width: 80%;
 }
 
-table.bt tbody td .bt-content {
+table.bt .bt-content {
 	width: 65% !important;
 }
 

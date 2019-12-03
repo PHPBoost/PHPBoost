@@ -138,7 +138,7 @@ class UserRegistrationController extends AbstractController
 			$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
 			$agreement_fieldset->add_field($agreement);
 
-			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="message-helper notice user-agreement">' . $agreement_text . '</div>');
+			$agreement = new FormFieldHTML('agreement', '<div id="id-message-helper" class="message-helper bgc notice user-agreement">' . $agreement_text . '</div>');
 			$agreement_fieldset->add_field($agreement);
 
 			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'],
@@ -158,11 +158,11 @@ class UserRegistrationController extends AbstractController
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
-			return '<div id="registration-validation-mail" class="message-helper notice">'. $this->lang['registration.validation.mail.explain'] . '</div>';
+			return '<div id="registration-validation-mail" class="message-helper bgc notice">'. $this->lang['registration.validation.mail.explain'] . '</div>';
 		}
 		elseif ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
-			return '<div id="registration-validation-admin" class="message-helper notice">'. $this->lang['registration.validation.administrator.explain'] . '</div>';
+			return '<div id="registration-validation-admin" class="message-helper bgc notice">'. $this->lang['registration.validation.administrator.explain'] . '</div>';
 		}
 		else
 		{

@@ -417,7 +417,7 @@
 
 
                     # IF C_EMPTY_FOLDER #
-                        <div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
+                        <div id="empty-folder" class="message-helper bgc notice">{L_EMPTY_FOLDER}</div>
                         <span id="new-folder"></span>
                     # ELSE #
 						<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
@@ -474,7 +474,7 @@
 										</div>
 									</div>
 		                        # ENDIF #
-	                            <div class="cell-form input-with-button grouped-inputs">
+	                            <div class="cell-form grouped-inputs">
 									<input type="text" readonly="readonly" onclick="select_div(text_{personal_files.ID});" id="text_{personal_files.ID}" class="grouped-element" value="{personal_files.DISPLAYED_CODE}">
 	                            	# IF C_POPUP #
 										<a class="grouped-element" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
@@ -556,7 +556,7 @@
 										</div>
 									</div>
 								# ENDIF #
-	                            <div class="cell-form input-with-button grouped-inputs">
+	                            <div class="cell-form grouped-inputs">
 									<input type="text" readonly="readonly" onclick="select_div(text_{public_files.ID});" id="text_{public_files.ID}" class="grouped-element" value="{public_files.DISPLAYED_CODE}">
 	                            	# IF C_POPUP #
 										<a class="grouped-element" href="javascript:insert_popup('{public_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>

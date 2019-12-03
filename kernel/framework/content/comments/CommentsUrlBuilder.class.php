@@ -1,7 +1,7 @@
 <?php
 /**
  * This class represents the comments topic
- * <div class="message-helper notice">Do not use this class, but one of its children like for your module</div>
+ * <div class="message-helper bgc notice">Do not use this class, but one of its children like for your module</div>
  * @package     Content
  * @subpackage  Comments
  * @copyright   &copy; 2005-2019 PHPBoost

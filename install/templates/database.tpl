@@ -4,10 +4,10 @@
 
 	<div class="content">
 		# IF SUCCESS #
-			<div class="message-helper success">{SUCCESS}</div>
+			<div class="message-helper bgc success">{SUCCESS}</div>
 		# END #
 		# IF ERROR #
-			<div class="message-helper error">{ERROR}</div>
+			<div class="message-helper bgc error">{ERROR}</div>
 		# END #
 		<div class="float-right pbt-box center">
 			<a href="http://www.mysql.com/">

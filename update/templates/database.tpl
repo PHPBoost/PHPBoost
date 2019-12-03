@@ -11,7 +11,7 @@
 		<span class="spacer">&nbsp;</span>
 		{@H|db.parameters.config.explanation}
 		# IF ERROR #
-			<div class="message-helper error">{ERROR}</div>
+			<div class="message-helper bgc error">{ERROR}</div>
 		# END #
 	</div>
 

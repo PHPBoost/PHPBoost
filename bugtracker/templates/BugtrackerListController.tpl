@@ -122,5 +122,5 @@
 		# ENDIF #
 	</table>
 # ELSE #
-<div class="message-helper notice">{L_NO_BUG}</div>
+<div class="message-helper bgc notice">{L_NO_BUG}</div>
 # ENDIF #

@@ -10,7 +10,7 @@
 			</header>
 
 			<div class="content">
-				<div class="message-helper warning">
+				<div class="message-helper bgc warning">
 					${LangLoader::get_message('cssmenu.warning', 'menu', 'sandbox')}
 				</div>
 				<p>{@lorem.large.content}</p>

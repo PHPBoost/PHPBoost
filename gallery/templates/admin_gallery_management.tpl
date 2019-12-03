@@ -444,7 +444,7 @@ function display_thumbnails(direction)
 
 			# IF C_DISPLAY_NO_PICTURES_MESSAGE #
 				# IF NOT C_PICTURES #
-					<div class="message-helper notice">
+					<div class="message-helper bgc notice">
 						{L_TOTAL_IMG}
 					</div>
 					# ELSE #

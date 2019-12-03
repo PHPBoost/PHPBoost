@@ -38,8 +38,8 @@ $lang['themes.view_real_preview'] = 'View full size';
 $lang['themes.select_all_themes'] = 'Select all themes';
 
 //Warnings
-$lang['themes.warning_before_delete'] = '<span class="message-helper warning">A theme must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
-$lang['themes.add.warning_before_install'] = '<span class="message-helper notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['themes.warning_before_delete'] = '<span class="message-helper bgc warning">A theme must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper bgc notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['themes.add.warning_before_install'] = '<span class="message-helper bgc notice">The installed themes are automatically enabled. Do not forget to disable them if necessary.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Upload theme';

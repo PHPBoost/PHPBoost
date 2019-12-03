@@ -38,8 +38,8 @@ $lang['themes.view_real_preview'] = 'Voir en taille réelle';
 $lang['themes.select_all_themes'] = 'Sélectionner tous les thèmes';
 
 //Avertissements
-$lang['themes.warning_before_delete'] = '<span class="message-helper warning">Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
-$lang['themes.add.warning_before_install'] = '<span class="message-helper notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['themes.warning_before_delete'] = '<span class="message-helper bgc warning">Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper bgc notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['themes.add.warning_before_install'] = '<span class="message-helper bgc notice">Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';

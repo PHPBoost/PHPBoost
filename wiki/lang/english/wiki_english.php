@@ -114,11 +114,11 @@ $LANG['wiki_change_reason_label'] = 'Reason for the change (optional 100 car max
 $LANG['wiki_change_reason'] = 'Reason for the change';
 
 $LANG['wiki_status_list'] = array(
-	array('Quality article', '<span class="message-helper notice">This article is very good.</span>'),
-	array('Unachieved article', '<span class="message-helper question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
-	array('Article in transformation', '<span class="message-helper notice">This article is not complete, you can use your knowledge to complete it.</span>'),
-	array('Article to remake', '<span class="message-helper warning">This article must be writen again. Its content is not reliable.</span>'),
-	array('Article discussion', '<span class="message-helper error">This article was a subject of discussion and its content seems to be incorrect. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
+	array('Quality article', '<span class="message-helper bgc notice">This article is very good.</span>'),
+	array('Unachieved article', '<span class="message-helper bgc question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
+	array('Article in transformation', '<span class="message-helper bgc notice">This article is not complete, you can use your knowledge to complete it.</span>'),
+	array('Article to remake', '<span class="message-helper bgc warning">This article must be writen again. Its content is not reliable.</span>'),
+	array('Article discussion', '<span class="message-helper bgc error">This article was a subject of discussion and its content seems to be incorrect. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
 //Déplacement de l'article

@@ -75,7 +75,7 @@ $LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you 
 <p>You cannot insert some PHP code in you pages for security reason.</p>
 <p>To create links between different pages of this module, you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p>
 <p>This tag only exist on pages and wiki modules.</p>
-<div class="message-helper warning">For security reason, insert PHP code is forbidden in "pages" module.</div>';
+<div class="message-helper bgc warning">For security reason, insert PHP code is forbidden in "pages" module.</div>';
 $LANG['pages_redirections'] = 'Redirections';
 $LANG['pages_num_pages'] = '%d existing page(s)';
 $LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f commentary by page';

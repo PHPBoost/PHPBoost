@@ -29,8 +29,8 @@ $lang['langs.default_lang_visibility'] = 'The default language is usable for eve
 $lang['langs.select_all_langs'] = 'Select all languages';
 
 //Warnings
-$lang['langs.warning_before_delete'] = '<span class="message-helper warning">A language must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
-$lang['langs.add.warning_before_install'] = '<span class="message-helper notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['langs.warning_before_delete'] = '<span class="message-helper bgc warning">A language must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['langs.add.warning_before_install'] = '<span class="message-helper bgc notice">The installed languages are automatically enabled. Do not forget to disable them if necessary.</span>';
 
 //Upload
 $lang['langs.upload_lang'] = 'Upload a language';

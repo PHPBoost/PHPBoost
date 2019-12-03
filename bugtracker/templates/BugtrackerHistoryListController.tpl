@@ -55,5 +55,5 @@
 	# ENDIF #
 </table>
 # ELSE #
-<div class="message-helper notice">{@notice.no_history}</div>
+<div class="message-helper bgc notice">{@notice.no_history}</div>
 # ENDIF #

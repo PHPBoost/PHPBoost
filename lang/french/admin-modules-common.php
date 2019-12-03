@@ -27,9 +27,9 @@ $lang['modules.installed_modules'] = 'Modules installés';
 $lang['modules.available_modules'] = 'Modules disponibles';
 
 //Warnings
-$lang['modules.warning_before_delete'] = '<span class="message-helper warning">Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper notice">Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
-$lang['modules.add.warning_before_install'] = '<span class="message-helper notice">Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
-$lang['modules.update.warning_before_update'] = '<span class="message-helper notice">Les modules mis à jour sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['modules.warning_before_delete'] = '<span class="message-helper bgc warning">Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.</span><span class="message-helper bgc notice">Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['modules.add.warning_before_install'] = '<span class="message-helper bgc notice">Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
+$lang['modules.update.warning_before_update'] = '<span class="message-helper bgc notice">Les modules mis à jour sont automatiquement activés. Pensez à les désactiver si besoin.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Uploader un module';

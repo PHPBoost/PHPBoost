@@ -1,7 +1,7 @@
 <?php
 /**
  * This class could be used to export feeds
- * <div classs="message-helper notice">Do not use this class, but one of its children like RSS or ATOM</div>
+ * <div classs="message-helper bgc notice">Do not use this class, but one of its children like RSS or ATOM</div>
  * @package     Content
  * @subpackage  Feed
  * @copyright   &copy; 2005-2019 PHPBoost

@@ -150,7 +150,7 @@ class ErrorHandler
 
 	protected function display_debug()
 	{
-		echo '<div class="message-helper ' . $this->errclass . ' error-handler">
+		echo '<div class="message-helper bgc ' . $this->errclass . ' error-handler">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em>
               </div>';

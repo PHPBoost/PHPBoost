@@ -26,7 +26,7 @@
 					<fieldset>
 						<legend><h1>{L_ALERT}</h1></legend>
 
-						<div class="message-helper notice">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
+						<div class="message-helper bgc notice">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">
 							<label for="title">* {L_ALERT_TITLE}</label>
 							<div class="form-field">
@@ -55,7 +55,7 @@
 				# START alert_confirm #
 				<fieldset>
 					<legend>{L_ALERT}</legend>
-					<div class="message-helper success">
+					<div class="message-helper bgc success">
 						{alert_confirm.MSG}
 						<div class="center"><a href="{URL_TOPIC}">{L_BACK_TOPIC}</a></div>
 					</div>

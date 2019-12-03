@@ -1,7 +1,7 @@
 		# INCLUDE message_helper #
 
 		# IF NO_FAVORITE #
-			<div class="message-helper notice">{L_NO_FAVORITE}</div>
+			<div class="message-helper bgc notice">{L_NO_FAVORITE}</div>
 		# ELSE #
 		{L_FAVORITES}
 			<table class="table">

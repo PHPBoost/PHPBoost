@@ -71,7 +71,7 @@ $lang = array(
 // Server setup
 	'step.server.title' => 'Looking up server configuration...',
 	'step.server.explanation' => '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="https://www.phpboost.com/forum/">Support Forums</a>.</p>
-<div class="message-helper notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
+<div class="message-helper bgc notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>',
 	'php.version' => 'PHP version',
 	'php.version.check' => 'PHP minimum version :min_php_version',
 	'php.version.check.explanation' => '<span style="font-weight: bold;color: red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.',
@@ -194,9 +194,9 @@ The PHPBoost Team.',
 	'finish.message' => '<fieldset>
 							<legend>PHPBoost is now installed and ready to run!</legend>
 							<div class="fielset-inset">
-								<p class="message-helper success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
+								<p class="message-helper bgc success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
 								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="https://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-								<p class="message-helper warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
+								<p class="message-helper bgc warning">For security reasons we also recommand you to delete the <b>install</b> folder and all its content. Hackers could manage to run the installation script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
 								<p>Don\'t forget to consult the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym aria-label="Frequently Asked Questions">FAQ</acronym></a>.</p>
 								<p>If you have any problem please go to the <a href="https://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
 							</div>

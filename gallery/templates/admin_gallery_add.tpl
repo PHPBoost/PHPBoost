@@ -197,7 +197,7 @@
 						</div>
 					</fieldset>
 				# ELSE #
-					<div class="message-helper notice">{L_NO_IMG}</div>
+					<div class="message-helper bgc notice">{L_NO_IMG}</div>
 				# ENDIF #
 			</form>
 		</div>

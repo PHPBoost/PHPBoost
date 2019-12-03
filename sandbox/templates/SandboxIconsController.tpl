@@ -86,9 +86,9 @@
 			</div>
 			<span class="formatter-code">{@iconfa.howto.css.html.code}</span>
 			<div class="code">
-				<pre><<span>div class="message-helper success">{@css.message.success}<<span>/div></span></pre>
+				<pre><<span>div class="message-helper bgc success">{@css.message.success}<<span>/div></span></pre>
 			</div>
-			<div class="message-helper success">{@css.message.success}</div>
+			<div class="message-helper bgc success">{@css.message.success}</div>
 
 			<br />
 			<h3>{@iconfa.howto.bbcode}</h3>

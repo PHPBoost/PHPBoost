@@ -30,7 +30,7 @@
 						<div class="fieldset-inset">
 							{L_EXPLAIN_ACTIONS}
 							<div class="spacer"></div>
-							<div class="message-helper question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+							<div class="message-helper bgc question">{L_EXPLAIN_ACTIONS_QUESTION}</div>
 						</div>
 					</fieldset>
 					<fieldset>
@@ -131,7 +131,7 @@
 						<legend>{ACTION_FOR_SELECTION}</legend>
 						<div class="fieldset-inset">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<div class="cell-flex cell-flex-3 no-style">
+							<div class="cell-flex cell-columns-3 no-style">
 								<div class="cell">
 									<button type="submit" name="optimize" value="true" class="submit">
 										<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
@@ -352,7 +352,7 @@
 									<header></header>
 									<div class="content">
 										<span id="errorh"></span>
-										<div class="message-helper warning">{L_EXPLAIN_QUERY}</div>
+										<div class="message-helper bgc warning">{L_EXPLAIN_QUERY}</div>
 										<fieldset>
 											<label for="query">* {L_EXECUTED_QUERY}</label>
 											<textarea rows="12" id="query" name="query">{QUERY}</textarea>

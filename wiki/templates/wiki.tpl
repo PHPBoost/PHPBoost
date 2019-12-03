@@ -52,7 +52,7 @@
 
 		<div class="content">
 			# START warning #
-			<div class="message-helper warning">{warning.UPDATED_ARTICLE}</div>
+			<div class="message-helper bgc warning">{warning.UPDATED_ARTICLE}</div>
 			# END warning #
 
 			# START redirect #

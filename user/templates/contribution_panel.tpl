@@ -7,7 +7,7 @@
 			{L_CONTRIBUTION_LIST}
 
 			# IF C_NO_CONTRIBUTION #
-				<div class="message-helper success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
+				<div class="message-helper bgc success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			# ELSE #
 				<table class="table">
 					<thead>
@@ -155,7 +155,7 @@
 						<div class="spacer"></div>
 					# END row #
 				# ELSE #
-					<div class="message-helper warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
+					<div class="message-helper bgc warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 				# ENDIF #
 			</div>
 		<footer></footer>

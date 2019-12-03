@@ -7,7 +7,7 @@
 
 	<article class="content">
 		# IF C_PREVIEW #
-		<div class="message-helper notice">Prévisualisation</div>
+		<div class="message-helper bgc notice">Prévisualisation</div>
 		# ENDIF #
 
 		# IF C_RESULT #

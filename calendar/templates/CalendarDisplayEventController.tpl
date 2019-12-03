@@ -33,7 +33,7 @@
 			# ENDIF #
 
 			# IF C_CANCELLED #
-			<span class="message-helper error">{@calendar.cancelled}</span>
+			<span class="message-helper bgc error">{@calendar.cancelled}</span>
 			# ENDIF #
 
 			<div class="options infos">

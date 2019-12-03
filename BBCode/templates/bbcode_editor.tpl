@@ -114,7 +114,9 @@
 							</div>
 						</div>
 						<div class="cell-body">
-							<span class="font-size-sample">{@bbcode.preview.text}</span>
+							<div class="cell-content">
+								<span class="font-size-sample">{@bbcode.preview.text}</span>
+							</div>
 						</div>
 						<div class="cell-footer cell-input">
 							<span class="button hide-modal" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
@@ -237,25 +239,35 @@
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.title}</div>
 						</div>
-						<div class="cell-body justify-between">
-							<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
-							<span class="button hide-modal" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+						<div class="cell-body">
+							<div class="cell-content justify-between">
+								<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
+								<span class="button hide-modal" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							</div>
 						</div>
-						<div class="cell-body justify-between">
-							<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
-							<span class="button hide-modal" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+						<div class="cell-body">
+							<div class="cell-content justify-between">
+								<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
+								<span class="button hide-modal" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							</div>
 						</div>
-						<div class="cell-body justify-between">
-							<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
-							<span class="button hide-modal" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+						<div class="cell-body">
+							<div class="cell-content justify-between">
+								<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
+								<span class="button hide-modal" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							</div>
 						</div>
-						<div class="cell-body justify-between">
-							<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
-							<span class="button hide-modal" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+						<div class="cell-body">
+							<div class="cell-content justify-between">
+								<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
+								<span class="button hide-modal" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							</div>
 						</div>
-						<div class="cell-body justify-between">
-							<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
-							<span class="button hide-modal" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+						<div class="cell-body">
+							<div class="cell-content justify-between">
+								<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
+								<span class="button hide-modal" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -371,7 +383,9 @@
 							<div class="cell-name">{@bbcode.custom.div}</div>
 						</div>
 						<div class="cell-body">
-							<span class="message-helper notice">{@bbcode.custom.div.alert}</span>
+							<div class="cell-content">
+								<span class="message-helper bgc notice">{@bbcode.custom.div.alert}</span>
+							</div>
 						</div>
 						<div class="cell-form">
 							<label for="bb_cd_id{FIELD}" class="cell-label">{@bbcode.custom.div.id}</label>
@@ -497,33 +511,43 @@
 							<div class="cell-name">{@bbcode.style}</div>
 						</div>
 						<div class="cell-body">
-							<div class="message-helper notice justify-between">
-								<span>${LangLoader::get_message('notice', 'main')}</span>
-								<span class="button message-helper-button notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<div class="cell-content">
+								<div class="message-helper bgc notice justify-between">
+									<span>${LangLoader::get_message('notice', 'main')}</span>
+									<span class="button message-helper-button notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</div>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="message-helper question justify-between">
-								<span>${LangLoader::get_message('question', 'main')}</span>
-								<span class="button message-helper-button question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<div class="cell-content">
+								<div class="message-helper bgc question justify-between">
+									<span>${LangLoader::get_message('question', 'main')}</span>
+									<span class="button message-helper-button question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</div>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="message-helper success justify-between">
-								<span>${LangLoader::get_message('success', 'main')}</span>
-								<span class="button message-helper-button success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<div class="cell-content">
+								<div class="message-helper bgc success justify-between">
+									<span>${LangLoader::get_message('success', 'main')}</span>
+									<span class="button message-helper-button success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</div>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="message-helper warning justify-between">
-								<span>${LangLoader::get_message('warning', 'main')}</span>
-								<span class="button message-helper-button warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<div class="cell-content">
+								<div class="message-helper bgc warning justify-between">
+									<span>${LangLoader::get_message('warning', 'main')}</span>
+									<span class="button message-helper-button warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</div>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="message-helper error justify-between">
-								<span>${LangLoader::get_message('error', 'main')}</span>
-								<span class="button message-helper-button error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+							<div class="cell-content">
+								<div class="message-helper bgc error justify-between">
+									<span>${LangLoader::get_message('error', 'main')}</span>
+									<span class="button message-helper-button error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -682,7 +706,11 @@
 								</label>
 							</div>
 						</div>
-						<div class="cell-body cell-hidden hidden"><span class="message-helper notice">{@bbcode.anchor.url.desc}</span></div>
+						<div class="cell-body cell-hidden hidden">
+							<div class="cell-content">
+								<span class="message-helper bgc notice">{@bbcode.anchor.url.desc}</span>
+							</div>
+						</div>
 						<div class="cell-footer cell-input">
 							<span class="button hide-modal" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
@@ -877,7 +905,11 @@
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fa}</div>
 						</div>
-						<div class="cell-body center">{@bbcode.fa.tag}</div>
+						<div class="cell-body">
+							<div class="cell-content center">
+								{@bbcode.fa.tag}
+							</div>
+						</div>
 						<div class="cell-list cell-list-inline">
 							<ul>
 								# START code_fa #

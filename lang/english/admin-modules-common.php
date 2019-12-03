@@ -27,9 +27,9 @@ $lang['modules.installed_modules'] = 'Installed modules';
 $lang['modules.available_modules'] = 'Avalable Modules disponibles';
 
 //Warnings
-$lang['modules.warning_before_delete'] = '<span class="message-helper warning">A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper notice">The installed modules are automatically enabled. Do not forget to disable them if necessary.</span>';
-$lang['modules.add.warning_before_install'] = '<span class="message-helper notice">The installed modules are automatically enabled. Do not forget to disable them if necessary.</span>';
-$lang['modules.update.warning_before_update'] = '<span class="message-helper notice">The updated modules are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['modules.warning_before_delete'] = '<span class="message-helper bgc warning">A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.</span><span class="message-helper bgc notice">The installed modules are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['modules.add.warning_before_install'] = '<span class="message-helper bgc notice">The installed modules are automatically enabled. Do not forget to disable them if necessary.</span>';
+$lang['modules.update.warning_before_update'] = '<span class="message-helper bgc notice">The updated modules are automatically enabled. Do not forget to disable them if necessary.</span>';
 
 //Upload
 $lang['modules.upload_module'] = 'Install a module';

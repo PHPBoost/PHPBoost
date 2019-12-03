@@ -51,15 +51,15 @@ class MessageHelper
 				$image     = 'error_question';
 			break;
 			case self::MEMBER_ONLY:
-				$css_class = 'member-only';
+				$css_class = 'member';
 				$image     = 'error_member_only';
 			break;
 			case self::MODERATOR_ONLY:
-				$css_class = 'modo-only';
+				$css_class = 'moderator';
 				$image     = 'error_modo_only';
 			break;
 			case self::ADMIN_ONLY:
-				$css_class = 'admin-only';
+				$css_class = 'administrator';
 				$image     = 'error_admin_only';
 			break;
 			default:

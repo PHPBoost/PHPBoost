@@ -65,17 +65,17 @@ class SandboxGraphicsCSSController extends ModuleController
 
 		// code source
 		$this->view->put_all(array(
-			'PAGE' => file_get_contents('html/css/page.tpl'),
-			'FORM_OPTION' => file_get_contents('html/css/form-option.tpl'),
-			'DIV_OPTION' => file_get_contents('html/css/div-option.tpl'),
+			'PAGE'         => file_get_contents('html/css/page.tpl'),
+			'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
+			'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),
 			'PROGRESS_BAR' => file_get_contents('html/css/progress-bar.tpl'),
-			'EXPLORER' => file_get_contents('html/css/explorer.tpl'),
-			'BUTTON' => file_get_contents('html/css/button.tpl'),
-			'SORTABLE' => file_get_contents('html/css/sortable.tpl'),
-			'TABLE' => file_get_contents('html/css/table.tpl'),
-			'MESSAGE' => file_get_contents('html/css/message.tpl'),
-			'ALERT' => file_get_contents('html/css/alert.tpl'),
-			'BLOCK' => file_get_contents('html/css/block.tpl')
+			'EXPLORER'     => file_get_contents('html/css/explorer.tpl'),
+			'BUTTON'       => file_get_contents('html/css/button.tpl'),
+			'SORTABLE'     => file_get_contents('html/css/sortable.tpl'),
+			'TABLE'        => file_get_contents('html/css/table.tpl'),
+			'MESSAGE'      => file_get_contents('html/css/message.tpl'),
+			'ALERT'        => file_get_contents('html/css/alert.tpl'),
+			'BLOCK'        => file_get_contents('html/css/block.tpl')
 		));
 
 		$this->build_floating_messages();

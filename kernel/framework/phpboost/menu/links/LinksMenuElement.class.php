@@ -1,7 +1,7 @@
 <?php
 /**
  * A LinksMenuElement contains a Title, an url, and an image url
- * <div class="message-helper notice">Abstract class : Do not instanciate it
+ * <div class="message-helper bgc notice">Abstract class : Do not instanciate it
  * LinksMenuLink and LinksMenuLink classes are based on this class
  * use, on of these</div>
  * @package     PHPBoost
@@ -87,7 +87,7 @@ abstract class LinksMenuElement extends Menu
 					$image = new Image($url->absolute());
 				else
 					$image = new Image(PATH_TO_ROOT . $this->image);
-				
+
 				$template->put_all(array(
 					'C_IMG' => !empty($this->image),
 					'ABSOLUTE_IMG' => $url->absolute(),

@@ -129,7 +129,7 @@
 				# IF C_CONTRIBUTION #
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
-					<div class="message-helper notice">{L_NOTICE_CONTRIBUTION}</div>
+					<div class="message-helper bgc notice">{L_NOTICE_CONTRIBUTION}</div>
 					<div class="form-element form-element-textarea">
 						<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
 						{CONTRIBUTION_COUNTERPART_EDITOR}

@@ -80,7 +80,7 @@
 									&nbsp;
 								</div>
 							# ELSE #
-								<div class="message-helper notice"># IF C_NO_VOTE #{L_NO_VOTE}# ELSE #{L_RESULTS_NOT_DISPLAYED_YET}# ENDIF #</div>
+								<div class="message-helper bgc notice"># IF C_NO_VOTE #{L_NO_VOTE}# ELSE #{L_RESULTS_NOT_DISPLAYED_YET}# ENDIF #</div>
 							# ENDIF #
 						# ENDIF #
 					</div>

@@ -416,7 +416,7 @@
 							</tr>
 							<tr>
 								<td class="td33P">
-									<div class="message-helper question">{L_ALTERNATIVE_PM}</div>
+									<div class="message-helper bgc question">{L_ALTERNATIVE_PM}</div>
 								</td>
 								<td>
 									{KERNEL_EDITOR}
