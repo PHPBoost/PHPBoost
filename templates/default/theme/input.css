@@ -100,7 +100,13 @@ a.grouped-element,
 	margin: 0;
 	align-items: center;
 }
-.grouped-inputs span{
+
+.grouped-inputs .grouped-element input:not([type="checkbox"]):not([type="radio"]),
+.grouped-inputs .grouped-element select {
+	width: 100%;
+}
+
+.grouped-inputs span {
 	padding: 0 0.618em;
 }
 

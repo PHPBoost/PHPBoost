@@ -24,13 +24,13 @@
 		<div class="fieldset-inset">
 			# INCLUDE MSG #
 			# IF C_UNEXISTING_UPDATE #
-				<div class="message-helper warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
+				<div class="message-helper bgc warning message-helper-small">{L_UNEXISTING_UPDATE}</div>
 			# ELSE #
 				<article>
 					<header>
 						<h2>{APP_NAME} - {APP_VERSION}</h2>
 						# IF C_APP_WARNING #
-							<div class="message-helper message-update {WARNING_CSS_CLASS}">
+							<div class="message-helper bgc {WARNING_CSS_CLASS} message-update">
 								<p class="center">{L_WARNING}</p>
 								<p>{APP_WARNING}</p>
 							</div>

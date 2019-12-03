@@ -80,7 +80,7 @@
 		</div>
 		# ELSE #
 		<div class="content">
-			<div class="message-helper notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
+			<div class="message-helper bgc notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		</div>
 		# ENDIF #
 		<footer></footer>

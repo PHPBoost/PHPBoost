@@ -338,7 +338,7 @@ $(document).ready(function(){
 		<legend>{L_FOLDER_CONTENT}</legend>
 		<div class="fieldset-inset">
 			# IF C_EMPTY_FOLDER #
-				<div id="empty-folder" class="message-helper notice">{L_EMPTY_FOLDER}</div>
+				<div id="empty-folder" class="message-helper bgc notice">{L_EMPTY_FOLDER}</div>
 				<span id="new-folder"></span>
 			# ELSE #
 				# START folder #

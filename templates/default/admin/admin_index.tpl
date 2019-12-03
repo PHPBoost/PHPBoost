@@ -48,9 +48,9 @@
 					<div class="cell-body">
 						<div class="cell-content">
 							# IF C_UNREAD_ALERTS #
-								<div class="message-helper warning">{L_UNREAD_ALERT}</div>
+								<div class="message-helper bgc warning">{L_UNREAD_ALERT}</div>
 							# ELSE #
-								<div class="message-helper success">{L_NO_UNREAD_ALERT}</div>
+								<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
 							# ENDIF #
 							# IF C_UNREAD_ALERTS #
 							<p class="smaller center">

@@ -1,7 +1,7 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
 	<div id="message-maintain" class="floating-message-container">
-		<div id="message-helper-maintain" class="message-helper warning message-helper-small">
+		<div id="message-helper-maintain" class="message-helper bgc warning message-helper-small">
 			<a id="message-helper-button-maintain" class="message-helper-button warning {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true"></i></a>
 			{L_MAINTAIN_DELAY}
 			<div id="release">{L_LOADING}...</div>

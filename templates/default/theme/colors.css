@@ -499,30 +499,6 @@ a:hover,
 }
 .bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.2);}
 
-.administrator {
-	color: #353535;
-	border-color: #353535;
-}
-.bgc.administrator { background-color: rgba(54, 54, 54, 0.2);}
-
-.moderator {
-	color: #48419D;
-	border-color: #48419D;
-}
-.bgc.moderator { background-color: rgba(72, 65, 157, 0.2);}
-
-.member {
-	color: #2F9674;
-	border-color: #2F9674;
-}
-.bgc.member { background-color: rgba(47, 150, 116, 0.2);}
-
-.visitor {
-	color: #888888;
-	border-color: #888888;
-}
-.bgc.visitor { background-color: rgba(136, 136, 136, 0.2);}
-
 .color-alert        { color: #913636; }
 .color-notavailable { color: #913636; }
 .color-available 	{ color: #4D9136; }
@@ -566,7 +542,6 @@ td.calendar-week { border-color: #0066cc; }
 .fa-check:before          { color: #4D9136; }
 .fa-minus-circle:before        { color: #913636; }
 .fa-times:before            { color: #913636; }
-.fa-exclamation-triangle:before          { color: #D36636; }
 .user-locked .fa-user-lock:before              { color: #913636; }
 .user-unlocked .fa-user-lock:before            { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }
@@ -596,6 +571,7 @@ td.calendar-week { border-color: #0066cc; }
 .fa-showmymsg:before        { color: #353535; }
 
 /* --- Alerts --------------------------------------------------------------- */
+.floating-element,
 .message-helper { background-color: #FFFFFF }
 
 .notice, .notice:before             { color: #888888; }
@@ -603,31 +579,41 @@ td.calendar-week { border-color: #0066cc; }
 .success, .success:before           { color: #4D9136; }
 .warning, .warning:before           { color: #D36636; }
 .error, .error:before               { color: #913636; }
-.member-only, .member-only:before   { color: #2F9674; }
-.modo-only, .modo-only:before       { color: #48419D; }
-.admin-only, .admin-only:before     { color: #353535; }
+.member, .member:before             { color: #2F9674; }
+.moderator, .moderator:before       { color: #48419D; }
+.administrator, .administrator:before { color: #353535; }
 
-.notice       { border-color: #888888; background-color: rgba(136, 136, 136, 0.2); }
-.question     { border-color: #0066cc; background-color: rgba(0, 102, 204, 0.2); }
-.success      { border-color: #4D9136; background-color: rgba(77, 145, 54, 0.2); }
-.warning      { border-color: #D36636; background-color: rgba(210, 102, 54, 0.2); }
-.error        { border-color: #913636; background-color: rgba(145, 54, 54, 0.2); }
-.member-only  { border-color: #2F9674; background-color: rgba(47, 150, 116, 0.2); }
-.modo-only    { border-color: #48419D; background-color: rgba(72, 65, 157, 0.2); }
-.admin-only   { border-color: #353535; background-color: rgba(54, 54, 54, 0.2); }
+.notice        { border-color: #888888; }
+.question      { border-color: #0066cc; }
+.success       { border-color: #4D9136; }
+.warning       { border-color: #D36636; }
+.error         { border-color: #913636; }
+.member        { border-color: #2F9674; }
+.moderator     { border-color: #48419D; }
+.administrator { border-color: #353535; }
 
-.message-helper-button				{ color: #FFFFFF; }
-.message-helper-button.notice       { background-color: #888888; }
-.message-helper-button.question     { background-color: #0066cc; }
-.message-helper-button.success      { background-color: #4D9136; }
-.message-helper-button.warning      { background-color: #D36636; }
-.message-helper-button.error        { background-color: #913636; }
-.message-helper-button.member-only  { background-color: #2F9674; }
-.message-helper-button.modo-only    { background-color: #48419D; }
-.message-helper-button.admin-only   { background-color: #353535; }
+.bgc.notice        { background-color: rgba(136, 136, 136, 0.2); }
+.bgc.question      { background-color: rgba(0, 102, 204, 0.2); }
+.bgc.success       { background-color: rgba(77, 145, 54, 0.2); }
+.bgc.warning       { background-color: rgba(210, 102, 54, 0.2); }
+.bgc.error         { background-color: rgba(145, 54, 54, 0.2); }
+.bgc.member        { background-color: rgba(47, 150, 116, 0.2); }
+.bgc.moderator     { background-color: rgba(72, 65, 157, 0.2); }
+.bgc.administrator { background-color: rgba(54, 54, 54, 0.2); }
 
-.member-only.authorized-reader { border-color: #2F9674; }
-.modo-only.authorized-reader   { border-color: #48419D; }
+.message-helper-button				 { color: #FFFFFF; }
+.message-helper-button.notice        { background-color: #888888; }
+.message-helper-button.question      { background-color: #0066cc; }
+.message-helper-button.success       { background-color: #4D9136; }
+.message-helper-button.warning       { background-color: #D36636; }
+.message-helper-button.error         { background-color: #913636; }
+.message-helper-button.member        { background-color: #2F9674; }
+.message-helper-button.moderator     { background-color: #48419D; }
+.message-helper-button.administrator { background-color: #353535; }
+
+.authorized-reader.member        { border-color: #2F9674; }
+.authorized-reader.moderator     { border-color: #48419D; }
+.authorized-reader.administrator { border-color: #353535; }
 
 /* --- Classes for/from bbcode -------------------------------------------------- */
 .bbcode-bar {

@@ -1,5 +1,5 @@
 # IF C_VALIDATION_ERROR #
-	<div class="message-helper error">
+	<div class="message-helper bgc error">
 		<p class="text-strong">{TITLE_VALIDATION_ERROR_MESSAGE} : </p>
 		# START validation_error_messages #
 			- {validation_error_messages.ERROR_MESSAGE}<br />

@@ -27,6 +27,7 @@
 @import url('../../default/theme/cell.css') screen, print;
 @import url('../../default/theme/cell_layout.css') screen, print;
 @import url('../../default/theme/pagination.css') screen, print;
+@import url('../../default/theme/message_helper.css') screen, print;
 
 @import url('../../default/theme/dashboard/dashboard_addons.css') screen, print;
 
