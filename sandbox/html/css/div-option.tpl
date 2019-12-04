@@ -1,6 +1,6 @@
 <pre>
 &lt;div class="options infos">
-    &lt;div class="center">
+    &lt;div class="align-center">
         &lt;span>
             &lt;img src="link-to-picture.ext" alt="Lorem" itemprop="image">
         &lt;/span>
@@ -17,7 +17,7 @@
     &lt;span class="text-strong">Module option : &lt;/span>&lt;span>&lt;a itemprop="about" class="small" href="#">link&lt;/a>&lt;/span>&lt;br />
     &lt;span>12 coms&lt;/span>
     &lt;div class="spacer">&lt;/div>
-    &lt;div class="center">
+    &lt;div class="align-center">
         &lt;div class="notation" id="notation-1">
             &lt;span class="stars">
                 &lt;a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1">&lt;/a>

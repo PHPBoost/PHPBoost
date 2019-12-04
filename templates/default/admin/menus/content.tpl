@@ -17,7 +17,7 @@ function CheckForm() {
 </script>
 <div id="admin-contents">
 	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset-content">
-		<p class="center">{L_REQUIRE}</p>
+		<p class="align-center">{L_REQUIRE}</p>
 			<fieldset>
 			<legend>{L_ACTION_MENUS}</legend>
 			<div class="fieldset-inset">
@@ -66,7 +66,7 @@ function CheckForm() {
 					<div class="form-field-textarea">
 						<textarea rows="15" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
-					<div class="center"><button type="button" class="small" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button></div>
+					<div class="align-center"><button type="button" class="small" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button></div>
 				</div>
 				<div class="form-element full-field">
 					<label>{L_AUTHS}</label>

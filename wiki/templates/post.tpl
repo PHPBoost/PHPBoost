@@ -39,7 +39,7 @@
 		# INCLUDE message_helper #
 
 		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content wiki-edit">
-			<p class="center">{L_REQUIRE}</p>
+			<p class="align-center">{L_REQUIRE}</p>
 			<fieldset>
 				<legend>{TITLE}</legend>
 				# START create #

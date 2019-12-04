@@ -33,7 +33,7 @@ ${resources('update/update')}
 							<div class="site-logo"></div>
 							<span>{@language.change}</span>
 						</h5>
-						<form class="center" action="{U_CHANGE_LANG}" method="post">
+						<form class="align-center" action="{U_CHANGE_LANG}" method="post">
 							<label for="change_lang">
 								<select
 									id="change_lang"

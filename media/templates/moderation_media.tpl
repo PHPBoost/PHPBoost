@@ -2,7 +2,7 @@
 		<form action="moderation_media.php" method="post">
 			<fieldset class="fieldset-submit">
 				<legend>{L_FILTER}</legend>
-				<div id="form" class="center fieldset-content">
+				<div id="form" class="align-center fieldset-content">
 					{L_DISPLAY_FILE}&nbsp;
 					<select name="state" id="state" class="nav" onchange="change_order()">
 						<option value="all"{SELECTED_ALL}>{L_ALL}</option>

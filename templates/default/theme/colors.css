@@ -659,7 +659,7 @@ h3.formatter-title { border-color: #366393; }
 	border-color: rgba(54, 100, 147, 0.4);
 }
 
-/*  */
+/* --- Progress bar --- */
 .progressbar-container {
 	background-color: #ECF2F8;
 }
@@ -668,6 +668,7 @@ h3.formatter-title { border-color: #366393; }
 	background-color: #8FE18B;
 }
 
+/* --- Notation --- */
 .notation .star-width:before,
 .notation .star,
 .static-notation .star {

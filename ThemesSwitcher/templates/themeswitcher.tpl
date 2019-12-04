@@ -1,12 +1,26 @@
-<div class="themes-switcher# IF C_VERTICAL # themes-switcher-vertical# ELSE ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## ENDIF #">
-	<form action="{REWRITED_SCRIPT}" method="get">
-		<label for="switchtheme">
-			<select id="switchtheme" aria-labelledby="{@switch_theme}" name="switchtheme" onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
-			# START themes #
-				<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
-			# END themes #
-			</select>
-		</label>
-		<a href="{URL}{DEFAULT_THEME}">{@defaut_theme}</a>
-	</form>
+# IF C_HORIZONTAL #
+<div class="cell-mini">
+	<div class="cell">
+# ENDIF #
+		<div class="cell-form# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
+			<form action="{REWRITED_SCRIPT}" method="get">
+				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ELSE #cell-input# ENDIF #">
+					# IF C_HORIZONTAL #<span class="grouped-element">{@switch.theme}</span># ENDIF #
+					<select id="switchtheme" name="switchtheme" onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
+					# START themes #
+						<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
+					# END themes #
+					</select>
+					# IF C_HORIZONTAL #<a class="grouped-element" href="{URL}{DEFAULT_THEME}">{@defaut.theme}</a># ENDIF #
+				</div>
+			</form>
+		</div>
+# IF C_HORIZONTAL #
+	</div>
 </div>
+# ENDIF #
+# IF C_VERTICAL #
+	<div class="cell-body">
+		<div class="cell-content align-center"><a class="button small" href="{URL}{DEFAULT_THEME}">{@defaut.theme}</a></div>
+	</div>
+# ENDIF #

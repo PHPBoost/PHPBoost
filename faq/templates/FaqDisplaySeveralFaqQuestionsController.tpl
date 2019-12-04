@@ -65,7 +65,7 @@
 # INCLUDE MSG #
 <section id="module-faq">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
@@ -107,7 +107,7 @@
 		# END sub_categories_list #
 		<div class="spacer"></div>
 	</div>
-	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+	# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ELSE #
 	<div class="spacer"></div>
 	# ENDIF #
@@ -138,7 +138,7 @@
 				<header class="faq-question-element">
 					<h3 class="question-title">
 						# IF questions.C_ACTION_USER #
-						<span class="actions"><a href="{questions.U_LINK}" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i></a></span>
+						<span class="controls"><a href="{questions.U_LINK}" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i></a></span>
 						# ELSE #
 						<span class="actions actions-menu question-actions" id="question-{questions.ID}-actions">
 							<a href="" aria-label="{@faq.actions.menu}" class="actions-title" onclick="open_submenu('question-{questions.ID}-actions', 'opened', 'question-actions');return false;"><i class="fa fa-ellipsis-h"></i></a>
@@ -176,7 +176,7 @@
 	# ENDIF #
 	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
-			<div class="center">
+			<div class="align-center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
 		</div>

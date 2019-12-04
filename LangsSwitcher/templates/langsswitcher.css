@@ -1,21 +1,4 @@
 /*
-* Surchargez ce fichier dans votre thème pour personnaliser le module
+* Copy this file in your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-
-.langs-switcher {
-	padding: 0.809em;
-}
-
-.selected-lang {
-	display: inline-block;
-}
-
-.langs-switcher-vertical {
-	display: block;
-	margin: 0 auto 0.309em auto;
-}
-
-.langs-switcher img {
-	vertical-align: middle;
-}

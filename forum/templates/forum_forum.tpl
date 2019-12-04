@@ -84,7 +84,7 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-forum" class="forum-contents">
 			<header>
-				<span class="actions">
+				<span class="controls">
 					# IF IDCAT #<a href="unread.php?cat={IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread" aria-hidden="true"></i></a># ENDIF #
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</span>

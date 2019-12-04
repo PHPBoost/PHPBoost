@@ -45,7 +45,6 @@ fieldset[id*="advises"] .form-element {
 [type="email"],
 [type="url"],
 [type="number"],
-[type="color"],
 [type="tel"],
 [type="search"],
 [type="password"],
@@ -55,6 +54,7 @@ select {
 	width: 100%;
 	padding: 0.618em;
 }
+[type="color"] { width: 100%; }
 
 @media (min-width:769px){
 	p[id*="filter"] select,

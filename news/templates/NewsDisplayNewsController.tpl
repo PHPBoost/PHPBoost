@@ -1,6 +1,6 @@
 <section id="module-news">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
@@ -12,7 +12,7 @@
 		</article>
 	# ENDIF #
 	<article id="news-item-{ID}" class="news-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-		<div class="item-infos">
+		<div class="flex-between">
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #
 					# IF C_AUTHOR_CUSTOM_NAME #
@@ -34,7 +34,7 @@
 				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 				# IF C_NB_VIEW_ENABLED #<span class="pinned notice" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 			</div>
-			<div class="actions">
+			<div class="controls">
 				# IF C_EDIT #
 				<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 				# ENDIF #
@@ -130,6 +130,7 @@
 	<footer>
 		<meta itemprop="url" content="{U_LINK}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_PICTURE}"># ENDIF #
 		# IF C_COMMENTS_ENABLED #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">

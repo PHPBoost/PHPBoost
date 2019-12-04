@@ -6,17 +6,18 @@
 @import url('../../default/theme/shape.css') screen;
 
 /* @import url('../../default/theme/@variables.css') screen; */
-@import url('../../default/theme/global.css') screen, print;
-@import url('../../default/theme/form.css') screen, print;
-@import url('../../default/theme/fieldset.css') screen, print;
-@import url('../../default/theme/button.css') screen, print;
-@import url('../../default/theme/input.css') screen, print;
-@import url('../../default/theme/datepicker.css') screen, print;
-@import url('../../default/theme/constraint.css') screen, print;
-@import url('../../default/theme/linedwrap.css') screen, print;
-@import url('../../default/theme/authorizations.css') screen, print;
+@import url('../../default/theme/global.css') screen;
+@import url('../../default/theme/form.css') screen;
+@import url('../../default/theme/fieldset.css') screen;
+@import url('../../default/theme/button.css') screen;
+@import url('../../default/theme/input.css') screen;
+@import url('../../default/theme/datepicker.css') screen;
+@import url('../../default/theme/constraint.css') screen;
+@import url('../../default/theme/linedwrap.css') screen;
+@import url('../../default/theme/authorizations.css') screen;
 
-@import url('../../default/theme/table.css') screen, print;
+@import url('../../default/theme/table.css') screen;
+@import url('../../default/theme/formatter.css') screen;
 @import url('../../default/theme/cookies.css') screen;
 @import url('../../default/theme/scrollto.css') screen;
 @import url('../../default/theme/sortable.css') screen;
@@ -30,8 +31,6 @@
 @import url('../../default/theme/pagination.css') screen;
 @import url('../../default/theme/share.css') screen;
 
-
-@import url('../../default/theme/content.css') screen, print;
-@import url('../../default/theme/front_global.css') screen, print;
+@import url('../../default/theme/content.css') screen;
 
 @import url('../../default/theme/colors.css') screen;

@@ -240,31 +240,31 @@
 							<div class="cell-name">{@bbcode.title}</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content justify-between">
+							<div class="cell-content flex-between">
 								<h2 class="formatter-title">{@bbcode.title.label} 1</h2>
 								<span class="button hide-modal" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content justify-between">
+							<div class="cell-content flex-between">
 								<h3 class="formatter-title">{@bbcode.title.label} 2</h3>
 								<span class="button hide-modal" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content justify-between">
+							<div class="cell-content flex-between">
 								<h4 class="formatter-title">{@bbcode.title.label} 3</h4>
 								<span class="button hide-modal" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content justify-between">
+							<div class="cell-content flex-between">
 								<h5 class="formatter-title">{@bbcode.title.label} 4</h5>
 								<span class="button hide-modal" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content justify-between">
+							<div class="cell-content flex-between">
 								<h6 class="formatter-title">{@bbcode.title.label} 5</h6>
 								<span class="button hide-modal" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 							</div>
@@ -512,7 +512,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc notice justify-between">
+								<div class="message-helper bgc notice flex-between">
 									<span>${LangLoader::get_message('notice', 'main')}</span>
 									<span class="button message-helper-button notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
@@ -520,7 +520,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc question justify-between">
+								<div class="message-helper bgc question flex-between">
 									<span>${LangLoader::get_message('question', 'main')}</span>
 									<span class="button message-helper-button question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
@@ -528,7 +528,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc success justify-between">
+								<div class="message-helper bgc success flex-between">
 									<span>${LangLoader::get_message('success', 'main')}</span>
 									<span class="button message-helper-button success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
@@ -536,7 +536,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc warning justify-between">
+								<div class="message-helper bgc warning flex-between">
 									<span>${LangLoader::get_message('warning', 'main')}</span>
 									<span class="button message-helper-button warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
@@ -544,7 +544,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content">
-								<div class="message-helper bgc error justify-between">
+								<div class="message-helper bgc error flex-between">
 									<span>${LangLoader::get_message('error', 'main')}</span>
 									<span class="button message-helper-button error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
@@ -906,7 +906,7 @@
 							<div class="cell-name">{@bbcode.fa}</div>
 						</div>
 						<div class="cell-body">
-							<div class="cell-content center">
+							<div class="cell-content align-center">
 								{@bbcode.fa.tag}
 							</div>
 						</div>

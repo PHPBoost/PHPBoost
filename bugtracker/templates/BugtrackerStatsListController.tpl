@@ -28,7 +28,7 @@
 		<h1>{@labels.fields.status}</h1>
 	</header>
 	<div class="content">
-		<div class="center">
+		<div class="align-center">
 		# IF C_BUGS #
 			<div id="status-chart"></div>
 		# ELSE #

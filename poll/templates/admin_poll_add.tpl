@@ -55,7 +55,7 @@
 			# INCLUDE message_helper #
 
 			<form action="admin_poll_add.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-				<p class="center">{L_REQUIRE}</p>
+				<p class="align-center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_POLL_ADD}</legend>
 					<div class="fieldset-inset">
@@ -111,13 +111,13 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="left no-separator">
+											<td class="align-left no-separator">
 												<label class="infos-options"><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
 												<label class="infos-options"><input type="text" name="a1" value="{ANSWER1}" /></label>
 												<label class="infos-options"><input type="text" name="a2" value="{ANSWER2}" /></label>
 												<span id="a3"></span>
 											</td>
-											<td class="left no-separator">
+											<td class="align-left no-separator">
 												<label class="infos-options"><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
@@ -125,7 +125,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="left" colspan="2">
+											<td class="align-left" colspan="2">
 												<span id="s3"><a href="javascript:add_field(3, 20)" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a></span>
 											</td>
 										</tr>

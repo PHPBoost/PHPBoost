@@ -43,7 +43,7 @@
 								<input type="password" id="password" name="password" placeholder="{@password}">
 							</label>
 						</li>
-						<li class="center">
+						<li class="align-center">
 							<label class="checkbox" for="autoconnect">
 								<span>{@autoconnect}</span>
 								<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
@@ -51,7 +51,7 @@
 						</li>
 						<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 						<input type="hidden" name="token" value="{TOKEN}">
-						<li class="center">
+						<li class="align-center">
 							<button type="submit" name="authenticate" value="internal" class="submit">{@connection}</button>
 						</li>
 					</form>
@@ -59,7 +59,7 @@
 					# IF C_DISPLAY_REGISTER_CONTAINER #
 						# IF C_USER_REGISTER #
 							<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-								<li class="center">
+								<li class="align-center">
 									<button type="submit" name="register" value="true" class="submit">{@register}</button>
 								</li>
 								<input type="hidden" name="token" value="{TOKEN}">
@@ -71,7 +71,7 @@
 							# END external_auth #
 						</li>
 					# ENDIF #
-					<li class="center">
+					<li class="align-center">
 						<a class="button small" href="${relative_url(UserUrlBuilder::forget_password())}">
 							<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
 						</a>
@@ -95,21 +95,21 @@
 						# IF C_HAS_PM #
 							<span class="stacked blink member">
 								<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
-								<span class="stack-event bgc member">{NUMBER_PM}</span>
+								<span class="stack-event stack-circle stack-left bgc member">{NUMBER_PM}</span>
 							</span>
 						# ENDIF #
 						# IF C_ADMIN_AUTH #
 							# IF C_UNREAD_ALERT #
 								<span class="stacked blink administrator">
 									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-									<span class="stack-event bgc administrator">{NUMBER_UNREAD_ALERTS}</span>
+									<span class="stack-event stack-circle stack-left bgc administrator">{NUMBER_UNREAD_ALERTS}</span>
 								</span>
 							# ENDIF #
 						# ENDIF #
 						# IF C_UNREAD_CONTRIBUTION #
 							<span class="stacked blink moderator">
 								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
-								<span class="stack-event bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span>
+								<span class="stack-event stack-circle stack-left bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span>
 							</span>
 						# ENDIF #
 					</a>
@@ -127,7 +127,7 @@
 							</a>
 							<span # IF C_HAS_PM #class="stacked blink member"# ENDIF #>
 								<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
-								# IF C_HAS_PM #<span class="stack-event bgc member">{NUMBER_PM}</span> # ENDIF #
+								# IF C_HAS_PM #<span class="stack-event stack-circle stack-left bgc member">{NUMBER_PM}</span> # ENDIF #
 							</span>
 						</li>
 						# IF C_ADMIN_AUTH #
@@ -137,7 +137,7 @@
 								</a>
 								<span # IF C_UNREAD_ALERT #class="stacked blink administrator"# ENDIF #>
 									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-									# IF C_UNREAD_ALERT # <span class="stack-event bgc administrator">{NUMBER_UNREAD_ALERTS}</span> # ENDIF #
+									# IF C_UNREAD_ALERT # <span class="stack-event stack-circle stack-left bgc administrator">{NUMBER_UNREAD_ALERTS}</span> # ENDIF #
 								</span>
 							</li>
 						# ENDIF #
@@ -155,7 +155,7 @@
 							</a>
 							<span # IF C_UNREAD_CONTRIBUTION #class="stacked blink moderator"# ENDIF #>
 								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
-								# IF C_UNREAD_CONTRIBUTION #<span class="stack-event bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span># ENDIF #
+								# IF C_UNREAD_CONTRIBUTION #<span class="stack-event stack-circle stack-left bgc moderator">{NUMBER_UNREAD_CONTRIBUTIONS}</span># ENDIF #
 							</span>
 						</li>
 						<li class="# IF C_VERTICAL #li-stretch # ENDIF #connect-disconnect">

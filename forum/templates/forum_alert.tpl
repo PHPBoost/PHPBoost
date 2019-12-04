@@ -57,7 +57,7 @@
 					<legend>{L_ALERT}</legend>
 					<div class="message-helper bgc success">
 						{alert_confirm.MSG}
-						<div class="center"><a href="{URL_TOPIC}">{L_BACK_TOPIC}</a></div>
+						<div class="align-center"><a href="{URL_TOPIC}">{L_BACK_TOPIC}</a></div>
 					</div>
 				</fieldset>
 				# END alert_confirm #

@@ -31,7 +31,7 @@
 						<h2>{APP_NAME} - {APP_VERSION}</h2>
 						# IF C_APP_WARNING #
 							<div class="message-helper bgc {WARNING_CSS_CLASS} message-update">
-								<p class="center">{L_WARNING}</p>
+								<p class="align-center">{L_WARNING}</p>
 								<p>{APP_WARNING}</p>
 							</div>
 						# ENDIF #
@@ -41,7 +41,7 @@
 					</div>
 					<div class="content">
 						# IF C_DISPLAY_LINKS_AND_PRIORITY #
-							<div class="infos options center">
+							<div class="infos options align-center">
 								<p class="infos-options alert-priority {PRIORITY_CSS_CLASS}">{PRIORITY}</p>
 								# IF C_DISPLAY_UPDATE_BUTTON #
 									<form action="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={IDENTIFIER}" method="post">

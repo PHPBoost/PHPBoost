@@ -53,7 +53,7 @@
 								<div class="message-helper bgc success">{L_NO_UNREAD_ALERT}</div>
 							# ENDIF #
 							# IF C_UNREAD_ALERTS #
-							<p class="smaller center">
+							<p class="smaller align-center">
 								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 							</p>
 							# ENDIF #
@@ -170,11 +170,11 @@
 								# END comments_list #
 								# IF C_NO_COMMENT #
 									<li>
-										<p class="center"><em>{L_NO_COMMENT}</em></p>
+										<p class="align-center"><em>{L_NO_COMMENT}</em></p>
 									</li>
 								# ELSE #
 									<li>
-										<p class="smaller center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+										<p class="smaller align-center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 									</li>
 								# ENDIF #
 								# IF NOT C_NO_COMMENT #
@@ -210,7 +210,7 @@
 								<div class="form-element full-field">
 									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
 								</div>
-								<p class="center">
+								<p class="align-center">
 									<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
 									<button type="reset" value="true">{L_RESET}</button>
 									<input type="hidden" name="token" value="{TOKEN}">

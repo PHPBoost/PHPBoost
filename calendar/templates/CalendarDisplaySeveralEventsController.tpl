@@ -2,7 +2,7 @@
 
 <section id="module-calendar">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 		</div>
 		<h1>

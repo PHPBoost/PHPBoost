@@ -20,7 +20,7 @@
 		</div>
 
 	</div>
-	<div class="cell-content center">
+	<div class="cell-content align-center">
 		<p>{L_TOTAL} : {TOTAL_USERS_CONNECTED}</p>
 		# IF C_MORE_USERS #
 			<a class="button small" href="${relative_url(OnlineUrlBuilder::home())}">{TOTAL_USERS_CONNECTED} {L_USERS_ONLINE}</a>

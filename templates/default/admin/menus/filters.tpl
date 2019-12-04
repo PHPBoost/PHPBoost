@@ -29,7 +29,7 @@
 			<legend>{@filters}</legend>
 			<p>{@links_menus_filters_explain}</p>
 			<div class="fieldset-inset">
-				<div class="form-element full-field right">
+				<div class="form-element full-field align-right">
 					<label>{@filters}</label>
 					<div class="form-field">
 						# START filters #
@@ -46,7 +46,7 @@
 						# END filters #
 
 						<span id="add_filter{NBR_FILTER}"></span>
-						<p class="menu-filter right">
+						<p class="menu-filter align-right">
 							<a href="javascript:add_filter({NBR_FILTER})" aria-label="{@add_filter}"><i class="fa fa-plus" aria-hidden="true"></i></a>
 						</p>
 					</div>

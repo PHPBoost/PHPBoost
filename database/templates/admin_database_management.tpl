@@ -49,7 +49,7 @@
 									<span class="sr-only">${LangLoader::get_message('db_select_db_for_restore', 'common', 'database')}</span>
 								</label>
 								<br /><br />
-								<div class="center">
+								<div class="align-center">
 									<button type="submit" id="submit-file-to-restore" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
 								</div>
@@ -88,7 +88,7 @@
 						</thead>
 						<tbody>
 							# START table_list #
-								<tr class="center">
+								<tr class="align-center">
 									<td class="mini-checkbox">
 										<div class="form-field-checkbox">
 											<label class="checkbox" for="id{table_list.I}">
@@ -108,7 +108,7 @@
 									<td>{table_list.TABLE_FREE}</td>
 								</tr>
 							# END table_list #
-							<tr class="center">
+							<tr class="align-center">
 								<td class="mini-checkbox">
 									<div class="form-field-checkbox">
 										<label class="checkbox" for="check-all">
@@ -260,12 +260,12 @@
 									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
 								# END table_list #
 								</select>
-								<p class="center">
+								<p class="align-center">
 									<a href="javascript:check_select_all_tables(true);">{SELECT_ALL}</a> / <a href="javascript:check_select_all_tables(false);">{SELECT_NONE}</a>
 								</p>
 
 							</div>
-							<div class="form-element third-field top-field center custom-radio">
+							<div class="form-element third-field top-field align-center custom-radio">
 								<label for="">{L_SELECTION}</label>
 								<div class="form-field form-field-radio-button">
 									<div class="form-field-radio">

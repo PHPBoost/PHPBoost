@@ -14,7 +14,7 @@
 	</div>
 
 	# IF C_EDITOR_ENABLED #
-		<div class="center">
+		<div class="align-center">
 			<div class="form-element-preview">{PREVIEW_BUTTON}</div>
 			# IF C_RESET_BUTTON_ENABLED #
 				<div class="form-element-reset">{RESET_BUTTON}</div>

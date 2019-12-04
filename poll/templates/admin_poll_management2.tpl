@@ -56,7 +56,7 @@
 			# INCLUDE message_helper #
 
 			<form action="admin_poll.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-				<p class="center">{L_REQUIRE}</p>
+				<p class="align-center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_POLL_MANAGEMENT}</legend>
 					<div class="fieldset-inset">
@@ -112,13 +112,13 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="left no-separator">
+											<td class="align-left no-separator">
 												# START answers #
 												<label class="infos-options"><input type="text" name="a{answers.ID}" value="{answers.ANSWER}" /></label>
 												# END answers #
 												<span id="a{MAX_ID}"></span>
 											</td>
-											<td class="left no-separator">
+											<td class="align-left no-separator">
 												# START votes #
 												<label class="infos-options"><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label>
 												# END votes #
@@ -126,7 +126,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="left" colspan="2">
+											<td class="align-left" colspan="2">
 												<script>
 												<!--
 													if( {MAX_ID} < 19 )

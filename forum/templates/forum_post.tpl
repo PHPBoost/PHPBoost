@@ -80,7 +80,7 @@
 					# INCLUDE message_helper #
 
 					<div class="fieldset-content">
-						<p class="center">{L_REQUIRE}</p>
+						<p class="align-center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_ACTION}</legend>
 							# IF C_FORUM_CUT_CAT #
@@ -122,7 +122,7 @@
 
 						<fieldset>
 							<legend>{L_POLL}</legend>
-							<p id="hidepoll_link" class="center"><a href="" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
+							<p id="hidepoll_link" class="align-center"><a href="" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
 							<div id="hidepoll">
 								<div class="form-element">
 									<label for="question">* {L_QUESTION}</label>
@@ -154,7 +154,7 @@
 										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>
 
-										<p class="center" id="add_poll_field_link">
+										<p class="align-center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
 											<a aria-label="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>
 											# ENDIF #

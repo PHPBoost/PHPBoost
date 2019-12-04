@@ -62,7 +62,7 @@
 				<h2>
 					<span>{@css.page.title}</span>
 				</h2>
-				<span class="actions">
+				<span class="controls">
 					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
 					<a href="#" aria-label="{@css.delete}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
 				</span>
@@ -138,7 +138,7 @@
 			</header>
 			<div class="content">
 				<div class="options infos">
-					<div class="center">
+					<div class="align-center">
 						<span>
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
 						</span>
@@ -155,7 +155,7 @@
 					<span class="text-strong">{@css.options.option.title} : </span><span><a itemprop="about" class="small" href="#">{@css.options.link}</a></span><br />
 					<span> {@css.options.option.com}</span>
 					<div class="spacer"></div>
-					<div class="center">
+					<div class="align-center">
 						<div class="notation" id="notation-1">
 							<span class="stars">
 								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1"></a>

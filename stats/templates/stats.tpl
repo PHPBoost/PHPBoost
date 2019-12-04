@@ -320,8 +320,8 @@
 						# ENDIF #
 
 						{GRAPH_RESULT}
-						<p class="center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
-						<p class="center">{U_VISITS_MORE}</p>
+						<p class="align-center">{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}</p>
+						<p class="align-center">{U_VISITS_MORE}</p>
 					</div>
 					<div class="block">
 						<table class="table">

@@ -166,7 +166,7 @@ jQuery(document).ready(function() {
 					</li>
 				# END list_extended_fields #
 			</ul>
-			<div id="no_field" class="center"# IF C_FIELDS # style="display: none;"# ENDIF #>${LangLoader::get_message('no_item_now', 'common')}</div>
+			<div id="no_field" class="align-center"# IF C_FIELDS # style="display: none;"# ENDIF #>${LangLoader::get_message('no_item_now', 'common')}</div>
 		</div>
 	</fieldset>
 	# IF C_MORE_THAN_ONE_FIELD #

@@ -97,7 +97,7 @@
 # INCLUDE MSG #
 <section id="module-faq">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
@@ -184,7 +184,7 @@
 	# ENDIF #
 	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
-			<div class="center">
+			<div class="align-center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
 		</div>

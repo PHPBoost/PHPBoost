@@ -77,7 +77,7 @@
 						<table class="table">
 							<caption>{TABLE_NAME}</caption>
 							<thead>
-								<tr class="center">
+								<tr class="align-center">
 									<th>{L_TABLE_FIELD}</th>
 									<th>{L_TABLE_TYPE}</th>
 									<th>{L_TABLE_ATTRIBUTE}</th>
@@ -123,7 +123,7 @@
 						<table class="table">
 							<caption>{L_SIZE}</caption>
 							<thead>
-								<tr class="center">
+								<tr class="align-center">
 									<th>{L_TABLE_DATA}</th>
 									<th>{L_TABLE_INDEX}</th>
 									<th>{L_TABLE_FREE}</th>
@@ -292,7 +292,7 @@
 									<div class="responsive-table">
 										<table class="table">
 											<thead>
-												<tr class="center">
+												<tr class="align-center">
 													# START head #
 														<th>{head.FIELD_NAME}</th>
 													# END head #
@@ -327,7 +327,7 @@
 					<article><form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 						<table class="table">
 							<thead>
-								<tr class="center">
+								<tr class="align-center">
 									<th>{L_FIELD_FIELD}</th>
 									<th>{L_FIELD_TYPE}</th>
 									<th>{L_FIELD_NULL}</th>

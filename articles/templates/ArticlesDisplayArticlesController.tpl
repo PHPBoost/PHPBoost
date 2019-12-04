@@ -1,7 +1,7 @@
 <section id="module-articles">
 
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			{@articles.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
@@ -12,7 +12,7 @@
 
 	<div id="article-articles-{ID}" class="article-articles# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/Article">
 
-		<span class="actions">
+		<span class="controls">
 			# IF C_EDIT #
 			<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
@@ -76,14 +76,14 @@
 			<hr />
 
 			# IF C_PAGINATION #
-				<div class="pages-pagination right">
+				<div class="pages-pagination align-right">
 					# IF C_NEXT_PAGE #
 					<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
 					# ELSE #
 					&nbsp;
 					# ENDIF #
 				</div>
-				<div class="pages-pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
+				<div class="pages-pagination align-center"># INCLUDE PAGINATION_ARTICLES #</div>
 				<div class="pages-pagination">
 					# IF C_PREVIOUS_PAGE #
 					<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
@@ -106,7 +106,7 @@
 			# ENDIF #
 			<div class="spacer"></div>
 			# IF C_NOTATION_ENABLED #
-			<div class="left smaller">
+			<div class="align-left smaller">
 				{KERNEL_NOTATION}
 			</div>
 			# ENDIF #

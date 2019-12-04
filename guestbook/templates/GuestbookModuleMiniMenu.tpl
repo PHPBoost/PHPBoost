@@ -14,7 +14,7 @@
             ${LangLoader::get_message('no_item_now', 'common')}
         </div>
     # ENDIF #
-    <div class="cell-content center">
+    <div class="cell-content align-center">
         <a class="button small" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>
     </div>
 </div>

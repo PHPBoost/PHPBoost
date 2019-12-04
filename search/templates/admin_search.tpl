@@ -42,7 +42,7 @@
 			# INCLUDE MSG #
 			# IF NOT C_WEIGHTING #
 			<form action="admin_search.php" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
-				<p class="center">{L_REQUIRE}</p>
+				<p class="align-center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_SEARCH_CONFIG}</legend>
 					<div class="fieldset-inset">

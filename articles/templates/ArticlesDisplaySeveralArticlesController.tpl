@@ -1,6 +1,6 @@
 <section id="module-articles">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="fa fa-edit small" aria-hidden="true"></i> </a># ENDIF ## ENDIF #
 		</div>
@@ -31,7 +31,7 @@
 							# ENDIF #
 						</div>
 					# ENDIF #
-					<div class="cell-infos center">
+					<div class="cell-infos align-center">
 						<span>
 							{sub_categories_list.ARTICLES_NUMBER}
 							# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
@@ -45,13 +45,13 @@
 			</div>
 		# END sub_categories_list #
 	</div>
-	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+	# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ENDIF #
 
 
 	# IF C_NO_ARTICLE_AVAILABLE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div class="center">
+		<div class="align-center">
 			${LangLoader::get_message('no_item_now', 'common')}
 		</div>
 		# ENDIF #
@@ -87,7 +87,7 @@
 								<i class="fa fa-calendar-alt"></i> <time datetime="# IF NOT articles.C_DIFFERED #{articles.DATE_ISO8601}# ELSE #{articles.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT articles.C_DIFFERED #{articles.DATE} | # ELSE #{articles.PUBLISHING_START_DATE} | # ENDIF #</time>
 								<i class="fa fa-folder"></i> <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 							</div>
-							<div class="actions">
+							<div class="controls">
 								# IF articles.C_EDIT #
 								<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 								# ENDIF #

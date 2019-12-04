@@ -62,7 +62,7 @@
 </section>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
-	<div class="center">
+	<div class="align-center">
 		<button type="submit" class="submit" id="refresh-comments">{@allComments}</button>
 	</div>
 # ENDIF #

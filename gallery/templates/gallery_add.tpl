@@ -2,7 +2,7 @@
 	<section id="module-gallery-add">
 		<header>
 			<h1>{L_GALLERY} - {L_ADD_IMG}</h1>
-			<div class="right">
+			<div class="align-right">
 				{PAGINATION}
 			</div>
 		</header>
@@ -60,7 +60,7 @@
 			</fieldset>
 		</div>
 		<footer>
-			<div class="right">
+			<div class="align-right">
 				{PAGINATION}
 			</div>
 		</footer>

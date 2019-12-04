@@ -12,7 +12,7 @@
 			</ul>
 		</div>
 		<div class="cell-body">
-			<div class="cell-content center">
+			<div class="cell-content align-center">
 				<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="button small">{@newsletter.archives}</a>
 			</div>
 		</div>

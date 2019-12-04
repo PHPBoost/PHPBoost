@@ -29,7 +29,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('switch_theme', 'themeswitcher_common', 'ThemesSwitcher');
+		return LangLoader::get_message('switch.theme', 'themeswitcher_common', 'ThemesSwitcher');
 	}
 
 	public function is_displayed()
@@ -69,9 +69,9 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 				'IDNAME' => $theme->get_id()
 			));
 		}
-		
+
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
-		
+
 		$tpl->put_all(array(
 			'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
 			'URL' => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='

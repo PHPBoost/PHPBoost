@@ -1,13 +1,13 @@
 	# IF C_POLL_MAIN #
 		<section id="module-poll-main">
 			<header>
-				<div class="cat-actions">
-					# IF C_IS_ADMIN # <span class="actions"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
+				<div class="align-right">
+					# IF C_IS_ADMIN # <span class="controls"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
 				</div>
 				<h1>{L_POLL}</h1>
 			</header>
 
-			<div class="content center">
+			<div class="content align-center">
 				{L_POLL_MAIN}
 				# START list #
 				<div class="poll-question-container">
@@ -18,7 +18,7 @@
 				</div>
 				# END list #
 
-				<p class="center">{U_ARCHIVE}</p>
+				<p class="align-center">{U_ARCHIVE}</p>
 			</div>
 			<footer></footer>
 		</section>
@@ -29,7 +29,7 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<section id="module-poll">
 				<header>
-					<div class="cat-actions">{L_MINI_POLL}</div>
+					<div class="align-right">{L_MINI_POLL}</div>
 					<h1>{QUESTION}</h1>
 				</header>
 					# INCLUDE message_helper #
@@ -37,7 +37,7 @@
 
 				<div id="article-poll-{IDPOLL}" class="article-poll">
 					# IF C_IS_ADMIN #
-						<span class="actions">
+						<span class="controls">
 							<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 							<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 						</span>
@@ -53,11 +53,11 @@
 								<p class="poll-question-select"><label class="checkbox"><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> <span>{checkbox.ANSWERS}</span></label></p>
 							# END checkbox #
 
-							<p class="center">
+							<p class="align-center">
 								<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
-							<p class="center">
+							<p class="align-center">
 								<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 							</p>
 						</div>
@@ -75,8 +75,8 @@
 									</div>
 								# END result #
 								<div>
-									<span class="smaller left">{VOTES} {L_VOTE}</span>
-									<span class="smaller right">${LangLoader::get_message('on', 'main')} : {DATE} </span>
+									<span class="smaller align-left">{VOTES} {L_VOTE}</span>
+									<span class="smaller align-right">${LangLoader::get_message('on', 'main')} : {DATE} </span>
 									&nbsp;
 								</div>
 							# ELSE #
@@ -96,7 +96,7 @@
 		<section id="module-poll-archives">
 			<header>
 				<h1>{L_ARCHIVE}</h1>
-				# IF C_PAGINATION #<span class="right"># INCLUDE PAGINATION #</span># ENDIF #
+				# IF C_PAGINATION #<span class="align-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</header>
 			<div class="content">
 				# START list #
@@ -104,7 +104,7 @@
 					<header>
 						<h2>
 							{list.QUESTION}
-							<span class="actions">
+							<span class="controls">
 								# IF C_IS_ADMIN #
 								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
@@ -123,14 +123,14 @@
 							</div>
 						# END list.result #
 						<div>
-							<span class="smaller left">{list.VOTE} {list.L_VOTE}</span>
-							<span class="smaller right">${LangLoader::get_message('on', 'main')} : {list.DATE} </span>
+							<span class="smaller align-left">{list.VOTE} {list.L_VOTE}</span>
+							<span class="smaller align-right">${LangLoader::get_message('on', 'main')} : {list.DATE} </span>
 							&nbsp;
 						</div>
 					</div>
 				</article>
 				# END list #
 			</div>
-			<footer># IF C_PAGINATION #<span class="right"># INCLUDE PAGINATION #</span># ENDIF #</footer>
+			<footer># IF C_PAGINATION #<span class="align-right"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 		</section>
 	# ENDIF #

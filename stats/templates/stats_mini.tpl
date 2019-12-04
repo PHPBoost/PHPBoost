@@ -8,5 +8,5 @@
 			{U_LINK_LAST_USER}
 		</p>
 		</div>
-	<div class="cell-content center"><a href="{PATH_TO_ROOT}/stats/stats.php" class="button small">{L_MORE_STAT}</a></div>
+	<div class="cell-content align-center"><a href="{PATH_TO_ROOT}/stats/stats.php" class="button small">{L_MORE_STAT}</a></div>
 </div>

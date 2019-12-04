@@ -60,7 +60,7 @@
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<a href="{bug.U_LINK}"># IF bug.C_FIXED #<s>\#{bug.ID}</s># ELSE #\#{bug.ID}# ENDIF #</a>
 				</td>
-				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+				<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					{bug.TITLE}
 				</td>
 				# IF C_DISPLAY_TYPE_COLUMN #
@@ -83,7 +83,7 @@
 					{bug.DETECTED_IN}
 				</td>
 				# ENDIF #
-				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+				<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<span>{@labels.fields.status} : {bug.STATUS}</span>
 					<div class="spacer"></div>
 					# IF bug.C_PROGRESS #

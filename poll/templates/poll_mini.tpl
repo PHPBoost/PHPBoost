@@ -1,7 +1,7 @@
 # START question #
 	<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="form-poll">
 		<div class="cell-body">
-			<div class="cell-content center"><span class="poll-container-title">{question.QUESTION}</span></div>
+			<div class="cell-content align-center"><span class="poll-container-title">{question.QUESTION}</span></div>
 		</div>
 
 
@@ -42,7 +42,7 @@
 
 # START result #
 	<div class="cell-body">
-		<div class="cell-content center"><span class="poll-container-title">{result.QUESTION}</span></div>
+		<div class="cell-content align-center"><span class="poll-container-title">{result.QUESTION}</span></div>
 	</div>
 	<div class="cell-list">
 		<ul>
@@ -55,7 +55,7 @@
 					</div>
 				# END result.answers #
 			</li>
-			<li class="center">{result.VOTES} {L_VOTE}</li>
+			<li class="align-center">{result.VOTES} {L_VOTE}</li>
 		</ul>
 	</div>
 # END result #

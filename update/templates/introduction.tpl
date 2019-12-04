@@ -3,7 +3,7 @@
 	</header>
 
 	<div class="content">
-		<div class="float-right pbt-box center">
+		<div class="float-right pbt-box align-center">
 			<img src="templates/images/PHPBoost_box.png" alt="{@phpboost.logo}" />
 		</div>
 

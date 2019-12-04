@@ -1,6 +1,6 @@
 <section id="module-download">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
@@ -12,7 +12,7 @@
 		# IF NOT C_VISIBLE #
 			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
-		<div class="actions">
+		<div class="controls">
 			# IF C_EDIT #
 			<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
@@ -30,7 +30,7 @@
 
 		<div class="content">
 			<div class="options infos">
-				<div class="center">
+				<div class="align-center">
 					# IF C_PICTURE #
 						<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
 						<div class="spacer"></div>
@@ -83,7 +83,7 @@
 				# ENDIF #
 				# IF C_VISIBLE #
 					# IF C_NOTATION_ENABLED #
-						<div class="center">{NOTATION}</div>
+						<div class="align-center">{NOTATION}</div>
 					# ENDIF #
 				# ENDIF #
 			</div>

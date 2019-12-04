@@ -1,6 +1,6 @@
 <section id="module-news">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
@@ -10,7 +10,7 @@
 	</header>
 	<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{COLUMNS_NUMBER}# ELSE #cell-row# ENDIF #">
 		# IF C_NEWS_NO_AVAILABLE #
-			<div class="center">
+			<div class="align-center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
 		# ELSE #
@@ -59,7 +59,7 @@
 								# ENDIF #
 							</div>
 							# IF news.C_ACTIONS #
-								<div class="cell-actions">
+								<div class="controls">
 									# IF news.C_EDIT #
 									<a href="{news.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #

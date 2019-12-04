@@ -3,7 +3,7 @@
 	</header>
 
 	<div class="content">
-		<div class="float-right pbt-box center">
+		<div class="float-right pbt-box align-center">
 			<a href="http://www.mysql.com/">
 				<img src="templates/images/mysql.png" alt="MySQL" />
 			</a>

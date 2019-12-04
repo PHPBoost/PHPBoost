@@ -187,7 +187,7 @@ jQuery(document).ready(function() {
 </script>
 <div id="admin-contents">
 	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();return check_form();">
-		<p class="center">${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}</p>
+		<p class="align-center">${LangLoader::get_message('form.explain_required_fields', 'status-messages-common')}</p>
 		<fieldset>
 			<legend>{L_ACTION_MENUS}</legend>
 			<div class="fieldset-inset">

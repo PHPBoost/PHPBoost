@@ -100,7 +100,7 @@
 				</form>
 
 				<form action="admin_ranks_add.php" method="post" onsubmit="return check_form_rank_add();" class="fieldset-content">
-					<p class="center">{L_REQUIRE}</p>
+					<p class="align-center">{L_REQUIRE}</p>
 					<fieldset>
 						<legend>{L_ADD_RANKS}</legend>
 						<div class="fieldset-inset">

@@ -4,7 +4,7 @@
 	<article class="">
 		# INCLUDE ERROR_MESSAGE #
 		# INCLUDE LOGIN_FORM #
-		<div class="center">
+		<div class="align-center">
 			# IF C_REGISTRATION_ENABLED #
 				<a class="infos-options" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@registration}</a>
 			# ENDIF #
@@ -23,7 +23,7 @@
 # ELSE #
 	<div id="global" class="global-maintain">
 		# IF C_MAINTAIN #
-			<div id="maintain" class="center">
+			<div id="maintain" class="align-center">
 				{L_MAINTAIN}
 
 				# IF C_DISPLAY_DELAY #
@@ -77,7 +77,7 @@
 			</div>
 
 			# IF NOT C_HAS_ERROR #
-			<p class="center">
+			<p class="align-center">
 				<a href="" id="connect" onclick="jQuery('#loginForm').toggle();jQuery('#externalAuthForm').toggle();return false;">${LangLoader::get_message('connection', 'user-common')}</a>
 			</p>
 
@@ -94,7 +94,7 @@
 
 		# INCLUDE ERROR_MESSAGE #
 		# INCLUDE LOGIN_FORM #
-		<div id="externalAuthForm" class="center">
+		<div id="externalAuthForm" class="align-center">
 			# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
 				# START external_auth #
 					<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>

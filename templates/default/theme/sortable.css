@@ -1,3 +1,7 @@
+/*
+* Copy this file in your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
 .sortable-block .sortable-element > .sortable-block {
 	flex: 1 0 calc(100% - 0.618em);
 	margin: 0 0 0 0.618em;
@@ -59,7 +63,9 @@
 .sortable-block .sortable-title {
 	flex: 1 1 auto;
 	padding: 0.618em;
-	max-width: calc(100% - 5.2em)
+	max-width: calc(100% - 5.2em);
+	display: flex;
+	align-items: center;
 }
 
 .sortable-block .sortable-title:hover {

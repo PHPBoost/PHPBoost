@@ -3,8 +3,8 @@
 		<h1>{@dashboard}</h1>
 	</header>
 	<div class="content">
-		<p class="center text-strong">{@welcome} {PSEUDO}</p>
-		<p class="center">
+		<p class="align-center text-strong">{@welcome} {PSEUDO}</p>
+		<p class="align-center">
 			# IF C_AVATAR_IMG #
 				<img src="{U_AVATAR_IMG}" alt="{@avatar}" />
 			# ELSE #

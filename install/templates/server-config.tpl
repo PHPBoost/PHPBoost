@@ -3,7 +3,7 @@
     </header>
 
     <div class="content">
-        <div class="float-right pbt-box center">
+        <div class="float-right pbt-box align-center">
             <a href="http://www.php.net/">
                 <img src="templates/images/php.png" alt="PHP" class="float-right" />
             </a>

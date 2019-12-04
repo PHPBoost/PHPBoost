@@ -44,7 +44,7 @@
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<section id="module-user-convers">
 				<header>
-					<div class="cat-actions">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
+					<div class="align-right">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<h1>{convers.U_PM_BOX}</h1>
 				</header>
 				<div class="content">
@@ -125,7 +125,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<div class="left">
+									<div class="align-left">
 										<label for="validc" class="checkbox">
 											<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" />
 											<span>&nbsp;</span>
@@ -225,7 +225,7 @@
 					<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				</div>
 			</div>
-			<div class="center">
+			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
@@ -243,7 +243,7 @@
 				</header>
 				<div class="content">
 					<div class="fieldset-content">
-						<p class="center">{L_REQUIRE}</p>
+						<p class="align-center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_EDIT}</legend>
 							# START edit_pm.title #
@@ -261,7 +261,7 @@
 							</div>
 						</fieldset>
 
-						<div class="center">
+						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
 							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
@@ -285,7 +285,7 @@
 					# INCLUDE message_helper #
 
 					<div class="fieldset-content">
-						<p class="center">{L_REQUIRE}</p>
+						<p class="align-center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_POST_NEW_CONVERS}</legend>
 							# START post_convers.user_id_dest #
@@ -317,7 +317,7 @@
 							</div>
 						</fieldset>
 
-						<div class="center">
+						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>
 							<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>

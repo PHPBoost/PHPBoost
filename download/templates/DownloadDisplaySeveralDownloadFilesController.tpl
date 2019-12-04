@@ -1,6 +1,6 @@
 <section id="module-download">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('download', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
@@ -31,7 +31,7 @@
 		# END sub_categories_list #
 		<div class="spacer"></div>
 	</div>
-	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+	# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ELSE #
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
@@ -113,7 +113,7 @@
 				<header>
 					<h2><a href="{downloadfiles.U_LINK}" itemprop="name">{downloadfiles.NAME}</a></h2>
 				</header>
-				<div class="actions">
+				<div class="controls">
 					# IF downloadfiles.C_EDIT #<a href="{downloadfiles.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 					# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 				</div>
@@ -157,7 +157,7 @@
 				# ELSE #
 					<div class="content">
 						<div class="options infos">
-							<div class="center">
+							<div class="align-center">
 								# IF downloadfiles.C_PICTURE #
 									<img src="{downloadfiles.U_PICTURE}" alt="{downloadfiles.NAME}" itemprop="image" />
 									<div class="spacer"></div>
@@ -210,7 +210,7 @@
 							# ENDIF #
 							# IF downloadfiles.C_VISIBLE #
 								# IF C_NOTATION_ENABLED #
-									<div class="center">{downloadfiles.NOTATION}</div>
+									<div class="align-center">{downloadfiles.NOTATION}</div>
 								# ENDIF #
 							# ENDIF #
 						</div>
@@ -237,7 +237,7 @@
 		# ENDIF #
 	# ELSE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div class="center">
+		<div class="align-center">
 			${LangLoader::get_message('no_item_now', 'common')}
 		</div>
 		# ENDIF #

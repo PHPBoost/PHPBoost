@@ -1,6 +1,6 @@
 			<section id="module-calendar-events">
 				<header>
-					<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
+					<h2 class="align-center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
 				</header>
 
 				# IF C_EVENTS #
@@ -14,7 +14,7 @@
 							</h2>
 							<a itemprop="url" href="{event.U_LINK}"></a>
 						</header>
-						<div class="actions">
+						<div class="controls">
 							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_EDIT #
 								<a href="{event.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -98,7 +98,7 @@
 					# END event #
 				</div>
 				# ELSE #
-					<div class="center">
+					<div class="align-center">
 						# IF C_PENDING_PAGE #{@calendar.notice.no_pending_event}# ELSE #{@calendar.notice.no_current_action}# ENDIF #
 					</div>
 				# ENDIF #

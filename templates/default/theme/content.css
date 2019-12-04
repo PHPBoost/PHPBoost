@@ -11,16 +11,6 @@
 	text-align: left;
 }
 
-.cat-actions {
-	text-align: right;
-}
-
-/* --- Item infos --- */
-.item-infos {
-	display: flex;
-	justify-content: space-between;
-}
-
 .more {
 	font-size: 0.809em;
 	font-style: italic;
@@ -45,13 +35,13 @@ aside:not(#menu-left):not(#menu-right) {
 }
 
 /* --- Control Icons (edit, delete, etc) --- */
-.actions a {
+.controls a {
 	display: inline-block;
 	padding: 0 0.456em;
 }
 
 @media (max-width: 768px) {
-	.actions a {
+	.controls a {
 		padding: 0 0.809em;
 	}
 }
@@ -192,29 +182,6 @@ aside:not(#menu-left):not(#menu-right) {
 .options .horizontal-fieldset-element,
 .options .horizontal-fieldset .form-element {
 	margin: 0;
-}
-
-.options h6 {
-	margin: 0 auto;
-	vertical-align: middle;
-	font-weight: 400;
-	padding: 0.228em;
-}
-
-.infos {
-	width: 100%;
-}
-
-.infos img {
-	padding: 0 0 0.618em 0;
-	display: block;
-	margin: auto;
-}
-
-@media (min-width: 769px) {
-	.infos {
-		max-width: 38%;
-	}
 }
 
 /* --- Maintain --- */

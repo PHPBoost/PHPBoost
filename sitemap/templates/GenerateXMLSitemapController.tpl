@@ -3,6 +3,6 @@
 # ELSE #
 <div class="message-helper bgc success">${i18nraw('generation_succeeded')}</div>
 # ENDIF #
-<div class="center">
+<div class="align-center">
 	<button type="button" onclick="window.location = '{GENERATE}'">{@try_again}</button>
 </div>

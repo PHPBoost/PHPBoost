@@ -60,7 +60,7 @@ function change_reposition_pictures()
 			<div class="fieldset-inset">
 				<ul id="categories" class="sortable-block">
 					# IF C_NO_CATEGORIES #
-						<div class="center">${LangLoader::get_message('no_item_now', 'common')}</div>
+						<div class="align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
 					# ELSE #
 						# START children #
 							{children.child}

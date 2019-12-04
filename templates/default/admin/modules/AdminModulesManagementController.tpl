@@ -82,7 +82,7 @@
 						</ul>
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #
-						<div class="cell-footer center">
+						<div class="cell-footer align-center">
 							<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
 						</div>
 					# ENDIF #

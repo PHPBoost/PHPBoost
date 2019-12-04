@@ -110,10 +110,10 @@ a.wikipedia-link:after {
 .inline 	  { display: inline !important; }
 .inline-block { display: inline-block !important; }
 
-.center  { text-align: center !important; }
-.left 	 { text-align: left !important; }
-.right 	 { text-align: right !important; }
-.justify { text-align: justify !important; }
+.align-center  { text-align: center !important; }
+.align-left    { text-align: left !important; }
+.align-right   { text-align: right !important; }
+.align-justify { text-align: justify !important; }
 
 img.float-left,
 img.float-right {

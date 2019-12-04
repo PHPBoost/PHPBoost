@@ -233,7 +233,7 @@
 
 <section id="module-gallery">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 		</div>
@@ -313,7 +313,7 @@
 				</div>
 			# END sub_categories_list #
 		</div>
-		# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+		# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ENDIF #
 
 	# IF C_GALLERY_PICS #
@@ -322,7 +322,7 @@
 				<h2>${LangLoader::get_message('image', 'main')}</h2>
 			</header>
 			<div class="content">
-				<p class="center" id="pics_max"></p>
+				<p class="align-center" id="pics_max"></p>
 
 				# IF C_GALLERY_PICS_MAX #
 					<p class="pics-max"><a href="{U_IMG_MAX}" data-lightbox="formatter"><img src="{U_IMG_MAX}" alt="{NAME}" /></a></p>
@@ -391,7 +391,7 @@
 								</td>
 
 								# START list_preview_pics #
-									<td class="center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
+									<td class="align-center" style="height:{list_preview_pics.HEIGHT}px"><span id="thumb{list_preview_pics.ID}"><a href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a></span></td>
 								# END list_preview_pics #
 
 								<td>

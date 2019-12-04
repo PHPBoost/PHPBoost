@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="message-date">
-			<span class="actions">
+			<span class="controls">
 				{L_TOPIC} : <a class="small" href="{U_TOPIC}">{TITLE}</a>
 			</span>
 			<span>{L_ON}: {DATE}</span>

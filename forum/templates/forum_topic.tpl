@@ -123,9 +123,9 @@
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
-		<div class="justify-between">
+		<div class="flex-between">
 			<div></div>
-			<div class="actions">
+			<div class="controls">
 				<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 				# IF C_FORUM_LOCK_TOPIC #
 					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
@@ -143,7 +143,7 @@
 	</header>
 
 	# IF C_POLL_EXIST #
-		<div class="content center">
+		<div class="content align-center">
 			<form method="post" action="action{U_POLL_ACTION}">
 				<table class="forum-poll-table">
 					<thead>
@@ -319,13 +319,13 @@
 		</article>
 	# END msg #
 
-	<div class="justify-between">
+	<div class="flex-between">
 		<div></div>
 		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</div>
-	<footer class="footer-forum justify-between">
+	<footer class="footer-forum flex-between">
 		<div>{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span></div>
-		<div class="actions">
+		<div class="controls">
 			<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_FORUM_MODERATOR #
 				# IF C_FORUM_LOCK_TOPIC #

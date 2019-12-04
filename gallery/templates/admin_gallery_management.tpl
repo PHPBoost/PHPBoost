@@ -228,12 +228,12 @@ function display_thumbnails(direction)
 	# START pics #
 		<section>
 			<header>
-				<div class="cat-actions">
+				<div class="align-right">
 					# IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 				</div>
 				<h1>{GALLERY} </h1>
 				# IF C_PAGINATION #
-					<p class="center">
+					<p class="align-center">
 						# INCLUDE PAGINATION #
 					</p>
 				# ENDIF #
@@ -262,7 +262,7 @@ function display_thumbnails(direction)
 						# END cat.list #
 					</div>
 					<div class="spacer"></div>
-					# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+					# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 				</article>
 			# END cat #
 
@@ -283,12 +283,12 @@ function display_thumbnails(direction)
 						</tr>
 						<tr>
 							# IF pics.pics_max.C_PREVIOUS #
-							<td class="left no-separator">
+							<td class="align-left no-separator">
 								<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max">{L_PREVIOUS}</a>
 							</td>
 							# ENDIF #
 							# IF pics.pics_max.C_NEXT #
-							<td class="right no-separator">
+							<td class="align-right no-separator">
 								<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max">{L_NEXT}</a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max" class="fa fa-arrow-right fa-2x"></a>
 							</td>
 							# ENDIF #
@@ -374,7 +374,7 @@ function display_thumbnails(direction)
 							</td>
 
 							# START pics.pics_max.list_preview_pics #
-								<td class="center" style="height:{pics.pics_max.list_preview_pics.HEIGHT}px"><span id="thumb{pics.pics_max.list_preview_pics.ID}"><a href="{pics.pics_max.list_preview_pics.URL}"><img src="pics/thumbnails/{pics.pics_max.list_preview_pics.PATH}" alt="{pics.pics_max.list_preview_pics.NAME}" /></a></span></td>
+								<td class="align-center" style="height:{pics.pics_max.list_preview_pics.HEIGHT}px"><span id="thumb{pics.pics_max.list_preview_pics.ID}"><a href="{pics.pics_max.list_preview_pics.URL}"><img src="pics/thumbnails/{pics.pics_max.list_preview_pics.PATH}" alt="{pics.pics_max.list_preview_pics.NAME}" /></a></span></td>
 							# END pics.pics_max.list_preview_pics #
 
 
@@ -393,7 +393,7 @@ function display_thumbnails(direction)
 			# IF NOT pics.C_PICS_MAX #
 				<article>
 					<header>
-						<div class="cat-actions"> # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #</div>
+						<div class="align-right"> # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #</div>
 						<h2>{GALLERY}</h2>
 					</header>
 					<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
@@ -454,7 +454,7 @@ function display_thumbnails(direction)
 				# ENDIF #
 			# ENDIF #
 			# IF C_PAGINATION #
-				<p class="center">
+				<p class="align-center">
 					# INCLUDE PAGINATION #
 				</p>
 			# ENDIF #

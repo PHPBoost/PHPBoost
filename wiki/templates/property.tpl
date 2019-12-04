@@ -8,7 +8,7 @@
 					<button type="submit" name="default" value="true" class="submit">{L_DEFAULT}</button>
 				</p>
 				<hr />
-				<p class="center">
+				<p class="align-center">
 					{EXPLAIN_WIKI_GROUPS}
 				</p>
 				<div class="form-element">
@@ -208,7 +208,7 @@
 		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset-content">
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>
-				<p class="center">
+				<p class="align-center">
 					{rename.L_RENAMING_ARTICLE}
 				</p>
 				<div class="form-element">

@@ -30,7 +30,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('switch_lang', 'langswitcher_common', 'LangsSwitcher');
+		return LangLoader::get_message('switch.lang', 'langswitcher_common', 'LangsSwitcher');
 	}
 
 	public function is_displayed()
@@ -65,7 +65,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 		Menu::assign_common_template_variables($tpl);
 
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
-		
+
 		$tpl->put_all(array(
 			'C_HAS_PICTURE' => $lang->get_configuration()->has_picture(),
 			'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),

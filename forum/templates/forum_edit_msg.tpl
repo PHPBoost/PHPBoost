@@ -24,7 +24,7 @@
 					# INCLUDE message_helper #
 
 					<div class="fieldset-content">
-						<p class="center">{L_REQUIRE}</p>
+						<p class="align-center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_EDIT_MESSAGE}</legend>
 							<div class="form-element form-element-textarea">

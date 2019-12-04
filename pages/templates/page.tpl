@@ -3,7 +3,7 @@
 		<h1>{TITLE}</h1>
 	</header>
 	<div id="article-pages-{ID}" class="article-pages">
-		<div class="actions">
+		<div class="controls">
 			# IF C_ACTIV_COM #<a href="{U_COM}" aria-label="{L_COM}"><i class="fa fa-comments" aria-hidden="true"></i></a># ENDIF #
 			# IF C_TOOLS_AUTH #
 			<a href="{U_RENAME}" aria-label="{L_RENAME}"><i class="fa fa-magic" aria-hidden="true"></i></a>
@@ -27,5 +27,5 @@
 			${ContentSharingActionsMenuService::display()}
 		</aside>
 	</div>
-	<footer class="center"><span class="page-count-hit">{COUNT_HITS}</span></footer>
+	<footer class="align-center"><span class="page-count-hit">{COUNT_HITS}</span></footer>
 </section>

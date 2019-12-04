@@ -60,7 +60,7 @@
 			</header>
 			<div class="content">
 			<form action="media_action.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-				<p class="center">{L_REQUIRE}</p>
+				<p class="align-center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
 					<div class="form-element">

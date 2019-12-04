@@ -39,7 +39,7 @@
 		# ENDIF #
 	</div>
 	<footer>
-		<div class="center">
+		<div class="align-center">
 			<a href="{U_GROUP_LIST}" class="button">{@groups.list}</a>
 		</div>
 	</footer>

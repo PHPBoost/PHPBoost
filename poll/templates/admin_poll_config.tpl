@@ -51,7 +51,7 @@
 		<div class="admin-module-poll" id="admin-contents">
 			# INCLUDE MSG #
 			<form action="admin_poll_config.php" method="post" class="fieldset-content" onsubmit="check_form_conf()">
-				<p class="center">{L_REQUIRE}</p>
+				<p class="align-center">{L_REQUIRE}</p>
 
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>

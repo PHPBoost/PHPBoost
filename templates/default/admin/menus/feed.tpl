@@ -22,7 +22,7 @@ function CheckForm() {
 </script>
 <div id="admin-contents">
 	<form action="feed.php" method="post" class="fieldset-content" onsubmit="return CheckForm();">
-		<p class="center">{L_REQUIRE}</p>
+		<p class="align-center">{L_REQUIRE}</p>
 		<fieldset>
 			<legend>{L_ACTION_MENUS}</legend>
 			<div class="fieldset-inset">
@@ -43,7 +43,7 @@ function CheckForm() {
 							class="feed-option-title">
 							{L_AVAILABLES_FEEDS}
 						</option>
-						<option value="null" class="center"></option>
+						<option value="null" class="align-center"></option>
 						# START modules #
 							<optgroup label="{modules.NAME}">
 							# START modules.feeds_urls #
@@ -53,7 +53,7 @@ function CheckForm() {
 							 	</option>
 							# END modules.feeds_urls #
 							</optgroup>
-							<option value="null" class="center">-----------------------------</option>
+							<option value="null" class="align-center">-----------------------------</option>
 						# END modules #
 					</select></div>
 				</div>

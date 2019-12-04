@@ -41,8 +41,8 @@
 			<div class="spacer"></div>
 			<span class="smaller"><em>{L_NO_RANDOM_PICS}</em></span>
 		# ENDIF #
-	</div>	
+	</div>
 </div>
 <div class="cell-body">
-	<div class="cell-content center"><a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a></div>
+	<div class="cell-content align-center"><a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a></div>
 </div>

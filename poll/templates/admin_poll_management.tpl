@@ -50,7 +50,7 @@
 				<tbody>
 					# START questions #
 					<tr>
-						<td class="left">
+						<td class="align-left">
 							{questions.QUESTIONS}
 						</td>
 						<td>

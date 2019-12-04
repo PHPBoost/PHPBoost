@@ -13,7 +13,7 @@
 				<a href="{menu_configuration.U_CONFIGURE}" aria-label="{EL_MENU_CONFIGURATION_CONFIGURE}">{menu_configuration.E_NAME}</a>
 			</td>
 			<td>{menu_configuration.E_MATCH_REGEX}</td>
-			<td class="center">
+			<td class="align-center">
 				<a href="{menu_configuration.U_EDIT}" aria-label="{L_MENU_CONFIGURATION_EDIT}"><i class="fa fa-edit" aria-hidden="true" aria-label="{L_MENU_CONFIGURATION_EDIT}"></i></a>
 			</td>
 		</tr>

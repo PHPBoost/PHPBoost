@@ -1,6 +1,6 @@
 <section id="module-web">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
@@ -31,7 +31,7 @@
 		# END sub_categories_list #
 		<div class="spacer"></div>
 	</div>
-	# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+	# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 	# ELSE #
 		# IF NOT C_CATEGORY_DISPLAYED_TABLE #<div class="spacer"></div># ENDIF #
 	# ENDIF #
@@ -101,7 +101,7 @@
 		# START weblinks #
 		<article id="article-web-{weblinks.ID}" class="article-web several-items# IF C_CATEGORY_DISPLAYED_SUMMARY # block# ENDIF ## IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
-				<span class="actions">
+				<span class="controls">
 					# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 					# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 				</span>
@@ -145,7 +145,7 @@
 			# ELSE #
 			<div class="content">
 				<div class="options infos">
-					<div class="center">
+					<div class="align-center">
 						# IF weblinks.C_IS_PARTNER #
 							# IF weblinks.C_HAS_PARTNER_PICTURE #
 								<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
@@ -194,7 +194,7 @@
 					# ENDIF #
 					# IF C_NOTATION_ENABLED #
 					<div class="spacer"></div>
-					<div class="center">{weblinks.NOTATION}</div>
+					<div class="align-center">{weblinks.NOTATION}</div>
 					# ENDIF #
 				</div>
 
@@ -211,7 +211,7 @@
 	# ELSE #
 	<div class="content">
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div class="center">
+		<div class="align-center">
 			${LangLoader::get_message('no_item_now', 'common')}
 		</div>
 		# ENDIF #

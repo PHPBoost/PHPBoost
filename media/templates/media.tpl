@@ -1,7 +1,7 @@
 # IF C_CATEGORIES #
 	<section id="module-media">
 		<header>
-			<div class="cat-actions">
+			<div class="align-right">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 				# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 			</div>
@@ -32,7 +32,7 @@
 				# END sub_categories_list #
 				<div class="spacer"></div>
 			</div>
-			# IF C_SUBCATEGORIES_PAGINATION #<span class="center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
+			# IF C_SUBCATEGORIES_PAGINATION #<span class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</span># ENDIF #
 		# ELSE #
 			<div class="spacer"></div>
 		# ENDIF #
@@ -72,7 +72,7 @@
 					</h2>
 				</header>
 				# IF C_MODO #
-					<span class="actions">
+					<span class="controls">
 						<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" aria-label="{L_UNAPROBED}"><i class="fa fa-eye-slash"></i></a>
 						<a href="{file.U_ADMIN_EDIT_MEDIA}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
 						<a href="{file.U_ADMIN_DELETE_MEDIA}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt"></i></a>
@@ -109,14 +109,14 @@
 		</div>
 		# ENDIF #
 
-		<footer># IF C_PAGINATION #<span class="center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
+		<footer># IF C_PAGINATION #<span class="align-center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 	</section>
 # ENDIF #
 
 # IF C_DISPLAY_MEDIA #
 <section id="module-media">
 	<header>
-		<div class="cat-actions">
+		<div class="align-right">
 			${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
@@ -124,7 +124,7 @@
 		</h1>
 	</header>
 		<div id="article-media-{ID}" class="article-media# IF C_NEW_CONTENT # new-content# ENDIF #">
-			<div class="actions">
+			<div class="controls">
 				# IF C_DISPLAY_COMMENTS #
 					<a href="{U_COM}"><i class="fa fa-comments"></i> {L_COM}</a>
 				# ENDIF #
@@ -141,7 +141,7 @@
 						<span class="infos-options"><span class="text-strong">{L_BY} : </span>{BY}</span>
 						<span class="infos-options"><span class="text-strong">{L_VIEWED} : </span>{HITS}</span>
 					# IF C_DISPLAY_NOTATION #
-					<div class="center text-strong">{KERNEL_NOTATION}</div>
+					<div class="align-center text-strong">{KERNEL_NOTATION}</div>
 					# ENDIF #
 				</div>
 

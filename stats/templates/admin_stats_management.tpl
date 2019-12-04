@@ -123,7 +123,7 @@
 		<fieldset>
 			<legend>{L_TEMPLATES}</legend>
 			<div class="fieldset-inset elements-container columns-2">
-				<div class="block center">
+				<div class="block align-center">
 					<img class="fieldset-img" src="display_stats.php?theme=1" alt="{L_TEMPLATES}" />
 				</div>
 				<div class="block">
@@ -166,7 +166,7 @@
 		<fieldset>
 			<legend>{L_SEX}</legend>
 			<div class="fieldset-inset elements-container columns-2">
-				<div class="block center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
+				<div class="block align-center"><div class="bargraph">{GRAPH_RESULT_SEX}</div></div>
 				<div class="block">
 					<table class="table">
 						<thead>
@@ -243,9 +243,9 @@
 			<fieldset>
 				<legend>{L_VISITORS} {MONTH} {U_YEAR}</legend>
 				<div class="fieldset-inset elements-container columns-2">
-					<div class="block center">
+					<div class="block align-center">
 						<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-						<p class="center">
+						<p class="align-center">
 							<a href="admin_stats{U_PREVIOUS_LINK}#stats" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>&nbsp;
 							<a href="admin_stats{U_NEXT_LINK}#stats" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
 						</p>
@@ -269,7 +269,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
-					<div class="block center">
+					<div class="block align-center">
 						# IF C_STATS_NO_GD #
 							<table class="table">
 								<tbody>
@@ -320,11 +320,11 @@
 							</table>
 						# ENDIF #
 						<div class="bargraph">{GRAPH_RESULT}</div>
-						<p class="block center">
+						<p class="block align-center">
 							{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 						</p>
 					</div>
-					<p class="block center">
+					<p class="block align-center">
 						{U_VISITS_MORE}
 					</p>
 				</div>
@@ -362,7 +362,7 @@
 		<fieldset>
 			<legend>{L_BROWSERS}</legend>
 			<div class="fieldset-inset elements-container columns-2">
-				<div class="block center">
+				<div class="block align-center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
@@ -400,7 +400,7 @@
 		<fieldset>
 			<legend>{L_OS}</legend>
 			<div class="fieldset-inset elements-container columns-2">
-				<div class="block center">
+				<div class="block align-center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
@@ -438,7 +438,7 @@
 		<fieldset>
 			<legend>{L_LANG}</legend>
 			<div class="fieldset-inset elements-container columns-2">
-				<div class="block center">
+				<div class="block align-center">
 					<div class="bargraph">{GRAPH_RESULT}</div>
 				</div>
 				<div class="block">
@@ -687,7 +687,7 @@
 				<legend>{L_ROBOTS}</legend>
 				<div class="fieldset-inset elements-container columns-2">
 					# IF C_ROBOTS_DATA #
-					<div class="block center">
+					<div class="block align-center">
 						<img class="fieldset-img" src="display_stats.php?bot=1" alt="{L_ROBOTS}" />
 					</div>
 					# ENDIF #

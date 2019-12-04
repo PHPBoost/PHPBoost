@@ -68,7 +68,7 @@
 <div id="admin-contents">
 	# IF C_EDIT_GROUP #
 		<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-			<p class="center">{L_REQUIRE}</p>
+			<p class="align-center">{L_REQUIRE}</p>
 			<fieldset>
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
 				<div class="fieldset-inset">
@@ -187,7 +187,7 @@
 		</table>
 
 		<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
-			<p class="center">{L_REQUIRE}</p>
+			<p class="align-center">{L_REQUIRE}</p>
 			<fieldset>
 				<legend>{L_ADD_MBR_GROUP}</legend>
 				<div class="fieldset-inset">
@@ -255,7 +255,7 @@
 		</form>
 
 		<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
-			<p class="center">{L_REQUIRE}</p>
+			<p class="align-center">{L_REQUIRE}</p>
 			<fieldset>
 				<legend>{L_ADD_GROUPS}</legend>
 				<div class="fieldset-inset">
