@@ -7,8 +7,9 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.2 - last update: 2019 12 04
  * @since       PHPBoost 3.0 - 2009 10 02
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class SQLDAO implements DAO
@@ -97,12 +98,12 @@ abstract class SQLDAO implements DAO
 		$this->cache_model();
 	}
 
-	public function save(PropertiesMapInterface $object)
+	public function save(PropertiesMapInterface $object, $on_duplicate_update_column = '')
 	{
 		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
 		{
-			$result = $this->raw_insert($object);
+			$result = $this->raw_insert($object, $on_duplicate_update_column);
 			$object->{$this->pk_setter}($result->get_last_inserted_id());
 		}
 		else
@@ -203,9 +204,9 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 * @return InjectQueryResult
 	 */
-	private function raw_insert(PropertiesMapInterface $object)
+	private function raw_insert(PropertiesMapInterface $object, $on_duplicate_update_column = '')
 	{
-		$this->compute_insert_query();
+		$this->compute_insert_query($on_duplicate_update_column);
 		$prepared_vars = $this->model->get_raw_value($object);
 		return $this->querier->inject($this->insert_query, $prepared_vars);
 	}
@@ -248,15 +249,16 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_insert_query()
+	private function compute_insert_query($on_duplicate_update_column = '')
 	{
 		if ($this->insert_query === null)
 		{
 			$fields_list = array_keys($this->fields_mapping);
 
 			$this->insert_query = 'INSERT INTO ' . $this->table .
-				' (' . implode(', ', $fields_list) .
-			     ') VALUES(:'  . implode(', :', $fields_list) . ');';
+				' (' . implode(', ', $fields_list) . ')
+				VALUES(:'  . implode(', :', $fields_list) . ')
+				' . ($on_duplicate_update_column ? 'ON DUPLICATE KEY UPDATE ' . $on_duplicate_update_column . ' = VALUES(' . $on_duplicate_update_column . ') + 1' : '') . ';';
 		}
 	}
 

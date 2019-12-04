@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 23
+ * @version   	PHPBoost 5.2 - last update: 2019 12 04
  * @since   	PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -38,7 +38,7 @@ class AdminError404Service
 			{
 				$error_404 = new AdminError404($requested_url, $from_url);
 			}
-			AdminError404DAO::instance()->save($error_404);
+			AdminError404DAO::instance()->save($error_404, 'times');
 		}
 	}
 
