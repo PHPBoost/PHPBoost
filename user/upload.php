@@ -535,7 +535,7 @@ elseif ( !empty($del_folder))
         'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
         'C_PERSONAL_FILES'   => $total_personal_files > 0,
         'C_PUBLIC_FILES'     => $total_public_files > 0,
-        'L_NO_ITEM'          => angLoader::get_message('no_item_now', 'common')
+        'L_NO_ITEM'          => LangLoader::get_message('no_item_now', 'common')
     ));
 
     $tpl->display();
