@@ -17,7 +17,7 @@
 
 	# IF C_ADVANCED_AUTH #
 		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
-			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input">
+			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 				<div class="grouped-inputs">
 					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
 					<button class="grouped-element" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid">
@@ -51,69 +51,66 @@
 	</a>
 </div>
 <script>
-<!--
-function check_select_multiple(id, status)
-{
-	var i;
-
-	//Sélection des groupes.
-	var selectidgroups = jQuery('#groups_auth' + id)[0];
-	for(i = 0; i < selectidgroups.length; i++)
+	function check_select_multiple(id, status)
 	{
-		if (selectidgroups[i])
-			selectidgroups[i].selected = status;
-	}
+		var i;
 
-	//Sélection des membres.
-	var selectidmember = jQuery('#members_auth' + id)[0];
-	for(i = 0; i < selectidmember.length; i++)
-	{
-		if (selectidmember[i])
-			selectidmember[i].selected = status;
-	}
-}
-
-function check_select_multiple_ranks(id, start)
-{
-	var i;
-	for(i = start; i <= 2; i++)
-	{
-		if (jQuery('#' + id + i) && jQuery('#' + id + i)[0].disabled != true)
-			jQuery('#' + id + i)[0].selected = true;
-	}
-}
-
-//Fonction d'ajout de membre dans les autorisations.
-function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
-{
-	var selectid = jQuery('#members_auth' + searchid)[0];
-	for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
-	{
-		if (selectid[i].value == user_id)
+		//Sélection des groupes.
+		var selectidgroups = jQuery('#groups_auth' + id)[0];
+		for(i = 0; i < selectidgroups.length; i++)
 		{
-			alert(alert_already_auth);
-			return;
+			if (selectidgroups[i])
+				selectidgroups[i].selected = status;
+		}
+
+		//Sélection des membres.
+		var selectidmember = jQuery('#members_auth' + id)[0];
+		for(i = 0; i < selectidmember.length; i++)
+		{
+			if (selectidmember[i])
+				selectidmember[i].selected = status;
 		}
 	}
-	var oOption = new Option(login, user_id);
-	oOption.id = searchid + 'm' + (selectid.length - 1);
-		oOption.selected = true;
 
-	if (jQuery('#members_auth' + searchid)) //Ajout du membre.
-		jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
-}
-
-function open_advanced_auth(id) {
-	jQuery('#advanced_auth' + id).fadeToggle(300, function(){
-		if (jQuery('#advanced_auth_plus' + id).hasClass('fa-plus-square')){
-			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-minus-square';
+	function check_select_multiple_ranks(id, start)
+	{
+		var i;
+		for(i = start; i <= 2; i++)
+		{
+			if (jQuery('#' + id + i) && jQuery('#' + id + i)[0].disabled != true)
+				jQuery('#' + id + i)[0].selected = true;
 		}
-		else{
-			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-plus-square';
+	}
 
+	//Fonction d'ajout de membre dans les autorisations.
+	function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
+	{
+		var selectid = jQuery('#members_auth' + searchid)[0];
+		for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
+		{
+			if (selectid[i].value == user_id)
+			{
+				alert(alert_already_auth);
+				return;
+			}
 		}
-	});
-	jQuery('#advanced_authb' + id).fadeToggle();
-}
--->
+		var oOption = new Option(login, user_id);
+		oOption.id = searchid + 'm' + (selectid.length - 1);
+			oOption.selected = true;
+
+		if (jQuery('#members_auth' + searchid)) //Ajout du membre.
+			jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
+	}
+
+	function open_advanced_auth(id) {
+		jQuery('#advanced_auth' + id).fadeToggle(300, function(){
+			if (jQuery('#advanced_auth_plus' + id).hasClass('fa-plus-square')){
+				jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-minus-square';
+			}
+			else{
+				jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-plus-square';
+			}
+		});
+		jQuery('#advanced_authb' + id).fadeToggle();
+	}
 </script>
