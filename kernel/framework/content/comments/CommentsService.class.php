@@ -143,12 +143,12 @@ class CommentsService
 				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),
 			));
 		}
-		
+
 		$request = AppContext::get_request();
 		if ($request->get_string('delete-selected-comments', false))
 		{
 			$ids = array();
-			
+
 			$result = PersistenceContext::get_querier()->select("SELECT
 					comments.id
 				FROM " . DB_TABLE_COMMENTS . " comments
@@ -164,7 +164,7 @@ class CommentsService
 				$number_comment++;
 			}
 			$result->dispose();
-			
+
 			for ($i = 1 ; $i <= $comments_number ; $i++)
 			{
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
@@ -195,7 +195,7 @@ class CommentsService
 		$comments_number = CommentsManager::get_comments_number($module_id, $id_in_module, $topic_identifier);
 		$lang = $comments_number > 1 ? self::$lang['com_s'] : self::$lang['com'];
 
-		return !empty($comments_number) ? $lang . ' (' . $comments_number . ')' : self::$lang['post_com'];
+		return !empty($comments_number) ? $comments_number . ' ' . $lang : self::$lang['post_com'];
 	}
 
 	/**
@@ -288,7 +288,7 @@ class CommentsService
 				$comments_number++;
 				$id = $row['id_comment'];
 				$path = $row['path'];
-			
+
 				if ($row['user_id'] == self::$user->get_id())
 					self::$display_delete_button = true;
 
