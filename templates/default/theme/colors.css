@@ -499,6 +499,12 @@ a:hover,
 }
 .bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.2);}
 
+.dropdown-container {
+	background-color: #FFFFFF;
+	border: 1px solid #DDDDDD;
+	box-shadow: 0 3px 6px #BBBBBB;
+}
+
 .color-alert        { color: #913636; }
 .color-notavailable { color: #913636; }
 .color-available 	{ color: #4D9136; }

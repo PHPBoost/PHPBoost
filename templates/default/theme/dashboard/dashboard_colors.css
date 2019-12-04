@@ -232,7 +232,7 @@ select:focus {
 [disabled],
 [disabled]:hover,
 [readonly],
-[readonly]:hover, {
+[readonly]:hover {
 	background-color: #ECF2F8;
 }
 

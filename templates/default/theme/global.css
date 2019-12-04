@@ -46,12 +46,21 @@ figcaption {
 .stacked .stack-event {
     position: absolute;
     top: -0.809em;
-    left: -0.309em;
-    border-radius: 100%;
     padding: 0 0.309em;
     font-size: 0.618em;
-    border: 1px;
+}
+
+.stacked .stack-event.stack-left  { left: -0.309em; }
+.stacked .stack-event.stack-right { right: -0.309em; }
+
+.stacked .stack-event.stack-circle {
+    border-width: 1px;
     border-style: solid;
+    border-radius: 100%;
+}
+
+.dropdown-container {
+	z-index: 10;
 }
 
 /* --- flexbox --- */
