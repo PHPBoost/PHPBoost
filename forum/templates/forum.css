@@ -157,8 +157,7 @@ article footer ul.pagination {
 	margin: 0;
 }
 
-.forum-contents header h2,
-.footer-forum {
+.forum-contents header h2 {
 	border: none;
 	font-weight: 300;
 	font-size: 1.382em;

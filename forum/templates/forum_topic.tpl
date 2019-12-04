@@ -122,18 +122,21 @@
 <article id="article-forum-{ID}" class="forum-contents" itemscope="itemscope" itemtype="http://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
-		<span class="actions">
 		# IF C_FORUM_MODERATOR #
-			# IF C_FORUM_LOCK_TOPIC #
-			<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
-			# ELSE #
-			<a href="action{U_TOPIC_UNLOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
-			# ENDIF #
-			<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-share" aria-hidden="true"></i></a>
+		<div class="justify-between">
+			<div></div>
+			<div class="actions">
+				<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+				# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+				# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+				# ENDIF #
+				<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-share" aria-hidden="true"></i></a>
+			</div>
+		</div>
 		# ENDIF #
-		</span>
 		<h2>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 			{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 		</h2>
 
@@ -141,7 +144,6 @@
 
 	# IF C_POLL_EXIST #
 		<div class="content center">
-
 			<form method="post" action="action{U_POLL_ACTION}">
 				<table class="forum-poll-table">
 					<thead>
@@ -300,9 +302,8 @@
 						# ENDIF #
 					</div>
 					<div class="message-user-rank">
-						<p># IF msg.C_USER_RANK #{msg.USER_RANK}# ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #</p>
-						<p>	# IF msg.C_USER_IMG_ASSOC #<img src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #</p>
-
+						# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #
+						# IF msg.C_USER_IMG_ASSOC #<img class="valign-middle" src="{msg.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #
 					</div>
 	            </div>
 	            <div class="message-user-management">
@@ -318,24 +319,23 @@
 		</article>
 	# END msg #
 
-	<footer class="footer-forum">
-		# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
-		<span class="actions">
-		# IF C_FORUM_MODERATOR #
-			# IF C_FORUM_LOCK_TOPIC #
-			<a href="action{U_TOPIC_LOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true"></i></a>
-			# ELSE #
-			<a href="action{U_TOPIC_UNLOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+	<div class="justify-between">
+		<div></div>
+		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
+	</div>
+	<footer class="footer-forum justify-between">
+		<div>{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span></div>
+		<div class="actions">
+			<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+			# IF C_FORUM_MODERATOR #
+				# IF C_FORUM_LOCK_TOPIC #
+				<a href="action{U_TOPIC_LOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+				# ELSE #
+				<a href="action{U_TOPIC_UNLOCK}" aria-label="{L_TOPIC_LOCK}" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+				# ENDIF #
+				<a href="move{U_TOPIC_MOVE}" aria-label="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-share" aria-hidden="true"></i></a>
 			# ENDIF #
-			<a href="move{U_TOPIC_MOVE}" aria-label="{L_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}"><i class="fa fa-share" aria-hidden="true"></i></a>
-		# ENDIF #
-		</span>
-		<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
-		{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
-
-
-
-		<div class="spacer"></div>
+		</div>
 	</footer>
 
 	<span id="go-bottom"></span>
