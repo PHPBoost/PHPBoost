@@ -171,8 +171,8 @@ article footer ul.pagination {
 	font-size: 1em;
 }
 
-.forum-contents header a.basic-button,
-.footer-forum a.basic-button {
+.forum-contents header a.alt-button,
+.footer-forum a.alt-button {
 	font-size: 0.618em;
 }
 

@@ -45,8 +45,8 @@
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
 			<input type="hidden" name="id" value="{IDMENU}">
-			<button type="submit" class="submit" name="valid" value="true">{L_ACTION}</button>
-			<button type="reset" value="true">{L_RESET}</button>
+			<button type="submit" class="button submit" name="valid" value="true">{L_ACTION}</button>
+			<button type="reset" class="button reset" value="true">{L_RESET}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 		</fieldset>
 	</form>

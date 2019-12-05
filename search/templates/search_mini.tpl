@@ -24,7 +24,7 @@
 		<div id="mini-search-form" class="grouped-inputs">
 			<input class="grouped-element" type="search" id="searched-text" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH_TITLE}..." aria-labelledby="search-button">
 			<input type="hidden" id="search-token" name="token" value="{TOKEN}">
-			<button id="search-button" class="submit" type="submit" name="search_submit" aria-label="{L_YOUR_SEARCH}"><i class="fa fa-search" aria-hidden="true"></i></button>
+			<button id="search-button" class="button submit" type="submit" name="search_submit" aria-label="{L_YOUR_SEARCH}"><i class="fa fa-search" aria-hidden="true"></i></button>
 		</div>
 	</form>
 	<div class="cell-body">
@@ -36,7 +36,7 @@
 			<form class="cell-form grouped-inputs grouped-auto grouped-right" role="search" action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 				<input class="grouped-element" type="search" id="searched-text" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH_TITLE}..." aria-labelledby="search-button">
 				<input type="hidden" id="search-token" name="token" value="{TOKEN}">
-				<button id="search-button" class="submit" type="submit" name="search_submit" aria-label="{L_YOUR_SEARCH}"><i class="fa fa-search" aria-hidden="true"></i></button>
+				<button id="search-button" class="button submit" type="submit" name="search_submit" aria-label="{L_YOUR_SEARCH}"><i class="fa fa-search" aria-hidden="true"></i></button>
 			</form>
 		</div>
 	</div>

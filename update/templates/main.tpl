@@ -50,7 +50,7 @@ ${resources('update/update')}
 
 							</label>
 							<p id="button_change_lang">
-								<button type="submit" value="true" class="submit">{@change}</button>
+								<button type="submit" value="true" class="button submit">{@change}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 							<script>

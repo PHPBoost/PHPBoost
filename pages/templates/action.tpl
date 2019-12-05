@@ -111,7 +111,7 @@
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
+		<button type="submit" name="" value="true" class="button submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END rename #
@@ -134,7 +134,7 @@
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
+		<button type="submit" name="" value="true" class="button submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END new #
@@ -175,7 +175,7 @@
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="del_cat" value="{remove.ID_ARTICLE}">
-		<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+		<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END remove #

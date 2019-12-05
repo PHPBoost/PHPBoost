@@ -37,12 +37,12 @@
 							<ul class="addon-menu-content">
 								# IF modules_installed.C_COMPATIBLE #
 									# IF modules_installed.C_IS_ACTIVATED #
-										<li class="addon-menu-item"><button type="submit" class="submit" name="disable-{modules_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+										<li class="addon-menu-item"><button type="submit" class="button submit" name="disable-{modules_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
 									# ELSE #
-										<li class="addon-menu-item"><button type="submit" class="submit" name="enable-{modules_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li>
+										<li class="addon-menu-item"><button type="submit" class="button submit" name="enable-{modules_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li>
 									# ENDIF #
 								# ENDIF #
-								<li class="addon-menu-item"><button type="submit" class="submit alt" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+								<li class="addon-menu-item"><button type="submit" class="button alt-submit" name="delete-{modules_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 							</ul>
 						</div>
 					</header>
@@ -57,7 +57,7 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
@@ -83,7 +83,7 @@
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #
 						<div class="cell-footer align-center">
-							<a class="basic-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
+							<a class="button alt-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
 						</div>
 					# ENDIF #
 				</article>
@@ -109,9 +109,9 @@
 					<span>&nbsp;</span>
 				</label>
 			</li>
-			<li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
-			<li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
-			<li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+			<li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
+			<li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="button submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
+			<li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button alt-submit" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
 		</ul>
 	</div>
 	# ENDIF #

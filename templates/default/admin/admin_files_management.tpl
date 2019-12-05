@@ -303,7 +303,7 @@ $(document).ready(function(){
 			</fieldset>
 			<fieldset class="fieldset-submit">
 				<div class="fieldset-inset">
-				<button type="submit" class="submit" name="valid_up" value="true">{L_UPLOAD}</button>
+				<button type="submit" class="button submit" name="valid_up" value="true">{L_UPLOAD}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				</div>
 			</fieldset>

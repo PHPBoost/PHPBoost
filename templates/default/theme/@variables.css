@@ -1,38 +1,41 @@
 :root {
 
-    --txt-dark-color: #202020;
-    --txt-soft-color: #353535;
-    --txt-lite-color: #555555;
+    --color-main   : #366493;
+    --color-option : #E2A447;
 
-    --bkgd-main  : #FFFFFF;
-    --bkgd-option: #ECF2F8;
+    --txt-dark     : #202020;
+    --txt-medium   : #353535;
+    --txt-light    : #555555;
 
-    --bdr-main-color  : #DDDDDD;
-    --bdr-option-color: #366493;
+    --bgc-main     : #FFFFFF;
+    --bgc-option   : #ECF2F8;
 
-    --notice-dark-color  : #888888;
-    --notice-lite-color  : rgba(136, 136, 136, 0.2);
+    --bdr-main     : #DDDDDD;
+    --bdr-option   : #366493;
 
-    --question-dark-color: #0066CC;
-    --question-lite-color: rgba(0, 102, 204, 0.2);
+    --notice-main        : #888888;
+    --notice-bgc         : rgba(136, 136, 136, 0.2);
 
-    --success-dark-color : #4D9136;
-    --success-lite-color : rgba(77, 145, 54, 0.2);
+    --question-main      : #0066CC;
+    --question-bgc       : rgba(0, 102, 204, 0.2);
 
-    --warning-dark-color : #D36636;
-    --warning-lite-color : rgba(210, 102, 54, 0.2);
+    --success-main       : #4D9136;
+    --success-bgc        : rgba(77, 145, 54, 0.2);
 
-    --error-dark-color   : #913636;
-    --error-lite-color   : rgba(145, 54, 54, 0.2);
+    --warning-main       : #D36636;
+    --warning-bgc        : rgba(210, 102, 54, 0.2);
 
-    --member-dark-color  : #2F9674;
-    --member-lite-color  : rgba(47, 150, 116, 0.2);
+    --error-main         : #913636;
+    --error-bgc          : rgba(145, 54, 54, 0.2);
 
-    --modo-dark-color    : #48419D;
-    --modo-lite-color    : rgba(72, 65, 157, 0.2);
+    --member-main        : #2F9674;
+    --member-bgc         : rgba(47, 150, 116, 0.2);
 
-    --admin-dark-color   : #353535;
-    --admin-lite-color   : rgba(54, 54, 54, 0.2);
+    --moderator-main     : #48419D;
+    --moderator-bgc      : rgba(72, 65, 157, 0.2);
+
+    --administrator-main : #353535;
+    --administrator-bgc  : rgba(54, 54, 54, 0.2);
 
     /*
      * bc = secondary adjacent color #paletton.com
@@ -44,8 +47,8 @@
     --bc-prime-darker: #096A4A;
     --bc-prime-dark  : #168661;
     --bc-prime-soft  : #2F9674;
-    --bc-prime-lite  : #4CAA8B;
-    --bc-prime-liter : #7CCAB0;
+    --bc-prime-light  : #4CAA8B;
+    --bc-prime-lightr : #7CCAB0;
 
     /*
      * ad = tertiary adjacent color #paletton.com
@@ -57,8 +60,8 @@
     --ad-prime-darker: #1E186E;
     --ad-prime-dark  : #2E278C;
     --ad-prime-soft  : #48419D;
-    --ad-prime-lite  : #635DB2;
-    --ad-prime-liter : #8F8ACF;
+    --ad-prime-light  : #635DB2;
+    --ad-prime-lightr : #8F8ACF;
 
     /*
      * comp = complementary adjacent color #paletton.com
@@ -70,8 +73,8 @@
     --comp-prime-darker: #A96E16;
     --comp-prime-dark  : #D38D24;
     --comp-prime-soft  : #E2A447;
-    --comp-prime-lite  : #FBC169;
-    --comp-prime-liter : #FFD18C;
+    --comp-prime-light  : #FBC169;
+    --comp-prime-lightr : #FFD18C;
 
     /*
      * Light on overlay
@@ -89,17 +92,17 @@
     --rgba-darker-90: rgba(0, 0, 0, 0.90);
     --rgba-darker-00: rgba(0, 0, 0, 1);
 
-    --rgba-liter-05: rgba(255, 255, 255, 0.05);
-    --rgba-liter-10: rgba(255, 255, 255, 0.10);
-    --rgba-liter-20: rgba(255, 255, 255, 0.20);
-    --rgba-liter-30: rgba(255, 255, 255, 0.30);
-    --rgba-liter-40: rgba(255, 255, 255, 0.40);
-    --rgba-liter-50: rgba(255, 255, 255, 0.50);
-    --rgba-liter-60: rgba(255, 255, 255, 0.60);
-    --rgba-liter-70: rgba(255, 255, 255, 0.70);
-    --rgba-liter-80: rgba(255, 255, 255, 0.80);
-    --rgba-liter-90: rgba(255, 255, 255, 0.90);
-    --rgba-liter-00: rgba(255, 255, 255, 1);
+    --rgba-lightr-05: rgba(255, 255, 255, 0.05);
+    --rgba-lightr-10: rgba(255, 255, 255, 0.10);
+    --rgba-lightr-20: rgba(255, 255, 255, 0.20);
+    --rgba-lightr-30: rgba(255, 255, 255, 0.30);
+    --rgba-lightr-40: rgba(255, 255, 255, 0.40);
+    --rgba-lightr-50: rgba(255, 255, 255, 0.50);
+    --rgba-lightr-60: rgba(255, 255, 255, 0.60);
+    --rgba-lightr-70: rgba(255, 255, 255, 0.70);
+    --rgba-lightr-80: rgba(255, 255, 255, 0.80);
+    --rgba-lightr-90: rgba(255, 255, 255, 0.90);
+    --rgba-lightr-00: rgba(255, 255, 255, 1);
 
     /*
      * prime = phpboost primary color :
@@ -121,29 +124,29 @@
     --rgba-prime-00: rgba(54, 100, 147, 1);
 
     /*
-     * lite-prime = liteness of primary color
-     * main = lite-prime-40
+     * light-prime = lightness of primary color
+     * main = light-prime-40
     */
 
-    --lite-prime-05:  #070D13;
-    --lite-prime-10:  #0E1A25;
-    --lite-prime-15:  #152638;
-    --lite-prime-20:  #1C334A;
-    --lite-prime-25:  #22405D;
-    --lite-prime-30:  #294D70;
-    --lite-prime-35:  #305982;
-    --lite-prime-40:  #366493;
-    --lite-prime-45:  #3E73A8;
-    --lite-prime-50:  #4580BA;
-    --lite-prime-55:  #578CC1;
-    --lite-prime-60:  #6A99C8;
-    --lite-prime-65:  #7DA6CF;
-    --lite-prime-70:  #8FB3D6;
-    --lite-prime-75:  #A2BFDD;
-    --lite-prime-80:  #B5CCE3;
-    --lite-prime-85:  #C7D9EA;
-    --lite-prime-90:  #DAE6F1;
-    --lite-prime-95:  #ECF2F8;
+    --light-prime-05:  #070D13;
+    --light-prime-10:  #0E1A25;
+    --light-prime-15:  #152638;
+    --light-prime-20:  #1C334A;
+    --light-prime-25:  #22405D;
+    --light-prime-30:  #294D70;
+    --light-prime-35:  #305982;
+    --light-prime-40:  #366493;
+    --light-prime-45:  #3E73A8;
+    --light-prime-50:  #4580BA;
+    --light-prime-55:  #578CC1;
+    --light-prime-60:  #6A99C8;
+    --light-prime-65:  #7DA6CF;
+    --light-prime-70:  #8FB3D6;
+    --light-prime-75:  #A2BFDD;
+    --light-prime-80:  #B5CCE3;
+    --light-prime-85:  #C7D9EA;
+    --light-prime-90:  #DAE6F1;
+    --light-prime-95:  #ECF2F8;
 
     /*
      * sat-prime = saturation of primary color

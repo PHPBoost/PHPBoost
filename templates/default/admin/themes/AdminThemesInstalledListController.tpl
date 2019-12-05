@@ -37,14 +37,14 @@
 									</a>
 									<ul class="addon-menu-content">
 										# IF themes_installed.C_COMPATIBLE #
-											<li class="addon-menu-item"><button type="submit" class="submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
+											<li class="addon-menu-item"><button type="submit" class="button submit" name="default-{themes_installed.ID}" value="true">${LangLoader::get_message('set_to_default', 'admin-common')}</button></li>
 											# IF themes_installed.C_IS_ACTIVATED #
-												<li class="addon-menu-item"><button type="submit" class="submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
+												<li class="addon-menu-item"><button type="submit" class="button submit" name="disable-{themes_installed.ID}" value="true">${LangLoader::get_message('disable', 'common')}</button></li>
 											# ELSE #
-												<li class="addon-menu-item"><button type="submit" class="submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
+												<li class="addon-menu-item"><button type="submit" class="button submit" name="enable-{themes_installed.ID}" value="true">${LangLoader::get_message('enable', 'common')}</button></li></li>
 											# ENDIF #
 										# ENDIF #
-										<li class="addon-menu-item"><button type="submit" class="submit alt" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
+										<li class="addon-menu-item"><button type="submit" class="button alt-submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('uninstall', 'admin-common')}</button></li>
 									</ul>
 								</div>
 							# ENDIF #
@@ -75,7 +75,7 @@
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
-									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a> # ENDIF #
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a> # ENDIF #
 								</span>
 							</li>
 							<li class="li-stretch">
@@ -134,7 +134,7 @@
 		<footer>
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
-				<button type="submit" class="submit" name="update_themes_configuration" value="true">${LangLoader::get_message('save.authorizations', 'admin-common')}</button>
+				<button type="submit" class="button submit" name="update_themes_configuration" value="true">${LangLoader::get_message('save.authorizations', 'admin-common')}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<input type="hidden" name="update" value="true">
 			</fieldset>
@@ -151,9 +151,9 @@
 						<span>&nbsp;</span>
 					</label>
 				</li>
-				<li class="addon-menu-item"><button type="submit" name="delete-selected-themes" value="true" class="submit alt" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
-				<li class="addon-menu-item"><button type="submit" name="deactivate-selected-themes" value="true" class="submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
-				<li class="addon-menu-item"><button type="submit" name="activate-selected-themes" value="true" class="submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="delete-selected-themes" value="true" class="button alt-submit" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="deactivate-selected-themes" value="true" class="button submit" id="deactivate-all-button">${LangLoader::get_message('multiple.deactivate_selection', 'admin-common')}</button></li>
+				<li class="addon-menu-item"><button type="submit" name="activate-selected-themes" value="true" class="button submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>
 			</ul>
 		</div>
 	# ENDIF #

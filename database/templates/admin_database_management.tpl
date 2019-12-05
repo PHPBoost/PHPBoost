@@ -50,7 +50,7 @@
 								</label>
 								<br /><br />
 								<div class="align-center">
-									<button type="submit" id="submit-file-to-restore" name="" value="true" class="submit">{L_RESTORE_NOW}</button>
+									<button type="submit" id="submit-file-to-restore" name="" value="true" class="button submit">{L_RESTORE_NOW}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
 								</div>
 							</div>
@@ -133,21 +133,21 @@
 							<input type="hidden" name="token" value="{TOKEN}">
 							<div class="cell-flex cell-columns-3 no-style">
 								<div class="cell">
-									<button type="submit" name="optimize" value="true" class="submit">
+									<button type="submit" name="optimize" value="true" class="button submit">
 										<i class="fa fa-chart-bar fa-fw" aria-hidden="true"></i>
 										{L_OPTIMIZE}
 									</button>
 								</div>
 								<div class="cell">
 
-									<button type="submit" name="repair" value="true" class="submit">
+									<button type="submit" name="repair" value="true" class="button submit">
 										<i class="fa fa-cogs fa-fw" aria-hidden="true"></i>
 										{L_REPAIR}
 									</button>
 								</div>
 								<div class="cell">
 
-									<button type="submit" name="backup" value="true" class="submit">
+									<button type="submit" name="backup" value="true" class="button submit">
 										<i class="fa fa-save fa-fw" aria-hidden="true"></i>
 										{L_BACKUP}
 									</button>
@@ -304,7 +304,7 @@
 					<fieldset class="fieldset-submit">
 						<legend>{L_UPDATE}</legend>
 						<div class="fieldset-inset">
-							<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
+							<button type="submit" name="" value="true" class="button submit">{L_BACKUP}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 						</div>
 					</fieldset>
@@ -358,7 +358,7 @@
 											<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 										</fieldset>
 										<fieldset class="fieldset-submit">
-											<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+											<button type="submit" name="submit" value="true" class="button submit">{L_EXECUTE}</button>
 											<input type="hidden" name="token" value="{TOKEN}">
 										</fieldset>
 									</div>

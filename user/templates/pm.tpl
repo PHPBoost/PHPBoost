@@ -131,7 +131,7 @@
 											<span>&nbsp;</span>
 										</label>
 										<input type="hidden" name="token" value="{TOKEN}" />
-										<button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button>
+										<button type="submit" name="valid" value="true" class="button submit">{L_DELETE}</button>
 									</div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</td>
@@ -227,9 +227,9 @@
 			</div>
 			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" name="pm" value="true" class="button submit">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-				<button type="reset" value="true">{L_RESET}</button>
+				<button type="reset" class="button reset" value="true">{L_RESET}</button>
 			</div>
 		</form>
 		# END post_pm #
@@ -263,9 +263,9 @@
 
 						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>
+							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="button submit">{L_SUBMIT}</button>
 							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" value="true">{L_RESET}</button>
+							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						</div>
 					</div>
 				</div>
@@ -319,9 +319,9 @@
 
 						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>
+							<button type="submit" name="convers" value="true" class="button submit">{L_SUBMIT}</button>
 							<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" value="true">{L_RESET}</button>
+							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						</div>
 					</div>
 				</div>

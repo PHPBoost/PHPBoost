@@ -18,8 +18,8 @@
 				<div class="spacer">&nbsp;</div>
 				<div class="fieldset-inset">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="filter" value="true" class="submit">{L_SUBMIT}</button>
-					<button type="reset" value="true">{L_RESET}</button>
+					<button type="submit" name="filter" value="true" class="button submit">{L_SUBMIT}</button>
+					<button type="reset" class="button reset" value="true">{L_RESET}</button>
 				</div>
 			</fieldset>
 		</form>
@@ -142,8 +142,8 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
-				<button type="reset" value="true">{L_RESET}</button>
+				<button type="submit" name="submit" value="true" class="button submit">{L_SUBMIT}</button>
+				<button type="reset" class="button reset" value="true">{L_RESET}</button>
 			</fieldset>
 		</form>
 		# ENDIF #

@@ -5,7 +5,7 @@
 				<p style="text-align:center">
 					{L_EXPLAIN_DEFAULT}
 					<span class="spacer"></span>
-					<button type="submit" name="default" value="true" class="submit">{L_DEFAULT}</button>
+					<button type="submit" name="default" value="true" class="button submit">{L_DEFAULT}</button>
 				</p>
 				<hr />
 				<p class="align-center">
@@ -51,8 +51,8 @@
 
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
-				<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-				<button type="reset" value="true">{L_RESET}</button>
+				<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
+				<button type="reset" class="button reset" value="true">{L_RESET}</button>
 				<input type="hidden" name="id_auth" value="{auth.ID}">
 				<input type="hidden" name="token" value="{TOKEN}">
 			</fieldset>
@@ -138,9 +138,9 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 				<button onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();" type="button">{L_PREVIEW}</button>
-				<button type="reset">{L_RESET}</button>
+				<button type="reset" class="button reset">{L_RESET}</button>
 			</fieldset>
 		</form>
 		# END status #
@@ -185,7 +185,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END move #
@@ -225,7 +225,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END rename #
@@ -301,7 +301,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END create #
@@ -348,7 +348,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END remove #

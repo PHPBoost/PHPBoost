@@ -122,22 +122,22 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	{
 		if ($member_extended_field->get_regex() == 4)
 		{
-			$displayed_value = '<a href="mailto:' . $value . '" class="basic-button smaller">' . $this->lang['regex.mail'] . '</a>';
+			$displayed_value = '<a href="mailto:' . $value . '" class="button alt-button smaller">' . $this->lang['regex.mail'] . '</a>';
 
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
 				if (TextHelper::strstr($value, $id))
-					$displayed_value = '<a href="mailto:' . $value . '" class="basic-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+					$displayed_value = '<a href="mailto:' . $value . '" class="button alt-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
 		else if ($member_extended_field->get_regex() == 5)
 		{
-			$displayed_value = '<a href="' . $value . '" class="basic-button smaller">' . $this->lang['regex.website'] . '</a>';
+			$displayed_value = '<a href="' . $value . '" class="button alt-button smaller">' . $this->lang['regex.website'] . '</a>';
 
 			foreach (self::$brands_pictures_list as $id => $parameters)
 			{
 				if (TextHelper::strstr($value, $id))
-					$displayed_value = '<a href="' . $value . '" class="basic-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+					$displayed_value = '<a href="' . $value . '" class="button alt-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
 		else

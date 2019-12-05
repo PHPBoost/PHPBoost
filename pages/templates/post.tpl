@@ -151,8 +151,8 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" class="submit">{L_SUBMIT}</button>
+				<button type="submit" class="button submit">{L_SUBMIT}</button>
 				<button type="submit" name="preview" value="preview">{L_PREVIEW}</button>
-				<button type="reset">{L_RESET}</button>
+				<button type="reset" class="button reset">{L_RESET}</button>
 			</fieldset>
 		</form>

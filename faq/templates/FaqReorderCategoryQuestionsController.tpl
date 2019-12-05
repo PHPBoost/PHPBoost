@@ -174,7 +174,7 @@
 				</fieldset>
 				# IF C_MORE_THAN_ONE_QUESTION #
 				<fieldset class="fieldset-submit" id="position-update-button">
-					<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
+					<button type="submit" name="submit" value="true" class="button submit">${LangLoader::get_message('position.update', 'common')}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 					<input type="hidden" name="tree" id="tree" value="">
 				</fieldset>

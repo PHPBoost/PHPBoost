@@ -94,7 +94,7 @@
 						<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 					# END syndication_cats #
 					# IF C_POST_NEW_SUBJECT #
-						<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+						<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="button alt-button">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
 				</h2>
 			</header>
@@ -195,7 +195,7 @@
 										<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a># IF syndication_cats.C_DISPLAY_RAQUO # &raquo; # ENDIF #
 									# END syndication_cats #
 									# IF C_POST_NEW_SUBJECT #
-										<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+										<i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_POST_NEW_SUBJECT}" class="button alt-button">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #
 								</div>
 								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #

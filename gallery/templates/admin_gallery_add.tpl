@@ -114,7 +114,7 @@
 					<div class="fieldset-inset">
 						<input type="hidden" name="max_file_size" value="2000000">
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="" value="true" class="submit">{L_UPLOAD_IMG}</button>
+						<button type="submit" name="" value="true" class="button submit">{L_UPLOAD_IMG}</button>
 					</div>
 				</fieldset>
 			</form>
@@ -193,7 +193,7 @@
 						<div class="fieldset-inset">
 							<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+							<button type="submit" name="valid" value="true" class="button submit">{L_SUBMIT}</button>
 						</div>
 					</fieldset>
 				# ELSE #

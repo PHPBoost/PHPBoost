@@ -4,7 +4,7 @@
 */
 
 /* --- admin --- */
-.admin-poll input[type="text"] {
+/* .admin-poll input[type="text"] {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #D4D4D4;
@@ -14,16 +14,6 @@
 	border-width: 1px 0 0;
 	border-style: solid;
 	border-color: #D4D4D4;
-}
-
-.admin-module-poll #calendar1 .calendar-block,
-.admin-module-poll #calendar2 .calendar-block,
-.admin-module-poll #calendar3 .calendar-block {
-	position: absolute;
-	z-index: 100;
-	top: auto;
-	bottom: 100%;
-	left: 0;
 }
 
 .admin-module-poll .fieldset-inset {
@@ -50,14 +40,14 @@
 
 .poll-vote {
 	width: 80% !important;
-}
+} */
 
 /* --- modules --- */
-.poll-question-select {
+/* .poll-question-select {
 	margin-top: 1em;
 	padding-left: 1.482em;
 }
 
 .poll-question-container {
 	margin: 1.618em 0 1em 0;
-}
+} */

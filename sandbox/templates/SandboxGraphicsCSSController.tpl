@@ -143,10 +143,10 @@
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="PHPBoost" itemprop="image">
 						</span>
 						<div class="spacer"></div>
-						<a href="#" class="basic-button">
+						<a href="#" class="button alt-button">
 							<i class="fa fa-globe" aria-hidden="true"></i> {@css.options.link}
 						</a>
-						<a href="#" class="basic-button alt" aria-label="{@css.options.link}">
+						<a href="#" class="button alt-button" aria-label="{@css.options.link}">
 							<i class="fa fa-unlink" aria-hidden="true" aria-label="{@css.options.link}"></i>
 						</a>
 					</div>
@@ -388,10 +388,10 @@
 			</header>
 			<div class="content">
 				<button type="submit" class="button">{@css.button}</button>
-				<button type="submit" class="submit">.submit</button><br />
-				<button type="submit" class="button-small">.small</button><br />
-				<button type="submit" class="basic-button">.basic-button</button><br />
-				<button type="submit" class="basic-button alt">.basic-button.alt</button>
+				<button type="submit" class="button submit">.submit</button><br />
+				<button type="submit" class="button small">.small</button><br />
+				<button type="submit" class="button alt-button">.alt-button</button><br />
+				<button type="submit" class="button alt-button">.alt-button.alt</button>
 			</div>
 		</article>
 	</div>
@@ -568,10 +568,10 @@
 				            <div class="message-user-infos hidden-small-screens">
 				                <div></div>
 								<div class="message-user-links">
-									<a href="#" class="basic-button">MP</a>
-									<a href="#" class="basic-button">Facebook</a>
-									<a href="#" class="basic-button">Twitter</a>
-									<a href="#" class="basic-button"><i class="far fa-envelope"></i></a>
+									<a href="#" class="button alt-button">MP</a>
+									<a href="#" class="button alt-button">Facebook</a>
+									<a href="#" class="button alt-button">Twitter</a>
+									<a href="#" class="button alt-button"><i class="far fa-envelope"></i></a>
 								</div>
 							</div>
 			                <div class="message-user">

@@ -13,7 +13,7 @@ class AdminViewAllMembersController extends AdminController
 {
 	private $view;
 	private $lang;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -70,10 +70,10 @@ class AdminViewAllMembersController extends AdminController
 		{
 			$user = new User();
 			$user->set_properties($row);
-			
+
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $user->get_id();
-			
+
 			$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 
 			if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
@@ -86,7 +86,7 @@ class AdminViewAllMembersController extends AdminController
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level()))),
 				new HTMLTableRowCell(UserService::get_level_lang($user->get_level())),
-				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), $this->lang['email'], array(), 'basic-button smaller')),
+				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), $this->lang['email'], array(), 'button alt-button smaller')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
 				new HTMLTableRowCell(empty($row['login']) || $row['approved'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common')),

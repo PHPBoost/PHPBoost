@@ -63,7 +63,7 @@
 						<div class="spacer"></div>
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-							<button type="submit" class="submit" value="true" name="valid">{L_SUBMIT}</button>
+							<button type="submit" class="button submit" value="true" name="valid">{L_SUBMIT}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 						</fieldset>
 					</form>

@@ -23,7 +23,7 @@
 							<h3 class="cell-name">{modules_upgradable.NAME}</h3>
 							<div class="addon-menu-container">
 								# IF modules_upgradable.C_COMPATIBLE #
-									<button type="submit" class="submit addon-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
+									<button type="submit" class="button submit addon-menu-title" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
 								# ELSE #
 									<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 								# ENDIF #
@@ -44,7 +44,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>

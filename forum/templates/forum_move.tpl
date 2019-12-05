@@ -35,7 +35,7 @@
 						<legend>{L_SUBMIT}</legend>
 						<input type="hidden" name="id" value="{ID}">
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
+						<button type="submit" name="submit" value="true" class="button submit">{L_SUBMIT}</button>
 					</fieldset>
 				</form>
 			</div>

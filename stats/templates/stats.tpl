@@ -264,7 +264,7 @@
 							<p>
 								<input type="hidden" name="{TYPE}" value="1">
 								<input type="hidden" name="token" value="{TOKEN}">
-								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
+								<button type="submit" name="date" value="true" class="button submit">{L_SUBMIT}</button>
 							</p>
 						</div>
 					</div>

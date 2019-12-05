@@ -27,7 +27,7 @@
 						</h3>
 						<div class="addon-menu-container">
 							# IF langs_not_installed.C_COMPATIBLE #
-								<button type="submit" class="submit addon-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+								<button type="submit" class="button submit addon-menu-title" name="add-{langs_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 							# ELSE #
 								<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 							# ENDIF #
@@ -53,7 +53,7 @@
 										{langs_not_installed.AUTHOR}
 									# ENDIF #
 									# IF langs_not_installed.C_AUTHOR_WEBSITE #
-										<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
+										<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a>
 									# ENDIF #
 								</span>
 							</li>
@@ -91,7 +91,7 @@
 			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER});" aria-label="{@langs.select_all_langs}" />
 			<span>&nbsp;</span>
 		</label>
-		<button type="submit" name="add-selected-langs" value="true" class="submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
+		<button type="submit" name="add-selected-langs" value="true" class="button submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 	</div>
 	# ENDIF #
 </form>

@@ -67,7 +67,7 @@
 					</div>
 					# ENDIF #
 					# IF C_PARTICIPATE #
-					<a href="{U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a>
+					<a href="{U_SUSCRIBE}" class="button alt-button">{@calendar.labels.suscribe}</a>
 						# IF C_MISSING_PARTICIPANTS #
 						<span class="small text-italic">({L_MISSING_PARTICIPANTS})</span>
 						# ENDIF #
@@ -77,7 +77,7 @@
 						# ENDIF #
 					# ENDIF #
 					# IF C_IS_PARTICIPANT #
-					<a href="{U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a>
+					<a href="{U_UNSUSCRIBE}" class="button alt-button">{@calendar.labels.unsuscribe}</a>
 					# ELSE #
 						# IF C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max_participants_reached}</span># ENDIF #
 					# ENDIF #

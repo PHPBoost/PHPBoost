@@ -64,7 +64,7 @@
 				<div class="form-element user-profil-email">
 					<label>{@email}</label>
 					<div class="form-field form-field-free">
-						<a href="mailto:{EMAIL}" class="basic-button smaller">${LangLoader::get_message('mail', 'main')}</a>
+						<a href="mailto:{EMAIL}" class="button alt-button smaller">${LangLoader::get_message('mail', 'main')}</a>
 					</div>
 				</div>
 				# ENDIF #
@@ -72,7 +72,7 @@
 				<div class="form-element user-profil-private-msg">
 					<label>{@private_message}</label>
 					<div class="form-field form-field-free">
-						<a href="{U_DISPLAY_USER_PM}" class="basic-button smaller">${LangLoader::get_message('pm', 'main')}</a>
+						<a href="{U_DISPLAY_USER_PM}" class="button alt-button smaller">${LangLoader::get_message('pm', 'main')}</a>
 					</div>
 				</div>
 				# ENDIF #

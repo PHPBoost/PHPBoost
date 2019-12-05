@@ -236,18 +236,48 @@ class SandboxFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['form.input.user.completion'], '',
 			array('class' => 'form-field-css-class')
-		));		
+		));
 
 		// Separator
 		$fieldset->add_field(new FormFieldFree('03_separator', '', ''));
 
+		// BUTTONS
+		$fieldset->add_field(new FormFieldFree('all_buttons', 'All buttons must have the <span class="pinned notice">.button</span> class.', ''));
 		// Buttons
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button'], '', '', 'button'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button.small'], '', '', 'small'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic'], '', '', 'basic-button'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic.alt'], '', '', 'basic-button alt'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button'], '', '', 'submit'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button.alt'], '', '', 'submit alt'));
+		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'button reset'));
+		$fieldset->add_element(new FormButtonButton('.button', '', '', 'button'));
+		$fieldset->add_element(new FormButtonButton('.alt-button', '', '', 'button alt-button'));
+		$fieldset->add_element(new FormButtonButton('.submit', '', '', 'button submit'));
+		$fieldset->add_element(new FormButtonButton('.alt-submit', '', '', 'button alt-submit'));
+
+		$fieldset->add_field(new FormFieldFree('button_sizes', '', ''));
+
+		$fieldset->add_element(new FormButtonButton('.smallest', '', '', 'smallest'));
+		$fieldset->add_element(new FormButtonButton('.smaller', '', '', 'smaller'));
+		$fieldset->add_element(new FormButtonButton('.small', '', '', 'small'));
+		$fieldset->add_element(new FormButtonButton('.button', '', '', 'button'));
+		$fieldset->add_element(new FormButtonButton('.big', '', '', 'big'));
+		$fieldset->add_element(new FormButtonButton('.bigger', '', '', 'bigger'));
+		$fieldset->add_element(new FormButtonButton('.biggest', '', '', 'biggest'));
+
+		$fieldset->add_field(new FormFieldFree('button_colors', '', ''));
+		$fieldset->add_element(new FormButtonButton('.error', '', '', 'button error'));
+		$fieldset->add_element(new FormButtonButton('.error.bgc', '', '', 'button bgc error'));
+		$fieldset->add_element(new FormButtonButton('.warning', '', '', 'button warning'));
+		$fieldset->add_element(new FormButtonButton('.warning.bgc', '', '', 'button bgc warning'));
+		$fieldset->add_element(new FormButtonButton('.success', '', '', 'button success'));
+		$fieldset->add_element(new FormButtonButton('.success.bgc', '', '', 'button bgc success'));
+		$fieldset->add_element(new FormButtonButton('.question', '', '', 'button question'));
+		$fieldset->add_element(new FormButtonButton('.question.bgc', '', '', 'button bgc question'));
+		$fieldset->add_element(new FormButtonButton('.notice', '', '', 'button notice'));
+		$fieldset->add_element(new FormButtonButton('.notice.bgc', '', '', 'button bgc notice'));
+		$fieldset->add_element(new FormButtonButton('.member', '', '', 'button member'));
+		$fieldset->add_element(new FormButtonButton('.member.bgc', '', '', 'button bgc member'));
+		$fieldset->add_element(new FormButtonButton('.moderator', '', '', 'button moderator'));
+		$fieldset->add_element(new FormButtonButton('.moderator.bgc', '', '', 'button bgc moderator'));
+		$fieldset->add_element(new FormButtonButton('.administrator', '', '', 'button administrator'));
+		$fieldset->add_element(new FormButtonButton('.administrator.bgc', '', '', 'button bgc administrator'));
+
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
 		$form->add_fieldset($fieldset2);
@@ -357,7 +387,7 @@ class SandboxFormController extends ModuleController
 		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$buttons_fieldset->add_element($this->submit_button);
-		$buttons_fieldset->add_element(new FormButtonButton($this->lang['form.button'], 'alert("Hello world");'));
+		$buttons_fieldset->add_element(new FormButtonButton($this->lang['form.button'], 'alert("Hello world");', '', 'button'));
 		$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS

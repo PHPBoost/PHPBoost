@@ -129,7 +129,7 @@
 			</table>
 			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
+				<button type="submit" name="valid" value="true" class="button submit">{L_SUBMIT}</button>
 			</div>
 		</div>
 		<footer>

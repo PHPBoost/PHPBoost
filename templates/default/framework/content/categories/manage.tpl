@@ -71,7 +71,7 @@ function change_reposition_pictures()
 	</fieldset>
 	# IF C_MORE_THAN_ONE_CATEGORY #
 	<fieldset class="fieldset-submit">
-		<button type="submit" class="submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
+		<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
 	</fieldset>

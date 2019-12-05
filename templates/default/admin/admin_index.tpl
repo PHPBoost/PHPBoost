@@ -184,7 +184,7 @@
 											<span aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}">&nbsp;</span>
 										</label>
 										<input type="hidden" name="token" value="{TOKEN}" />
-										<button type="submit" name="delete-selected-comments" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+										<button type="submit" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
 									</li>
 								# ENDIF #
 							</ul>
@@ -211,8 +211,8 @@
 									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
 								</div>
 								<p class="align-center">
-									<button type="submit" class="submit" name="writingpad" value="true">{L_UPDATE}</button>
-									<button type="reset" value="true">{L_RESET}</button>
+									<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
+									<button type="reset" class="button reset" value="true">{L_RESET}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
 								</p>
 							</div>

@@ -162,17 +162,17 @@
 						<div class="spacer"></div>
 						# ENDIF #
 						# IF weblinks.C_VISIBLE #
-							<a href="{weblinks.U_VISIT}" class="basic-button">
+							<a href="{weblinks.U_VISIT}" class="button alt-button">
 								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 							</a>
 							# IF IS_USER_CONNECTED #
-							<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+							<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button alt-button" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 								<i class="fa fa-unlink" aria-hidden="true"></i>
 							</a>
 							# ENDIF #
 						# ELSE #
 							# IF C_PENDING #
-							<a href="{weblinks.U_VISIT}" class="basic-button">
+							<a href="{weblinks.U_VISIT}" class="button alt-button">
 								<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
 							</a>
 							# ENDIF #

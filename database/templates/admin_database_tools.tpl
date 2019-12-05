@@ -273,7 +273,7 @@
 											<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 										</fieldset>
 										<fieldset class="fieldset-submit" style="margin:0">
-											<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+											<button type="submit" name="submit" value="true" class="button submit">{L_EXECUTE}</button>
 											<input type="hidden" name="token" value="{TOKEN}">
 										</fieldset>
 									</div>
@@ -353,7 +353,7 @@
 						</table>
 						<fieldset class="fieldset-submit">
 							<legend>{L_EXECUTE}</legend>
-							<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
+							<button type="submit" name="submit" value="true" class="button submit">{L_EXECUTE}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 						</fieldset>
 					</form></article>

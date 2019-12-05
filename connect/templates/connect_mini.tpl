@@ -52,7 +52,7 @@
 						<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 						<input type="hidden" name="token" value="{TOKEN}">
 						<li class="align-center">
-							<button type="submit" name="authenticate" value="internal" class="submit">{@connection}</button>
+							<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
 						</li>
 					</form>
 
@@ -60,7 +60,7 @@
 						# IF C_USER_REGISTER #
 							<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
 								<li class="align-center">
-									<button type="submit" name="register" value="true" class="submit">{@register}</button>
+									<button type="submit" name="register" value="true" class="button submit">{@register}</button>
 								</li>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</form>

@@ -5,10 +5,10 @@
             &lt;img src="link-to-picture.ext" alt="Lorem" itemprop="image">
         &lt;/span>
         &lt;div class="spacer">&lt;/div>
-        &lt;a href="#" class="basic-button">
+        &lt;a href="#" class="button alt-button">
             &lt;i class="fa fa-globe">&lt;/i> link
         &lt;/a>
-        &lt;a href="#" class="basic-button alt" aria-label="{@css.options.link}">
+        &lt;a href="#" class="button alt-button" aria-label="{@css.options.link}">
             &lt;i class="fa fa-unlink">&lt;/i>
         &lt;/a>
     &lt;/div>

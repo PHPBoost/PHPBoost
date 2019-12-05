@@ -53,7 +53,7 @@
 				</tbody>
 			</table>
 		</div>
-		<footer>{@iconfa.list}<a class="basic-button" href="https://fontawesome.com/icons?d=listing&m=free">Cheatsheet Font-Awesome</a></footer>
+		<footer>{@iconfa.list}<a class="button alt-button" href="https://fontawesome.com/icons?d=listing&m=free">Cheatsheet Font-Awesome</a></footer>
 	</article>
 
 	<article>
@@ -101,7 +101,7 @@
 			<br />
 			<h3>{@iconfa.howto.variants}</h3>
 			<p>{@iconfa.howto.variants.explain}</p>
-			<p>{@iconfa.howto.variants.list}<a class="basic-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
+			<p>{@iconfa.howto.variants.list}<a class="button alt-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
 			<div class="code">
 				<pre><<span>i class="fa fa-spinner fa-spin fa-2x><</span>/i></pre>
 			</div>

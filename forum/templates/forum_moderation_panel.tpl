@@ -103,7 +103,7 @@
 							<tr>
 								<td colspan="4">
 									# IF C_FORUM_ADMIN #
-										<span class="float-left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span>
+										<span class="float-left"><button type="submit" name="valid" value="true" class="button submit">{L_DELETE}</button></span>
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
 										<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
@@ -179,7 +179,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
+									<button type="submit" name="" value="true" class="button submit">{L_DELETE}</button>
 								</td>
 							</tr>
 						</tfoot>
@@ -241,7 +241,7 @@
 				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset-submit">
 						<legend></legend>
-						<button type="submit" name="valid" value="true" class="submit">{L_CHANGE_STATUS}</button>
+						<button type="submit" name="valid" value="true" class="button submit">{L_CHANGE_STATUS}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>
@@ -318,7 +318,7 @@
 									<span id="search_img"></span>
 								</span>
 								<span>
-									<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
+									<button type="submit" id="search_member" name="search_member" class="button submit">{L_SEARCH}</button>
 									<script>
 									<!--
 										document.getElementById('search_member').style.display = 'none';
@@ -353,7 +353,7 @@
 									<a href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
 								</td>
 								<td class="td25P">
-									<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
+									<a href="{user_list.U_PM}" class="button alt-button smaller">MP</a>
 								</td>
 							</tr>
 							# END user_list #
@@ -411,7 +411,7 @@
 									{L_PM}
 								</td>
 								<td>
-									<a href="{U_PM}" class="basic-button smaller">MP</a>
+									<a href="{U_PM}" class="button alt-button smaller">MP</a>
 								</td>
 							</tr>
 							<tr>
@@ -432,7 +432,7 @@
 									<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select></label>
-									<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
+									<button type="submit" name="valid_user" value="true" class="button submit">{L_CHANGE_INFO}</button>
 									<input type="hidden" name="token" value="{TOKEN}">
 								</td>
 							</tr>

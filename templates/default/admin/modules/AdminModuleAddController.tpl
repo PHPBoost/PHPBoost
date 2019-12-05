@@ -23,7 +23,7 @@
 							<h3 class="cell-name">{modules_not_installed.NAME}</h3>
 							<div class="addon-menu-container">
 								# IF modules_not_installed.C_COMPATIBLE #
-									<button type="submit" class="submit addon-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+									<button type="submit" class="button submit addon-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 								# ELSE #
 									<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 								# ENDIF #
@@ -44,7 +44,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #</span>
+									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>

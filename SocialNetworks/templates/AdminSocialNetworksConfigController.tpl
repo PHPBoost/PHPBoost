@@ -131,7 +131,7 @@ jQuery(document).ready(function() {
 	</fieldset>
 	<fieldset class="fieldset-submit">
 		<div class="fieldset-inset">
-			<button type="submit" name="order_manage_submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
+			<button type="submit" name="order_manage_submit" value="true" class="button submit">${LangLoader::get_message('position.update', 'common')}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="tree" id="tree" value="">
 		</div>

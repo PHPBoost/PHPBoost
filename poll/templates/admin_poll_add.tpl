@@ -139,18 +139,16 @@
 				<fieldset>
 					<legend>{L_DATE}</legend>
 					<div class="fieldset-inset">
-						<div class="form-element half-field custom-radio">
+						<div class="form-element custom-radio">
 							<label for="release_date">{L_RELEASE_DATE}</label>
 							<div class="form-field poll-form-field">
 								<div onclick="document.getElementById('start_end_date').checked = true;">
 									<div class="form-field-radio">
 										<label class="radio" for"start_end_date">
 											<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} />
-											<span>
-												{CALENDAR_START}
-												{L_UNTIL}
-											    {CALENDAR_END}
-											</span>
+											<div class="grouped-inputs">{CALENDAR_START}</div>
+											<div>{L_UNTIL}</div>
+										    <div class="grouped-inputs">{CALENDAR_END}</div>
 										</label>
 									</div>
 								</div>
@@ -170,13 +168,13 @@
 						</div>
 						<div class="form-element top-field">
 							<label for="current_date">* {L_POLL_DATE}</label>
-							<div class="form-field form-field-datetime">
+							<div class="form-field form-field-datetime grouped-inputs">
 								{CALENDAR_CURRENT_DATE}
-								<label class="label-time" data-time="h">
-									<input class="input-hours" type="text" name="hour" value="{HOUR}" />
+								<label class="label-time grouped-element" data-time="h">
+									<input class="input-hours" type="number" name="hour" value="{HOUR}" />
 								</label>
-								<label class="label-time" data-time="mn">
-									<input class="input-minutes" type="text" maxlength="2" name="min" value="{MIN}" />
+								<label class="label-time grouped-element" data-time="mn">
+									<input class="input-minutes" type="number" maxlength="2" name="min" value="{MIN}" />
 								</label>
 							</div>
 						</div>
@@ -186,8 +184,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<div class="fieldset-inset">
-						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
-						<button type="reset" value="true">{L_RESET}</button>
+						<button type="submit" name="valid" value="true" class="button submit">{L_SUBMIT}</button>
+						<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>

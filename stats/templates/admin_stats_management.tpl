@@ -265,7 +265,7 @@
 						</select>
 						# ENDIF #
 						<input type="hidden" name="{TYPE}" value="1">
-						<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
+						<button type="submit" name="date" value="true" class="button submit">{L_SUBMIT}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
@@ -733,7 +733,7 @@
 						<fieldset class="fieldset-submit">
 							<legend>{L_ERASE_RAPPORT}</legend>
 							<div class="fieldset-inset">
-								<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button>
+								<button type="submit" name="erase" value="true" class="button submit">{L_ERASE_RAPPORT}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</div>
 						</fieldset>
@@ -759,8 +759,8 @@
 
 				<fieldset class="fieldset-submit">
 					<div class="fieldset-inset">
-						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-						<button type="reset" value="true">{L_RESET}</button>
+						<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
+						<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>

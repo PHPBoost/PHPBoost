@@ -91,7 +91,7 @@
 								{member_list.U_ACTION_USER}
 							</td>
 							<td>
-								<a href="{member_list.U_PM}" class="basic-button smaller">MP</a>
+								<a href="{member_list.U_PM}" class="button alt-button smaller">MP</a>
 							</td>
 						</tr>
 						# END member_list #
@@ -136,7 +136,7 @@
 						<div class="form-element">
 							<label>{L_PM}</label>
 							<div class="form-field">
-								<a href="{U_PM}" class="basic-button smaller">MP</a>
+								<a href="{U_PM}" class="button alt-button smaller">MP</a>
 							</div>
 						</div>
 						<div class="form-element form-element-textarea">
@@ -158,7 +158,7 @@
 					<fieldset class="fieldset-submit">
 						<legend></legend>
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
+						<button type="submit" name="valid_user" value="true" class="button submit">{L_CHANGE_INFO}</button>
 					</fieldset>
 				</form>
 				# ENDIF #
@@ -177,7 +177,7 @@
 						<div class="form-element">
 							<label>{L_PM}</label>
 							<div class="form-field">
-								<a href="{U_PM}" class="basic-button smaller">MP</a>
+								<a href="{U_PM}" class="button alt-button smaller">MP</a>
 							</div>
 						</div>
 						<div class="form-element">
@@ -195,7 +195,7 @@
 					<fieldset class="fieldset-submit">
 						<legend></legend>
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_user" value="true" class="submit">{L_BAN}</button>
+						<button type="submit" name="valid_user" value="true" class="button submit">{L_BAN}</button>
 					</fieldset>
 				</form>
 				# ENDIF #

@@ -73,11 +73,11 @@ class UserUsersListController extends AbstractController
 
 			$html_table_row = array(
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'basic-button smaller') : ''),
+				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'alt-button smaller') : ''),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($posted_msg),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'basic-button smaller'))
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'alt-button smaller'))
 			);
 
 			if (AppContext::get_current_user()->is_admin())

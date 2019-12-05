@@ -47,10 +47,6 @@
 	background-color: #FFFFFF;
 }
 
-.cell-tile .cell-table tr:nth-child(even) td {
-	background-color: #ECF2F8;
-}
-
 .cell-thumbnail a:hover {
     color: #FFFFFF;
 }
@@ -87,7 +83,7 @@ span.not-compatible {
 .multiple-select-button:hover,
 .addon-menu-container:hover .addon-menu-title,
 .addon-menu-container.opened .addon-menu-title,
-.addon-menu-title.opened { background-color: #0066cc; }
+.addon-menu-title.opened { background-color: #336493; }
 
 .addon-menu-container .addon-menu-title,
 .addon-menu-container.opened .addon-menu-title,
@@ -138,7 +134,7 @@ span.not-compatible {
 }
 
 .addon-menu-checkbox {
-	background-color: #0066CC;
+	background-color: #366493;
 }
 
 /* --- Table ----------------------------------------------------------------- */
@@ -149,10 +145,6 @@ table thead th {
 
 table thead th a { color: #FFFFFF; }
 
-tr:nth-child(even) td {
-	background-color: #FFFFFF;
-}
-
 .html-table-header-sortable:hover a,
 .html-table-header-sortable.sort-active a {
 	background-color: #FFFFFF;
@@ -160,18 +152,15 @@ tr:nth-child(even) td {
 }
 
 /* --- Form elements --------------------------------------------------------- */
-button,
 .button {
 	background-color: #FFFFFF;
 	border-color: #DDDDDD;
 }
 
-button:hover,
 .button-hover {
 	border-color: #555555;
 }
 
-button:active,
 .button-active {
 	border-color: #366493;
 }
@@ -332,6 +321,8 @@ nav.admin-index a {
 #admin-quick-menu li .quick-link {
 	color: #FFFFFF;
 }
+
+.js-menu-button { color: #FFFFFF}
 
 @media (min-width: 769px) {
 

@@ -283,10 +283,10 @@ class AdminSandboxFormController extends AdminModuleController
 
 		$fieldset->add_element(new FormButtonButton($this->lang['form.button'], '', '', 'button'));
 		$fieldset->add_element(new FormButtonButton($this->lang['form.button.small'], '', '', 'small'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic'], '', '', 'basic-button'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic.alt'], '', '', 'basic-button alt'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic'], '', '', 'alt-button'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.button.basic.alt'], '', '', 'alt-button alt'));
 		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button'], '', '', 'submit'));
-		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button.alt'], '', '', 'submit alt'));
+		$fieldset->add_element(new FormButtonButton($this->lang['form.send.button.alt'], '', '', 'alt-submit'));
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
 		$form->add_fieldset($fieldset2);

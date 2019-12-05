@@ -94,8 +94,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
-						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-						<button type="reset" value="true">{L_RESET}</button>
+						<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
+						<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>
@@ -108,7 +108,7 @@
 				</fieldset>
 				<fieldset class="fieldset-submit">
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="gallery_cache" value="true" class="submit alt">{L_CLEAR_OUT_CACHE}</button>
+						<button type="submit" name="gallery_cache" value="true" class="button alt-submit">{L_CLEAR_OUT_CACHE}</button>
 				</fieldset>
 			</form>
 			# ELSE #
@@ -139,8 +139,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
-						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-						<button type="reset" value="true">{L_RESET}</button>
+						<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
+						<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>

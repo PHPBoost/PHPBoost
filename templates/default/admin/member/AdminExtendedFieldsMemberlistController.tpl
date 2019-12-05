@@ -172,7 +172,7 @@ jQuery(document).ready(function() {
 	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
 		<div class="fieldset-inset">
-			<button type="submit" class="submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
+			<button type="submit" class="button submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="tree" id="tree" value="">
 		</div>

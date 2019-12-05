@@ -56,7 +56,7 @@
 			<fieldset class="fieldset-submit">
 				<legend></legend><input type="hidden" name="max_file_size" value="2000000">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="vupload" value="true" class="submit">{L_UPLOAD}</button>
+				<button type="submit" name="vupload" value="true" class="button submit">{L_UPLOAD}</button>
 			</fieldset>
 		</div>
 		<footer>

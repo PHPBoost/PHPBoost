@@ -75,7 +75,7 @@
 					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
 				</label>
 				<input type="hidden" name="token" value="{TOKEN}" />
-				<button type="submit" name="delete-selected-elements" value="true" class="submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+				<button type="submit" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
 			</div>
 		# ENDIF #
 		</form>

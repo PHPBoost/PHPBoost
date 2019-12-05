@@ -37,12 +37,12 @@
 					# ENDIF #
 					# IF C_VISIBLE #
 						# IF C_DISPLAY_DOWNLOAD_LINK #
-							<a href="{U_DOWNLOAD}" class="basic-button">
+							<a href="{U_DOWNLOAD}" class="button alt-button">
 								<i class="fa fa-download" aria-hidden="true"></i> {@download}
 							</a>
 
 							# IF IS_USER_CONNECTED #
-							<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="basic-button alt" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+							<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button alt-button" aria-label="${LangLoader::get_message('deadlink', 'common')}">
 								<i class="fa fa-unlink" aria-hidden="true"></i>
 							</a>
 							# ENDIF #
