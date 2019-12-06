@@ -145,8 +145,8 @@
 					<input type="hidden" name="idedit" value="{IDEDIT}" />
 					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
 					<input type="hidden" name="token" value="{TOKEN}" />
-					<button type="submit" name="submit" value="true" class="button submit">{L_SUBMIT}</button>
-					<button type="button" onclick="XMLHttpRequest_preview(); return false;">{L_PREVIEW}</button>
+					<button type="submit" class="button submit" name="submit" value="true">{L_SUBMIT}</button>
+					<button type="button" class="button small" onclick="XMLHttpRequest_preview(); return false;">{L_PREVIEW}</button>
 					<button type="reset" class="button reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>

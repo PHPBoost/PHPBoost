@@ -227,8 +227,8 @@
 			</div>
 			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="pm" value="true" class="button submit">{L_SUBMIT}</button>
-				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+				<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>
+				<button type="button" class="button small" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 				<button type="reset" class="button reset" value="true">{L_RESET}</button>
 			</div>
 		</form>
@@ -263,8 +263,8 @@
 
 						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="button submit">{L_SUBMIT}</button>
-							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+							<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>
+							<button type="button" class="button small" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						</div>
 					</div>
@@ -292,12 +292,12 @@
 							<div class="form-element">
 								<label for="login">* {L_RECIPIENT}</label>
 								<div class="form-field">
-									<label>
+									<label for="" class="grouped-inputs">
 										<input type="text" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
-										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>
+										<button type="button" class="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>
 										<span id="search_img"></span>
 									</label>
-									<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+									<div id="xmlhttprequest-result-search" style="display: none;" class="pinned question"></div>
 									# START post_convers.user_id_dest.search #
 										{post_convers.user_id_dest.search.RESULT}
 									# END post_convers.user_id_dest.search #
@@ -319,8 +319,8 @@
 
 						<div class="align-center">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="convers" value="true" class="button submit">{L_SUBMIT}</button>
-							<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+							<button type="submit" class="button submit" name="convers" value="true">{L_SUBMIT}</button>
+							<button type="button" class="button small" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 						</div>
 					</div>

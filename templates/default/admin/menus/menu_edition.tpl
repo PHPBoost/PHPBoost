@@ -7,8 +7,8 @@
 			# END elements #
 		</ul>
 		<fieldset class="fieldset-submit">
-			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
 		</fieldset>
 	</div>
 # ENDIF #
@@ -18,7 +18,7 @@
 		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
 			<i class="fa fa-folder" aria-hidden="true" style="cursor:move"></i>
-			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
+			<label for="menu_element_{ID}_name">{L_NAME} <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
 			<script>
@@ -51,8 +51,8 @@
 			# END elements #
 		</ul>
 		<fieldset class="fieldset-submit">
-			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-			<button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
+			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
 		</fieldset>
 	</li>
 # ENDIF #

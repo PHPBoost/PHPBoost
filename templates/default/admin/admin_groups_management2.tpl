@@ -193,11 +193,11 @@
 				<div class="fieldset-inset">
 					<div class="form-element">
 						<label for="login">* {L_PSEUDO}</label>
-						<div class="form-field">
-							<input type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr">
-							<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
-							<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+						<div class="form-field grouped-inputs">
+							<input class="grouped-element" type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr">
+							<button class="grouped-element button submit" onclick="XMLHttpRequest_search();" type="button"><i class="fa fa-search"></i></button>
 						</div>
+						<div class="pinned" id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 					</div>
 				</div>
 			</fieldset>

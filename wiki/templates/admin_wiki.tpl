@@ -86,7 +86,7 @@
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					{KERNEL_EDITOR}
 					<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
-					<div class="align-center"><button type="button" onclick="XMLHttpRequest_preview('contents');">{L_PREVIEW}</button></div>
+					<div class="align-center"><button type="button" class="button small" onclick="XMLHttpRequest_preview('contents');">{L_PREVIEW}</button></div>
 				</div>
 			</div>
 		</fieldset>

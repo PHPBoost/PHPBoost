@@ -895,11 +895,6 @@ a[class*='lightcase-icon-']:hover {
 	    background-color: rgba(54, 100, 147, 0.2);
 	}
 
-	.modal-btn {
-	    border-color: #366493;
-	    background-color: rgba(54, 100, 147, 0.2);
-	}
-
 	.close-modal {
 	    color: #FFFFFF;
 	}

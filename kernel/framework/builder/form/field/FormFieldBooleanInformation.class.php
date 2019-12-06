@@ -35,7 +35,7 @@ class FormFieldBooleanInformation extends FormFieldFree
 
 	protected function get_html_value()
 	{
-		return '<i class="' . ($this->get_value() ? 'fa fa-check' : 'fa fa-times') . ' fa-2x"></i>';
+		return '<i class="fa fa-2x ' . ($this->get_value() ? 'fa-check success' : 'fa-times error') . '"></i>';
 	}
 }
 ?>

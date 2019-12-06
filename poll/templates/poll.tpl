@@ -54,7 +54,7 @@
 							# END checkbox #
 
 							<p class="align-center">
-								<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
+								<button type="submit" class="button submit" name="valid_poll" value="{L_VOTE}">{L_VOTE}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 							<p class="align-center">

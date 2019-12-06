@@ -138,8 +138,8 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" value="true" class="button submit">{L_SUBMIT}</button>
-				<button onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();" type="button">{L_PREVIEW}</button>
+				<button type="submit" class="button submit" value="true">{L_SUBMIT}</button>
+				<button type="button" class="button small" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{L_PREVIEW}</button>
 				<button type="reset" class="button reset">{L_RESET}</button>
 			</fieldset>
 		</form>

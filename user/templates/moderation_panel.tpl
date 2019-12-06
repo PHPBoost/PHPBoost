@@ -62,7 +62,7 @@
 							<div class="form-field">
 								<input type="text" maxlength="25" id="login" value="" name="login">
 								<input type="hidden" name="token" value="{TOKEN}">
-								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
+								<button class="button small" onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
 								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 							</div>
 						</div>

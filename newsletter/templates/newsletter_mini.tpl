@@ -3,7 +3,7 @@
 		<div class="cell-form grouped-inputs">
 			<input class="grouped-element" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}">
 			<input type="hidden" name="token" value="{TOKEN}">
-			<button class="grouped-element" type="submit" name="" value="true" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+			<button class="grouped-element button submit" type="submit" name="" value="true" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
 		</div>
 		<div class="cell-list">
 			<ul>
@@ -25,7 +25,7 @@
 				<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
 				<input type="hidden" name="subscribe" value="subscribe">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button id="NewsletterButton" type="submit" class="button submit" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+				<button id="NewsletterButton" type="submit" class="grouped-element button submit" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
 			</form>
 		</div>
 	</div>

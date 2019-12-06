@@ -75,7 +75,7 @@
 				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
-					<div class="explorer inline">
+					<div class="explorer d-inline">
 						<div class="cats">
 							<div class="content">
 								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
@@ -152,7 +152,7 @@
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" class="button submit">{L_SUBMIT}</button>
-				<button type="submit" name="preview" value="preview">{L_PREVIEW}</button>
+				<button type="submit" class="button small" name="preview" value="preview">{L_PREVIEW}</button>
 				<button type="reset" class="button reset">{L_RESET}</button>
 			</fieldset>
 		</form>

@@ -124,10 +124,10 @@ function addSubMenu(menu_element_id) {
 	jQuery('<ul/>', {id : 'menu_element_' + id + '_list', class : 'sortable-block'}).appendTo('#menu_element_' + id);
 
 	jQuery('<fieldset/>', {id : 'menu_element_' + id + '_buttons', class : 'fieldset-submit'}).appendTo('#menu_element_' + id);
-	jQuery('<button/>', {type : 'button', id : 'menu_element_' + id + '_add_sub_element', name : 'menu_element_' + id + '_add_sub_element', value : {JL_ADD_SUB_ELEMENT}, onclick : 'addSubElement(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_ELEMENT}).appendTo('#menu_element_' + id + '_buttons');
+	jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_element', name : 'menu_element_' + id + '_add_sub_element', value : {JL_ADD_SUB_ELEMENT}, onclick : 'addSubElement(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_ELEMENT}).appendTo('#menu_element_' + id + '_buttons');
 	jQuery('#menu_element_' + id + '_buttons').append(' ');
 
-	jQuery('<button/>', {type : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : {JL_ADD_SUB_MENU}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_MENU}).appendTo('#menu_element_' + id + '_buttons');
+	jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : {JL_ADD_SUB_MENU}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_MENU}).appendTo('#menu_element_' + id + '_buttons');
 
 	addSubElement('menu_element_' + id);
 }

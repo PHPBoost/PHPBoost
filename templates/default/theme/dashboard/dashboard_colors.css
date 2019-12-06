@@ -136,7 +136,10 @@ span.not-compatible {
 .addon-menu-checkbox {
 	background-color: #366493;
 }
-
+.sortable-element,
+.sortable-element:hover {
+    background-color: #FFFFFF;
+}
 /* --- Table ----------------------------------------------------------------- */
 table thead th {
 	background-color: #366493;
