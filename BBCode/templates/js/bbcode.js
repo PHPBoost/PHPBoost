@@ -285,11 +285,20 @@ function bbcode_mail(field)
 function bbcode_wikipedia(field)
 {
 	var word = document.getElementById('bb_wikipedia_word' + field).value,
+		encoded_word = '',
 		lang = document.getElementById('bb_wikipedia_lang' + field).value,
-		insert_lang = (lang != '' && lang != null) ? '=' + lang : '',
-		insert_word = (word != '' && word != null) ? word : '';
+		insert_lang = (lang != '' && lang != null) ? ' lang="' + lang + '"' : '',
+		insert_word = (word != '' && word != null) ? word : '',
+		insert_page = '';
+	
+	if (word != '' && word != null) {
+		encoded_word = url_encode_rewrite(word);
+		if (encoded_word != word) {
+			insert_page = ' page="' + encoded_word + '"';
+		}
+	}
 
-	insertbbcode('[wikipedia' + insert_lang + ']' + insert_word, '[/wikipedia]', field);
+	insertbbcode('[wikipedia' + insert_page + insert_lang + ']' + insert_word, '[/wikipedia]', field);
 }
 
 function bbcode_feed(field)
