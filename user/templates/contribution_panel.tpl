@@ -183,7 +183,7 @@
 						<a href="{FIXING_URL}"><i class="fa fa-wrench fa-2x"aria-hidden="true"></i> {L_PROCESS_CONTRIBUTION}</a>
 					</div>
 					<div>
-						<a href="{U_UPDATE}"><i class="fa fa-check fa-2x"aria-hidden="true"></i> {L_UPDATE} {L_STATUS}</a>
+						<a href="{U_UPDATE}"><i class="fa fa-check fa-2x success"aria-hidden="true"></i> {L_UPDATE} {L_STATUS}</a>
 					</div>
 					<div class="spacer"></div>
 				</div>

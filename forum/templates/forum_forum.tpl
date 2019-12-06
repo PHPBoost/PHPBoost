@@ -111,7 +111,7 @@
 					<thead>
 						<tr>
 							<th class="forum-announce-topic"><i class="far fa-eye" aria-hidden="true"></i></th>
-							<th class="forum-fixed-topic"><i class="fa fa-check" aria-hidden="true"></i></th>
+							<th class="forum-fixed-topic"><i class="fa fa-check success" aria-hidden="true"></i></th>
 							<th class="forum-topic" aria-label="{L_TOPIC}"><i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span></th>
 							<th class="forum-author"><i class="far fa-user fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_AUTHOR}"></i><span class="hidden-large-screens">{L_AUTHOR}</span></th>
 							<th class="forum-message-nb"><i class="far fa-comments fa-fw hidden-small-screens" aria-hidden="true" aria-label="{L_ANSWERS}"></i><span class="hidden-large-screens">{L_ANSWERS}</span></th>

@@ -33,13 +33,13 @@ function change_alert_status(id, status)
 		{
 			if( status == 0 )
 			{
-				document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-check\"></i>";
+				document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-check success\"></i>";
 				document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
 				document.getElementById("status_" + id).title = "{L_UNFIX}";
 			}
 			else
 			{
-				document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-times\"></i>";
+				document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-times error\"></i>";
 				document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
 				document.getElementById("status_" + id).title = "{L_FIX}";
 			}
@@ -144,7 +144,7 @@ function delete_alert(id)
 					</td>
 					<td>
 						{alerts.ACTIONS}
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-check# ELSE #fa-times# ENDIF #"></i></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-check success# ELSE #fa-times error# ENDIF #"></i></a>
 						<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
 					</td>
 				</tr>

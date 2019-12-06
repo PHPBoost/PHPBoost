@@ -564,9 +564,6 @@ td.calendar-week { border-color: #0066cc; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
 .syndication .fa-rss:before      { color: #D36636; }
-.fa-check:before          { color: #4D9136; }
-.fa-minus-circle:before        { color: #913636; }
-.fa-times:before            { color: #913636; }
 .user-locked .fa-user-lock:before              { color: #913636; }
 .user-unlocked .fa-user-lock:before            { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }

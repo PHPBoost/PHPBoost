@@ -465,7 +465,7 @@ else
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => ($row['warning_percentage'] != 100) ? Date::to_format($row['delay_banned'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : $LANG['illimited'],
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="fa fa-minus-circle"></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="fa fa-minus-circle error"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 

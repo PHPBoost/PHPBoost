@@ -14,19 +14,19 @@
 						<tr>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=warning" class="moderation-type-block">
-									<i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
 									<span>{L_USERS_WARNING}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=punish" class="moderation-type-block">
-									<i class="fa fa-times fa-2x" aria-hidden="true"></i>
+									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
 									<span>{L_USERS_PUNISHMENT}</span>
 								</a>
 							</td>
 							<td class="td33P">
 								<a href="moderation_forum.php?action=alert" class="moderation-type-block">
-									<i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i>
+									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
 									<span>{L_ALERT_MANAGEMENT}</span>
 								</a>
 							</td>

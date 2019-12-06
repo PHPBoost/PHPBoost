@@ -4,7 +4,7 @@
 <section id="module-user-error-403">
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
-		<i class="fa fa-minus-circle fa-4x"></i>
+		<i class="fa fa-minus-circle fa-4x error"></i>
 
 		<div class="type-error">
 			{MESSAGE}

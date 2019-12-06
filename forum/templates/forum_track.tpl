@@ -23,7 +23,7 @@
 				<thead>
 					<tr class="forum-text-column">
 						<th class="forum-announce-topic"><i class="far fa-eye" aria-hidden="true"></i></th>
-						<th class="forum-fixed-topic"><i class="fa fa-check" aria-hidden="true"></i></th>
+						<th class="forum-fixed-topic"><i class="fa fa-check success" aria-hidden="true"></i></th>
 						<th class="forum-topic" aria-label="{L_TOPIC}">
 							<i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{L_TOPIC}</span>
 						</th>
