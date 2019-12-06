@@ -563,13 +563,11 @@ table.calendar-table td a:hover {
 td.calendar-week { border-color: #0066cc; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
-.syndication .fa-rss:before      { color: #D36636; }
-.user-locked .fa-user-lock:before              { color: #913636; }
-.user-unlocked .fa-user-lock:before            { color: #4D9136; }
+.syndication .fa-rss:before         { color: #D36636; }
+.user-locked .fa-user-lock:before   { color: #913636; }
+.user-unlocked .fa-user-lock:before { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }
 .fa-female:before           { color: #F49CC4; }
-.fa-user-check:before           { color: #4D9136; }
-.fa-user-times:before          { color: #913636; }
 .fa-trend-up:before         { color: #4D9136; }
 .fa-trend-down:before       { color: #913636; }
 .fa-circle-alert            { color: #913636; }
@@ -623,14 +621,14 @@ td.calendar-week { border-color: #0066cc; }
 .bgc.moderator     { background-color: rgba(72, 65, 157, 0.2); }
 .bgc.administrator { background-color: rgba(54, 54, 54, 0.2); }
 
-.bgc:hover.notice        { background-color: #888888; }
-.bgc:hover.question      { background-color: #0066cc; }
-.bgc:hover.success       { background-color: #4D9136; }
-.bgc:hover.warning      { background-color: #D36636; }
-.bgc:hover.error         { background-color: #913636; }
-.bgc:hover.member        { background-color: #2F9674; }
-.bgc:hover.moderator    { background-color: #48419D; }
-.bgc:hover.administrator { background-color: #353535; }
+.bgc:hover.notice        { background-color: rgba(136, 136, 136, 0.5); }
+.bgc:hover.question      { background-color: rgba(0, 102, 204, 0.5); }
+.bgc:hover.success       { background-color: rgba(77, 145, 54, 0.5); }
+.bgc:hover.warning       { background-color: rgba(210, 102, 54, 0.5); }
+.bgc:hover.error         { background-color: rgba(145, 54, 54, 0.5); }
+.bgc:hover.member        { background-color: rgba(47, 150, 116, 0.5); }
+.bgc:hover.moderator     { background-color: rgba(72, 65, 157, 0.5); }
+.bgc:hover.administrator { background-color: rgba(54, 54, 54, 0.5); }
 
 .bgc:hover.notice, .bgc:hover.notice::before,
 .bgc:hover.question, .bgc:hover.question::before,
@@ -640,15 +638,24 @@ td.calendar-week { border-color: #0066cc; }
 .bgc:hover.member, .bgc:hover.member::before,
 .bgc:hover.moderator, .bgc:hover.moderator::before,
 .bgc:hover.administrator, .bgc:hover.administrator::before,
-.message-helper-button				 { color: #FFFFFF; }
-.message-helper-button.notice        { background-color: #888888; }
-.message-helper-button.question      { background-color: #0066cc; }
-.message-helper-button.success       { background-color: #4D9136; }
-.message-helper-button.warning       { background-color: #D36636; }
-.message-helper-button.error         { background-color: #913636; }
-.message-helper-button.member        { background-color: #2F9674; }
-.message-helper-button.moderator     { background-color: #48419D; }
-.message-helper-button.administrator { background-color: #353535; }
+.bgc-full				 { color: #FFFFFF; }
+
+.button.bgc:hover.notice,
+.bgc-full.notice        { background-color: #888888; }
+.button.bgc:hover.question,
+.bgc-full.question      { background-color: #0066cc; }
+.button.bgc:hover.success,
+.bgc-full.success       { background-color: #4D9136; }
+.button.bgc:hover.warning,
+.bgc-full.warning       { background-color: #D36636; }
+.button.bgc:hover.error,
+.bgc-full.error         { background-color: #913636; }
+.button.bgc:hover.member,
+.bgc-full.member        { background-color: #2F9674; }
+.button.bgc:hover.moderator,
+.bgc-full.moderator     { background-color: #48419D; }
+.button.bgc:hover.administrator,
+.bgc-full.administrator { background-color: #353535; }
 
 .authorized-reader.member        { border-color: #2F9674; }
 .authorized-reader.moderator     { border-color: #48419D; }

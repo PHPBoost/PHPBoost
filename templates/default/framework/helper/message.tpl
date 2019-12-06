@@ -2,7 +2,9 @@
 	<div id="message-helper-{ID}" class="floating-element" style="display: none;">
 		<div class="message-helper bgc {MESSAGE_CSS_CLASS}">
 			# IF NOT C_TIMEOUT #
-				<a id="message-helper-button-{ID}" class="message-helper-button {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true"></i></a>
+				<a id="message-helper-button-{ID}" class="bgc-full {MESSAGE_CSS_CLASS} close-message" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</a>
 			# ENDIF #
 			{MESSAGE_CONTENT}
 		</div>

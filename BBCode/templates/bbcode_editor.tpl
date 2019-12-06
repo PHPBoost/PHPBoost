@@ -514,7 +514,7 @@
 							<div class="cell-content">
 								<div class="message-helper bgc notice flex-between">
 									<span>${LangLoader::get_message('notice', 'main')}</span>
-									<span class="button message-helper-button notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button bgc-full notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -522,7 +522,7 @@
 							<div class="cell-content">
 								<div class="message-helper bgc question flex-between">
 									<span>${LangLoader::get_message('question', 'main')}</span>
-									<span class="button message-helper-button question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button bgc-full question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -530,7 +530,7 @@
 							<div class="cell-content">
 								<div class="message-helper bgc success flex-between">
 									<span>${LangLoader::get_message('success', 'main')}</span>
-									<span class="button message-helper-button success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button bgc-full success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -538,7 +538,7 @@
 							<div class="cell-content">
 								<div class="message-helper bgc warning flex-between">
 									<span>${LangLoader::get_message('warning', 'main')}</span>
-									<span class="button message-helper-button warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button bgc-full warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -546,7 +546,7 @@
 							<div class="cell-content">
 								<div class="message-helper bgc error flex-between">
 									<span>${LangLoader::get_message('error', 'main')}</span>
-									<span class="button message-helper-button error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="button bgc-full error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>

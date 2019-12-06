@@ -74,7 +74,7 @@
 	}
 }
 
-.floating-message-container .message-helper-button {
+.floating-message-container .close-message {
 	position: absolute;
 	z-index: 1;
 	top: -13px;
@@ -84,16 +84,6 @@
 	border-radius: 100em;
 	text-align: center;
 	padding-top: 0.1618em;
-}
-
-.floating-message-container .fa-close-message {
-	display: inline-block;
-	font-size: 1em;
-	margin: auto;
-}
-
-.floating-message-container .fa-close-message:before {
-	content: "\f00d";
 }
 
 .floating-message-container .message-helper > a {
