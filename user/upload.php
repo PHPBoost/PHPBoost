@@ -545,9 +545,9 @@ elseif (!empty($del_folder))
         'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
         'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common')) : $LANG['illimited'],
         'MAX_FILES_SIZE' => !$unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
-        'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-        'TOTAL_PUBLIC_SIZE' => ($total_public_size > 1024) ? NumberHelper::round($total_public_size / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_public_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-        'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+        'TOTAL_SIZE' =>  File::get_formated_size($total_size * 1024),
+        'TOTAL_PUBLIC_SIZE' => File::get_formated_size($total_public_size * 1024),
+        'TOTAL_FOLDER_SIZE' => File::get_formated_size($total_folder_size * 1024),
         'TOTAL_FOLDERS' => $total_directories,
         'TOTAL_PERSONAL_FILES' => $total_personal_files,
         'TOTAL_PUBLIC_FILES' => $total_public_files
