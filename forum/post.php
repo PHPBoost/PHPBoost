@@ -84,7 +84,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		if ($i == 2)
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
 		elseif ($i > 2)
-			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
+			$forum_cats .= ' <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="' . $array[1] . '">' . $array[0] . '</a>';
 		$i++;
 	}
 

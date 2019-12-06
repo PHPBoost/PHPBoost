@@ -43,7 +43,7 @@
 
 					<fieldset class="fieldset-submit">
 							<button type="submit" name="edit_msg" value="true" class="button submit">{L_SUBMIT}</button>
-							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
+							<button onclick="XMLHttpRequest_preview();" class="button small" type="button">{L_PREVIEW}</button>
 							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>

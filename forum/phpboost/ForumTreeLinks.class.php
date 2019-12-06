@@ -14,7 +14,7 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 	public function get_actions_tree_links()
 	{
 		$module_id = 'forum';
-		
+
 		$lang = LangLoader::get('common', $module_id);
 		$tree = new ModuleTreeLinks();
 

@@ -1,5 +1,4 @@
 <script>
-<!--
 	function Confirm_read_topics() {
 		return confirm("{L_CONFIRM_READ_TOPICS}");
 	}
@@ -75,81 +74,79 @@
 			timeout_forum = setTimeout('forum_display_block(\'' + forumid + '\')', delay_forum);
 		}
 	}
-	--></script>
+</script>
 <section id="module-forum">
 	<header id="forum-top">
 
 		<div class="forum-links">
 			# IF C_USER_CONNECTED #
-			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
-				<ul>
-					<li>
-						<span class="cssmenu-title">
-							<a href="index.php" aria-label="{L_FORUM_INDEX}"><i class="fa fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
-						</span>
-					</li>
-					<li>
-						<span class="cssmenu-title">
-							<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="fa fa-showmymsg" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
-						</span>
-					</li>
-					<li>
-						<span class="cssmenu-title">
-						<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
-						</span>
-					</li>
-					<li class="forum-index">
-						<span class="cssmenu-title">
-							<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="fa fa-lastview" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
-						</span>
-					</li>
-					<li>
-						<span class="cssmenu-title">
-							<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="fa fa-notread" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
-							<div class="forum-refresh">
-								<div id="forum_block_forum_unread_top" style="display: none;"></div>
-							</div>
-							<a href="" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
-						</span>
-					</li>
-					<li>
-						<span class="cssmenu-title">
-							<a href="{U_MSG_SET_VIEW}" onclick="javascript:return Confirm_read_topics();" aria-label="{L_MARK_AS_READ}"><i class="fa fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
-						</span>
-					</li>
-					# IF C_FORUM_CONNEXION #
-					<li>
-						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out-alt"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
-						</span>
-					</li>
-					# ENDIF #
-				</ul>
-			</nav>
+				<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-forum-top-link">
+					<ul>
+						<li>
+							<span class="cssmenu-title">
+								<a href="index.php" aria-label="{L_FORUM_INDEX}"><i class="fa fa-home" aria-hidden="true"></i> <span class="hidden-large-screens">{L_FORUM_INDEX}</span></a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="fa fa-showmymsg" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+							<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
+							</span>
+						</li>
+						<li class="forum-index">
+							<span class="cssmenu-title">
+								<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="fa fa-lastview" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="fa fa-notread" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
+								<div class="forum-refresh">
+									<div id="forum_block_forum_unread_top" style="display: none;"></div>
+								</div>
+								<a href="" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);"><i class="fa fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<a href="{U_MSG_SET_VIEW}" onclick="javascript:return Confirm_read_topics();" aria-label="{L_MARK_AS_READ}"><i class="fa fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+							</span>
+						</li>
+						# IF C_FORUM_CONNEXION #
+						<li>
+							<span class="cssmenu-title">
+								<a href="${relative_url(UserUrlBuilder::disconnect())}" aria-label="{L_DISCONNECT}"><i class="fa fa-sign-out-alt"></i> <span class="hidden-large-screens">{L_DISCONNECT}</span></a>
+							</span>
+						</li>
+						# ENDIF #
+					</ul>
+				</nav>
 			# ELSE #
 			# IF C_FORUM_CONNEXION #
-			<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
-				<ul>
-					<li>
-						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
-						</span>
-					</li>
-					<li>
-						<span class="cssmenu-title">
-							<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
-						</span>
-					</li>
-				</ul>
-			</nav>
+				<nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="cssmenu cssmenu-group float-right" id="cssmenu-sign-in-top-link">
+					<ul>
+						<li>
+							<span class="cssmenu-title">
+								<a href="${relative_url(UserUrlBuilder::connect())}" aria-label="{L_CONNECT}"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_CONNECT}</span></a>
+							</span>
+						</li>
+						<li>
+							<span class="cssmenu-title">
+								<a href="${relative_url(UserUrlBuilder::registration())}" aria-label="{L_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_REGISTER}</span></a>
+							</span>
+						</li>
+					</ul>
+				</nav>
 			# ENDIF #
 			# ENDIF #
 		</div>
 		<script>
-			<!--
 			jQuery("#cssmenu-forum-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});
 			# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-top-link").menumaker({title: " ${LangLoader::get_message('forum.links', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false});# ENDIF #
-			-->
 		</script>
 
 		<h1>{FORUM_NAME}</h1>

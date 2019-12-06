@@ -322,7 +322,7 @@
 									<script>
 									<!--
 										document.getElementById('search_member').style.display = 'none';
-										document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
+										document.write('<button class="button small" onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
 									-->
 									</script>
 									<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>

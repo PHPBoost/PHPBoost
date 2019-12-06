@@ -47,6 +47,10 @@ td,
 	border-color: transparent;
 }
 
+tfoot td[colspan] {
+	border-width: 0 1px 1px 1px;
+}
+
 .bt td {
 	border-bottom-width: 0;
 }

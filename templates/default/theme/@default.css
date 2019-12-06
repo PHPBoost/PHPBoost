@@ -107,8 +107,10 @@ a.wikipedia-link:after {
 	font-size: 0.618em; }
 
 /* --- Alignment --- */
-.inline 	  { display: inline !important; }
-.inline-block { display: inline-block !important; }
+.d-flex         { display: flex !important; }
+.d-inline 	    { display: inline !important; }
+.d-block 	    { display: block !important; }
+.d-inline-block { display: inline-block !important; }
 
 .align-center  { text-align: center !important; }
 .align-left    { text-align: left !important; }

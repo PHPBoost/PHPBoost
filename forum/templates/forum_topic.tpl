@@ -218,10 +218,10 @@
 						</div>
 		                <div class="message-user-links">
 							# IF msg.C_USER_PM #
-								<a href="{msg.U_USER_PM}" class="button alt-button user-pm">${LangLoader::get_message('pm', 'main')}</a>
+								<a href="{msg.U_USER_PM}" class="button submit smaller user-pm">${LangLoader::get_message('pm', 'main')}</a>
 							# ENDIF #
 							# IF msg.C_USER_MAIL #
-								<a href="{msg.U_USER_MAIL}" class="button alt-button user-mail">${LangLoader::get_message('mail', 'main')}</a>
+								<a href="{msg.U_USER_MAIL}" class="button submit smaller user-mail">${LangLoader::get_message('mail', 'main')}</a>
 							# ENDIF #
 							# START msg.ext_fields #
 								{msg.ext_fields.BUTTON}
@@ -353,8 +353,8 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="valid" value="true" class="button submit">{L_SUBMIT}</button>
-				<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+				<button type="submit" class="button submit" name="valid" value="true">{L_SUBMIT}</button>
+				<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 				<button type="reset" class="button reset" value="true">{L_RESET}</button>
 			</fieldset>
 		</form>

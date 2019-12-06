@@ -108,7 +108,7 @@
 						<option value="unlock">{L_UNLOCK}</option>
 						<option value="del">{L_DELETE}</option>
 					</select>
-					<button type="submit" value="true" name="valid" class="button submit">{L_GO}</button>
+					<button type="submit" class="button submit" value="true" name="valid">{L_GO}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</div>
 			</form>

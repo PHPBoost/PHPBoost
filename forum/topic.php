@@ -154,7 +154,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 	if ($i == 2)
 		$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
 	elseif ($i > 2)
-		$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
+		$forum_cats .= ' <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="' . $array[1] . '">' . $array[0] . '</a>';
 	$i++;
 }
 
@@ -467,7 +467,7 @@ while ( $row = $result->fetch() )
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button = '<a href="mailto:' . $row[$field_type] . '" class="button alt-button"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button = '<a href="mailto:' . $row[$field_type] . '" class="button small"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title = $parameters['title'];
 						$icon_fa = $parameters['picture'];
 						$unknown_field = false;
@@ -481,13 +481,13 @@ while ( $row = $result->fetch() )
 			}
 			else if ($field['regex'] == 5)
 			{
-				$button = '<a href="' . $row[$field_type] . '" class="button alt-button user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
+				$button = '<a href="' . $row[$field_type] . '" class="button submit smaller user-website">' . LangLoader::get_message('regex.website', 'admin-user-common') . '</a>';
 
 				foreach (MemberShortTextExtendedField::$brands_pictures_list as $id => $parameters)
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button = '<a href="' . $row[$field_type] . '" class="button alt-button"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button = '<a href="' . $row[$field_type] . '" class="button small"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title = $parameters['title'];
 						$icon_fa = $parameters['picture'];
 						$unknown_field = false;

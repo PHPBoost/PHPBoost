@@ -20,7 +20,6 @@
 }
 
 #module-forum table tbody td .bt-content span {
-	display: block;
 	text-align: left;
 }
 
@@ -167,15 +166,6 @@ article footer ul.pagination {
 	padding: 0 0.618em;
 }
 
-.forum-contents header a {
-	font-size: 1em;
-}
-
-.forum-contents header a.alt-button,
-.footer-forum a.alt-button {
-	font-size: 0.618em;
-}
-
 .forum-contents table {
 	margin-top: 0;
 }
@@ -202,11 +192,6 @@ ul.pagination a {
 .content {
 	padding: 0;
 	clear: both;
-}
-
-/* --- Classe du lien du pseudo sur forum --- */
-a.forum-link-pseudo {
-	font-weight: bold;
 }
 
 /* --- Messages non lus --- */
@@ -326,9 +311,6 @@ a.forum-link-pseudo {
 }
 
 /* Contenu */
-.forum-cat-title {
-	padding: 0 0.309em;
-}
 
 .pagin-forum {
 	float: right;

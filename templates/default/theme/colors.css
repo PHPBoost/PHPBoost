@@ -224,14 +224,14 @@ table caption {
 	border-color: #DDDDDD;
 }
 
-th,
+thead th,
 .formatter-table .formatter-table-head {
 	background-color: #366493;
 	color: #FFFFFF;
 	border-color: #366493;
 }
 
-th a,
+thead th a,
 .formatter-table .formatter-table-head a {
 	color: #FFFFFF;
 }

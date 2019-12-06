@@ -176,8 +176,8 @@
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="post_topic" value="true" class="button submit">{L_SUBMIT}</button>
-							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
+							<button type="submit" class="button submit" name="post_topic" value="true">{L_SUBMIT}</button>
+							<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" class="button reset" value="true">{L_RESET}</button>
 
 							# IF C_DISPLAY_MSG #

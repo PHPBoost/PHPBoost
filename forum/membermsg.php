@@ -64,7 +64,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		}
 		$tpl->put_all(array(
 			'C_PAGINATION'     => $pagination->has_several_pages(),
-			'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['show_member_msg'],
+			'FORUM_NAME'       => $config->get_forum_name(),
 			'PAGINATION'       => $pagination->display(),
 			'L_BACK'           => $LANG['back'],
 			'L_VIEW_MSG_USER'  => $LANG['show_member_msg'],
@@ -300,7 +300,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'MODO'             => $total_modo,
 		'MEMBER'           => $total_member,
 		'GUEST'            => $total_visit,
-		'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $LANG['show_member_msg'],
+		'FORUM_NAME'       => $config->get_forum_name(),
 		'L_FORUM_INDEX'    => $LANG['forum_index'],
 		'L_USER'           => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN'          => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],

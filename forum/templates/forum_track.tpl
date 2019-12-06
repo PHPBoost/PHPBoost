@@ -111,11 +111,12 @@
 							<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 						</td>
 						<td class="forum-last-topic">
-							<span class="last-topic-title">
-								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE}<br /> {topics.LAST_MSG_DATE_FULL}"><i class="fa fa-hand-point-right" aria-hidden="true"></i> {topics.LAST_MSG_DATE_FULL}</a>
+							<span class="d-block">
+								<i class="fa fa-hand-point-right fa-fw" aria-hidden="true"></i>
+								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE}<br /> {topics.LAST_MSG_DATE_FULL}"> {topics.LAST_MSG_DATE_FULL}</a>
 							</span>
-							<span class="last-topic-user">
-								<i class="fa fa-user"></i>
+							<span class="d-block">
+								<i class="fa fa-user fa-fw"></i>
 								# IF topics.C_LAST_MSG_GUEST #
 								<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
 								# ELSE #
@@ -129,7 +130,7 @@
 			</table>
 			<div class="align-center">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="valid" value="true" class="button submit">{L_SUBMIT}</button>
+				<button type="submit" class="button submit" name="valid" value="true">{L_SUBMIT}</button>
 			</div>
 		</div>
 		<footer>

@@ -202,7 +202,7 @@ class ForumHomeController extends ModuleController
 						'DESC' => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS' => $subforums,
 						'C_SUBFORUMS' => !empty($subforums),
-						'L_SUBFORMS' => $LANG['subforum_s'],
+						'L_SUBFORUMS' => $LANG['subforum_s'],
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],

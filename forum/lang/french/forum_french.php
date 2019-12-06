@@ -92,7 +92,10 @@ $LANG['alert_contents'] = 'Merci de détailler davantage le problème afin d\'ai
 $LANG['alert_success'] = 'Vous avez signalé avec succès la non-conformité du sujet <em>%title</em>, l\'équipe modératrice vous remercie de l\'avoir aidée.';
 $LANG['alert_topic_already_done'] = 'Nous vous remercions d\'avoir pris l\'initiative d\'aider l\'équipe modératrice, mais un membre a déjà signalé une non-conformité de ce sujet.';
 $LANG['alert_back'] = 'Retour au sujet';
-$LANG['explain_track'] = 'Cochez la case Mp pour recevoir un message privé, Mail pour un email lors d\'une réponse au sujet que vous suivez. Cochez la case supprimer pour ne plus suivre le sujet.';
+$LANG['explain_track'] = '
+    Cocher la case <span class="text-strong">MP</span> (<i class="far fa-envelope"></i>) pour recevoir un message privé,
+    <span class="text-strong">Mail</span> (<i class="fa fa-at"></i>) pour un email, lors d\'une réponse au sujet suivi.
+    <br />Cocher la case <span class="text-strong">supprimer</span> (<i class="fa fa-trash-alt"></i>) pour ne plus suivre le sujet.';
 $LANG['sub_forums'] = 'Sous-forums';
 $LANG['moderation_forum'] = 'Modération du forum';
 $LANG['no_topics'] = 'Aucun sujet à afficher';

@@ -3,13 +3,11 @@
 		# INCLUDE forum_top #
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-membermsg" class="forum-contents">
-			<header>
+			<header class="flex-between">
 				<h2>
-					<span class="forum-cat-title">
-						<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
-					</span>
-					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+					{L_VIEW_MSG_USER}
 				</h2>
+				# IF C_PAGINATION #<span># INCLUDE PAGINATION #</span># ENDIF #
 			</header>
 			<div class="content">
 
@@ -22,7 +20,7 @@
 				                <div class="message-user">
 				                    <h3 class="message-user-pseudo">
 										# IF NOT list.C_GUEST #
-											<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
+											<a class="{list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
 												{list.USER_PSEUDO}
 											</a>
 											<span class="sr-only"># IF C_USER_ONLINE #${LangLoader::get_message('forum.connected.mbr.yes', 'common', 'forum')}# ELSE #${LangLoader::get_message('forum.connected.mbr.no', 'common', 'forum')}# ENDIF #</span>
@@ -76,11 +74,8 @@
 				# END list #
 
 			</div>
-			<footer>
-				<span class="forum-cat-title">
-					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
-				</span>
-				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
+			<footer class="align-right">
+				# IF C_PAGINATION #<span># INCLUDE PAGINATION #</span># ENDIF #
 			</footer>
 		</article>
 
