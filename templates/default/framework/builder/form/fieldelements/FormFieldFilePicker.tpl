@@ -5,7 +5,7 @@
 	</div>
 	<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 	<div class="ready-to-load">
-		<button type="button" class="clear-list">{@clear.list}</button>
+		<button type="button" class="button clear-list">{@clear.list}</button>
 		# IF C_MULTIPLE #
 			<span class="fa-stack fa-lg">
 				<i class="far fa-file fa-stack-2x "></i>
@@ -14,7 +14,7 @@
 		# ENDIF #
 	</div>
 	<div class="modal-container">
-		<button class="upload-help" data-modal data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
+		<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.helper}"><i class="fa fa-question"></i></button>
 		<div id="upload-helper" class="modal modal-animation">
 			<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 			<div class="content-panel">
