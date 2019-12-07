@@ -91,7 +91,6 @@ Note.prototype = {
 			else if(decimal >= 0.50 && decimal < 0.75) {
 				star_class = 'fa star star-hover fa-star-empty';
 				star_width = 'star-width star-width-50';
-				alert(decimal);
 			}
 			else if(decimal >= 0.05 && decimal < 0.50) {
 				star_class = 'fa star star-hover fa-star-empty';
