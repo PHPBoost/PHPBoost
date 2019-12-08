@@ -136,6 +136,6 @@
 	padding: 0;
 }
 
-.cell-mini-vertical input:not([type="checkbox"]):not([type="radio"]) {
+.cell-mini-vertical .cell-form:not(.grouped-inputs) input:not([type="checkbox"]):not([type="radio"]) {
 	width: 100%;
 }
