@@ -31,7 +31,7 @@
 				<div class="controls">
 					<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
 					# IF C_DISPLAY_UNREAD_DETAILS #
-						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread" aria-hidden="true"></i></a>
+						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="far fa-file-alt" aria-hidden="true"></i></a>
 					# ENDIF #
 				</div>
 			</header>

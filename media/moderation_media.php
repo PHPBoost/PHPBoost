@@ -182,7 +182,7 @@ else
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
 			'CAT' => $categories_cache->category_exists($row['idcat']) ? $row['cat_name'] : $LANG['unknown'],
 			'U_CAT' => url('media.php?cat=' . $row['idcat']),
-			'COLOR' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? 'bkgd-color-unvisible' : ($row['infos'] == MEDIA_STATUS_APROBED ? 'bkgd-color-visible' : 'bkgd-color-unaprobed'),
+			'COLOR' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? 'bgc warning' : ($row['infos'] == MEDIA_STATUS_APROBED ? 'bgc success' : 'bgc error'),
 			'SHOW' => $row['infos'] == MEDIA_STATUS_APROBED ? ' checked="checked"' : '',
 			'HIDE' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? ' checked="checked"' : '',
 			'UNAPROBED' => $row['infos'] == MEDIA_STATUS_UNAPROBED ? ' checked="checked"' : '',

@@ -47,7 +47,7 @@ $lang['config.message_before_topic_title'] = 'Message devant le titre du topic';
 $lang['config.message_when_topic_is_unsolved'] = 'Message devant le titre du topic si statut non changé';
 $lang['config.message_when_topic_is_solved'] = 'Message devant le titre du topic si statut changé';
 $lang['config.message_before_topic_title_icon_displayed'] = 'Afficher l\'icône associée';
-$lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
+$lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-check success"></i> / <i class="fa fa-times error"></i>';
 
 //Categories
 $lang['category.status.locked'] = 'Verrouillé';

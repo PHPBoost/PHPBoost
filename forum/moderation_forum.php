@@ -135,7 +135,12 @@ if ($action == 'alert') //Gestion des alertes
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
 
 		$i = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, c.id AS cid
+		$result = PersistenceContext::get_querier()->select("SELECT
+			ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo,
+			m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups,
+			m.display_name, m.level AS user_level, m.groups,
+			t.title AS topic_title,
+			c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -162,7 +167,7 @@ if ($action == 'alert') //Gestion des alertes
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'USER_GROUP_COLOR'   => $group_color,
 				'LOGIN_USER'         => $row['display_name'],
-				'BACKGROUND_COLOR'   => $row['status'] == 1 ? 'bkgd-color-solved' : 'bkgd-color-unsolved',
+				'BACKGROUND_COLOR'   => $row['status'] == 1 ? 'bgc success' : 'bgc warning',
 				'ID'                 => $row['id'],
 				'C_STATUS'           => $row['status'] != 0,
 				'U_IDMODO_REL'       => UserUrlBuilder::profile($row['idmodo'])->rel(),

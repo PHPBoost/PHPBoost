@@ -1,5 +1,5 @@
 # IF C_FIRST_MENU #
-	<div id="menu_element_{ID}">
+	<div id="menu_element_{ID}" class="menu-elements-container">
 		<input type="hidden" id="menu_uid" name="menu_uid" value="{ID}">
 		<ul id="menu_element_{ID}_list" class="sortable-block">
 			# START elements #
@@ -18,7 +18,7 @@
 		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
-				<span class="grouped-element"><i class="fa fa-folder" aria-hidden="true"></i></span>
+				<span class="grouped-element bgc-full notice"><i class="fa fa-folder" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
@@ -63,7 +63,7 @@
 		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('menu.element', 'admin')}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
-				<span class="grouped-element"><i class="fa fa-globe" aria-hidden="true"></i></span>
+				<span class="grouped-element bgc-full link-color"><i class="fa fa-globe" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>

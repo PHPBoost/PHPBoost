@@ -90,7 +90,14 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 	$nbr_topics_compt = 0;
-	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
+	$result = PersistenceContext::get_querier()->select("SELECT
+		m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups,
+		m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups,
+		t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg,
+		v.last_view_id,
+		p.question,
+		me.last_view_forum, me.last_view_forum,
+		tr.pm, tr.mail
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
@@ -172,7 +179,6 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'IMG_ANNOUNCE'                => $img_announce,
 			'U_ANCRE'                     => $new_ancre,
 			'C_ANCRE'                     => !empty($new_ancre),
-			'TRACK'                       => '<i class="fa fa-msg-track"></i>',
 			'C_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
 			'TYPE'                        => $type[$row['type']],
 			'TITLE'                       => stripslashes($row['title']),

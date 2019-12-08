@@ -126,13 +126,13 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="bkgd-color-unaprobed">
+							<td class="bgc error">
 								{L_FILE_UNAPROBED}
 							</td>
-							<td class="bkgd-color-unvisible">
+							<td class="bgc warning">
 								{L_FILE_UNVISIBLE}
 							</td>
-							<td class="bkgd-color-visible">
+							<td class="bgc success">
 								{L_FILE_VISIBLE}
 							</td>
 						</tr>

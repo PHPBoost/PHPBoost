@@ -97,7 +97,7 @@
 						<a href="{U_POST_NEW_SUBJECT}" class="button submit">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
 					<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss"></i></a>
-					# IF IDCAT #<a href="unread.php?cat={IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread" aria-hidden="true"></i></a># ENDIF #
+					# IF IDCAT #<a href="unread.php?cat={IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</div>
 				<h2>
@@ -146,9 +146,9 @@
 							# ENDIF #
 						</td>
 						<td class="forum-fixed-topic">
-							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display" aria-hidden="true"></i># ENDIF #
-							# IF topics.C_IMG_POLL #<i class="fa fa-tasks" aria-hidden="true"></i># ENDIF #
-							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track" aria-hidden="true"></i># ENDIF #
+							# IF topics.C_DISPLAY_MSG #<i class="fa fa-check success" aria-hidden="true"></i># ENDIF #
+							# IF topics.C_IMG_POLL #<i class="fa fa-poll-h" aria-hidden="true"></i># ENDIF #
+							# IF topics.C_IMG_TRACK #<i class="fa fa-heart error" aria-hidden="true"></i># ENDIF #
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #

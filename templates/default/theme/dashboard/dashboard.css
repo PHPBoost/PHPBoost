@@ -54,3 +54,12 @@
 	display: block;
 	margin: 0 auto;
 }
+
+/* --- sortable menu edition --- */
+@media (min-width: 769px) {
+    .menu-elements-container .sortable-selector,
+    .menu-elements-container .sortable-actions {
+        margin: 1.228em 0 0;
+    }
+
+}

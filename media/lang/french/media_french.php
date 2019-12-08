@@ -49,7 +49,7 @@ $MEDIA_LANG = array(
 'media_url' => 'Lien du fichier multimédia',
 'media_poster' => 'Image d\'illustration',
 'media_width' => 'Largeur de la vidéo',
-'notice_contribution' => 'Vous n\'êtes pas autorisé à ajouter un fichier multimédia, cependant vous pouvez en proposer un. <span class="color-alert text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
+'notice_contribution' => 'Vous n\'êtes pas autorisé à ajouter un fichier multimédia, cependant vous pouvez en proposer un. <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 'require_name' => 'Vous devez donner un titre à ce fichier multimédia !',
 'require_url' => 'Vous devez renseigner le lien de votre fichier multimédia !',
 'hide_media' => 'Cacher ce fichier multimédia',

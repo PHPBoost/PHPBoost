@@ -47,7 +47,7 @@ $lang['config.message_before_topic_title'] = 'Prefix title';
 $lang['config.message_when_topic_is_unsolved'] = 'Message explanation to members if topic status is unsolved';
 $lang['config.message_when_topic_is_solved'] = 'Message explanation to members if topic status is solved';
 $lang['config.message_before_topic_title_icon_displayed'] = 'Display associated icon';
-$lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i>';
+$lang['config.message_before_topic_title_icon_displayed.explain'] = '<i class="fa fa-check success"></i> / <i class="fa fa-times error"></i>';
 
 //Categories
 $lang['category.status.locked'] = 'Locked';

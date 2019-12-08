@@ -54,7 +54,7 @@ function addSubElement(menu_element_id) {
 
 	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
 
-	jQuery('<span/>', {class : 'grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>', {class : 'grouped-element bgc-full link-color'}).appendTo('#menu_inputs_' + id);
 	jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
 
 	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
@@ -97,7 +97,7 @@ function addSubMenu(menu_element_id) {
 
 	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
 
-	jQuery('<span/>', {class : 'grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>', {class : 'grouped-element bgc-full notice'}).appendTo('#menu_inputs_' + id);
 	jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
 
 	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);

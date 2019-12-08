@@ -11,22 +11,22 @@
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="fa fa-showmymsg" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
+						<a href="{U_SHOW_MY_MSG}" aria-label="{L_SHOW_MY_MSG}"><i class="far fa-user-circle" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_MY_MSG}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-msg-track" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
+						<a href="{U_TOPIC_TRACK}" aria-label="{L_SHOW_TOPIC_TRACK}"><i class="fa fa-heart error" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_TOPIC_TRACK}</span></a>
 					</span>
 				</li>
 				<li class="forum-index">
 					<span class="cssmenu-title">
-						<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="fa fa-lastview" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
+						<a href="{U_LAST_MSG_READ}" aria-label="{L_SHOW_LAST_READ}"><i class="far fa-clock" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_LAST_READ}</span></a>
 					</span>
 				</li>
 				<li>
 					<span class="cssmenu-title">
-						<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="fa fa-notread" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
+						<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-file-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
 						<div class="forum-refresh">
 							<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 						</div>
@@ -142,7 +142,7 @@
 					# ENDIF #
 					<li>
 						<span class="cssmenu-title">
-							<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {L_ALERT}</a>
+							<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i>{L_ALERT}</a>
 						</span>
 					</li>
 					<li>

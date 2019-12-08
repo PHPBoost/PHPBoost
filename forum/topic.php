@@ -616,9 +616,9 @@ elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->writ
 }
 else
 {
-	$img_track_display = $track ? 'msg-not-track' : 'msg-track';
-	$img_track_pm_display = $track_pm ? 'pm-not-track' : 'pm-track';
-	$img_track_mail_display = $track_mail ? 'mail-not-track' : 'mail-track';
+	$img_track_display = $track ? 'heart-broken' : 'heart error';
+	$img_track_pm_display = $track_pm ? 'envelope error' : 'envelope-open-text success';
+	$img_track_mail_display = $track_mail ? 'at error' : 'at success';
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
@@ -636,7 +636,7 @@ else
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if ($config->is_message_before_topic_title_displayed() && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
-		$img_msg_display = $topic['display_msg'] ? 'msg-not-display' : 'msg-display';
+		$img_msg_display = $topic['display_msg'] ? 'times error' : 'check success';
 		$tpl_bottom->put_all(array(
 			'C_DISPLAY_MSG'                 => true,
 			'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),

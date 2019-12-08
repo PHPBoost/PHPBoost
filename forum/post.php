@@ -473,7 +473,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
-					$img_display = $topic['display_msg'] ? 'fa fa-msg-not-display' : 'fa fa-msg-display';
+					$img_display = $topic['display_msg'] ? 'fa fa-check success' : 'fa fa-times error';
 					$tpl_bottom->put_all(array(
 						'C_DISPLAY_MSG'                 => true,
 						'C_ICON_DISPLAY_MSG'            => $config->is_message_before_topic_title_icon_displayed(),

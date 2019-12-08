@@ -120,30 +120,6 @@ h1, h2, h3, h4, h5, h6 {
 	transition: width .6s ease;
 }
 
-/* -- PHPBoost specific FontAwesome icons ----------------------------------- */
-
-li.block .fa-stack {
-	height: 2.34em;
-}
-
-.fa-circle-alert {
-	position: absolute;
-	z-index: 1;
-	top: -3px;
-	left: 1.309em;
-	font-size: 1.32em;
-}
-
-.fa-circle-alert span {
-	display: block;
-	position: absolute;
-	top: 4px;
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0.7em;
-	text-align: center;
-}
-
 /* --- Internal menus ------------------------------------------------------- */
 /* --- rss menus --- */
 .feed-list {

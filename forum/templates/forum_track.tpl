@@ -81,7 +81,7 @@
 							# ENDIF #
 						</td>
 						<td class="forum-fixed-topic">
-							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF # # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
+							# IF topics.C_DISPLAY_MSG #<i class="fa fa-check success"></i># ENDIF # # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 						</td>
 						<td class="forum-topic">
 							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #

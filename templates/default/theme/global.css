@@ -182,30 +182,6 @@ figcaption {
 .star-width-100 { width: 100%; }
 
 
-/* --- Les alertes --- */
-li.small-block .fa-stack {
-	height: 2.34em;
-}
-
-.fa-circle-alert {
-	position: absolute;
-	z-index: 1;
-	top: -3px;
-	left: 20px;
-	font-size: 1.32em;
-}
-
-.fa-circle-alert span {
-	position: absolute;
-	top: 4px;
-	display: block;
-	margin: 0 auto;
-	width: 100%;
-	font-size: 0.7em;
-	text-align: center;
-}
-
-
 /* -- Les messages d erreurs -- */
 /* ---------------------------- */
 
@@ -291,21 +267,3 @@ li.small-block .fa-stack {
 .fa-announce-new-post:before 	{ content: "\f071"; } /* copy exclamation-triangle */
 .fa-announce-top:before,
 .fa-announce-new-top:before 	{ content: "\f06a"; } /* copy exclamation-circle */
-
-.fa-msg-display:before 			{ content: "\f00c"; } /* copy check */
-.fa-msg-not-display:before 		{ content: "\f00d"; } /* copy times */
-.fa-msg-track:before 			{ content: "\f004"; } /* copy heart */
-.fa-msg-not-track:before 		{ content: "\f004"; } /* copy heart */
-.fa-pm-track:before 			{ content: "\f27a"; } /* copy comment-alt */
-.fa-pm-not-track:before 		{ content: "\f27a"; } /* copy comment-alt */
-.fa-mail-track:before 			{ content: "\f0e0"; } /* copy envelope */
-.fa-mail-not-track:before 		{ content: "\f0e0"; } /* copy envelope */
-.fa-lastview:before 			{ content: "\f017"; } /* copy clock-o */
-.fa-notread:before 				{ content: "\f15c"; } /* copy file-alt, regular fonts */
-.fa-showmymsg:before 			{ content: "\f4ad"; } /* copy comments-dots, regular fonts*/
-
-.fa-notread,
-.fa-lastview,
-.fa-showmymsg {
-	font-weight: 200;
-}

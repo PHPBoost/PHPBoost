@@ -129,12 +129,6 @@ article footer ul.pagination {
 	}
 }
 
-#article-forum-moderation textarea {
-	margin: 0 0.228em ;
-	width: 99%;
-	border-top: none;
-}
-
 .moderation-type-block {
 	display: block;
 	text-align: center;

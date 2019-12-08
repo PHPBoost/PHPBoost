@@ -35,7 +35,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_change_img') )
-					document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-display"></i>' : '<i class="fa fa-msg-display"></i>';
+					document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-times error"></i>' : '<i class="fa fa-check success"></i>';
 				if( document.getElementById('forum_change_msg') )
 					document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 			}
@@ -55,7 +55,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_img') )
-					document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-track"></i>' : '<i class="fa fa-msg-track"></i>';
+					document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-heart-broken"></i>' : '<i class="fa fa-heartbeat error"></i>';
 				if( document.getElementById('forum_track_msg') )
 					document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNTRACK}" : "{L_TRACK}";
 				is_track = xhr_object.responseText == '1' ? true : false;
@@ -76,7 +76,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_pm_img') )
-					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-pm-not-track"></i>' : '<i class="fa fa-pm-track"></i>';
+					document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-envelope error"></i>' : '<i class="fa fa-envelope-open-text success"></i>';
 				if( document.getElementById('forum_track_pm_msg') )
 					document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE_PM}" : "{L_SUBSCRIBE_PM}";
 				is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -97,7 +97,7 @@
 			if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 			{
 				if( document.getElementById('forum_track_mail_img') )
-					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-not-track"></i>' : '<i class="fa fa-mail-track"></i>';
+					document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-at error"></i>' : '<i class="fa fa-at success"></i>';
 				if( document.getElementById('forum_track_mail_msg') )
 					document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUBSCRIBE}" : "{L_SUBSCRIBE}";
 				is_track_mail = xhr_object.responseText == '1' ? true : false;
@@ -310,7 +310,7 @@
 		            <div class="message-moderation-level">
 						# IF msg.C_FORUM_MODERATOR #
 							{msg.USER_WARNING}%
-							<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{L_WARNING_MANAGEMENT}"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>
+							<a href="moderation_forum{msg.U_FORUM_WARNING}" aria-label="{L_WARNING_MANAGEMENT}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
 							<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" aria-label="{L_PUNISHMENT_MANAGEMENT}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
 						# ENDIF #
 					</div>

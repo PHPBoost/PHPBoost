@@ -8,6 +8,10 @@ body {
     color: #555555;
 }
 
+.bgc-main	{ background-color: #FFFFFF; }
+.bkgd-sub   { background-color: #ECF2F8; }
+.bgc-title	{ background-color: #a2bfdd; color: #FFFFFF; }
+
 #site-slogan { color: #366493; }
 
 #footer       { border-color: #366493; }
@@ -509,14 +513,16 @@ a,
 	color: #366493;
 	border-color: #366493;
 }
-.bgc.link-color { background-color: rgba(54, 100, 147, 0.2);}
+	.bgc.link-color { background-color: rgba(54, 100, 147, 0.2);}
+	.bgc-full.link-color { background-color: #366493; color: #FFFFFF}
 
 a:hover,
 .link-color:hover {
 	color: #0066cc;
 	border-color: #0066cc;
 }
-.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.2);}
+	.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.3);}
+	.bgc-full:hover.link-color { color: #FFFFFF}
 
 .dropdown-container {
 	background-color: #FFFFFF;
@@ -524,32 +530,9 @@ a:hover,
 	box-shadow: 0 3px 6px #BBBBBB;
 }
 
-.color-alert        { color: #913636; }
-.color-notavailable { color: #913636; }
-.color-available 	{ color: #4D9136; }
-.color-unknown 		{ color: #0066cc; }
-
-.bkgd-color-solved          { background-color: rgba(47, 150, 116, 0.2); }
-.bkgd-color-unsolved        { background-color: rgba(210, 102, 54, 0.2); }
-
-.bkgd-color-visible         { background-color: rgba(77, 145, 54, 0.2); }
-.bkgd-color-unvisible       { background-color: rgba(210, 102, 54, 0.2); }
-.bkgd-color-unaprobed       { background-color: rgba(145, 54, 54, 0.2); }
-
-.bkgd-color-fixed           { background-color: rgba(77, 145, 54, 0.2); }
-tr td.bkgd-color-fixed      { background-color: rgba(77, 145, 54, 0.2); }
-.bkgd-color-processing      { background-color: rgba(210, 102, 54, 0.2); }
-tr td.bkgd-color-processing { background-color: rgba(210, 102, 54, 0.2); }
-.bkgd-color-unknown         { background-color: rgba(145, 54, 54, 0.2); }
-tr td.bkgd-color-unknown    { background-color: rgba(145, 54, 54, 0.2); }
-
 tbody td.calendar-none      { background-color: transparent; }
 tbody td.calendar-today     { background-color: rgba(0, 102, 204, 0.2); }
 tbody td.calendar-weekend   { background-color: rgba(54, 100, 147, 0.1); }
-
-.bkgd-main	{ background-color: #FFFFFF; }
-.bkgd-sub   { background-color: #ECF2F8; }
-.bkgd-title	{ background-color: #a2bfdd; color: #FFFFFF; }
 
 abbr,
 a.wikipedia-link {
@@ -568,27 +551,11 @@ td.calendar-week { border-color: #0066cc; }
 .user-unlocked .fa-user-lock:before { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }
 .fa-female:before           { color: #F49CC4; }
-.fa-trend-up:before         { color: #4D9136; }
-.fa-trend-down:before       { color: #913636; }
-.fa-circle-alert            { color: #913636; }
-.fa-circle-alert span       { color: #FFFFFF; }
 
 .fa-announce:before,
 .fa-announce-hot:before     { color: #0066cc; }
 .fa-announce-new:before,
 .fa-announce-new-hot:before { color: #4D9136; }
-
-.fa-msg-display:before      { color: #4D9136; }
-.fa-msg-not-display:before 	{ color: #913636; }
-.fa-msg-track:before        { color: #913636; }
-.fa-msg-not-track:before    { color: #353535; }
-.fa-pm-track:before         { color: #0066cc; }
-.fa-pm-not-track:before     { color: #353535; }
-.fa-mail-track:before       { color: #0066cc; }
-.fa-mail-not-track:before   { color: #353535; }
-.fa-lastview:before         { color: #353535; }
-.fa-notread:before          { color: #353535; }
-.fa-showmymsg:before        { color: #353535; }
 
 /* --- Alerts --------------------------------------------------------------- */
 .floating-element,
