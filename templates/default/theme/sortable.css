@@ -17,9 +17,9 @@
 
 .sortable-block .sortable-element {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	align-content: center;
+	align-items: center;
 	flex-wrap: wrap;
 	margin-bottom: 0.309em;
 	padding: 0;
@@ -36,6 +36,10 @@
 }
 
 @media (min-width:769px){
+	.sortable-block .sortable-element {
+		flex-direction: row;
+	}
+
 	.sortable-block .sortable-element .sortable-selector {
 		flex: 0 0 1.309em;
 		opacity: 0.2;
@@ -102,7 +106,7 @@
 }
 
 .sortable-block .sortable-element label {
-	margin-left: 0.809em;
+	/* margin-left: 0.809em; */
 }
 
 .sortable-block .sortable-actions img,

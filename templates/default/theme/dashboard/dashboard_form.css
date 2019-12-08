@@ -184,33 +184,6 @@ select {
 	text-decoration: none;
 }
 
-p[id*=filter] input,
-p[id*=filter] select {
-	margin: 0.309em 0;
-}
-
-div[id*=menu_element] input {
-	width: 100%;
-	margin-bottom: 0.618em;
-}
-
-@media (min-width: 769px) {
-	div[id*=menu_element] input {
-		width: 22%;
-		margin-bottom: 0;
-	}
-}
-
-@media (min-width: 981px) {
-	div[id*=menu_element] input {
-		width: 25%;
-	}
-}
-
-div.advanced-auth-input input[id*=menu_element] {
-	width: 70%;
-}
-
 /* --- Textarea --- */
 .bbcode-bar { width: 100% !important; }
 

@@ -17,18 +17,19 @@
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('sub.menu', 'admin')}">
-			<i class="fa fa-folder" aria-hidden="true" style="cursor:move"></i>
-			<label for="menu_element_{ID}_name">{L_NAME} <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
-			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
-			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
-			<script>
-			<!--
-				jQuery(document).ready(function() {
-					image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
-				});
-			-->
-			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
+			<div class="grouped-inputs inputs-with-sup large-inputs-group">
+				<span class="grouped-element"><i class="fa fa-folder" aria-hidden="true"></i></span>
+				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
+				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
+				<script>
+					jQuery(document).ready(function() {
+						image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
+					});
+				</script>
+				<span class="preview grouped-element"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
+			</div>
+
 		</div>
 		<div class="sortable-actions">
 			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>
@@ -61,18 +62,20 @@
 	<li class="sortable-element" id="menu_element_{ID}" data-id="{ID}">
 		<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 		<div class="sortable-title" aria-label="${LangLoader::get_message('menu.element', 'admin')}">
-			<i class="fa fa-globe" aria-hidden="true"></i>
-			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
-			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
-			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
-			<script>
-			<!--
-				jQuery(document).ready(function() {
-					image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
-				});
-			-->
-			</script>
-			<span class="preview"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
+			<div class="grouped-inputs inputs-with-sup large-inputs-group">
+				<span class="grouped-element"><i class="fa fa-globe" aria-hidden="true"></i></span>
+				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{L_NAME}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
+				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{L_URL}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{L_IMAGE}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
+				<script>
+				<!--
+					jQuery(document).ready(function() {
+						image_preview(jQuery('#menu_element_{ID}_image').val(), menu_element_{ID}_image_preview, true);
+					});
+				-->
+				</script>
+				<span class="preview grouped-element"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
+			</div>
 		</div>
 		<div class="sortable-actions">
 			<a href="" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{L_MORE}"><i class="fa fa-cog" aria-hidden="true"></i></a>

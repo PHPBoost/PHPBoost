@@ -338,7 +338,7 @@ legend {
 	border-color: #DDDDDD;
 }
 
-span.grouped-element {
+.grouped-element {
 	border-color: #DDDDDD;
 }
 
@@ -888,23 +888,20 @@ a[class*='lightcase-icon-']:hover {
     #      #####  #####  #####  #####  #    ##  #####
 ----------------------------------------------------------------------------- */
 
-@media { /* --- multiTabs --- */
+.accordion-container > nav > ul > li > a {
+    border-color: #366493;
+    background-color: rgba(54, 100, 147, 0.2);
+}
 
-	.accordion-container > nav > ul > li > a {
-	    border-color: #366493;
-	    background-color: rgba(54, 100, 147, 0.2);
-	}
+.close-modal {
+    color: #FFFFFF;
+}
 
-	.close-modal {
-	    color: #FFFFFF;
-	}
+.modal { background-color: rgba(0, 0, 0, 0.5); }
+.modal .content-panel { background-color: #FFFFFF; }
 
-	.modal { background-color: rgba(0, 0, 0, 0.5); }
-	.modal .content-panel { background-color: #FFFFFF; }
-
-	.tabs-container > nav > ul > li a.active-tab {
-	    background-color: rgba(54, 100, 147, 0.2);
-	}
+.tabs-container > nav > ul > li a.active-tab {
+    background-color: rgba(54, 100, 147, 0.2);
 }
 
 #tooltip {

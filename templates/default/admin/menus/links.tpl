@@ -52,20 +52,24 @@ function addSubElement(menu_element_id) {
 	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
 	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('menu.element', 'admin'))}}).appendTo('#menu_element_' + id);
 
-	jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_name'}).text({JL_NAME} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_ELEMENT}}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<span/>', {class : 'grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_url'}).text({JL_URL} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_ELEMENT}}).appendTo('#menu_label_name_' + id);
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_image'}).text({JL_IMAGE} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_title_' + id);
-	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview'}).appendTo('#menu_title_' + id);
+	jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
+
+	jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
+
+	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
@@ -91,20 +95,24 @@ function addSubMenu(menu_element_id) {
 	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
 	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('sub.menu', 'admin'))}}).appendTo('#menu_element_' + id);
 
-	jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_name'}).text({JL_NAME} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_MENU}}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<span/>', {class : 'grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_url'}).text({JL_URL} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_title_' + id);
-	jQuery('#menu_title_' + id).append(' ');
+	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_MENU}}).appendTo('#menu_label_name_' + id);
 
-	jQuery('<label/>', {for : 'menu_element_' + id + '_image'}).text({JL_IMAGE} + ' ').appendTo('#menu_title_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_title_' + id);
-	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview'}).appendTo('#menu_title_' + id);
+	jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
+
+	jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+	jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
+	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
+
+	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
 	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
 
 	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);

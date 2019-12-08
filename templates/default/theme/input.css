@@ -78,7 +78,8 @@ option {
 }
 
 .grouped-inputs input,
-.grouped-inputs select {
+.grouped-inputs select,
+.inputs-with-sup .label-sup {
 	flex: 1 1 auto;
 	margin: 0;
 	width: 1%;
@@ -114,6 +115,7 @@ a.grouped-element,
 .grouped-inputs a {
 	display: flex;
 	margin: 0;
+	justify-content: center;
 	align-items: center;
 }
 
@@ -123,7 +125,7 @@ a.grouped-element,
 }
 
 .grouped-inputs span {
-	padding: 0 0.618em;
+	padding: 0.228em 0.618em;
 }
 
 .grouped-inputs button i,
@@ -140,4 +142,47 @@ a.grouped-element,
 
 .grouped-inputs a:hover {
 	text-decoration: none;
+}
+
+/* inputs with sup labels */
+.grouped-inputs.large-inputs-group {
+	flex-wrap: wrap;
+}
+
+.inputs-with-sup > span {
+	width: 100%;
+	border-width: 1px;
+}
+
+.inputs-with-sup .label-sup {
+	position: relative;
+}
+
+.inputs-with-sup .label-sup span {
+	display: none;
+	position: absolute;
+	top: -1.618em;
+	font-size: 0.809em;
+	left: 0.309em;
+}
+
+@media (min-width: 769px) {
+	.grouped-inputs.large-inputs-group {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		min-width: 100%;
+	}
+
+	.grouped-inputs.inputs-with-sup {
+		margin: 1.228em 0 0;
+	}
+
+	.inputs-with-sup > span {
+		width: auto;
+		border-width: 1px 0 1px 1px;
+	}
+
+	.inputs-with-sup .label-sup span {
+		display: inline-block;
+	}
 }
