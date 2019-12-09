@@ -110,7 +110,7 @@
 		<div id="modal-html">
 			<h5>{@multitabs.html}</h5>
 			<div class="modal-container">
-				<button class="modal-btn" data-modal data-target="modal-01">{@multitabs.open.modal}</button>
+				<button class="button" data-modal data-target="modal-01">{@multitabs.open.modal}</button>
 				<div id="modal-01" class="modal modal-animation">
 					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel">

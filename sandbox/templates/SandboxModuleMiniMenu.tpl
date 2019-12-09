@@ -1,9 +1,9 @@
 # IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="# IF C_SLIDE_RIGHT #mini-sbx-right# ELSE #mini-sbx-left# ENDIF #">
-		<span class="sbx-toggle-btn submit# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
+		<span class="sbx-toggle-btn bgc-full administrator# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
 			<i class="fa fa-wrench" aria-hidden="true"></i> {@sandbox.module.title}
 		</span>
-		<div class="sbx-menu bkgd-main">
+		<div class="sbx-menu bgc-main">
 			<span class="close-btn bkgd-sub"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
 			<div class="sbx-inset">
 				<div class="sbx-menu-item sbx-text">
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@mini.tools}</div>
+					<div class="sbx-item-title bgc-title">{@mini.tools}</div>
 					# IF C_CSS_CACHE_ENABLED #
 						<div class="item-form item-2x" aria-label="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
 					# ELSE #
@@ -91,7 +91,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@mini.personalization}</div>
+					<div class="sbx-item-title bgc-title">{@mini.personalization}</div>
 					<div class="item-3x" aria-label="{@mini.menus}/{@title.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
 							<span class="icon-stack">
@@ -180,7 +180,7 @@
 					</div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@sandbox.module.title}</div>
+					<div class="sbx-item-title bgc-title">{@sandbox.module.title}</div>
 					<div class="item-4x" aria-label="{@title.form.builder}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.form.builder}</span></a></div>
 					<div class="item-4x" aria-label="{@title.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.css}</span></a></div>
 					<div class="item-4x" aria-label="{@title.bbcode}"><a href="{PATH_TO_ROOT}/sandbox/bbcode"><i class="fa fa-code fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.bbcode}</span></a></div>
@@ -191,7 +191,7 @@
 					<div class="item-4x" aria-label="{@title.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.config}</span></a></div>
 				</div>
 				<div class="sbx-menu-item">
-					<div class="sbx-item-title bkgd-title">{@mini.themes.switcher}</div>
+					<div class="sbx-item-title bgc-title">{@mini.themes.switcher}</div>
 					<div class="item-form item-2x3">
 						<form action="{REWRITED_SCRIPT}" method="get">
 							<label for="switchtheme">
