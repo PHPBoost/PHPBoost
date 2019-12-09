@@ -189,6 +189,12 @@ class ArticlesDisplayArticlesController extends ModuleController
 				'PAGINATION_ARTICLES' => $pagination->display()
 			));
 		}
+		else
+		{
+			$this->tpl->put_all(array(
+				'C_FIRST_PAGE' => true
+			));
+		}
 	}
 
 	private function list_article_pages($array_page)
