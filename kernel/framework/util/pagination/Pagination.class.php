@@ -13,8 +13,10 @@
 class Pagination
 {
 	const LINKS_NB = 3;
+	const FIRST_LINK = 'first-page';
 	const PREV_LINK = 'prev-page';
 	const NEXT_LINK = 'next-page';
+	const LAST_LINK = 'last-page';
 
 	const LIGHT_PAGINATION = 'light';
 	const FULL_PAGINATION = 'full';
@@ -71,10 +73,11 @@ class Pagination
 	{
 		$this->tpl = new FileTemplate('framework/util/pagination.tpl');
 		$this->tpl->put_all(array(
-			'C_LIGHT' => $type == self::LIGHT_PAGINATION,
-			'C_FULL' => $type == self::FULL_PAGINATION,
-			'L_PREVIOUS_PAGE' => LangLoader::get_message('pagination.previous', 'common'),
-			'L_NEXT_PAGE'     => LangLoader::get_message('pagination.next', 'common')
+			'C_LIGHT_PAGINATION' => $type == self::LIGHT_PAGINATION,
+			'C_FULL_PAGINATION'  => $type == self::FULL_PAGINATION,
+			'L_FIRST_PAGE'    => LangLoader::get_message('pagination.first', 'common'),
+			'L_CURRENT_PAGE'  => LangLoader::get_message('pagination.current', 'common'),
+			'L_LAST_PAGE'     => LangLoader::get_message('pagination.last', 'common')
 		));
 	}
 
@@ -111,12 +114,12 @@ class Pagination
 	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
 		$this->tpl->assign_block_vars('page', array(
-			'URL'             => $this->get_url($page_number),
-			'NAME'            => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
+			'U_PAGE'          => $this->get_url($page_number),
+			'PAGE_NAME'       => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
 			'C_CURRENT_PAGE'  => $is_current_page,
-			'L_PAGE'  		  => $is_current_page ? LangLoader::get_message('pagination.current', 'common') : LangLoader::get_message('pagination.page', 'common') . " " . $page_number,
-			'C_PREVIOUS'      => $name == self::PREV_LINK,
-			'C_NEXT'          => $name == self::NEXT_LINK
+			'L_PAGE' 		  => $is_current_page ? LangLoader::get_message('pagination.current', 'common') : LangLoader::get_message('pagination.page', 'common') . " " . $page_number,
+			'C_PREVIOUS_PAGE' => $name == self::PREV_LINK,
+			'C_NEXT_PAGE'     => $name == self::NEXT_LINK
 		));
 	}
 
