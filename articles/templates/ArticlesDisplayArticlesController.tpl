@@ -39,7 +39,7 @@
 					<i class="far fa-folder" aria-hidden="true"></i> <a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 				</span>
 			</div>
-			<div class="controls">
+			<div class="controls align-right">
 				# IF C_EDIT #
 					<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
@@ -96,20 +96,20 @@
 
 			# IF C_KEYWORDS #
 				<aside class="tags-container">
-					<i class="fa fa-tags" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('form.keywords', 'common')}</span>
+					<span class="text-strong" aria-label="${LangLoader::get_message('form.keywords', 'common')}"><i class="fa fa-tags" aria-hidden="true"></i></span>
 					# START keywords #
-						<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
+						<a class="pinned link-color" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
+						# IF keywords.C_SEPARATOR ## ENDIF #
 					# END keywords #
 				</aside>
 			# ENDIF #
 			# IF C_SOURCES #
-				<aside>
-					<div id="articles-sources-container">
-						<span>${LangLoader::get_message('form.sources', 'common')}</span> :
-						# START sources #
-						<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small" rel="nofollow">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
-						# END sources #
-					</div>
+				<aside class="sources-container">
+					<span class="text-strong">${LangLoader::get_message('form.sources', 'common')}</span> :
+					# START sources #
+						<a class="pinned question" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
+						# IF sources.C_SEPARATOR ## ENDIF #
+					# END sources #
 				</aside>
 			# ENDIF #
 			# IF C_DATE_UPDATED #
