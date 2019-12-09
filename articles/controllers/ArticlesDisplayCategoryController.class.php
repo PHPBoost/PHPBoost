@@ -176,7 +176,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by'], 'css_class' => 'grouped-inputs'));
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
@@ -193,7 +193,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array(
+				'class' => 'grouped-element',
+				'events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();')
+			)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -201,7 +204,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
 			),
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array(
+				'class' => 'grouped-element',
+				'events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();')
+			)
 		));
 
 		$this->view->put('FORM', $form->display());

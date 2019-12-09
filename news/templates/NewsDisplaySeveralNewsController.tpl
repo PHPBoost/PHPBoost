@@ -1,8 +1,8 @@
 <section id="module-news">
 	<header>
 		<div class="align-right controls">
-			<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
@@ -58,13 +58,13 @@
 									<span class="pinned notice" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
 								# ENDIF #
 							</div>
-							# IF news.C_ACTIONS #
-								<div class="controls">
+							# IF news.C_CONTROLS #
+								<div class="controls align-right">
 									# IF news.C_EDIT #
-									<a href="{news.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+									<a href="{news.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
 									# ENDIF #
 									# IF news.C_DELETE #
-									<a href="{news.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									<a href="{news.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 								</div>
 							# ENDIF #

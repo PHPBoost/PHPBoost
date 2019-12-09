@@ -96,7 +96,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg,
 		v.last_view_id,
 		p.question,
-		me.last_view_forum, me.last_view_forum,
+		me.last_view_forum,
 		tr.pm, tr.mail
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id

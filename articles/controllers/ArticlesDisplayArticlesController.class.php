@@ -183,6 +183,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 			$this->tpl->put_all(array(
 				'C_PAGINATION' => true,
+				'C_FIRST_PAGE' => $current_page == 1,
 				'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
 				'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
 				'PAGINATION_ARTICLES' => $pagination->display()

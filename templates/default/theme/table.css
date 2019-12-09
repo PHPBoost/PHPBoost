@@ -82,6 +82,14 @@ tfoot td select {
 	}
 }
 
+.html-table-filters {
+	padding: 0.809em; 
+}
+
+.html-table-nbr-elements {
+	text-align: left; 
+}
+
 /* --- thead patch for formated tables --- */
 .formatter-table td.formatter-table-head {
 	padding: 0.618em;
@@ -100,7 +108,6 @@ tfoot td select {
 
 
 /* --- Responsive Table - basictable.js ------------------------------------- */
-
 .bt thead,
 .bt thead th {
 	display: none;

@@ -1,6 +1,9 @@
 /*
-* Copy this file in your theme to customize the module.
-* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ * Copy this file in your theme to customize the module.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ *
+ * Contains standalone framwork classes
+ *
 */
 
 /* --- Link --- */
@@ -53,32 +56,24 @@ figcaption {
 .bigger   { font-size: 1.456em;  }
 .biggest  { font-size: 2.1618em; }
 
-/* --- Visits counter --- */
-#visit-counter {
-	position: absolute;
-	right: 1.618em;
-	top : 92.5%;
-	font-size: 0.9em;
-	text-align: right;
+/* --- Alignment --- */
+.indent {
+	text-indent: 2.618em;
 }
 
-/* --- Breadcrumb --- */
-#breadcrumb {
-	padding: 0.618em;
-	font-size: 0.809em;
+.indent::first-letter {
+	font-weight: 600;
+	font-size: 130.9%
 }
 
-#breadcrumb ol {
-	margin: 0;
-	list-style: none;
-}
-
-#breadcrumb li {
-	display: inline;
-}
-
-#breadcrumb li:not(.current):after {
-	content: '/';
+.pinned {
+	display: inline-block;
+	padding: 0 0.228em;
+	margin: 0 0 0.228em 0;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 3px;
 }
 
 /* --- Search engines --- */
@@ -87,103 +82,13 @@ figcaption {
 	font-weight: bold;
 }
 
-/* --- Le selecteur de couleur --- */
-.color-picker {
-	position: absolute;
-	z-index: 100;
-}
-
-.color-picker td {
-	padding: 0;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-}
-
-.color-picker td a {
-	display: block;
-	width: 0.809em;
-	height: 0.809em;
-}
-
-.indent {
-	margin-left: 1.618em;
-}
-
-/* --- La recherche de membre (AJAX) --- */
+/* --- Member search (AJAX) --- */
 .xmlhttprequest-result-search {
 	overflow: auto;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 }
-
-/* --- La barre de progression --- */
-.progressbar-container {
-	position: relative;
-	margin: 0.228em 0 0.618em;
-}
-
-.progressbar-container .progressbar-infos {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 100%;
-	line-height: 0.809em;
-	font-size: 0.618em;
-	text-align: center;
-}
-
-.progressbar-container .progressbar {
-	height: 1.618em;
-	transition: width .6s ease;
-}
-
-/* --- Le systeme de notation --- */
-.notation,
-.static-notation {
-	display: inline-block;
-}
-
-.notation .star,
-.static-notation .star {
-	position: relative;
-	font-size: 1.5rem;
-	text-decoration: none;
-}
-
-.static-notation .star {
-	cursor: default;
-}
-
-.notation .star-width {
-	position: absolute;
-	display: inline-block;
-	top:0;
-	left:0;
-}
-
-.notation .star-width:before {
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900;
-	left: 0;
-	top:0;
-	content:"\f005";
-	display:block;
-	overflow:hidden;
-}
-
-.star-width-0   { width: 0%;   }
-.star-width-10  { width: 30%;  }
-.star-width-25  { width: 41%;  }
-.star-width-50  { width: 50%;  }
-.star-width-75  { width: 65%;  }
-.star-width-90  { width: 78%;  }
-.star-width-100 { width: 100%; }
-
-
-/* -- Les messages d erreurs -- */
-/* ---------------------------- */
 
 /* --- Authorized reader --- */
 .authorized-reader {
@@ -200,6 +105,7 @@ figcaption {
     font-size: 0.618em;
 }
 
+/* --- add ellispsis --- */
 .ellipsis {
 	display: block;
 	overflow: hidden;
@@ -207,6 +113,7 @@ figcaption {
 	white-space: nowrap;
 }
 
+/* --- Country flags in select --- */
 .flag-selector {
 	padding-left: 3.309em;
 	background-position: 0.309em;
@@ -226,7 +133,7 @@ figcaption {
     width: 1px;
 }
 
-/* --- Stacked --- */
+/* --- Stacked element --- */
 .stacked {
     position: relative;
 }
@@ -247,13 +154,22 @@ figcaption {
     border-radius: 100%;
 }
 
+/* --- Floating sub container --- */
 .dropdown-container {
 	z-index: 10;
 }
 
+/* --- Coast to coast elements --- */
 .flex-between {
     display: flex !important;
 	justify-content: space-between;
+	flex-direction: column;
+}
+
+@media (min-width: 769px) {
+	.flex-between {
+		flex-direction: row;
+	}
 }
 
 /* --- Announces & messaging icons ------------------------------------------ */

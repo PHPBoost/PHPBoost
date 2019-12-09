@@ -1,7 +1,7 @@
 <section id="module-news">
 	<header>
 		<div class="align-right controls">
-			<a class="syndication" href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1 itemprop="name">{NAME}</h1>
@@ -34,14 +34,16 @@
 				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 				# IF C_NB_VIEW_ENABLED #<span class="pinned notice" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 			</div>
-			<div class="controls">
-				# IF C_EDIT #
-				<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a>
-				# ENDIF #
-				# IF C_DELETE #
-				<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-trash-alt"></i></a>
-				# ENDIF #
-			</div>
+			# IF C_CONTROLS #
+				<div class="controls align-right">
+					# IF C_EDIT #
+					<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-fw fa-edit"></i></a>
+					# ENDIF #
+					# IF C_DELETE #
+					<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-fw fa-trash-alt"></i></a>
+					# ENDIF #
+				</div>
+			# ENDIF #
 		</div>
 
 		<div class="content">

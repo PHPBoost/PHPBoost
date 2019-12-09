@@ -52,21 +52,21 @@ body {
 	background-color: rgba(54, 100, 147, 0.05);
 }
 
-.pagination-block li a {
+.pagination-item a {
 	border-color: #DDDDDD;
 }
 
-.pagination-block li a:hover:not(.current-page) {
+.pagination-item a:hover:not(.current-page) {
 	background-color: #0066CC;
 	color: #FFFFFF;
 }
 
-.pagination-block li a:active {
+.pagination-item a:active {
 	background-color: #ECF2F8;
 	border-color: #DDDDDD;
 }
 
-.pagination-block li a.current-page {
+.pagination-item a.current-page {
 	border-color: #366493;
 	background-color: rgba(54, 100, 147, 0.3);
 }
@@ -546,7 +546,6 @@ table.calendar-table td a:hover {
 td.calendar-week { border-color: #0066cc; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
-.syndication .fa-rss:before         { color: #D36636; }
 .user-locked .fa-user-lock:before   { color: #913636; }
 .user-unlocked .fa-user-lock:before { color: #4D9136; }
 .fa-male:before             { color: #8DC3E9; }

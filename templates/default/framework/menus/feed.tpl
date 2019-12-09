@@ -2,7 +2,7 @@
 	<div class="cell">
 		<div class="cell-header">
 			<h6 class="cell-name"># IF C_NAME #{NAME}# ELSE #{RAW_TITLE}# ENDIF #</h6>
-			<a href="{U_LINK}" class="syndication"><i class="fa fa-rss" aria-hidden="true"></i></a>
+			<a href="{U_LINK}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 		</div>
 		<div class="cell-list">
 			<ul>

@@ -87,20 +87,24 @@
 						</div>
 						# IF C_PAGINATION_ACTIVATED #
 							# IF C_NB_ROWS_OPTIONS #
-							<div class="table-rows-options">
-								<select name="nbItemsPerPage" onchange="window.location=this.value">
-									# START nbItemsOption #
-									<option value="{nbItemsOption.URL}"
-										# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
-										{nbItemsOption.VALUE}
-									</option>
-									# END nbItemsOption #
-								</select>
-							</div>
+								<div class="flex-between">
+									<div class="table-rows-options">
+										<select name="nbItemsPerPage" onchange="window.location=this.value">
+											# START nbItemsOption #
+											<option value="{nbItemsOption.URL}"
+												# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
+												{nbItemsOption.VALUE}
+											</option>
+											# END nbItemsOption #
+										</select>
+									</div>
 							# END IF #
 							<div class="table-pagination">
 								# INCLUDE pagination #
 							</div>
+							# IF C_NB_ROWS_OPTIONS #
+								</div>
+							# ENDIF #
 						# ENDIF #
 					</td>
 				</tr>

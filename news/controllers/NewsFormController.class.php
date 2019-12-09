@@ -103,7 +103,7 @@ class NewsFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->lang['news.form.short_contents'], $this->get_news()->get_short_contents(), array(
 			'hidden' => !$this->get_news()->get_short_contents_enabled(),
-			'description' => !NewsConfig::load()->get_display_condensed_enabled() ? '<span class="color-alert">' . $this->lang['news.form.short_contents.description'] . '</span>' : ''
+			'description' => !NewsConfig::load()->get_display_condensed_enabled() ? '<span class="error">' . $this->lang['news.form.short_contents.description'] . '</span>' : ''
 		)));
 
 		if ($this->config->get_author_displayed() == true)

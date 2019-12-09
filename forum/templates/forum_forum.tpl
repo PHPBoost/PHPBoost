@@ -12,7 +12,7 @@
 				<header class="flex-between">
 					<h2>{L_SUBFORUMS}</h2>
 					<div class="controls">
-						<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}"><i class="fa fa-rss" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('syndication', 'common')}</span></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}"><i class="fa fa-rss warning" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('syndication', 'common')}</span></a>
 					</div>
 				</header>
 				<div class="content">
@@ -96,7 +96,7 @@
 					# IF C_POST_NEW_SUBJECT #
 						<a href="{U_POST_NEW_SUBJECT}" class="button submit">{L_POST_NEW_SUBJECT}</a>
 					# ENDIF #
-					<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss"></i></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning"></i></a>
 					# IF IDCAT #<a href="unread.php?cat={IDCAT}" aria-label="{L_DISPLAY_UNREAD_MSG}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</div>
@@ -199,7 +199,7 @@
 						<tr>
 							<th colspan="7">
 								<div class="footer-forum">
-									<a class="syndication" href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 									# START syndication_cats #
 										# IF syndication_cats.C_DISPLAY_RAQUO # <i class="fa fa-angle-double-right" aria-hidden="true"></i> # ENDIF #<a href="{syndication_cats.LINK}">{syndication_cats.LABEL}</a>
 									# END syndication_cats #

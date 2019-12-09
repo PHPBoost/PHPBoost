@@ -7,19 +7,24 @@
 	margin-top: 0.618em;
 }
 
-.pages-pagination {
-	float: right;
-	width: 38%;
-	margin-bottom: 0.618em;
-}
-
-.article-articles.several-items h2,
-.article-articles.several-items .more {
+.articles-item.several-items h2,
+.articles-item.several-items .more {
 	margin: 0;
 }
 
-.article-articles.several-items img {
+.articles-item.several-items img {
 	padding: 0 0 0.618em 0;
+}
+
+/* --- Pages pagination --- */
+.pages-pagination {
+	width: 100%;
+}
+
+@media (min-width: 769px) {
+	.pages-pagination {
+		width: calc(100% / 3);
+	}
 }
 
 span.contents + hr {

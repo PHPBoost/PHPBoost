@@ -1,4 +1,9 @@
 /*
+* Copy this file in your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+/*
  * Default CSS for all themes
 --------------------------------------*/
 
@@ -117,8 +122,8 @@ a.wikipedia-link:after {
 .align-right   { text-align: right !important; }
 .align-justify { text-align: justify !important; }
 
-img.float-left,
-img.float-right {
+.float-left,
+.float-right {
 	padding: 0.809em 0; }
 
 @media (min-width: 481px) {
@@ -126,10 +131,10 @@ img.float-right {
 	.float-right { float: right !important; } }
 
 @media (min-width: 769px) {
-	img.float-left, img.left   {
+	.float-left   {
 		float: left !important;
 		padding: 0.618em 0.809em 0.618em 0;	}
-	img.float-right, img.right {
+	.float-right {
 		float: right !important;
 		padding: 0.618em 0 0.809em 0.618em;	} }
 
@@ -206,12 +211,6 @@ img.float-right {
 .low-opacity {
 	opacity: 0.40; }
 
-/* --- Pagination --- */
-ul.pagination li {
-	display: inline; }
-ul.pagination .current-page {
-	text-decoration: underline; }
-
 /* --- Debug --- */
 .pbt-debug {
 	background-color: #FFA500 !important;
@@ -246,13 +245,6 @@ ul.pagination .current-page {
 		box-shadow: none;
 		color: #000000;
 	} }
-
-/* --- Tables --- */
-.html-table-filters {
-	padding: 0.809em; }
-
-.html-table-nbr-elements {
-	float: left; }
 
 /* --- Blink animation effect ----------------------------------------------- */
 @keyframes blink {
@@ -366,23 +358,3 @@ ul.pagination .current-page {
 		url('fonts/open-sans/open-sans-v13-latin-800italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-800italic.woff') format('woff'),
 		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
-
-/* --- Icons forced to "Regular" format --- */
-.fa.fa-calendar-alt,
-.fa.fa-clock,
-.fa.fa-comments,
-.fa.fa-trash-alt,
-.fa.fa-edit,
-.fa.fa-envelope,
-.fa.fa-eye,
-.fa.fa-file,
-.fa.fa-copy,
-.fa.fa-file-alt,
-.fa.fa-folder,
-.fa.fa-hand-point-right,
-.fa.fa-lightbulb,
-.fa.fa-minus-square,
-.fa.fa-plus-square,
-.fa.fa-star,
-.fa.fa-user {
-  font-weight: 400; }

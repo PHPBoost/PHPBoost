@@ -1,55 +1,48 @@
-
-section footer .pagination {
-	text-align: center;
-}
-
-.pagination {
+.pagination ul {
 	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
-.pagination .fa:before {
-	font-size: 0.809em;
-}
-
-.pagination-block {
-	margin: 0.309em 0;
-}
-
-.pagination-block li {
+.pagination-item {
+	list-style-type: none;
 	padding: 0.1618em;
 }
 
-.pagination-block li a {
-	display: inline-block;
-	padding: 0.1618em 0.618em;
-	outline: none;
+.pagination-item a {
+	display: block;
+	padding: 0.228em 0.618em;
 	font-weight: bold;
 	font-size: 0.809em;
 	text-align: center;
 	text-decoration: none;
-}
-
-.pagination-block li a {
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
 	transition: all 0.2s linear;
 }
 
-.pagination-block li a:hover {
+.light-pagination .pagination-item a {
+	border-radius: 50%;
+}
+
+.pagination-item a:hover {
 	transition: all 0.1s linear;
-}
-
-.pagination-block li a:active {
-	transition: all 0.2s linear;
-}
-
-.pagination-block li a.current-page {
 	text-decoration: none;
 }
 
-.pagination-block-bis li a.prev-page:hover,
-.pagination-block-bis li a.next-page:hover {
+.pagination-item a:active {
+	transition: all 0.2s linear;
+}
+
+.pagination-item li a.current-page {
+	text-decoration: none;
+}
+
+.pagination-item-bis li a.prev-page:hover,
+.pagination-item-bis li a.next-page:hover {
 	text-decoration: underline;
 }
 

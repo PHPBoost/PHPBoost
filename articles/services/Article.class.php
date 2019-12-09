@@ -467,6 +467,7 @@ class Article
 			Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'),
 			array(
 			// Conditions
+			'C_CONTROLS'		   			  => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT'                          => $this->is_authorized_to_edit(),
 			'C_DELETE'                        => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE'                   => $this->has_picture(),
@@ -496,7 +497,6 @@ class Article
 			'C_AUTHOR_EXIST'                => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO'                        => $user->get_display_name(),
 			'DESCRIPTION'                   => $description,
-			'PICTURE'                       => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS'              => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR'              => $user_group_color,
 			'ID_CARD' 						=> IdcardService::display_idcard($user),
@@ -514,6 +514,7 @@ class Article
 			'U_AUTHOR'         => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_CATEGORY'       => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_ARTICLE'        => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
+			'U_PICTURE'        => $this->get_picture()->rel(),
 			'U_EDIT_ARTICLE'   => ArticlesUrlBuilder::edit_article($this->id, AppContext::get_request()->get_getint('page', 1))->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id)->rel(),
 			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('articles', $this->id_category)->rel()
