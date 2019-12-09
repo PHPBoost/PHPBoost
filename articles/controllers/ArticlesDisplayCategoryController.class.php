@@ -120,7 +120,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 
 			foreach ($article->get_sources() as $name => $url)
 			{
-				$this->tpl->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
 			}
 		}
 		$result->dispose();

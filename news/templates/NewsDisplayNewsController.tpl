@@ -2,7 +2,7 @@
 	<header>
 		<div class="align-right controls">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1 itemprop="name">{NAME}</h1>
 	</header>
@@ -16,20 +16,20 @@
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #
 					# IF C_AUTHOR_CUSTOM_NAME #
-						<span class="pinned"><i class="fa fa-user" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME}</span>
+						<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME}</span>
 					# ELSE #
 						# IF NOT C_ID_CARD #
 							<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
-								<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+								<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
 							</span>
 						# ENDIF #
 					# ENDIF #
 				# ENDIF #
 				<span class="pinned notice">
-					<i class="fa fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
+					<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 				</span>
 				<span class="pinned question">
-					<a itemprop="about" href="{U_CATEGORY}"><i class="fa fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
+					<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 				</span>
 				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
 				# IF C_NB_VIEW_ENABLED #<span class="pinned notice" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
@@ -37,10 +37,10 @@
 			# IF C_CONTROLS #
 				<div class="controls align-right">
 					# IF C_EDIT #
-					<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-fw fa-edit"></i></a>
+					<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
 					# ENDIF #
 					# IF C_DELETE #
-					<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-fw fa-trash-alt"></i></a>
+					<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
 					# ENDIF #
 				</div>
 			# ENDIF #
@@ -70,9 +70,8 @@
 			<aside class="sources-container">
 				<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
 				# START sources #
-					<span class="pinned question">
-						<a href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
-					</span># IF sources.C_SEPARATOR ## ENDIF #
+					<a class="pinned question" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
+					# IF sources.C_SEPARATOR ## ENDIF #
 				# END sources #
 			</aside>
 		# ENDIF #
@@ -81,9 +80,7 @@
 			<aside class="tags-container">
 				<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
 				# START keywords #
-					<span class="pinned question">
-						<a href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
-					</span>
+					<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
 				# END keywords #
 			</aside>
 		# ENDIF #
@@ -111,6 +108,8 @@
 						<img src="{U_PREVIOUS_THUMBNAIL}" alt="{PREVIOUS_ITEM}">
 						{PREVIOUS_ITEM}
 					</a>
+				# ELSE #
+					<span></span>
 				# ENDIF #
 				# IF C_NEXT_ITEM #
 					<a class="related-item next-item" href="{U_NEXT_ITEM}">

@@ -50,83 +50,82 @@
 		</div>
 
 
-			# IF C_PAGINATION #
-				# INCLUDE FORM #
-				<div class="spacer"></div>
-			# ENDIF #
+		# IF C_PAGINATION #
+			# INCLUDE FORM #
+			<div class="spacer"></div>
+		# ENDIF #
 
-			# IF PAGE_NAME #
-				<h2 class="title page_name">{PAGE_NAME}</h2>
-			# ENDIF #
+		# IF PAGE_NAME #
+			<h2 class="title page_name">{PAGE_NAME}</h2>
+		# ENDIF #
 
-			<div class="content" itemprop="text">
-				# IF C_FIRST_PAGE #
-					# IF C_HAS_PICTURE #<img src="{U_PICTURE}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
-				# ENDIF #
-				{CONTENTS}
-			</div>
-			# IF C_PAGINATION #
-				<aside class="flex-between">
-					<div class="pages-pagination">
-						# IF C_PREVIOUS_PAGE #
-							<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-angle-double-left"></i> {L_PREVIOUS_TITLE}</a>
-						# ENDIF #
-					</div>
-					<div class="pages-pagination align-center"># INCLUDE PAGINATION_ARTICLES #</div>
-					<div class="pages-pagination align-right">
-						# IF C_NEXT_PAGE #
-							<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-angle-double-right"></i></a>
-						# ENDIF #
-					</div>
-				</aside>
+		<div class="content" itemprop="text">
+			# IF C_FIRST_PAGE #
+				# IF C_HAS_PICTURE #<img src="{U_PICTURE}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 			# ENDIF #
-			# IF C_AUTHOR_DISPLAYED #
-				# IF NOT C_AUTHOR_CUSTOM_NAME #
-					# IF C_ID_CARD #
-						<aside>
-							{ID_CARD}
-						</aside>
+			{CONTENTS}
+		</div>
+		# IF C_PAGINATION #
+			<aside class="flex-between">
+				<div class="pages-pagination">
+					# IF C_PREVIOUS_PAGE #
+						<a href="{U_PREVIOUS_PAGE}"><i class="fa fa-angle-double-left"></i> {L_PREVIOUS_TITLE}</a>
 					# ENDIF #
+				</div>
+				<div class="pages-pagination align-center"># INCLUDE PAGINATION_ARTICLES #</div>
+				<div class="pages-pagination align-right">
+					# IF C_NEXT_PAGE #
+						<a href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-angle-double-right"></i></a>
+					# ENDIF #
+				</div>
+			</aside>
+		# ENDIF #
+		# IF C_AUTHOR_DISPLAYED #
+			# IF NOT C_AUTHOR_CUSTOM_NAME #
+				# IF C_ID_CARD #
+					<aside>
+						{ID_CARD}
+					</aside>
 				# ENDIF #
 			# ENDIF #
+		# ENDIF #
 
-			<aside>
-				${ContentSharingActionsMenuService::display()}
+		<aside>
+			${ContentSharingActionsMenuService::display()}
+		</aside>
+
+		# IF C_SOURCES #
+			<aside class="sources-container">
+				<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+				# START sources #
+					<a class="pinned question" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
+					# IF sources.C_SEPARATOR ## ENDIF #
+				# END sources #
 			</aside>
-
-			# IF C_KEYWORDS #
-				<aside class="tags-container">
-					<span class="text-strong" aria-label="${LangLoader::get_message('form.keywords', 'common')}"><i class="fa fa-tags" aria-hidden="true"></i></span>
-					# START keywords #
-						<a class="pinned link-color" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
-						# IF keywords.C_SEPARATOR ## ENDIF #
-					# END keywords #
-				</aside>
-			# ENDIF #
-			# IF C_SOURCES #
-				<aside class="sources-container">
-					<span class="text-strong">${LangLoader::get_message('form.sources', 'common')}</span> :
-					# START sources #
-						<a class="pinned question" itemprop="isBasedOnUrl" href="{sources.URL}" rel="nofollow">{sources.NAME}</a>
-						# IF sources.C_SEPARATOR ## ENDIF #
-					# END sources #
-				</aside>
-			# ENDIF #
-			# IF C_DATE_UPDATED #
-				<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{DATE_UPDATED_ISO8601}" itemprop="datePublished">{DATE_UPDATED}</time></i></aside>
-			# ENDIF #
-			# IF C_NOTATION_ENABLED #
-				<aside>
-					{KERNEL_NOTATION}
-				</aside>
-			# ENDIF #
-			# IF C_COMMENTS_ENABLED #
-				<aside>
-					# INCLUDE COMMENTS #
-				</aside>
-			# ENDIF #
-		<footer>
-		</footer>
+		# ENDIF #
+		# IF C_KEYWORDS #
+			<aside class="tags-container">
+				<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
+				# START keywords #
+					<a class="pinned link-color" itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a>
+					# IF keywords.C_SEPARATOR ## ENDIF #
+				# END keywords #
+			</aside>
+		# ENDIF #
+		# IF C_DATE_UPDATED #
+			<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{DATE_UPDATED_ISO8601}" itemprop="datePublished">{DATE_UPDATED}</time></i></aside>
+		# ENDIF #
+		# IF C_NOTATION_ENABLED #
+			<aside>
+				{KERNEL_NOTATION}
+			</aside>
+		# ENDIF #
+		# IF C_COMMENTS_ENABLED #
+			<aside>
+				# INCLUDE COMMENTS #
+			</aside>
+		# ENDIF #
+		<footer></footer>
 	</article>
 	<footer>
 		<meta itemprop="url" content="{U_ARTICLE}">

@@ -2,7 +2,7 @@
 	<header>
 		<div class="align-right controls">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
@@ -31,31 +31,31 @@
 								# IF news.C_AUTHOR_DISPLAYED #
 									<span class="pinned {news.USER_LEVEL_CLASS}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR};border-color:{news.USER_GROUP_COLOR};"# ENDIF #>
 										# IF news.C_AUTHOR_CUSTOM_NAME #
-											<i class="fa fa-user" aria-hidden="true"></i> {news.AUTHOR_CUSTOM_NAME}
+											<i class="far fa-user" aria-hidden="true"></i> {news.AUTHOR_CUSTOM_NAME}
 										# ELSE #
 											# IF news.C_AUTHOR_EXIST #
 												<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>
-													<i class="fa fa-user" aria-hidden="true"></i> {news.PSEUDO}
+													<i class="far fa-user" aria-hidden="true"></i> {news.PSEUDO}
 												</a>
 											# ELSE #
-												<i class="fa fa-user" aria-hidden="true"></i> {news.PSEUDO}
+												<i class="far fa-user" aria-hidden="true"></i> {news.PSEUDO}
 											# ENDIF #
 										# ENDIF #
 									</span>
 								# ENDIF #
 								<span class="pinned notice">
-									<i class="fa fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE}# ELSE #{news.DIFFERED_START_DATE}# ENDIF #</time>
+									<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE}# ELSE #{news.DIFFERED_START_DATE}# ENDIF #</time>
 								</span>
 								<span class="pinned question">
-									<a itemprop="about" href="{news.U_CATEGORY}"><i class="fa fa-folder" aria-hidden="true"></i> {news.CATEGORY_NAME}</a>
+									<a itemprop="about" href="{news.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {news.CATEGORY_NAME}</a>
 								</span>
 								# IF C_COMMENTS_ENABLED #
 									<span class="pinned notice">
-										<i class="fa fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.COMMENTS_NUMBER} # ENDIF # {news.L_COMMENTS}
+										<i class="far fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.COMMENTS_NUMBER} # ENDIF # {news.L_COMMENTS}
 									</span>
 								# ENDIF #
 								# IF news.C_NB_VIEW_ENABLED #
-									<span class="pinned notice" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
+									<span class="pinned notice" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
 								# ENDIF #
 							</div>
 							# IF news.C_CONTROLS #
