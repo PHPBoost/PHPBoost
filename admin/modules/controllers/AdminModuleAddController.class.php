@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 17
+ * @version   	PHPBoost 5.2 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -33,7 +33,7 @@ class AdminModuleAddController extends AdminController
 			{
 				$modules_selected++;
 
-				$result = $this->install_module($module->get_id(), true);
+				$result = $this->install_module($module->get_id());
 
 				if ($result['type'] == MessageHelper::SUCCESS)
 				{
@@ -167,9 +167,9 @@ class AdminModuleAddController extends AdminController
 		return -1;
 	}
 
-	private function install_module($module_id, $activate)
+	private function install_module($module_id)
 	{
-		switch(ModulesManager::install_module($module_id, $activate, true))
+		switch(ModulesManager::install_module($module_id))
 		{
 			case ModulesManager::CONFIG_CONFLICT:
 				return array('msg' => $this->lang['modules.config_conflict'], 'type' => MessageHelper::WARNING);
@@ -263,7 +263,7 @@ class AdminModuleAddController extends AdminController
 							else
 								$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 
-							$result = $this->install_module($module_id, true);
+							$result = $this->install_module($module_id);
 
 							if ($result['type'] == MessageHelper::SUCCESS)
 								$this->view->put('MSG_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));

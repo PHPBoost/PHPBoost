@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 09 29
+ * @version   	PHPBoost 5.2 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -123,26 +123,16 @@ class AdminLangsNotInstalledListController extends AdminController
 		{
 			if ($request->get_string('add-' . $lang->get_id(), false) || ($request->get_string('add-selected-langs', false) && $request->get_value('add-checkbox-' . $lang_number, 'off') == 'on'))
 			{
-				$activated = $request->get_bool('activated-' . $lang->get_id(), false);
 				$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
-				LangsManager::install($lang->get_id(), $authorizations, $activated);
-				$error = LangsManager::get_error();
-				if ($error !== null)
-				{
-					$this->view->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
-				}
-				else
-				{
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
-				}
+				$this->install_lang($lang->get_id(), $authorizations);
 			}
 			$lang_number++;
 		}
 	}
 
-	private function install_lang($id_lang, $authorizations = array(), $activate = true)
+	private function install_lang($id_lang, $authorizations = array())
 	{
-		LangsManager::install($id_lang, $authorizations, $activate);
+		LangsManager::install($id_lang, $authorizations);
 		$error = LangsManager::get_error();
 		if ($error !== null)
 		{
