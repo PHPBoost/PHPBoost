@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 23
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../admin/admin_begin.php');
@@ -61,8 +62,8 @@ $template->put_all(array(
 	'L_REQUIRE_NBR_MSG_RANK'   => $LANG['require_nbr_msg_rank'],
 	'L_CONFIRM_DEL_RANK'       => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 	'L_FORUM_MANAGEMENT'       => $LANG['forum_management'],
-	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks_management', 'common', 'forum'),
-	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.actions.add_rank', 'common', 'forum'),
+	'L_FORUM_RANKS_MANAGEMENT' => LangLoader::get_message('forum.ranks.manager', 'common', 'forum'),
+	'L_FORUM_ADD_RANKS'        => LangLoader::get_message('forum.rank.add', 'common', 'forum'),
 	'L_RANK_NAME'              => $LANG['rank_name'],
 	'L_NBR_MSG'                => $LANG['nbr_msg'],
 	'L_IMG_ASSOC'              => $LANG['img_assoc'],

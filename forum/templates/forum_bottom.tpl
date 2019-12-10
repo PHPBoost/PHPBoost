@@ -165,7 +165,7 @@
 		</div>
 		<script>
 			<!--
-			jQuery("#cssmenu-forum-action").menumaker({ title: " ${LangLoader::get_message('forum.message_options', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
+			jQuery("#cssmenu-forum-action").menumaker({ title: " ${LangLoader::get_message('forum.message.options', 'common', 'forum')} ", format: "multitoggle", breakpoint: 768, menu_static: false });
 			-->
 		</script>
 		#  ENDIF #

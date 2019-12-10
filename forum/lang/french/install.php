@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 09 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2010 05 28
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -23,13 +24,13 @@ $lang = array(
 	'rank.admin' => 'Administrateur',
 	'rank.modo' => 'Modérateur',
 	'rank.inactiv' => 'Boosteur Inactif',
-	'rank.fronde' => 'Booster Fronde',
-	'rank.minigun' => 'Booster Minigun',
-	'rank.fuzil' => 'Booster Fuzil',
-	'rank.bazooka' => 'Booster Bazooka',
-	'rank.roquette' => 'Booster Roquette',
-	'rank.mortier' => 'Booster Mortier',
-	'rank.missile' => 'Booster Missile',
-	'rank.fusee' => 'Booster Fusée',
+	'rank.fronde' => 'Boosteur Fronde',
+	'rank.minigun' => 'Boosteur Minigun',
+	'rank.fuzil' => 'Boosteur Fuzil',
+	'rank.bazooka' => 'Boosteur Bazooka',
+	'rank.roquette' => 'Boosteur Roquette',
+	'rank.mortier' => 'Boosteur Mortier',
+	'rank.missile' => 'Boosteur Missile',
+	'rank.fusee' => 'Boosteur Fusée',
 );
 ?>

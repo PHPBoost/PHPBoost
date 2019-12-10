@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumCategoriesFormController extends DefaultCategoriesFormController
@@ -37,7 +38,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('type', LangLoader::get_message('type', 'main'), $this->get_category()->get_type(),
 			array(
 				new FormFieldSelectChoiceOption(LangLoader::get_message('category', 'categories-common'), ForumCategory::TYPE_CATEGORY),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('module_title', 'common', 'forum'), ForumCategory::TYPE_FORUM),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('forum.module.title', 'common', 'forum'), ForumCategory::TYPE_FORUM),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('link', 'admin'), ForumCategory::TYPE_URL)
 			), array(
 				'events' => array('change' => '

@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumFeedProvider implements FeedProvider
@@ -24,11 +25,11 @@ class ForumFeedProvider implements FeedProvider
 			$category = CategoriesService::get_categories_manager($module_id, 'idcat')->get_categories_cache()->get_category($idcat);
 
 			$data = new FeedData();
-			$data->set_title(LangLoader::get_message('xml_forum_desc', 'common', $module_id) . ' ' . $category->get_name());
+			$data->set_title(LangLoader::get_message('forum.last.thread', 'common', $module_id) . ' ' . $category->get_name());
 			$data->set_date(new Date());
 			$data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
 			$data->set_host(HOST);
-			$data->set_desc(LangLoader::get_message('xml_forum_desc', 'common', $module_id));
+			$data->set_desc(LangLoader::get_message('forum.last.thread', 'common', $module_id));
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 

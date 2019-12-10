@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 4.1 - 2014 09 11
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumConfig extends AbstractConfigData
@@ -224,7 +225,7 @@ class ForumConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FORUM_NAME => LangLoader::get_message('default.forum_name', 'config', 'forum'),
+			self::FORUM_NAME => LangLoader::get_message('default.forum.name', 'config', 'forum'),
 			self::NUMBER_TOPICS_PER_PAGE => 20,
 			self::NUMBER_MESSAGES_PER_PAGE => 15,
 			self::READ_MESSAGES_STORAGE_DURATION => 30,
@@ -235,9 +236,9 @@ class ForumConfig extends AbstractConfigData
 			self::LEFT_COLUMN_DISABLED => false,
 			self::RIGHT_COLUMN_DISABLED => false,
 			self::MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED => true,
-			self::MESSAGE_BEFORE_TOPIC_TITLE => LangLoader::get_message('default.message_before_topic_title', 'config', 'forum'),
-			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED => LangLoader::get_message('default.message_when_topic_is_unsolved', 'config', 'forum'),
-			self::MESSAGE_WHEN_TOPIC_IS_SOLVED => LangLoader::get_message('default.message_when_topic_is_solved', 'config', 'forum'),
+			self::MESSAGE_BEFORE_TOPIC_TITLE => LangLoader::get_message('default.message.before.topic.title', 'config', 'forum'),
+			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED => LangLoader::get_message('default.message.when.topic.is.unsolved', 'config', 'forum'),
+			self::MESSAGE_WHEN_TOPIC_IS_SOLVED => LangLoader::get_message('default.message.when.topic.is.solved', 'config', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
 			self::AUTHORIZATIONS => array('r-1' => 129, 'r0' => 131, 'r1' => 139)
 		);

@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2015 12 20
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumSetup extends DefaultModuleSetup
@@ -280,9 +281,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		//Website
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.website']);
+		$extended_field->set_name($lang['extended.field.website']);
 		$extended_field->set_field_name('user_website');
-		$extended_field->set_description($lang['extended-field.field.website-explain']);
+		$extended_field->set_description($lang['extended.field.website.explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -292,9 +293,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		//Skype
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.skype']);
+		$extended_field->set_name($lang['extended.field.skype']);
 		$extended_field->set_field_name('user_skype');
-		$extended_field->set_description($lang['extended-field.field.skype-explain']);
+		$extended_field->set_description($lang['extended.field.skype.explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
@@ -304,9 +305,9 @@ class ForumSetup extends DefaultModuleSetup
 
 		//Sign
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.signing']);
+		$extended_field->set_name($lang['extended.field.signing']);
 		$extended_field->set_field_name('user_sign');
-		$extended_field->set_description($lang['extended-field.field.signing-explain']);
+		$extended_field->set_description($lang['extended.field.signing.explain']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(false);
