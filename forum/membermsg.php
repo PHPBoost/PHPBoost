@@ -22,10 +22,10 @@ require_once('../kernel/header.php');
 $request = AppContext::get_request();
 
 $view_msg = $request->get_getint('id', 0);
-if (!empty($view_msg)) //Affichage de tous les messages du membre
+if (!empty($view_msg)) // Display all user's messages
 {
 	$_NBR_ELEMENTS_PER_PAGE = 10;
-	$ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
+	$ranks_cache = ForumRanksCache::load()->get_ranks(); // Loads all ranks from cache
 	$extended_fields_cache = ExtendedFieldsCache::load();
 	$displayed_extended_fields = $extended_fields_cache->get_websites_or_emails_extended_field_field_types();
 	$extended_fields_to_recover_list = '';

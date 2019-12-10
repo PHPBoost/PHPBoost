@@ -55,9 +55,8 @@
 									# ENDIF #
 								</div>
 								<div class="message-user-rank">
-									<p># IF list.C_USER_RANK #{list.USER_RANK}# ELSE #${LangLoader::get_message('banned', 'user-common')}# ENDIF #</p>
-									<p>	# IF list.C_USER_IMG_ASSOC #<img src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #</p>
-
+									# IF list.C_USER_RANK #<span class="pinned {list.LEVEL_CLASS}">{list.USER_RANK}# ELSE #<span class="pinned error">${LangLoader::get_message('banned', 'user-common')}# ENDIF #</span>
+									# IF list.C_USER_IMG_ASSOC #<img class="valign-middle" src="{list.USER_IMG_ASSOC}" alt="${LangLoader::get_message('rank', 'main')}" /># ENDIF #
 								</div>
 				            </div>
 				            <div class="message-user-management">

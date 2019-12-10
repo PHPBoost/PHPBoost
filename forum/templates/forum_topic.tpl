@@ -277,9 +277,9 @@
 					<p class="user-editor">
 						{L_EDIT_BY}
 						# IF msg.C_FORUM_USER_EDITOR_LOGIN #
-							<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+							<a href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
 						# ELSE #
-							<em>{L_GUEST}</em>
+							{L_GUEST}
 						# ENDIF #
 						{L_ON} {msg.TOPIC_EDIT_DATE_FULL}
 					</p>
