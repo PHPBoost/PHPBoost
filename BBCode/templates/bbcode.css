@@ -45,7 +45,7 @@
 	flex: 1 1 auto;
 }
 
-span.button {
+.bbcode-elements .button {
 	display: inline-block;
 }
 

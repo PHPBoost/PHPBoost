@@ -87,18 +87,18 @@
 								{contributions.MODULE}
 							</td>
 							# IF contributions.C_FIXED #
-								<td class="bkgd-color-fixed">
+								<td class="bgc success">
 									{contributions.STATUS}
 								</td>
 							# ELSE #
 								# IF contributions.C_PROCESSING #
-								<td class="bkgd-color-processing">
-									{contributions.STATUS}
-								</td>
+									<td class="bgc question">
+										{contributions.STATUS}
+									</td>
 								# ELSE #
-								<td class="bkgd-color-unknown">
-									{contributions.STATUS}
-								</td>
+									<td class="bgc error">
+										{contributions.STATUS}
+									</td>
 								# ENDIF #
 							# ENDIF #
 							<td >

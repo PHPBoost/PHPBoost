@@ -16,24 +16,24 @@ function showCookieBar() {
 
 	var L_BUTTON = "";
 
-	//Cas 1 : NOTRACKING : Utilisation uniquement des cookies techniques (login / préférences / stats anonymes)
-	//Cas 2 : TRACKING : Utilisation d'outils types google-analytics, publicité, liens RS
+	//Case 1 : NO TRACKING : Only technical cookies (login / preferences / anonymous stats)
+	//Case 2 : TRACKING : cookies for tracking systems (google-analytics, advertising, social networks links, and so on...)
 	if ( COOKIEBAR_TRACKING_MODE == 'notracking') {
-		L_BUTTON = '<button type="button" class="cookiebar-button cookiebar-button-understand" id="cookiebar-button-allowed">' + L_COOKIEBAR_UNDERSTAND + '</button>';
+		L_BUTTON = '<button type="button" class="button submit" id="cookiebar-button-allowed">' + L_COOKIEBAR_UNDERSTAND + '</button>';
 	}
 	else {
-		L_BUTTON = '<button type="button" class="cookiebar-button cookiebar-button-allowed" id="cookiebar-button-allowed">' + L_COOKIEBAR_ALLOWED + '</button><button type="button" class="cookiebar-button cookiebar-button-declined" id="cookiebar-button-declined">' + L_COOKIEBAR_DECLINED + '</button>';
+		L_BUTTON = '<button type="submit" class="button bgc success" id="cookiebar-button-allowed">' + L_COOKIEBAR_ALLOWED + '</button><button type="submit" class="button bgc error" id="cookiebar-button-declined">' + L_COOKIEBAR_DECLINED + '</button>';
 	}
 
 	if (getCookie('pbt-cookiebar-viewed') == "")
 	{
-		//On ajoute la cookiebar uniquement si elle n'existe pas. On cherche si une id #cookiebar-container existe.
+		// Add cookies bar if it doesn't exist
 		if ($('#cookiebar-container').length < 1 )
 		{
-			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="cookiebar-more"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
+			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="button small"><a href="' + U_COOKIEBAR_ABOUTCOOKIE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
 		}
 
-		//Si cookie accepté on sauvegarde le choix
+		// If cookie is accepted then save this choice
 		$('#cookiebar-button-allowed').on('click', function(e){
 			e.preventDefault();
 			$('#cookiebar-container').fadeOut();
@@ -42,7 +42,7 @@ function showCookieBar() {
 			showChangeChoice();
 		});
 
-		//Si cookie refusé on sauvegarde le choix
+		// If cookie is not accepted then save this choice
 		$('#cookiebar-button-declined').on('click', function(e){
 			e.preventDefault();
 			$('#cookiebar-container').fadeOut();
@@ -62,7 +62,7 @@ function showChangeChoice() {
 	}
 }
 
-//Supprime les cookies de la cookiebar.
+// Delete cookies from cookiebar.
 function changeCookieBarChoice() {
 	eraseCookie('pbt-cookiebar-viewed');
 	eraseCookie('pbt-cookiebar-choice');

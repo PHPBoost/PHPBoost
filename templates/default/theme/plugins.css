@@ -245,10 +245,6 @@
 	transition-duration: 0.4s;
 }
 
-.fa-finish:before {
-	content:'\f058';
-}
-
 .wizard-container .wizard-header {
 	padding: 10px;
 }

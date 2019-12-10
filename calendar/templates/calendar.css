@@ -72,11 +72,10 @@ table tbody tr th.column-title {
 	}
 }
 
-table.calendar-table td {
+td[class*="calendar-"],
+td[class*="calendar-"]:last-child {
 	padding: 0;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
+	border-width: 0;
 }
 
 .calendar-table td a {
@@ -84,9 +83,6 @@ table.calendar-table td {
     display: block;
 }
 
-td.calendar-week{
-	border-width: 0 1px 0 0;
-	border-style: solid;
-	border-color: transparent;
+td.calendar-week {
 	padding: 0.456em;
 }

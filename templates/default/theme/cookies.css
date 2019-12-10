@@ -53,16 +53,6 @@
 	}
 }
 
-.cookiebar-button {
-	margin: 0 0.309em;
-}
-
-@media (max-width: 768px) {
-	.cookiebar-button {
-		margin: 0 0.618em;
-	}
-}
-
 @media (max-width: 468px) {
 	.cookiebar-more {
 		display: block;

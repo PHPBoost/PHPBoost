@@ -31,7 +31,7 @@
 
             var btnNext = '<a href="#" class="wizard-btn '+ settings.nextClass +' float-right" data-action="next"><i class="fas fa-2x fa-chevron-circle-right" aria-hidden="true"></i><span class="sr-only">next</span></a>';
             var btnBack = '<a href="#" class="wizard-btn '+ settings.prevClass +'" data-action="back"><i class="fas fa-2x fa-chevron-circle-left" aria-hidden="true"></i><span class="sr-only">prev</span></a>';
-            var btnFinish = '<span class="wizard-btn '+ settings.finishClass +' float-right" data-action="finish"> <i class="fas fa-2x fa-finish" aria-hidden="true"></i></span><span class="sr-only">finish</span>';
+            var btnFinish = '<span class="wizard-btn '+ settings.finishClass +' float-right" data-action="finish"> <i class="fa fa-2x fa-check-circle success" aria-hidden="true"></i></span><span class="sr-only">finish</span>';
 
             var step_links = elem.find('nav ul li a').toArray();
             var step_count = step_links.length;
