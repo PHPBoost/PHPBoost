@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 21
+ * @version   	PHPBoost 5.3 - last update: 2019 12 10
  * @since   	PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,14 +22,13 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$this->init();
 
-		$activated = true; //activation forced
 		$theme_number = 1;
 		foreach ($this->get_not_installed_themes() as $theme)
 		{
 			if ($request->get_string('add-' . $theme->get_id(), false) || ($request->get_string('add-selected-themes', false) && $request->get_value('add-checkbox-' . $theme_number, 'off') == 'on'))
 			{
 				$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $theme->get_id());
-				$this->install_theme($theme->get_id(), $authorizations, $activated);
+				$this->install_theme($theme->get_id(), $authorizations);
 			}
 			$theme_number++;
 		}
@@ -147,9 +146,9 @@ class AdminThemesNotInstalledListController extends AdminController
 		return -1;
 	}
 
-	private function install_theme($id_theme, $authorizations = array(), $activate = true)
+	private function install_theme($id_theme, $authorizations = array())
 	{
-		ThemesManager::install($id_theme, $authorizations, $activate);
+		ThemesManager::install($id_theme, $authorizations);
 		$error = ThemesManager::get_error();
 		if ($error !== null)
 		{
