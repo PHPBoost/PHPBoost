@@ -48,7 +48,7 @@ figcaption {
 }
 
 /* --- Sizes --- */
-.smallest { font-size: 0.309em; vertical-align: middle; }
+.smallest { font-size: 0.456em; vertical-align: middle; }
 .smaller  { font-size: 0.618em; vertical-align: middle; }
 .small    { font-size: 0.809em; vertical-align: middle; }
 .normal   { font-size: 1.000em;  }
@@ -65,6 +65,9 @@ figcaption {
 	font-weight: 600;
 	font-size: 130.9%
 }
+
+.h-padding { padding: 0 0.618em; }
+.v-padding { padding: 0.618em 0; }
 
 .pinned {
 	display: inline-block;

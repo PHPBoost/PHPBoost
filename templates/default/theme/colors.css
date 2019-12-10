@@ -88,13 +88,11 @@ body {
 	border-color: #DDDDDD;
 }
 
-.sortable-element {
-	background-color: rgba(54, 100, 147, 0.2);
+.sortable-block .sortable-element {
 	border-color: #DDDDDD;
 }
-
-.sortable-element:hover {
-	background-color: rgba(54, 100, 147, 0.3);
+.sortable-block .sortable-element:hover {
+	background-color: rgba(54, 100, 147, 0.05);
 }
 
 .sortable-selector:after {

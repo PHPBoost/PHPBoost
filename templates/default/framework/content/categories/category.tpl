@@ -1,9 +1,8 @@
 <li id="cat-{ID}" class="sortable-element" data-id="{ID}">
 	<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 	<div class="sortable-title">
-		<i class="fa fa-globe" aria-hidden="true"></i>
 		<a href="{U_DISPLAY}">{NAME}</a>
-		# IF C_DESCRIPTION #<span class="cat-desc"> | {DESCRIPTION}</span># ENDIF #
+		# IF C_DESCRIPTION #<em class="h-padding small">{DESCRIPTION}</em># ENDIF #
 	</div>
 	<div class="sortable-actions">
 		<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>

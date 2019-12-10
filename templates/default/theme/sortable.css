@@ -2,45 +2,51 @@
 * Copy this file in your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
-.sortable-block .sortable-element > .sortable-block {
-	flex: 1 0 calc(100% - 0.618em);
-	padding: 0 0 0 1.618em;
-}
 
 .sortable-block {
 	margin: 0;
 	padding: 0;
 	min-height: 24px;
 	list-style-type: none;
-	list-style-position: outside;
 }
 
-.sortable-block .sortable-element {
+.sortable-element {
+	margin: 0 0 0.309em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	align-items: center;
 	flex-wrap: wrap;
-	margin-bottom: 0.309em;
 	padding: 0;
 	width: 100%;
 	transition: all 0.2s;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
-.sortable-block .sortable-element:hover {
+.sortable-element:hover {
 	transition: all 0.2s;
 }
 
-.sortable-block .sortable-selector {
+.sortable-element > .sortable-block {
+	flex: 1 1 100%;
+	padding: 0 0 0 1.809em;
+}
+
+.sortable-element .sortable-element {
+	border-width: 1px 0 1px 1px;
+}
+
+.sortable-selector {
 	padding: 0 0 0 0.309em;
 }
 
 @media (min-width:769px){
-	.sortable-block .sortable-element {
+	.sortable-element {
 		flex-direction: row;
 	}
 
-	.sortable-block .sortable-element .sortable-selector {
+	.sortable-selector {
 		flex: 0 0 1.309em;
 		opacity: 0.2;
 		transition: opacity 0.3s;
@@ -54,17 +60,13 @@
 	}
 }
 
-.sortable-block .sortable-element:hover .sortable-actions {
+.sortable-element:hover .sortable-actions,
+.sortable-element:hover .sortable-selector {
 	opacity: 1;
 	transition: opacity 0.3s;
 }
 
-.sortable-block .sortable-element:hover .sortable-selector {
-	opacity: 1;
-	transition: opacity 0.3s;
-}
-
-.sortable-block .sortable-title {
+.sortable-title {
 	flex: 1 1 auto;
 	padding: 0.618em;
 	max-width: calc(100% - 5.2em);
@@ -72,18 +74,8 @@
 	align-items: center;
 }
 
-.sortable-block .sortable-title:hover {
+.sortable-title:hover {
 	transition: all 0.2s linear;
-}
-
-.sortable-block .sortable-title > span {
-	font-size: 1.482em;
-}
-
-.sortable-block .sortable-title span.cat-desc {
-	font-size: 0.8em;
-	font-weight: normal;
-	font-style: italic;
 }
 
 .sortable-block fieldset {

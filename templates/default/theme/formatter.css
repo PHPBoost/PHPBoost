@@ -190,6 +190,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 4rem; }
 
 .formatter-ul {
 	text-align: left;
+	list-style-position: inside;
 }
 
 .code ol {
