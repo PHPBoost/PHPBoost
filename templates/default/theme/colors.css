@@ -1,4 +1,7 @@
 /*
+ * Copy this file in your theme to customize the module.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ *
  * Contains all elements colors
 */
 
@@ -501,26 +504,21 @@ figure {
 	border-color: #DDDDDD;
 }
 
-figcaption {
-	border-color: #DDDDDD;
-	background-color: #ECF2F8;
-}
-
 a,
 .link-color {
 	color: #366493;
 	border-color: #366493;
 }
-	.bgc.link-color { background-color: rgba(54, 100, 147, 0.2);}
-	.bgc-full.link-color { background-color: #366493; color: #FFFFFF}
+.bgc.link-color { background-color: rgba(54, 100, 147, 0.2);}
+.bgc-full.link-color { background-color: #366493; color: #FFFFFF}
 
 a:hover,
 .link-color:hover {
 	color: #0066cc;
 	border-color: #0066cc;
 }
-	.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.3);}
-	.bgc-full:hover.link-color { color: #FFFFFF}
+.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.3);}
+.bgc-full:hover.link-color { color: #FFFFFF}
 
 .dropdown-container {
 	background-color: #FFFFFF;

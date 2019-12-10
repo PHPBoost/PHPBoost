@@ -1,4 +1,7 @@
 /*
+ * Copy this file in your theme to customize the module.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ *
  * Common styles for form elements
 */
 
@@ -127,7 +130,7 @@
 	text-align: center;
 }
 
-/* --- Previsualisation AJAX --- */
+/* --- AJAX Preview --- */
 .xmlhttprequest-preview {
 	overflow: auto;
 	height: auto;
@@ -149,11 +152,6 @@
 	display: none !important;
 }
 
-.module-mini-container label {
-	display: block;
-	width: 100%;
-}
-
 /* --- Checkbox - radio --- */
 .inline-radio .radio,
 .inline-radio .form-field-radio,
@@ -161,4 +159,35 @@
 .inline-checkbox .form-field-checkbox {
    display: inline-block;
  	margin: 0 0.456em 0 0;
+}
+
+/* --- Fieldset --- */
+.vertical-fieldset,
+.horizontal-fieldset { margin: 1.309em 0; }
+
+.vertical-fieldset .form-element,
+.horizontal-fieldset .form-element { margin: 0 0.309em 0 0.309em; }
+
+.horizontal-fieldset .form-element label { display: inline; }
+
+.horizontal-fieldset .form-field {
+	display: block;
+	width: 100%;
+}
+
+.vertical-fieldset .form-element label,
+.horizontal-fieldset .form-element label {
+	width: auto;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+/* --- Fake fieldset / legend --- */
+.fieldset-content {
+	margin: auto;
+	margin-top: 1.309em;
+}
+
+@media (max-width: 768px) {
+	.fieldset-content { margin-top: 0.618em; }
 }

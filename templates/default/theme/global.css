@@ -2,50 +2,9 @@
  * Copy this file in your theme to customize the module.
  * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
  *
- * Contains standalone framwork classes
+ * Contains standalone framework classes
  *
 */
-
-/* --- Link --- */
-a { text-decoration: none; }
-
-a:hover {
-	text-decoration: underline;
-	transition: all 0.3s ease;
-}
-
-/* --- Titles --- */
-h1 { font-size: 2.4em; }
-h2 { font-size: 2.0em; }
-h3 { font-size: 1.8em; }
-h4 { font-size: 1.6em; }
-h5 { font-size: 1.4em; }
-h6 { font-size: 1.2em; }
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: 400;
-	word-wrap: normal;
-	overflow-wrap: normal;
-	hyphens: none;
-	line-height: normal;
-}
-
-/* --- figure --- */
-figure {
-    padding: 0.618em;
-    text-align: center;
-    display: inline-block;
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
-}
-
-figcaption {
-    padding: 0.618em;
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
-}
 
 /* --- Sizes --- */
 .smallest { font-size: 0.456em; vertical-align: middle; }
@@ -55,16 +14,6 @@ figcaption {
 .big      { font-size: 1.228em;  }
 .bigger   { font-size: 1.456em;  }
 .biggest  { font-size: 2.1618em; }
-
-/* --- Alignment --- */
-.indent {
-	text-indent: 2.618em;
-}
-
-.indent::first-letter {
-	font-weight: 600;
-	font-size: 130.9%
-}
 
 .h-padding { padding: 0 0.618em; }
 .v-padding { padding: 0.618em 0; }
@@ -77,6 +26,10 @@ figcaption {
 	border-style: solid;
 	border-color: transparent;
 	border-radius: 3px;
+}
+
+.no-list {
+	list-style: none;
 }
 
 /* --- Search engines --- */
@@ -164,7 +117,7 @@ figcaption {
 
 /* --- Coast to coast elements --- */
 .flex-between {
-    display: flex !important;
+    display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 }
@@ -173,6 +126,118 @@ figcaption {
 	.flex-between {
 		flex-direction: row;
 	}
+}
+
+/* --- Wikipedia link --- */
+a.wikipedia-link {
+	position: relative;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: transparent;
+	cursor: help;
+	padding-right: 0.809em;
+}
+
+a.wikipedia-link:after {
+	position: absolute;
+	vertical-align: middle;
+	top: 1px;
+	right: 0;
+	content: "\f266" ;
+	font-family: 'Font Awesome 5 Brands';
+	font-weight: 900; /* Solid icons*/
+	font-size: 0.618em;
+}
+
+/* --- Display --- */
+.d-flex         { display: flex; }
+.d-inline 	    { display: inline; }
+.d-block 	    { display: block; }
+.d-inline-block { display: inline-block; }
+
+/* --- Alignment --- */
+.indent { text-indent: 2.618em; }
+.indent::first-letter {
+	font-weight: 600;
+	font-size: 130.9%
+}
+
+.align-center  { text-align: center; }
+.align-left    { text-align: left; }
+.align-right   { text-align: right; }
+.align-justify { text-align: justify; }
+
+.float-left,
+.float-right { padding: 0.809em 0; }
+
+@media (min-width: 481px) {
+	.float-left  { float: left; }
+	.float-right { float: right; }
+}
+
+@media (min-width: 769px) {
+	.float-left   {
+		float: left;
+		padding: 0.618em 0.809em 0.618em 0;
+	}
+	.float-right {
+		float: right;
+		padding: 0.618em 0 0.809em 0.618em;
+	}
+}
+
+/* --- Hidden --- */
+.hidden { display: none; }
+
+@media (max-width: 768px) {
+	.hidden-small-screens { display: none; }
+}
+
+@media (min-width: 769px) {
+	.hidden-large-screens { display: none; }
+}
+
+/* --- Text --- */
+.text-strong  { font-weight: bold; }
+.text-justify { text-align: justify; }
+.text-italic  { font-style: italic; }
+
+.valign-top		{ vertical-align: top; }
+.valign-middle 	{ vertical-align: middle; }
+.valign-bottom 	{ vertical-align: bottom; }
+
+.spacer { clear: both; }
+
+/* --- Smileys --- */
+.smiley {
+	vertical-align: middle; }
+
+/* --- Icons --- */
+.icon-disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
+/* --- Opacity --- */
+.low-opacity {
+	opacity: 0.40; }
+
+/* --- Debug --- */
+.error-handler {
+	width: auto;
+	max-width: 750px;
+	margin: 1em auto;
+}
+
+/* --- Preview elements --- */
+.loading-preview-container { position: relative; }
+
+.loading-preview {
+	position: absolute;
+	z-index: 10;
+	margin: 90px auto auto auto;
+	width: 100%;
+	text-align: center;
 }
 
 /* --- Announces & messaging icons ------------------------------------------ */

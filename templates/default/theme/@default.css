@@ -1,44 +1,45 @@
 /*
-* Copy this file in your theme to customize the module.
-* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ * Copy this file in your theme to customize the module.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ *
+ * Default CSS for all themes
 */
 
-/*
- * Default CSS for all themes
---------------------------------------*/
-
-/* --- Reset generic class for different browsers --------------------------- */
+/* --- Reset generic tags for different browsers --------------------------- */
 * {
 	margin: 0;
 	padding: 0;
 	font-size: 100%;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	outline: none; }
+	outline: none;
+}
 
 html, body {
 	height: 100%;
 	margin: 0;
-	padding: 0; }
+	padding: 0;
+}
 
-img, table, td, blockquote, code, pre, textarea, input, audio, video, object, .video-player {
-	max-width: 100%; }
+img, table, td, blockquote, code, pre, textarea, input, audio, video, object, .video-player { max-width: 100%; }
 
 input, button, label, select, textarea, legend {
 	font-family: inherit;
 	font-size: inherit;
-	vertical-align: middle; }
+	vertical-align: middle;
+}
 
-optgroup, select, label, button, .button, input[type=radio], input[type=checkbox], input[type=color], .notation .star {
-	cursor: pointer; }
+optgroup, select, label, button, .button, input[type="radio"], input[type="checkbox"], input[type="color"], .notation .star { cursor: pointer; }
 
-input[type=checkbox] {
+input[type="checkbox"] {
 	border: none;
-	background: none; }
+	background: none;
+}
 
 button::-moz-focus-inner, .button::-moz-focus-inner {
 	border: 0;
-	padding: 0; }
+	padding: 0;
+}
 
 div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
@@ -46,7 +47,8 @@ div, textarea, table, td, th, code, pre, samp {
 	hyphens: auto;
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
-	-webkit-hyphens: auto; }
+	-webkit-hyphens: auto;
+}
 
 /* --- Fix for no wrap for button --- */
 button, .button {
@@ -55,32 +57,70 @@ button, .button {
 	hyphens: auto;
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
-	-webkit-hyphens: auto; }
+	-webkit-hyphens: auto;
+}
 
 /* --- Fix for chrome word-wrap --- */
-fieldset {
-	min-width: 0 !important; }
+fieldset { min-width: 0 !important; }
 
 hr {
 	border: none;
-	margin: 1px auto;
+	margin: 0.228em auto;
 	height: 1px;
-	width: 99%; }
+	width: 99%;
+}
 
 ul, ol {
 	line-height: normal;
 	margin-left: 2.618em;
-	margin-bottom: 0.809em; }
-
-.no-list {
-	list-style: none; }
+	margin-bottom: 0.809em;
+}
 
 p {
 	margin-bottom: 0.618em;
-	font-size: 1em; }
+	font-size: 1em;
+}
 
-pre {
-	white-space: pre-wrap; }
+a { text-decoration: none; }
+
+a:hover {
+	text-decoration: underline;
+	transition: all 0.3s ease;
+}
+
+/* --- Titles --- */
+h1 { font-size: 2.4em; }
+h2 { font-size: 2.0em; }
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.6em; }
+h5 { font-size: 1.4em; }
+h6 { font-size: 1.2em; }
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	word-wrap: normal;
+	overflow-wrap: normal;
+	hyphens: none;
+	line-height: normal;
+}
+
+/* --- figure --- */
+figure {
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+figcaption {
+    text-align: center;
+    padding: 0.618em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+pre { white-space: pre-wrap; }
 
 abbr {
 	cursor: help;
@@ -88,154 +128,8 @@ abbr {
 	text-decoration: none;
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
-	border-bottom-color: transparent; }
-
-/* --- PHPBoost specific classes -------------------------------------------- */
-
-/* --- Wikipedia link --- */
-a.wikipedia-link {
-	position: relative;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
 	border-bottom-color: transparent;
-	cursor: help;
-	padding-right: 0.809em; }
-
-a.wikipedia-link:after {
-	position: absolute;
-	vertical-align: middle;
-	top: 1px;
-	right: 0;
-	content: "\f266" ;
-	font-family: 'Font Awesome 5 Brands';
-	font-weight: 900; /* Solid icons*/
-	font-size: 0.618em; }
-
-/* --- Alignment --- */
-.d-flex         { display: flex !important; }
-.d-inline 	    { display: inline !important; }
-.d-block 	    { display: block !important; }
-.d-inline-block { display: inline-block !important; }
-
-.align-center  { text-align: center !important; }
-.align-left    { text-align: left !important; }
-.align-right   { text-align: right !important; }
-.align-justify { text-align: justify !important; }
-
-.float-left,
-.float-right {
-	padding: 0.809em 0; }
-
-@media (min-width: 481px) {
-	.float-left  { float: left !important; }
-	.float-right { float: right !important; } }
-
-@media (min-width: 769px) {
-	.float-left   {
-		float: left !important;
-		padding: 0.618em 0.809em 0.618em 0;	}
-	.float-right {
-		float: right !important;
-		padding: 0.618em 0 0.809em 0.618em;	} }
-
-/* --- Hidden --- */
-.hidden { display: none !important; }
-
-@media (max-width: 768px) {
-	.hidden-small-screens { display: none !important; } }
-
-@media (min-width: 769px) {
-	.hidden-large-screens { display: none !important; } }
-
-/* --- Text --- */
-.text-strong  { font-weight: bold !important; }
-.text-justify { text-align: justify !important; }
-.text-italic  { font-style: italic !important; }
-
-.valign-top		{ vertical-align: top !important; }
-.valign-middle 	{ vertical-align: middle !important; }
-.valign-bottom 	{ vertical-align: bottom !important; }
-
-.spacer {
-	clear: both; }
-
-/* --- Image --- */
-.img-link,
-.img-link:hover {
-	text-decoration: none; }
-
-/* --- Smileys --- */
-.smiley {
-	vertical-align: middle; }
-
-/* --- Icons --- */
-.icon-disabled {
-	opacity: 0.3;
-	cursor: default; }
-
-/* --- Fieldsets --- */
-.vertical-fieldset,
-.horizontal-fieldset {
-	margin: 1.309em 0; }
-
-.vertical-fieldset .form-element,
-.horizontal-fieldset .form-element {
-	margin: 0 0.309em 0 0.309em; }
-
-.horizontal-fieldset .form-element label {
-	display: inline; }
-
-.horizontal-fieldset .form-field {
-	display: block;
-	width: 100%; }
-
-.vertical-fieldset .form-element label,
-.horizontal-fieldset .form-element label {
-	width: auto;
-	vertical-align: middle;
-	font-weight: bold; }
-
-/* --- Fake fieldset / legend --- */
-.fieldset-content {
-	margin: auto;
-	margin-top: 1.309em; }
-
-@media (max-width: 768px) {
-	.fieldset-content {
-		margin-top: 0.618em; } }
-
-.module-mini-contents .fieldset-content {
-	width: 100%; }
-
-/* --- Opacity --- */
-.low-opacity {
-	opacity: 0.40; }
-
-/* --- Debug --- */
-.pbt-debug {
-	background-color: #FFA500 !important;
-	outline: 3px solid #FF4500 !important; }
-
-.error-handler {
-	width: auto;
-	max-width: 750px;
-	margin: 1em auto; }
-
-/* --- AJAX Preview --- */
-.xmlhttprequest-preview {
-	overflow: auto;
-	height: 16.18em; }
-
-/* --- Preview elements --- */
-.loading-preview-container {
-	position: relative; }
-
-.loading-preview {
-	position: absolute;
-	z-index: 10;
-	margin: 90px auto auto auto;
-	width: 100%;
-	text-align: center; }
+}
 
 /* --- Print --- */
 @media print {
@@ -244,18 +138,18 @@ a.wikipedia-link:after {
 		text-shadow: none;
 		box-shadow: none;
 		color: #000000;
-	} }
+	}
+}
 
 /* --- Blink animation effect ----------------------------------------------- */
 @keyframes blink {
 	0%   { opacity: 0; }
 	30%  { opacity: 1; }
 	70%  { opacity: 1; }
-	100% { opacity: 0; } }
-
-.blink {
-	animation: blink 1.5s ease-in-out infinite;
+	100% { opacity: 0; }
 }
+
+.blink { animation: blink 1.5s ease-in-out infinite; }
 
 
 /* --- Basic font ----------------------------------------------------------- */
@@ -267,7 +161,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Light'), local('OpenSans-Light'),
 		url('fonts/open-sans/open-sans-v13-latin-300.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-300.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-300.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-300.ttf') format('truetype');
+}
 
 /* --- open-sans-300italic - latin --- */
 @font-face {
@@ -277,7 +172,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'),
 		url('fonts/open-sans/open-sans-v13-latin-300italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-300italic.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-300italic.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-300italic.ttf') format('truetype');
+}
 
 /* --- open-sans-italic - latin --- */
 @font-face {
@@ -287,7 +183,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Italic'), local('OpenSans-Italic'),
 		url('fonts/open-sans/open-sans-v13-latin-italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-italic.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-italic.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-italic.ttf') format('truetype');
+}
 
 /* --- open-sans-regular - latin --- */
 @font-face {
@@ -297,7 +194,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans'), local('OpenSans'),
 		url('fonts/open-sans/open-sans-v13-latin-regular.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-regular.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-regular.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-regular.ttf') format('truetype');
+}
 
 /* --- open-sans-600 - latin --- */
 @font-face {
@@ -307,7 +205,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Semibold'), local('OpenSans-Semibold'),
 		url('fonts/open-sans/open-sans-v13-latin-600.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-600.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-600.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-600.ttf') format('truetype');
+}
 
 /* --- open-sans-600italic - latin --- */
 @font-face {
@@ -317,7 +216,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Semibold Italic'), local('OpenSans-SemiboldItalic'),
 		url('fonts/open-sans/open-sans-v13-latin-600italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-600italic.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-600italic.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-600italic.ttf') format('truetype');
+}
 
 /* --- open-sans-700 - latin --- */
 @font-face {
@@ -327,7 +227,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Bold'), local('OpenSans-Bold'),
 		url('fonts/open-sans/open-sans-v13-latin-700.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-700.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-700.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-700.ttf') format('truetype');
+}
 
 /* --- open-sans-700italic - latin --- */
 @font-face {
@@ -337,7 +238,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'),
 		url('fonts/open-sans/open-sans-v13-latin-700italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-700italic.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-700italic.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-700italic.ttf') format('truetype');
+}
 
 /* --- open-sans-800 - latin --- */
 @font-face {
@@ -347,7 +249,8 @@ a.wikipedia-link:after {
 	src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'),
 		url('fonts/open-sans/open-sans-v13-latin-800.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-800.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-800.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-800.ttf') format('truetype');
+}
 
 /* --- open-sans-800italic - latin --- */
 @font-face {
@@ -357,4 +260,5 @@ a.wikipedia-link:after {
 	src: local('Open Sans Extrabold Italic'), local('OpenSans-ExtraboldItalic'),
 		url('fonts/open-sans/open-sans-v13-latin-800italic.woff2') format('woff2'),
 		url('fonts/open-sans/open-sans-v13-latin-800italic.woff') format('woff'),
-		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype'); }
+		url('fonts/open-sans/open-sans-v13-latin-800italic.ttf') format('truetype');
+}
