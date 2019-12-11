@@ -1,1 +1,1 @@
-			<a href="{LOC}">{TEXT}</a>
+<a href="{LOC}">{TEXT}</a>
