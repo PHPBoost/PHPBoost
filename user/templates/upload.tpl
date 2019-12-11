@@ -471,9 +471,9 @@
 		                            <div class="cell-form grouped-inputs">
 										<input type="text" readonly="readonly" onclick="select_div(text_{personal_files.ID});" id="text_{personal_files.ID}" class="grouped-element" value="{personal_files.DISPLAYED_CODE}">
 		                            	# IF C_POPUP #
-											<a class="grouped-element" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+											<a class="grouped-element submit" href="javascript:insert_popup('{personal_files.INSERTED_CODE}')" aria-label="${LangLoader::get_message('popup_insert', 'main')}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
 										# ELSE #
-											<a class="grouped-element" href="" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+											<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 										# ENDIF #
 		                            </div>
 		                            <div class="cell-list">

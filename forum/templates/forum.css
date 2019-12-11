@@ -3,17 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* -- header
-============================================================================= */
-#forum-top {
-	padding: 0.456em;
-}
-
-#forum-top h1 {
-	font-size: 1.618em;
-	text-align: left;
-}
-
 /* --- Forum table --- */
 #module-forum table.bt tbody td.forum-last-topic .bt-content {
 	max-width: 63%;
@@ -45,9 +34,7 @@
 }
 
 .forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
-	padding: 0.309em 0.809em;
-	letter-spacing: 0;
-	font-size: 1.482rem;
+	padding: 0.309em;
 }
 
 .reload-unread {
@@ -179,8 +166,10 @@ ul.pagination a {
 }
 
 /* --- Contenu de la page --- */
-.forum-contents {
-	padding: 0 0.809em;
+@media (min-width: 769px) {
+	.forum-contents {
+		padding: 0 0.809em;
+	}
 }
 
 .content {

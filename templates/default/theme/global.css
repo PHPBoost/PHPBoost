@@ -117,15 +117,9 @@
 
 /* --- Coast to coast elements --- */
 .flex-between {
-    display: flex;
+    display: flex !important;
 	justify-content: space-between;
-	flex-direction: column;
-}
-
-@media (min-width: 769px) {
-	.flex-between {
-		flex-direction: row;
-	}
+	flex-direction: row;
 }
 
 /* --- Wikipedia link --- */

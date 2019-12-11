@@ -123,9 +123,7 @@
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #
-		<div class="flex-between">
-			<div></div>
-			<div class="controls">
+			<div class="controls align-right">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 				# IF C_FORUM_LOCK_TOPIC #
 					<a href="action{U_TOPIC_LOCK}" data-confirmation="{L_ALERT_LOCK_TOPIC}" aria-label="{L_TOPIC_LOCK}"><i class="fa fa-ban" aria-hidden="true"></i></a>
@@ -134,12 +132,10 @@
 				# ENDIF #
 				<a href="move{U_TOPIC_MOVE}" data-confirmation="{L_ALERT_MOVE_TOPIC}" aria-label="{L_TOPIC_MOVE}"><i class="fa fa-share" aria-hidden="true"></i></a>
 			</div>
-		</div>
 		# ENDIF #
 		<h2>
 			{U_FORUM_CAT} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 		</h2>
-
 	</header>
 
 	# IF C_POLL_EXIST #
@@ -201,9 +197,9 @@
 		</div>
 	# ENDIF #
 	# START msg #
-		<article id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<div id="d{msg.ID}" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
 			<span id="m{msg.ID}"></span>
-	        <header class="message-header-container">
+	        <div class="message-header-container">
 				<img class="message-user-avatar" src="# IF msg.C_USER_AVATAR #{msg.U_USER_AVATAR}# ELSE #{msg.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}">
 	            <div class="message-header-infos">
 		            <div class="message-user-infos hidden-small-screens">
@@ -267,7 +263,7 @@
 	                    <a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" class="hidden-small-screens" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{msg.ID}</i></a>
 	                </div>
 	            </div>
-	        </header>
+	        </div>
 	        <div class="message-content" >
 				# IF msg.L_FORUM_QUOTE_LAST_MSG # <p class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</p> # ENDIF #
 
@@ -288,7 +284,7 @@
 			<div class="message-user-sign# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 				# IF msg.C_USER_SIGN #{msg.USER_SIGN}# ENDIF #
 			</div>
-	        <footer class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+	        <div class="message-footer-container# IF msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 	            <div class="message-user-assoc">
 	                <div class="message-group-level">
 						# IF msg.C_USER_GROUPS #
@@ -315,12 +311,11 @@
 						# ENDIF #
 					</div>
 	            </div>
-	        </footer>
-		</article>
+	        </div>
+		</div>
 	# END msg #
 
-	<div class="flex-between">
-		<div></div>
+	<div class="align-right">
 		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</div>
 	<footer class="footer-forum flex-between">

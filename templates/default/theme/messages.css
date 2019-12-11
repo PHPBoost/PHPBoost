@@ -4,7 +4,7 @@
     margin: 0.809em 0;
 }
 
-.message-user-avatar { max-width: 90px; }
+.message-user-avatar { max-width: 0; }
 .message-small .message-user-avatar { max-width: 80px; }
 
 .message-header-container h3 { font-size: 1.618em; }
@@ -61,23 +61,14 @@
 .message-user-infos,
 .message-user-assoc {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 @media (min-width: 769px) {
     .message-user-avatar { max-width: 120px; }
 
-    .message-header-container h3 { font-size: 2em; }
-
-    .message-user,
-    .message-infos,
-    .message-user-management,
-    .message-user-infos,
-    .message-user-assoc {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+    .message-header-container h3 { font-size: 2em; }    
 }
 
 .message-user-sign {
