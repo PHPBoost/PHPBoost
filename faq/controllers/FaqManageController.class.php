@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqManageController extends AdminModuleController
@@ -48,7 +49,7 @@ class FaqManageController extends AdminModuleController
 
 		$table_model = new SQLHTMLTableModel(FaqSetup::$faq_table, 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['faq.management']);
+		$table_model->set_caption($this->lang['faq.questions.manager']);
 
 		$table = new HTMLTable($table_model);
 
@@ -102,13 +103,13 @@ class FaqManageController extends AdminModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['faq.management'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['faq.questions.manager'], $this->lang['faq.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
+		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
-		$breadcrumb->add($this->lang['faq.management'], FaqUrlBuilder::manage());
+		$breadcrumb->add($this->lang['faq.questions.manager'], FaqUrlBuilder::manage());
 
 		return $response;
 	}

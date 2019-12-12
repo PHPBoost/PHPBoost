@@ -46,6 +46,7 @@
 	left: 50%;
 	transform: translateX(-50%);
 	top: 0.618em;
+	padding: 1px;
 }
 
 .floating-message-container.active-message {

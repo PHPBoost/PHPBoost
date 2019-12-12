@@ -16,7 +16,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		return LangLoader::get_message('faq.module.title', 'common', 'faq');
 	}
 }
 ?>

@@ -114,8 +114,8 @@ class FaqSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_category' => 1,
 			'q_order' => 1,
-			'question' => $this->messages['default.question.what_is_phpboost'],
-			'answer' => $this->messages['default.answer.what_is_phpboost'],
+			'question' => $this->messages['default.question.what.is.phpboost'],
+			'answer' => $this->messages['default.answer.what.is.phpboost'],
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
@@ -125,8 +125,8 @@ class FaqSetup extends DefaultModuleSetup
 			'id' => 2,
 			'id_category' => 2,
 			'q_order' => 1,
-			'question' => $this->messages['default.question.what_is_a_cms'],
-			'answer' => $this->messages['default.answer.what_is_a_cms'],
+			'question' => $this->messages['default.question.what.is.a.cms'],
+			'answer' => $this->messages['default.answer.what.is.a.cms'],
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1

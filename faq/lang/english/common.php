@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 16
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,26 +13,27 @@
 #                    English                       #
 ####################################################
 
-$lang['module_title'] = 'FAQ';
-$lang['module_config_title'] = 'FAQ questions configuration';
+$lang['faq.module.title'] = 'FAQ';
+$lang['faq.config.title'] = 'FAQ questions configuration';
 
-$lang['faq.actions.add'] = 'Add question';
-$lang['faq.add'] = 'New question';
-$lang['faq.edit'] = 'Question edition';
-$lang['faq.pending'] = 'Pending questions';
-$lang['faq.manage'] = 'Manage questions';
-$lang['faq.management'] = 'FAQ management';
+$lang['faq.question.add'] = 'Add question';
+$lang['faq.question.edit'] = 'Question edition';
+$lang['faq.questions.pending'] = 'Pending questions';
+$lang['faq.questions.manager'] = 'FAQ manager';
 
-$lang['faq.reorder_questions'] = 'Reorder questions';
-$lang['faq.questions_order_management'] = 'Questions order management';
-$lang['faq.random_question'] = 'Random question';
+$lang['faq.questions.reorder'] = 'Reorder questions';
+$lang['faq.random.question'] = 'Random question';
 $lang['faq.questions'] = 'Questions';
-$lang['faq.actions.menu'] = 'Actions menu';
+$lang['faq.show.answers'] = 'Show all answers';
+$lang['faq.hide.answers'] = 'Hide all answers';
 
 //config
-$lang['config.display_type.answers_hidden'] = 'Clic on questions to display answers';
-$lang['config.display_type.display_all_answers'] = 'Display all answers';
-$lang['config.items_default_sort.explain'] = 'On page "Pending questions"';
+$lang['config.display.type.accordion'] = 'Display type for the answers';
+$lang['config.display.type.basic'] = 'Independant display';
+$lang['config.display.type.siblings'] = 'Separated display';
+$lang['config.display.controls'] = 'Display full controls';
+$lang['config.display.controls.explain'] = 'Display buttons to show/hide all the answers';
+$lang['config.items.default.sort.explain'] = 'On page "Pending questions"';
 
 //SEO
 $lang['faq.seo.description.root'] = 'All :site\'s FAQ questions.';

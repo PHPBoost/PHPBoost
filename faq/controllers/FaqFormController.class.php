@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqFormController extends ModuleController
@@ -56,7 +57,7 @@ class FaqFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('faq', $this->get_faq_question()->get_id() === null ? $this->lang['faq.add'] : $this->lang['faq.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('faq', $this->get_faq_question()->get_id() === null ? $this->lang['faq.question.add'] : $this->lang['faq.question.edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('question', $this->lang['faq.form.question'], $this->get_faq_question()->get_question(), array('required' => true)));
@@ -272,13 +273,13 @@ class FaqFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
+		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
 		if ($faq_question->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['faq.add'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['faq.add'], FaqUrlBuilder::add($faq_question->get_id_category()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.add']);
+			$graphical_environment->set_page_title($this->lang['faq.question.add'], $this->lang['faq.module.title']);
+			$breadcrumb->add($this->lang['faq.question.add'], FaqUrlBuilder::add($faq_question->get_id_category()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.question.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::add($faq_question->get_id_category()));
 		}
 		else
@@ -286,8 +287,8 @@ class FaqFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['faq.edit'], $this->lang['module_title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit']);
+			$graphical_environment->set_page_title($this->lang['faq.question.edit'], $this->lang['faq.module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.question.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($faq_question->get_id_category(), true));
@@ -298,7 +299,7 @@ class FaqFormController extends ModuleController
 			}
 			$category = $faq_question->get_category();
 			$breadcrumb->add($faq_question->get_question(), FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
-			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id()));
+			$breadcrumb->add($this->lang['faq.question.edit'], FaqUrlBuilder::edit($faq_question->get_id()));
 		}
 
 		return $response;

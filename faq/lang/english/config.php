@@ -11,7 +11,7 @@
 #                    English                       #
 ####################################################
 
-$lang['root_category_description'] = 'Welcome on the FAQ!
+$lang['root.category.description'] = 'Welcome on the FAQ!
 <br /><br />
 Two categories and some questions were created to show you how this module works. Here are some tips to get started on this module.
 <br /><br />

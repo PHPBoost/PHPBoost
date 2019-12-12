@@ -21,7 +21,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('faq.random_question', 'common', 'faq');
+		return LangLoader::get_message('faq.random.question', 'common', 'faq');
 	}
 
 	public function is_displayed()
@@ -32,7 +32,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		$module_id = 'faq';
-		
+
 		//Create file template
 		$tpl = new FileTemplate('faq/FaqModuleMiniMenu.tpl');
 

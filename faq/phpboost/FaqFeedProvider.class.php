@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqFeedProvider implements FeedProvider
@@ -25,7 +26,7 @@ class FaqFeedProvider implements FeedProvider
 			$site_name = GeneralConfig::load()->get_site_name();
 			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
-			$feed_module_name = LangLoader::get_message('module_title', 'common', 'faq');
+			$feed_module_name = LangLoader::get_message('faq.module.title', 'common', 'faq');
 			$data = new FeedData();
 			$data->set_title($feed_module_name . ' - ' . $site_name);
 			$data->set_date(new Date());

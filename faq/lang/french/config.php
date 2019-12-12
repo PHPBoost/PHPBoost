@@ -11,9 +11,9 @@
 #                    French                        #
 ####################################################
 
-$lang['root_category_description'] = 'Bienvenue dans la FAQ !
+$lang['root.category.description'] = 'Bienvenue dans la FAQ !
 <br /><br />
-2 catégories et quelques questions ont été créées pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien débuter sur ce module.
+2 catégories et quelques questions ont été créées pour vous montrer le fonctionnement de ce module. Voici quelques conseils pour bien débuter:
 <br /><br />
 <ul class="formatter-ul">
 	<li class="formatter-li"> Pour configurer ou personnaliser l\'accueil de votre module, rendez vous dans l\'<a href="' . FaqUrlBuilder::configuration()->relative() . '">administration du module</a></li>

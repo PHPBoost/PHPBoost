@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminFaqConfigController extends AdminModuleController
@@ -43,7 +44,7 @@ class AdminFaqConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminFaqDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminFaqDisplayResponse($tpl, $this->lang['faq.config.title']);
 	}
 
 	private function init()
@@ -70,15 +71,19 @@ class AdminFaqConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display.type.accordion'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['config.display_type.answers_hidden'], FaqConfig::DISPLAY_TYPE_ANSWERS_HIDDEN),
-				new FormFieldSelectChoiceOption($this->lang['config.display_type.display_all_answers'], FaqConfig::DISPLAY_TYPE_ALL_ANSWERS)
+				new FormFieldSelectChoiceOption($this->lang['config.display.type.basic'], FaqConfig::DISPLAY_TYPE_BASIC),
+				new FormFieldSelectChoiceOption($this->lang['config.display.type.siblings'], FaqConfig::DISPLAY_TYPE_SIBLINGS)
 			)
 		));
 
+		$fieldset->add_field(new FormFieldCheckbox('display_controls', $this->lang['config.display.controls'], $this->config->are_control_buttons_displayed(),
+			array('class' => 'custom-checkbox', 'description' => $this->lang['config.display.controls.explain'] )
+		));
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options(),
-			array('description' => $this->lang['config.items_default_sort.explain'])
+			array('description' => $this->lang['config.items.default.sort.explain'])
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
@@ -120,6 +125,10 @@ class AdminFaqConfigController extends AdminModuleController
 		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		if($this->form->get_value('display_controls'))
+			$this->config->display_control_buttons();
+		else
+			$this->config->hide_control_buttons();
 
 		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
 		$items_default_sort = explode('-', $items_default_sort);

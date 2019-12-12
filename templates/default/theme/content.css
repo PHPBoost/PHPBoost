@@ -40,11 +40,6 @@
 	content: '/';
 }
 
-/* --- Categories --- */
-.cat-description {
-	margin: 0.618em 0;
-}
-
 /* --- Item infos --- */
 .more {
 	font-size: 0.809em;
@@ -69,13 +64,16 @@
 }
 
 /* --- Main content --- */
+.cat-description,
 .content {
 	padding: 0.809em;
 	margin-bottom: 1.618em;
 }
 
-.content::after,
-.content::before {
+.cat-description::before,
+.cat-description::after,
+.content::before,
+.content::after {
     content: '';
     display: block;
     clear: both;
@@ -327,59 +325,4 @@ aside:not(#menu-left):not(#menu-right) {
 
 .content-privileged-friends {
 	border-width: 7px 1px 1px 1px;
-}
-
-/* --- Alternate action menu (e.g faq)  */
-.actions-menu {
-	position: relative;
-}
-
-.actions-title {
-	position: relative;
-	display: block;
-	padding: 0.309em 0.456em;
-}
-
-@media (max-width: 768px) {
-	.actions-title {
-		position: relative;
-		display: block;
-		padding: 1em 1.309em;
-	}
-}
-
-.actions-menu.opened .fa-ellipsis-h:before {
-	content: "\f00d";
-}
-
-.actions-submenu {
-	position: absolute;
-	list-style: none;
-	padding: 0;
-	top: 100%;
-	left: -9999px;
-	width: 250px;
-	z-index: 1;
-}
-
-.opened .actions-submenu {
-	left: auto;
-	right: 0;
-}
-
-.action a {
-	display: block;
-	font-size: 1.5rem;
-	padding: 0.309em 0.456em;
-}
-
-@media (max-width: 768px) {
-	.action a {
-		padding: 1em 0.618em;
-	}
-}
-
-.action i {
-	text-align: center;
-	width: 20px;
 }

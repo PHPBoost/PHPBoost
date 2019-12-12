@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqDisplayCategoryController extends ModuleController
@@ -77,26 +78,27 @@ class FaqDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->tpl->put_all(array(
-			'C_CATEGORY' => true,
+			'C_CATEGORY'      => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_QUESTIONS' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
-			'C_DISPLAY_REORDER_LINK' => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
+			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
+			'C_SUB_CATEGORIES'           => $nbr_cat_displayed > 0,
+			'C_QUESTIONS'                => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_QUESTION'   => $result->get_rows_count() > 1,
+			'C_DISPLAY_TYPE_BASIC'       => $config->get_display_type() == FaqConfig::DISPLAY_TYPE_BASIC,
+			'C_DISPLAY_CONTROLS'         => $config->are_control_buttons_displayed(),
+			'C_DISPLAY_REORDER_LINK'     => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
-			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
-			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
-			'ID_CAT' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description,
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
-			'U_REORDER_QUESTIONS' => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
-			'QUESTIONS_NUMBER' => $result->get_rows_count()
+			'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display(),
+			'C_SEVERAL_CATS_COLUMNS'     => $nbr_column_cats_per_line > 1,
+			'NUMBER_CATS_COLUMNS'        => $nbr_column_cats_per_line,
+			'ID_CAT'                     => $this->get_category()->get_id(),
+			'CATEGORY_NAME'              => $this->get_category()->get_name(),
+			'CATEGORY_IMAGE'             => $this->get_category()->get_image()->rel(),
+			'CATEGORY_DESCRIPTION'       => $category_description,
+			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
+			'U_REORDER_QUESTIONS'        => FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
+			'QUESTIONS_NUMBER'           => $result->get_rows_count()
 		));
 
 		while ($row = $result->fetch())
@@ -163,9 +165,9 @@ class FaqDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['faq.module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title'], $page);
+			$graphical_environment->set_page_title($this->lang['faq.module.title'], $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -174,7 +176,7 @@ class FaqDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
+		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

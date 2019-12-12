@@ -3,22 +3,24 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 22
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqConfig extends AbstractConfigData
 {
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
-	const DISPLAY_TYPE = 'display_type';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const AUTHORIZATIONS = 'authorizations';
 
-	const DISPLAY_TYPE_ANSWERS_HIDDEN = 'display_type_answers_hidden';
-	const DISPLAY_TYPE_ALL_ANSWERS = 'display_type_all_answers';
+	const DISPLAY_TYPE = 'display_type';
+	const DISPLAY_TYPE_BASIC = 'display_type_basic';
+	const DISPLAY_TYPE_SIBLINGS = 'display_type_siblings';
+	const DISPLAY_CONTROLS = 'display_controls';
 
 	public function get_categories_number_per_page()
 	{
@@ -50,9 +52,19 @@ class FaqConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $value);
 	}
 
-	public function is_display_type_answers_hidden()
+	public function display_control_buttons()
 	{
-		return $this->get_property(self::DISPLAY_TYPE) == self::DISPLAY_TYPE_ANSWERS_HIDDEN;
+		$this->set_property(self::DISPLAY_CONTROLS, true);
+	}
+
+	public function hide_control_buttons()
+	{
+		$this->set_property(self::DISPLAY_CONTROLS, false);
+	}
+
+	public function are_control_buttons_displayed()
+	{
+		return $this->get_property(self::DISPLAY_CONTROLS);
 	}
 
 	public function get_items_default_sort_field()
@@ -103,10 +115,11 @@ class FaqConfig extends AbstractConfigData
 		return array(
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::COLUMNS_NUMBER_PER_LINE => 4,
-			self::DISPLAY_TYPE => self::DISPLAY_TYPE_ANSWERS_HIDDEN,
+			self::DISPLAY_TYPE => self::DISPLAY_TYPE_BASIC,
+			self::DISPLAY_CONTROLS => true,
 			self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
-			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'faq'),
+			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root.category.description', 'config', 'faq'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);
 	}

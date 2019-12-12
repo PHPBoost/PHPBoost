@@ -4,7 +4,7 @@
  *        - Accordion
  *        - Modal
  *        - Tabs
- *    - Tooltip (jBox)
+ *    - Tooltip
  *    - Wizard
 */
 
@@ -14,72 +14,77 @@
 [data-tabs] { cursor: pointer; }
 .content-panel { padding: 0.618em; }
 
-@media all { /* --- Multitabs Accordion ------------------------------------- */
-    .accordion-container .accordion-controls {
-        text-align: right;
-    }
+/* --- Multitabs Accordion -------------------------------------------------- */
+.accordion-container .accordion-controls {
+    text-align: right;
+}
 
-    .accordion-controls span {
-        display: inline-block;
-        padding: 0.618em;
-    }
+.accordion-controls span {
+    display: inline-block;
+    padding: 0.618em;
+}
 
-    .accordion-container > nav > ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
+.accordion-container > nav > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
 
-    .accordion-container > nav > ul > li > a {
-        position: relative;
-        display: block;
-        border-width: 1px 1px 0;
-        border-style: solid;
-        border-color: transparent;
-        padding: 0.618em;
-        transition: border-width 0.3s ease 0.3s;
-    }
+.accordion-container > nav > ul > li > a {
+    position: relative;
+    display: block;
+    border-width: 1px 1px 0;
+    border-style: solid;
+    border-color: transparent;
+    padding: 0.618em;
+    transition: border-width 0.3s ease 0.3s;
+}
 
-    .accordion-container > nav > ul > li:last-child > a,
-    .accordion-container > nav > ul > li > a.active-tab {
-        border-width: 1px;
-        transition: border-width 0s linear;
-    }
+.accordion-container > nav > ul > li:last-child > a,
+.accordion-container > nav > ul > li > a.active-tab {
+    border-width: 1px;
+    transition: border-width 0s linear;
+}
 
-    .accordion-container > nav > ul > li > a:after {
-        position: absolute;
-        font-family: 'Font Awesome 5 free';
-        font-weight: 900;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0.618em;
-        content: '\f078'
-    }
+.accordion-container > nav > ul > li > a:after {
+    position: absolute;
+    font-family: 'Font Awesome 5 free';
+    font-weight: 900;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.618em;
+    content: '\f078'
+}
 
-    .accordion-container > nav > ul > li > a.active-tab:after {
-        content: '\f077';
-    }
+.accordion-container > nav > ul > li > a.active-tab:after {
+    content: '\f077';
+}
 
-    .accordion-animation,
-    .accordion-animation:not(.active-panel) *  {
-        height: 0;
-        opacity: 0;
-        visibility: hidden;
-        transition:
-            opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-            visibility 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-            margin 0.3s ease 0.3s,
-            height 0.3s ease 0.3s;
-    }
+.accordion-animation  {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
+        visibility 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
+        margin 0.3s ease 0.3s,
+        height 0.3s ease 0.3s;
+}
 
-    .accordion-animation.active-panel {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
-    }
+.accordion-animation.active-panel {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
+}
 
+.accordion .content-panel {
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: transparent;
+}
 
-
+li:last-child .accordion .content-panel {
+    border-width: 0 1px 1px;
 }
 
 /* --- Multitabs Modals ----------------------------------------------------- */

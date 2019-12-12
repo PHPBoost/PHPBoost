@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 08
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 08 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqReorderCategoryQuestionsController extends ModuleController
@@ -59,7 +60,6 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -126,18 +126,18 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['faq.module.title']);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['faq.module.title']);
 
-		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions_order_management'];
+		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions.reorder'];
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions_order_management'];
+			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
+		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
@@ -146,7 +146,7 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 				$breadcrumb->add($category->get_name(), FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
 
-		$breadcrumb->add($this->lang['faq.questions_order_management'], FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
+		$breadcrumb->add($this->lang['faq.questions.reorder'], FaqUrlBuilder::reorder_questions($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 
 		return $response;
 	}

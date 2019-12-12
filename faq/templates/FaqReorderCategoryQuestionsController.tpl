@@ -1,108 +1,100 @@
 # IF C_QUESTIONS #
-<script>
-<!--
-	var FaqQuestions = function(id){
-		this.id = id;
-		this.questions_number = {QUESTIONS_NUMBER};
-	};
+	<script>
+		var FaqQuestions = function(id){
+			this.id = id;
+			this.questions_number = {QUESTIONS_NUMBER};
+		};
 
-	FaqQuestions.prototype = {
-		init_sortable : function() {
-			jQuery("ul#questions-list").sortable({
-				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
-				onDrop: function ($item, container, _super, event) {
-					FaqQuestions.change_reposition_pictures();
-					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
-					$("body").removeClass(container.group.options.bodyClass);
-				}
-			});
-		},
-		serialize_sortable : function() {
-			jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
-		},
-		get_sortable_sequence : function() {
-			var sequence = jQuery("ul#questions-list").sortable("serialize").get();
-			return sequence[0];
-		},
-		change_reposition_pictures : function() {
-			sequence = this.get_sortable_sequence();
-			var length = sequence.length;
-			for(var i = 0; i < length; i++)
-			{
-				if (jQuery('#list-' + sequence[i].id).is(':first-child'))
-					jQuery("#move-up-" + sequence[i].id).hide();
-				else
-					jQuery("#move-up-" + sequence[i].id).show();
-
-				if (jQuery('#list-' + sequence[i].id).is(':last-child'))
-					jQuery("#move-down-" + sequence[i].id).hide();
-				else
-					jQuery("#move-down-" + sequence[i].id).show();
-			}
-		}
-	};
-
-	var FaqQuestion = function(id, faq_questions){
-		this.id = id;
-		this.FaqQuestions = faq_questions;
-
-		if (FaqQuestions.questions_number > 1)
-			FaqQuestions.change_reposition_pictures();
-	};
-
-	FaqQuestion.prototype = {
-		delete : function() {
-			if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
-			{
-				jQuery.ajax({
-					url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
-					type: "post",
-					dataType: "json",
-					data: {'id' : this.id, 'token' : '{TOKEN}'},
-					success: function(returnData) {
-						if(returnData.code > 0) {
-							jQuery("#list-" + returnData.code).remove();
-							# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-							jQuery("#title-question-" + returnData.code).remove();
-							# ENDIF #
-
-							FaqQuestions.init_sortable();
-							FaqQuestions.questions_number--;
-
-							FaqQuestions.change_reposition_pictures();
-							if (FaqQuestions.questions_number == 1) {
-								jQuery("#position-update-button").hide();
-							} else if (FaqQuestions.questions_number == 0) {
-								jQuery("#position-update-form").hide();
-								# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-								jQuery("#questions-titles-list").hide();
-								# ENDIF #
-								jQuery("#no-item-message").show();
-							}
-						}
+		FaqQuestions.prototype = {
+			init_sortable : function() {
+				jQuery("ul#questions-list").sortable({
+					handle: '.sortable-selector',
+					placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>',
+					onDrop: function ($item, container, _super, event) {
+						FaqQuestions.change_reposition_pictures();
+						$item.removeClass(container.group.options.draggedClass).removeAttr("style");
+						$("body").removeClass(container.group.options.bodyClass);
 					}
 				});
-			}
-		}
-	};
+			},
+			serialize_sortable : function() {
+				jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
+			},
+			get_sortable_sequence : function() {
+				var sequence = jQuery("ul#questions-list").sortable("serialize").get();
+				return sequence[0];
+			},
+			change_reposition_pictures : function() {
+				sequence = this.get_sortable_sequence();
+				var length = sequence.length;
+				for(var i = 0; i < length; i++)
+				{
+					if (jQuery('#list-' + sequence[i].id).is(':first-child'))
+						jQuery("#move-up-" + sequence[i].id).hide();
+					else
+						jQuery("#move-up-" + sequence[i].id).show();
 
-	var FaqQuestions = new FaqQuestions('questions-list');
-	jQuery(document).ready(function() {
-		FaqQuestions.init_sortable();
-	});
--->
-</script>
+					if (jQuery('#list-' + sequence[i].id).is(':last-child'))
+						jQuery("#move-down-" + sequence[i].id).hide();
+					else
+						jQuery("#move-down-" + sequence[i].id).show();
+				}
+			}
+		};
+
+		var FaqQuestion = function(id, faq_questions){
+			this.id = id;
+			this.FaqQuestions = faq_questions;
+
+			if (FaqQuestions.questions_number > 1)
+				FaqQuestions.change_reposition_pictures();
+		};
+
+		FaqQuestion.prototype = {
+			delete : function() {
+				if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
+				{
+					jQuery.ajax({
+						url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
+						type: "post",
+						dataType: "json",
+						data: {'id' : this.id, 'token' : '{TOKEN}'},
+						success: function(returnData) {
+							if(returnData.code > 0) {
+								jQuery("#list-" + returnData.code).remove();
+
+								FaqQuestions.init_sortable();
+								FaqQuestions.questions_number--;
+
+								FaqQuestions.change_reposition_pictures();
+								if (FaqQuestions.questions_number == 1) {
+									jQuery("#position-update-button").hide();
+								} else if (FaqQuestions.questions_number == 0) {
+									jQuery("#position-update-form").hide();
+									jQuery("#no-item-message").show();
+								}
+							}
+						}
+					});
+				}
+			}
+		};
+
+		var FaqQuestions = new FaqQuestions('questions-list');
+		jQuery(document).ready(function() {
+			FaqQuestions.init_sortable();
+		});
+	</script>
 # ENDIF #
 # INCLUDE MSG #
 <section id="module-faq">
 	<header>
-		<div class="align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+		<div class="controls align-right">
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+			{@faq.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
@@ -112,20 +104,7 @@
 	# ENDIF #
 
 	# IF C_QUESTIONS #
-		# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
-		<div id="questions-titles-list">
-			<ol>
-			# START questions #
-				<li id="title-question-{questions.ID}"# IF questions.C_NEW_CONTENT # class="new-content"# ENDIF #>
-					<a href="#question{questions.ID}">{questions.QUESTION}</a>
-				</li>
-			# END questions #
-			</ol>
-			<hr />
-		</div>
-		# ENDIF #
-
-		<div class="content elements-container">
+		<div class="content">
 			<form action="{REWRITED_SCRIPT}" method="post" id="position-update-form" onsubmit="FaqQuestions.serialize_sortable();" class="faq-reorder-form">
 				<fieldset id="questions-management">
 					<ul id="questions-list" class="sortable-block">
@@ -145,28 +124,26 @@
 							</div>
 
 							<script>
-							<!--
-							jQuery(document).ready(function() {
-								var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
+								jQuery(document).ready(function() {
+									var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 
-								jQuery('#delete-{questions.ID}').on('click',function(){
-									faq_question.delete();
+									jQuery('#delete-{questions.ID}').on('click',function(){
+										faq_question.delete();
+									});
+
+									if (FaqQuestions.questions_number > 1) {
+										jQuery('#move-up-{questions.ID}').on('click',function(){
+											var li = jQuery(this).closest('li');
+											li.insertBefore( li.prev() );
+											FaqQuestions.change_reposition_pictures();
+										});
+										jQuery('#move-down-{questions.ID}').on('click',function(){
+											var li = jQuery(this).closest('li');
+											li.insertAfter( li.next() );
+											FaqQuestions.change_reposition_pictures();
+										});
+									}
 								});
-
-								if (FaqQuestions.questions_number > 1) {
-									jQuery('#move-up-{questions.ID}').on('click',function(){
-										var li = jQuery(this).closest('li');
-										li.insertBefore( li.prev() );
-										FaqQuestions.change_reposition_pictures();
-									});
-									jQuery('#move-down-{questions.ID}').on('click',function(){
-										var li = jQuery(this).closest('li');
-										li.insertAfter( li.next() );
-										FaqQuestions.change_reposition_pictures();
-									});
-								}
-							});
-							-->
 							</script>
 						</li>
 						# END questions #
@@ -181,13 +158,12 @@
 				# ENDIF #
 			</form>
 		</div>
-	# ENDIF #
-	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-		<div id="no-item-message"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
-			<div class="align-center">
+	# ELSE #
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			<div class="message-helper bgc notice align-center">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
-		</div>
+		# ENDIF #
 	# ENDIF #
 
 	<footer></footer>

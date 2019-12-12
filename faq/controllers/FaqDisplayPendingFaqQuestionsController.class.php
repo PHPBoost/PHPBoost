@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.3 - last update: 2019 12 12
  * @since   	PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqDisplayPendingFaqQuestionsController extends ModuleController
@@ -34,6 +35,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 
 	public function build_view(HTTPRequestCustom $request)
 	{
+		$config = FaqConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories();
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', FaqQuestion::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
@@ -59,10 +61,11 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 
 		$this->tpl->put_all(array(
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
-			'C_PENDING' => true,
+			'C_PENDING'   => true,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => FaqConfig::load()->is_display_type_answers_hidden(),
-			'QUESTIONS_NUMBER' => $result->get_rows_count()
+			'C_DISPLAY_TYPE_BASIC'     => $config->get_display_type() == FaqConfig::DISPLAY_TYPE_BASIC,
+			'C_DISPLAY_CONTROLS'       => $config->are_control_buttons_displayed(),
+			'QUESTIONS_NUMBER'         => $result->get_rows_count()
 		));
 
 		while ($row = $result->fetch())
@@ -121,13 +124,13 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['faq.pending'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['faq.questions.pending'], $this->lang['faq.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.seo.description.pending']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_pending($sort_field, $sort_mode));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], FaqUrlBuilder::home());
-		$breadcrumb->add($this->lang['faq.pending'], FaqUrlBuilder::display_pending($sort_field, $sort_mode));
+		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
+		$breadcrumb->add($this->lang['faq.questions.pending'], FaqUrlBuilder::display_pending($sort_field, $sort_mode));
 
 		return $response;
 	}
