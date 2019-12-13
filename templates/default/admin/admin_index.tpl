@@ -157,11 +157,7 @@
 					<div class="cell-list">
 						<form method="post" class="fieldset-content">
 							<ul>
-								# IF C_NO_COMMENT #
-									<li>
-										<p class="align-center"><em>${LangLoader::get_message('no_item_now', 'common')}</em></p>
-									</li>
-								# ELSE #
+								# IF C_COMMENTS #
 									# START comments_list #
 									<li>
 										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" />
@@ -183,6 +179,10 @@
 										</label>
 										<input type="hidden" name="token" value="{TOKEN}" />
 										<button type="submit" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+									</li>
+								# ELSE #
+									<li>
+										<p class="align-center"><em>${LangLoader::get_message('no_item_now', 'common')}</em></p>
 									</li>
 								# ENDIF #
 							</ul>
