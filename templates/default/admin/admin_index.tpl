@@ -157,7 +157,12 @@
 					<div class="cell-list">
 						<form method="post" class="fieldset-content">
 							<ul>
-								# START comments_list #
+								# IF C_NO_COMMENT #
+									<li>
+										<p class="align-center"><em>${LangLoader::get_message('no_item_now', 'common')}</em></p>
+									</li>
+								# ELSE #
+									# START comments_list #
 									<li>
 										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" />
 										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
@@ -167,17 +172,10 @@
 										<span class="smaller">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
 										{comments_list.CONTENT}
 									</li>
-								# END comments_list #
-								# IF C_NO_COMMENT #
-									<li>
-										<p class="align-center"><em>{L_NO_COMMENT}</em></p>
-									</li>
-								# ELSE #
+									# END comments_list #
 									<li>
 										<p class="smaller align-center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 									</li>
-								# ENDIF #
-								# IF NOT C_NO_COMMENT #
 									<li class="mini-checkbox">
 										<label for="delete-all-checkbox" class="checkbox">
 											<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});">

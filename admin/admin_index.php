@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 12 13
  * @since   	PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -132,7 +132,6 @@ $tpl->put_all(array(
 	'L_ACTION_MODULES_MANAGEMENT' => $LANG['action.modules_management'],
 	'L_ACTION_THEMES_MANAGEMENT' => $LANG['action.themes_management'],
 	'L_ACTION_LANGS_MANAGEMENT' => $LANG['action.langs_management'],
-	'L_NO_COMMENT' => LangLoader::get_message('no_item_now', 'common'),
 	'L_LAST_COMMENTS' => $LANG['last_comments'],
 	'L_VIEW_ALL_COMMENTS' => $LANG['view_all_comments'],
 	'L_WRITING_PAD' => $LANG['writing_pad'],
