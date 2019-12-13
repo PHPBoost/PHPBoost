@@ -155,7 +155,7 @@
 						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 					</div>
 					<div class="cell-list">
-						<form id="comments_list_form" method="post" class="fieldset-content">
+						<form method="post" class="fieldset-content">
 							<ul>
 								# START comments_list #
 									<li>

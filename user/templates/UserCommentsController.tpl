@@ -6,7 +6,7 @@
 		# INCLUDE PAGINATION #
 	</div>
 	# ENDIF #
-	<form id="comments_list_form" method="post" class="fieldset-content">
+	<form method="post" class="fieldset-content">
 	# INCLUDE COMMENTS #
 	# IF C_NO_COMMENT #
 		<div class="align-center">

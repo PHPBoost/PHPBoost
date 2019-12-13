@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 11 27
+ * @version     PHPBoost 5.2 - last update: 2019 12 13
  * @since       PHPBoost 3.0 - 2011 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -137,7 +137,7 @@ class CommentsService
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => $comments_number > $comments_number_to_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_DISPLAY_DELETE_BUTTON' => $comments_number && ($authorizations->is_authorized_moderation() || self::$display_delete_button),
-				'C_DISPLAY_FORM' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
+				'C_DISPLAY_DELETE_FORM' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
 				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
 				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),
 				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),
