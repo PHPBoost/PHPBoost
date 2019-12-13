@@ -219,24 +219,64 @@ function open_submenu(myid, myclass, closeother)
 // Description :
 // This function check or uncheck all checkbox with specific id
 //
-// options : one
+// options : three
 // {status} correspond to the status we need (check or uncheck).
+// {elements_number} corresponds to the total number of elements displayed.
+// {except_element} corresponds to an element to ignore.
 //
 // Return : -
 //
 // Comments :
 //
-function multiple_checkbox_check(status, nbr_element, except_element)
+function multiple_checkbox_check(status, elements_number, except_element)
 {
 	var i;
 	var except_element = (typeof except_element !== 'undefined') ? except_element : 0;
-	for(i = 1; i <= nbr_element; i++)
+	for(i = 1; i <= elements_number; i++)
 	{
 		if($('#multiple-checkbox-' + i)[0] && i != except_element)
 			$('#multiple-checkbox-' + i)[0].checked = status;
 	}
 	try {
 		$('.check-all')[0].checked = status;
+	}
+	catch (err) {}
+	delete_button_display(elements_number);
+}
+
+//Function delete_button_display
+//
+// Description :
+// This function change the data-confirmation message of the delete all button and its display
+//
+// options : one
+// {elements_number} corresponds to the total number of elements displayed.
+//
+// Return : -
+//
+// Comments :
+//
+function delete_button_display(elements_number)
+{
+	var i;
+	var checked_elements_number = 0;
+	for(i = 1; i <= elements_number; i++)
+	{
+		if($('#multiple-checkbox-' + i)[0] && $('#multiple-checkbox-' + i)[0].checked == true)
+			checked_elements_number++;
+	}
+	
+	try {
+		if (checked_elements_number > 0) {
+			$('#delete-all-button').attr("disabled", false);
+			if (checked_elements_number > 1)
+				$('#delete-all-button').attr("data-confirmation", "delete-elements");
+			else
+				$('#delete-all-button').attr("data-confirmation", "delete-element");
+		} else {
+			$('#delete-all-button').attr("disabled", true);
+		}
+		update_data_confirmations();
 	}
 	catch (err) {}
 }

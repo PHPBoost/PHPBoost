@@ -311,6 +311,7 @@ class CommentsService
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_AVATAR' => $user_avatar,
 					'COMMENT_NUMBER' => $comments_number,
+					'TOTAL_COMMENT_NUMBER' => $comments_number_to_display,
 					'ID_COMMENT' => $id,
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
@@ -319,11 +320,6 @@ class CommentsService
 					'GROUP_COLOR' => $group_color,
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
 				)));
-
-				$template->put_all(array(
-					'L_UPDATE' => self::$common_lang['edit'],
-					'L_DELETE' => self::$common_lang['delete'],
-				));
 			}
 			$result->dispose();
 		}

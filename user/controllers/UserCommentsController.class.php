@@ -166,7 +166,7 @@ class UserCommentsController extends AbstractController
 		$result->dispose();
 
 		$this->tpl->put_all(array(
-			'C_NO_COMMENT'    => $this->comments_number == 0,
+			'C_COMMENTS'    => $this->comments_number > 0,
 			'C_MODERATOR'     => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
 			'COMMENTS_NUMBER' => $this->comments_number
 		));

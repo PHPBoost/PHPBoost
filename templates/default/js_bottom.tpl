@@ -1,18 +1,21 @@
 <script>
 // Delete confirmation
-	jQuery('[data-confirmation]').each(function() {
-		data_confirmation = jQuery(this).attr('data-confirmation');
-		if (data_confirmation == 'delete-element')
-			var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
-		else if (data_confirmation == 'delete-elements')
-			var message = ${escapejs(LangLoader::get_message('confirm.delete.elements', 'status-messages-common'))};
-		else
-			var message = data_confirmation;
-		this.onclick = function () { return confirm(message); }
-	});
+	function update_data_confirmations() {
+		jQuery('[data-confirmation]').each(function() {
+			data_confirmation = jQuery(this).attr('data-confirmation');
+			if (data_confirmation == 'delete-element')
+				var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
+			else if (data_confirmation == 'delete-elements')
+				var message = ${escapejs(LangLoader::get_message('confirm.delete.elements', 'status-messages-common'))};
+			else
+				var message = data_confirmation;
+			this.onclick = function () { return confirm(message); }
+		});
+	}
 
 // lightbox
 	jQuery(document).ready(function() {
+		update_data_confirmations();
 		jQuery('a[rel^=lightbox]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-lightbox^=formatter]').attr('data-rel', 'lightcase:collection');
 		jQuery('a[data-rel^=lightcase]').lightcase({

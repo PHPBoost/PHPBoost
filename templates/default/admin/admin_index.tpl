@@ -160,7 +160,7 @@
 								# IF C_COMMENTS #
 									# START comments_list #
 									<li>
-										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" />
+										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
 										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
 										<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 											<i class="far fa-hand-point-right" aria-hidden="true"></i>
@@ -178,7 +178,7 @@
 											<span aria-label="${LangLoader::get_message('select.all.comments', 'comments-common')}">&nbsp;</span>
 										</label>
 										<input type="hidden" name="token" value="{TOKEN}" />
-										<button type="submit" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+										<button type="submit" id="delete-all-button" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
 									</li>
 								# ELSE #
 									<li>

@@ -51,7 +51,7 @@
 						<td class="mini-checkbox">
 							# IF row.C_DISPLAY_DELETE_INPUT #
 								<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox">
-									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" />
+									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
 									<span>&nbsp;</span>
 								</label>
 							# ENDIF #
@@ -118,7 +118,7 @@
 					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
 				</label>
 				<input type="hidden" name="token" value="{TOKEN}" />
-				<button type="submit" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+				<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
 			</div>
 		# ENDIF #
 	</form>

@@ -32,7 +32,7 @@
 							</h3>
 							<div class="message-actions">
 								# IF messages.C_DELETE #
-								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" />
+								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" onclick="delete_button_display({MESSAGES_NUMBER});" />
 								# ENDIF #
 								# IF messages.C_EDIT #
 									<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -75,7 +75,7 @@
 					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
 				</label>
 				<input type="hidden" name="token" value="{TOKEN}" />
-				<button type="submit" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
+				<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
 			</div>
 		# ENDIF #
 		</form>
