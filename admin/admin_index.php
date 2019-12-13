@@ -109,7 +109,7 @@ $tpl->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_HEADER_LOGO' => !empty($header_logo_path),
 	'HEADER_LOGO' => Url::to_rel($header_logo_path),
-	'C_COMMMENTS' => $comments_number > 0,
+	'C_COMMENTS' => $comments_number > 0,
 	'COMMENTS_NUMBER' => $comments_number,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'C_MODULE_DATABASE_INSTALLED' => $module_database_installed,
