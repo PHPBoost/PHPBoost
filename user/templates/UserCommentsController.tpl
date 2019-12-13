@@ -14,7 +14,7 @@
 		</div>
 		<div class="spacer"></div>
 	# ELSE #
-		# IF C_MODERATOR #
+		# IF C_DISPLAY_DELETE_BUTTON #
 		<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {COMMENTS_NUMBER});" aria-label="{@select.all.comments}"><input type="hidden" name="token" value="{TOKEN}" /><button type="submit" name="delete-selected-comments" value="true" class="button submit" data-confirmation="delete-elements">${LangLoader::get_message('delete', 'common')}</button>
 		# ENDIF #
 		# IF C_PAGINATION #

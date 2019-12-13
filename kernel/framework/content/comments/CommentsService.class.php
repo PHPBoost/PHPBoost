@@ -137,7 +137,7 @@ class CommentsService
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => $comments_number > $comments_number_to_display,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_DISPLAY_DELETE_BUTTON' => $comments_number && ($authorizations->is_authorized_moderation() || self::$display_delete_button),
-				'C_DISPLAY_DELETE_FORM' => $authorizations->is_authorized_moderation() || self::$display_delete_button,
+				'C_DISPLAY_DELETE_FORM' => $comments_number && ($authorizations->is_authorized_moderation() || self::$display_delete_button),
 				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
 				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),
 				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),

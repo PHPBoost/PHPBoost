@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 12 13
  * @since   	PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -130,7 +130,7 @@ class UserCommentsController extends AbstractController
 
 			$template->assign_block_vars('comments', array(
 				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
-				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation() || $row['user_id'] == $this->current_user->get_id(),
+				'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $row['user_id'] == $this->current_user->get_id()),
 				'C_VISITOR' => empty($row['display_name']),
 				'C_VIEW_TOPIC' => true,
 				'C_GROUP_COLOR' => !empty($group_color),
