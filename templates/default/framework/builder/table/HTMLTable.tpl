@@ -7,7 +7,7 @@
 	<form method="post" class="fieldset-content">
 		<table
 			# IF C_ID # id="{ID}"# ENDIF #
-			# IF C_CSS_CLASSES # class="table {CSS_CLASSES}"# ENDIF #
+			class="{CSS_CLASSES}# IF C_CSS_CLASSES # table# ENDIF #"
 			# IF C_CSS_STYLE # style="{CSS_STYLE}"# ENDIF #>
 			# IF C_CAPTION #
 			<caption>
