@@ -270,18 +270,17 @@ function delete_button_display(elements_number)
 	try {
 		if (checked_elements_number > 0) {
 			$('#delete-all-button').attr("disabled", false);
-			if (checked_elements_number > 1) {
+			if (checked_elements_number > 1)
 				$('#delete-all-button').attr("data-confirmation", "delete-elements");
-				if (checked_elements_number < elements_number)
-					$('.check-all')[0].checked = false;
-				else if (checked_elements_number == elements_number)
-					$('.check-all')[0].checked = true;
-			} else {
+			else
 				$('#delete-all-button').attr("data-confirmation", "delete-element");
-			}
 		} else {
 			$('#delete-all-button').attr("disabled", true);
 		}
+		if (checked_elements_number < elements_number)
+			$('.check-all')[0].checked = false;
+		else if (checked_elements_number == elements_number)
+			$('.check-all')[0].checked = true;
 		update_data_confirmations();
 	}
 	catch (err) {}
