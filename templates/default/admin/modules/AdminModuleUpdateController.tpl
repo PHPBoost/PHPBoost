@@ -74,7 +74,7 @@
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
 			<label class="checkbox" for="upgrade-all-checkbox">
-				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" aria-label="{@modules.select_all_modules}" />
 				<span>&nbsp;</span>
 			</label>
 			<button type="submit" name="upgrade-selected-modules" value="true" class="select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>

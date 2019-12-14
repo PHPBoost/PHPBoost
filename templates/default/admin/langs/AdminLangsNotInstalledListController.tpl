@@ -88,7 +88,7 @@
 	# IF C_MORE_THAN_ONE_LANG_AVAILABLE #
 	<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
 		<label class="checkbox" for="add-all-checkbox">
-			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER});" aria-label="{@langs.select_all_langs}" />
+			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, null, false);" aria-label="{@langs.select_all_langs}" />
 			<span>&nbsp;</span>
 		</label>
 		<button type="submit" name="add-selected-langs" value="true" class="button submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>

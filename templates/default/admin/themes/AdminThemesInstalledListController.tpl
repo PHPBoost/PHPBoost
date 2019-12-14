@@ -147,7 +147,7 @@
 			<ul class="addon-menu-content">
 				<li class="addon-menu-checkbox mini-checkbox select-all-checkbox">
 					<label class="checkbox" for="delete-all-checkbox">
-						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER});" aria-label="{@themes.select_all_themes}" />
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER}, false);" aria-label="{@themes.select_all_themes}" />
 						<span>&nbsp;</span>
 					</label>
 				</li>

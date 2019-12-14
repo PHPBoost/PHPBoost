@@ -122,7 +122,7 @@
 			<li class="addon-menu-checkbox mini-checkbox">
 				<div class="form-field form-field-checkbox select-all-checkbox">
 					<label class="checkbox" for="delete-all-checkbox">
-						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER});" aria-label="{@langs.select_all_langs}" />
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {LANGS_NUMBER}, {DEFAULT_LANG_NUMBER}, false);" aria-label="{@langs.select_all_langs}" />
 						<span>&nbsp;</span>
 					</label>
 				</div>

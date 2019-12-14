@@ -228,20 +228,21 @@ function open_submenu(myid, myclass, closeother)
 //
 // Comments :
 //
-function multiple_checkbox_check(status, elements_number, except_element)
+function multiple_checkbox_check(status, elements_number, except_element, delete_button_control = true)
 {
 	var i;
 	var except_element = (typeof except_element !== 'undefined') ? except_element : 0;
-	for(i = 1; i <= elements_number; i++)
+	for (i = 1; i <= elements_number; i++)
 	{
-		if($('#multiple-checkbox-' + i)[0] && i != except_element)
+		if ($('#multiple-checkbox-' + i)[0] && i != except_element)
 			$('#multiple-checkbox-' + i)[0].checked = status;
 	}
 	try {
 		$('.check-all')[0].checked = status;
 	}
 	catch (err) {}
-	delete_button_display(elements_number);
+	if (delete_button_control)
+		delete_button_display(elements_number);
 }
 
 //Function delete_button_display
@@ -260,19 +261,24 @@ function delete_button_display(elements_number)
 {
 	var i;
 	var checked_elements_number = 0;
-	for(i = 1; i <= elements_number; i++)
+	for (i = 1; i <= elements_number; i++)
 	{
-		if($('#multiple-checkbox-' + i)[0] && $('#multiple-checkbox-' + i)[0].checked == true)
+		if ($('#multiple-checkbox-' + i)[0] && $('#multiple-checkbox-' + i)[0].checked == true)
 			checked_elements_number++;
 	}
 	
 	try {
 		if (checked_elements_number > 0) {
 			$('#delete-all-button').attr("disabled", false);
-			if (checked_elements_number > 1)
+			if (checked_elements_number > 1) {
 				$('#delete-all-button').attr("data-confirmation", "delete-elements");
-			else
+				if (checked_elements_number < elements_number)
+					$('.check-all')[0].checked = false;
+				else if (checked_elements_number == elements_number)
+					$('.check-all')[0].checked = true;
+			} else {
 				$('#delete-all-button').attr("data-confirmation", "delete-element");
+			}
 		} else {
 			$('#delete-all-button').attr("disabled", true);
 		}

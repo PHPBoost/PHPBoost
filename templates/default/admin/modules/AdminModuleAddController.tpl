@@ -75,7 +75,7 @@
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
 			<label class="checkbox" for="add-all-checkbox">
-				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER});" aria-label="{@modules.select_all_modules}" />
+				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" aria-label="{@modules.select_all_modules}" />
 				<span>&nbsp;</span>
 			</label>
 			<button type="submit" name="add-selected-modules" value="true" class="select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
