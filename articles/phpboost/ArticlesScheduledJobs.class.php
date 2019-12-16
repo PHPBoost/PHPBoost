@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 09
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 4.1 - 2015 12 15
 */
 
@@ -30,9 +30,7 @@ class ArticlesScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 			if ($is_modified)
 			{
-				Feed::clear_cache('articles');
-				ArticlesCategoriesCache::invalidate();
-				ArticlesKeywordsCache::invalidate();
+				ArticlesServices::clear_cache();
 
 				$config->set_deferred_operations($deferred_operations);
 				ArticlesConfig::save();

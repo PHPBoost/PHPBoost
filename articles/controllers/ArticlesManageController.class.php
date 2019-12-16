@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 28
+ * @version   	PHPBoost 5.2 - last update: 2019 12 13
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -133,20 +133,13 @@ class ArticlesManageController extends ModuleController
 				{
 					if (isset($this->ids[$i]))
 					{
-						ArticlesService::delete('WHERE id=:id', array('id' => $this->ids[$i]));
-						ArticlesService::get_keywords_manager()->delete_relations($this->ids[$i]);
-
-						PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $this->ids[$i]));
-
-						CommentsService::delete_comments_topic_module('articles', $this->ids[$i]);
-						NotationService::delete_notes_id_in_module('articles', $this->ids[$i]);
+						ArticlesService::delete($this->ids[$i]);
 					}
 				}
 			}
 
-			Feed::clear_cache('articles');
-			ArticlesCategoriesCache::invalidate();
-			ArticlesKeywordsCache::invalidate();
+			ArticlesServices::clear_cache();
+			
 			AppContext::get_response()->redirect(ArticlesUrlBuilder::manage_articles(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}

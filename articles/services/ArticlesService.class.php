@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 02
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -38,9 +38,22 @@ class ArticlesService
 		self::$db_querier->update(ArticlesSetup::$articles_table, $article->get_properties(), 'WHERE id=:id', array('id', $article->get_id()));
 	}
 
-	public static function delete($condition, array $parameters)
+	public static function delete(int $id)
 	{
-		self::$db_querier->delete(ArticlesSetup::$articles_table, $condition, $parameters);
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
+		}
+		
+		self::$db_querier->delete(ArticlesSetup::$articles_table, 'WHERE id=:id', array('id' => $id));
+		
+		self::get_keywords_manager()->delete_relations($id);
+
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $id));
+
+		CommentsService::delete_comments_topic_module('articles', $id);
+		NotationService::delete_notes_id_in_module('articles', $id);
 	}
 
 	public static function get_article($condition, array $parameters)
@@ -55,6 +68,13 @@ class ArticlesService
 		$article = new Article();
 		$article->set_properties($row);
 		return $article;
+	}
+
+	public static function clear_cache()
+	{
+		Feed::clear_cache('articles');
+		ArticlesCategoriesCache::invalidate();
+		ArticlesKeywordsCache::invalidate();
 	}
 
 	public static function update_number_view(Article $article)
