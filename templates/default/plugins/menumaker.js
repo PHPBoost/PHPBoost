@@ -1,11 +1,11 @@
 /**
  * Responsive dropdown Menu jQuery plugin - Version: 1.0.2
- * @copyright 	&copy; 2005-2019 PHPBoost - 2015 CssMenuMaker
- * @license 	https://www.opensource.org/licenses/mit-license.php
+ * @copyright   &copy; 2005-2019 PHPBoost - 2015 CssMenuMaker
+ * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      CssMenuMaker
  * @link        https://app.cssmenumaker.com/?theme_id=8
- * @version   	PHPBoost 5.3 - last update: 2019 11 18
- * @since   	PHPBoost 5.0 - 2016 03 30
+ * @version     PHPBoost 5.3 - last update: 2019 11 18
+ * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */

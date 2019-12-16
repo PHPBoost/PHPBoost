@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
- * @since   	PHPBoost 3.0 - 2010 04 12
+ * @version     PHPBoost 5.2 - last update: 2018 12 24
+ * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -78,7 +78,7 @@ $lang = array(
 	'advanced-config.redirection_https_enabled.explain' => 'Redirect urls HTTP to HTTPS',
 	'advanced-config.redirection_https_enabled.explain-disable' => 'Your website doesn\'t use HTTPS protocol, mod activation is unavailable',
 	'advanced-config.hsts_security_enabled' => 'Enabled HSTS security',
-	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (HSTS) is a web security policy mechanism which allows web servers to declare that web browsers should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol.<br /><span class="text-strong color-notavailable">It is strongly recommended that you do not enable this option if your switching to HTTPS is temporary.</span>',
+	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (HSTS) is a web security policy mechanism which allows web servers to declare that web browsers should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol.<br /><span class="text-strong error">It is strongly recommended that you do not enable this option if your switching to HTTPS is temporary.</span>',
 	'advanced-config.hsts_security_duration' => 'HSTS Security renewal time',
 	'advanced-config.hsts_security_duration.explain' =>  'In days. 30 days recommended.',
 	'advanced-config.hsts_security_subdomain' => 'Include subdomain',

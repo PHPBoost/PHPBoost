@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
- * @since   	PHPBoost 1.2 - 2005 10 27
+ * @version     PHPBoost 5.2 - last update: 2019 11 11
+ * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -160,7 +160,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		{
 			if (!ForumAuthorizationsService::check_authorizations($id_get)->write() || $locked_cat)
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $locked_cat ? $LANG['e_cat_lock_forum'] : $LANG['e_cat_write']);
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $locked_cat ? $LANG['e.category.forum.locked'] : $LANG['e.category.right']);
 				DispatchManager::redirect($controller);
 			}
 
@@ -244,7 +244,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				'id' => $idt_get
 			));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_topic_lock_forum']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e.forum.topic.locked']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -350,7 +350,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unexist_topic_forum']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e.forum.nonexistent.topic']);
 			DispatchManager::redirect($controller);
 		}
 
@@ -674,7 +674,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
-                    $LANG['e_unexist_topic_forum']);
+                    $LANG['e.forum.nonexistent.topic']);
                 DispatchManager::redirect($controller);
 			}
 
@@ -693,7 +693,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'locked':
-				$errstr = $LANG['e_topic_lock_forum'];
+				$errstr = $LANG['e.forum.topic.locked'];
 				$type = MessageHelper::WARNING;
 				break;
 				default:
@@ -752,11 +752,11 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$type = MessageHelper::NOTICE;
 				break;
 				case 'c_locked':
-				$errstr = $LANG['e_cat_lock_forum'];
+				$errstr = $LANG['e.category.forum.locked'];
 				$type = MessageHelper::WARNING;
 				break;
 				case 'c_write':
-				$errstr = $LANG['e_cat_write'];
+				$errstr = $LANG['e.category.right'];
 				$type = MessageHelper::WARNING;
 				break;
 				default:

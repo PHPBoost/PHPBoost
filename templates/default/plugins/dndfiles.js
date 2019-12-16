@@ -1,10 +1,10 @@
 /**
  * Drag and drop jQuery plugin - Version: 1.0
- * @copyright 	&copy; 2005-2019 PHPBoost - 2019 babsolune
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost - 2019 babsolune
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version   	PHPBoost 5.3 - last update: 2019 10 03
- * @since   	PHPBoost 5.3 - 2019 09 23
+ * @version     PHPBoost 5.3 - last update: 2019 10 03
+ * @since       PHPBoost 5.3 - 2019 09 23
 */
 
 (function($) {

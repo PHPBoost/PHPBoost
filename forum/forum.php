@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
- * @since   	PHPBoost 1.2 - 2005 10 26
+ * @version     PHPBoost 5.2 - last update: 2019 11 11
+ * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -237,7 +237,7 @@ if (!empty($id_get))
 	if (!$check_group_write_auth)
 	{
 		$tpl->assign_block_vars('error_auth_write', array(
-			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
+			'L_ERROR_AUTH_WRITE' => $LANG['e.category.right']
 		));
 	}
 	//Catégorie verrouillée?
@@ -245,7 +245,7 @@ if (!empty($id_get))
 	{
 		$check_group_write_auth = false;
 		$tpl->assign_block_vars('error_auth_write', array(
-			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
+			'L_ERROR_AUTH_WRITE' => $LANG['e.category.forum.locked']
 		));
 	}
 

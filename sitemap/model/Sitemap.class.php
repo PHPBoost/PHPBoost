@@ -2,11 +2,11 @@
 /**
  * Describes the map of the site. Can be exported according to any text form by using a template configuration.
  * A site map contains some links, some link sections and some module maps (which also contain links and sections).
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 07 07
- * @since   	PHPBoost 3.0 - 2009 02 03
+ * @version     PHPBoost 5.2 - last update: 2018 07 07
+ * @since       PHPBoost 3.0 - 2009 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */

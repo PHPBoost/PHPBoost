@@ -6,11 +6,11 @@
  * list. But it is possible to implement external authentication mecanism by providing others
  * implementations of this class to support LDAP authentication, OpenID, Facebook connect and more...
  * This class provides easy ways to create several type of charts.
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 04 19
- * @since   	PHPBoost 4.1 - 2014 11 28
+ * @version     PHPBoost 5.2 - last update: 2018 04 19
+ * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 

@@ -1,12 +1,12 @@
 /**
  * Sortable jQuery plugin - Version: 0.9.13
- * @copyright 	&copy; 2005-2019 PHPBoost - 2012 Jonas von Andrian
- * @license 	https://www.opensource.org/licenses/mit-license.php
+ * @copyright   &copy; 2005-2019 PHPBoost - 2012 Jonas von Andrian
+ * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jonas von Andrian
  * @link        https://github.com/johnny/jquery-sortable
  * @doc         http://johnny.github.io/jquery-sortable/
- * @version   	PHPBoost 5.3 - last update: 2018 08 09
- * @since   	PHPBoost 5.0 - 2016 03 30
+ * @version     PHPBoost 5.3 - last update: 2018 08 09
+ * @since       PHPBoost 5.0 - 2016 03 30
 */
 
 ! function(d, B, m, f) {

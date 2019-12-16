@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 28
- * @since   	PHPBoost 4.0 - 2013 12 05
+ * @version     PHPBoost 5.2 - last update: 2019 11 28
+ * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -140,7 +140,7 @@ $lang['form.url'] = 'Adresse';
 $lang['form.other'] = 'Autre';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Mots clés';
-$lang['form.keywords.description'] = 'Vous permet d\'ajouter des mots clés';
+$lang['form.keywords.description'] = 'Un seul mot clé par ligne';
 $lang['form.picture'] = 'Image';
 $lang['form.picture.preview'] = 'Prévisualisation de l\'image';
 $lang['form.sources'] = 'Source(s)';

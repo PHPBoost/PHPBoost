@@ -254,8 +254,8 @@
 
 							# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" aria-label="{L_CUT_TOPIC}" data-confirmation="{L_ALERT_CUT_TOPIC}"><i class="fa fa-cut" aria-hidden="true"></i></a> # ENDIF #
 
-							<a aria-label="${LangLoader::get_message('go.top', 'common', 'forum')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-							<a aria-label="${LangLoader::get_message('go.bottom', 'common', 'forum')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+							<a aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+							<a aria-label="${LangLoader::get_message('scroll-to.bottom', 'user-common')}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 	                    </div>
 	                </div>
 	                <div class="message-infos">
@@ -334,27 +334,27 @@
 	</footer>
 
 	<span id="go-bottom"></span>
-# IF C_AUTH_POST #
-	<div class="forum-post-form">
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
-			<div class="form-element form-element-textarea">
-				<label for="contents">{L_RESPOND}</label>
-				{KERNEL_EDITOR}
-				<div class="form-field-textarea">
-					<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
+	# IF C_AUTH_POST #
+		<div class="forum-post-form">
+			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
+				<div class="form-element form-element-textarea">
+					<label for="contents">{L_RESPOND}</label>
+					{KERNEL_EDITOR}
+					<div class="form-field-textarea">
+						<textarea id="contents" name="contents" rows="15" cols="40">{CONTENTS}</textarea>
+					</div>
 				</div>
-			</div>
 
-			<fieldset class="fieldset-submit">
-				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" class="button submit" name="valid" value="true">{L_SUBMIT}</button>
-				<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-				<button type="reset" class="button reset" value="true">{L_RESET}</button>
-			</fieldset>
-		</form>
-	</div>
-# ENDIF #
+				<fieldset class="fieldset-submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="token" value="{TOKEN}">
+					<button type="submit" class="button submit" name="valid" value="true">{L_SUBMIT}</button>
+					<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset" value="true">{L_RESET}</button>
+				</fieldset>
+			</form>
+		</div>
+	# ENDIF #
 
 # IF C_ERROR_AUTH_WRITE #
 	<div class="error-auth-write-response">{L_RESPOND}</div>

@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 12 10
- * @since   	PHPBoost 4.1 - 2015 02 25
+ * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,10 +12,6 @@
 ####################################################
 #                    English                       #
 ####################################################
-// should go to common files - start
-$lang['go.top'] = 'Go top';
-$lang['go.bottom'] = 'Go bottom';
-// should go to common files - end
 
 $lang['forum.module.title'] = 'Forum';
 $lang['forum.config.title'] = 'Forum module configuration';

@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 08
- * @since   	PHPBoost 4.0 - 2013 03 19
+ * @version     PHPBoost 5.2 - last update: 2019 10 08
+ * @since       PHPBoost 4.0 - 2013 03 19
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 

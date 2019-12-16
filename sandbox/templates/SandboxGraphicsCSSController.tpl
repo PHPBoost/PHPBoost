@@ -12,7 +12,7 @@
         <li>
 			<a class="summary-link" href="#framework">{@css.title.framework}</a>
 			<ul>
-				<li><a href="#page-title" class="summary-link">{@css.page.title}</a></li>
+				<li><a href="#single-item" class="summary-link">{@css.page.title}</a></li>
 				<li><a href="#options" class="summary-link">{@css.options}</a></li>
 				<li><a href="#options-infos" class="summary-link">{@css.options}.infos</a></li>
 			</ul>
@@ -57,16 +57,18 @@
 	</div>
 
 	<div class="no-style">
-		<article id="page-title" class="block">
+		<article id="single-item" class="block">
 			<header>
 				<h2>
 					<span>{@css.page.title}</span>
 				</h2>
-				<span class="controls">
-					<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
-					<a href="#" aria-label="{@css.delete}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
-				</span>
-				<div class="more">{@css.more}</div>
+				<div class="flex-between">
+					<div class="more">{@css.more}</div>
+					<span class="controls">
+						<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
+						<a href="#" aria-label="{@css.delete}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
+					</span>
+				</div>
 			</header>
 			<div class="content">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" alt="{@css.picture}" class="item-thumbnail" />

@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 11 21
- * @since   	PHPBoost 1.2 - 2005 10 26
+ * @version     PHPBoost 5.3 - last update: 2019 11 21
+ * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -604,14 +604,14 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
-		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
+		'L_ERROR_AUTH_WRITE' => $LANG['e.forum.topic.locked']
 	));
 }
 elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
-		'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
+		'L_ERROR_AUTH_WRITE' => $LANG['e.category.right']
 	));
 }
 else

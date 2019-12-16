@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 24
- * @since   	PHPBoost 3.0 - 2010 04 12
+ * @version     PHPBoost 5.2 - last update: 2018 12 24
+ * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -81,7 +81,7 @@ $lang = array(
 	'advanced-config.redirection_https_enabled.explain' => 'Redirige les urls HTTP vers HTTPS',
 	'advanced-config.redirection_https_enabled.explain-disable' => 'Votre site n\'utilise actuellement pas le protocole HTTPS, activation de ce mode impossible',
 	'advanced-config.hsts_security_enabled' => 'Activation de la fonctionnalité HSTS',
-	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (souvent abrégé par HSTS) est un dispositif de sécurité par lequel un site web peut déclarer aux navigateurs qu\'ils doivent communiquer avec lui en utilisant exclusivement le protocole HTTPS, au lieu du HTTP.<br /><span class="text-strong color-notavailable">Il est fortement recommandé de ne pas activer l\'option si le passage en HTTPS n\'est pas définitif.</span>',
+	'advanced-config.hsts_security.explain' => 'HTTP Strict Transport Security (souvent abrégé par HSTS) est un dispositif de sécurité par lequel un site web peut déclarer aux navigateurs qu\'ils doivent communiquer avec lui en utilisant exclusivement le protocole HTTPS, au lieu du HTTP.<br /><span class="text-strong error">Il est fortement recommandé de ne pas activer l\'option si le passage en HTTPS n\'est pas définitif.</span>',
 	'advanced-config.hsts_security_duration' => 'Delai de renouvellement de la sécurité HSTS',
 	'advanced-config.hsts_security_duration.explain' =>  'En jours. 30 jours conseillé.',
 	'advanced-config.hsts_security_subdomain' => 'Inclusion des sous-domaines',

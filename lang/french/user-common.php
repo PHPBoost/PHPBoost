@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 08
- * @since   	PHPBoost 3.0 - 2011 10 07
+ * @version     PHPBoost 5.3 - last update: 2019 10 08
+ * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -37,7 +37,7 @@ $lang['external-auth.user-data-not-found'] = 'Les informations de votre compte n
 
 //Contribution
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. <span class="color-alert text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. <span class="error text-strong">La modification est possible tant que la contribution n\'a pas été approuvée.</span> Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
 $lang['contribution.description'] = 'Complément de contribution';
 $lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
@@ -57,7 +57,7 @@ $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous
 $lang['login'] = 'Identifiant de connexion';
 $lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
-$lang['login.custom.explain'] = '<span class="color-alert">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
+$lang['login.custom.explain'] = '<span class="error">Si non coché, vous devrez vous connecter avec votre adresse email</span>';
 $lang['login.tooltip'] = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
 $lang['password.custom'] = 'Définir un mot de passe';
 $lang['password.custom.explain'] = 'Par défaut un mot de passe est généré automatiquement';

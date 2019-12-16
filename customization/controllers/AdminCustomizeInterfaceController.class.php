@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
- * @since   	PHPBoost 3.0 - 2011 09 26
+ * @version     PHPBoost 5.2 - last update: 2019 08 02
+ * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -117,7 +117,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			}
 			else
 			{
-				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], '<span class="text-strong color-alert">' . $this->lang['customization.interface.logo.current.erased'] .'</span>',
+				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], '<span class="text-strong error">' . $this->lang['customization.interface.logo.current.erased'] .'</span>',
 					array('class' => 'third-field top-field')
 				));
 			}

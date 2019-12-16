@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
- * @since   	PHPBoost 1.6 - 2006 11 21
+ * @version     PHPBoost 5.2 - last update: 2018 11 19
+ * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -15,15 +15,14 @@
 ####################################################
 
 //Admin
-$LANG['forum_management'] = 'Gestion du forum';
-$LANG['update_data_cached'] = 'Recompter le nombre de sujets et de messages';
+$LANG['config.ranks.manager'] = 'Gestion des rangs du forum';
 
 //Erreurs
-$LANG['e_topic_lock_forum'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
-$LANG['e_cat_lock_forum'] = 'Forum verrouillé, création de nouveau sujet/message impossible';
-$LANG['e_unexist_topic_forum'] = 'Le topic que vous demandez n\'existe pas';
-$LANG['e_unable_cut_forum'] = 'Vous ne pouvez pas scinder le sujet à partir de ce message';
-$LANG['e_cat_write'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
+$LANG['e.forum.topic.locked'] = 'Sujet verrouillé, vous ne pouvez pas poster de message';
+$LANG['e.category.forum.locked'] = 'Forum verrouillé, création de nouveau sujet/message impossible';
+$LANG['e.forum.nonexistent.topic'] = 'Le topic que vous demandez n\'existe pas';
+$LANG['e.forum.noncuttable.topic'] = 'Vous ne pouvez pas scinder le sujet à partir de ce message';
+$LANG['e.category.right'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
 
 //Alertes
 $LANG['alert_delete_topic'] = 'Supprimer ce sujet ?';

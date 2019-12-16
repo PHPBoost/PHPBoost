@@ -1,11 +1,11 @@
 <?php
 /**
  * This class represents a section of a site map.
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 24
- * @since   	PHPBoost 2.0 - 2008 06 16
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 06 16
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 

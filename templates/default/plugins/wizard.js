@@ -1,12 +1,12 @@
 /**
  * Wizzy wizard jQuery plugin - Version:  0.6.1
- * @copyright 	&copy; 2005-2019 PHPBoost - 2012 Nenad Kaevik
- * @license 	https://github.com/NenadKaevik/wizzy
+ * @copyright   &copy; 2005-2019 PHPBoost - 2012 Nenad Kaevik
+ * @license     https://github.com/NenadKaevik/wizzy
  * @link        https://nenadkaevik.github.io/wizzy/
  * @author      Nenad Kaevik
  * @doc         https://xpy.github.io/tipy/
- * @version   	PHPBoost 5.3 - last update: 2019 07 30
- * @since   	PHPBoost 5.2 - 2019 07 29
+ * @version     PHPBoost 5.3 - last update: 2019 07 30
+ * @since       PHPBoost 5.2 - 2019 07 29
  *
  * @patch		delete es6 (ie11) / replace wizzy -> wizzard - wz- -> wizard- - wz-wrapper -> wizard-container / let -> var
 */

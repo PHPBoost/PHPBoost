@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.3 - last update: 2019 10 08
- * @since   	PHPBoost 3.0 - 2011 10 07
+ * @version     PHPBoost 5.3 - last update: 2019 10 08
+ * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -37,7 +37,7 @@ $lang['external-auth.user-data-not-found'] = 'The informations of your account c
 
 //Contribution
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. <span class="color-alert text-strong">Amendment is possible until the contribution has been approved.</span> In the next field, you can justify your contribution to explain your demarche to a moderator.';
+$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. <span class="error text-strong">Amendment is possible until the contribution has been approved.</span> In the next field, you can justify your contribution to explain your demarche to a moderator.';
 $lang['contribution.description'] = 'Contribution counterpart';
 $lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
@@ -58,7 +58,7 @@ $lang['display_name.explain'] = 'Display name on each item you add.';
 $lang['login'] = 'Login';
 $lang['login.explain'] = 'Email address or your customized login if you chose one.';
 $lang['login.custom'] = 'Choose a login';
-$lang['login.custom.explain'] = '<span class="color-alert">Default, you must log in with your email address.</span>';
+$lang['login.custom.explain'] = '<span class="error">Default, you must log in with your email address.</span>';
 $lang['login.tooltip'] = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.';
 $lang['password.custom'] = 'Define a password';
 $lang['password.custom.explain'] = 'The password is automatically generated per default';

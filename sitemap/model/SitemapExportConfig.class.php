@@ -6,10 +6,10 @@
  * displayed in a page of the web site (the site map) or to be written in the sitemap.xml
  * file at the root of your site, this file will be read by the search engines to optimize
  * the research of your site.
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 10 24
- * @since   	PHPBoost 2.0 - 2008 06 16
+ * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @since       PHPBoost 2.0 - 2008 06 16
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 02 19
- * @since   	PHPBoost 3.0 - 2012 05 14
+ * @version     PHPBoost 5.2 - last update: 2019 02 19
+ * @since       PHPBoost 3.0 - 2012 05 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -75,7 +75,7 @@ $site_path = $general_config->get_site_path();
 			</fieldset>
 			<fieldset class="fieldset-submit">
 				<div class="fieldset-inset">
-					<button class="submit" type="submit" name="submit" value="true">Submit</button>
+					<button class="button submit" type="submit" name="submit" value="true">Submit</button>
 				</div>
 			</fieldset>
 		</form>

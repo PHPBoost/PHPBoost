@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
- * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @copyright   &copy; 2005-2019 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 19
- * @since   	PHPBoost 1.6 - 2006 11 21
+ * @version     PHPBoost 5.2 - last update: 2018 11 19
+ * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -15,15 +15,14 @@
 ####################################################
 
 //Admin
-$LANG['forum_management'] = 'Forum management';
-$LANG['update_data_cached'] = 'Recount topics and posts';
+$LANG['config.ranks.manager'] = 'Forum management';
 
 //Error
-$LANG['e_topic_lock_forum'] = 'Locked topic, you can\'t post';
-$LANG['e_cat_lock_forum'] = 'Locked forum, you can\'t post new topic/post';
-$LANG['e_unexist_topic_forum'] = 'This topic doesn\'t exist';
-$LANG['e_unable_cut_forum'] = 'You can\'t split this topic from this post';
-$LANG['e_cat_write'] = 'You aren\'t allowed to write in this category';
+$LANG['e.forum.topic.locked'] = 'Locked topic, you can\'t post';
+$LANG['e.category.forum.locked'] = 'Locked forum, you can\'t post new topic/post';
+$LANG['e.forum.nonexistent.topic'] = 'This topic doesn\'t exist';
+$LANG['e.forum.noncuttable.topic'] = 'You can\'t split this topic from this post';
+$LANG['e.category.right'] = 'You aren\'t allowed to write in this category';
 
 //Alerts
 $LANG['alert_delete_topic'] = 'Are you sure you want to delete this topic ?';
