@@ -236,6 +236,7 @@ li:last-child .accordion .content-panel {
         visibility: hidden;
         max-width: 320px;
         z-index: 1000;
+        transition: opacity 0.3s ease;
     }
 
     #tooltip.position-b { margin-top: 0.809em; }

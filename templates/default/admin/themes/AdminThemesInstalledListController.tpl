@@ -50,7 +50,7 @@
 							# ENDIF #
 					</header>
 					<div class="cell-body">
-						<div class="cell-thumbnail" >
+						<div class="cell-thumbnail cell-landscape" >
 							# IF themes_installed.C_PICTURES #
 								<img src="{themes_installed.MAIN_PICTURE}" alt="{themes_installed.NAME}" />
 								<a class="cell-thumbnail-caption" href="{themes_installed.MAIN_PICTURE}" data-lightbox="{themes_installed.ID}" data-rel="lightcase:collection-{themes_installed.ID}">

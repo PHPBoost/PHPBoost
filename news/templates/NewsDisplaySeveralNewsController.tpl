@@ -70,7 +70,7 @@
 							# ENDIF #
 						</div>
 						# IF news.C_PICTURE #
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape">
 								<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" />
 								<a class="cell-thumbnail-caption" href="{news.U_LINK}">
 									# IF news.C_READ_MORE #[${LangLoader::get_message('read-more', 'common')}]# ELSE #<i class="fa fa-eye"></i># ENDIF #

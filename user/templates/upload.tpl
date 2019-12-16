@@ -453,7 +453,7 @@
 									</div>
 		                            # IF personal_files.C_ENABLED_THUMBNAILS #
 										<div class="cell-body">
-											<div class="cell-thumbnail">
+											<div class="cell-thumbnail cell-landscape">
 											 	# IF personal_files.C_IMG #
 											 		<img src="{personal_files.URL}" alt="{personal_files.NAME}">
 						                            <a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
@@ -540,7 +540,7 @@
 									</div>
 		                            # IF public_files.C_ENABLED_THUMBNAILS #
 										<div class="cell-body">
-											<div class="cell-thumbnail">
+											<div class="cell-thumbnail cell-landscape">
 					                            # IF public_files.C_IMG #
 													<img src="{public_files.URL}" alt="{public_files.NAME}">
 					                                <a class="cell-thumbnail-caption" href="{public_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">

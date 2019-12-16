@@ -134,7 +134,7 @@
 										<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
 									</div>
 									<div class="cell-body">
-										<div class="cell-thumbnail">
+										<div class="cell-thumbnail cell-landscape">
 											<img src="pics/{list.NAME}" alt="{list.NAME}" />
 										</div>
 									</div>

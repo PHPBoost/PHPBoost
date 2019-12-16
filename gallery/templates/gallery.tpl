@@ -233,8 +233,8 @@
 
 <section id="module-gallery">
 	<header>
-		<div class="align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+		<div class="controls align-right">
+			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
 		</div>
 		<h1>
@@ -254,7 +254,7 @@
 				<li><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_DISPLAY}</a>
 					<ul class="level-1">
 						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_BEST_VIEWS}</a></li>
-						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_BEST_NOTES}</a></li># ENDIF #
+						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> {L_BEST_NOTES}</a></li># ENDIF #
 					</ul>
 				</li>
 				<li><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
@@ -263,7 +263,7 @@
 						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock" aria-hidden="true"></i> {L_DATE}</a></li>
 						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_VIEWS}</a></li>
 						# IF C_NOTATION_ENABLED #
-						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="fa fa-star-half-empty" aria-hidden="true"></i> {L_NOTES}</a></li>
+						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> {L_NOTES}</a></li>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
 						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
@@ -298,7 +298,7 @@
 						<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 					</div>
 					<div class="cell-body">
-						<div class="cell-thumbnail">
+						<div class="cell-thumbnail cell-landscape">
 							# IF sub_categories_list.C_CATEGORY_IMAGE #
 									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							# ENDIF #
@@ -420,7 +420,7 @@
 								<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-download"></i></a> -->
 							</div>
 							<div class="cell-body">
-								<div class="cell-thumbnail">
+								<div class="cell-thumbnail cell-landscape">
 									<img src="{pics_list.U_PICTURE}" alt="{pics_list.NAME}" class="gallery-img" />
 									<a class="cell-thumbnail-caption smaller" aria-label="# IF C_PICTURE_NAME_DISPLAYED #{pics_list.NAME}# ENDIF #" href="{pics_list.U_DISPLAY}" onclick="{pics_list.ONCLICK}" # IF NOT pics_list.ONCLICK # data-lightbox="formatter"# ENDIF #>
 										${LangLoader::get_message('general-config.view_real_preview', 'admin-config-common')}

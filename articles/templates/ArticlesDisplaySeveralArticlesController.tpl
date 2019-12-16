@@ -23,7 +23,7 @@
 					</div>
 					<div class="cell-body">
 						# IF C_DISPLAY_CATS_ICON #
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape">
 								# IF sub_categories_list.C_CATEGORY_IMAGE #
 									<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
@@ -99,7 +99,7 @@
 							# ENDIF #
 						</div>
 						# IF articles.C_HAS_PICTURE #
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape">
 								<img itemprop="thumbnailUrl" src="{articles.U_PICTURE}" alt="{articles.TITLE}" />
 								<a href="{articles.U_ARTICLE}" class="cell-thumbnail-caption">
 									# IF articles.C_READ_MORE #[${LangLoader::get_message('read-more', 'common')}]# ELSE #<i class="fa fa-eye"></i># ENDIF #

@@ -252,7 +252,7 @@ function display_thumbnails(direction)
 								<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a>
 							</div>
 							<div class="cell-body">
-								<div class="cell-thumbnail">
+								<div class="cell-thumbnail cell-landscape">
 									# IF cat.list.C_IMG #<img itemprop="thumbnailUrl" src="{cat.list.IMG}" alt="{cat.list.CAT}" /># ENDIF #
 									<a class="cell-thumbnail-caption" href="admin_gallery.php?cat={cat.list.IDCAT}" aria-label="{cat.list.CAT}"><i class="fa fa-eye"></i></a>
 								</div>
@@ -405,7 +405,7 @@ function display_thumbnails(direction)
 									</div>
 								</div>
 								<div class="cell-body">
-									<div class="cell-thumbnail">
+									<div class="cell-thumbnail cell-landscape">
 										<div id="pics{pics.list.ID}" class="pics-list-element">
 											<img src="pics/{pics.list.PATH}" alt="{pics.list.ALT_NAME}" />
 										</div>

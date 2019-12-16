@@ -65,9 +65,17 @@
     jQuery('.wizard-container').wizard();
 
 // sizes of .cell-thumbnail
-	jQuery('.cell-thumbnail').each(function() {
+	jQuery('.cell-thumbnail.cell-landscape').each(function() {
 		var widthRef = $(this).innerWidth();
 		$(this).outerHeight(widthRef * 9 / 16);
+	});
+	jQuery('.cell-thumbnail.cell-square').each(function() {
+		var widthRef = $(this).innerWidth();
+		$(this).outerHeight(widthRef);
+	});
+	jQuery('.cell-thumbnail.cell-portrait').each(function() {
+		var widthRef = $(this).innerWidth();
+		$(this).outerHeight(widthRef * 16 / 9);
 	});
 </script>
 

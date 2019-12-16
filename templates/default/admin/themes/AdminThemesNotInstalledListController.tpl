@@ -29,7 +29,7 @@
 					</div>
 				</header>
 				<div class="cell-body">
-					<div class="cell-thumbnail" >
+					<div class="cell-thumbnail cell-landscape" >
 						# IF themes_not_installed.C_PICTURES #
 							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" />
 							<a class="cell-thumbnail-caption" href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" data-rel="lightcase:collection-{themes_not_installed.ID}">

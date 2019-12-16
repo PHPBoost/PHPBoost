@@ -62,7 +62,7 @@
 					</div>
 					<div class="cell-body">
 						# IF sub_categories_list.C_CATEGORY_IMAGE #
-							<div class="cell-thumbnail">
+							<div class="cell-thumbnail cell-landscape">
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}"><i class="far fa-eye"></i></a>
 							</div>
