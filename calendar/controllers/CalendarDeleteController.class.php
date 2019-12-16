@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 10 29
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -112,26 +112,16 @@ class CalendarDeleteController extends ModuleController
 		}
 		else
 		{
+			//Delete event
+			CalendarService::delete_event($this->event->get_id(), $this->event->get_parent_id());
+			
 			if (!$this->event->belongs_to_a_serie() || count($events_list) == 1)
 			{
 				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_id()));
 			}
-
-			//Delete event
-			CalendarService::delete_event('WHERE id_event = :id', array('id' => $this->event->get_id()));
-
-			if (!$this->event->get_parent_id())
-				PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $this->event->get_id()));
-
-			//Delete event comments
-			CommentsService::delete_comments_topic_module('calendar', $this->event->get_id());
-
-			//Delete participants
-			CalendarService::delete_all_participants($this->event->get_id());
 		}
 
-		Feed::clear_cache('calendar');
-		CalendarCurrentMonthEventsCache::invalidate();
+		CalendarServices::clear_cache();
 	}
 
 	private function check_authorizations()

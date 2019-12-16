@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 02 02
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 3.0 - 2012 11 20
 */
 
@@ -80,9 +80,23 @@ class CalendarService
 	 * @param string $condition Restriction to apply to the list of events
 	 * @param string[] $parameters Parameters of the condition
 	 */
-	public static function delete_event($condition, array $parameters)
+	public static function delete_event(int $id, bool $has_parent)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_events_table, $condition, $parameters);
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
+		}
+		
+		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE id=:id', array('id' => $id));
+
+		if (!$has_parent)
+			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $id));
+
+		CommentsService::delete_comments_topic_module('calendar', $id);
+
+		//Delete participants
+		self::delete_all_participants($id);
 	}
 
 	 /**
@@ -208,6 +222,15 @@ class CalendarService
 		$result->dispose();
 
 		return $events;
+	}
+
+	 /**
+	 * @desc Clears all module elements in cache.
+	 */
+	public static function clear_cache()
+	{
+		Feed::clear_cache('calendar');
+		CalendarCurrentMonthEventsCache::invalidate();
 	}
 
 	 /**

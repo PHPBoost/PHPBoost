@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 11
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 4.0 - 2013 11 08
 */
 
@@ -25,7 +25,7 @@ class CalendarSuscribeController extends ModuleController
 			if (!in_array($current_user_id, array_keys($this->event->get_participants())))
 			{
 				CalendarService::add_participant($event_id, $current_user_id);
-				CalendarCurrentMonthEventsCache::invalidate();
+				CalendarServices::clear_cache();
 			}
 
 			$category = $this->event->get_content()->get_category();

@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 11 11
+ * @version   	PHPBoost 5.2 - last update: 2019 12 16
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -415,8 +415,7 @@ class CalendarFormController extends ModuleController
 
 		$this->contribution_actions($event, $id_event);
 
-		Feed::clear_cache('calendar');
-		CalendarCurrentMonthEventsCache::invalidate();
+		CalendarServices::clear_cache();
 	}
 
 	private function set_event_start_and_end_date(CalendarEvent $event, $new_start_date, $new_end_date)
