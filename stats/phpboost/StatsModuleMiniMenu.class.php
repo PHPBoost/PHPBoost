@@ -24,7 +24,7 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 	{
 		global $LANG;
 		load_module_lang('stats');
-		return $LANG['stats'];
+		return $LANG['stats.module.title'];
 	}
 
 	public function is_displayed()

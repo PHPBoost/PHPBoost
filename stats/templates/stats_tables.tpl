@@ -1,19 +1,19 @@
 <table class="table-no-header">
 	<tbody>
 		<tr>
-			<td class="no-separator">
+			<td>
 				# IF C_REFERER #<a href="{FULL_URL}">{RELATIVE_URL}</a># ELSE #{FULL_URL}# ENDIF #
 			</td>
-			<td class="no-separator total-head">
+			<td class="total-head">
 				{TOTAL_VISIT}
 			</td>
-			<td class="no-separator average-head">
+			<td class="average-head">
 				{AVERAGE}
 			</td>
-			<td class="no-separator last-update-head">
+			<td class="last-update-head">
 				{LAST_UPDATE}
 			</td>
-			<td class="no-separator trend-head">
+			<td class="trend-head">
 				# IF C_PICTURE #<i class="fa fa-trend-{PICTURE}" aria-hidden="true"></i> # ENDIF #({SIGN}{TREND}%)
 			</td>
 		</tr>

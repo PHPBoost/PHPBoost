@@ -25,6 +25,7 @@ $browser = (bool)retrieve(GET, 'browser', false);
 $os = (bool)retrieve(GET, 'os', false);
 $all = (bool)retrieve(GET, 'all', false);
 $user_lang = (bool)retrieve(GET, 'lang', false);
+$bot = (bool)retrieve(GET, 'bot', false);
 
 $l_title = $LANG['site'];
 $l_title = ($visit || $visit_year) ? $LANG['guest_s'] : $l_title;
@@ -35,10 +36,11 @@ $l_title = $members ? $LANG['member_s'] : $l_title;
 $l_title = $browser ? $LANG['browser_s'] : $l_title;
 $l_title = $os ? $LANG['os'] : $l_title;
 $l_title = $user_lang ? $LANG['stat_lang'] : $l_title;
+$l_title = $bot ? $LANG['robots'] : $l_title;
 $l_title = !empty($l_title) ? $l_title : '';
 
 if (!empty($l_title))
-	$Bread_crumb->add($LANG['stats'], url('stats.php'));
+	$Bread_crumb->add($LANG['stats.module.title'], url('stats.php'));
 	$Bread_crumb->add($l_title, '');
-define('TITLE', $LANG['stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));
+define('TITLE', $LANG['stats.module.title'] . (!empty($l_title) ? ' - ' . $l_title : ''));
 ?>

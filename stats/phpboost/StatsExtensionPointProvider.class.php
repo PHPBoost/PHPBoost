@@ -29,7 +29,12 @@ class StatsExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new StatsMenusExtensionPoint();
+		return new ModuleMenus(array(new StatsModuleMiniMenu()));
+	}
+
+	public function tree_links()
+	{
+		return new StatsTreeLinks();
 	}
 
 	public function scheduled_jobs()

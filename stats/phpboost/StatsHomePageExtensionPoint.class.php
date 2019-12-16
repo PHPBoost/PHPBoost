@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 08 02
+ * @version   	PHPBoost 5.3 - last update: 2019 12 16
  * @since   	PHPBoost 3.0 - 2012 02 08
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -29,42 +29,44 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 		load_module_lang('stats');
 
-		return $LANG['stats'];
+		return $LANG['stats.module.title'];
 	}
 
 	private function get_view()
 	{
 		$this->check_authorizations();
 
-		global $LANG, $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
+		global $LANG, $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang, $bot;
 
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 
 		$tpl = new FileTemplate('stats/stats.tpl');
 
 		$date_lang = LangLoader::get('date-common');
-		$_NBR_ELEMENTS_PER_PAGE = 15;
+		$_NBR_ELEMENTS_PER_PAGE = StatsConfig::load()->get_elements_number_per_page();
 
 		$tpl->put_all(array(
-			'U_STATS_SITE' => url('.php?site=1', '-site.php'),
-			'U_STATS_USERS' => url('.php?members=1', '-members.php'),
-			'U_STATS_VISIT' => url('.php?visit=1', '-visit.php'),
-			'U_STATS_PAGES' => url('.php?pages=1', '-pages.php'),
+			'U_STATS_SITE'    => url('.php?site=1', '-site.php'),
+			'U_STATS_USERS'   => url('.php?members=1', '-members.php'),
+			'U_STATS_VISIT'   => url('.php?visit=1', '-visit.php'),
+			'U_STATS_PAGES'   => url('.php?pages=1', '-pages.php'),
 			'U_STATS_REFERER' => url('.php?referer=1', '-referer.php'),
 			'U_STATS_KEYWORD' => url('.php?keyword=1', '-keyword.php'),
 			'U_STATS_BROWSER' => url('.php?browser=1', '-browser.php'),
-			'U_STATS_OS' => url('.php?os=1', '-os.php'),
-			'U_STATS_LANG' => url('.php?lang=1', '-lang.php'),
-			'L_SITE' => $LANG['site'],
-			'L_STATS' => $LANG['stats'],
-			'L_USERS' => $LANG['member_s'],
-			'L_VISITS' => $LANG['guest_s'],
-			'L_PAGES' => $LANG['page_s'],
-			'L_REFERER' => $LANG['referer_s'],
-			'L_KEYWORD' => $LANG['keyword_s'],
+			'U_STATS_OS'      => url('.php?os=1', '-os.php'),
+			'U_STATS_LANG'    => url('.php?lang=1', '-lang.php'),
+			'U_STATS_ROBOTS'  => url('.php?bot=1', '-bot.php'),
+			'L_SITE'     => $LANG['site'],
+			'L_STATS'    => $LANG['stats.module.title'],
+			'L_USERS'    => $LANG['member_s'],
+			'L_VISITS'   => $LANG['guest_s'],
+			'L_PAGES'    => $LANG['page_s'],
+			'L_REFERER'  => $LANG['referer_s'],
+			'L_KEYWORD'  => $LANG['keyword_s'],
 			'L_BROWSERS' => $LANG['browser_s'],
-			'L_OS' => $LANG['os'],
-			'L_LANG' => $LANG['stat_lang']
+			'L_ROBOTS'   => $LANG['robot_s'],
+			'L_OS'       => $LANG['os'],
+			'L_LANG'     => $LANG['stat_lang']
 		));
 
 		if ($members)
@@ -189,7 +191,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_TODAY' => $date_lang['today'],
 				'L_TOTAL' => $LANG['total'],
 				'L_AVERAGE' => $LANG['average'],
-				'L_VISITORS' => $LANG['guest_s'] . ':',
+				'L_VISITORS' => $LANG['guest_s'],
 				'L_VISITS_DAY' => $LANG['guest_s'],
 				'L_DAY' => $date_lang['date'],
 				'L_MONTH' => $date_lang['month'],
@@ -1012,6 +1014,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
 			$pagination->set_url(new Url('/stats/stats.php?referer=1&amp;p=%d'));
+Debug::dump($_NBR_ELEMENTS_PER_PAGE);
 
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{
@@ -1066,7 +1069,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
 			$pagination->set_url(new Url('/stats/stats.php?keyword=1&amp;p=%d'));
-
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
@@ -1154,7 +1156,6 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$path = 'countries/';
 			}
 
-
 			$Stats = new ImagesStats();
 
 			$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
@@ -1200,6 +1201,46 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
 				));
 			}
+		}
+		elseif ($bot)
+		{
+			$array_robot = StatsSaver::retrieve_stats('robots');
+			if (isset($array_robot['unknow_bot']))
+			{
+				$array_robot[$LANG['unknown']] = $array_robot['unknow_bot'];
+				unset($array_robot['unknow_bot']);
+			}
+			$robots_visits_number = 0;
+			foreach ($array_robot as $key => $value)
+			{
+				$robots_visits_number += $value;
+			}
+
+			if ($robots_visits_number)
+			{
+				$Stats = new ImagesStats();
+				$Stats->load_data($array_robot, 'ellipse');
+				foreach ($Stats->data_stats as $key => $angle_value)
+				{
+						$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+						$tpl->assign_block_vars('list', array(
+							'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
+							'VIEWS' => $array_robot[$key],
+							'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
+							'L_NAME' => $key
+						));
+				}
+			}
+
+			$tpl->put_all(array(
+				'C_STATS_ROBOTS' => true,
+				'C_ROBOTS_DATA' => $robots_visits_number,
+				'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
+				'L_ERASE' => $LANG['erase'],
+				'L_COLORS' => $LANG['colors'],
+				'L_VIEW_NUMBER' => $LANG['number_r_visit'],
+				'L_LAST_UPDATE' => $LANG['last_update']
+			));
 		}
 		else
 		{

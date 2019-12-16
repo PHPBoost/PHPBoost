@@ -23,7 +23,7 @@
 }
 
 #menustats.opened ul{
-	height: 280px;
+	height: auto;
 	opacity: 1;
 	visibility: visible;
 	transition: 0.3s
@@ -60,23 +60,7 @@
 	}
 
 	#menustats li span {
-		position: absolute;
-		top: 100%;
-		left: -50%;
-		display: block;
-		width: 200%;
-		opacity: 0;
-		visibility: hidden;
-		transition: all .3s ease 0s;
-		white-space: nowrap;
-		text-align: center;
-	}
-
-	#menustats li:hover span {
-		top: 80%;
-		opacity: 1;
-		visibility: visible;
-		transition: all .5s ease 0s;
+		display: none;
 	}
 }
 
@@ -112,8 +96,8 @@
 
 .stats-color-square {
 	margin: auto;
-	height: 0.618em;
-	width: 0.618em;
+	height: 1.618em;
+	width: 1.618em;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #000000;

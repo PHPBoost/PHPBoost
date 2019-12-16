@@ -13,7 +13,7 @@
 #                    French                       #
 ####################################################
 
-$LANG['stats'] = 'Statistiques';
+$LANG['stats.module.title'] = 'Statistiques';
 $LANG['more_stats'] = 'Plus de stats';
 $LANG['last_member'] = 'Dernier membre';
 $LANG['percentage'] = 'Pourcentage';
@@ -21,6 +21,9 @@ $LANG['member_registered'] = '<strong>%d</strong> membre inscrit';
 $LANG['member_registered_s'] = '<strong>%d</strong> membres inscrits';
 $LANG['admin.authorizations'] = 'Autorisations';
 $LANG['admin.authorizations.read'] = 'Autorisation d\'afficher les statistiques';
+$LANG['config.elements.number.per.page'] = 'Nombre d\'éléments par page';
+$LANG['config.elements.number.per.page.explain'] = 'Pour les sites référents et les mots clés.';
+$LANG['config.require.elements.number'] = 'Le nombre d\'éléments par page ne peut pas être nul.';
 
 //Robots
 $LANG['robot'] = 'Robot';
@@ -30,7 +33,6 @@ $LANG['erase_rapport'] = 'Effacer le rapport';
 $LANG['number_r_visit'] = 'Nombre de visite(s)';
 
 //Statistiques
-$LANG['stats'] = 'Statistiques';
 $LANG['more_stats'] = 'Plus de stats';
 $LANG['site'] = 'Site';
 $LANG['referer_s'] = 'Sites référents';

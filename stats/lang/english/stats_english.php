@@ -13,7 +13,7 @@
 #                    English                       #
 ####################################################
 
-$LANG['stats'] = 'Statistics';
+$LANG['stats.module.title'] = 'Statistics';
 $LANG['more_stats'] = 'More statistics';
 $LANG['last_member'] = 'Latest member';
 $LANG['percentage'] = 'Percentage';
@@ -21,6 +21,9 @@ $LANG['member_registered'] = '<strong>%d</strong> registered member';
 $LANG['member_registered_s'] = '<strong>%d</strong> registered members';
 $LANG['admin.authorizations'] = 'Permissions';
 $LANG['admin.authorizations.read'] = 'Permission to display the statistics';
+$LANG['config.elements.number.per.page'] = 'Elements number per page';
+$LANG['config.elements.number.per.page.explain'] = 'For referent websites and keywords.';
+$LANG['config.require.elements.number'] = 'The number of elements per page can\'t be null.';
 
 
 //Robots
@@ -31,7 +34,6 @@ $LANG['erase_rapport'] = 'Erase rapport';
 $LANG['number_r_visit'] = 'Number of views';
 
 //Stats
-$LANG['stats'] = 'Stats';
 $LANG['more_stats'] = 'More stats';
 $LANG['site'] = 'Site';
 $LANG['referer_s'] = 'Referent websites';
