@@ -73,7 +73,7 @@ class ArticlesService
 	public static function clear_cache()
 	{
 		Feed::clear_cache('articles');
-		ArticlesCategoriesCache::invalidate();
+		CategoriesService::get_categories_manager()->regenerate_cache();
 		ArticlesKeywordsCache::invalidate();
 	}
 
