@@ -30,7 +30,7 @@ class ArticlesScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 			if ($is_modified)
 			{
-				ArticlesServices::clear_cache();
+				ArticlesService::clear_cache();
 
 				$config->set_deferred_operations($deferred_operations);
 				ArticlesConfig::save();

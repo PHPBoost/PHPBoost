@@ -175,7 +175,7 @@ class CalendarEventsListController extends ModuleController
 				}
 			}
 
-			CalendarServices::clear_cache();
+			CalendarService::clear_cache();
 			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}

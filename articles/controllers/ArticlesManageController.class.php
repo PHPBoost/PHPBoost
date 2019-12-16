@@ -138,7 +138,7 @@ class ArticlesManageController extends ModuleController
 				}
 			}
 
-			ArticlesServices::clear_cache();
+			ArticlesService::clear_cache();
 			
 			AppContext::get_response()->redirect(ArticlesUrlBuilder::manage_articles(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}

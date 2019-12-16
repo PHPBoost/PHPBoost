@@ -140,7 +140,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		CalendarConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
-		CalendarServices::clear_cache();
+		CalendarService::clear_cache();
 	}
 }
 ?>

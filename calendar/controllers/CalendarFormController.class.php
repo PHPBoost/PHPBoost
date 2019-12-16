@@ -415,7 +415,7 @@ class CalendarFormController extends ModuleController
 
 		$this->contribution_actions($event, $id_event);
 
-		CalendarServices::clear_cache();
+		CalendarService::clear_cache();
 	}
 
 	private function set_event_start_and_end_date(CalendarEvent $event, $new_start_date, $new_end_date)

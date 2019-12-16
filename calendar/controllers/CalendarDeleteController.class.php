@@ -121,7 +121,7 @@ class CalendarDeleteController extends ModuleController
 			}
 		}
 
-		CalendarServices::clear_cache();
+		CalendarService::clear_cache();
 	}
 
 	private function check_authorizations()

@@ -24,7 +24,7 @@ class ArticlesDeleteController extends ModuleController
 		}
 
 		ArticlesService::delete($article->get_id());
-		ArticlesServices::clear_cache();
+		ArticlesService::clear_cache();
 
 		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($article->get_category()->get_id(), $article->get_category()->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->rel()) ? $request->get_url_referrer() : ArticlesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('articles.message.success.delete', 'common', 'articles'), array('title' => $article->get_title())));
 	}

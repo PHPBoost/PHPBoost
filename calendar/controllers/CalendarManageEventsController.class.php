@@ -134,7 +134,7 @@ class CalendarManageEventsController extends AdminModuleController
 				}
 			}
 
-			CalendarServices::clear_cache();
+			CalendarService::clear_cache();
 			
 			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}

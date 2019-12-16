@@ -436,7 +436,7 @@ class ArticlesFormController extends ModuleController
 
 		ArticlesService::get_keywords_manager()->put_relations($id_article, $this->form->get_value('keywords'));
 
-		ArticlesServices::clear_cache();
+		ArticlesService::clear_cache();
 	}
 
 	private function contribution_actions(Article $article, $id_article)

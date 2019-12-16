@@ -25,7 +25,7 @@ class CalendarSuscribeController extends ModuleController
 			if (!in_array($current_user_id, array_keys($this->event->get_participants())))
 			{
 				CalendarService::add_participant($event_id, $current_user_id);
-				CalendarServices::clear_cache();
+				CalendarService::clear_cache();
 			}
 
 			$category = $this->event->get_content()->get_category();
