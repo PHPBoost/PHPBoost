@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 5.2 - last update: 2017 03 26
@@ -69,18 +69,20 @@ $LANG['last_update'] = 'Last visit';
 //Navigateurs.
 global $stats_array_browsers;
 $stats_array_browsers = array(
+	'chrome' => array('Chrome', 'chrome.png'),
+	'chromium' => array('Chromium', 'chromium.png'),
 	'edge' => array('Edge', 'edge.png'),
+	'firefox' => array('Firefox', 'firefox.png'),
 	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
 	'opera' => array('Opera', 'opera.png'),
-	'firefox' => array('Firefox', 'firefox.png'),
 	'safari' => array('Safari', 'safari.png'),
-	'chrome' => array('Chrome', 'chrome.png'),
 	'konqueror' => array('Konqueror', ''),
-	'netscape' => array('Netscape', ''),
 	'mozilla' => array('Mozilla', ''),
-	'aol' => array('Aol', ''),
-	'lynx' => array('Lynx', ''),
 	'seamonkey' => array('SeaMonkey', 'seamonkey.png'),
+
+	'aol' => array('Aol - 2006', ''),
+	'netscape' => array('Netscape', ''),
+	'lynx' => array('Lynx', ''),
 	'camino' => array('Camino', ''),
 	'links' => array('Links', ''),
 	'galeon' => array('Galeaon', ''),

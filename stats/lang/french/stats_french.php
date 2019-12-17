@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 5.2 - last update: 2017 03 26
@@ -68,24 +68,27 @@ $LANG['last_update'] = 'Dernière visite';
 //Navigateurs.
 global $stats_array_browsers;
 $stats_array_browsers = array(
-	'edge' => array('Edge', 'edge.png'),
-	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
-	'opera' => array('Opera', 'opera.png'),
-	'firefox' => array('Firefox', 'firefox.png'),
-	'safari' => array('Safari', 'safari.png'),
 	'chrome' => array('Chrome', 'chrome.png'),
+	'chromium' => array('Chromium', 'chromium.png'),
+	'edge' => array('Edge', 'edge.png'),
+	'firefox' => array('Firefox', 'firefox.png'),
+	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
+	'maxthon' => array('Maxthon', 'maxthon.png'),
+	'opera' => array('Opera', 'opera.png'),
+	'safari' => array('Safari', 'safari.png'),
 	'konqueror' => array('Konqueror', ''),
-	'netscape' => array('Netscape', ''),
 	'mozilla' => array('Mozilla', ''),
-	'aol' => array('Aol', ''),
-	'lynx' => array('lynx', ''),
 	'seamonkey' => array('SeaMonkey', 'seamonkey.png'),
+
+	'aol' => array('Aol - 2006', ''),
+	'k-meleon' => array('K-meleon - 2015', ''),
+	'netscape' => array('Netscape - 2008', ''),
+	'lynx' => array('Lynx', ''),
 	'camino' => array('Camino', ''),
 	'links' => array('Links', ''),
 	'galeon' => array('Galeaon', ''),
 	'phoenix' => array('Phoenix', ''),
 	'chimera' => array('Chimera', ''),
-	'k-meleon' => array('K-meleon', ''),
 	'icab' => array('Icab', ''),
 	'ncsa mosaic'=> array('Ncsa mosaic', ''),
 	'amaya'	=> array('Amaya', ''),

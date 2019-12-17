@@ -1,6 +1,6 @@
 /**
  * Responsive dropdown Menu jQuery plugin - Version: 1.0.2
- * @copyright   &copy; 2005-2019 PHPBoost - 2015 CssMenuMaker
+ * @copyright   &copy; 2005-2020 PHPBoost - 2015 CssMenuMaker
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      CssMenuMaker
  * @link        https://app.cssmenumaker.com/?theme_id=8
