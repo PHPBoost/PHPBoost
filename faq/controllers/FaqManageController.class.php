@@ -7,12 +7,16 @@
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class FaqManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
+    
+    private $elements_number = 0;
+    private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -21,6 +25,8 @@ class FaqManageController extends AdminModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
+        
+        $this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
 	}
@@ -61,6 +67,9 @@ class FaqManageController extends AdminModuleController
 			$faq_question->set_properties($row);
 			$category = $faq_question->get_category();
 			$user = $faq_question->get_author_user();
+            
+            $this->elements_number++;
+			$this->ids[$this->elements_number] = $faq_question->get_id();
 
 			$edit_link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
@@ -88,8 +97,29 @@ class FaqManageController extends AdminModuleController
 
 		return $table->get_page_number();
 	}
+    
+    private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+    {
+        if ($request->get_string('delete-selected-elements', false))
+        {
+            for ($i = 1; $i <= $this->elements_number; $i++)
+            {
+                if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+                {
+                    if (isset($this->ids[$i]))
+                    {
+                        FaqService::delete($this->ids[$i]);
+                    }
+                }
+            }
 
-	private function check_authorizations()
+            FaqService::clear_cache();
+
+            AppContext::get_response()->redirect(FaqUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+        }
+    }
+
+    private function check_authorizations()
 	{
 		if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
 		{

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 12
+ * @version     PHPBoost 5.3 - last update: 2019 12 17
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class FaqFormController extends ModuleController
@@ -196,9 +197,7 @@ class FaqFormController extends ModuleController
 
 		$this->contribution_actions($faq_question, $id);
 
-		Feed::clear_cache('faq');
-		FaqCache::invalidate();
-		FaqCategoriesCache::invalidate();
+		FaqService::clear_cache();
 	}
 
 	private function contribution_actions(FaqQuestion $faq_question, $id)

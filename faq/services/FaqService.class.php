@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 08
+ * @version     PHPBoost 5.3 - last update: 2019 12 17
  * @since       PHPBoost 4.0 - 2014 09 02
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class FaqService
@@ -50,9 +51,15 @@ class FaqService
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function delete($condition, array $parameters)
+	public static function delete(int $id)
 	{
-		self::$db_querier->delete(FaqSetup::$faq_table, $condition, $parameters);
+        if (AppContext::get_current_user()->is_readonly())
+        {
+            $controller = PHPBoostErrors::user_in_read_only();
+            DispatchManager::redirect($controller);
+        }
+
+        self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', array('id' => $id));
 	}
 
 	 /**
@@ -70,6 +77,12 @@ class FaqService
 		$faq_question = new FaqQuestion();
 		$faq_question->set_properties($row);
 		return $faq_question;
+	}
+    
+    public static function clear_cache()
+	{
+		Feed::clear_cache('faq');
+        CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 
 	 /**
