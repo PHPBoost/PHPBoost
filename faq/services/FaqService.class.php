@@ -60,6 +60,8 @@ class FaqService
         }
 
         self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', array('id' => $id));
+        
+        PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $question->get_id()));
 	}
 
 	 /**
@@ -82,6 +84,7 @@ class FaqService
     public static function clear_cache()
 	{
 		Feed::clear_cache('faq');
+        FaqCache::invalidate();
         CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 

@@ -13,7 +13,7 @@
 class FaqManageController extends AdminModuleController
 {
 	private $lang;
-	private $view;
+    private $view;
     
     private $elements_number = 0;
     private $ids = array();
@@ -64,18 +64,18 @@ class FaqManageController extends AdminModuleController
 		foreach ($result as $row)
 		{
 			$faq_question = new FaqQuestion();
-			$faq_question->set_properties($row);
-			$category = $faq_question->get_category();
-			$user = $faq_question->get_author_user();
-            
+            $faq_question->set_properties($row);
+            $category = $faq_question->get_category();
+            $user = $faq_question->get_author_user();
+
             $this->elements_number++;
-			$this->ids[$this->elements_number] = $faq_question->get_id();
+            $this->ids[$this->elements_number] = $faq_question->get_id();
 
-			$edit_link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
-			$delete_link = new LinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+            $edit_link = new LinkHTMLElement(FaqUrlBuilder::edit($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+            $delete_link = new LinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
 
-			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+            $user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+            $author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_question()), 'left'),
