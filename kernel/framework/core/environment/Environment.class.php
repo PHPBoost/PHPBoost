@@ -5,10 +5,10 @@
  * users management...) as well as the graphical environment.</p>
  * @package     Core
  * @subpackage  Environment
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 26
+ * @version     PHPBoost 5.3 - last update: 2019 03 26
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>

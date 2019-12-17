@@ -5,7 +5,7 @@
  * @subpackage  DBAL\Types
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
- * @version     PHPBoost 5.2 - last update: 2013 01 01
+ * @version     PHPBoost 5.3 - last update: 2013 01 01
  * @since       PHPBoost 4.0 - 2013 01 01
 */
 

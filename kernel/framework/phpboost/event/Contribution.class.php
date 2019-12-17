@@ -4,10 +4,10 @@
  * All the contributions are managed in the contribution panel.
  * @package     PHPBoost
  * @subpackage  Event
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */

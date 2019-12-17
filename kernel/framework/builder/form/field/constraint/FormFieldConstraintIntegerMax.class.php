@@ -2,10 +2,10 @@
 /**
  * @package     Builder
  * @subpackage  Form\field\constraint
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2016 10 24
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>

@@ -3,10 +3,10 @@
  * This class enables you to retrieve easily a date entered by a user.
  * If the user isn't in the same timezone as the server, the hour will be automatically recomputed.
  * @package     Util
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 19
+ * @version     PHPBoost 5.3 - last update: 2018 11 19
  * @since       PHPBoost 2.0 - 2008 06 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

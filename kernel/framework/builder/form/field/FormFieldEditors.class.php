@@ -2,10 +2,10 @@
 /**
  * @package     Builder
  * @subpackage  Form\field
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 06 03
+ * @version     PHPBoost 5.3 - last update: 2018 06 03
  * @since       PHPBoost 3.0 - 2011 09 26
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */

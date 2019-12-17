@@ -2,10 +2,10 @@
 /**
  * @package     PHPBoost
  * @subpackage  Menu\feed
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 03 26
+ * @version     PHPBoost 5.3 - last update: 2018 03 26
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>

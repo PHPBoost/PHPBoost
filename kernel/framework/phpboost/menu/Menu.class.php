@@ -3,10 +3,10 @@
  * This class represents a menu element and is used to build any kind of menu
  * @package     PHPBoost
  * @subpackage  Menu
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 07 26
+ * @version     PHPBoost 5.3 - last update: 2016 07 26
  * @since       PHPBoost 2.0 - 2008 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

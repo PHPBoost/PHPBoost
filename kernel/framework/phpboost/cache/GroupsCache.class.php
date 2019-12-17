@@ -3,10 +3,10 @@
  * This class contains the cache data of the groups which group users having common criteria.
  * @package     PHPBoost
  * @subpackage  Cache
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 05 28
+ * @version     PHPBoost 5.3 - last update: 2017 05 28
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>

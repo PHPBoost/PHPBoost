@@ -4,10 +4,10 @@
  * a formatting factory having the default settings.
  * @package     Content
  * @subpackage  Formatting
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 30
+ * @version     PHPBoost 5.3 - last update: 2018 11 30
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

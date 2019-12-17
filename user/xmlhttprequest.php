@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      ??
- * @version     PHPBoost 5.2 - last update: 2018 10 30
+ * @version     PHPBoost 5.3 - last update: 2018 10 30
  * @since       PHPBoost 3.0
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

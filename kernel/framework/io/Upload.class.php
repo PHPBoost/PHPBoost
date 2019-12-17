@@ -2,10 +2,10 @@
 /**
  * This class provides you methods to upload easily files to the ftp.
  * @package     IO
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 04
+ * @version     PHPBoost 5.3 - last update: 2019 10 04
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

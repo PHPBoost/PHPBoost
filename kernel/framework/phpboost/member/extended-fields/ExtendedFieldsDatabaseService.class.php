@@ -4,10 +4,10 @@
  * Indeed, for instance when a field is created, the data base structure must be updated throw an ALTER request.
  * @package     PHPBoost
  * @subpackage  Member\extended-fields
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 30
+ * @version     PHPBoost 5.3 - last update: 2016 10 30
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

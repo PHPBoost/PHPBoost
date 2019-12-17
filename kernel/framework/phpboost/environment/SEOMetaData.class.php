@@ -3,10 +3,10 @@
  * This class manage the meta tags ans title for the SEO
  * @package     PHPBoost
  * @subpackage  Environment
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 10 31
+ * @version     PHPBoost 5.3 - last update: 2018 10 31
  * @since       PHPBoost 3.0 - 2012 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

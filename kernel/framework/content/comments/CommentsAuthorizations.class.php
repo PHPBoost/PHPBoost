@@ -3,10 +3,10 @@
  * This class could be used to specified comments authorizations (access, read, post, moderation)
  * @package     Content
  * @subpackage  Comments
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2014 12 22
  * @since       PHPBoost 3.0 - 2010 04 01
 */
 

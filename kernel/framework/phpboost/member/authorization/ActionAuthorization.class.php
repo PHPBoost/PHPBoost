@@ -7,10 +7,10 @@
  * to use. It's recommanded to begin with 1 (2^0 = 1) then 2 (2^1 = 2) then 4 (2^2 = 4) etc...
  * @package     PHPBoost
  * @subpackage  Member\authorization
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 05
+ * @version     PHPBoost 5.3 - last update: 2018 11 05
  * @since       PHPBoost 3.0 - 2010 03 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

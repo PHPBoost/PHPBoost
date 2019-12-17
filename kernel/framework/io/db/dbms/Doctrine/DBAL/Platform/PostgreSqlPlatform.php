@@ -7,7 +7,7 @@
  * @link        https://www.doctrine-project.org
  * @author      Roman BORSCHEL <roman@code-factory.org>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @version     PHPBoost 5.3 - last update: 2016 10 28
  * @since       PHPBoost 4.0 - 2013 01 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

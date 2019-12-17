@@ -4,10 +4,10 @@
  * It also provides all moving and disabling methods to change the website appearance.
  * @package     PHPBoost
  * @subpackage  Menu
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 02 02
+ * @version     PHPBoost 5.3 - last update: 2018 02 02
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

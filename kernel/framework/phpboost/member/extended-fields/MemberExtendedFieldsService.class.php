@@ -3,10 +3,10 @@
  * This class is responsible for updated, displayed and registed of member extended fields.
  * @package     PHPBoost
  * @subpackage  Member\extended-fields
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 07 06
+ * @version     PHPBoost 5.3 - last update: 2017 07 06
  * @since       PHPBoost 3.0 - 2010 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

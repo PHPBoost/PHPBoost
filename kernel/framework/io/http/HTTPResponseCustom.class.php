@@ -3,10 +3,10 @@
  * Manages response via the HTTP protocol
  * @package     IO
  * @subpackage  HTTP
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2017 03 23
+ * @version     PHPBoost 5.3 - last update: 2017 03 23
  * @since       PHPBoost 3.0 - 2010 01 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
