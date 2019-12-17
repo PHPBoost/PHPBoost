@@ -16,13 +16,10 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('stats'); //Chargement de la langue du module.
 
-$request = AppContext::get_request();
+$stats_config = StatsConfig::load();
 
-$valid = $request->get_postvalue('valid', false);
-
-if ($valid)
+if (AppContext::get_request()->get_postvalue('valid', false))
 {
-	$stats_config = StatsConfig::load();
 	$stats_config->set_authorizations(Authorizations::build_auth_array_from_form(StatsAuthorizationsService::READ_AUTHORIZATIONS));
 	$stats_config->set_elements_number_per_page(retrieve(POST, 'elements_number', 15));
 	StatsConfig::save();
@@ -32,12 +29,9 @@ if ($valid)
 //Sinon on remplit le formulaire
 else
 {
-	$_NBR_ELEMENTS_PER_PAGE = StatsConfig::load()->get_elements_number_per_page();
-
 	$tpl = new FileTemplate('stats/admin_stats_management.tpl');
 
 	$tpl->put_all(array(
-		'L_CONFIG' => LangLoader::get_message('configuration', 'admin'),
 		'L_STATS' => $LANG['stats.module.title'],
 		'L_ELEMENTS_NUMBER_PER_PAGE' => $LANG['config.elements.number.per.page'],
 		'L_ELEMENTS_NUMBER_EXPLAIN' => $LANG['config.elements.number.per.page.explain'],
@@ -47,14 +41,10 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 
-		'ELEMENTS_NUMBER_PER_PAGE' => StatsConfig::load()->get_elements_number_per_page(),
-		'READ_AUTHORIZATION' => Authorizations::generate_select(StatsAuthorizationsService::READ_AUTHORIZATIONS, StatsConfig::load()->get_authorizations()),
+		'ELEMENTS_NUMBER_PER_PAGE' => $stats_config->get_elements_number_per_page(),
+		'READ_AUTHORIZATION' => Authorizations::generate_select(StatsAuthorizationsService::READ_AUTHORIZATIONS, $stats_config->get_authorizations()),
 	));
-
-	$date_lang = LangLoader::get('date-common');
-
-
-
+	
 	$tpl->display();
 }
 

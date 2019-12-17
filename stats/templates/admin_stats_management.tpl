@@ -26,7 +26,7 @@
 <div id="admin-contents">
 	<form action="admin_stats.php" method="post" class="fieldset-content" onsubmit="return check_form();">
 		<fieldset>
-			<legend>{L_CONFIG}: {L_STATS}</legend>
+			<legend>${LangLoader::get_message('configuration', 'admin')}: {L_STATS}</legend>
 			<div class="fieldset-inset">
 				<div id="AdminStatsElementNumberPerPage" class="form-element">
 					<label for="">{L_ELEMENTS_NUMBER_PER_PAGE}<span class="field-description">{L_ELEMENTS_NUMBER_EXPLAIN}</span></label>
