@@ -1,209 +1,109 @@
 :root {
-
-    --color-main   : #366493;
-    --color-option : #E2A447;
-
-    --txt-dark     : #202020;
-    --txt-medium   : #353535;
-    --txt-light    : #555555;
+    --txt-main    : #555555;
 
     --bgc-main     : #FFFFFF;
     --bgc-option   : #ECF2F8;
 
-    --bdr-main     : #DDDDDD;
-    --bdr-option   : #366493;
+    --bdr-main     : #dce1e6;
 
-    --notice-main        : #888888;
-    --notice-bgc         : rgba(136, 136, 136, 0.2);
+    --darken : 0, 0, 0;
+    --lighten: 255, 255, 255;
 
-    --question-main      : #0066CC;
-    --question-bgc       : rgba(0, 102, 204, 0.2);
+/* main */
+    --main-rgb     : 50, 100, 147;
+    --main-dark    : #366493;
+    --main-light   : #4e8ec1;
 
-    --success-main       : #4D9136;
-    --success-bgc        : rgba(77, 145, 54, 0.2);
+/* error */
+    --ruby-rgb     : 191, 38, 60;
+    --ruby-dark    : #bf263c;
+    --ruby-light   : #d84258;
 
-    --warning-main       : #D36636;
-    --warning-bgc        : rgba(210, 102, 54, 0.2);
+    --cherry-rgb   : 218, 68, 83;
+    --cherry-dark  : #da4453;
+    --cherry-light : #ed6474;
 
-    --error-main         : #913636;
-    --error-bgc          : rgba(145, 54, 54, 0.2);
+/* warning */
+    --tango-rgb    : 233, 87, 63;
+    --tango-dark   : #e9573f;
+    --tango-light  : #fc7d5f;
 
-    --member-main        : #2F9674;
-    --member-bgc         : rgba(47, 150, 116, 0.2);
+    --sun-rgb      : 246, 187, 66;
+    --sun-dark     : #f6bb42;
+    --sun-light    : #ffdd64;
 
-    --moderator-main     : #48419D;
-    --moderator-bgc      : rgba(72, 65, 157, 0.2);
+/* alt */
+    --straw-rgb    : 224, 195, 65;
+    --straw-dark   : #e0c341;
+    --straw-light  : #e8e15f;
 
-    --administrator-main : #353535;
-    --administrator-bgc  : rgba(54, 54, 54, 0.2);
+    --grass-rgb    : 140, 193, 82;
+    --grass-dark   : #8cc152;
+    --grass-light  : #a0e378;
 
-    /*
-     * bc = secondary adjacent color #paletton.com
-     * hex : #2F9674
-     * rgb : rgb(47, 150, 116)
-     * hsl : hsl(160, 52%, 39%)
-    */
+/* success */
+    --basil-rgb    : 42, 186, 102;
+    --basil-dark   : #2aba66;
+    --basil-light  : #2edc82;
 
-    --bc-prime-darker: #096A4A;
-    --bc-prime-dark  : #168661;
-    --bc-prime-soft  : #2F9674;
-    --bc-prime-light  : #4CAA8B;
-    --bc-prime-lightr : #7CCAB0;
+/* member */
+    --mint-rgb     : 72, 252, 173;
+    --mint-dark    : #48fcad;
+    --mint-light   : #48debe;
 
-    /*
-     * ad = tertiary adjacent color #paletton.com
-     * hex : #48419D
-     * rgb : rgb(72, 65, 157)
-     * hsl : hsl(245, 41%, 44%)
-    */
+    --teal-rgb     : 125, 177, 177;
+    --teal-dark    : #7db1b1;
+    --teal-light   : #a0dcdc;
 
-    --ad-prime-darker: #1E186E;
-    --ad-prime-dark  : #2E278C;
-    --ad-prime-soft  : #48419D;
-    --ad-prime-light  : #635DB2;
-    --ad-prime-lightr : #8F8ACF;
+/* question */
+    --aqua-rgb     : 59, 175, 218;
+    --aqua-dark    : #3bafda;
+    --aqua-light   : #afd2fa;
 
-    /*
-     * comp = complementary adjacent color #paletton.com
-     * hex : #48419D
-     * rgb : rgb(72, 65, 157)
-     * hsl : hsl(245, 41%, 44%)
-    */
+    --jeans-rgb    : 74, 137, 221;
+    --jeans-dark   : #4a89dc;
+    --jeans-light  : #5daafa;
 
-    --comp-prime-darker: #A96E16;
-    --comp-prime-dark  : #D38D24;
-    --comp-prime-soft  : #E2A447;
-    --comp-prime-light  : #FBC169;
-    --comp-prime-lightr : #FFD18C;
+/* moderator */
+    --lotus-rgb   : 150, 122, 221;
+    --lotus-dark  : #967adc;
+    --lotus-light : #aca0fa;
 
-    /*
-     * Light on overlay
-    */
+    --plum-rgb     : 106, 80, 167;
+    --plum-dark    : #6a50a7;
+    --plum-light   : #8078c8;
 
-    --rgba-darker-05: rgba(0, 0, 0, 0.05);
-    --rgba-darker-10: rgba(0, 0, 0, 0.10);
-    --rgba-darker-20: rgba(0, 0, 0, 0.20);
-    --rgba-darker-30: rgba(0, 0, 0, 0.30);
-    --rgba-darker-40: rgba(0, 0, 0, 0.40);
-    --rgba-darker-50: rgba(0, 0, 0, 0.50);
-    --rgba-darker-60: rgba(0, 0, 0, 0.60);
-    --rgba-darker-70: rgba(0, 0, 0, 0.70);
-    --rgba-darker-80: rgba(0, 0, 0, 0.80);
-    --rgba-darker-90: rgba(0, 0, 0, 0.90);
-    --rgba-darker-00: rgba(0, 0, 0, 1);
+    --candy-rgb    : 215, 112, 173;
+    --candy-dark   : #d770ad;
+    --candy-light  : #ec96d2;
 
-    --rgba-lightr-05: rgba(255, 255, 255, 0.05);
-    --rgba-lightr-10: rgba(255, 255, 255, 0.10);
-    --rgba-lightr-20: rgba(255, 255, 255, 0.20);
-    --rgba-lightr-30: rgba(255, 255, 255, 0.30);
-    --rgba-lightr-40: rgba(255, 255, 255, 0.40);
-    --rgba-lightr-50: rgba(255, 255, 255, 0.50);
-    --rgba-lightr-60: rgba(255, 255, 255, 0.60);
-    --rgba-lightr-70: rgba(255, 255, 255, 0.70);
-    --rgba-lightr-80: rgba(255, 255, 255, 0.80);
-    --rgba-lightr-90: rgba(255, 255, 255, 0.90);
-    --rgba-lightr-00: rgba(255, 255, 255, 1);
+    --bear-rgb     : 170, 142, 105;
+    --bear-dark    : #aa8e69;
+    --bear-light   : #bab496;
 
-    /*
-     * prime = phpboost primary color :
-     * hex : #366493
-     * rgb : rgb(54, 100, 147)
-     * hsl : hsl(210, 46%, 39%)
-    */
+    --gravel-rgb   : 122, 112, 99;
+    --gravel-dark  : #7b7163;
+    --gravel-light : #8e9182;
 
-    --rgba-prime-05: rgba(54, 100, 147, 0.05);
-    --rgba-prime-10: rgba(54, 100, 147, 0.1);
-    --rgba-prime-20: rgba(54, 100, 147, 0.2);
-    --rgba-prime-30: rgba(54, 100, 147, 0.3);
-    --rgba-prime-40: rgba(54, 100, 147, 0.4);
-    --rgba-prime-50: rgba(54, 100, 147, 0.5);
-    --rgba-prime-60: rgba(54, 100, 147, 0.6);
-    --rgba-prime-70: rgba(54, 100, 147, 0.7);
-    --rgba-prime-80: rgba(54, 100, 147, 0.8);
-    --rgba-prime-90: rgba(54, 100, 147, 0.9);
-    --rgba-prime-00: rgba(54, 100, 147, 1);
+    --bole-rgb     : 80, 52, 44;
+    --bole-dark    : #50342c;
+    --bole-light   : #625046;
 
-    /*
-     * light-prime = lightness of primary color
-     * main = light-prime-40
-    */
+    --polar-rgb    : 245, 247, 250;
+    --polar-dark   : #e1e1e1;
+    --polar-light  : #f5f7fa;
 
-    --light-prime-05:  #070D13;
-    --light-prime-10:  #0E1A25;
-    --light-prime-15:  #152638;
-    --light-prime-20:  #1C334A;
-    --light-prime-25:  #22405D;
-    --light-prime-30:  #294D70;
-    --light-prime-35:  #305982;
-    --light-prime-40:  #366493;
-    --light-prime-45:  #3E73A8;
-    --light-prime-50:  #4580BA;
-    --light-prime-55:  #578CC1;
-    --light-prime-60:  #6A99C8;
-    --light-prime-65:  #7DA6CF;
-    --light-prime-70:  #8FB3D6;
-    --light-prime-75:  #A2BFDD;
-    --light-prime-80:  #B5CCE3;
-    --light-prime-85:  #C7D9EA;
-    --light-prime-90:  #DAE6F1;
-    --light-prime-95:  #ECF2F8;
+/* notice */
+    --mouse-rgb    : 170, 178, 189;
+    --mouse-dark   : #aab2bd;
+    --mouse-light  : #dce1e6;
 
-    /*
-     * sat-prime = saturation of primary color
-     * main = sat-prime-45
-    */
+    --cloud-rgb    : 67, 74, 84;
+    --cloud-dark   : #434a54;
+    --cloud-light  : #747d87;
 
-    --sat-prime-00 : #636363;
-    --sat-prime-05 : #5E6368;
-    --sat-prime-10 : #5A636D;
-    --sat-prime-15 : #556372;
-    --sat-prime-20 : #506377;
-    --sat-prime-25 : #4B637C;
-    --sat-prime-30 : #466381;
-    --sat-prime-35 : #416386;
-    --sat-prime-40 : #3C638B;
-    --sat-prime-45 : #366493;
-    --sat-prime-50 : #326395;
-    --sat-prime-55 : #2D639A;
-    --sat-prime-60 : #28639F;
-    --sat-prime-65 : #2363A4;
-    --sat-prime-70 : #1E63A9;
-    --sat-prime-75 : #1963AE;
-    --sat-prime-80 : #1463B3;
-    --sat-prime-85 : #0F63B8;
-    --sat-prime-90 : #0A63BD;
-    --sat-prime-95 : #0563C2;
-    --sat-prime-100: #0066CC;
-
-    /*
-     * hue-prime = hue of primary color
-     * main = hue-prime-210
-    */
-
-    --hue-prime-000: #913636;
-    --hue-prime-015: #D36636;
-    --hue-prime-030: #916336;
-    --hue-prime-045: #917A36;
-    --hue-prime-060: #919136;
-    --hue-prime-075: #7A9136;
-    --hue-prime-090: #639136;
-    --hue-prime-105: #4D9136;
-    --hue-prime-120: #369136;
-    --hue-prime-135: #36914D;
-    --hue-prime-150: #369163;
-    --hue-prime-165: #36917A;
-    --hue-prime-180: #369191;
-    --hue-prime-195: #367A91;
-    --hue-prime-210: #366493;
-    --hue-prime-225: #364D91;
-    --hue-prime-240: #363691;
-    --hue-prime-255: #4D3691;
-    --hue-prime-270: #633691;
-    --hue-prime-285: #7A3691;
-    --hue-prime-300: #913691;
-    --hue-prime-315: #91367A;
-    --hue-prime-330: #913663;
-    --hue-prime-345: #91364D;
-
-
+/* administrator */
+    --coal-rgb     : 50, 49, 51;
+    --coal-dark    : #323133;
+    --coal-light   : #4b4b55;
 }
