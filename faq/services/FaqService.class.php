@@ -53,15 +53,15 @@ class FaqService
 	 */
 	public static function delete(int $id)
 	{
-        if (AppContext::get_current_user()->is_readonly())
-        {
-            $controller = PHPBoostErrors::user_in_read_only();
-            DispatchManager::redirect($controller);
-        }
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
+		}
 
-        self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', array('id' => $id));
         
-        PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $question->get_id()));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $id));
 	}
 
 	 /**
@@ -81,11 +81,11 @@ class FaqService
 		return $faq_question;
 	}
     
-    public static function clear_cache()
+	public static function clear_cache()
 	{
 		Feed::clear_cache('faq');
-        FaqCache::invalidate();
-        CategoriesService::get_categories_manager()->regenerate_cache();
+		FaqCache::invalidate();
+		CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 
 	 /**
