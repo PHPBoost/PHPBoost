@@ -17,6 +17,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 	private $links = array();
+	protected $title;
 	protected $module;
 
 	public function __construct(View $view)
@@ -36,6 +37,8 @@ class AdminMenuDisplayResponse extends AbstractResponse
 				$home_page = $this->module->get_configuration()->get_home_page();
 				if (!empty($home_page))
 				{
+					$this->set_title(StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->module->get_configuration()->get_name())));
+					
 					$this->links[] = array(
 						'LINK' => LangLoader::get_message('home', 'main'),
 						'U_LINK' => Url::to_rel('/' . $this->module->get_id() . '/' . $home_page)
@@ -47,6 +50,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 
 	public function set_title($title)
 	{
+		$this->title = $title;
 		$this->full_view->put_all(array('TITLE' => $title));
 	}
 

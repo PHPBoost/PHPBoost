@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 09 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -72,10 +72,8 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 		));
 
 		$response = new AdminMenuDisplayResponse($this->view);
-		$response->set_title($this->lang['module_name']);
 		$response->add_link(LangLoader::get_message('configuration', 'admin-common'), DispatchManager::get_url('/SocialNetworks', '/admin/'));
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['module_config_title'], $this->lang['module_name']);
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->lang['module_name'])));
 
 		return $response;
 	}

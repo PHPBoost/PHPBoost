@@ -13,14 +13,12 @@ class DefaultAdminDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$title = StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->module->get_configuration()->get_name()));
-		$this->set_title($title);
-
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), $this->module->get_configuration()->get_admin_main_page());
-		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), $this->module->get_configuration()->get_documentation());
+		
+		if ($this->module->get_configuration()->get_documentation())
+			$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), $this->module->get_configuration()->get_documentation());
 
-		$env = $this->get_graphical_environment();
-		$env->set_page_title($title);
+		$this->get_graphical_environment()->set_page_title($this->title);
 	}
 }
 ?>
