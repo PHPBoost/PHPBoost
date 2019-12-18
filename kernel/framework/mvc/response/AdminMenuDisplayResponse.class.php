@@ -17,7 +17,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 	private $links = array();
-	private $module;
+	protected $module;
 
 	public function __construct(View $view)
 	{
