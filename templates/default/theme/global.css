@@ -28,6 +28,19 @@
 	border-radius: 3px;
 }
 
+.pinned[data-color] {
+	padding-left: 1.618em;
+	position: relative;
+}
+
+.data-color {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 1.309em;
+}
+
 .no-list {
 	list-style: none;
 }

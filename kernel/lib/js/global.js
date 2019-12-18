@@ -266,7 +266,7 @@ function delete_button_display(elements_number)
 		if ($('#multiple-checkbox-' + i)[0] && $('#multiple-checkbox-' + i)[0].checked == true)
 			checked_elements_number++;
 	}
-	
+
 	try {
 		if (checked_elements_number > 0) {
 			$('#delete-all-button').attr("disabled", false);
@@ -652,3 +652,10 @@ setInterval(function() {
 		jQuery(this).outerHeight(cell_width + 'px');
 	});
 }, 1);
+
+// data-color add a colored square to the pinned class and color its borders.
+	jQuery('.pinned[data-color]').each(function(){
+		var color = jQuery(this).data('color');
+		jQuery(this).css('border-color', color);
+		jQuery(this).prepend('<span style="background-color: '+color+';" class="data-color"></span>')
+	});
