@@ -506,13 +506,11 @@ h3.formatter-title { border-color: #366393; }
 	.cssmenu ul > li.current > .cssmenu-title  { background-color: rgba(54, 100, 147, 0.1); }
 
 	.cssmenu-group .cssmenu-title {
-		background-image: linear-gradient(to bottom, rgba(54, 100, 147, 0.05) 0%,rgba(54, 100, 147, 0.1) 100%);
-		border-color: rgba(54, 100, 147, 0.4);
+		border-color: #366493;
 	}
 
-	.cssmenu-group li.current .cssmenu-title,
 	.cssmenu-group .cssmenu-title:hover  {
-	    background-image: linear-gradient(to bottom, rgba(54, 100, 147, 0.1) 0%,rgba(54, 100, 147, 0.05) 100%);
+		border-color: #4e8ec1;
 	}
 }
 
@@ -671,8 +669,8 @@ a,
 
 a:hover,
 .link-color:hover {
-	color: #0066cc;
-	border-color: #0066cc;
+	color: #4e8ec1;
+	border-color: #4e8ec1;
 }
 .bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.3);}
 .bgc-full:hover.link-color { color: #FFFFFF}
