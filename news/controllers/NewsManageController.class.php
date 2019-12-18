@@ -100,24 +100,24 @@ class NewsManageController extends AdminModuleController
 
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
 	{
-			if ($request->get_string('delete-selected-elements', false))
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
 			{
-				for ($i = 1 ; $i <= $this->elements_number ; $i++)
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
-					if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
-						{
-							if (isset($this->ids[$i]))
-							{
-								NewsService::delete($this->ids[$i]);
-							}
-						}
+					if (isset($this->ids[$i]))
+					{
+						NewsService::delete($this->ids[$i]);
+					}
 				}
-			
-					NewsService::clear_cache();
-			
-					AppContext::get_response()->redirect(NewsUrlBuilder::manage_news(), LangLoader::get_message('process.success', 'status-messages-common'));
-			
 			}
+			
+				NewsService::clear_cache();
+			
+				AppContext::get_response()->redirect(NewsUrlBuilder::manage_news(), LangLoader::get_message('process.success', 'status-messages-common'));
+			
+		}
 	}
 	
 	private function check_authorizations()
