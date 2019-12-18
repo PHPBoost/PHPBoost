@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 16
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -73,7 +73,7 @@ class ArticlesService
 	public static function clear_cache()
 	{
 		Feed::clear_cache('articles');
-		CategoriesService::get_categories_manager()->regenerate_cache();
+		ArticlesCategoriesCache::invalidate();
 		ArticlesKeywordsCache::invalidate();
 	}
 

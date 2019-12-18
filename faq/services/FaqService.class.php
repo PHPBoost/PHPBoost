@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 17
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -85,7 +85,7 @@ class FaqService
 	{
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
-		CategoriesService::get_categories_manager()->regenerate_cache();
+		FaqCategoriesCache::invalidate();
 	}
 
 	 /**
