@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 09 22
+ * @version     PHPBoost 5.3 - last update: 2018 12 18
  * @since       PHPBoost 4.0 - 2013 12 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -13,6 +13,7 @@
 ####################################################
 
 $lang['configuration'] = 'Configuration';
+$lang['configuration.module.title'] = 'Configuration du module :module_name';
 $lang['install'] = 'Installer';
 $lang['uninstall'] = 'Désinstaller';
 $lang['actions'] = 'Actions';

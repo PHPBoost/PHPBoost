@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 06 23
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 3.0 - 2009 10 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,6 +17,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 	private $links = array();
+	private $module;
 
 	public function __construct(View $view)
 	{
@@ -29,15 +30,15 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		$module_name = Environment::get_running_module_name();
 		if (!empty($module_name))
 		{
-			$module = ModulesManager::get_module($module_name);
-			if (!empty($module))
+			$this->module = ModulesManager::get_module($module_name);
+			if ($this->module)
 			{
-				$home_page = $module->get_configuration()->get_home_page();
+				$home_page = $this->module->get_configuration()->get_home_page();
 				if (!empty($home_page))
 				{
 					$this->links[] = array(
 						'LINK' => LangLoader::get_message('home', 'main'),
-						'U_LINK' => Url::to_rel('/' . $module->get_id() . '/' . $home_page)
+						'U_LINK' => Url::to_rel('/' . $this->module->get_id() . '/' . $home_page)
 					);
 				}
 			}
