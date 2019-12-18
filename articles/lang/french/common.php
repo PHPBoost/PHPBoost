@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 31
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,6 @@ $lang['articles.summary'] = 'Sommaire :';
 $lang['articles.print.item'] = 'Impression d\'un article';
 
 // Configuration
-$lang['articles.module.config.title'] = 'Configuration : Articles';
 $lang['articles.display.categories.icon'] = 'Afficher l\'icône des catégories';
 $lang['articles.characters.number.to.cut'] = 'Nombre de caractères pour couper le condensé de l\'article';
 $lang['articles.display.decriptions.to.guests'] = 'Afficher le condensé des articles aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
