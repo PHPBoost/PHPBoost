@@ -3,24 +3,30 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 04
+ * @version     PHPBoost 5.3 - last update: 2019 12 18
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class NewsManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
+	
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->check_authorizations();
+	    $this->check_authorizations();
 
 		$this->init();
 
 		$current_page = $this->build_table();
+		
+		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
 	}
@@ -61,6 +67,9 @@ class NewsManageController extends AdminModuleController
 			$news->set_properties($row);
 			$category = $news->get_category();
 			$user = $news->get_author_user();
+			
+			$this->elements_number++;
+			$this->ids[$this->elements_number] = $news->get_id();
 
 			$edit_link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
 			$delete_link = new LinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
@@ -89,6 +98,28 @@ class NewsManageController extends AdminModuleController
 		return $table->get_page_number();
 	}
 
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+			if ($request->get_string('delete-selected-elements', false))
+			{
+				for ($i = 1 ; $i <= $this->elements_number ; $i++)
+				{
+					if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+						{
+							if (isset($this->ids[$i]))
+							{
+								NewsService::delete($this->ids[$i]);
+							}
+						}
+				}
+			
+					NewsService::clear_cache();
+			
+					AppContext::get_response()->redirect(NewsUrlBuilder::manage_news(), LangLoader::get_message('process.success', 'status-messages-common'));
+			
+			}
+	}
+	
 	private function check_authorizations()
 	{
 		if (!CategoriesAuthorizationsService::check_authorizations()->moderation())

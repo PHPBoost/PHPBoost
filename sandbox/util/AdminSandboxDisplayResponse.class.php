@@ -14,7 +14,7 @@ class AdminSandboxDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), $this->module->get_configuration()->get_admin_main_page());
-		$this->add_link(LangLoader::get_message('title.admin.form' 'common', 'sandbox'), SandboxUrlBuilder::admin_form());
+		$this->add_link(LangLoader::get_message('title.admin.form', 'common', 'sandbox'), SandboxUrlBuilder::admin_form());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($page_title);
