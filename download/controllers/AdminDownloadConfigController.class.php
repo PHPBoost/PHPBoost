@@ -67,7 +67,7 @@ class AdminDownloadConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
