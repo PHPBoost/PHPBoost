@@ -126,7 +126,7 @@
  	jQuery('.cssmenu-title').each(function(){
 		if(jQuery(this).children('img').length) {
 			var imgWidth = jQuery(this).children('img').outerWidth(),
-				marginWidth = jQuery(this).children('img').css('marginRight');
+				marginWidth = jQuery(this).children('span').css('marginLeft');
 			jQuery(this).css('padding-right', 'calc(' + imgWidth + 'px + ' + marginWidth + ')');
 		}
 	});

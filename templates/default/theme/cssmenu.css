@@ -84,9 +84,9 @@
 	}
 }
 
-.cssmenu-title img,
-.cssmenu-title i {
-	margin-right: 0.456em;
+.cssmenu-title img + span,
+.cssmenu-title i + span {
+	margin-left: 0.456em;
 }
 
 
@@ -460,6 +460,10 @@
 
 .cssmenu-group li:last-child .cssmenu-title {
 	border-right-width: 1px;
+}
+
+.cssmenu-group .cssmenu-title-icon {
+    padding: 0.5em 0.482em 0.456em;
 }
 
 /* --- Small screens cssmenu-group variant --- */
