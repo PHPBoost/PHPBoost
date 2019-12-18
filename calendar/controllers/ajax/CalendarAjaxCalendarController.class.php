@@ -198,7 +198,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					{
 						$birthday_day = $array_events[$day]['type'] == 'BIRTHDAY';
 						$color = $array_events[$day]['color'];
-						$class = '';
+						$class = 'calendar-event';
 					}
 					else if (($day == date("j")) && ($month == date("m")) && ($year == date("Y")))
 						$class = 'calendar-today';
