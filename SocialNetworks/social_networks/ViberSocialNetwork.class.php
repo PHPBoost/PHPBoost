@@ -9,16 +9,16 @@
 
 class WhatsappSocialNetwork extends AbstractSocialNetwork
 {
-	const SOCIAL_NETWORK_ID = 'whatsapp';
+	const SOCIAL_NETWORK_ID = 'viber';
 
 	public function get_name()
 	{
-		return 'WhatsApp';
+		return 'Viber';
 	}
 
 	public function get_mobile_content_sharing_url()
 	{
-		return 'whatsapp://send?text=' . (rawurlencode((defined('TITLE') ? TITLE . ' ' : '') . HOST . REWRITED_SCRIPT));
+		return 'viber://forward?text=' . (rawurlencode((defined('TITLE') ? TITLE . ' ' : '') . HOST . REWRITED_SCRIPT));
 	}
 
 	public function is_mobile_only()
