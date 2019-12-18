@@ -144,6 +144,11 @@ a.grouped-element,
 	text-decoration: none;
 }
 
+.grouped-area {
+	margin: 0;
+	border-width: 1px 1px 0;
+}
+
 /* inputs with sup labels */
 .grouped-inputs.large-inputs-group {
 	flex-wrap: wrap;
