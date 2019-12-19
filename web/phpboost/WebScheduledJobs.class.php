@@ -33,7 +33,7 @@ class WebScheduledJobs extends AbstractScheduledJobExtensionPoint
 				Feed::clear_cache('web');
 				WebCache::invalidate();
 				WebCategoriesCache::invalidate();
-				WebKeywordsCache::invalidate();
+				KeywordsCache::invalidate();
 
 				$config->set_deferred_operations($deferred_operations);
 				WebConfig::save();

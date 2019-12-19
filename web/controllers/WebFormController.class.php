@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -115,7 +115,7 @@ class WebFormController extends ModuleController
 			'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => !$this->get_weblink()->is_partner()
 		)));
 
-		$other_fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->moderation())
 		{
@@ -343,12 +343,12 @@ class WebFormController extends ModuleController
 
 		$this->contribution_actions($weblink, $id);
 
-		WebService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
+		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
 		Feed::clear_cache('web');
 		WebCache::invalidate();
 		WebCategoriesCache::invalidate();
-		WebKeywordsCache::invalidate();
+		KeywordsCache::invalidate();
 	}
 
 	private function contribution_actions(WebLink $weblink, $id)
