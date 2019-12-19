@@ -195,7 +195,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ':&nbsp;<b>' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b>' : ''));
+		$fieldset->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ': ' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
 
 		$fieldset->add_field(new FormFieldHTML('informations_fixed_number', ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ': ' . $nbr_bugs));
 

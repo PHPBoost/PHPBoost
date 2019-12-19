@@ -67,6 +67,8 @@ fieldset p {
 	display: none;
 }
 
+.horizontal-fieldset-element .form-element { flex-direction: column; }
+
 .horizontal-fieldset-desc,
 .horizontal-fieldset-element  {
 	display: inline-block;
