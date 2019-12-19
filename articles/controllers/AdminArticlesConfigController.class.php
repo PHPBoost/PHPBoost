@@ -108,7 +108,7 @@ class AdminArticlesConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], ArticlesConfig::DISPLAY_LIST_VIEW)
 			),
 			array('events' => array('change' => '
-				if (HTMLForms.getField("display_type").getValue() === \'' . SmalladsConfig::DISPLAY_GRID_VIEW . '\') {
+				if (HTMLForms.getField("display_type").getValue() === \'' . ArticlesConfig::DISPLAY_GRID_VIEW . '\') {
 					HTMLForms.getField("items_number_per_row").enable();
 				} else {
 					HTMLForms.getField("items_number_per_row").disable();

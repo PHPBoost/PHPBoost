@@ -49,7 +49,6 @@
 			</div>
 		</div>
 
-
 		# IF C_PAGINATION #
 			# INCLUDE FORM #
 			<div class="spacer"></div>
