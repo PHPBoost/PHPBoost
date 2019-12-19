@@ -9,9 +9,9 @@
 
 class DownloadKeywordsCache extends KeywordsCache
 {
-	public function get_module_identifier()
-	{
-		return 'download';
-	}
+	// public function get_module_identifier()
+	// {
+		// return 'download';
+	// }
 }
 ?>

@@ -9,9 +9,9 @@
 
 class WebKeywordsCache extends KeywordsCache
 {
-	public function get_module_identifier()
-	{
-		return 'web';
-	}
+	// public function get_module_identifier()
+	// {
+		// return 'web';
+	// }
 }
 ?>

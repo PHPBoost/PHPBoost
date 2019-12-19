@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -11,8 +11,7 @@
 class ArticlesService
 {
 	private static $db_querier;
-	private static $keywords_manager;
-
+	
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
@@ -48,11 +47,10 @@ class ArticlesService
 		
 		self::$db_querier->delete(ArticlesSetup::$articles_table, 'WHERE id=:id', array('id' => $id));
 		
-		self::get_keywords_manager()->delete_relations($id);
-
 		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $id));
 
 		CommentsService::delete_comments_topic_module('articles', $id);
+		KeywordsService::get_keywords_manager()->delete_relations($id);
 		NotationService::delete_notes_id_in_module('articles', $id);
 	}
 
@@ -74,21 +72,12 @@ class ArticlesService
 	{
 		Feed::clear_cache('articles');
 		ArticlesCategoriesCache::invalidate();
-		ArticlesKeywordsCache::invalidate();
+		KeywordsCache::invalidate();
 	}
 
 	public static function update_number_view(Article $article)
 	{
 		self::$db_querier->update(ArticlesSetup::$articles_table, array('number_view' => $article->get_number_view()), 'WHERE id=:id', array('id' => $article->get_id()));
-	}
-
-	public static function get_keywords_manager()
-	{
-		if (self::$keywords_manager === null)
-		{
-			self::$keywords_manager = new KeywordsManager(ArticlesKeywordsCache::load());
-		}
-		return self::$keywords_manager;
 	}
 }
 ?>

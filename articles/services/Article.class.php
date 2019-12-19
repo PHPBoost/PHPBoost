@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -333,7 +333,7 @@ class Article
 	{
 		if ($this->keywords === null)
 		{
-			$this->keywords = ArticlesService::get_keywords_manager()->get_keywords($this->id);
+			$this->keywords = KeywordsService::get_keywords_manager()->get_keywords($this->id);
 		}
 		return $this->keywords;
 	}

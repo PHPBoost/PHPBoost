@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2018 08 27
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		ConfigManager::delete('articles', 'config');
-		ArticlesService::get_keywords_manager()->delete_module_relations();
+		KeywordsService::get_keywords_manager()->delete_module_relations();
 	}
 
 	private function drop_tables()
