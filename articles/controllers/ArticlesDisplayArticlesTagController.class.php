@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 02
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.0 - 2013 06 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -119,7 +119,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_MOSAIC' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
 			'C_ARTICLES_CAT' => false,
 			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
 			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),
