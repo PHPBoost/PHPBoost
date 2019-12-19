@@ -38,7 +38,7 @@
 						<i class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>
 					<div class="upload-elements-move-to-cat">
-						<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
+						<script src="{PATH_TO_ROOT}/templates/default/plugins/upload.js"></script>
 						<script>
 							var path = '{PATH_TO_ROOT}/templates/{THEME}';
 							var selected_cat = {SELECTED_CAT};

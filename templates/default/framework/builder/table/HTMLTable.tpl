@@ -1,6 +1,6 @@
 # IF C_FILTERS #
 	<div id="filters-{TABLE_ID}" class="html-table-filters">
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/UrlSerializedParameterEncoder.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/default/plugins/UrlSerializedParameterEncoder.js"></script>
 		# INCLUDE filters #
 	</div>
 # ENDIF #

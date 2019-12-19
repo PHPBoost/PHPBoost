@@ -28,7 +28,7 @@
 </script>
 
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
-<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/@global.js"></script>
 
 <script src="{PATH_TO_ROOT}/templates/default/plugins/autocomplete.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/basictable.js"></script>

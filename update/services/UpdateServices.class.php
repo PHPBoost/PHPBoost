@@ -698,6 +698,10 @@ class UpdateServices
 		if ($folder->exists())
 			$folder->delete();
 
+		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/phpboost');
+		if ($folder->exists())
+			$folder->delete();
+
 		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css/font-awesome');
 		if ($folder->exists())
 			$folder->delete();
@@ -705,6 +709,9 @@ class UpdateServices
 		$folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css/font-awesome-animation');
 		if ($folder->exists())
 			$folder->delete();
+
+		$file = new File(PATH_TO_ROOT . '/kernel/lib/js/global.js');
+		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php');
 		$file->delete();

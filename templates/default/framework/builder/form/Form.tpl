@@ -8,8 +8,8 @@
 # ENDIF #
 
 # IF C_JS_NOT_ALREADY_INCLUDED #
-	<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/validator.js"></script>
-	<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/form.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/validator.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/form.js"></script>
 # ENDIF #
 
 <script>

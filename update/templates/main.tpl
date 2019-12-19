@@ -16,7 +16,7 @@ ${resources('update/update')}
 			var THEME = "{THEME}";
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/global.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/default/plugins/@global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
