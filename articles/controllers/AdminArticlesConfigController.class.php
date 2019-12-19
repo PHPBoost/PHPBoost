@@ -187,7 +187,7 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-		if($this->config->get_display_type() == SmalladsConfig::DISPLAY_GRID_VIEW)
+		if($this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW)
 			$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
 		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
 		$items_default_sort = explode('-', $items_default_sort);
