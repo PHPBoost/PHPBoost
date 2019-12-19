@@ -29,7 +29,6 @@
     top: -0.618em;
     right: 0.309em;
     content: attr(data-time);
-    background-color: #fff;
     padding: 0.228em;
     line-height: 0.5;
 }
@@ -41,7 +40,7 @@
 /* --- Grouped input --- */
 .calendar-container > a {
     height: 100%;
-    font-size: 1.618em
+    font-size: 1.309em
 }
 
 /* --- calendar block ------------------------------------------------------- */

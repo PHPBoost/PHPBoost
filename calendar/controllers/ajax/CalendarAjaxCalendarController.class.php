@@ -252,7 +252,6 @@ class CalendarAjaxCalendarController extends AbstractController
 			if (!in_array($legend['color'], $displayed_color))
 			{
 				$legend_view->assign_block_vars('legend', array(
-					'C_NEW_LINE' => $number_elements == 4,
 					'COLOR' => $legend['color'],
 					'NAME'  => $legend['name']
 				));
