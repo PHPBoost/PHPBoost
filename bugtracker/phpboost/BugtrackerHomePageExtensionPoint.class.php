@@ -22,7 +22,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	 */
 	private function get_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'bugtracker');
+		return LangLoader::get_message('bugtracker.module.title', 'common', 'bugtracker');
 	}
 }
 ?>

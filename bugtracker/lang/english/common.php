@@ -14,7 +14,7 @@
 ####################################################
 
 //Module title
-$lang['module_title'] = 'Bugtracker';
+$lang['bugtracker.module.title'] = 'Bugtracker';
 
 //Notice
 $lang['notice.no_one'] = 'No one';

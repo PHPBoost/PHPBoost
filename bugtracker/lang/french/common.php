@@ -13,14 +13,22 @@
 ####################################################
 #                    French                        #
 ####################################################
-
-//Titre du module
-$lang['module_title'] = 'Rapport de bugs';
-
-//Messages divers
+// TODO:
+    // replace '_' by '.'
+    // replace common expression then send those to the right common file if not exists
+// should go to common file - start
 $lang['notice.no_one'] = 'Personne';
 $lang['notice.none'] = 'Aucun';
 $lang['notice.none_e'] = 'Aucune';
+$lang['notice.not_defined'] = 'Non défini';
+$lang['notice.new_comment'] = 'Nouveau commentaire';
+// ...
+// should go to common file - end
+
+//Titre du module
+$lang['bugtracker.module.title'] = 'Rapport de bugs';
+
+//Messages divers
 $lang['notice.no_bug'] = 'Aucun ticket n\'a été déclaré';
 $lang['notice.no_bug_solved'] = 'Aucun ticket n\'a été traité';
 $lang['notice.no_bug_fixed'] = 'Aucun ticket n\'a été corrigé dans cette version';
@@ -30,9 +38,7 @@ $lang['notice.no_bug_matching_filters'] = 'Aucun ticket ne correspond aux filtre
 $lang['notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
 $lang['notice.no_history'] = 'Ce ticket n\'a aucun historique';
 $lang['notice.contents_update'] = 'Mise à jour du contenu';
-$lang['notice.new_comment'] = 'Nouveau commentaire';
 $lang['notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
-$lang['notice.not_defined'] = 'Non défini';
 $lang['notice.not_defined_e_date'] = 'Date non définie';
 
 //Actions

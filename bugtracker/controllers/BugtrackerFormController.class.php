@@ -282,7 +282,7 @@ class BugtrackerFormController extends ModuleController
 			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
 				$alert = new AdministratorAlert();
-				$alert->set_entitled('[' . $this->lang['module_title'] . '] ' . $bug->get_title());
+				$alert->set_entitled('[' . $this->lang['bugtracker.module.title'] . '] ' . $bug->get_title());
 				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title())->relative());
 
 				switch ($bug->get_priority())
@@ -548,11 +548,11 @@ class BugtrackerFormController extends ModuleController
 
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();
-			$graphical_environment->set_page_title($this->lang['titles.add'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['titles.add'], $this->lang['bugtracker.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::add());
 
 			$breadcrumb = $graphical_environment->get_breadcrumb();
-			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+			$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 			$breadcrumb->add($this->lang['titles.add'], BugtrackerUrlBuilder::add());
 		}
 		else
@@ -567,11 +567,11 @@ class BugtrackerFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id(), $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id(), $this->lang['bugtracker.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id()));
 
 			$breadcrumb = $graphical_environment->get_breadcrumb();
-			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+			$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit($bug->get_id()));
 		}
 

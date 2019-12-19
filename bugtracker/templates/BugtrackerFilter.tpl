@@ -1,29 +1,27 @@
 <script>
-<!--
-function delete_filter(id) {
-	if (confirm(${escapejs(@actions.confirm.del_filter)})) {
-		jQuery.ajax({
-			url: '${relative_url(BugtrackerUrlBuilder::delete_filter())}',
-			type: "post",
-			data: {'id' : id, 'token' : '{TOKEN}'},
-			success: function(returnData){
-				if (returnData.code > 0) {
-					jQuery("#filter" + returnData.code).remove();
+	function delete_filter(id) {
+		if (confirm(${escapejs(@actions.confirm.del_filter)})) {
+			jQuery.ajax({
+				url: '${relative_url(BugtrackerUrlBuilder::delete_filter())}',
+				type: "post",
+				data: {'id' : id, 'token' : '{TOKEN}'},
+				success: function(returnData){
+					if (returnData.code > 0) {
+						jQuery("#filter" + returnData.code).remove();
+					}
 				}
-			}
-		});
+			});
+		}
 	}
-}
 
-function toggle_filters_table() {
-	jQuery("#table_filters").fadeToggle();
-}
--->
+	function toggle_filters_table() {
+		jQuery("#table_filters").fadeToggle();
+	}
 </script>
 <div class="bugtracker-filter">
 	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 </div>
-<table class="table" id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
+<table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #
@@ -51,6 +49,7 @@ function toggle_filters_table() {
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 				<th>
+					<span aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></span>
 				</th>
 			# ENDIF #
 		</tr>
@@ -82,19 +81,19 @@ function toggle_filters_table() {
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 				<td>
-					<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-save" aria-hidden="true"></i></a>
+					<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-fw fa-save" aria-hidden="true"></i></a>
 				</td>
 			# ENDIF #
 		</tr>
 		# IF C_SAVED_FILTERS #
-		# START filters #
-			<tr id="filter{filters.ID}">
-				<td colspan="{FILTERS_NUMBER}">
-					<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-					<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
-				</td>
-			</tr>
-		# END filters #
+			# START filters #
+				<tr id="filter{filters.ID}">
+					<td colspan="{FILTERS_NUMBER}">
+						<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+						<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+					</td>
+				</tr>
+			# END filters #
 		# ENDIF #
 	</tbody>
 	<tfoot>

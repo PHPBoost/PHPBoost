@@ -195,7 +195,9 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('informations', (!empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ' : <b>' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ' : ' . $nbr_bugs));
+		$fieldset->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ':&nbsp;<b>' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b>' : ''));
+
+		$fieldset->add_field(new FormFieldHTML('informations_fixed_number', ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ': ' . $nbr_bugs));
 
 		return $form;
 	}
@@ -253,12 +255,12 @@ class BugtrackerRoadmapListController extends ModuleController
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['titles.roadmap.version'], array('version' => $versions[key($versions)]['name'])), $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['titles.roadmap.version'], array('version' => $versions[key($versions)]['name'])), $this->lang['bugtracker.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.roadmap'], array('version' => $versions[key($versions)]['name'])), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 
 		return $response;

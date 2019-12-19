@@ -194,12 +194,12 @@ class BugtrackerSolvedListController extends ModuleController
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.solved'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['titles.solved'], $this->lang['bugtracker.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.solved'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::solved($field, $sort, $page, $filter, $filter_id));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.solved'], BugtrackerUrlBuilder::solved($field, $sort, $page, $filter, $filter_id));
 
 		return $response;

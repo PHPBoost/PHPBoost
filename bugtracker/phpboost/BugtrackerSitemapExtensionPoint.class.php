@@ -25,7 +25,7 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 		$config = BugtrackerConfig::load();
 		$current_user = AppContext::get_current_user();
 
-		$link = new SitemapLink($lang['module_title'], BugtrackerUrlBuilder::home(), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
+		$link = new SitemapLink($lang['bugtracker.module.title'], BugtrackerUrlBuilder::home(), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($link, 'bugtracker');
 
 		if ($auth_mode == Sitemap::AUTH_PUBLIC)

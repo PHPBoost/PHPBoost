@@ -206,12 +206,12 @@ class BugtrackerUnsolvedListController extends ModuleController
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.unsolved'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['titles.unsolved'], $this->lang['bugtracker.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['seo.unsolved'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field, $sort, $page, $filter, $filter_id));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved($field, $sort, $page, $filter, $filter_id));
 
 		return $response;

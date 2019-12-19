@@ -1,26 +1,31 @@
-<div class="spacer"></div>
-
 # IF C_VERSIONS_AVAILABLE #
-	<section class="block">
+	<article>
 		<div class="content">
 			# INCLUDE SELECT_VERSION #
 		</div>
-	</section>
-	<div class="spacer"></div>
+	</article>
 
 	# IF C_BUGS #
 	<table class="table">
 		<thead>
 			<tr>
 				<th>
-					<a href="{LINK_BUG_ID_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_ID_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+					</span>
 					{@labels.fields.id}
-					<a href="{LINK_BUG_ID_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_ID_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+					</span>
 				</th>
 				<th class="title-column">
-					<a href="{LINK_BUG_TITLE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_TITLE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+					</span>
 					${LangLoader::get_message('form.title', 'common')}
-					<a href="{LINK_BUG_TITLE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_TITLE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+					</span>
 				</th>
 				# IF C_DISPLAY_TYPE_COLUMN #
 				<th>
@@ -43,14 +48,22 @@
 				</th>
 				# ENDIF #
 				<th>
-					<a href="{LINK_BUG_STATUS_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_STATUS_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+					</span>
 					{@titles.informations}
-					<a href="{LINK_BUG_STATUS_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_STATUS_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+					</span>
 				</th>
 				<th>
-					<a href="{LINK_BUG_DATE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_DATE_TOP}" aria-label="${LangLoader::get_message('sort.asc', 'common')}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+					</span>
 					{@labels.fields.fix_date}
-					<a href="{LINK_BUG_DATE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+					<span class="html-table-header-sortable">
+						<a href="{LINK_BUG_DATE_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+					</span>
 				</th>
 			</tr>
 		</thead>
@@ -64,33 +77,33 @@
 					{bug.TITLE}
 				</td>
 				# IF C_DISPLAY_TYPE_COLUMN #
-				<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					{bug.TYPE}
-				</td>
+					<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+						{bug.TYPE}
+					</td>
 				# ENDIF #
 				# IF C_DISPLAY_CATEGORY_COLUMN #
-				<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					{bug.CATEGORY}
-				</td>
+					<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+						{bug.CATEGORY}
+					</td>
 				# ENDIF #
 				# IF C_DISPLAY_PRIORITY_COLUMN #
-				<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					{bug.PRIORITY}
-				</td>
+					<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+						{bug.PRIORITY}
+					</td>
 				# ENDIF #
 				# IF C_DISPLAY_DETECTED_IN_COLUMN #
-				<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					{bug.DETECTED_IN}
-				</td>
+					<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+						{bug.DETECTED_IN}
+					</td>
 				# ENDIF #
 				<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<span>{@labels.fields.status} : {bug.STATUS}</span>
 					<div class="spacer"></div>
 					# IF bug.C_PROGRESS #
-					<div class="progressbar-container">
-						<div class="progressbar-infos">{bug.PROGRESS}% </div>
-						<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
-					</div>
+						<div class="progressbar-container">
+							<div class="progressbar-infos">{bug.PROGRESS}% </div>
+							<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
+						</div>
 					# ENDIF #
 					<a href="{bug.U_COMMENTS}">{bug.COMMENTS_NUMBER} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a>
 				</td>
@@ -100,17 +113,17 @@
 			</tr>
 			# END bug #
 			<tr>
-				<td colspan="{BUGS_COLSPAN}" class="legend-line"># INCLUDE LEGEND #</td>
+				<td colspan="{BUGS_COLSPAN}"># INCLUDE LEGEND #</td>
 			</tr>
 		</tbody>
 		# IF C_PAGINATION #
-		<tfoot>
-			<tr>
-				<td colspan="{BUGS_COLSPAN}">
-					# INCLUDE PAGINATION #
-				</td>
-			</tr>
-		</tfoot>
+			<tfoot>
+				<tr>
+					<td colspan="{BUGS_COLSPAN}">
+						# INCLUDE PAGINATION #
+					</td>
+				</tr>
+			</tfoot>
 		# ENDIF #
 	</table>
 	# ELSE #

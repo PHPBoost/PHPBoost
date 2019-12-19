@@ -11,7 +11,7 @@
 class BugtrackerDetailController extends ModuleController
 {
 	private $lang;
-	private $view;
+	private $tpl;
 	private $bug;
 	private $config;
 	private $current_user;
@@ -24,7 +24,27 @@ class BugtrackerDetailController extends ModuleController
 
 		$this->build_view($request);
 
-		return $this->build_response($this->view);
+		return $this->build_response($this->tpl);
+	}
+
+	private function init()
+	{
+		$this->current_user = AppContext::get_current_user();
+		$request = AppContext::get_request();
+		$id = $request->get_int('id', 0);
+
+		$this->tpl = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
+
+		$this->lang = LangLoader::get('common', 'bugtracker');
+		$this->tpl->add_lang($this->lang);
+		$this->config = BugtrackerConfig::load();
+
+		try {
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+		} catch (RowNotFoundException $e) {
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_bug']);
+			DispatchManager::redirect($error_controller);
+		}
 	}
 
 	private function build_view($request)
@@ -38,9 +58,9 @@ class BugtrackerDetailController extends ModuleController
 		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 
-		$this->view->put_all($this->bug->get_array_tpl_vars());
+		$this->tpl->put_all($this->bug->get_array_tpl_vars());
 
-		$this->view->put_all(array(
+		$this->tpl->put_all(array(
 			'C_TYPES' 						=> $types,
 			'C_CATEGORIES' 					=> $categories,
 			'C_SEVERITIES' 					=> $severities,
@@ -62,27 +82,7 @@ class BugtrackerDetailController extends ModuleController
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($this->bug->get_id());
 		$comments_topic->set_url(BugtrackerUrlBuilder::detail_comments($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
-		$this->view->put('COMMENTS', $comments_topic->display());
-	}
-
-	private function init()
-	{
-		$this->current_user = AppContext::get_current_user();
-		$request = AppContext::get_request();
-		$id = $request->get_int('id', 0);
-
-		$this->lang = LangLoader::get('common', 'bugtracker');
-
-		try {
-			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
-		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_bug']);
-			DispatchManager::redirect($error_controller);
-		}
-
-		$this->view = new FileTemplate('bugtracker/BugtrackerDetailController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->config = BugtrackerConfig::load();
+		$this->tpl->put('COMMENTS', $comments_topic->display());
 	}
 
 	private function check_authorizations()
@@ -94,18 +94,18 @@ class BugtrackerDetailController extends ModuleController
 		}
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $tpl)
 	{
-		$body_view = BugtrackerViews::build_body_view($view, 'detail', $this->bug->get_id(), $this->bug->get_type());
+		$body_view = BugtrackerViews::build_body_view($tpl, 'detail', $this->bug->get_id(), $this->bug->get_type());
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), $this->lang['bugtracker.module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->bug->get_real_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['bugtracker.module.title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 
 		return $response;

@@ -7,11 +7,7 @@
 	margin-bottom: 10px;
 }
 
-#module-bugtracker .cssmenu-title-rss {
-	padding: 0.53em 0.482em 0.456em;
-}
-
-.cssmenu-group .cssmenu-title-rss {
+.cssmenu-group .cssmenu-title-icon {
 	border-width: 1px 0 1px 0;
 }
 
@@ -90,3 +86,13 @@ div[id*="calendar"] {
 .bugtracker-filter {
 	text-align: left;
 }
+
+.table-form .fieldset-content,
+.table-form .horizontal-fieldset,
+.table-form .horizontal-fieldset-element,
+.table-form .form-element {
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.table-form select { width : 100%; }

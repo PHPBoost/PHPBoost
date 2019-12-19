@@ -22,14 +22,14 @@
 @import url('../../default/theme/sortable.css') screen;
 @import url('../../default/theme/cssmenu.css') screen;
 @import url('../../default/theme/plugins.css') screen;
-@import url('../../default/theme/cell.css') screen;
-@import url('../../default/theme/cell_layout.css') screen;
 @import url('../../default/theme/explorer.css') screen;
 @import url('../../default/theme/messages.css') screen;
 @import url('../../default/theme/message_helper.css') screen;
 @import url('../../default/theme/pagination.css') screen;
 @import url('../../default/theme/share.css') screen;
 
+@import url('../../default/theme/cell.css') screen;
+@import url('../../default/theme/cell_layout.css') screen;
 @import url('../../default/theme/content.css') screen;
 
 @import url('../../default/theme/colors.css') screen;
