@@ -144,10 +144,10 @@
 							<td>
 								<i class="fa fa-envelope message-announce" aria-hidden="true"></i> {L_READ}
 							</td>
-							<td class="no-separator">
+							<td>
 								<i class="fa fa-envelope message-announce-track" aria-hidden="true"></i> {L_TRACK}
 							</td>
-							<td class="no-separator">
+							<td>
 								<i class="fa fa-envelope message-announce-new" aria-hidden="true"></i> {L_NOT_READ}
 							</td>
 						</tr>

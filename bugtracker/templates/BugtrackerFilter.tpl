@@ -58,30 +58,30 @@ function toggle_filters_table() {
 	<tbody>
 		<tr>
 			# IF C_DISPLAY_TYPES #
-				<td class="no-separator">
+				<td>
 					# INCLUDE SELECT_TYPE #
 				</td>
 			# ENDIF #
 			# IF C_DISPLAY_CATEGORIES #
-				<td class="no-separator">
+				<td>
 					# INCLUDE SELECT_CATEGORY #
 				</td>
 			# ENDIF #
 			# IF C_DISPLAY_SEVERITIES #
-				<td class="no-separator">
+				<td>
 					# INCLUDE SELECT_SEVERITY #
 				</td>
 			# ENDIF #
-				<td class="no-separator">
+				<td>
 					# INCLUDE SELECT_STATUS #
 				</td>
 			# IF C_DISPLAY_VERSIONS #
-				<td class="no-separator">
+				<td>
 					# INCLUDE SELECT_VERSION #
 				</td>
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
-				<td class="no-separator">
+				<td>
 					<a href="{LINK_FILTER_SAVE}" aria-label="{@labels.save_filters}"><i class="fa fa-save" aria-hidden="true"></i></a>
 				</td>
 			# ENDIF #

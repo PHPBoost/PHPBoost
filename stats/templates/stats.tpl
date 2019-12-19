@@ -412,13 +412,13 @@
 					<tbody>
 						# START list #
 						<tr>
-							<td class="no-separator">
+							<td>
 								{list.IMG}
 							</td>
-							<td class="no-separator">
+							<td>
 								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 							</td>
-							<td class="no-separator">
+							<td>
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>
 						</tr>
@@ -447,13 +447,13 @@
 					<tbody>
 						# START list #
 						<tr>
-							<td class="no-separator">
+							<td>
 								{list.IMG}
 							</td>
-							<td class="no-separator">
+							<td>
 								<div class="stats-color-square" style="background-color: {list.COLOR};"></div>
 							</td>
-							<td class="no-separator">
+							<td>
 								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>
 						</tr>

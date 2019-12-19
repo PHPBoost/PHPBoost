@@ -7,19 +7,19 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<td class="no-separator">
+							<td>
 								<a class="infos-options" href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
 									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
 								</a>
 								<a href="{U_WARNING}">{L_USERS_WARNING}</a>
 							</td>
-							<td class="no-separator">
+							<td>
 								<a class="infos-options" href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
 									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
 								</a>
 								<a href="{U_PUNISH}">{L_USERS_PUNISHMENT}</a>
 							</td>
-							<td class="no-separator">
+							<td>
 								<a class="infos-options" href="{U_BAN}" aria-label="{L_USERS_BAN}">
 									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
 								</a>
