@@ -15,9 +15,9 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-		<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
+		<div class="cell-flex cell-columns-{CATEGORIES_PER_ROW} cell-tile">
 			# START sub_categories_list #
-				<div class="cell">
+				<div class="cell" itemscope>
 					<div class="cell-header" itemprop="about">
 						<h5 class="cell-name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 						<span class="small">
@@ -33,8 +33,10 @@
 						# IF sub_categories_list.C_CATEGORY_IMAGE #
 							<div class="cell-body">
 								<div class="cell-thumbnail cell-landscape">
-										<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}</a>
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+									<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
+										${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}
+									</a>
 								</div>
 							</div>
 						# ENDIF #
@@ -59,7 +61,7 @@
 				<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
-		<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{COLUMNS_NUMBER}# ELSE #cell-row# ENDIF #">
+		<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 			# START articles #
 				<article
 					id="articles-item-{articles.ID}"

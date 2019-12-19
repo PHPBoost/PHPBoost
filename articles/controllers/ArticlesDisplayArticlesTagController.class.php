@@ -14,7 +14,7 @@
 class ArticlesDisplayArticlesTagController extends ModuleController
 {
 	private $lang;
-	private $view;
+	private $tpl;
 	private $keyword;
 
 	private $config;
@@ -35,8 +35,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->tpl = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
+		$this->tpl->add_lang($this->lang);
 		$this->config = ArticlesConfig::load();
 
 		$this->comments_config = CommentsConfig::load();
@@ -111,22 +111,20 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
-		$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
-
-		$this->view->put_all(array(
-			'C_ARTICLES' => $result->get_rows_count() > 0,
+		$this->tpl->put_all(array(
+			'C_ARTICLES'              => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
-			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
-			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
-			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),
-			'C_ARTICLES_FILTERS' => true,
-			'CATEGORY_NAME' => $this->get_keyword()->get_name(),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line
+			'C_PAGINATION'            => $pagination->has_several_pages(),
+			'PAGINATION'              => $pagination->display(),
+			'C_NO_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 0,
+			'C_DISPLAY_GRID_VIEW'     => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_ARTICLES_CAT'          => false,
+			'C_COMMENTS_ENABLED'      => $this->comments_config->module_comments_is_enabled('articles'),
+			'C_NOTATION_ENABLED'      => $this->content_management_config->module_notation_is_enabled('articles'),
+			'C_ARTICLES_FILTERS'      => true,
+			'CATEGORY_NAME'           => $this->get_keyword()->get_name(),
+			'CATEGORIES_PER_ROW'      => $this->config->get_categories_number_per_row(),
+			'ITEMS_PER_ROW' 	      => $this->config->get_items_number_per_row(),
 		));
 
 		while ($row = $result->fetch())
@@ -136,7 +134,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 			$this->build_keywords_view($article);
 
-			$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
+			$this->tpl->assign_block_vars('articles', $article->get_array_tpl_vars());
 
 			foreach ($article->get_sources() as $name => $url)
 			{
@@ -150,12 +148,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	{
 		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);
-		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
+		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
 
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->tpl->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -199,7 +197,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->view->put('FORM', $form->display());
+		$this->tpl->put('FORM', $form->display());
 	}
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
@@ -209,7 +207,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_items_number_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -235,7 +233,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->view);
+		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['articles.module.title'], $page);

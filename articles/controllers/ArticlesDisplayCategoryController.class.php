@@ -87,26 +87,24 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
-
 		$this->view->put_all(array(
-			'C_ARTICLES' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
-			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
-			'C_DISPLAY_LIST_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
-			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('articles'),
-			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('articles'),
-			'C_ARTICLES_FILTERS' => true,
-			'C_DISPLAY_CATS_ICON' => $this->config->are_cats_icon_enabled(),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line,
-			'C_ONE_ARTICLE_AVAILABLE' => $result->get_rows_count() == 1,
+			'C_ARTICLES'               => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_ARTICLE'  => $result->get_rows_count() > 1,
+			'C_DISPLAY_GRID_VIEW'      => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_DISPLAY_LIST_VIEW'      => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
+			'C_COMMENTS_ENABLED'       => $this->comments_config->module_comments_is_enabled('articles'),
+			'C_NOTATION_ENABLED'       => $this->content_management_config->module_notation_is_enabled('articles'),
+			'C_ARTICLES_FILTERS'       => true,
+			'C_DISPLAY_CATS_ICON'      => $this->config->are_cats_icon_enabled(),
+			'C_PAGINATION'             => $pagination->has_several_pages(),
+			'C_NO_ARTICLE_AVAILABLE'   => $result->get_rows_count() == 0,
+			'CATEGORIES_PER_ROW'       => $this->config->get_categories_number_per_row(),
+			'ITEMS_PER_ROW'       	   => $this->config->get_items_number_per_row(),
+			'C_ONE_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 1,
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
-			'PAGINATION' => $pagination->display(),
-			'ID_CAT' => $this->get_category()->get_id(),
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'PAGINATION'               => $pagination->display(),
+			'ID_CAT'                   => $this->get_category()->get_id(),
+			'U_EDIT_CATEGORY'          => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
 		while($row = $result->fetch())
@@ -129,7 +127,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
 	{
 		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests()));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_number_categories_per_page(), $field, $mode, $page, $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
 
 		$nbr_cat_displayed = 0;
 		foreach ($subcategories as $id => $category)
@@ -165,7 +163,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'NUMBER_CATS_COLUMNS' => $this->config->get_number_cols_display_per_line()
+			'NUMBER_CATS_COLUMNS' => $this->config->get_categories_number_per_row()
 		));
 	}
 
@@ -257,7 +255,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_items_number_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -269,9 +267,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		return $pagination;
 	}
 
-	private function get_subcategories_pagination($subcategories_number, $number_categories_per_page, $field, $mode, $page, $subcategories_page)
+	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $field, $mode, $page, $subcategories_page)
 	{
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$number_categories_per_page);
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
 		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, $page, '%d'));
 
 		if ($pagination->current_page_is_empty() && $subcategories_page > 1)

@@ -14,7 +14,7 @@
 class ArticlesDisplayPendingArticlesController extends ModuleController
 {
 	private $lang;
-	private $view;
+	private $tpl;
 	private $form;
 	private $config;
 
@@ -32,8 +32,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->tpl = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
+		$this->tpl->add_lang($this->lang);
 		$this->config = ArticlesConfig::load();
 	}
 
@@ -112,26 +112,24 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
-		$this->view->put_all(array(
-			'C_PENDING' => true,
-			'C_DISPLAY_GRID_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
-			'C_DISPLAY_LIST_VIEW' => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
+		$this->tpl->put_all(array(
+			'C_PENDING'               => true,
+			'C_DISPLAY_GRID_VIEW'     => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_DISPLAY_LIST_VIEW'     => $this->config->get_display_type() == ArticlesConfig::DISPLAY_LIST_VIEW,
 			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
-			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
+			'C_NO_ARTICLE_AVAILABLE'  => $nbr_articles_pending == 0
 		));
 
 		if ($nbr_articles_pending > 0)
 		{
-			$number_columns_display_per_line = $this->config->get_number_cols_display_per_line();
-
-			$this->view->put_all(array(
+			$this->tpl->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
 				'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('articles'),
 				'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('articles'),
-				'C_PAGINATION' => $pagination->has_several_pages(),
-				'PAGINATION' => $pagination->display(),
-				'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-				'COLUMNS_NUMBER' => $number_columns_display_per_line
+				'C_PAGINATION'       => $pagination->has_several_pages(),
+				'PAGINATION'         => $pagination->display(),
+				'CATEGORIES_PER_ROW' => $this->config->get_categories_number_per_row(),
+				'ITEMS_PER_ROW' 	 => $this->config->get_items_number_per_row(),
 			));
 
 			while($row = $result->fetch())
@@ -141,17 +139,17 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 				$this->build_keywords_view($article);
 
-				$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
+				$this->tpl->assign_block_vars('articles', $article->get_array_tpl_vars());
 
 				foreach ($article->get_sources() as $name => $url)
 				{
-					$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+					$this->tpl->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
 				}
 			}
 		}
 		$result->dispose();
 
-		$this->view->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 	}
 
 	private function build_sources_view(Article $article)
@@ -160,12 +158,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$nbr_sources = count($sources);
 		if ($nbr_sources)
 		{
-			$this->view->put('articles.C_SOURCES', $nbr_sources > 0);
+			$this->tpl->put('articles.C_SOURCES', $nbr_sources > 0);
 
 			$i = 1;
 			foreach ($sources as $name => $url)
 			{
-				$this->view->assign_block_vars('articles.sources', array(
+				$this->tpl->assign_block_vars('articles.sources', array(
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
 					'URL' => $url,
@@ -179,12 +177,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);
-		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
+		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
 
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->tpl->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -206,7 +204,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_items_number_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -223,7 +221,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->view);
+		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['articles.pending.items'], $this->lang['articles.module.title'], $page);

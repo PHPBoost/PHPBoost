@@ -11,9 +11,10 @@
 
 class ArticlesConfig extends AbstractConfigData
 {
-	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
-	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
-	const NUMBER_COLS_DISPLAY_PER_LINE = 'number_cols_display_per_line';
+	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
+	const CATEGORIES_NUMBER_PER_ROW = 'categories_number_per_row';
+	const ITEMS_NUMBER_PER_ROW = 'items_number_per_row';
 	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
 
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
@@ -34,34 +35,44 @@ class ArticlesConfig extends AbstractConfigData
 
 	const AUTHORIZATIONS = 'authorizations';
 
-	public function get_number_articles_per_page()
+	public function get_items_number_per_page()
 	{
-		return $this->get_property(self::NUMBER_ARTICLES_PER_PAGE);
+		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
 	}
 
-	public function set_number_articles_per_page($number)
+	public function set_items_number_per_page($number)
 	{
-		$this->set_property(self::NUMBER_ARTICLES_PER_PAGE, $number);
+		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $number);
 	}
 
-	public function get_number_categories_per_page()
+	public function get_categories_number_per_page()
 	{
-		return $this->get_property(self::NUMBER_CATEGORIES_PER_PAGE);
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_PAGE);
 	}
 
-	public function set_number_categories_per_page($number)
+	public function set_categories_number_per_page($number)
 	{
-		$this->set_property(self::NUMBER_CATEGORIES_PER_PAGE, $number);
+		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $number);
 	}
 
-	public function get_number_cols_display_per_line()
+	public function get_categories_number_per_row()
 	{
-		return $this->get_property(self::NUMBER_COLS_DISPLAY_PER_LINE);
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_ROW);
 	}
 
-	public function set_number_cols_display_per_line($number)
+	public function set_categories_number_per_row($number)
 	{
-		$this->set_property(self::NUMBER_COLS_DISPLAY_PER_LINE, $number);
+		$this->set_property(self::CATEGORIES_NUMBER_PER_ROW, $number);
+	}
+
+	public function get_items_number_per_row()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_ROW);
+	}
+
+	public function set_items_number_per_row($number)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_ROW, $number);
 	}
 
 	public function get_number_character_to_cut()
@@ -186,20 +197,21 @@ class ArticlesConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::NUMBER_ARTICLES_PER_PAGE => 10,
-			self::NUMBER_CATEGORIES_PER_PAGE => 10,
-			self::NUMBER_COLS_DISPLAY_PER_LINE => 2,
-			self::NUMBER_CHARACTER_TO_CUT => 150,
-			self::ITEMS_DEFAULT_SORT_FIELD => Article::SORT_DATE,
-			self::ITEMS_DEFAULT_SORT_MODE => Article::DESC,
-			self::DEFAULT_CONTENTS => '',
-			self::CATS_ICON_ENABLED => false,
+			self::ITEMS_NUMBER_PER_PAGE            => 10,
+			self::CATEGORIES_NUMBER_PER_PAGE       => 10,
+			self::CATEGORIES_NUMBER_PER_ROW        => 2,
+			self::ITEMS_NUMBER_PER_ROW             => 2,
+			self::NUMBER_CHARACTER_TO_CUT          => 150,
+			self::ITEMS_DEFAULT_SORT_FIELD         => Article::SORT_DATE,
+			self::ITEMS_DEFAULT_SORT_MODE          => Article::DESC,
+			self::DEFAULT_CONTENTS                 => '',
+			self::CATS_ICON_ENABLED                => false,
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::DATE_UPDATED_DISPLAYED => false,
-			self::DISPLAY_TYPE => self::DISPLAY_GRID_VIEW,
-			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'articles'),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
-			self::DEFERRED_OPERATIONS => array()
+			self::DATE_UPDATED_DISPLAYED           => false,
+			self::DISPLAY_TYPE                     => self::DISPLAY_GRID_VIEW,
+			self::ROOT_CATEGORY_DESCRIPTION        => LangLoader::get_message('root_category_description', 'config', 'articles'),
+			self::AUTHORIZATIONS                   => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::DEFERRED_OPERATIONS              => array()
 		);
 	}
 

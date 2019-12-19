@@ -31,10 +31,12 @@ $lang['author'] = 'Auteur';
 $lang['compatibility'] = 'Compatibilité';
 $lang['not_compatible'] = 'Non compatible';
 
-$lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
-$lang['config.categories_number_per_page'] = 'Nombre de catégories maximum affichées par page';
+$lang['config.items_number_per_page'] = 'Nombre d\'éléments par page';
+$lang['config.categories_number_per_page'] = 'Nombre de catégories par page';
 $lang['config.columns_number_per_line'] = 'Nombre de colonnes d\'affichage par ligne';
 $lang['config.columns_number_per_line.description'] = 'Catégories et éléments';
+$lang['config.categories.number.per.row'] = 'Nombre de catégories par ligne';
+$lang['config.items.number.per.row'] = 'Nombre d\'éléments par ligne';
 $lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par défaut';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.comments_enabled'] = 'Activer les commentaires';
