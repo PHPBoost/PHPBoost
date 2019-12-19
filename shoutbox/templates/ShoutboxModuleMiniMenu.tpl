@@ -147,7 +147,7 @@
 		</nav>
 		<div class="shout-spacing small">
 			<div class="grouped-inputs">
-				<button class="grouped-element" onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
+				<button class="button submit grouped-element" onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<a class="grouped-element" href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
 			</div>
