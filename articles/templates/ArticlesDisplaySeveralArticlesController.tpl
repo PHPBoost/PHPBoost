@@ -15,33 +15,30 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-		<div class="cell-flex cell-columns-{COLUMNS_NUMBER} no-style">
+		<div class="cell-flex cell-columns-{COLUMNS_NUMBER}">
 			# START sub_categories_list #
 				<div class="cell">
-					<div class="cell-header">
-						<div class="cell-name align-center"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
+					<div class="cell-header" itemprop="about">
+						<h5 class="cell-name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+						<span class="small">
+							{sub_categories_list.ARTICLES_NUMBER}
+							# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
+								{@articles.items}
+							# ELSE #
+								{@articles.item}
+							# ENDIF #
+						</span>
 					</div>
-					<div class="cell-body">
-						# IF C_DISPLAY_CATS_ICON #
-							<div class="cell-thumbnail cell-landscape">
-								# IF sub_categories_list.C_CATEGORY_IMAGE #
-									<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+					# IF C_DISPLAY_CATS_ICON #
+						# IF sub_categories_list.C_CATEGORY_IMAGE #
+							<div class="cell-body">
+								<div class="cell-thumbnail cell-landscape">
 										<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
-									</a>
-								# ENDIF #
+										<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}</a>
+								</div>
 							</div>
 						# ENDIF #
-						<div class="cell-content align-center">
-							<span>
-								{sub_categories_list.ARTICLES_NUMBER}
-								# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
-									{@articles.items}
-								# ELSE #
-									{@articles.item}
-								# ENDIF #
-							</span>
-						</div>
-					</div>
+					# ENDIF #
 				</div>
 			# END sub_categories_list #
 		</div>

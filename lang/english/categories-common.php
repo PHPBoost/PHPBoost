@@ -13,6 +13,7 @@
 
 $lang['category'] = 'Category';
 $lang['categories'] = 'Categories';
+$lang['see.category'] = 'See category';
 
 $lang['sub_category'] = 'Sub-category';
 $lang['sub_categories'] = 'Sub-categories';
