@@ -9,9 +9,9 @@
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
-class Edit extends LinkHTMLElement
+class EditLinkHTMLElement extends LinkHTMLElement
 {
-	public function __construct($url, $content, $attributs = array(), $css_class = '', $use_icon = true)
+	public function __construct($url, $content = '')
 	{
 		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('edit', 'common')), 'far fa-fw fa-edit')
 	}
