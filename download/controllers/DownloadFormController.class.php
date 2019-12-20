@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -154,7 +154,7 @@ class DownloadFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software_version'], $this->get_downloadfile()->get_software_version()));
 
-		$other_fieldset->add_field(DownloadService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
 		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_downloadfile()->get_sources()));
 
@@ -407,12 +407,12 @@ class DownloadFormController extends ModuleController
 
 		$this->contribution_actions($downloadfile, $id);
 
-		DownloadService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
+		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
 		Feed::clear_cache('download');
 		DownloadCache::invalidate();
 		DownloadCategoriesCache::invalidate();
-		DownloadKeywordsCache::invalidate();
+		KeywordsCache::invalidate();
 	}
 
 	private function contribution_actions(DownloadFile $downloadfile, $id)
