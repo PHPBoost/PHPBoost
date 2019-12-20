@@ -402,23 +402,14 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 .floating-element,
 .message-helper { background-color: #FFFFFF }
 
-.notice, .notice::before               { color: #AAB2BD; }
-.question, .question::before           { color: #3BAFDA; }
-.success, .success::before             { color: #2ABA66; }
-.warning, .warning::before             { color: #E9573F; }
-.error, .error::before                 { color: #BF263C; }
-.member, .member::before               { color: #37BC9B; }
-.moderator, .moderator::before         { color: #967ADC; }
-.administrator, .administrator::before { color: #323133; }
-
-.notice        { border-color: #AAB2BD; }
-.question      { border-color: #3BAFDA; }
-.success       { border-color: #2ABA66; }
-.warning       { border-color: #E9573F; }
-.error         { border-color: #BF263C; }
-.member        { border-color: #37BC9B; }
-.moderator     { border-color: #967ADC; }
-.administrator { border-color: #323133; }
+.notice        { color: #AAB2BD; border-color: #AAB2BD; }
+.question      { color: #3BAFDA; border-color: #3BAFDA; }
+.success       { color: #2ABA66; border-color: #2ABA66; }
+.warning       { color: #E9573F; border-color: #E9573F; }
+.error         { color: #BF263C; border-color: #BF263C; }
+.member        { color: #37BC9B; border-color: #37BC9B; }
+.moderator     { color: #967ADC; border-color: #967ADC; }
+.administrator { color: #323133; border-color: #323133; }
 
 .notice:hover        { color: #BDC2C9; border-color: #BDC2C9;}
 .question:hover      { color: #4FD2FA; border-color: #4FD2FA;}
@@ -438,18 +429,8 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 .bgc.moderator     { background-color: rgba(150, 122, 221, 0.2); }
 .bgc.administrator { background-color: rgba(50, 49, 51, 0.2); }
 
-.bgc:hover.notice        { background-color: rgba(170, 178, 189, 0.2); color: #BDC2C9; border-color: #BDC2C9;}
-.bgc:hover.question      { background-color: rgba(59, 175, 218, 0.2);   color: #4FD2FA; border-color: #4FD2FA;}
-.bgc:hover.success       { background-color: rgba(42, 186, 102, 0.2);   color: #2EDC82; border-color: #2EDC82;}
-.bgc:hover.warning       { background-color: rgba(233, 87, 63, 0.2);  color: #FC7D5F; border-color: #FC7D5F;}
-.bgc:hover.error         { background-color: rgba(191, 38, 60, 0.2);   color: #DA4453; border-color: #DA4453;}
-.bgc:hover.member        { background-color: rgba(72, 252, 173, 0.2);  color: #48DEBE; border-color: #48DEBE;}
-.bgc:hover.moderator     { background-color: rgba(150, 122, 221, 0.2);   color: #ACA0FA; border-color: #ACA0FA;}
-.bgc:hover.administrator { background-color: rgba(50, 49, 51, 0.2);    color: #676773; border-color: #676773;}
-
-
 .bgc-full,
-.bgc-full:hover				 { color: #FFFFFF; }
+.bgc-full:hover	{ color: #FFFFFF; }
 
 .bgc-full.notice        { background-color: #AAB2BD; border-color: #AAB2BD;}
 .bgc-full.question      { background-color: #3BAFDA; border-color: #3BAFDA;}
@@ -469,8 +450,8 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 .bgc-full:hover.moderator     { background-color: #ACA0FA; }
 .bgc-full:hover.administrator { background-color: #676773; }
 
-.authorized-reader.member        { border-color: #37BC9B; }
-.authorized-reader.moderator     { border-color: #967ADC; }
+.authorized-reader.member        { border-color: #48DEBE; }
+.authorized-reader.moderator     { border-color: #ACA0FA; }
 .authorized-reader.administrator { border-color: #323133; }
 
 /* --- formatter & bbcode --------------------------------------------------- */
@@ -484,12 +465,6 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 .bbcode-button:hover {
 	color: #4E8EC1;
 	background-color: rgba(0, 102, 204, 0.2);
-}
-
-/* --- Highlight text --- */
-.highlight-search-word {
-	background-color: #FFFF00;
-	color: #000000;
 }
 
 .formatter-content {
@@ -509,6 +484,12 @@ h3.formatter-title { border-color: #366393; }
 .formatter-hide .formatter-hide-message {
 	background-color: rgba(54, 100, 147, 0.15);
 	border-color: rgba(54, 100, 147, 0.4);
+}
+
+/* --- Highlighted text --- */
+.highlight-search-word {
+	background-color: #FFFF00;
+	color: #000000;
 }
 
 /* -- cssmenu.css ----------------------------------------------------------- */
