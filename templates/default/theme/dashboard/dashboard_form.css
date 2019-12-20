@@ -141,12 +141,6 @@ select {
 	.form-element { width: calc(100% / 4); }
 }
 
-.form-element[id*=_separator_field] {
-	width: 100%;
-	padding: 0;
-	border-width: 0;
-}
-
 .form-element > label {
 	margin-bottom: 0.228em;
 	display: block;
