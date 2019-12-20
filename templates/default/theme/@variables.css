@@ -4,7 +4,7 @@
     --bgc-main     : #FFFFFF;
     --bgc-option   : #ECF2F8;
 
-    --bdr-main     : #dce1e6;
+    --bdr-main     : #BDC2C9;
 
     --darken : 0, 0, 0;
     --lighten: 255, 255, 255;
@@ -12,98 +12,91 @@
 /* main */
     --main-rgb     : 50, 100, 147;
     --main-dark    : #366493;
-    --main-light   : #4e8ec1;
+    --main-light   : #4E8EC1;
 
 /* error */
     --ruby-rgb     : 191, 38, 60;
-    --ruby-dark    : #bf263c;
-    --ruby-light   : #d84258;
-
-    --cherry-rgb   : 218, 68, 83;
-    --cherry-dark  : #da4453;
-    --cherry-light : #ed6474;
+    --ruby-dark    : #BF263C;
+    --ruby-light   : #DA4453;
 
 /* warning */
     --tango-rgb    : 233, 87, 63;
-    --tango-dark   : #e9573f;
-    --tango-light  : #fc7d5f;
+    --tango-dark   : #E9573F;
+    --tango-light  : #FC7D5F;
 
     --sun-rgb      : 246, 187, 66;
-    --sun-dark     : #f6bb42;
-    --sun-light    : #ffdd64;
+    --sun-dark     : #F6BB42;
+    --sun-light    : #FFDD64;
 
-/* alt */
+/* alt - star */
     --straw-rgb    : 224, 195, 65;
-    --straw-dark   : #e0c341;
-    --straw-light  : #e8e15f;
+    --straw-dark   : #E0C341;
+    --straw-light  : #E8E15F;
 
     --grass-rgb    : 140, 193, 82;
-    --grass-dark   : #8cc152;
-    --grass-light  : #a0e378;
+    --grass-dark   : #8CC152;
+    --grass-light  : #A0E378;
 
 /* success */
     --basil-rgb    : 42, 186, 102;
-    --basil-dark   : #2aba66;
-    --basil-light  : #2edc82;
+    --basil-dark   : #2ABA66;
+    --basil-light  : #2EDC82;
 
 /* member */
     --mint-rgb     : 72, 252, 173;
-    --mint-dark    : #48fcad;
-    --mint-light   : #48debe;
+    --mint-dark    : #37BC9B;
+    --mint-light   : #48DEBE;
 
     --teal-rgb     : 125, 177, 177;
-    --teal-dark    : #7db1b1;
-    --teal-light   : #a0dcdc;
+    --teal-dark    : #7DB1B1;
+    --teal-light   : #A0DCDC;
 
 /* question */
     --aqua-rgb     : 59, 175, 218;
-    --aqua-dark    : #3bafda;
-    --aqua-light   : #afd2fa;
-
-    --jeans-rgb    : 74, 137, 221;
-    --jeans-dark   : #4a89dc;
-    --jeans-light  : #5daafa;
+    --aqua-dark    : #3BAFDA;
+    --aqua-light   : #4FD2FA;
 
 /* moderator */
     --lotus-rgb   : 150, 122, 221;
-    --lotus-dark  : #967adc;
-    --lotus-light : #aca0fa;
+    --lotus-dark  : #967ADC;
+    --lotus-light : #ACA0FA;
 
+/* alt-submit */
     --plum-rgb     : 106, 80, 167;
-    --plum-dark    : #6a50a7;
-    --plum-light   : #8078c8;
+    --plum-dark    : #6A50A7;
+    --plum-light   : #8078C8;
 
     --candy-rgb    : 215, 112, 173;
-    --candy-dark   : #d770ad;
-    --candy-light  : #ec96d2;
+    --candy-dark   : #D770AD;
+    --candy-light  : #EC96D2;
 
     --bear-rgb     : 170, 142, 105;
-    --bear-dark    : #aa8e69;
-    --bear-light   : #bab496;
+    --bear-dark    : #AA8E69;
+    --bear-light   : #BAB496;
 
     --gravel-rgb   : 122, 112, 99;
-    --gravel-dark  : #7b7163;
-    --gravel-light : #8e9182;
+    --gravel-dark  : #7B7163;
+    --gravel-light : #8E9182;
 
     --bole-rgb     : 80, 52, 44;
-    --bole-dark    : #50342c;
+    --bole-dark    : #50342C;
     --bole-light   : #625046;
 
     --polar-rgb    : 245, 247, 250;
-    --polar-dark   : #e1e1e1;
-    --polar-light  : #f5f7fa;
+    --polar-dark   : #E1E1E1;
+    --polar-light  : #F5F7FA;
 
 /* notice */
     --mouse-rgb    : 170, 178, 189;
-    --mouse-dark   : #aab2bd;
-    --mouse-light  : #dce1e6;
+    --mouse-dark   : #AAB2BD;
+    --mouse-light  : #BDC2C9;
 
     --cloud-rgb    : 67, 74, 84;
-    --cloud-dark   : #434a54;
-    --cloud-light  : #747d87;
+    --cloud-dark   : #434A54;
+    --cloud-light  : #747D87;
 
 /* administrator */
     --coal-rgb     : 50, 49, 51;
     --coal-dark    : #323133;
-    --coal-light   : #4b4b55;
+    --coal-light   : #676773;
 }
