@@ -239,44 +239,67 @@ class SandboxFormController extends ModuleController
 		));
 
 		// Separator
-		$fieldset->add_field(new FormFieldFree('03_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('03_separator', 'FormFieldSpacer', array('class' => 'form-field-css-class')));
 
 		// BUTTONS
-		$fieldset->add_field(new FormFieldFree('all_buttons', 'All buttons must have the <span class="pinned notice">.button</span> class.', ''));
+		$fieldset->add_field(new FormFieldSubTitle('all_buttons', 'All Buttons', ''));
+		$fieldset->add_field(new FormFieldSpacer('all_buttons_explain', 'All buttons must have the <span class="pinned notice">.button</span> class.'));
 		// Buttons
-		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'button reset'));
-		$fieldset->add_element(new FormButtonButton('.button', '', '', 'button'));
-		$fieldset->add_element(new FormButtonButton('.alt-button', '', '', 'button alt-button'));
-		$fieldset->add_element(new FormButtonButton('.submit', '', '', 'button submit'));
-		$fieldset->add_element(new FormButtonButton('.alt-submit', '', '', 'button alt-submit'));
+		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'reset'));
+		$fieldset->add_element(new FormButtonButton('.button', '', '', ''));
+		$fieldset->add_element(new FormButtonButton('.alt-button', '', '', 'alt-button'));
+		$fieldset->add_element(new FormButtonButton('.submit', '', '', 'submit'));
+		$fieldset->add_element(new FormButtonButton('.alt-submit', '', '', 'alt-submit'));
 
-		$fieldset->add_field(new FormFieldFree('button_sizes', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('button_sizes', ''));
 
 		$fieldset->add_element(new FormButtonButton('.smallest', '', '', 'smallest'));
 		$fieldset->add_element(new FormButtonButton('.smaller', '', '', 'smaller'));
 		$fieldset->add_element(new FormButtonButton('.small', '', '', 'small'));
-		$fieldset->add_element(new FormButtonButton('.button', '', '', 'button'));
+		$fieldset->add_element(new FormButtonButton('.button', '', '', ''));
 		$fieldset->add_element(new FormButtonButton('.big', '', '', 'big'));
 		$fieldset->add_element(new FormButtonButton('.bigger', '', '', 'bigger'));
 		$fieldset->add_element(new FormButtonButton('.biggest', '', '', 'biggest'));
 
-		$fieldset->add_field(new FormFieldFree('button_colors', '', ''));
-		$fieldset->add_element(new FormButtonButton('.error', '', '', 'button error'));
-		$fieldset->add_element(new FormButtonButton('.error.bgc', '', '', 'button bgc error'));
-		$fieldset->add_element(new FormButtonButton('.warning', '', '', 'button warning'));
-		$fieldset->add_element(new FormButtonButton('.warning.bgc', '', '', 'button bgc warning'));
-		$fieldset->add_element(new FormButtonButton('.success', '', '', 'button success'));
-		$fieldset->add_element(new FormButtonButton('.success.bgc', '', '', 'button bgc success'));
-		$fieldset->add_element(new FormButtonButton('.question', '', '', 'button question'));
-		$fieldset->add_element(new FormButtonButton('.question.bgc', '', '', 'button bgc question'));
-		$fieldset->add_element(new FormButtonButton('.notice', '', '', 'button notice'));
-		$fieldset->add_element(new FormButtonButton('.notice.bgc', '', '', 'button bgc notice'));
-		$fieldset->add_element(new FormButtonButton('.member', '', '', 'button member'));
-		$fieldset->add_element(new FormButtonButton('.member.bgc', '', '', 'button bgc member'));
-		$fieldset->add_element(new FormButtonButton('.moderator', '', '', 'button moderator'));
-		$fieldset->add_element(new FormButtonButton('.moderator.bgc', '', '', 'button bgc moderator'));
-		$fieldset->add_element(new FormButtonButton('.administrator', '', '', 'button administrator'));
-		$fieldset->add_element(new FormButtonButton('.administrator.bgc', '', '', 'button bgc administrator'));
+		$fieldset->add_field(new FormFieldSpacer('button_notice', ''));
+		$fieldset->add_element(new FormButtonButton('.notice', '', '', 'notice'));
+		$fieldset->add_element(new FormButtonButton('.notice.bgc', '', '', 'bgc notice'));
+		$fieldset->add_element(new FormButtonButton('.notice.bgc-full', '', '', 'bgc-full notice'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_question', ''));
+		$fieldset->add_element(new FormButtonButton('.question', '', '', 'question'));
+		$fieldset->add_element(new FormButtonButton('.question.bgc', '', '', 'bgc question'));
+		$fieldset->add_element(new FormButtonButton('.question.bgc-full', '', '', 'bgc-full question'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_success', ''));
+		$fieldset->add_element(new FormButtonButton('.success', '', '', 'success'));
+		$fieldset->add_element(new FormButtonButton('.success.bgc', '', '', 'bgc success'));
+		$fieldset->add_element(new FormButtonButton('.success.bgc-full', '', '', 'bgc-full success'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_warning', ''));
+		$fieldset->add_element(new FormButtonButton('.warning', '', '', 'warning'));
+		$fieldset->add_element(new FormButtonButton('.warning.bgc', '', '', 'bgc warning'));
+		$fieldset->add_element(new FormButtonButton('.warning.bgc-full', '', '', 'bgc-full warning'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_errors', ''));
+		$fieldset->add_element(new FormButtonButton('.error', '', '', 'error'));
+		$fieldset->add_element(new FormButtonButton('.error.bgc', '', '', 'bgc error'));
+		$fieldset->add_element(new FormButtonButton('.error.bgc-full', '', '', 'bgc-full error'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_member', ''));
+		$fieldset->add_element(new FormButtonButton('.member', '', '', 'member'));
+		$fieldset->add_element(new FormButtonButton('.member.bgc', '', '', 'bgc member'));
+		$fieldset->add_element(new FormButtonButton('.member.bgc-full', '', '', 'bgc-full member'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_moderator', ''));
+		$fieldset->add_element(new FormButtonButton('.moderator', '', '', 'moderator'));
+		$fieldset->add_element(new FormButtonButton('.moderator.bgc', '', '', 'bgc moderator'));
+		$fieldset->add_element(new FormButtonButton('.moderator.bgc-full', '', '', 'bgc-full moderator'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_administrator', ''));
+		$fieldset->add_element(new FormButtonButton('.administrator', '', '', 'administrator'));
+		$fieldset->add_element(new FormButtonButton('.administrator.bgc', '', '', 'bgc administrator'));
+		$fieldset->add_element(new FormButtonButton('.administrator.bgc-full', '', '', 'bgc-full administrator'));
 
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
