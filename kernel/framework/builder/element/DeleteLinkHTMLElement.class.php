@@ -13,7 +13,7 @@ class DeleteLinkHTMLElement extends LinkHTMLElement
 {
 	public function __construct($url, $content = '')
 	{
-		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('delete', 'common')), 'far fa-fw fa-trash-alt')
+		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('delete', 'common')), 'far fa-fw fa-trash-alt', true)
 	}
 }
 ?>
