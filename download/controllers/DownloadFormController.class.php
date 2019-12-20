@@ -6,6 +6,7 @@
  * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class DownloadFormController extends ModuleController
@@ -409,10 +410,7 @@ class DownloadFormController extends ModuleController
 
 		KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 
-		Feed::clear_cache('download');
-		DownloadCache::invalidate();
-		DownloadCategoriesCache::invalidate();
-		KeywordsCache::invalidate();
+		DownloadService::clear_cache();
 	}
 
 	private function contribution_actions(DownloadFile $downloadfile, $id)

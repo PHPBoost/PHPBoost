@@ -5,6 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class DownloadService
@@ -64,9 +65,20 @@ class DownloadService
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function delete($condition, array $parameters)
+	public static function delete(int $id)
 	{
-		self::$db_querier->delete(DownloadSetup::$download_table, $condition, $parameters);
+		if (AppContext::get_current_user()->is_readonly())
+        {
+            $controller = PHPBoostErrors::user_in_read_only();
+            DispatchManager::redirect($controller);
+        }
+			self::$db_querier->delete(DownloadSetup::$download_table, 'WHERE id=:id', array('id' => $id));
+		
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'download', 'id' => $id));
+		
+			CommentsService::delete_comments_topic_module('download', $id);
+			KeywordsService::get_keywords_manager()->delete_relations($id);
+			NotationService::delete_notes_id_in_module('download', $id);
 	}
 
 	 /**
@@ -86,6 +98,14 @@ class DownloadService
 		$downloadfile = new DownloadFile();
 		$downloadfile->set_properties($row);
 		return $downloadfile;
+	}
+	
+	public static function clear_cache()
+	{
+		Feed::clear_cache('download');
+		KeywordsCache::invalidate();
+		DownloadCache::invalidate();
+        CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>

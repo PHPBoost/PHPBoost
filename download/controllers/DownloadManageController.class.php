@@ -7,12 +7,16 @@
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class DownloadManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
+	
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -21,6 +25,8 @@ class DownloadManageController extends AdminModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
+		
+		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
 	}
@@ -67,6 +73,9 @@ class DownloadManageController extends AdminModuleController
 			$downloadfile->set_properties($row);
 			$category = $downloadfile->get_category();
 			$user = $downloadfile->get_author_user();
+			
+			$this->elements_number++;
+			$this->ids[$this->elements_number] = $downloadfile->get_id();
 
 			$edit_link = new LinkHTMLElement(DownloadUrlBuilder::edit($downloadfile->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
 			$delete_link = new LinkHTMLElement(DownloadUrlBuilder::delete($downloadfile->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
@@ -94,6 +103,26 @@ class DownloadManageController extends AdminModuleController
 
 		return $table->get_page_number();
 	}
+	
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+    {
+        if ($request->get_string('delete-selected-elements', false))
+        {
+            for ($i = 1; $i <= $this->elements_number; $i++)
+            {
+                if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+                {
+                    if (isset($this->ids[$i]))
+                    {
+                        DownloadService::delete($this->ids[$i]);
+                    }
+                }
+            }
+            DownloadService::clear_cache();
+			
+            AppContext::get_response()->redirect(DownloadUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
+        }
+    }
 
 	private function check_authorizations()
 	{

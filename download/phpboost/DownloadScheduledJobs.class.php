@@ -5,6 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class DownloadScheduledJobs extends AbstractScheduledJobExtensionPoint
@@ -30,10 +31,7 @@ class DownloadScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 			if ($is_modified)
 			{
-				Feed::clear_cache('download');
-				DownloadCache::invalidate();
-				DownloadCategoriesCache::invalidate();
-				KeywordsCache::invalidate();
+				DownloadService::clear_cache();
 
 				$config->set_deferred_operations($deferred_operations);
 				DownloadConfig::save();
