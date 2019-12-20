@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,7 +23,7 @@ class AdminErrorsController404List extends AdminController
 
 	private $view;
 	private $lang;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -34,7 +34,7 @@ class AdminErrorsController404List extends AdminController
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
-		
+
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list'], $current_page);
 	}
 
@@ -64,8 +64,8 @@ class AdminErrorsController404List extends AdminController
 		{
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $row['id'];
-			
-			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+
+			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
 
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell(new LinkHTMLElement($row['requested_url'], $row['requested_url'])),

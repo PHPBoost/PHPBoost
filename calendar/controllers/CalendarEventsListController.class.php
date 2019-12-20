@@ -3,16 +3,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 16
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarEventsListController extends ModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 	private $hide_delete_input = array();
@@ -100,10 +101,10 @@ class CalendarEventsListController extends ModuleController
 			$category = $event->get_content()->get_category();
 			$user = $event->get_content()->get_author_user();
 
-			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
 			$edit_link = $event->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-trash-alt');
+			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), '');
 			$delete_link = $event->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -126,7 +127,7 @@ class CalendarEventsListController extends ModuleController
 			$table_row = new HTMLTableRow($row);
 			if (in_array($event->get_id(), $this->hide_delete_input))
 				$table_row->hide_delete_input();
-			
+
 			$results[] = $table_row;
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
@@ -149,11 +150,11 @@ class CalendarEventsListController extends ModuleController
 						try {
 							$event = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
 						} catch (RowNotFoundException $e) {}
-						
+
 						if ($event)
 						{
 							$events_list = CalendarService::get_serie_events($event->get_content()->get_id());
-							
+
 							if (!$event->belongs_to_a_serie() || count($events_list) == 1)
 							{
 								CalendarService::delete_event_content('WHERE id = :id', array('id' => $event->get_id()));

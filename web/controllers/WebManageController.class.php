@@ -3,17 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -24,7 +25,7 @@ class WebManageController extends AdminModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
-		
+
 		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
@@ -72,12 +73,12 @@ class WebManageController extends AdminModuleController
 			$weblink->set_properties($row);
 			$category = $weblink->get_category();
 			$user = $weblink->get_author_user();
-			
+
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $weblink->get_id();
 
-			$edit_link = new LinkHTMLElement(WebUrlBuilder::edit($weblink->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
-			$delete_link = new LinkHTMLElement(WebUrlBuilder::delete($weblink->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+			$edit_link = new LinkHTMLElement(WebUrlBuilder::edit($weblink->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
+			$delete_link = new LinkHTMLElement(WebUrlBuilder::delete($weblink->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -102,7 +103,7 @@ class WebManageController extends AdminModuleController
 
 		return $table->get_page_number();
 	}
-	
+
 	    private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
     {
         if ($request->get_string('delete-selected-elements', false))
@@ -118,7 +119,7 @@ class WebManageController extends AdminModuleController
                 }
             }
             WebService::clear_cache();
-			
+
             AppContext::get_response()->redirect(WebUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
         }
     }

@@ -3,16 +3,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 16
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarManageEventsController extends AdminModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -73,9 +74,9 @@ class CalendarManageEventsController extends AdminModuleController
 
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $event->get_id();
-			
-			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
-			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), 'fa fa-trash-alt');
+
+			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
+			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), '');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -117,14 +118,14 @@ class CalendarManageEventsController extends AdminModuleController
 						try {
 							$event = CalendarService::get_event('WHERE id_event = :id', array('id' => $this->ids[$i]));
 						} catch (RowNotFoundException $e) {}
-						
+
 						if ($event)
 						{
 							$events_list = CalendarService::get_serie_events($event->get_content()->get_id());
-							
+
 							//Delete event
 							CalendarService::delete_event($event->get_id(), $event->get_parent_id());
-							
+
 							if (!$event->belongs_to_a_serie() || count($events_list) == 1)
 							{
 								CalendarService::delete_event_content('WHERE id = :id', array('id' => $event->get_id()));
@@ -135,7 +136,7 @@ class CalendarManageEventsController extends AdminModuleController
 			}
 
 			CalendarService::clear_cache();
-			
+
 			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}

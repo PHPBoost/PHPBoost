@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserUsersListController extends AbstractController
@@ -13,7 +14,7 @@ class UserUsersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $groups_cache;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -25,7 +26,7 @@ class UserUsersListController extends AbstractController
 
 		if (AppContext::get_current_user()->is_admin())
 			$this->execute_multiple_delete_if_needed($request);
-		
+
 		return $this->generate_response($current_page);
 	}
 
@@ -65,7 +66,7 @@ class UserUsersListController extends AbstractController
 		{
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $row['user_id'];
-			
+
 			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 
@@ -73,23 +74,23 @@ class UserUsersListController extends AbstractController
 
 			$html_table_row = array(
 				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], $this->lang['email'], array(), 'alt-button smaller') : ''),
+				new HTMLTableRowCell($row['show_email'] == 1 ? new LinkHTMLElement('mailto:' . $row['email'], '<i class="fa fa-fw fa-at"></i>', array('aria-label' => $this->lang['email']), 'button small') : ''),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($posted_msg),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('never', 'main')),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), 'PM', array(), 'alt-button smaller'))
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="far fa-fw fa-envelope"></i>', array('aria-label' => $this->lang['private_message']), 'button small'))
 			);
 
 			if (AppContext::get_current_user()->is_admin())
 			{
 				$user = new User();
 				$user->set_properties($row);
-				$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
+				$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
 
 				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
-					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
 				else
-					$delete_link = new LinkHTMLElement('', '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'fa fa-trash-alt icon-disabled');
+					$delete_link = new LinkHTMLElement('', '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'icon-disabled');
 
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}

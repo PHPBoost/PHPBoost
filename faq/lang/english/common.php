@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 12
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -19,7 +19,7 @@ $lang['faq.config.title'] = 'FAQ questions configuration';
 $lang['faq.question.add'] = 'Add question';
 $lang['faq.question.edit'] = 'Question edition';
 $lang['faq.questions.pending'] = 'Pending questions';
-$lang['faq.questions.manager'] = 'FAQ manager';
+$lang['faq.questions.manager'] = 'Questions manager';
 
 $lang['faq.questions.reorder'] = 'Reorder questions';
 $lang['faq.random.question'] = 'Random question';

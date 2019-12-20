@@ -3,18 +3,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2013 06 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
-	
+
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -25,7 +26,7 @@ class NewsManageController extends AdminModuleController
 		$this->init();
 
 		$current_page = $this->build_table();
-		
+
 		$this->execute_multiple_delete_if_needed($request);
 
 		return $this->generate_response($current_page);
@@ -67,12 +68,12 @@ class NewsManageController extends AdminModuleController
 			$news->set_properties($row);
 			$category = $news->get_category();
 			$user = $news->get_author_user();
-			
+
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $news->get_id();
 
-			$edit_link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id()), '', array('aria-label' => LangLoader::get_message('edit', 'common')), 'fa fa-edit');
-			$delete_link = new LinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id()), '', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+			$edit_link = new LinkHTMLElement(NewsUrlBuilder::edit_news($news->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
+			$delete_link = new LinkHTMLElement(NewsUrlBuilder::delete_news($news->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -112,14 +113,14 @@ class NewsManageController extends AdminModuleController
 					}
 				}
 			}
-			
+
 				NewsService::clear_cache();
-			
+
 				AppContext::get_response()->redirect(NewsUrlBuilder::manage_news(), LangLoader::get_message('process.success', 'status-messages-common'));
-			
+
 		}
 	}
-	
+
 	private function check_authorizations()
 	{
 		if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
