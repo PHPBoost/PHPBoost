@@ -13,8 +13,6 @@
 #                       French                      #
 #####################################################
 
-$lang = array();
-
 $lang['default.category.name'] = 'Catégorie de test';
 $lang['default.category.description'] = 'Articles de démonstration';
 $lang['default.article.title'] = 'Débuter avec le module Articles';
@@ -22,9 +20,9 @@ $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.<br />
 <br />
 <ul class="formatter-ul">
-<li class="formatter-li">Pour configurer votre module, <a href="' . ArticlesUrlBuilder::configuration()->rel() . '">cliquez ici</a>
+<li class="formatter-li">Pour configurer votre module, <a href="' . ModulesUrlBuilder::configuration('articles')->rel() . '">cliquez ici</a>
 </li><li class="formatter-li">Pour ajouter des catégories : <a href="' . CategoriesUrlBuilder::add_category(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a> (les catégories et sous catégories sont à l\'infini)
-</li><li class="formatter-li">Pour ajouter un article : <a href="' . ArticlesUrlBuilder::add_article()->rel() . '">cliquez ici</a>
+</li><li class="formatter-li">Pour ajouter un article : <a href="' . ItemsUrlBuilder::add(Category::ROOT_CATEGORY, 'articles')->rel() . '">cliquez ici</a>
 </li></ul>
 <ul class="formatter-ul">
 <li class="formatter-li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="https://www.phpboost.com/wiki/bbcode">article</a>)<br />

@@ -104,7 +104,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION'               => $pagination->display(),
 			'ID_CAT'                   => $this->get_category()->get_id(),
-			'U_EDIT_CATEGORY'          => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ArticlesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'U_EDIT_CATEGORY'          => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
 		while($row = $result->fetch())
@@ -322,7 +322,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)

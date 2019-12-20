@@ -24,16 +24,16 @@ class ArticlesTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage_categories()));
 		$tree->add_link($manage_categories_link);
 
-		$manage_articles_link = new ModuleLink($lang['articles.management'], ArticlesUrlBuilder::manage_articles(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
-		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles.management'], ArticlesUrlBuilder::manage_articles(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
-		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles.add.item'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$manage_articles_link = new ModuleLink($lang['articles.management'], ItemsUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
+		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles.management'], ItemsUrlBuilder::manage($module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$manage_articles_link->add_sub_link(new ModuleLink($lang['articles.add.item'], ItemsUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 		$tree->add_link($manage_articles_link);
 
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ModulesUrlBuilder::configuration($module_id)));
 
 		if (!CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation())
 		{
-			$tree->add_link(new ModuleLink($lang['articles.add.item'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY)), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution()));
+			$tree->add_link(new ModuleLink($lang['articles.add.item'], ItemsUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution()));
 		}
 
 		$tree->add_link(new ModuleLink($lang['articles.pending.items'], ArticlesUrlBuilder::display_pending_articles(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));

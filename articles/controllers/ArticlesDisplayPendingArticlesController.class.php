@@ -229,7 +229,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
 		$breadcrumb->add($this->lang['articles.pending.items'], ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		return $response;

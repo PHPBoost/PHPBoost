@@ -76,8 +76,8 @@ class ArticlesManageController extends ModuleController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $article->get_id();
 
-			$edit_link = new LinkHTMLElement(ArticlesUrlBuilder::edit_article($article->get_id()), '<i class="far fa-fw fa-edit"></i>', array('title' => LangLoader::get_message('edit', 'common')), '');
-			$delete_link = new LinkHTMLElement(ArticlesUrlBuilder::delete_article($article->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('title' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
+			$edit_link = new EditLinkHTMLElement(ItemsUrlBuilder::edit($article->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(ItemsUrlBuilder::delete($article->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
@@ -140,7 +140,7 @@ class ArticlesManageController extends ModuleController
 
 			ArticlesService::clear_cache();
 
-			AppContext::get_response()->redirect(ArticlesUrlBuilder::manage_articles(), LangLoader::get_message('process.success', 'status-messages-common'));
+			AppContext::get_response()->redirect(ItemsUrlBuilder::manage(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
@@ -159,11 +159,11 @@ class ArticlesManageController extends ModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['articles.management'], $this->lang['articles.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::manage_articles());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->lang['articles.management'], ArticlesUrlBuilder::manage_articles());
+		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.management'], ItemsUrlBuilder::manage());
 
 		return $response;
 	}
