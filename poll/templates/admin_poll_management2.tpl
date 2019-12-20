@@ -104,21 +104,21 @@
 								<table class="table admin-poll">
 									<tbody>
 										<tr>
-											<td class="no-separator text-strong">
+											<td class="text-strong">
 												{L_ANSWERS}
 											</td>
-											<td class="no-separator text-strong">
+											<td class="text-strong">
 												{L_NUMBER_VOTE}
 											</td>
 										</tr>
 										<tr>
-											<td class="align-left no-separator">
+											<td class="align-left">
 												# START answers #
 												<label class="infos-options"><input type="text" name="a{answers.ID}" value="{answers.ANSWER}" /></label>
 												# END answers #
 												<span id="a{MAX_ID}"></span>
 											</td>
-											<td class="align-left no-separator">
+											<td class="align-left">
 												# START votes #
 												<label class="infos-options"><input class="poll-vote" type="text" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label>
 												# END votes #
@@ -128,12 +128,9 @@
 										<tr>
 											<td class="align-left" colspan="2">
 												<script>
-												<!--
 													if( {MAX_ID} < 19 )
 														document.write('<span id="s{MAX_ID}"><a href="javascript:add_field({MAX_ID}, 19)" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a></span>');
-												-->
 												</script>
-
 											</td>
 										</tr>
 									</tbody>

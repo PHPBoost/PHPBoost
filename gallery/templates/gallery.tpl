@@ -293,22 +293,20 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
 			# START sub_categories_list #
-				<div class="cell">
+				<div class="cell" itemscope>
 					<div class="cell-header">
-						<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
+						<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+						<span class="subcat-options" itemprop="items">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
 					<div class="cell-body">
-						<div class="cell-thumbnail cell-landscape">
+						<div class="cell-thumbnail cell-landscape" itemprop="thumbnail">
 							# IF sub_categories_list.C_CATEGORY_IMAGE #
 									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							# ENDIF #
-							<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
-								<span class="fa fa-eye"></span>
+							<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
+								${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}
 							</a>
 						</div>
-					</div>
-					<div class="cell-footer">
-						<span class="subcat-options">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
 				</div>
 			# END sub_categories_list #
@@ -461,8 +459,8 @@
 								<div class="cell-list">
 									<ul>
 										<li class="li-stretch">
-											<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit"></i></a>
-											<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt"></i></a>
+											<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-edit"></i></a>
+											<a href="{pics_list.U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
 											<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
 												<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 												<div id="gallery-pic-move-to" class="modal modal-animation">
@@ -487,7 +485,6 @@
 						</div>
 					# END pics_list #
 				</div>
-
 			</div>
 			<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
 		</article>

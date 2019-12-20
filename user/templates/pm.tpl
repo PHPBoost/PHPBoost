@@ -89,37 +89,37 @@
 						</thead>
 						<tbody>
 							# START convers.list #
-							<tr>
-								<td>
-									<label for="d{convers.list.INCR}" class="checkbox">
-										<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
-										<span>&nbsp;</span>
-									</label>
-								</td>
-								<td class="convers-announce">
-									<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
-								</td>
-								<td class="convers-title no-separator">
-									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
-								</td>
-								<td>
-									{convers.list.U_PARTICIPANTS}
-								</td>
-								<td>
-									{convers.list.MSG}
-								</td>
-								<td class="smaller">
-									{convers.list.U_LAST_MSG}
-								</td>
-							</tr>
+								<tr>
+									<td>
+										<label for="d{convers.list.INCR}" class="checkbox">
+											<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
+											<span>&nbsp;</span>
+										</label>
+									</td>
+									<td class="convers-announce">
+										<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
+									</td>
+									<td class="convers-title">
+										{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
+									</td>
+									<td>
+										{convers.list.U_PARTICIPANTS}
+									</td>
+									<td>
+										{convers.list.MSG}
+									</td>
+									<td class="smaller">
+										{convers.list.U_LAST_MSG}
+									</td>
+								</tr>
 							# END convers.list #
 
 							# START convers.no_pm #
-							<tr>
-								<td colspan="6">
-									<span class="text-strong">{convers.no_pm.L_NO_PM}</span>
-								</td>
-							</tr>
+								<tr>
+									<td colspan="6">
+										<span class="text-strong">{convers.no_pm.L_NO_PM}</span>
+									</td>
+								</tr>
 							# END convers.no_pm #
 						</tbody>
 						<tfoot>

@@ -283,12 +283,12 @@ function display_thumbnails(direction)
 						</tr>
 						<tr>
 							# IF pics.pics_max.C_PREVIOUS #
-							<td class="align-left no-separator">
+							<td class="align-left">
 								<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_PREVIOUS}#pics_max">{L_PREVIOUS}</a>
 							</td>
 							# ENDIF #
 							# IF pics.pics_max.C_NEXT #
-							<td class="align-right no-separator">
+							<td class="align-right">
 								<a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max">{L_NEXT}</a> <a href="admin_gallery.php?cat={pics.pics_max.ID_CATEGORY}&amp;id={pics.pics_max.ID_NEXT}#pics_max" class="fa fa-arrow-right fa-2x"></a>
 							</td>
 							# ENDIF #

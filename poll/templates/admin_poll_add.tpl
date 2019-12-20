@@ -103,21 +103,21 @@
 								<table class="table admin-poll">
 									<tbody>
 										<tr>
-											<td class="no-separator text-strong">
+											<td class="text-strong">
 												{L_ANSWERS}
 											</td>
-											<td class="no-separator text-strong">
+											<td class="text-strong">
 												{L_NUMBER_VOTE}
 											</td>
 										</tr>
 										<tr>
-											<td class="align-left no-separator">
+											<td class="align-left">
 												<label class="infos-options"><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
 												<label class="infos-options"><input type="text" name="a1" value="{ANSWER1}" /></label>
 												<label class="infos-options"><input type="text" name="a2" value="{ANSWER2}" /></label>
 												<span id="a3"></span>
 											</td>
-											<td class="align-left no-separator">
+											<td class="align-left">
 												<label class="infos-options"><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
 												<label class="infos-options"><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
