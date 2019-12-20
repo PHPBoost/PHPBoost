@@ -13,7 +13,7 @@ class EditLinkHTMLElement extends LinkHTMLElement
 {
 	public function __construct($url, $content = '')
 	{
-		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('edit', 'common')), 'far fa-fw fa-edit')
+		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('edit', 'common')), 'far fa-fw fa-edit', true)
 	}
 }
 ?>
