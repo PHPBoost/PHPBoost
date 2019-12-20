@@ -1,1 +1,1 @@
-<img src="{URL}" # START attributs # {attributs.TYPE}="{attributs.VALUE}"# END attributs ## IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF #>
+<img src="{URL}" # START attributes # {attributes.TYPE}="{attributes.VALUE}"# END attributes ## IF C_HAS_CSS_CLASSES #class="{CSS_CLASSES}"# ENDIF #>

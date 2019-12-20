@@ -14,10 +14,10 @@ class LinkHTMLElement extends AbstractHTMLElement
 {
 	private $url;
 	private $content;
-	private $attributs = array();
+	private $attributes = array();
 	private $use_icon;
 
-	public function __construct($url, $content, $attributs = array(), $css_class = '', $use_icon = false)
+	public function __construct($url, $content, $attributes = array(), $css_class = '', $use_icon = false)
 	{
 		if ($url instanceof Url)
 		{
@@ -26,7 +26,7 @@ class LinkHTMLElement extends AbstractHTMLElement
 
 		$this->url = $url;
 		$this->content = $content;
-		$this->attributs = $attributs;
+		$this->attributes = $attributes;
 		$this->css_class = $css_class;
 		$this->use_icon = ($css_class ? $use_icon : false);
 	}
@@ -43,9 +43,9 @@ class LinkHTMLElement extends AbstractHTMLElement
 			'CONTENT' => $this->content,
 		));
 
-		foreach ($this->attributs as $type => $value)
+		foreach ($this->attributes as $type => $value)
 		{
-			$tpl->assign_block_vars('attributs', array(
+			$tpl->assign_block_vars('attributes', array(
 				'TYPE' => $type,
 				'VALUE' => $value
 			));

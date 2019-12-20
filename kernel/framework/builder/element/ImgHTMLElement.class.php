@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 03 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.1 - 2015 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -13,9 +13,9 @@
 class ImgHTMLElement extends AbstractHTMLElement
 {
 	private $url;
-	private $attributs = array();
+	private $attributes = array();
 
-	public function __construct($url, $attributs = array(), $css_class = '')
+	public function __construct($url, $attributes = array(), $css_class = '')
 	{
 		if ($url instanceof Url)
 		{
@@ -23,7 +23,7 @@ class ImgHTMLElement extends AbstractHTMLElement
 		}
 
 		$this->url = $url;
-		$this->attributs = $attributs;
+		$this->attributes = $attributes;
 		$this->css_class = $css_class;
 	}
 
@@ -37,9 +37,9 @@ class ImgHTMLElement extends AbstractHTMLElement
 			'URL' => $this->url
 		));
 
-		foreach ($this->attributs as $type => $value)
+		foreach ($this->attributes as $type => $value)
 		{
-			$tpl->assign_block_vars('attributs', array(
+			$tpl->assign_block_vars('attributes', array(
 				'TYPE' => $type,
 				'VALUE' => $value
 			));

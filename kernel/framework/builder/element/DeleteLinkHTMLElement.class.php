@@ -11,9 +11,9 @@
 
 class DeleteLinkHTMLElement extends LinkHTMLElement
 {
-	public function __construct($url, $content = '', $attributes = array())
+	public function __construct($url, $content = '', $attributes = array(), $css_class = '')
 	{
-		parent::__construct($url, $content, (!empty($attributes) ? $attributes : array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element')), 'far fa-fw fa-trash-alt', true);
+		parent::__construct($url, $content, array_merge(array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), $attributes), 'far fa-fw fa-trash-alt' . ($css_class ? ' ' . $css_class : ''), true);
 	}
 }
 ?>

@@ -11,9 +11,9 @@
 
 class EditLinkHTMLElement extends LinkHTMLElement
 {
-	public function __construct($url, $content = '')
+	public function __construct($url, $content = '', $attributes = array(), $css_class = '')
 	{
-		parent::__construct($url, $content, array('aria-label' => LangLoader::get_message('edit', 'common')), 'far fa-fw fa-edit', true);
+		parent::__construct($url, $content, array_merge(array('aria-label' => LangLoader::get_message('edit', 'common')), $attributes), 'far fa-fw fa-edit' . ($css_class ? ' ' . $css_class : ''), true);
 	}
 }
 ?>
