@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -127,7 +127,7 @@ class NewsFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->common_lang['form.picture'], $this->get_news()->get_picture()->relative()));
 
-		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 
 		$other_fieldset->add_field(new FormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_news()->get_sources()));
 
@@ -363,7 +363,7 @@ class NewsFormController extends ModuleController
 
 		$this->contribution_actions($news, $id_news);
 
-		NewsService::get_keywords_manager()->put_relations($id_news, $this->form->get_value('keywords'));
+		KeywordsService::get_keywords_manager()->put_relations($id_news, $this->form->get_value('keywords'));
 
 		NewsService::clear_cache();
 	}

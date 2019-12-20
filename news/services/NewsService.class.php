@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -13,11 +13,18 @@ class NewsService
 {
 	private static $db_querier;
 
-	private static $keywords_manager;
-
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
+	}
+
+	 /**
+	 * @desc Count items number.
+	 * @param string $condition (optional) : Restriction to apply to the list of items
+	 */
+	public static function count($condition = '', $parameters = array())
+	{
+		return self::$db_querier->count(NewsSetup::$news_table, $condition, $parameters);
 	}
 
 	public static function add(News $news)
@@ -42,12 +49,11 @@ class NewsService
 		
 		self::$db_querier->delete(NewsSetup::$news_table, 'WHERE id=:id', array('id' => $id));
 		
-		self::get_keywords_manager()->delete_relations($id);
-		
 		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'news', 'id' => $id));
 		
 		CommentsService::delete_comments_topic_module('news', $id);
-		}
+		KeywordsService::get_keywords_manager()->delete_relations($id);
+	}
 
 	public static function get_news($condition, array $parameters = array())
 	{
@@ -64,21 +70,12 @@ class NewsService
 	{
 		Feed::clear_cache('news');
 		NewsCategoriesCache::invalidate();
-		NewsKeywordsCache::invalidate();
+		KeywordsCache::invalidate();
 	}
 
 	public static function update_number_view(News $news)
 	{
 		self::$db_querier->update(NewsSetup::$news_table, array('number_view' => $news->get_number_view()), 'WHERE id=:id', array('id' => $news->get_id()));
-	}
-
-	public static function get_keywords_manager()
-	{
-		if (self::$keywords_manager === null)
-		{
-			self::$keywords_manager = new KeywordsManager(NewsKeywordsCache::load());
-		}
-		return self::$keywords_manager;
 	}
 }
 ?>
