@@ -17,7 +17,7 @@ class LinkHTMLElement extends AbstractHTMLElement
 	private $attributs = array();
 	private $use_icon;
 
-	public function __construct($url, $content, $attributs = array(), $css_class = '', $use_icon = true)
+	public function __construct($url, $content, $attributs = array(), $css_class = '', $use_icon = false)
 	{
 		if ($url instanceof Url)
 		{
