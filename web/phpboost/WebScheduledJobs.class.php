@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 19
  * @since       PHPBoost 4.1 - 2015 12 15
+ * @contributor Mipel <mipel@phpboost.com>
 */
 
 class WebScheduledJobs extends AbstractScheduledJobExtensionPoint
@@ -30,11 +31,8 @@ class WebScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 			if ($is_modified)
 			{
-				Feed::clear_cache('web');
-				WebCache::invalidate();
-				WebCategoriesCache::invalidate();
-				KeywordsCache::invalidate();
-
+				WebService::clear_cache();
+				
 				$config->set_deferred_operations($deferred_operations);
 				WebConfig::save();
 			}
