@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -85,7 +85,7 @@ class CalendarManageEventsController extends AdminModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
-				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
+				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('data-color' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ''), 'pinned')),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->lang['calendar.labels.repeat.' . $event->get_content()->get_repeat_type()] . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
@@ -155,11 +155,11 @@ class CalendarManageEventsController extends AdminModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.config.events.management'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.config.events.management'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::manage_events());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		$breadcrumb->add($this->lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events());
 

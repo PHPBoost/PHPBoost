@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.0 - 2013 06 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,12 +32,12 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 
 				if ($is_admin)
 				{
-					$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => $lang['edit']), '');
+					$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']));
 
 					if ($row['level'] != User::ADMIN_LEVEL || ($row['level'] == User::ADMIN_LEVEL && $number_admins > 1))
-						$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => $lang['delete'], 'data-confirmation' => 'delete-element'), '');
+						$delete_link = new DeleteLinkHTMLElement($row['user_id']);
 					else
-						$delete_link = new LinkHTMLElement('', '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => $lang['delete'], 'onclick' => 'return false;'), 'icon-disabled');
+						$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
 
 					$suggestion .= $edit_link->display() . '&nbsp;' . $delete_link->display() . '&nbsp;';
 				}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -85,12 +85,12 @@ class UserUsersListController extends AbstractController
 			{
 				$user = new User();
 				$user->set_properties($row);
-				$edit_link = new LinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
+				$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()));
 
 				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
-					$delete_link = new LinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
+					$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
 				else
-					$delete_link = new LinkHTMLElement('', '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'onclick' => 'return false;'), 'icon-disabled');
+					$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
 
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}

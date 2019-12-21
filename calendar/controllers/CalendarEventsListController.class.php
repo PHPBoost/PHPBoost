@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -101,10 +101,10 @@ class CalendarEventsListController extends ModuleController
 			$category = $event->get_content()->get_category();
 			$user = $event->get_content()->get_author_user();
 
-			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
+			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()));
 			$edit_link = $event->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), '');
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()));
 			$delete_link = $event->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -114,7 +114,7 @@ class CalendarEventsListController extends ModuleController
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()), $event->get_content()->get_title()), 'left'),
-				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('style' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? 'color:' . $category->get_color() : ''))),
+				new HTMLTableRowCell(new SpanHTMLElement($category->get_name(), array('data-color' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ''), 'pinned')),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell(LangLoader::get_message('from_date', 'main') . ' ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . $br->display() . LangLoader::get_message('to_date', 'main') . ' ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($event->belongs_to_a_serie() ? $this->get_repeat_type_label($event) . ' - ' . $event->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.labels.repeat_times'] : LangLoader::get_message('no', 'common')),
@@ -220,12 +220,12 @@ class CalendarEventsListController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.events_list'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.events_list'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events_list'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::events_list());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 		$breadcrumb->add($this->lang['calendar.events_list'], CalendarUrlBuilder::events_list());
 
 		return $response;

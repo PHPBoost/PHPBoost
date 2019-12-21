@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,7 +65,7 @@ class AdminErrorsController404List extends AdminController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $row['id'];
 
-			$delete_link = new LinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
+			$delete_link = new DeleteLinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']));
 
 			$results[] = new HTMLTableRow(array(
 				new HTMLTableRowCell(new LinkHTMLElement($row['requested_url'], $row['requested_url'])),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -77,8 +77,8 @@ class WebManageController extends AdminModuleController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $weblink->get_id();
 
-			$edit_link = new LinkHTMLElement(WebUrlBuilder::edit($weblink->get_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
-			$delete_link = new LinkHTMLElement(WebUrlBuilder::delete($weblink->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => 'delete-element'), '');
+			$edit_link = new EditLinkHTMLElement(WebUrlBuilder::edit($weblink->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(WebUrlBuilder::delete($weblink->get_id()));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
