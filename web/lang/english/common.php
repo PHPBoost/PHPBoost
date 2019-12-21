@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 04
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -13,7 +13,6 @@
 ####################################################
 
 $lang['module_title'] = 'Web Links';
-$lang['module_config_title'] = 'Links configuration';
 
 $lang['web.actions.add'] = 'Add link';
 $lang['web.add'] = 'New link';

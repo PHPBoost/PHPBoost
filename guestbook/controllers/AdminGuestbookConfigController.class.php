@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 15
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -46,7 +46,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminGuestbookDisplayResponse($tpl, $this->admin_common_lang['configuration']);
+		return new DefaultAdminDisplayResponse($tpl);
 	}
 
 	private function init()
@@ -60,7 +60,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration'] . ': ' .$this->lang['guestbook.module.title']);
+		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
