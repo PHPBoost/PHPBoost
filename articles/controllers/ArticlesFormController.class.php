@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,8 +98,8 @@ class ArticlesFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.decription.enabled'], $this->get_article()->get_description_enabled(),
-			array('description' => StringVars::replace_vars($this->lang['articles.decription.enabled.annex'],
+		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.description.enabled'], $this->get_article()->get_description_enabled(),
+			array('description' => StringVars::replace_vars($this->lang['articles.description.enabled.annex'],
 			array(
 				'number' => ArticlesConfig::load()->get_number_character_to_cut())),
 				'events' => array('click' => '
@@ -110,7 +110,7 @@ class ArticlesFormController extends ModuleController
 					}'
 		))));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.decription'],
+		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.description'],
 			array('number' =>ArticlesConfig::load()->get_number_character_to_cut())), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));

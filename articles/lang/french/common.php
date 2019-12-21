@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 21
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,9 +33,9 @@ $lang['articles.display.decriptions.to.guests'] = 'Afficher le condensé des art
 $lang['articles.default.contents'] = 'Contenu par défaut d\'un article';
 
 // Form
-$lang['articles.decription'] = 'Description (maximum :number caractères)';
-$lang['articles.decription.enabled'] = 'Activer le condensé de l\'article';
-$lang['articles.decription.enabled.annex'] = 'ou laissez PHPBoost couper le contenu à :number caractères';
+$lang['articles.description'] = 'Description (maximum :number caractères)';
+$lang['articles.description.enabled'] = 'Activer le condensé de l\'article';
+$lang['articles.description.enabled.annex'] = 'ou laissez PHPBoost couper le contenu à :number caractères';
 $lang['articles.add.page'] = 'Insérer une page';
 $lang['articles.add.page.title'] = 'Titre de la nouvelle page';
 
