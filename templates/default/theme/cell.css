@@ -10,6 +10,7 @@
 }
 
 .cell-header,
+.cell-infos,
 .cell-body,
 .cell-list,
 .cell-table,
@@ -21,6 +22,7 @@
 	border-color: transparent;
 }
 
+[class*="cell-"] + .cell-infos,
 [class*="cell-"] + .cell-body,
 [class*="cell-"] + .cell-list,
 [class*="cell-"] + .cell-table,

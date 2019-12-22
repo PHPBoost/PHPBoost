@@ -12,8 +12,8 @@ body {
 }
 
 .bgc-main	{ background-color: #FFFFFF; }
-.bkgd-sub   { background-color: #ECF2F8; }
-.bgc-title	{ background-color: #afd2fa; color: #FFFFFF; }
+.bgc-sub    { background-color: #ECF2F8; }
+.bgc-title	{ background-color: #4E8EC1; color: #FFFFFF; }
 
 #footer       { border-color: #366493; }
 .footer-infos { border-color: #366493; }
@@ -162,6 +162,7 @@ body {
 .button.submit:hover,
 .submit:hover {
 	background-color: #4E8EC1;
+	color: #FFFFFF;
 }
 
 .button.submit:active,
@@ -177,6 +178,7 @@ body {
 .button.alt-submit:hover,
 .alt-submit:hover {
 	background-color: #ACA0FA;
+	color: #FFFFFF;
 }
 
 .button.alt-submit:active,
@@ -194,6 +196,7 @@ body {
 .button.alt-button:hover,
 .alt-button:hover {
 	background-color: #E8E15F;
+	color: #FFFFFF;
 }
 
 .button.alt-button:active,
@@ -623,6 +626,7 @@ a[class*='lightcase-icon-']:hover {
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
 .cell-tile .cell-header,
+.cell-tile .cell-infos,
 .cell-tile .cell-body,
 .cell-tile .cell-list,
 .cell-tile .cell-table,
@@ -636,6 +640,7 @@ a[class*='lightcase-icon-']:hover {
 .cell-mini [class*="cell-"] { background-color: transparent; }
 
 .no-style .cell-header,
+.no-style .cell-infos,
 .no-style .cell-body,
 .no-style .cell-list,
 .no-style .cell-table,

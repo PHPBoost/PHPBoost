@@ -81,10 +81,10 @@
 		width: 80%;
 	}
 
-	.form-field-textarea {
-		width: 100%;
-	}
+	.form-field-textarea { width: 100%; }
 }
+
+.form-spacer { width: 100%; }
 
 /* --- Textarea --- */
 .form-field-textarea {

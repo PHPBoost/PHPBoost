@@ -11,7 +11,7 @@
 	transition: all 0.2s steps(3, end);
 }
 
-.button:hover  { transition: all 0.3s ease-in-out; }
+.button:hover  { transition: all 0.3s ease-in-out; text-decoration: none;}
 .button:active { transition: all 0.2s linear; }
 
 [disabled],
