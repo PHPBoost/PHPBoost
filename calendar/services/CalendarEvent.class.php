@@ -176,6 +176,7 @@ class CalendarEvent
 			Date::get_array_tpl_vars($this->end_date, 'end_date'),
 			array(
 			'C_APPROVED' => $this->content->is_approved(),
+			'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE' => $this->content->has_picture(),
@@ -187,6 +188,7 @@ class CalendarEvent
 			'C_PARTICIPANTS' => !empty($this->participants),
 			'C_PARTICIPATE' => $this->content->is_registration_authorized() && $this->content->is_authorized_to_register() && time() < $this->start_date->get_timestamp() && (!$this->content->get_max_registered_members() || ($this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() < $this->content->get_max_registered_members())) && (!$this->content->get_last_registration_date() || ($this->content->is_last_registration_date_enabled() && time() < $this->content->get_last_registration_date()->get_timestamp())) && !in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
 			'C_IS_PARTICIPANT' => in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
+			'C_UNSUBSCRIBE' => time() < $this->start_date->get_timestamp(),
 			'C_REGISTRATION_CLOSED' => $this->content->is_last_registration_date_enabled() && $this->content->get_last_registration_date() && time() > $this->content->get_last_registration_date()->get_timestamp(),
 			'C_MAX_PARTICIPANTS_REACHED' => $this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() == $this->content->get_max_registered_members(),
 			'C_MISSING_PARTICIPANTS' => !empty($missing_participants_number) && $missing_participants_number <= 5,
@@ -200,7 +202,6 @@ class CalendarEvent
 			'CONTENT_ID' => $this->content->get_id(),
 			'TITLE' => $this->content->get_title(),
 			'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
-			'PICTURE' => $this->content->get_picture()->rel(),
 			'LOCATION' => $location,
 			'LOCATION_MAP' => $location_map,
 			'COMMENTS_NUMBER' => CommentsService::get_comments_number('calendar', $this->id),
@@ -222,9 +223,10 @@ class CalendarEvent
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
-			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
+			'U_ITEM' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
 			'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
+			'U_PICTURE' => $this->content->get_picture()->rel(),
 			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()

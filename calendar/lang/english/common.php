@@ -15,32 +15,31 @@
 ####################################################
 
 //Module title
-$lang['module_title'] = 'Calendar';
-$lang['module_config_title'] = 'Calendar configuration';
+$lang['calendar.module.title'] = 'Calendar';
+$lang['calendar.config.title'] = 'Calendar configuration';
 
 //Config
 $lang['calendar.default.contents'] = 'Event default content';
 
 //Messages divers
-$lang['calendar.notice.no_current_action'] = 'No events scheduled for this date';
-$lang['calendar.notice.no_pending_event'] = 'No pending event';
-$lang['calendar.notice.suscribe.event_date_expired'] = 'The event is finished, you can not suscribe.';
-$lang['calendar.notice.unsuscribe.event_date_expired'] = 'The event is finished, you can not unsuscribe.';
+$lang['calendar.notice.no.event'] = 'No events scheduled for this date';
+$lang['calendar.notice.no.pending.event'] = 'No pending event';
+$lang['calendar.suscribe.notice.expired.event.date'] = 'The event is finished, you can not suscribe.';
+$lang['calendar.unsuscribe.notice.expired.event.date'] = 'The event is started or finished, you can not unsuscribe.';
 
 //Titles
-$lang['calendar.titles.add_event'] = 'Add event';
-$lang['calendar.titles.delete_event'] = 'Delete event';
-$lang['calendar.titles.delete_occurrence'] = 'Occurrence';
-$lang['calendar.titles.delete_all_events_of_the_serie'] = 'All events of the serie';
-$lang['calendar.titles.event_edition'] = 'Event edition';
-$lang['calendar.titles.event_removal'] = 'Event removal';
-$lang['calendar.titles.events_of'] = 'Events of';
-$lang['calendar.titles.event'] = 'Event';
-$lang['calendar.titles.repetition'] = 'Repetition';
-$lang['calendar.pending'] = 'Pending events';
-$lang['calendar.manage'] = 'Manage events';
-$lang['calendar.events_list'] = 'Events list';
-$lang['calendar.cancelled'] = 'This event has been canceled';
+$lang['calendar.event.delete'] = 'Delete event';
+$lang['calendar.event.delete.occurrence'] = 'Occurrence';
+$lang['calendar.event.delete.serie'] = 'All events of the serie';
+$lang['calendar.event.add'] = 'Add event';
+$lang['calendar.event.edit'] = 'Event edition';
+$lang['calendar.events.of'] = 'Events of';
+$lang['calendar.event'] = 'Event';
+$lang['calendar.repetition'] = 'Repetition';
+$lang['calendar.pending.events'] = 'Pending events';
+$lang['calendar.events.manager'] = 'Events manager';
+$lang['calendar.events.list'] = 'Events list';
+$lang['calendar.cancelled.event'] = 'This event has been canceled';
 
 //Labels
 $lang['calendar.labels.location'] = 'Location';
@@ -64,13 +63,13 @@ $lang['calendar.labels.repeat_times'] = 'times';
 $lang['calendar.labels.repeat.never'] = 'Never';
 $lang['calendar.labels.events_number'] = ':events_number events';
 $lang['calendar.labels.one_event'] = '1 event';
-$lang['calendar.labels.start_date'] = 'Start date';
-$lang['calendar.labels.end_date'] = 'End date';
+$lang['calendar.labels.start.date'] = 'Start date';
+$lang['calendar.labels.end.date'] = 'End date';
 $lang['calendar.labels.contribution.explain'] = 'You are not authorized to create an event, however you can contribute by submitting one.';
 $lang['calendar.labels.birthday'] = 'Birthday';
-$lang['calendar.labels.birthday_title'] = 'Birthday of';
+$lang['calendar.labels.birthday.of'] = 'Birthday of';
 $lang['calendar.labels.participants'] = 'Participants';
-$lang['calendar.labels.no_one'] = 'No one';
+$lang['calendar.labels.no.one'] = 'No one';
 $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 $lang['calendar.labels.cancel'] = 'Cancel the event';

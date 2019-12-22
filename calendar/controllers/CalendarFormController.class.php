@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 16
+ * @version     PHPBoost 5.3 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -63,7 +63,7 @@ class CalendarFormController extends ModuleController
 
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('event', $this->lang['calendar.titles.event']);
+		$fieldset = new FormFieldsetHTMLHeading('event', $event_content === null ? $this->lang['calendar.event.add'] : $this->lang['calendar.event.edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $event_content->get_title(), array('required' => true)));
@@ -80,9 +80,9 @@ class CalendarFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->lang['calendar.labels.picture'], $event_content->get_picture()->relative()));
 
-		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($start_date = new FormFieldDateTime('start_date', $this->lang['calendar.labels.start.date'], $this->get_event()->get_start_date(), array('required' => true, 'five_minutes_step' => true)));
 
-		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
+		$fieldset->add_field($end_date = new FormFieldDateTime('end_date', $this->lang['calendar.labels.end.date'], $this->get_event()->get_end_date(), array('required' => true, 'five_minutes_step' => true)));
 
 		$form->add_constraint(new FormConstraintFieldsDifferenceSuperior($start_date, $end_date));
 
@@ -538,13 +538,13 @@ class CalendarFormController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		if ($event->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['calendar.titles.add_event'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.titles.add_event']);
+			$graphical_environment->set_page_title($this->lang['calendar.event.add'], $this->lang['calendar.module.title']);
+			$breadcrumb->add($this->lang['calendar.event.add'], CalendarUrlBuilder::add_event());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
 		}
 		else
@@ -552,13 +552,13 @@ class CalendarFormController extends ModuleController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition'], $this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['calendar.event.edit'], $this->lang['calendar.module.title']);
 
 			$category = $event->get_content()->get_category();
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.titles.event_edition']);
+			$breadcrumb->add($this->lang['calendar.event.edit'], CalendarUrlBuilder::edit_event($event->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.event.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id()));
 		}
 

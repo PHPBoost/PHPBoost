@@ -49,7 +49,7 @@ class AdminCalendarConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminCalendarDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new AdminCalendarDisplayResponse($tpl, $this->lang['calendar.config.title']);
 	}
 
 	private function init()

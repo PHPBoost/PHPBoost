@@ -21,7 +21,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'calendar');
+		return LangLoader::get_message('calendar.module.title', 'common', 'calendar');
 	}
 
 	public function is_displayed()

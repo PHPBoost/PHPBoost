@@ -121,7 +121,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						$title = isset($array_events[$j]['title']) ? $array_events[$j]['title'] : '';
 						$array_events[$j] = array(
 							'title' => $title . (!empty($title) ? '
-	' : '') . ($event['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
+	' : '') . ($event['type'] != 'BIRTHDAY' ? (($j == $start_date->get_day() && $month == $start_date->get_month() && $year == $start_date->get_year()) ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday.of', 'common', 'calendar') . ' ') . $event['title'],
 							'type' => $event['type'],
 							'color' => ($event['type'] == 'BIRTHDAY' ? $config->get_birthday_color() : ($event['id_category'] != Category::ROOT_CATEGORY && isset($categories[$event['id_category']]) && $categories[$event['id_category']]->get_color() ? $categories[$event['id_category']]->get_color() : $config->get_event_color())),
 							'id_category' => $event['id_category'],
@@ -137,7 +137,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						else if ($event['type'] == 'EVENT' && $event['id_category'] == Category::ROOT_CATEGORY)
 						{
 							$events_legends_list[$j] = array(
-								'name' => LangLoader::get_message('calendar.titles.event', 'common', 'calendar'),
+								'name' => LangLoader::get_message('calendar.event', 'common', 'calendar'),
 								'color' => $config->get_event_color()
 							);
 						}

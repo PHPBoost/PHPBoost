@@ -45,7 +45,7 @@ class CalendarManageEventsController extends AdminModuleController
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
-			new HTMLTableColumn($this->lang['calendar.titles.repetition']),
+			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn(LangLoader::get_message('status.approved', 'common'), 'approved'),
 			new HTMLTableColumn('')
 		);
@@ -75,8 +75,8 @@ class CalendarManageEventsController extends AdminModuleController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $event->get_id();
 
-			$edit_link = new LinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()), '<i class="far fa-fw fa-edit"></i>', array('aria-label' => LangLoader::get_message('edit', 'common')), '');
-			$delete_link = new LinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '<i class="far fa-fw fa-trash-alt"></i>', array('aria-label' => LangLoader::get_message('delete', 'common'), 'data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''), '');
+			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();

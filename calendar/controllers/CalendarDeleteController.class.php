@@ -59,13 +59,13 @@ class CalendarDeleteController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('delete_serie', $this->lang['calendar.titles.delete_event']);
+		$fieldset = new FormFieldsetHTMLHeading('delete_serie', $this->lang['calendar.event.delete']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'common'), 0,
 			array(
-				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_occurrence'], 0),
-				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_all_events_of_the_serie'], 1)
+				new FormFieldRadioChoiceOption($this->lang['calendar.event.delete.occurrence'], 0),
+				new FormFieldRadioChoiceOption($this->lang['calendar.event.delete.serie'], 1)
 			)
 		));
 
@@ -114,7 +114,7 @@ class CalendarDeleteController extends ModuleController
 		{
 			//Delete event
 			CalendarService::delete_event($this->event->get_id(), $this->event->get_parent_id());
-			
+
 			if (!$this->event->belongs_to_a_serie() || count($events_list) == 1)
 			{
 				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_id()));
@@ -150,17 +150,17 @@ class CalendarDeleteController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.titles.event_removal'], $this->lang['module_title']);
+		$graphical_environment->set_page_title($this->lang['calendar.event.delete'], $this->lang['calendar.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
+		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
 		$event_content = $this->event->get_content();
 
 		$category = $event_content->get_category();
 		$breadcrumb->add($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
 
-		$breadcrumb->add($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
+		$breadcrumb->add($this->lang['calendar.event.delete'], CalendarUrlBuilder::delete_event($this->event->get_id()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->event->get_id()));
 
 		return $response;

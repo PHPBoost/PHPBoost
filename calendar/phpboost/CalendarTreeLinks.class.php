@@ -27,21 +27,21 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_categories_link->add_sub_link(new ModuleLink(LangLoader::get_message('category.add', 'categories-common'), CategoriesUrlBuilder::add_category(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $module_id), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->manage_categories()));
 		$tree->add_link($manage_categories_link);
 
-		$manage_events_link = new ModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
-		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
-		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$manage_events_link = new ModuleLink($lang['calendar.events.manager'], CalendarUrlBuilder::manage_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation());
+		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.events.manager'], CalendarUrlBuilder::manage_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$manage_events_link->add_sub_link(new ModuleLink($lang['calendar.event.add'], CalendarUrlBuilder::add_event($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 		$tree->add_link($manage_events_link);
 
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration()));
 
 		if (!CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation())
 		{
-			$tree->add_link(new ModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution()));
+			$tree->add_link(new ModuleLink($lang['calendar.event.add'], CalendarUrlBuilder::add_event($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution()));
 		}
 
-		$tree->add_link(new ModuleLink($lang['calendar.events_list'], CalendarUrlBuilder::events_list($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->read()));
+		$tree->add_link(new ModuleLink($lang['calendar.events.list'], CalendarUrlBuilder::events_list($year, $month, $day), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->read()));
 
-		$tree->add_link(new ModuleLink($lang['calendar.pending'], CalendarUrlBuilder::display_pending_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
+		$tree->add_link(new ModuleLink($lang['calendar.pending.events'], CalendarUrlBuilder::display_pending_events(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 
 		$tree->add_link(new ModuleLink(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('calendar')->get_configuration()->get_documentation(), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->write() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->contribution() || CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->moderation()));
 

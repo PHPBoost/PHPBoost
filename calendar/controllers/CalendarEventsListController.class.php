@@ -48,7 +48,7 @@ class CalendarEventsListController extends ModuleController
 			new HTMLTableColumn(LangLoader::get_message('category', 'categories-common'), 'id_category'),
 			new HTMLTableColumn(LangLoader::get_message('author', 'common'), 'display_name'),
 			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), 'start_date'),
-			new HTMLTableColumn($this->lang['calendar.titles.repetition']),
+			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn('')
 		);
 
@@ -57,11 +57,11 @@ class CalendarEventsListController extends ModuleController
 
 		$table_model = new SQLHTMLTableModel(CalendarSetup::$calendar_events_table, 'table', $columns, new HTMLTableSortingRule('start_date', HTMLTableSortingRule::ASC));
 
-		$table_model->set_caption($this->lang['calendar.events_list']);
+		$table_model->set_caption($this->lang['calendar.events.list']);
 		$table_model->add_permanent_filter('parent_id = 0');
 
-		$table_model->add_filter(new HTMLTableDateTimeGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
-		$table_model->add_filter(new HTMLTableDateTimeLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start_date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateTimeGreaterThanOrEqualsToSQLFilter('start_date', 'filter1', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('minimum', 'common'))));
+		$table_model->add_filter(new HTMLTableDateTimeLessThanOrEqualsToSQLFilter('start_date', 'filter2', $this->lang['calendar.labels.start.date'] . ' ' . TextHelper::lcfirst(LangLoader::get_message('maximum', 'common'))));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -104,7 +104,7 @@ class CalendarEventsListController extends ModuleController
 			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_event(!$event->get_parent_id() ? $event->get_id() : $event->get_parent_id()));
 			$edit_link = $event->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_event($event->get_id()), '', array('data-confirmation' => !$event->belongs_to_a_serie() ? 'delete-element' : ''));
 			$delete_link = $event->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -220,13 +220,13 @@ class CalendarEventsListController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.events_list'], $this->lang['calendar.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['calendar.events.list'], $this->lang['calendar.module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events_list'], array('site' => GeneralConfig::load()->get_site_name())));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::events_list());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.events_list'], CalendarUrlBuilder::events_list());
+		$breadcrumb->add($this->lang['calendar.events.list'], CalendarUrlBuilder::events_list());
 
 		return $response;
 	}

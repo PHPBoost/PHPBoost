@@ -14,34 +14,33 @@
 #                    French                        #
 ####################################################
 
-//Titre du module
-$lang['module_title'] = 'Calendrier';
-$lang['module_config_title'] = 'Configuration du calendrier';
+// Module titles
+$lang['calendar.module.title'] = 'Calendrier';
+$lang['calendar.config.title'] = 'Configuration du calendrier';
 
-//Config
+// Configuration
 $lang['calendar.default.contents'] = 'Contenu par défaut d\'un événement';
 
-//Messages divers
-$lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';
-$lang['calendar.notice.no_pending_event'] = 'Aucun événement en attente';
-$lang['calendar.notice.suscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous inscrire.';
-$lang['calendar.notice.unsuscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous désinscrire.';
+// Messages
+$lang['calendar.notice.no.event'] = 'Aucun événement pour cette date';
+$lang['calendar.notice.no.pending.event'] = 'Aucun événement en attente';
+$lang['calendar.suscribe.notice.expired.event.date'] = 'L\'événement est en cours ou terminé, vous ne pouvez pas vous inscrire.';
+$lang['calendar.unsuscribe.notice.expired.event.date'] = 'L\'événement est en cours ou terminé, vous ne pouvez pas vous désinscrire.';
 
-//Titres
-$lang['calendar.titles.add_event'] = 'Ajouter un événement';
-$lang['calendar.titles.delete_event'] = 'Supprimer l\'événement';
-$lang['calendar.titles.delete_occurrence'] = 'L\'occurrence';
-$lang['calendar.titles.delete_all_events_of_the_serie'] = 'Tous les événements de la série';
-$lang['calendar.titles.event_edition'] = 'Edition de l\'événement';
-$lang['calendar.titles.event_removal'] = 'Suppression de l\'événement';
-$lang['calendar.titles.events_of'] = 'Evénements du';
-$lang['calendar.titles.event'] = 'Evénement';
-$lang['calendar.titles.recurrence'] = 'Récurrence';
-$lang['calendar.titles.repetition'] = 'Répétition';
-$lang['calendar.pending'] = 'Evénements en attente';
-$lang['calendar.manage'] = 'Gérer les événements';
-$lang['calendar.events_list'] = 'Liste des événements';
-$lang['calendar.cancelled'] = 'Cet événement a été annulé';
+// Titles
+$lang['calendar.event.delete'] = 'Supprimer l\'événement';
+$lang['calendar.event.delete.occurrence'] = 'L\'occurrence';
+$lang['calendar.event.delete.serie'] = 'Tous les événements de la série';
+$lang['calendar.event.add'] = 'Ajouter un événement';
+$lang['calendar.event.edit'] = 'Modifier un événement';
+$lang['calendar.events.of'] = 'Événements du';
+$lang['calendar.event'] = 'Événement';
+$lang['calendar.recurrence'] = 'Récurrence';
+$lang['calendar.repetition'] = 'Répétition';
+$lang['calendar.pending.events'] = 'Événements en attente';
+$lang['calendar.events.manager'] = 'Gestion des événements';
+$lang['calendar.events.list'] = 'Liste des événements';
+$lang['calendar.cancelled.event'] = 'Cet événement a été annulé';
 
 //Labels
 $lang['calendar.labels.location'] = 'Adresse';
@@ -65,13 +64,13 @@ $lang['calendar.labels.repeat_times'] = 'fois';
 $lang['calendar.labels.repeat.never'] = 'Jamais';
 $lang['calendar.labels.events_number'] = ':events_number événements';
 $lang['calendar.labels.one_event'] = '1 événement';
-$lang['calendar.labels.start_date'] = 'Date de début';
-$lang['calendar.labels.end_date'] = 'Date de fin';
+$lang['calendar.labels.start.date'] = 'Date de début';
+$lang['calendar.labels.end.date'] = 'Date de fin';
 $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';
 $lang['calendar.labels.birthday'] = 'Anniversaire';
-$lang['calendar.labels.birthday_title'] = 'Anniversaire de';
+$lang['calendar.labels.birthday.of'] = 'Anniversaire de';
 $lang['calendar.labels.participants'] = 'Participants';
-$lang['calendar.labels.no_one'] = 'Personne';
+$lang['calendar.labels.no.one'] = 'Personne';
 $lang['calendar.labels.suscribe'] = 'S\'inscrire';
 $lang['calendar.labels.unsuscribe'] = 'Se désinscrire';
 $lang['calendar.labels.cancel'] = 'Annuler l\'événement';
@@ -93,7 +92,7 @@ $lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
 $lang['calendar.seo.description.events_list'] = 'Liste des événements du site :site.';
 
 //Feed name
-$lang['calendar.feed.name'] = 'Evénements';
+$lang['calendar.feed.name'] = 'Événement';
 
 //Messages
 $lang['calendar.message.success.add'] = 'L\'événement <b>:title</b> a été ajouté';

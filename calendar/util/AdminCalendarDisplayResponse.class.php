@@ -15,13 +15,13 @@ class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('common', 'calendar');
-		$this->set_title($lang['module_title']);
+		$this->set_title($lang['calendar.module.title']);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration());
 		$this->add_link(LangLoader::get_message('module.documentation', 'admin-modules-common'), ModulesManager::get_module('calendar')->get_configuration()->get_documentation());
 
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page, $lang['module_title']);
+		$env->set_page_title($title_page, $lang['calendar.module.title']);
 	}
 }
 ?>

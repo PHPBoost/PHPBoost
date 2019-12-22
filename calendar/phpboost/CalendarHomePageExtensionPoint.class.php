@@ -22,7 +22,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 	 */
 	private function get_title()
 	{
-		return LangLoader::get_message('module_title', 'common', 'calendar');
+		return LangLoader::get_message('calendar.module.title', 'common', 'calendar');
 	}
 }
 ?>
