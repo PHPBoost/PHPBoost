@@ -86,10 +86,10 @@ class ForumCategory extends Category
 			'description' => $this->get_description(),
 			'last_topic_id' => $this->get_last_topic_id(),
 			'url' => $this->get_url()
-		));
+		);
 	}
 
-	public function set_additional_properties(array $properties)
+	public static function set_additional_properties(array $properties)
 	{
 		if (!empty($properties['url']))
 			$this->set_type(self::TYPE_URL);
