@@ -164,7 +164,7 @@ class Category
 			unset($parameters['is_url']);
 		}
 		else
-			$this->additional_attributes_list[] = array('id' => $id, 'is_url' => $parameters['is_url']);
+			$this->additional_attributes_list[] = array('id' => $id, 'is_url' => false);
 		
 		self::$additional_attributes_categories_table_fields[$id] = $parameters;
 	}
