@@ -151,7 +151,7 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		), $this->get_additional_properties());
+		), self::get_additional_properties());
 	}
 
 	public static function get_additional_properties()
@@ -168,7 +168,7 @@ class Category
 		$this->set_special_authorizations($properties['special_authorizations']);
 		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
-		$this->set_additional_properties($properties);
+		self::set_additional_properties($properties);
 	}
 
 	public static function set_additional_properties(array $properties) {}
