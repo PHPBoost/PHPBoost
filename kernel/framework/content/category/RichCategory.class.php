@@ -48,21 +48,28 @@ class RichCategory extends Category
 			return new Url('/templates/default/images/default_category_thumbnail.png');
 	}
 
-	public function get_properties()
+	protected static function get_additional_properties()
 	{
-		return array_merge(parent::get_properties(), array(
+		return array_merge(parent::get_additional_properties(), array(
 			'description' => $this->get_description(),
 			'image' => $this->get_image()->relative()
-		), self::get_additional_properties());
+		), self::get_rich_additional_properties());
+	}
+	
+	protected static function get_rich_additional_properties()
+	{
+		return array();
 	}
 
-	public function set_properties(array $properties)
+	protected function set_additional_properties(array $properties)
 	{
-		parent::set_properties($properties);
+		parent::set_additional_properties($properties);
 		$this->set_description($properties['description']);
 		$this->set_image(new Url($properties['image']));
-		self::set_additional_properties($properties);
+		self::set_rich_additional_properties($properties);
 	}
+	
+	protected static function set_additional_properties(array $properties) {}
 
 	public static function get_categories_table_additional_fields()
 	{
