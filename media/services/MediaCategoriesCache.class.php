@@ -7,18 +7,8 @@
  * @since       PHPBoost 4.0 - 2015 02 04
 */
 
-class MediaCategoriesCache extends CategoriesCache
+class MediaCategoriesCache extends DefaultCategoriesCache
 {
-	public function get_table_name()
-	{
-		return MediaSetup::$media_cats_table;
-	}
-
-	public function get_table_name_containing_items()
-	{
-		return MediaSetup::$media_table;
-	}
-
 	public function get_category_class()
 	{
 		return 'MediaCategory';
@@ -56,7 +46,7 @@ class MediaCategoriesCache extends CategoriesCache
 		if (empty($description))
 			$description = StringVars::replace_vars(LangLoader::get_message('media.seo.description.root', 'common', 'media'), array('site' => GeneralConfig::load()->get_site_name()));
 		$root->set_description($description);
-		$root->set_content_type($config->get_root_category_content_type());
+		$root->set_additional_property('content_type', $config->get_root_category_content_type());
 		return $root;
 	}
 }
