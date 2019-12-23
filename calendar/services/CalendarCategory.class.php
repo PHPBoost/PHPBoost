@@ -21,17 +21,17 @@ class CalendarCategory extends Category
 		return $this->color;
 	}
 
-	public function get_additional_properties()
+	protected static function get_additional_properties()
 	{
 		return array('color' => $this->get_color());
 	}
 
-	public function set_additional_properties(array $properties)
+	protected static function set_additional_properties(array $properties)
 	{
 		$this->set_color($properties['color']);
 	}
 
-	public static function get_categories_table_additional_fields()
+	protected static function get_categories_table_additional_fields()
 	{
 		return array(
 			'color' => array('type' => 'string', 'length' => 250, 'default' => "''")
