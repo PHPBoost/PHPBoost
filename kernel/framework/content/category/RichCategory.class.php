@@ -53,7 +53,7 @@ class RichCategory extends Category
 		return array_merge(parent::get_properties(), array(
 			'description' => $this->get_description(),
 			'image' => $this->get_image()->relative()
-		), $this->get_additional_properties());
+		), self::get_additional_properties());
 	}
 
 	public function set_properties(array $properties)
@@ -61,7 +61,7 @@ class RichCategory extends Category
 		parent::set_properties($properties);
 		$this->set_description($properties['description']);
 		$this->set_image(new Url($properties['image']));
-		$this->set_additional_properties($properties);
+		self::set_additional_properties($properties);
 	}
 
 	public static function get_categories_table_additional_fields()
