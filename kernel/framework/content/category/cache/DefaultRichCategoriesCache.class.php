@@ -15,5 +15,18 @@ class DefaultRichCategoriesCache extends DefaultCategoriesCache
 	{
 		return CategoriesManager::RICH_CATEGORY_CLASS;
 	}
+
+	public function get_root_category()
+	{
+		$root = new RichRootCategory();
+		$root->set_description($this->get_root_category_description());
+		$root->set_authorizations($this->get_root_category_authorizations());
+		return $root;
+	}
+	
+	protected function get_root_category_description()
+	{
+		return '';
+	}
 }
 ?>

@@ -28,26 +28,14 @@ class DefaultCategoriesCache extends CategoriesCache
 
 	public function get_root_category()
 	{
-		if ($this->get_category_class() == CategoriesManager::RICH_CATEGORY_CLASS)
-		{
-			$root = new RichRootCategory();
-			$root->set_description($this->get_root_category_description());
-		}
-		else
-			$root = new RootCategory();
-		
+		$root = new RootCategory();
 		$root->set_authorizations($this->get_root_category_authorizations());
 		return $root;
 	}
 	
-	public function get_root_category_authorizations()
+	protected function get_root_category_authorizations()
 	{
 		return array();
-	}
-	
-	public function get_root_category_description()
-	{
-		return '';
 	}
 }
 ?>

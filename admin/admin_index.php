@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 13
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -118,8 +118,8 @@ $tpl->put_all(array(
 	'C_MODULE_NEWS_INSTALLED' => $module_news_installed,
 	'U_SAVE_DATABASE' => $module_database_installed ? Url::to_rel('/database/admin_database.php') : '',
 	'U_EDIT_CSS_FILES' => $module_customization_installed ? AdminCustomizeUrlBuilder::editor_css_file()->rel() : '',
-	'U_ADD_ARTICLE' => $module_articles_installed ? ArticlesUrlBuilder::add_article()->rel() : '',
-	'U_ADD_NEWS' => $module_news_installed ? NewsUrlBuilder::add_news()->rel() : '',
+	'U_ADD_ARTICLE' => $module_articles_installed ? ItemsUrlBuilder::add(null, 'articles')->rel() : '',
+	'U_ADD_NEWS' => $module_news_installed ? ItemsUrlBuilder::add(null, 'news')->rel() : '',
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],

@@ -26,12 +26,12 @@ class ArticlesCategoriesCache extends DefaultRichCategoriesCache
 		);
 	}
 
-	public function get_root_category_authorizations()
+	protected function get_root_category_authorizations()
 	{
 		return ArticlesConfig::load()->get_authorizations();
 	}
 	
-	public function get_root_category_description()
+	protected function get_root_category_description()
 	{
 		$description = ArticlesConfig::load()->get_root_category_description();
 		if (empty($description))
