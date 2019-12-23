@@ -25,6 +25,11 @@ class DefaultCategoriesCache extends CategoriesCache
 	{
 		return CategoriesManager::STANDARD_CATEGORY_CLASS;
 	}
+	
+	public function get_module_identifier()
+	{
+		return '';
+	}
 
 	public function get_root_category()
 	{
