@@ -69,7 +69,7 @@ class RichCategory extends Category
 		self::set_rich_additional_properties($properties);
 	}
 	
-	protected static function set_additional_properties(array $properties) {}
+	protected static function set_rich_additional_properties(array $properties) {}
 
 	public static function get_categories_table_additional_fields()
 	{
