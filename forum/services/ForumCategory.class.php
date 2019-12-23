@@ -41,22 +41,22 @@ class ForumCategory extends Category
 
 	public function get_status()
 	{
-		return return $this->additional_attributes_values['status'];
+		return $this->additional_attributes_values['status'];
 	}
 
 	public function get_description()
 	{
-		return return $this->additional_attributes_values['description'];
+		return $this->additional_attributes_values['description'];
 	}
 
 	public function get_last_topic_id()
 	{
-		return return $this->additional_attributes_values['last_topic_id'];
+		return $this->additional_attributes_values['last_topic_id'];
 	}
 
 	public function get_url()
 	{
-		return return $this->additional_attributes_values['url'];
+		return $this->additional_attributes_values['url'];
 	}
 }
 ?>
