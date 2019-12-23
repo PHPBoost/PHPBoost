@@ -154,7 +154,7 @@ class Category
 		), self::get_additional_properties());
 	}
 
-	protected static function get_additional_properties()
+	public static function get_additional_properties()
 	{
 		return array();
 	}
@@ -171,7 +171,7 @@ class Category
 		self::set_additional_properties($properties);
 	}
 
-	protected static function set_additional_properties(array $properties) {}
+	public static function set_additional_properties(array $properties) {}
 
 	public static function create_categories_table($table_name)
 	{
@@ -193,12 +193,12 @@ class Category
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
 	}
 	
-	protected static function get_categories_table_additional_fields()
+	public static function get_categories_table_additional_fields()
 	{
 		return array();
 	}
 	
-	protected static function get_categories_table_additional_options()
+	public static function get_categories_table_additional_options()
 	{
 		return array();
 	}
