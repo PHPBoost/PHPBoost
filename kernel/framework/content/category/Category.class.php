@@ -151,10 +151,10 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		), $this->get_additional_properties());
+		), self::get_additional_properties());
 	}
 
-	public function get_additional_properties()
+	protected static function get_additional_properties()
 	{
 		return array();
 	}
@@ -168,10 +168,10 @@ class Category
 		$this->set_special_authorizations($properties['special_authorizations']);
 		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
-		$this->set_additional_properties($properties);
+		self::set_additional_properties($properties);
 	}
 
-	public function set_additional_properties(array $properties) {}
+	protected static function set_additional_properties(array $properties) {}
 
 	public static function create_categories_table($table_name)
 	{
@@ -193,12 +193,12 @@ class Category
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
 	}
 	
-	public static function get_categories_table_additional_fields()
+	protected static function get_categories_table_additional_fields()
 	{
 		return array();
 	}
 	
-	public static function get_categories_table_additional_options()
+	protected static function get_categories_table_additional_options()
 	{
 		return array();
 	}
