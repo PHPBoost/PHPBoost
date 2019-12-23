@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 10
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,7 @@
 
 class ModuleConfiguration
 {
+	private $module_id;
 	private $name;
 	private $description;
 	private $author;
@@ -34,11 +35,15 @@ class ModuleConfiguration
 	private $url_rewrite_rules;
 	private $documentation;
 	private $enabled_features;
+	private $item_name;
+	private $items_table_name;
+	private $categories_table_name;
 
-	public function __construct($config_ini_file, $desc_ini_file)
+	public function __construct($config_ini_file, $desc_ini_file, $module_id)
 	{
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
+		$this->module_id = $module_id;
 	}
 
 	public function get_name()
@@ -116,11 +121,6 @@ class ModuleConfiguration
 		return $this->contribution_interface;
 	}
 
-	public function get_mini_modules()
-	{
-		return $this->mini_modules;
-	}
-
 	public function get_url_rewrite_rules()
 	{
 		return $this->url_rewrite_rules;
@@ -138,10 +138,28 @@ class ModuleConfiguration
 
 	public function feature_is_enabled($feature_id)
 	{
-		if (in_array($feature_id, array_map('trim', $this->enabled_features), true))
-			return true;
-		else
-			return false;
+		return in_array($feature_id, array_map('trim', $this->enabled_features), true);
+	}
+
+	public function get_item_name()
+	{
+		return $this->item_name;
+	}
+
+	public function get_items_table_name()
+	{
+		return PREFIX . $this->items_table_name;
+	}
+
+	public function get_categories_table_name()
+	{
+		return PREFIX . $this->categories_table_name;
+	}
+
+	public function has_categories()
+	{
+		$categories_cache_class = TextHelper::ucfirst($this->module_id) . 'CategoriesCache';
+		return class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache');
 	}
 
 	private function load_configuration($config_ini_file)
@@ -163,7 +181,10 @@ class ModuleConfiguration
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
-		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', $config['enabled_features']) : array();
+		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', preg_replace('/\s/', '', $config['enabled_features'])) : array();
+		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : 'Item';
+		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : $this->module_id;
+		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : $this->module_id . '_cats';
 	}
 
 	private function load_description($desc_ini_file)

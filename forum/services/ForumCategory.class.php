@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 02 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 4.1 - 2015 02 25
 */
 
@@ -79,9 +79,9 @@ class ForumCategory extends Category
 		return $this->url;
 	}
 
-	public function get_properties()
+	public function get_additional_properties()
 	{
-		return array_merge(parent::get_properties(), array(
+		return array(
 			'status' => $this->get_status(),
 			'description' => $this->get_description(),
 			'last_topic_id' => $this->get_last_topic_id(),
@@ -89,7 +89,7 @@ class ForumCategory extends Category
 		));
 	}
 
-	public function set_properties(array $properties)
+	public function set_additional_properties(array $properties)
 	{
 		if (!empty($properties['url']))
 			$this->set_type(self::TYPE_URL);
@@ -98,34 +98,26 @@ class ForumCategory extends Category
 		else
 			$this->set_type(self::TYPE_CATEGORY);
 
-		parent::set_properties($properties);
 		$this->set_status($properties['status']);
 		$this->set_description($properties['description']);
 		$this->set_last_topic_id($properties['last_topic_id']);
 		$this->set_url($properties['url']);
 	}
 
-	public static function create_categories_table($table_name)
+	public static function get_categories_table_additional_fields()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
-			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		return array(
+			'description'   => array('type' => 'text', 'length' => 65000),
 			'last_topic_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'url' => array('type' => 'string', 'length' => 255, 'default' => "''")
+			'url'           => array('type' => 'string', 'length' => 255, 'default' => "''")
 		);
-		$options = array(
-			'primary' => array('id'),
-			'last_topic_id' => array('type' => 'key', 'fields' => 'last_topic_id'),
-			'id_parent' => array('type' => 'key', 'fields' => 'id_parent')
+	}
+
+	public static function get_categories_table_additional_options()
+	{
+		return array(
+			'last_topic_id' => array('type' => 'key', 'fields' => 'last_topic_id')
 		);
-		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
 	}
 }
 ?>

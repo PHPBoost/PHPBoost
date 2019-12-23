@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 30
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -143,7 +143,7 @@ class Category
 
 	public function get_properties()
 	{
-		return array(
+		return array_merge(array(
 			'id' => $this->get_id(),
 			'name' => TextHelper::htmlspecialchars($this->get_name()),
 			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
@@ -151,7 +151,12 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		);
+		), $this->get_additional_properties();
+	}
+
+	public static function get_additional_properties()
+	{
+		return array();
 	}
 
 	public function set_properties(array $properties)
@@ -163,24 +168,39 @@ class Category
 		$this->set_special_authorizations($properties['special_authorizations']);
 		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
+		$this->set_additional_properties($properties);
 	}
+
+	public static function set_additional_properties(array $properties) {}
 
 	public static function create_categories_table($table_name)
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+		$fields = array_merge(array(
+			'id'                     => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name'                   => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name'          => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			'c_order'                => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
 			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		);
+			'auth'                   => array('type' => 'text', 'length' => 65000),
+			'id_parent'              => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+		), self::get_categories_table_additional_fields());
 
-		$options = array(
-			'primary' => array('id')
-		);
+		$options = array_merge(array(
+			'primary'   => array('id'),
+			'id_parent' => array('type' => 'key', 'fields' => 'id_parent')
+		), self::get_categories_table_additional_options());
+
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
+	}
+	
+	public static function get_categories_table_additional_fields()
+	{
+		return array();
+	}
+	
+	public static function get_categories_table_additional_options()
+	{
+		return array();
 	}
 }
 ?>
