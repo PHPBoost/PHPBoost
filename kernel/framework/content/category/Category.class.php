@@ -151,7 +151,7 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		), $this->get_additional_properties();
+		), $this->get_additional_properties());
 	}
 
 	public static function get_additional_properties()
