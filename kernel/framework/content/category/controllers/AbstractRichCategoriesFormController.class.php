@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 4.0 - 2013 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,8 +23,8 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 	protected function set_properties()
 	{
 		parent::set_properties();
-		$this->get_category()->set_description($this->form->get_value('description'));
-		$this->get_category()->set_image(new Url($this->form->get_value('image')));
+		$this->get_category()->set_additional_property('description', $this->form->get_value('description'));
+		$this->get_category()->set_additional_property('image', new Url($this->form->get_value('image')));
 	}
 }
 ?>

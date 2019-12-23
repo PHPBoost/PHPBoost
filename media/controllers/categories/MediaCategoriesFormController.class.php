@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 4.1 - 2015 02 04
 */
 
@@ -29,7 +29,7 @@ class MediaCategoriesFormController extends DefaultRichCategoriesFormController
 	protected function set_properties()
 	{
 		parent::set_properties();
-		$this->get_category()->set_content_type($this->form->get_value('content_type')->get_raw_value());
+		$this->get_category()->set_additional_property('content_type', $this->form->get_value('content_type')->get_raw_value());
 	}
 }
 ?>

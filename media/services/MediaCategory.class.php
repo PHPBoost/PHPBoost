@@ -9,33 +9,15 @@
 
 class MediaCategory extends RichCategory
 {
-	private $content_type;
-
-	public function set_content_type($content_type)
+	public function __construct()
 	{
-		$this->content_type = $content_type;
+		parent::__construct();
+		$this->add_additional_attribute('content_type', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0));
 	}
-
+	
 	public function get_content_type()
 	{
-		return $this->content_type;
-	}
-
-	public function get_additional_properties()
-	{
-		return array('content_type' => $this->get_content_type());
-	}
-
-	public function set_additional_properties(array $properties)
-	{
-		$this->set_content_type($properties['content_type']);
-	}
-
-	public static function get_categories_table_rich_additional_fields()
-	{
-		return array(
-			'content_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
+		return $this->additional_attributes_values['content_type'];
 	}
 }
 ?>

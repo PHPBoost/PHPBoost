@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @version     PHPBoost 5.3 - last update: 2019 12 23
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -164,19 +164,19 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 	{
 		parent::set_properties();
 		$this->get_category()->set_type($this->form->get_value('type')->get_raw_value());
-		$this->get_category()->set_description($this->form->get_value('description'));
+		$this->get_category()->set_additional_property('description', $this->form->get_value('description'));
 
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL)
-			$this->get_category()->set_url($this->form->get_value('url'));
+			$this->get_category()->set_additional_property('url', $this->form->get_value('url'));
 		else
-			$this->get_category()->set_url('');
+			$this->get_category()->set_additional_property('url', '');
 
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_FORUM)
 			$status = $this->form->get_value('status');
 		else
 			$status = ForumCategory::STATUS_UNLOCKED;
 
-		$this->get_category()->set_status($status);
+		$this->get_category()->set_additional_property('status', $status);
 
 		if ($this->form->get_value('special_authorizations'))
 		{

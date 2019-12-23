@@ -23,6 +23,11 @@ class Category
 	protected $elements_number;
 	protected $allowed_to_have_childs = true;
 
+	protected $additional_attributes_list = array();
+	protected $additional_attributes_values = array();
+	protected static $additional_attributes_categories_table_fields = array();
+	protected static $additional_attributes_categories_table_options = array();
+
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
 	const CONTRIBUTION_AUTHORIZATIONS = 4;
@@ -141,6 +146,29 @@ class Category
 		return AppContext::get_current_user()->check_auth($this->auth, $bit);
 	}
 
+	protected function add_additional_attribute($id, array $parameters)
+	{
+		if (isset($parameters['key']))
+		{
+			if ($parameters['key'] == true)
+				self::$additional_attributes_categories_table_options[$id] = array('type' => 'key', 'fields' => $id);
+			
+			unset($parameters['key']);
+		}
+		
+		if (isset($parameters['is_url']))
+		{
+			if ($parameters['is_url'] == true)
+				$this->additional_attributes_list[$id] = array('id' => $id, 'is_url' => $parameters['is_url']);
+			
+			unset($parameters['is_url']);
+		}
+		else
+			$this->additional_attributes_list[] = array('id' => $id, 'is_url' => $parameters['is_url']);
+		
+		self::$additional_attributes_categories_table_fields[$id] = $parameters;
+	}
+
 	public function get_properties()
 	{
 		return array_merge(array(
@@ -151,12 +179,22 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		), self::get_additional_properties());
+		), $this->get_additional_properties());
 	}
 
-	public static function get_additional_properties()
+	protected function get_additional_properties()
 	{
-		return array();
+		$properties = array();
+		
+		foreach ($this->additional_attributes_list as $attribute)
+		{
+			if ($attribute['is_url'])
+				$properties[$attribute['id']] = $this->additional_attributes_values[$attribute['id']]->relative();
+			else
+				$properties[$attribute['id']] = $this->additional_attributes_values[$attribute['id']];
+		}
+		
+		return $properties;
 	}
 
 	public function set_properties(array $properties)
@@ -168,10 +206,27 @@ class Category
 		$this->set_special_authorizations($properties['special_authorizations']);
 		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
-		self::set_additional_properties($properties);
+		$this->set_additional_properties($properties);
 	}
 
-	public static function set_additional_properties(array $properties) {}
+	protected function set_additional_properties(array $properties)
+	{
+		foreach ($this->additional_attributes_list as $attribute)
+		{
+			if (isset($properties[$attribute['id']]))
+			{
+				$this->set_additional_property($attribute['id'], $properties[$attribute['id']], $attribute['is_url']);
+			}
+		}
+	}
+
+	public function set_additional_property($id, $value, $is_url = false)
+	{
+		if ($is_url)
+			$this->additional_attributes_values[$id] = new Url($value);
+		else
+			$this->additional_attributes_values[$id] = $value;
+	}
 
 	public static function create_categories_table($table_name)
 	{
@@ -183,24 +238,14 @@ class Category
 			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth'                   => array('type' => 'text', 'length' => 65000),
 			'id_parent'              => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		), self::get_categories_table_additional_fields());
+		), self::$additional_attributes_categories_table_fields);
 
 		$options = array_merge(array(
 			'primary'   => array('id'),
 			'id_parent' => array('type' => 'key', 'fields' => 'id_parent')
-		), self::get_categories_table_additional_options());
+		), self::$additional_attributes_categories_table_options);
 
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
-	}
-	
-	public static function get_categories_table_additional_fields()
-	{
-		return array();
-	}
-	
-	public static function get_categories_table_additional_options()
-	{
-		return array();
 	}
 }
 ?>

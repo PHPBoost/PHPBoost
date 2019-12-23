@@ -13,30 +13,28 @@
 
 class RichCategory extends Category
 {
-	protected $description;
-	protected $image;
+	public function __construct()
+	{
+		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
+		$this->add_additional_attribute('image', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'is_url' => true));
+	}
 
 	public function set_description($description)
 	{
-		$this->description = $description;
+		$this->set_additional_property('description', $description);
 	}
 
 	public function get_description()
 	{
-		return $this->description;
-	}
-
-	public function set_image(Url $image)
-	{
-		$this->image = $image;
+		return $this->additional_attributes_values['description'];
 	}
 
 	public function get_image()
 	{
-		if (!$this->image instanceof Url)
+		if (!$this->additional_attributes_values['image'] instanceof Url)
 			return $this->get_default_image();
 
-		return $this->image;
+		return $this->additional_attributes_values['image'];
 	}
 
 	public function get_default_image()
@@ -46,41 +44,6 @@ class RichCategory extends Category
 			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_category_thumbnail.png');
 		else
 			return new Url('/templates/default/images/default_category_thumbnail.png');
-	}
-
-	public static function get_additional_properties()
-	{
-		return array_merge(array(
-			'description' => $this->get_description(),
-			'image'       => $this->get_image()->relative()
-		), self::get_rich_additional_properties());
-	}
-	
-	public static function get_rich_additional_properties()
-	{
-		return array();
-	}
-
-	public function set_additional_properties(array $properties)
-	{
-		$this->set_description($properties['description']);
-		$this->set_image(new Url($properties['image']));
-		self::set_rich_additional_properties($properties);
-	}
-	
-	public static function set_rich_additional_properties(array $properties) {}
-
-	public static function get_categories_table_additional_fields()
-	{
-		return array_merge(array(
-			'description' => array('type' => 'text', 'length' => 65000),
-			'image'       => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
-		), self::get_categories_table_rich_additional_fields());
-	}
-
-	public static function get_categories_table_rich_additional_fields()
-	{
-		return array();
 	}
 }
 ?>
