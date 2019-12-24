@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 23
+ * @version     PHPBoost 5.3 - last update: 2019 12 24
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,8 +23,8 @@ class Category
 	protected $elements_number;
 	protected $allowed_to_have_childs = true;
 
-	protected $additional_attributes_list = array();
 	protected $additional_attributes_values = array();
+	protected static $additional_attributes_list = array();
 	protected static $additional_attributes_categories_table_fields = array();
 	protected static $additional_attributes_categories_table_options = array();
 
@@ -35,6 +35,13 @@ class Category
 	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 16;
 
 	const ROOT_CATEGORY = '0';
+
+	public static function __static() {}
+
+	public function __construct()
+	{
+		self::__static();
+	}
 
 	public function get_id()
 	{
@@ -146,7 +153,7 @@ class Category
 		return AppContext::get_current_user()->check_auth($this->auth, $bit);
 	}
 
-	protected function add_additional_attribute($id, array $parameters)
+	protected static function add_additional_attribute($id, array $parameters)
 	{
 		if (isset($parameters['key']))
 		{
@@ -159,12 +166,12 @@ class Category
 		if (isset($parameters['is_url']))
 		{
 			if ($parameters['is_url'] == true)
-				$this->additional_attributes_list[$id] = array('id' => $id, 'is_url' => $parameters['is_url']);
+				self::$additional_attributes_list[$id] = array('is_url' => $parameters['is_url']);
 			
 			unset($parameters['is_url']);
 		}
 		else
-			$this->additional_attributes_list[] = array('id' => $id, 'is_url' => false);
+			self::$additional_attributes_list[$id] = array('is_url' => false);
 		
 		self::$additional_attributes_categories_table_fields[$id] = $parameters;
 	}
@@ -186,15 +193,20 @@ class Category
 	{
 		$properties = array();
 		
-		foreach ($this->additional_attributes_list as $attribute)
+		foreach (self::$additional_attributes_list as $id => $attribute)
 		{
 			if ($attribute['is_url'])
-				$properties[$attribute['id']] = $this->additional_attributes_values[$attribute['id']]->relative();
+				$properties[$id] = $this->additional_attributes_values[$id]->relative();
 			else
-				$properties[$attribute['id']] = $this->additional_attributes_values[$attribute['id']];
+				$properties[$id] = $this->additional_attributes_values[$id];
 		}
 		
 		return $properties;
+	}
+
+	public function get_additional_property($id)
+	{
+		return $this->additional_attributes_values[$id];
 	}
 
 	public function set_properties(array $properties)
@@ -211,11 +223,11 @@ class Category
 
 	protected function set_additional_properties(array $properties)
 	{
-		foreach ($this->additional_attributes_list as $attribute)
+		foreach (self::$additional_attributes_list as $id => $attribute)
 		{
-			if (isset($properties[$attribute['id']]))
+			if (isset($properties[$id]))
 			{
-				$this->set_additional_property($attribute['id'], $properties[$attribute['id']], $attribute['is_url']);
+				$this->set_additional_property($id, $properties[$id], $attribute['is_url']);
 			}
 		}
 	}
