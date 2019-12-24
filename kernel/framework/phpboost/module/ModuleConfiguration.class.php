@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 23
+ * @version     PHPBoost 5.3 - last update: 2019 12 24
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -41,9 +41,9 @@ class ModuleConfiguration
 
 	public function __construct($config_ini_file, $desc_ini_file, $module_id)
 	{
+		$this->module_id = $module_id;
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
-		$this->module_id = $module_id;
 	}
 
 	public function get_name()
