@@ -12,7 +12,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('web');
-		
+
 		$this->content_tables = array(PREFIX . 'web');
 		$this->delete_old_files_list = array(
 			'/phpboost/WebComments.class.php',
@@ -20,7 +20,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/WebNotation.class.php',
 			'/phpboost/WebSitemapExtensionPoint.class.php',
 			'/services/WebAuthorizationsService.class.php',
-			'/services/WebKeywordsCache.class.php'
+			'/services/WebKeywordsCache.class.php',
 			'/util/AdminWebDisplayResponse.class.php'
 		);
 		$this->delete_old_folders_list = array(

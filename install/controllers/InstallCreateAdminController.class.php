@@ -88,7 +88,7 @@ class InstallCreateAdminController extends InstallController
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 
-		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['admin.password'], '',
 			array('description' => StringVars::replace_vars($this->lang['admin.password.explanation'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),

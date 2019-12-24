@@ -1,23 +1,24 @@
-@import url('../../templates/default/theme/@default.css') screen, print;
+@import url('../../templates/default/theme/@default.css') screen;
 @import url('../../templates/default/theme/font-awesome/css/font-awesome.css');
 @import url('../../templates/default/theme/font-awesome-animation.css');
 
-@import url('../../templates/default/theme/form.css') screen, print;
-@import url('../../templates/default/theme/fieldset.css') screen, print;
-@import url('../../templates/default/theme/input.css') screen, print;
-@import url('../../templates/default/theme/button.css') screen, print;
-@import url('../../templates/default/theme/constraint.css') screen, print;
+@import url('../../templates/default/theme/form.css') screen;
+@import url('../../templates/default/theme/fieldset.css') screen;
+@import url('../../templates/default/theme/input.css') screen;
+@import url('../../templates/default/theme/constraint.css') screen;
 
-@import url('../../templates/default/theme/checkbox.css') screen, print;
-@import url('../../templates/default/theme/cssmenu.css') screen, print;
+@import url('../../templates/default/theme/checkbox.css') screen;
+@import url('../../templates/default/theme/cssmenu.css') screen;
+@import url('../../templates/default/theme/message_helper.css') screen;
+@import url('../../templates/default/theme/global.css') screen;
 
 @import url('../../templates/default/theme/dashboard/dashboard_shape.css') screen;
-@import url('../../templates/default/theme/dashboard/dashboard_menus.css') screen, print;
-@import url('../../templates/default/theme/dashboard/dashboard_content.css') screen, print;
-@import url('../../templates/default/theme/dashboard/dashboard_form.css') screen, print;
-@import url('../../templates/default/theme/dashboard/dashboard_global.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard_menus.css') screen;
+@import url('../../templates/default/theme/dashboard/dashboard_content.css') screen;
+@import url('../../templates/default/theme/dashboard/dashboard_form.css') screen;
+@import url('../../templates/default/theme/dashboard/dashboard_global.css') screen;
 
-@import url('../../templates/default/theme/dashboard/dashboard.css') screen, print;
-@import url('../../templates/default/theme/colors.css') screen, print;
-@import url('../../templates/default/theme/dashboard/dashboard_colors.css') screen, print;
-@import url('update.css') screen, print;
+@import url('../../templates/default/theme/dashboard/dashboard.css') screen;
+@import url('../../templates/default/theme/colors.css') screen;
+@import url('../../templates/default/theme/dashboard/dashboard_colors.css') screen;
+@import url('update.css') screen;
