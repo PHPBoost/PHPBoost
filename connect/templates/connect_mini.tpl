@@ -29,7 +29,7 @@
 			<div class="cell-list connect-contents">
 			# ELSE #
 			<div class="cell-list cell-list-inline connect-contents">
-				<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i><span>{@connection}</span></a>
+				<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
 			# ENDIF #
 				<ul class="connect-container">
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
@@ -49,9 +49,9 @@
 								<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
 							</label>
 						</li>
-						<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
-						<input type="hidden" name="token" value="{TOKEN}">
 						<li class="align-center">
+							<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
 						</li>
 					</form>
@@ -76,7 +76,6 @@
 							<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
 						</a>
 					</li>
-					<li></li>
 				</div>
 			</ul>
 
@@ -86,9 +85,9 @@
 				<div class="cell-header">
 					<div class="cell-name">{L_PRIVATE_PROFIL}</div>
 				</div>
-				<div class="cell-list connect-contents">
+				<div class="cell-list connected-contents">
 			# ELSE #
-				<div class="cell-list cell-list-inline">
+				<div class="cell-list cell-list-inline connected-content">
 					<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
 						<i class="fa fa-fw fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #" aria-hidden="true"></i>
 						<span>{L_PRIVATE_PROFIL}</span>

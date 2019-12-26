@@ -25,9 +25,16 @@
 	content: '\f0d8';
 }
 
+#module-connect .connect-contents.cell-list-inline ul {
+	flex-direction: column;
+}
+
 @media (min-width: 768px) {
 	#module-connect .js-menu-button {
 		display: none;
+	}
+	#module-connect .connect-contents.cell-list-inline ul {
+		flex-direction: row;
 	}
 }
 
