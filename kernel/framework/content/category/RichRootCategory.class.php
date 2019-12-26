@@ -21,6 +21,8 @@ class RichRootCategory extends RichCategory
 		$this->set_name(LangLoader::get_message('root', 'main'));
 		$this->set_rewrited_name('root');
 		$this->set_order(0);
+		$this->set_additional_property('description', '');
+		$this->set_additional_property('image', New Url());
 	}
 }
 ?>
