@@ -63,18 +63,6 @@
 	overflow: visible;
 }
 
-@media (max-width: 768px) {
-	.floating-message-container {
-		width: 100%;
-		top: 1em;
-	}
-
-	.floating-message-container .message-helper {
-		max-width: 90%;
-		padding: 10px 10px 10px 50px;
-	}
-}
-
 .floating-message-container .close-message {
 	position: absolute;
 	z-index: 1;
