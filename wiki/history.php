@@ -71,7 +71,7 @@ if (!empty($id_article))
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_restore_version'] . '"><i class="fa fa-undo" aria-hidden="true"></i></a> &nbsp; ' : '';
 
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>' : '';
 
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 

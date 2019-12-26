@@ -12,19 +12,19 @@
 					# IF C_INDEX_PAGE #
 						# IF IS_ADMIN #
 							<li><a href="{U_EDIT_INDEX}" class="cssmenu-title">
-								<i class="fa fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT_INDEX}
+								<i class="far fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT_INDEX}
 							</a></li>
 						# ENDIF #
 					# ENDIF #
 					# IF NOT C_INDEX_PAGE #
 						# IF C_EDIT #
 						<li><a href="{U_EDIT}" class="cssmenu-title">
-							<i class="fa fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT}
+							<i class="far fa-fw fa-edit" aria-hidden="true"></i> {L_EDIT}
 						</a></li>
 						# ENDIF #
 						# IF C_DELETE #
 						<li><a href="{U_DELETE}" data-confirmation="delete-element" class="cssmenu-title">
-							<i class="fa fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
+							<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
 						</a></li>
 						# ENDIF #
 						# IF C_RENAME #

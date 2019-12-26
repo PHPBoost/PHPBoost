@@ -25,7 +25,7 @@ GoogleMapsFormFieldMultipleMarkers.prototype = {
 			jQuery('<input/> ', {type : 'hidden', id : 'longitude-' + id, name : 'longitude-' + id}).appendTo('#field-' + id);
 			jQuery('<input/> ', {type : 'hidden', id : 'zoom-' + id, name : 'zoom-' + id}).appendTo('#field-' + id);
 
-			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', class : 'grouped-element', 'aria-label' : '{@form.del.marker}'}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#field-' + id);
+			jQuery('<a/> ', {href : 'javascript:GoogleMapsFormFieldMultipleMarkers.delete('+ this.integer +');', class : 'grouped-element', 'aria-label' : '{@form.del.marker}'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#field-' + id);
 
 			jQuery('<div/>', {id : 'map-' + id, class: 'map-canvas'}).appendTo('#marker-' + id);
 
@@ -58,7 +58,7 @@ var GoogleMapsFormFieldMultipleMarkers = new GoogleMapsFormFieldMultipleMarkers(
 			<input type="hidden" id="latitude-${escape(HTML_ID)}-{fieldelements.ID}" name="latitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LATITUDE}" />
 			<input type="hidden" id="longitude-${escape(HTML_ID)}-{fieldelements.ID}" name="longitude-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.LONGITUDE}" />
 			<input type="hidden" id="zoom-${escape(HTML_ID)}-{fieldelements.ID}" name="zoom-${escape(HTML_ID)}-{fieldelements.ID}" value="{fieldelements.ZOOM}" />
-			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" class="grouped-element" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+			<a href="javascript:GoogleMapsFormFieldMultipleMarkers.delete({fieldelements.ID});" class="grouped-element" aria-label="{@form.del.marker}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 		</div>
 		<div class="map-canvas" id="map-${escape(HTML_ID)}-{fieldelements.ID}"></div>
 		<script>

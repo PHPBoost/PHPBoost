@@ -14,7 +14,7 @@
 			</td>
 			<td>{menu_configuration.E_MATCH_REGEX}</td>
 			<td class="align-center">
-				<a href="{menu_configuration.U_EDIT}" aria-label="{L_MENU_CONFIGURATION_EDIT}"><i class="fa fa-edit" aria-hidden="true" aria-label="{L_MENU_CONFIGURATION_EDIT}"></i></a>
+				<a href="{menu_configuration.U_EDIT}" aria-label="{L_MENU_CONFIGURATION_EDIT}"><i class="far fa-edit" aria-hidden="true" aria-label="{L_MENU_CONFIGURATION_EDIT}"></i></a>
 			</td>
 		</tr>
 		# END menu_configuration #

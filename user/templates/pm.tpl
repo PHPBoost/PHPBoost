@@ -185,8 +185,8 @@
 				                </h3>
 				                <div class="message-actions">
 									# IF pm.msg.C_MODERATION_TOOLS #
-										<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-										<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+										<a href="pm.php?edit={pm.msg.ID}" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 				            	</div>
 				            </div>

@@ -66,7 +66,7 @@ function rename_folder(id_folder, previous_name, previous_cut_name)
 				if( xhr_object.responseText != "" )
 				{
 					document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
-					document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+					document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
 				}
 				else
 				{
@@ -103,7 +103,7 @@ function add_folder(id_parent, user_id, divid)
 			{
 				if( xhr_object.responseText > 0 )
 				{
-					document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="fa fa-folder fa-4x" aria-hidden="true"></i></a><br /> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span></span> <span><a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="fa fa-trash-alt" data-confirmation="delete-element"></a></span> <span><a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a></span> <span id="img' + xhr_object.responseText + '"></div>';
+					document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="fa fa-folder fa-4x" aria-hidden="true"></i></a><br /> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a></span></span> <span><a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="far fa-trash-alt" data-confirmation="delete-element"></a></span> <span><a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a></span> <span id="img' + xhr_object.responseText + '"></div>';
 					var total_folder = document.getElementById('total-folder').innerHTML;
 					total_folder++;
 					document.getElementById('total-folder').innerHTML = total_folder;
@@ -172,7 +172,7 @@ function rename_file(id_file, previous_name, previous_cut_name)
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fi1' + id_file).style.display = 'inline';
 					document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
-					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><i class="far fa-edit" aria-hidden="true"></i></a>';
 				}
 				document.getElementById('imgf' + id_file).innerHTML = '';
 			}
@@ -180,7 +180,7 @@ function rename_file(id_file, previous_name, previous_cut_name)
 			{
 				document.getElementById('fi' + id_file).style.display = 'none';
 				document.getElementById('fi1' + id_file).style.display = 'inline';
-				document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+				document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><i class="far fa-edit" aria-hidden="true"></i></a>';
 				document.getElementById('imgf' + id_file).innerHTML = '';
 			}
 		}
@@ -348,9 +348,9 @@ $(document).ready(function(){
 						</div>
 						<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
 						<div class="upload-repertory-controls">
-							# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
+							# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span># ENDIF #
 							<span>
-								# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+								# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 							</span>
 							<span>
 								# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a># ENDIF #
@@ -388,9 +388,9 @@ $(document).ready(function(){
 						<span id="fi{files.ID}"></span>
 						{files.BBCODE}
 						<div class="upload-file-controls">
-							<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
-							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-							<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+							<span id="fihref{files.ID}"><a href="javascript:display_rename_file('{files.ID}', '{files.NAME_WITH_SLASHES}', '{files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a></span>
+							<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="admin_files{files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
 							{files.INSERT}
 						</div>
 						<span class="text-strong">{files.FILETYPE}</span><br />

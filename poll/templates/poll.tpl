@@ -2,7 +2,7 @@
 		<section id="module-poll-main">
 			<header>
 				<div class="align-right">
-					# IF C_IS_ADMIN # <span class="controls"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
+					# IF C_IS_ADMIN # <span class="controls"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a></span># ENDIF #
 				</div>
 				<h1>{L_POLL}</h1>
 			</header>
@@ -38,8 +38,8 @@
 				<div id="article-poll-{IDPOLL}" class="article-poll">
 					# IF C_IS_ADMIN #
 						<span class="controls">
-							<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-							<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+							<a href="{U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 						</span>
 					# ENDIF #
 					<div class="content">
@@ -106,8 +106,8 @@
 							{list.QUESTION}
 							<span class="controls">
 								# IF C_IS_ADMIN #
-								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
-								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+								<a href="{list.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+								<a href="{list.U_DEL}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								# ENDIF #
 							</span>
 						</h2>

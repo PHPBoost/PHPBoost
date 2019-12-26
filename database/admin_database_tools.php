@@ -99,7 +99,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$tpl->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('update', 'main') . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-trash-alt" data-confirmation="delete-element"></a></span>',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('update', 'main') . '" class="far fa-fw fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . LangLoader::get_message('delete', 'common') . '" class="far fa-fw fa-trash-alt" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}

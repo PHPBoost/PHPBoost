@@ -25,7 +25,7 @@ ContactFormFieldRecipientsPossibleValues.prototype = {
 			jQuery('<input/>', {type : 'email', id : 'field_email_' + id, name : 'field_email_' + id, placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}", required : "required", multiple : "multiple"}).appendTo('#' + id);
 			jQuery('#' + id).append(' ');
 
-			jQuery('<a/>', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 			this.integer++;
 		}
@@ -57,7 +57,7 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 		</div>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}">
 		<input type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
-		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 	</div>
 # END fieldelements #
 </div>

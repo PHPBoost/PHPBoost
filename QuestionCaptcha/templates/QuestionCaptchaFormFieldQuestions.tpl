@@ -17,7 +17,7 @@ QuestionCaptchaFormFieldQuestions.prototype = {
 
 			jQuery('<textarea/> ', {id : 'field_answers_' + id, name : 'field_answers_' + id, class : 'answers', placeholder : '{@form.answers}'}).appendTo('#' + id);
 
-			jQuery('<a/> ', {'aria-label' : ${escapejs(@config.delete)}, href : 'javascript:QuestionCaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/> ', {'aria-label' : ${escapejs(@config.delete)}, href : 'javascript:QuestionCaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 			jQuery('<div/> ', {class : 'spacer'}).appendTo('#' + id);
 
@@ -45,7 +45,7 @@ var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 		<textarea name="field_answers_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answers_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.answers}" class="answers">{fieldelements.ANSWERS}</textarea>
 
 		# IF fieldelements.C_DELETE #
-			<a href="javascript:QuestionCaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@config.delete}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+			<a href="javascript:QuestionCaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@config.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 		# ENDIF #
 		<div class="spacer"></div>
 	</div>

@@ -32,10 +32,10 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CATEGORY #
 				# IF C_DISPLAY_REORDER_LINK #
-					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-exchange-alt fa-fw" aria-hidden="true"></i></a>
+					<a href="{U_REORDER_QUESTIONS}" aria-label="{@faq.questions.reorder}"><i class="fa fa-fw fa-exchange-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF IS_ADMIN #
-					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>
+					<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
 			# ENDIF #
 		</div>
@@ -105,12 +105,12 @@
 				<article id="question{questions.ID}" itemscope="itemscope" itemtype="http://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF questions.C_NEW_CONTENT # new-content# ENDIF #">
 					<div class="content-panel faq-answer-container" itemprop="text">
 						<div class="controls align-right">
-							<a href="{questions.U_LINK}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');return false;" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-anchor fa-fw" aria-hidden="true"></i></a>
+							<a href="{questions.U_LINK}" onclick="copy_to_clipboard('{questions.U_ABSOLUTE_LINK}');return false;" aria-label="{questions.L_LINK_QUESTION}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
 							# IF questions.C_EDIT #
-								<a href="{questions.U_EDIT}"aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i> </a>
+								<a href="{questions.U_EDIT}"aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 							# ENDIF #
 							# IF questions.C_DELETE #
-								<a href=""aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_question({questions.ID});return false;"><i class="fa fa-trash-alt" aria-hidden="true"></i> </a>
+								<a href=""aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_question({questions.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 							# ENDIF #
 						</div>
 						<div class="content">{questions.ANSWER}</div>

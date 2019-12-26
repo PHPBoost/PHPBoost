@@ -43,10 +43,10 @@
 									{group.IMAGE}
 								</td>
 								<td>
-									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="fa fa-edit" aria-hidden="true" aria-label="{L_UPDATE}"></i></a>
+									<a href="admin_groups.php?id={group.ID}" aria-label="{L_UPDATE}"><i class="far fa-fw fa-edit" aria-hidden="true" aria-label="{L_UPDATE}"></i></a>
 								</td>
 								<td>
-									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
+									<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
 								</td>
 							</tr>
 							# END group #

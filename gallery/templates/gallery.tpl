@@ -61,7 +61,7 @@
 					html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 					html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="far fa-edit" aria-hidden="true"></i></a>';
 					document.getElementById('img' + id_file).innerHTML = '';
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -235,7 +235,7 @@
 	<header>
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 		</div>
 		<h1>
 			{GALLERY} # ENDIF #
@@ -303,8 +303,8 @@
 							# IF sub_categories_list.C_CATEGORY_IMAGE #
 								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							# ENDIF #
-							<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
-								${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}
+							<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
+								${LangLoader::get_message('see.category', 'categories-common')}
 							</a>
 						</div>
 					</div>
@@ -346,11 +346,11 @@
 								<div class="text-strong">{KERNEL_NOTATION}</div>
 							# ENDIF #
 							# IF C_GALLERY_PICS_MODO #
-								<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
+								<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
 
-								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+								<a href="{U_DEL}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-									<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
+									<a data-modal data-target="gallery-pic-move-to" aria-label="{L_MOVETO}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
 									<div id="gallery-pic-move-to" class="modal modal-animation">
 										<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 										<div class="cell content-panel">

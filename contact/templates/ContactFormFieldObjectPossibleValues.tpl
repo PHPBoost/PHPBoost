@@ -29,7 +29,7 @@ ContactFormFieldObjectPossibleValues.prototype = {
 			jQuery('<option/>', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
 			# END recipients_list #
 
-			jQuery('<a/>', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+			jQuery('<a/>', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete('+ this.integer +');', 'aria-label' : "${LangLoader::get_message('delete', 'common')}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 			jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
 
@@ -71,7 +71,7 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 			<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
 			# END fieldelements.recipients_list #
 		</select>
-		<a href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+		<a href="javascript:ContactFormFieldObjectPossibleValues.delete({fieldelements.ID});" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 		<script>
 		<!--
 		jQuery("#field_is_default_${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){

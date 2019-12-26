@@ -57,7 +57,7 @@ function rename_file(id_file, previous_cut_name)
 				html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 				html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 
-				document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+				document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" aria-label="{L_EDIT}"><i class="far fa-edit" aria-hidden="true"></i></a>';
 				document.getElementById('img' + id_file).innerHTML = '';
 			}
 			else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -229,7 +229,7 @@ function display_thumbnails(direction)
 		<section>
 			<header>
 				<div class="align-right">
-					# IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
+					# IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 				</div>
 				<h1>{GALLERY} </h1>
 				# IF C_PAGINATION #
@@ -333,9 +333,9 @@ function display_thumbnails(direction)
 						</tr>
 						<tr>
 							<td colspan="2" class="small">
-								&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+								&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 
-								<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+								<a href="gallery.php?del={pics.pics_max.ID}&amp;cat={pics.pics_max.ID_CATEGORY}&amp;token={pics.pics_max.TOKEN}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 
 								<div id="move{pics.pics_max.ID}" class="move-pics-container">
 									<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
@@ -393,7 +393,7 @@ function display_thumbnails(direction)
 			# IF NOT pics.C_PICS_MAX #
 				<article>
 					<header>
-						<div class="align-right"> # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #</div>
+						<div class="align-right"> # IF pics.C_EDIT #<a href="{pics.U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #</div>
 						<h2>{GALLERY}</h2>
 					</header>
 					<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
@@ -420,8 +420,8 @@ function display_thumbnails(direction)
 									</ul>
 								</div>
 								<div class="cell-footer">
-									<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span>
-									<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									<span id="fihref{pics.list.ID}"><a href="javascript:display_rename_file('{pics.list.ID}', '{pics.list.PROTECTED_TITLE}', '{pics.list.PROTECTED_NAME}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a></span>
+									<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 
 									<div id="move{pics.list.ID}" class="move-pics-container">
 										<div class="bbcode-block move-pics-block" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">

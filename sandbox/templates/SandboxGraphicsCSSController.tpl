@@ -65,8 +65,8 @@
 				<div class="flex-between">
 					<div class="more">{@css.more}</div>
 					<span class="controls">
-						<a href="#" aria-label="{@css.edit}"><i class="fa fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
-						<a href="#" aria-label="{@css.delete}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
+						<a href="#" aria-label="{@css.edit}"><i class="far fa-fw fa-edit" aria-hidden="true" aria-label="{@css.edit}"></i></a>
+						<a href="#" aria-label="{@css.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true" aria-label="{@css.delete}"></i></a>
 					</span>
 				</div>
 			</header>
@@ -285,11 +285,11 @@
 			</header>
 			<div class="content">
 				<ul>
-					<li>{@css.rss_feed} : <a href="#" class="fa fa-rss" aria-label="{@css.rss_feed}"></a></li>
-					<li>{@css.edit} : <a href="#" class="fa fa-edit" aria-label="{@css.edit}"></a></li>
-					<li>{@css.delete} : <a href="#" class="fa fa-trash-alt" aria-label="{@css.delete}"></a></li>
-					<li>{@css.delete.confirm} : <a href="#" class="fa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
-					<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-trash-alt" data-confirmation="{@css.delete.custom_message}" aria-label="{@css.delete.confirm.custom}"></a></li>
+					<li>{@css.rss_feed} : <a href="#" class="fa fa-fw fa-rss" aria-label="{@css.rss_feed}"></a></li>
+					<li>{@css.edit} : <a href="#" class="far fa-fw fa-edit" aria-label="{@css.edit}"></a></li>
+					<li>{@css.delete} : <a href="#" class="far fa-fw fa-trash-alt" aria-label="{@css.delete}"></a></li>
+					<li>{@css.delete.confirm} : <a href="#" class="fr fa-fwa fa-trash-alt" data-confirmation="delete-element" aria-label="{@css.delete.confirm}"></a></li>
+					<li>{@css.delete.confirm.custom} : <a href="#" class="far fa-fw fa-trash-alt" data-confirmation="{@css.delete.custom_message}" aria-label="{@css.delete.confirm.custom}"></a></li>
 				</ul>
 			</div>
 		</article>

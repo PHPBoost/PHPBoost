@@ -120,7 +120,7 @@
 					if( xhr_object.responseText != '' )
 					{
 						document.getElementById('f' + id_folder).innerHTML = '<a href="upload.php?f=' + id_folder + '{POPUP}">' + name + '</a>';
-						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
 					}
 					else
 					{
@@ -160,7 +160,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new-folder' + divid).innerHTML = '<span id="img' + xhr_object.responseText + '"></span><div class="cell-header"><div id="f' + xhr_object.responseText + '" class="cell-name ellipsis"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></div><i class="fa fa-folder"></i></div><div class="cell-list"><ul><li class="li-stretch"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span> <span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="fa fa-trash-alt"></i></a></span> <span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}" class="fa fa-share"></a></span></li></ul></div>';
+						document.getElementById('new-folder' + divid).innerHTML = '<span id="img' + xhr_object.responseText + '"></span><div class="cell-header"><div id="f' + xhr_object.responseText + '" class="cell-name ellipsis"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></div><i class="fa fa-folder"></i></div><div class="cell-list"><ul><li class="li-stretch"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a></span> <span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a></span> <span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}" class="fa fa-share"></a></span></li></ul></div>';
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -230,7 +230,7 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fifl' + id_file).style.display = 'inline';
 						document.getElementById('fifl' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
 					}
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
@@ -238,7 +238,7 @@
 				{
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fifl' + id_file).style.display = 'inline';
-					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
 			}
@@ -426,7 +426,7 @@
 									<ul>
 										<li class="li-stretch">
 											{folder.RENAME_FOLDER}
-											<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+											<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 											<a href="upload{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 										</li>
 									</ul>
@@ -480,7 +480,7 @@
 										<ul>
 											<li class="li-stretch">
 				                                {personal_files.RENAME_FILE}
-				                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+				                                <a href="upload.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 				                                <a href="upload{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 					                            # IF personal_files.C_IS_PUBLIC_FILE #
 						                            <a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">

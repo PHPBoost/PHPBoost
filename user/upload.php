@@ -160,7 +160,7 @@ elseif (!empty($del_folder))
         try {
             $check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
         } catch (RowNotFoundException $ex) {
-            
+
         }
 
         // folder and all content delete
@@ -201,7 +201,7 @@ elseif (!empty($del_folder))
     try {
         $folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
     } catch (RowNotFoundException $ex) {
-        
+
     }
 
     if ($folder_owner == AppContext::get_current_user()->get_id())
@@ -426,7 +426,7 @@ elseif (!empty($del_folder))
         $tpl->assign_block_vars('folder', array(
             'ID' => $row['id'],
             'NAME' => $name_cut,
-            'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i  class="fa fa-edit"></i></a></span>',
+            'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i  class="far fa-edit"></i></a></span>',
             'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-share" aria-label="' . $LANG['moveto'] . '"></a>',
             'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
             'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
@@ -508,7 +508,7 @@ elseif (!empty($del_folder))
                 'URL' => PATH_TO_ROOT . $link,
                 'TITLE' => str_replace('"', '\"', $row['name']),
                 'NAME' => $name_cut,
-                'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="fa fa-edit" aria-hidden="true"></i></a></span>',
+                'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="far fa-edit" aria-hidden="true"></i></a></span>',
                 'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
                 'DISPLAYED_CODE' => $displayed_code,
                 'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
@@ -537,7 +537,7 @@ elseif (!empty($del_folder))
     try {
         $total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
     } catch (RowNotFoundException $ex) {
-        
+
     }
 
     $total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;

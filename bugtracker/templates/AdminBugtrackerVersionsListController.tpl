@@ -87,7 +87,7 @@ BugtrackerFormFieldVersions.prototype = {
 
 			jQuery('<td/>', {id : 'td5_' + id, 'data-th' : ${escapejs(LangLoader::get_message('delete', 'common'))}}).appendTo('#tr_' + id);
 
-			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldVersions.delete_version(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_version)}}).html('<i class="fa fa-trash-alt" aria-hidden="true"></i>').appendTo('#td5_' + id);
+			jQuery('<a/> ', {id : 'delete_' + id, onclick : 'BugtrackerFormFieldVersions.delete_version(' + id + ');return false;', 'aria-label' : ${escapejs(@titles.del_version)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#td5_' + id);
 
 			this.integer++;
 		}
@@ -182,7 +182,7 @@ function display_default_version_radio(version_id)
 				</div>
 			</td>
 			<td>
-				<a href="{versions.LINK_DELETE}" aria-label="${@titles.del_version}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+				<a href="{versions.LINK_DELETE}" aria-label="${@titles.del_version}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 			</td>
 		</tr>
 		# END versions #
@@ -190,7 +190,7 @@ function display_default_version_radio(version_id)
 	<tfoot>
 		<tr>
 			<td colspan="5">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-trash-alt" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" data-confirmation="{@actions.confirm.del_default_value}"><i class="far fa-trash-alt" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #
 				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true"></i></a>
 			</td>
 		</tr>

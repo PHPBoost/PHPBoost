@@ -53,7 +53,7 @@
 						<th class="forum-delete" aria-label="{L_DELETE}">
 							<label for="" class="checkbox">
 								<input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');">
-								<span><i class="fa fa-trash-alt hidden-small-screens" aria-hidden="true"></i></span>
+								<span><i class="far fa-trash-alt hidden-small-screens" aria-hidden="true"></i></span>
 							</label>
 							<span class="hidden-large-screens">{L_DELETE}</span>
 						</th>

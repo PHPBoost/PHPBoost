@@ -36,7 +36,7 @@
 	<tfoot>
 	<tr>
 		<td colspan="3">
-			<a href="{LINK_DELETE_DEFAULT}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt"></i> {@labels.del_default_value}</a>
+			<a href="{LINK_DELETE_DEFAULT}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i> {@labels.del_default_value}</a>
 		</td>
 	</tr>
 	</tfoot>

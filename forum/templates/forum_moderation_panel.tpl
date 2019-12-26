@@ -147,7 +147,7 @@
 									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
 								<td class="td20P">
-									<a href="{alert_list.U_TITLE}">{alert_list.TITLE}</a> <a href="{alert_list.U_TITLE}"><i class="fa fa-edit"></i></a>
+									<a href="{alert_list.U_TITLE}">{alert_list.TITLE}</a> <a href="{alert_list.U_TITLE}"><i class="far fa-edit"></i></a>
 								</td>
 								<td class="td20P">
 									<a href="{alert_list.U_TOPIC}">{alert_list.TOPIC}</a>

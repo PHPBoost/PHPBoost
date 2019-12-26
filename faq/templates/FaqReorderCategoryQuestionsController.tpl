@@ -91,7 +91,7 @@
 	<header>
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit small" aria-hidden="true"></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
 			{@faq.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
@@ -116,11 +116,11 @@
 							</div>
 							<div class="sortable-actions">
 								# IF C_MORE_THAN_ONE_QUESTION #
-								<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i></a>
-								<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-arrow-down fa-fw" aria-hidden="true"></i></a>
+								<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i></a>
+								<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{questions.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
 								# ENDIF #
-								<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>
-								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="fa fa-trash-alt fa-fw" aria-hidden="true"></i></a>
+								<a href="{questions.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+								<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{questions.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 							</div>
 
 							<script>

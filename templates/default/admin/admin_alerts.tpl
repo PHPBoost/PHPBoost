@@ -144,8 +144,8 @@ function delete_alert(id)
 					</td>
 					<td>
 						{alerts.ACTIONS}
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-check success# ELSE #fa-times error# ENDIF #"></i></a>
-						<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{L_DELETE}"><i class="fa fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" aria-label="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa fa-fw # IF alerts.C_PROCESSED #fa-check success# ELSE #fa-times error# ENDIF #"></i></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" aria-label="{L_DELETE}"><i class="far fa-fw fa-trash-alt" aria-hidden="true" aria-label="{L_DELETE}"></i></a>
 					</td>
 				</tr>
 				# END alerts #

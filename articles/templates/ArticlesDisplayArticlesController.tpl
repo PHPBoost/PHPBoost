@@ -41,10 +41,10 @@
 			</div>
 			<div class="controls align-right">
 				# IF C_EDIT #
-					<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+					<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+					<a href="{U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 			</div>
 		</div>

@@ -161,7 +161,7 @@
 									# START comments_list #
 									<li>
 										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
-										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 										<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 											<i class="far fa-hand-point-right" aria-hidden="true"></i>
 										</a>
@@ -200,7 +200,7 @@
 
 				<div class="cell dashboard-writting-pad">
 					<div class="cell-header">
-						<h2><i class="fa fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
+						<h2><i class="far fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
 					</div>
 					<div class="cell-textarea">
 						<form action="admin_index.php" class="form-content" method="post">

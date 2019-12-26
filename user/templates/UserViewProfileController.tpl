@@ -9,7 +9,7 @@
 				<div class="form-element user-profile-edit">
 					<label>{@profile.edit}</label>
 					<div class="form-field form-field-free">
-						<a href="{U_EDIT_PROFILE}" aria-label="{@profile.edit}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						<a href="{U_EDIT_PROFILE}" aria-label="{@profile.edit}"><i class="far fa-edit" aria-hidden="true"></i></a>
 					</div>
 				</div>
 				# ENDIF #

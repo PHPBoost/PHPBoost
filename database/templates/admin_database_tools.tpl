@@ -54,7 +54,7 @@
 						</li>
 						<li>
 							<a class="cssmenu-title" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element">
-								<i class="fa fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
+								<i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> {L_DELETE}
 							</a>
 						</li>
 					</ul>

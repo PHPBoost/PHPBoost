@@ -120,7 +120,7 @@ else
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => stripslashes($row['title']),
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_unwatch_this_topic'] . '" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>'
+			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" aria-label="' . $LANG['wiki_unwatch_this_topic'] . '" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"><i class="far fa-trash-alt" aria-hidden="true"></i></a>'
 		));
 	}
 	$result->dispose();

@@ -48,7 +48,7 @@
 				</td>
 				# IF C_MODERATE #
 				<td>
-					<a href="{archives_list.U_DELETE_ARCHIVE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+					<a href="{archives_list.U_DELETE_ARCHIVE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 				</td>
 				# ENDIF #
 			</tr>

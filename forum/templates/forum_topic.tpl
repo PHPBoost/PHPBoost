@@ -237,18 +237,18 @@
 	                    </h3>
 	                    <div class="message-actions">
 							# IF C_AUTH_POST #<a href="topic{msg.U_VARS_QUOTE}#go-bottom" aria-label="{L_QUOTE}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
-							# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="fa fa-edit" aria-hidden="true"></i></a># ENDIF #
+							# IF msg.C_FORUM_MSG_EDIT #<a href="post{msg.U_FORUM_MSG_EDIT}" aria-label="{L_EDIT}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 
 							# IF msg.C_FORUM_MSG_DEL #
 								# IF msg.C_FORUM_MSG_DEL_MSG #
-									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="delete-message"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" id="dimgnojs{msg.ID}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+									<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{L_DELETE}" class="delete-message"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 									<script>
 										document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
 										document.getElementById('dimg{msg.ID}').style.display = 'inline';
 									</script>
 								# ELSE #
-									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+									<a href="action{msg.U_FORUM_MSG_DEL}" aria-label="{L_DELETE}" data-confirmation="{L_ALERT_DELETE_TOPIC}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 								# ENDIF #
 							# ENDIF #
 

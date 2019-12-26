@@ -123,9 +123,9 @@ jQuery(document).ready(function() {
 							<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 							# ENDIF #
-							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							# IF NOT list_extended_fields.C_FREEZE #
-							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 							# ELSE #
 							&nbsp;
 							# ENDIF #

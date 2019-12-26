@@ -4,7 +4,7 @@
 		<h1>
 			{@members_list} {@group.of_group} {GROUP_NAME} ({NUMBER_MEMBERS})
 			# IF C_ADMIN #
-				<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+				<a href="{U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 			# ENDIF #
 			</h1>
 	</header>
@@ -156,7 +156,7 @@
 					</span>
 					<a href="{group.U_GROUP}" class="group-name">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 					# IF C_ADMIN #
-						<a href="{group.U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						<a href="{group.U_ADMIN_GROUPS}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 					# ENDIF #
 				</h2>
 			</header>
