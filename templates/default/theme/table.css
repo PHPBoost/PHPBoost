@@ -83,11 +83,11 @@ tfoot td select {
 }
 
 .html-table-filters {
-	padding: 0.809em; 
+	padding: 0.809em;
 }
 
 .html-table-nbr-elements {
-	text-align: left; 
+	text-align: left;
 }
 
 /* --- thead patch for formated tables --- */
@@ -178,9 +178,14 @@ tfoot td select {
 	-webkit-overflow-scrolling: touch;
 }
 
-.bt.bt--no-header tfoot td::before,
+.bt tfoot td::before,
 .bt.bt--no-header tbody td::before {
 	display: none;
+}
+
+.bt tfoot .bt-content {
+	width: 100%;
+	padding: 0.618em;
 }
 
 /* --- Sortable filters ----------------------------------------------------- */
