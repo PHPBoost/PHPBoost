@@ -18,6 +18,9 @@ $lang['gallery.actions.add'] = 'Add pictures';
 $lang['gallery.manage'] = 'Manage pictures';
 $lang['gallery.management'] = 'Gallery management';
 
+$lang['gallery.item'] = 'image';
+$lang['gallery.items'] = 'images';
+
 //SEO
 $lang['gallery.seo.description.root'] = 'All :site\'s gallery pictures.';
 ?>
