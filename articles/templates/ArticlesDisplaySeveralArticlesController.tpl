@@ -20,13 +20,8 @@
 				<div class="cell" itemscope>
 					<div class="cell-header" itemprop="about">
 						<h5 class="cell-name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small">
+						<span class="small pinned notice" aria-label="{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #{@articles.items}# ELSE #{@articles.item}# ENDIF #">
 							{sub_categories_list.ARTICLES_NUMBER}
-							# IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #
-								{@articles.items}
-							# ELSE #
-								{@articles.item}
-							# ENDIF #
 						</span>
 					</div>
 					# IF C_DISPLAY_CATS_ICON #

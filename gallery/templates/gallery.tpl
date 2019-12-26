@@ -296,12 +296,12 @@
 				<div class="cell" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="subcat-options" itemprop="items">{sub_categories_list.PICTURES_NUMBER}</span>
+						<span class="small pinned notice" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
 					</div>
 					<div class="cell-body">
 						<div class="cell-thumbnail cell-landscape" itemprop="thumbnail">
 							# IF sub_categories_list.C_CATEGORY_IMAGE #
-									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							# ENDIF #
 							<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
 								${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}

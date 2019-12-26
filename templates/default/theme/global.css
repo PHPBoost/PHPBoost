@@ -26,7 +26,10 @@
 	border-style: solid;
 	border-color: transparent;
 	border-radius: 3px;
+	cursor: default;
 }
+
+a.pinned { cursor: pointer; }
 
 .pinned[data-color] {
 	padding-left: 1.618em;
