@@ -13,7 +13,7 @@
 .sortable-element {
 	margin: 0 0 0.309em;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	flex-wrap: wrap;
 	padding: 0;
@@ -42,9 +42,6 @@
 }
 
 @media (min-width:769px){
-	.sortable-element {
-		flex-direction: row;
-	}
 
 	.sortable-selector {
 		flex: 0 0 1.309em;
