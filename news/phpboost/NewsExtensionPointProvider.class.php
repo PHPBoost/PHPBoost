@@ -29,7 +29,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), NewsDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), NewsDisplayCategoryController::get_view());
 	}
 
 	public function css_files()

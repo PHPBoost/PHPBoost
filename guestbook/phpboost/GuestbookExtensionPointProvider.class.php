@@ -25,7 +25,7 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), GuestbookController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), GuestbookController::get_view());
 	}
 
 	public function menus()

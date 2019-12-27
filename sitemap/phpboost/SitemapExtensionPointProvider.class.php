@@ -29,7 +29,7 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), ViewSitemapController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), ViewSitemapController::get_view());
 	}
 
 	public function scheduled_jobs()

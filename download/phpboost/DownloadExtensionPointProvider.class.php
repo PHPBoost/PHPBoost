@@ -37,7 +37,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), DownloadDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), DownloadDisplayCategoryController::get_view());
 	}
 
 	public function menus()

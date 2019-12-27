@@ -37,7 +37,7 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), WebDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), WebDisplayCategoryController::get_view());
 	}
 
 	public function menus()

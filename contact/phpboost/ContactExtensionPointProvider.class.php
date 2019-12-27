@@ -27,7 +27,7 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), ContactController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), ContactController::get_view());
 	}
 
 	public function tree_links()

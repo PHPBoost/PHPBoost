@@ -39,7 +39,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), MediaDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), MediaDisplayCategoryController::get_view());
 	}
 
 	public function search()

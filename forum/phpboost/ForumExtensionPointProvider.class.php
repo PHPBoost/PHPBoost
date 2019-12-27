@@ -34,7 +34,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), ForumHomeController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), ForumHomeController::get_view());
 	}
 
 	public function scheduled_jobs()

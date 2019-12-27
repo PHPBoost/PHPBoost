@@ -46,7 +46,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	 */
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), BugtrackerUnsolvedListController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), BugtrackerUnsolvedListController::get_view());
 	}
 
 	 /**

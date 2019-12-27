@@ -30,7 +30,7 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), NewsletterHomeController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), NewsletterHomeController::get_view());
 	}
 
 	public function menus()

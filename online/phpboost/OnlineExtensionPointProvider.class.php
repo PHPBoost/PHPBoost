@@ -25,7 +25,7 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), OnlineHomeController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), OnlineHomeController::get_view());
 	}
 
 	public function menus()

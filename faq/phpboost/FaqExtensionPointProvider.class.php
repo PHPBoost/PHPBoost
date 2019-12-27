@@ -32,7 +32,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), FaqDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), FaqDisplayCategoryController::get_view());
 	}
 
 	public function menus()

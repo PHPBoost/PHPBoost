@@ -36,7 +36,7 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), CalendarDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), CalendarDisplayCategoryController::get_view());
 	}
 
 	public function menus()

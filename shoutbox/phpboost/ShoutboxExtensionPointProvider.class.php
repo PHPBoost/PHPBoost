@@ -26,7 +26,7 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), ShoutboxHomeController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), ShoutboxHomeController::get_view());
 	}
 
 	public function menus()

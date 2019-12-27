@@ -39,7 +39,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_title(), GalleryDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), GalleryDisplayCategoryController::get_view());
 	}
 
 	public function menus()
