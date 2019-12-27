@@ -352,7 +352,8 @@ select[readonly=readonly]:focus {
 	cursor: not-allowed;
 }
 
-.form-field-checkbox {
+.form-field-checkbox,
+.form-field-checkbox-mini {
 	display: inline-block;
 }
 
