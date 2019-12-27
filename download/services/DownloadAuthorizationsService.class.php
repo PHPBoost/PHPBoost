@@ -3,20 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 4.0 - 2014 08 24
 */
 
 class DownloadAuthorizationsService extends CategoriesAuthorizationsService
 {
 	const DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS = 32;
-
-	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
-	{
-		$instance = new self();
-		$instance->id_category = $id_category;
-		return $instance;
-	}
 
 	public function display_download_link()
 	{

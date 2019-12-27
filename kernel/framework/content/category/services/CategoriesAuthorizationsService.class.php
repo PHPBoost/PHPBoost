@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 5.3 - 2019 11 02
 */
 
@@ -17,7 +17,8 @@ class CategoriesAuthorizationsService
 
 	public static function check_authorizations($id_category = Category::ROOT_CATEGORY, $module_id = '', $id_category_field = CategoriesItemsParameters::DEFAULT_FIELD_NAME)
 	{
-		$instance = new self();
+		$class_name = get_called_class();
+		$instance = new $class_name();
 		$instance->id_category = $id_category;
 		$instance->module_id = $module_id;
 		$instance->id_category_field = $id_category_field;

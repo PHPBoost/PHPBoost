@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 4.1 - 2015 02 25
 */
 
@@ -15,13 +15,6 @@ class ForumAuthorizationsService extends CategoriesAuthorizationsService
 	const READ_TOPICS_CONTENT_AUTHORIZATIONS = 128;
 	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 256;
 	const MULTIPLE_POSTS_AUTHORIZATIONS = 512;
-
-	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
-	{
-		$instance = new self();
-		$instance->id_category = $id_category;
-		return $instance;
-	}
 
 	public function flood()
 	{
