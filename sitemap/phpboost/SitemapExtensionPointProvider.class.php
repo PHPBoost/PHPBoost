@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 3.0 - 2009 12 10
+ * @contributor xela <xela@phpboost.com>
 */
 
 class SitemapExtensionPointProvider extends ExtensionPointProvider
@@ -28,7 +29,7 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new SitemapHomePageExtensionPoint();
+		return new DefaultHomePageDisplay($this->get_title(), ViewSitemapController::get_view());
 	}
 
 	public function scheduled_jobs()

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 3.0 - 2011 09 19
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class OnlineExtensionPointProvider extends ExtensionPointProvider
@@ -24,7 +25,7 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new OnlineHomePageExtensionPoint();
+		return new DefaultHomePageDisplay($this->get_title(), OnlineHomeController::get_view());
 	}
 
 	public function menus()

@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 2.0 - 2008 02 24
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 define('FORUM_MAX_SEARCH_RESULTS', 50);
@@ -33,7 +34,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new ForumHomePageExtensionPoint();
+		return new DefaultHomePageDisplay($this->get_title(), ForumHomeController::get_view());
 	}
 
 	public function scheduled_jobs()

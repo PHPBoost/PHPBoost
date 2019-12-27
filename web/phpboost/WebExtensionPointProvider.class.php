@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 27
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class WebExtensionPointProvider extends ExtensionPointProvider
@@ -36,7 +37,7 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new WebHomePageExtensionPoint();
+		return new DefaultHomePageDisplay($this->get_title(), WebDisplayCategoryController::get_view());
 	}
 
 	public function menus()

@@ -19,6 +19,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/WebNewContent.class.php',
 			'/phpboost/WebNotation.class.php',
 			'/phpboost/WebSitemapExtensionPoint.class.php',
+			'/phpboost/WebHomePageExtensionPoint.class.php',
 			'/services/WebAuthorizationsService.class.php',
 			'/services/WebKeywordsCache.class.php',
 			'/util/AdminWebDisplayResponse.class.php'
