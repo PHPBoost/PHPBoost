@@ -192,8 +192,9 @@
 		}
 	}
 
-	.modal-menu i {
-		margin-right: 8px;
+	.modal-menu i,
+	.modal-menu img {
+		margin-right: 0.309em;
 		align-self: center;
 	}
 
