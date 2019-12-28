@@ -69,7 +69,7 @@
 						<div class="form-element half-field">
 							<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 							<div class="form-field">
-								<select name="idcat_post" id="category">
+								<select name="id_category_post" id="category">
 									{CATEGORIES}
 								</select>
 							</div>

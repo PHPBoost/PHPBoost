@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!CategoriesAuthorizationsService::check_authorizations($id_category, 'gallery', 'idcat')->write())
+	if (!CategoriesAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -103,7 +103,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$Upload = new Upload($dir);
 
 		$idpic = 0;
-		$idcat_post = (int)retrieve(POST, '_cat', 0);
+		$id_category_post = (int)retrieve(POST, '_cat', 0);
 		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
 		if (!$Upload->file('gallery', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))
@@ -131,7 +131,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
-				$idpic = $Gallery->Add_pics($idcat_post, $name_post, $parameters['path'], AppContext::get_current_user()->get_id());
+				$idpic = $Gallery->Add_pics($id_category_post, $name_post, $parameters['path'], AppContext::get_current_user()->get_id());
 				if ($Gallery->get_error() != '')
 					AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($id_category,$Gallery->get_error()) . '#message_helper');
 			}
@@ -142,7 +142,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		}
 	}
 
-	AppContext::get_response()->redirect(Url::to_absolute('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '-' . $idpic . '.php?add=1', '&')));
+	AppContext::get_response()->redirect(Url::to_absolute('/gallery/gallery' . url('.php?add=1&cat=' . $id_category_post . '&id=' . $idpic, '-' . $id_category_post . '-' . $idpic . '.php?add=1', '&')));
 }
 elseif ($g_add)
 {
@@ -152,11 +152,11 @@ elseif ($g_add)
 		DispatchManager::redirect($controller);
 	}
 
-	$categories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
 	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!CategoriesAuthorizationsService::check_authorizations($id_category, 'gallery', 'idcat')->write())
+	if (!CategoriesAuthorizationsService::check_authorizations($id_category)->write())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -181,7 +181,7 @@ elseif ($g_add)
 	if (!empty($g_idpics))
 	{
 		try {
-			$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
+			$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('id_category', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -192,13 +192,13 @@ elseif ($g_add)
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
 			'ID' => $g_idpics,
 			'PATH' => $imageup['path'],
-			'ID_CAT' => $imageup['idcat'],
-			'CAT_NAME' => $categories[$imageup['idcat']]->get_name()
+			'ID_CATEGORY' => $imageup['id_category'],
+			'CAT_NAME' => $categories[$imageup['id_category']]->get_name()
 		));
 	}
 
 	//Affichage du quota d'image uploadée.
-	$category_authorizations = CategoriesService::get_categories_manager('gallery', 'idcat')->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
+	$category_authorizations = CategoriesService::get_categories_manager()->get_heritated_authorizations($id_category, Category::WRITE_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	$quota = isset($category_authorizations['r-1']) ? ($category_authorizations['r-1'] != '3') : true;
 	if ($quota)
 	{
@@ -226,7 +226,7 @@ elseif ($g_add)
 	$tpl->put_all(array(
 		'CAT_ID' => $id_category,
 		'GALLERY' => !empty($id_category) ? $categories[$id_category]->get_name() : $LANG['gallery'],
-		'CATEGORIES_TREE' => CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
+		'CATEGORIES_TREE' => CategoriesService::get_categories_manager()->get_select_categories_form_field('cat', LangLoader::get_message('form.category', 'common'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH' => $config->get_max_width(),
 		'MAX_HEIGHT' => $config->get_max_height(),
 		'ALLOWED_EXTENSIONS' => 'jpeg", "jpg", "png", "gif',

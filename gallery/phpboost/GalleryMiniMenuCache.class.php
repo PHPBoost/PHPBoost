@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 29
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 06 29
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class GalleryMiniMenuCache implements CacheData
@@ -20,16 +21,16 @@ class GalleryMiniMenuCache implements CacheData
 		$config = GalleryConfig::load();
 		$Gallery = new Gallery();
 
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.id_category, gc.auth
 		FROM " . GallerySetup::$gallery_table . " g
-		LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.idcat
+		LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.id_category
 		WHERE g.aprob = 1
 		ORDER BY RAND()
 		LIMIT 30");
 
 		while ($row = $result->fetch())
 		{
-			$row['auth'] = ($row['idcat'] == 0) ? $config->get_authorizations() : TextHelper::unserialize(stripslashes($row['auth']));
+			$row['auth'] = ($row['id_category'] == Category::ROOT_CATEGORY) ? $config->get_authorizations() : TextHelper::unserialize(stripslashes($row['auth']));
 			//Calcul des dimensions avec respect des proportions.
 			list($row['width'], $row['height']) = $Gallery->get_resize_properties($row['width'], $row['height']);
 

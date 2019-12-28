@@ -12,7 +12,7 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 {
 	public function get_search_request($args)
 	{
-		$authorized_categories = CategoriesService::get_authorized_categories();
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'media');
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
 		$request = "SELECT " . $args['id_search'] . " AS id_search,

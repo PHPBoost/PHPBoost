@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.6 - 2007 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,31 +29,31 @@ $id_file = $request->get_postint('id_file', 0);
 //Notation.
 if (!empty($increment_view))
 {
-	$categories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
 	$g_idpics = $request->get_getint('id', 0);
-	$g_idcat = $request->get_getint('cat', 0);
-	if (empty($g_idpics) || (!empty($g_idcat) && !isset($categories[$g_idcat])))
+	$g_id_category = $request->get_getint('cat', 0);
+	if (empty($g_idpics) || (!empty($g_id_category) && !isset($categories[$g_id_category])))
 		exit;
 
 	//Niveau d'autorisation de la catégorie
-	if (!CategoriesAuthorizationsService::check_authorizations($g_idcat, 'gallery', 'idcat')->read())
+	if (!CategoriesAuthorizationsService::check_authorizations($g_id_category)->read())
 		exit;
 
 	//Mise à jour du nombre de vues.
-	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
+	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE id_category = :id_category AND id = :id", array('id_category' => $g_id_category, 'id' => $g_idpics));
 }
 elseif (!empty($rename_pics)) //Renomme une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	try {
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', array('id' => $id_file));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->moderation()) //Modo
+	if (CategoriesAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
@@ -73,13 +73,13 @@ elseif (!empty($aprob_pics))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	try {
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'idcat', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', array('id' => $id_file));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->moderation()) //Modo
+	if (CategoriesAuthorizationsService::check_authorizations($id_cat)->moderation()) //Modo
 	{
 		$Gallery = new Gallery();
 

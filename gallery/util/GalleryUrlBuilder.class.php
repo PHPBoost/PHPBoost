@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Alain091 <alain091@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2011 08 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -63,10 +63,10 @@ class GalleryUrlBuilder
 
 
 	// TODO : supprimer ce qui est en dessous si possible
-	public static function get_link_item($idcat, $id, $com = null, $sort = null)
+	public static function get_link_item($id_category, $id, $com = null, $sort = null)
 	{
-		return Url::to_rel('/gallery/gallery' . url('.php?cat=' . $idcat . '&id=' . $id . (!empty($com) ? '&com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : ''),
-			'-' . $idcat . '-' . $id . '.php' . (!empty($com) ? '?com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : '')));
+		return Url::to_rel('/gallery/gallery' . url('.php?cat=' . $id_category . '&id=' . $id . (!empty($com) ? '&com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : ''),
+			'-' . $id_category . '-' . $id . '.php' . (!empty($com) ? '?com=' . $com : '') . (!empty($sort) ? '&sort=' . $sort : '')));
 	}
 
 	public static function get_link_cat($id, $name = null)

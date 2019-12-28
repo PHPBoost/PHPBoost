@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -248,10 +248,10 @@ class Gallery
 	}
 
 	//Insertion base de donnée
-	public function Add_pics($idcat, $name, $path, $user_id)
+	public function Add_pics($id_category, $name, $path, $user_id)
 	{
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
-		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
+		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('id_category' => $id_category, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
 		return $result->get_last_inserted_id();
 	}
 
@@ -259,7 +259,7 @@ class Gallery
 	public function Del_pics($id_pics)
 	{
 		try {
-			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'id_category', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -314,7 +314,7 @@ class Gallery
 	//Déplacement d'une image.
 	public function Move_pics($id_pics, $id_move)
 	{
-		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('idcat' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
+		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('id_category' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
 	}
 
 	//Vérifie si le membre peut uploader une image

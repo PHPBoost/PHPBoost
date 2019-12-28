@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2015 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -47,7 +47,7 @@ class GallerySetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
@@ -61,7 +61,7 @@ class GallerySetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'idcat' => array('type' => 'key', 'fields' => 'idcat')
+				'id_category' => array('type' => 'key', 'fields' => 'id_category')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_table, $fields, $options);
@@ -97,7 +97,7 @@ class GallerySetup extends DefaultModuleSetup
 	{
 		PersistenceContext::get_querier()->insert(self::$gallery_table, array(
 			'id' => 1,
-			'idcat' => 1,
+			'id_category' => 1,
 			'name' => $this->messages['default.gallerypicture.name'],
 			'path' => 'phpboost-logo.png',
 			'width' => 90,

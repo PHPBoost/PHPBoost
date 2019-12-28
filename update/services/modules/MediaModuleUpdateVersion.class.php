@@ -28,7 +28,7 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		
 		$this->database_columns_to_modify = array(
 			array(
-				'table_name' => PREFIX . 'media_cats',
+				'table_name' => PREFIX . 'media',
 				'columns' => array(
 					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0'
 				)

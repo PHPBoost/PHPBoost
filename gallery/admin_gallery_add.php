@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,8 +21,8 @@ $config = GalleryConfig::load();
 
 $request = AppContext::get_request();
 
-$idcat = $request->get_getint('cat', 0);
-$idcat_post = $request->get_postint('idcat_post', 0);
+$id_category = $request->get_getint('cat', 0);
+$id_category_post = $request->get_postint('id_category_post', 0);
 $add_pic = $request->get_getint('add', 0);
 $nbr_pics_post = $request->get_postint('nbr_pics', 0);
 
@@ -66,7 +66,7 @@ if (isset($_FILES['gallery'])) // Upload
 			$name = TextHelper::strprotect($request->get_postvalue('name', ''));
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
-				$idpic = $Gallery->Add_pics($idcat_post, $name, $parameters['path'], AppContext::get_current_user()->get_id());
+				$idpic = $Gallery->Add_pics($id_category_post, $name, $parameters['path'], AppContext::get_current_user()->get_id());
 				if ($Gallery->get_error() != '')
 					$tpl->put('message_helper', MessageHelper::display($LANG[$Gallery->get_error()], MessageHelper::WARNING));
 			}
@@ -113,10 +113,10 @@ elseif ($valid && !empty($nbr_pics_post)) // Massive addition through ftp
 // Display of the uploaded picture
 if (!empty($add_pic))
 {
-	$categories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_categories();
+	$categories = CategoriesService::get_categories_manager()->get_categories_cache()->get_categories();
 
 	try {
-		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('id_category', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -125,10 +125,10 @@ if (!empty($add_pic))
 	$tpl->assign_block_vars('image_up', array(
 		'NAME' => stripslashes($imageup['name']),
 		'PATH' => $imageup['path'],
-		'U_IMG' => 'admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max',
+		'U_IMG' => 'admin_gallery.php?cat=' . $imageup['id_category'] . '&amp;id=' . $add_pic . '#pics_max',
 		'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
-		'CATNAME' => $categories[$imageup['idcat']]->get_name(),
-		'U_CAT' => 'admin_gallery.php?cat=' . $imageup['idcat']
+		'CATNAME' => $categories[$imageup['id_category']]->get_name(),
+		'U_CAT' => 'admin_gallery.php?cat=' . $imageup['id_category']
 	));
 }
 
@@ -196,7 +196,7 @@ if (is_dir($dir)) //Si le dossier existe
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-		$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field('category', '', $idcat, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('category', '', $id_category, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -206,7 +206,7 @@ if (is_dir($dir)) //Si le dossier existe
 			$categories_list .= $option->display()->render();
 		}
 
-		$root_categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field('root_cat', '', $idcat, $search_category_children_options);
+		$root_categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('root_cat', '', $id_category, $search_category_children_options);
 		$root_categories_tree_options = $method->invoke($root_categories_tree);
 		$root_categories_list = '';
 		foreach ($root_categories_tree_options as $option)
@@ -269,7 +269,7 @@ if (is_dir($dir)) //Si le dossier existe
 			if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
 				$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
 
-			$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
+			$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);

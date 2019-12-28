@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -54,7 +54,7 @@ elseif (!empty($del)) //Suppression d'une image.
 if (!empty($id_category))
 {
 	try {
-		$category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category($id_category);
+		$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id_category);
 	} catch (CategoryNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -62,10 +62,10 @@ if (!empty($id_category))
 }
 else
 {
-	$category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 }
 
-$subcategories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id(), true, 'gallery', 'idcat'));
+$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id()));
 $elements_number = $category->get_elements_number();
 
 $nbr_pics = $elements_number['pics_aprob'] + $elements_number['pics_unaprob'];
@@ -174,7 +174,7 @@ if ($total_cat > 0)
 
 if ($nbr_pics > 0 && empty($idpics))
 {
-	$nbr_pics_category = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE idcat = :idcat', array('idcat' => $id_category));
+	$nbr_pics_category = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE id_category = :id_category', array('id_category' => $id_category));
 }
 
 ##### Affichage des photos #####
@@ -183,7 +183,7 @@ $tpl->assign_block_vars('pics', array(
 	'COLSPAN' => isset($nbr_pics_category) ? min($nbr_pics_category, $config->get_columns_number()) : 1,
 	'C_EDIT' => !empty($id_category),
 	'ID' => $idpics,
-	'IDCAT' => $id_category,
+	'ID_CATEGORY' => $id_category,
 	'CATNAME' => $category->get_name(),
 	'U_EDIT_CATEGORY' => CategoriesUrlBuilder::edit_category($id_category)->rel()
 ));
@@ -213,11 +213,11 @@ if ($nbr_pics > 0)
 	{
 		$info_pics = array();
 		try {
-			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
+			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.id_category, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.groups
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = :idcat AND g.id = :id", array(
-				'idcat' => $id_category,
+			WHERE g.id_category = :id_category AND g.id = :id", array(
+				'id_category' => $id_category,
 				'id' => $idpics
 			));
 		} catch (RowNotFoundException $e) {}
@@ -232,11 +232,11 @@ if ($nbr_pics > 0)
 			list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 			$array_pics = array();
 			$array_js = 'var array_pics = new Array();';
-			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.idcat, g.path
+			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.id_category, g.path
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = :idcat", array(
-				'idcat' => $id_category
+			WHERE g.id_category = :id_category", array(
+				'id_category' => $id_category
 			));
 			while ($row = $result->fetch())
 			{
@@ -248,7 +248,7 @@ if ($nbr_pics > 0)
 				$array_pics[] = array(
 					'HEIGHT' => ($config->get_mini_max_height() + 16),
 					'ID' => $i,
-					'URL' => 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max',
+					'URL' => 'admin_gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max',
 					'NAME' => stripslashes($row['name']),
 					'PATH' => $row['path']
 				);
@@ -275,7 +275,7 @@ if ($nbr_pics > 0)
 				}
 
 				$array_js .= 'array_pics[' . $i . '] = new Array();' . "\n";
-				$array_js .= 'array_pics[' . $i . '][\'link\'] = \'.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . "';\n";
+				$array_js .= 'array_pics[' . $i . '][\'link\'] = \'.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max' . "';\n";
 				$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 				$i++;
 			}
@@ -309,7 +309,7 @@ if ($nbr_pics > 0)
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['idcat'], $search_category_children_options);
+			$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['id_category'], $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);
@@ -367,13 +367,13 @@ if ($nbr_pics > 0)
 	else
 	{
 		$j = 0;
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.groups
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.groups
 		FROM " . GallerySetup::$gallery_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		WHERE g.idcat = :idcat
+		WHERE g.id_category = :id_category
 		ORDER BY g.timestamp
 		LIMIT :number_items_per_page OFFSET :display_from", array(
-			'idcat' => $id_category,
+			'id_category' => $id_category,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
@@ -396,19 +396,19 @@ if ($nbr_pics > 0)
 
 			//Affichage de l'image en grand.
 			if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
-				$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']);
+				$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']);
 			elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
-				$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
+				$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 			elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
-				$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
+				$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\', 0)';
 			else //Ouverture nouvelle page.
-				$display_link = 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max';
+				$display_link = 'admin_gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max';
 
 			//Liste des catégories.
 			$search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-			$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($row['id'] . 'cat', '', $row['idcat'], $search_category_children_options);
+			$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($row['id'] . 'cat', '', $row['id_category'], $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 			$method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);

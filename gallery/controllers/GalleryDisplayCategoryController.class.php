@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 05
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,7 +62,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$content_management_config = ContentManagementConfig::load();
 		$category = $this->get_category();
 
-		$subcategories = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id(), true, 'gallery', 'idcat'));
+		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id()));
 
 		$elements_number = $category->get_elements_number();
 		$nbr_pics = $elements_number['pics_aprob'];
@@ -102,7 +102,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$column_width_pics = floor(100/$nbr_column_pics);
 
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-		$is_modo = CategoriesAuthorizationsService::check_authorizations($category->get_id(), 'gallery', 'idcat')->moderation();
+		$is_modo = CategoriesAuthorizationsService::check_authorizations($category->get_id())->moderation();
 
 		$module_data_path = $this->tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($category->get_name());
@@ -247,17 +247,17 @@ class GalleryDisplayCategoryController extends ModuleController
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
 					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = g.id AND notes.module_name = 'gallery'
 					LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = :user_id
-					WHERE g.idcat = :idcat AND g.id = :id AND g.aprob = 1
+					WHERE g.id_category = :id_category AND g.id = :id AND g.aprob = 1
 					" . $g_sql_sort, array(
 						'user_id' => AppContext::get_current_user()->get_id(),
-						'idcat' => $category->get_id(),
+						'id_category' => $category->get_id(),
 						'id' => $g_idpics
 					));
 				} catch (RowNotFoundException $e) {}
 
 				if ($info_pics && !empty($info_pics['id']))
 				{
-					$Bread_crumb->add(stripslashes($info_pics['name']), PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php'));
+					$Bread_crumb->add(stripslashes($info_pics['name']), PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $info_pics['id_category'] . '&amp;id=' . $info_pics['id'], '-' . $info_pics['id_category'] . '-' . $info_pics['id'] . '.php'));
 
 					//Affichage miniatures.
 					$id_previous = 0;
@@ -267,11 +267,11 @@ class GalleryDisplayCategoryController extends ModuleController
 					list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 					$array_pics = array();
 					$array_js = 'var array_pics = new Array();';
-					$result = $this->db_querier->select("SELECT g.id, g.idcat, g.path, g.name
+					$result = $this->db_querier->select("SELECT g.id, g.id_category, g.path, g.name
 					FROM " . GallerySetup::$gallery_table . " g
-					WHERE g.idcat = :idcat AND g.aprob = 1
+					WHERE g.id_category = :id_category AND g.aprob = 1
 					" . $g_sql_sort, array(
-						'idcat' => $category->get_id()
+						'id_category' => $category->get_id()
 					));
 					while ($row = $result->fetch())
 					{
@@ -283,7 +283,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						$array_pics[] = array(
 							'HEIGHT' => ($config->get_mini_max_height() + 16),
 							'ID' => $i,
-							'URL' => 'gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
+							'URL' => 'gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['id_category'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
 							'NAME' => stripslashes($row['name']),
 							'PATH' => $row['path']
 						);
@@ -308,7 +308,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							}
 						}
 						$array_js .= 'array_pics[' . $i . '] = new Array();' . "\n";
-						$array_js .= 'array_pics[' . $i . '][\'link\'] = \'' . GalleryUrlBuilder::get_link_item($row['idcat'],$row['id']) . '#pics_max' . "';\n";
+						$array_js .= 'array_pics[' . $i . '][\'link\'] = \'' . GalleryUrlBuilder::get_link_item($row['id_category'],$row['id']) . '#pics_max' . "';\n";
 						$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 						$i++;
 					}
@@ -340,7 +340,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-					$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['idcat'], $search_category_children_options);
+					$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($info_pics['id'] . 'cat', '', $info_pics['id_category'], $search_category_children_options);
 					$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 					$method->setAccessible(true);
 					$categories_tree_options = $method->invoke($categories_tree);
@@ -410,8 +410,8 @@ class GalleryDisplayCategoryController extends ModuleController
 							'U_NEXT' => ($pos_pics < ($i - 1)) ? GalleryUrlBuilder::get_link_item($category->get_id(),$id_next) : '',
 							'C_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0),
 							'C_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics),
-							'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments-list',
-							'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['idcat'] . '&amp;ext=.' . $extension
+							'U_COMMENTS' => GalleryUrlBuilder::get_link_item($info_pics['id_category'],$info_pics['id'],0,$g_sort) .'#comments-list',
+							'U_IMG_MAX' => 'show_pics.php?id=' . $info_pics['id'] . '&amp;cat=' . $info_pics['id_category'] . '&amp;ext=.' . $extension
 						)
 					));
 
@@ -468,7 +468,7 @@ class GalleryDisplayCategoryController extends ModuleController
 				$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->db_querier->select("SELECT
-					g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob,
+					g.id, g.id_category, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob,
 					m.display_name, m.groups, m.level,
 					notes.average_notes, notes.number_notes, note.note
 				FROM " . GallerySetup::$gallery_table . " g
@@ -476,11 +476,11 @@ class GalleryDisplayCategoryController extends ModuleController
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = g.id AND notes.module_name = 'gallery'
 				LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = :user_id
-				WHERE g.idcat = :idcat AND g.aprob = 1
+				WHERE g.id_category = :id_category AND g.aprob = 1
 				" . $g_sql_sort . "
 				LIMIT :number_items_per_page OFFSET :display_from", array(
 					'user_id' => AppContext::get_current_user()->get_id(),
-					'idcat' => $category->get_id(),
+					'id_category' => $category->get_id(),
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
 				));
@@ -497,29 +497,29 @@ class GalleryDisplayCategoryController extends ModuleController
 					//Affichage de l'image en grand.
 					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
-						$display_link = 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=.' . $extension;
+						$display_link = 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category'] . '&amp;ext=.' . $extension;
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					{
-						$onclick = 'increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\');return false;';
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\');return false;';
 						$display_link = '';
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
 					{
-						$onclick = 'increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\');return false;';
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\');return false;';
 						$display_link = '';
 					}
 					else //Ouverture nouvelle page.
 					{
 						$onclick = true;
-						$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
+						$display_link = url('gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], 'gallery-' . $row['id_category'] . '-' . $row['id'] . '.php') . '#pics_max';
 					}
 
 					//Liste des catégories.
 					$search_category_children_options = new SearchCategoryChildrensOptions();
 					$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 					$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-					$categories_tree = CategoriesService::get_categories_manager('gallery', 'idcat')->get_select_categories_form_field($row['id'] . 'cat', '', $row['idcat'], $search_category_children_options);
+					$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field($row['id'] . 'cat', '', $row['id_category'], $search_category_children_options);
 					$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 					$method->setAccessible(true);
 					$categories_tree_options = $method->invoke($categories_tree);
@@ -566,12 +566,12 @@ class GalleryDisplayCategoryController extends ModuleController
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
-						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'),
-						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'] . '&amp;ext=.' . $extension,
+						'U_PICTURE_LINK' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php'),
+						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category'] . '&amp;ext=.' . $extension,
 						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
-						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') . '#comments-list'
+						'U_COMMENTS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['id_category'] . '-' . $row['id'] . '.php?com=0') . '#comments-list'
 					));
 				}
 				$result->dispose();
@@ -603,7 +603,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -611,7 +611,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = CategoriesService::get_categories_manager('gallery', 'idcat')->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -620,7 +620,7 @@ class GalleryDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
-		if (!CategoriesAuthorizationsService::check_authorizations($id_cat, 'gallery', 'idcat')->read())
+		if (!CategoriesAuthorizationsService::check_authorizations($id_cat)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -648,7 +648,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], GalleryUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager('gallery', 'idcat')->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
