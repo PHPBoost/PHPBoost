@@ -23,7 +23,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/CalendarCurrentMonthEventsCache.class.php',
 			'/phpboost/CalendarNewContent.class.php',
 			'/phpboost/CalendarSitemapExtensionPoint.class.php',
-			'/phpboost/CalendarHomePageExtensionPoint.class.php'
+			'/phpboost/CalendarHomePageExtensionPoint.class.php',
 			'/services/CalendarAuthorizationsService.class.php'
 		);
 		
