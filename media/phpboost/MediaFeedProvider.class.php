@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -12,37 +12,37 @@ class MediaFeedProvider implements FeedProvider
 {
 	function get_feeds_list()
 	{
-		return CategoriesService::get_categories_manager('media', 'idcat')->get_feeds_categories_module()->get_feed_list();
+		return CategoriesService::get_categories_manager('media')->get_feeds_categories_module()->get_feed_list();
 	}
 
-	function get_feed_data_struct($idcat = 0, $name = '')
+	function get_feed_data_struct($id_category = 0, $name = '')
 	{
-		if (CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->category_exists($idcat))
+		if (CategoriesService::get_categories_manager('media')->get_categories_cache()->category_exists($id_category))
 		{
 			require_once(PATH_TO_ROOT . '/media/media_constant.php');
 
-			$category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($idcat);
+			$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($id_category);
 
 			$site_name = GeneralConfig::load()->get_site_name();
-			$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
+			$site_name = $id_category != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
 			$feed_module_name = LangLoader::get_message('module_title', 'common', 'media');
 			$data = new FeedData();
 			$data->set_title($feed_module_name . ' - ' . $site_name);
 			$data->set_date(new Date());
-			$data->set_link(SyndicationUrlBuilder::rss('media', $idcat));
+			$data->set_link(SyndicationUrlBuilder::rss('media', $id_category));
 			$data->set_host(HOST);
 			$data->set_desc($feed_module_name . ' - ' . $site_name);
 			$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-			$categories = CategoriesService::get_categories_manager('media', 'idcat')->get_children($idcat, new SearchCategoryChildrensOptions(), true);
+			$categories = CategoriesService::get_categories_manager('media')->get_children($id_category, new SearchCategoryChildrensOptions(), true);
 			$ids_categories = array_keys($categories);
 
 			$results = PersistenceContext::get_querier()->select('SELECT media.*, cat.image
 				FROM ' . MediaSetup::$media_table . ' media
-				LEFT JOIN '. MediaSetup::$media_cats_table .' cat ON cat.id = media.idcat
-				WHERE media.idcat IN :ids_categories
+				LEFT JOIN '. MediaSetup::$media_cats_table .' cat ON cat.id = media.id_category
+				WHERE media.id_category IN :ids_categories
 				AND infos = :status_approved
 				ORDER BY timestamp DESC', array(
 					'ids_categories' => $ids_categories,
@@ -64,7 +64,7 @@ class MediaFeedProvider implements FeedProvider
 				$item->set_desc(FormatingHelper::second_parse($row['contents']));
 				$item->set_date(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
 				$item->set_image_url($row['image']);
-				$item->set_auth(CategoriesService::get_categories_manager('media', 'idcat')->get_heritated_authorizations($row['idcat'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+				$item->set_auth(CategoriesService::get_categories_manager('media')->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 
 				$enclosure = new FeedItemEnclosure();
 				$enclosure->set_lenght(@filesize($row['url']));

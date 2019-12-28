@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-		$subcategories = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), true, 'media', 'idcat'));
+		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id()));
 
 		$subcategories_pagination = new ModulePagination($subcategories_page, count($subcategories), $config->get_categories_number_per_page());
 		$subcategories_pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $this->get_category()->get_id() . '&amp;p=' . $page . '&amp;subcategories_page=%d'));
@@ -86,7 +86,7 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_MODO' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), 'media', 'idcat')->moderation(),
+			'C_MODO' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
@@ -155,9 +155,9 @@ class MediaDisplayCategoryController extends ModuleController
 			'SELECTED_DESC' => $selected_fields['desc']
 		));
 
-		$condition = 'WHERE idcat = :idcat AND infos = :status';
+		$condition = 'WHERE id_category = :id_category AND infos = :status';
 		$parameters = array(
-			'idcat' => $this->get_category()->get_id(),
+			'id_category' => $this->get_category()->get_id(),
 			'status' => MEDIA_STATUS_APROBED
 		);
 
@@ -254,7 +254,7 @@ class MediaDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category($id);
+					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -262,7 +262,7 @@ class MediaDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$this->category = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 			}
 		}
 		return $this->category;
@@ -271,7 +271,7 @@ class MediaDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
-		if (!CategoriesAuthorizationsService::check_authorizations($id_cat, 'media', 'idcat')->read())
+		if (!CategoriesAuthorizationsService::check_authorizations($id_cat)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -299,7 +299,7 @@ class MediaDisplayCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], MediaUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager('media', 'idcat')->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

@@ -30,7 +30,7 @@
 			var id_music = new Array({JS_ID_MUSIC});
 
 			if (id_music.length > 0)
-				if (in_array(jQuery('#idcat').val(), id_music))
+				if (in_array(jQuery('#id_category').val(), id_music))
 				{
 					jQuery('#width_dl').hide();
 					jQuery('#height_dl').hide();
@@ -47,7 +47,7 @@
 			jQuery('#width_dl').hide();
 			jQuery('#height_dl').hide();
 			# ENDIF #
-			jQuery('#idcat').change(function() {
+			jQuery('#id_category').change(function() {
 				hide_width_height();
 			});
 		});
@@ -71,7 +71,7 @@
 					<div class="form-element">
 						<label for="category">${LangLoader::get_message('form.category', 'common')}</label>
 						<div class="form-field">
-							<select name="idcat" id="idcat">
+							<select name="id_category" id="id_category">
 								{CATEGORIES}
 							</select>
 						</div>

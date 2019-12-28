@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 27
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -49,7 +49,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 	public function sitemap()
 	{
-		return new DefaultSitemapCategoriesModule('media', 'idcat');
+		return new DefaultSitemapCategoriesModule('media');
 	}
 
 	public function tree_links()

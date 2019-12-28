@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, 'media', 'idcat')->moderation())
+if (!CategoriesAuthorizationsService::check_authorizations()->moderation())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -111,12 +111,12 @@ else
 {
 	// Filtre pour le panneau de modération.
 	$js_array = array();
-	$authorized_categories = CategoriesService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY, true, 'media', 'idcat');
+	$authorized_categories = CategoriesService::get_authorized_categories(!empty($cat) ? $cat : Category::ROOT_CATEGORY);
 
 	if ($filter)
 	{
 		$state = retrieve(POST, 'state', 'all', TSTRING);
-		$cat = (int)retrieve(POST, 'idcat', 0, TINTEGER);
+		$cat = (int)retrieve(POST, 'id_category', 0, TINTEGER);
 		$sub_cats = (bool)retrieve(POST, 'sub_cats', false, TBOOL);
 
 		if ($state == "visible")
@@ -143,9 +143,9 @@ else
 		$sub_cats = true;
 	}
 
-	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
+	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('authorized_categories' => $authorized_categories, 'id_category' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
 
-	$categories_cache = CategoriesService::get_categories_manager('media', 'idcat')->get_categories_cache();
+	$categories_cache = CategoriesService::get_categories_manager()->get_categories_cache();
 
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -160,12 +160,12 @@ else
 
 	$result = PersistenceContext::get_querier()->select("SELECT media.*, media_cats.name AS cat_name
 		FROM " . MediaSetup::$media_table . " media
-		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.idcat
-		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'idcat IN :authorized_categories' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
+		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.id_category
+		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
 		ORDER BY infos ASC, timestamp DESC
 		LIMIT :number_items_per_page OFFSET :display_from", array(
 			'authorized_categories' => $authorized_categories,
-			'idcat' => (!empty($cat) ? $cat : 0),
+			'id_category' => (!empty($cat) ? $cat : 0),
 			'infos' => $db_where,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -178,10 +178,10 @@ else
 		$tpl->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
-			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
-			'CAT' => $categories_cache->category_exists($row['idcat']) ? $row['cat_name'] : $LANG['unknown'],
-			'U_CAT' => url('media.php?cat=' . $row['idcat']),
+			'CAT' => $categories_cache->category_exists($row['id_category']) ? $row['cat_name'] : $LANG['unknown'],
+			'U_CAT' => url('media.php?cat=' . $row['id_category']),
 			'COLOR' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? 'bgc warning' : ($row['infos'] == MEDIA_STATUS_APROBED ? 'bgc success' : 'bgc error'),
 			'SHOW' => $row['infos'] == MEDIA_STATUS_APROBED ? ' checked="checked"' : '',
 			'HIDE' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? ' checked="checked"' : '',
