@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 27
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 4.0 - 2014 02 11
  * @contributor xela <xela@phpboost.com>
 */
@@ -18,7 +18,9 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		$this->content_tables = array(PREFIX . 'calendar_events_content');
 		$this->delete_old_files_list = array(
 			'/controllers/categories/CalendarCategoriesManageController.class.php',
+			'/controllers/categories/CalendarDeleteCategoryController.class.php',
 			'/phpboost/CalendarComments.class.php',
+			'/phpboost/CalendarCurrentMonthEventsCache.class.php',
 			'/phpboost/CalendarNewContent.class.php',
 			'/phpboost/CalendarSitemapExtensionPoint.class.php',
 			'/phpboost/CalendarHomePageExtensionPoint.class.php'

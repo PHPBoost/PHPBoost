@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 28
  * @since       PHPBoost 3.0 - 2012 11 24
 */
 
@@ -82,7 +82,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 
 		//Retrieve all the events of the selected month
-		$events = $month == date('n') && $year == date('Y') ? CalendarCurrentMonthEventsCache::load()->get_events() : CalendarService::get_all_current_month_events($month, $year, $month_days);
+		$events = $month == date('n') && $year == date('Y') ? CalendarCache::load()->get_events() : CalendarService::get_all_current_month_events($month, $year, $month_days);
 
 		$events_legends_list = array();
 
