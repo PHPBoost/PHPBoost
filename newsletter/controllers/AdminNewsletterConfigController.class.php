@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 31
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class AdminNewsletterConfigController extends AdminModuleController
@@ -38,7 +39,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminNewsletterDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
+		return new DefaultAdminDisplayResponse($tpl);
 	}
 
 	private function init()
@@ -51,7 +52,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset_config = new FormFieldsetHTMLHeading('configuration', LangLoader::get_message('configuration', 'admin'));
+		$fieldset_config = new FormFieldsetHTMLHeading('newsletter_configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset_config);
 
 		$fieldset_config->add_field(new FormFieldMailEditor('mail_sender', $this->lang['admin.mail-sender'], $this->config->get_mail_sender(),

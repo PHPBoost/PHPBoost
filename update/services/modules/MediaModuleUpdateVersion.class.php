@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
 */
@@ -23,7 +23,8 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/MediaNotation.class.php',
 			'/phpboost/MediaSitemapExtensionPoint.class.php',
 			'/phpboost/MediaHomePageExtensionPoint.class.php',
-			'/services/MediaAuthorizationsService.class.php'
+			'/services/MediaAuthorizationsService.class.php',
+			'/util/AdminMediaDisplayResponse.class.php'
 		);
 		
 		$this->database_columns_to_modify = array(

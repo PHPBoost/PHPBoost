@@ -3,16 +3,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.0 - 2013 11 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 ####################################################
 #                    French                        #
 ####################################################
-
-$lang['module_config_title'] = 'Configuration du module en ligne';
 
 //En ligne
 $lang['online.home'] = 'Accueil';

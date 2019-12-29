@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class AdminMediaConfigController extends AdminModuleController
@@ -45,7 +46,7 @@ class AdminMediaConfigController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminMediaDisplayResponse($tpl, $this->lang['module_config_title']);
+		return new DefaultAdminDisplayResponse($tpl);
 	}
 
 	private function init()
@@ -59,7 +60,7 @@ class AdminMediaConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('config', $this->admin_common_lang['configuration']);
+		$fieldset = new FormFieldsetHTMLHeading('media_configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
