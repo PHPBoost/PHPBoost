@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2012 11 20
 */
 
@@ -19,7 +19,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DefaultCategoriesManageController', '`^/categories/?$`'),
 	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/add/?$`'),
 	new UrlControllerMapper('CalendarCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	//Display events
 	new UrlControllerMapper('CalendarDisplayEventController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
