@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -27,7 +27,7 @@ class ForumHomeController extends ModuleController
 		global $LANG, $config, $nbr_msg_not_read, $tpl_top, $tpl_bottom;
 
 		$id_get = (int)retrieve(GET, 'id', 0);
-		$categories_cache = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache();
+		$categories_cache = CategoriesService::get_categories_manager()->get_categories_cache();
 
 		try {
 			$this->category = $categories_cache->get_category($id_get);
@@ -52,7 +52,7 @@ class ForumHomeController extends ModuleController
 		$display_cat = !empty($id_get);
 
 		//Vérification des autorisations.
-		$authorized_categories = CategoriesService::get_authorized_categories($id_get, true, 'forum', 'idcat');
+		$authorized_categories = CategoriesService::get_authorized_categories($id_get);
 
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
@@ -63,7 +63,7 @@ class ForumHomeController extends ModuleController
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status as cat_status, t.id AS tid, t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status as cat_status, t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -135,7 +135,7 @@ class ForumHomeController extends ModuleController
 						'C_END_S_CATS' => false
 					));
 
-					$children = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_children($row['cid']);
+					$children = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($row['cid']);
 					if ($children)
 					{
 						foreach ($children as $id => $child) //Listage des sous forums.
@@ -249,7 +249,7 @@ class ForumHomeController extends ModuleController
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('cats', '', $id_get, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -258,7 +258,7 @@ class ForumHomeController extends ModuleController
 		{
 			if ($option->get_raw_value())
 			{
-				$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
+				$cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}

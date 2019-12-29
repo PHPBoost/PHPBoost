@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,14 +33,14 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		load_module_lang('forum'); //Chargement de la langue du module.
 
 		$search = $args['search'];
-		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
+		$id_category = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 
 		//Liste des catégories.
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $idcat, $search_category_children_options);
+		$categories_tree = CategoriesService::get_categories_manager('forum')->get_select_categories_form_field('cats', '', $id_category, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 		$method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
@@ -49,7 +49,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		{
 			if ($option->get_raw_value())
 			{
-				$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
+				$cat = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($option->get_raw_value());
 				if (!$cat->get_url())
 					$cat_list .= $option->display()->render();
 			}
@@ -78,7 +78,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'IS_ALL_CHECKED'       => $where == 'all' ? ' checked="checked"' : '' ,
 			'L_CATEGORY'           => $LANG['category'],
 			'L_ALL_CATS'           => $LANG['all'],
-			'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
+			'IS_ALL_CATS_SELECTED' => ($id_category == '-1') ? ' selected="selected"' : '',
 			'CATS'                 => $cat_list,
 		));
 		return $tpl->render();
@@ -100,12 +100,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
 		$search = $args['search'];
-		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
+		$id_category = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = (!empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 30000) * 3600 * 24;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
-		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum');
 
 		if ($where == 'all')         // All
 			return "SELECT ".
@@ -116,9 +116,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.id_category
 			WHERE ( FT_SEARCH(t.title, '" . $search."*' IN BOOLEAN MODE) OR FT_SEARCH(msg.contents, '" . $search."*' IN BOOLEAN MODE) ) AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
+			" . ($id_category > 0 ? " AND c.id = " . $id_category : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
@@ -132,9 +132,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.id_category
 			WHERE FT_SEARCH(msg.contents, '" . $search."*' IN BOOLEAN MODE) AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
+			" . ($id_category > 0 ? " AND c.id = " . $id_category : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
@@ -147,9 +147,9 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS link
 			FROM " . PREFIX . "forum_msg msg
 			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.idcat
+			JOIN " . PREFIX . "forum_cats c ON c.id_parent != 0 AND c.id = t.id_category
 			WHERE FT_SEARCH(t.title, '" . $search."*' IN BOOLEAN MODE) AND msg.timestamp > '" . (time() - $time) . "'
-			" . ($idcat > 0 ? " AND c.id = " . $idcat : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
+			" . ($id_category > 0 ? " AND c.id = " . $id_category : '') . " AND c.id IN (" . implode(',', $authorized_categories) . ")
 			GROUP BY t.id, id_search, id_content, title, link, msg.timestamp
 			ORDER BY msg.timestamp DESC, relevance DESC
 			LIMIT " . FORUM_MAX_SEARCH_RESULTS;

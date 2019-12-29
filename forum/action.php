@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -49,7 +49,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 
 	//On va chercher les infos sur le topic
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -58,7 +58,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
 	{
-		if (!empty($msg['idtopic']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $topic['user_id'])) //Autorisé à supprimer?
+		if (!empty($msg['idtopic']) && (ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation() || AppContext::get_current_user()->get_id() == $topic['user_id'])) //Autorisé à supprimer?
 		{
 			$Forumfct->Del_topic($msg['idtopic']); //Suppresion du topic.
 		}
@@ -68,13 +68,13 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 			DispatchManager::redirect($error_controller);
 		}
 
-		AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
+		AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '.php', '&'));
 	}
 	elseif (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['id_category']) && (ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
-			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
+			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['id_category'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']);
 		}
 		else
 		{
@@ -107,20 +107,20 @@ elseif (!empty($idt_get))
 
 	//On va chercher les infos sur le topic
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read())
+	if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->read())
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
 
 	try {
-		$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($topic['idcat']);
+		$category = CategoriesService::get_categories_manager('forum', 'id_category')->get_categories_cache()->get_category($topic['id_category']);
 	} catch (CategoryNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -140,7 +140,7 @@ elseif (!empty($idt_get))
 			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {}
 
-		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
+		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation())
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
 
@@ -193,7 +193,7 @@ elseif (!empty($idt_get))
 	elseif (!empty($lock_get))
 	{
 		//Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
-		if (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation())
+		if (ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation())
 		{
 			if ($lock_get === 'true') //Verrouillage du topic.
 			{

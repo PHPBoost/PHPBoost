@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ $msg_d = retrieve(GET, 'msg_d', '');
 
 if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {
-	$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
+	$is_guest = (AppContext::get_current_user()->get_id() == -1);
 	$nbr_msg_not_read = 0;
 	if (!$is_guest)
 	{
@@ -33,14 +33,14 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$max_time_msg = forum_limit_time_msg();
 
 		//Vérification des autorisations.
-		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
+		$authorized_categories = CategoriesService::get_authorized_categories();
 
 		$contents = '';
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name as login, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
-		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories
@@ -103,15 +103,15 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	if ($msg)
 	{
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, idcat, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, id_category, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
 		} catch (RowNotFoundException $e) {}
 	}
 
 	if ($msg && $topic && !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
-		if (!empty($topic['idcat']) && (ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
+		if (!empty($topic['id_category']) && (ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
 		{
-			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['idcat'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
+			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['id_category'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
 			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
 				echo '-1';
 			else
@@ -177,10 +177,10 @@ elseif (!empty($msg_d))
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT idcat, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
+		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id_category, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
 	} catch (RowNotFoundException $e) {}
 
-	if ($topic && ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()))
+	if ($topic && ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()))
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
 		echo ($topic['display_msg']) ? 2 : 1;

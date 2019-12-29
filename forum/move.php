@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,20 +30,20 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$tpl = new FileTemplate('forum/forum_move.tpl');
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $id_get));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $id_get));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
 	try {
-		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
+		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['id_category']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -52,7 +52,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -66,8 +66,8 @@ if (!empty($id_get)) //Déplacement du sujet.
 		}
 		else
 		{
-			$option_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
-			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY || $option_cat->get_id() == $topic['idcat'])
+			$option_cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
+			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY || $option_cat->get_id() == $topic['id_category'])
 				$option->set_disable(true);
 
 			if (!$option_cat->get_url())
@@ -120,17 +120,17 @@ if (!empty($id_get)) //Déplacement du sujet.
 }
 elseif (!empty($id_post)) //Déplacement du topic
 {
-	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
-	if (ForumAuthorizationsService::check_authorizations($idcat)->moderation()) //Accès en édition
+	$id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id = :id', array('id' => $id_post));
+	if (ForumAuthorizationsService::check_authorizations($id_category)->moderation()) //Accès en édition
 	{
-		$to = (int)retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$category_to = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($to);
-		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $idcat != $to)
+		$to = (int)retrieve(POST, 'to', $id_category); //Catégorie cible.
+		$category_to = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($to);
+		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $id_category != $to)
 		{
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
 
-			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
+			$Forumfct->Move_topic($id_post, $id_category, $to); //Déplacement du topic
 
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
@@ -161,13 +161,13 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -182,7 +182,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 
 	try {
-		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
+		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['id_category']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -193,7 +193,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -207,11 +207,11 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		}
 		else
 		{
-			$option_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
+			$option_cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 			if ($option_cat->get_type() == ForumCategory::TYPE_CATEGORY)
 				$option->set_disable(true);
 
-			if ($option_cat->get_id() == $topic['idcat'])
+			if ($option_cat->get_id() == $topic['id_category'])
 				$option->set_active(true);
 
 			if (!$option_cat->get_url())
@@ -321,7 +321,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	}
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -329,7 +329,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 
 	$to = (int)retrieve(POST, 'to', 0); //Catégorie cible.
 
-	if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation()) //Accès en édition
+	if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -344,7 +344,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
         DispatchManager::redirect($controller);
 	}
 
-	$category_to = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($to);
+	$category_to = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($to);
 	if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY)
 	{
 		$title = retrieve(POST, 'title', '');
@@ -358,7 +358,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			//Instanciation de la class du forum.
 			$Forumfct = new Forum();
 
-			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
+			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['id_category'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
 			$question = retrieve(POST, 'question', '');

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 2.0 - 2008 03 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,7 @@ if (!$is_guest) {
 	$max_time_msg = forum_limit_time_msg();
 
 	//Vérification des autorisations.
-	$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
+	$authorized_categories = CategoriesService::get_authorized_categories();
 
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
 	$clause_topic = '';
@@ -42,7 +42,7 @@ if (!$is_guest) {
 	try {
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg_not_read
 		FROM " . PREFIX . "forum_topics t
-		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
 		WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", array(
 			'authorized_categories' => $authorized_categories,

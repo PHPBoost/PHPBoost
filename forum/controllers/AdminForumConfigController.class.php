@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -229,7 +229,7 @@ class AdminForumConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 
 		ForumConfig::save();
-		CategoriesService::get_categories_manager('forum', 'idcat')->regenerate_cache();
+		CategoriesService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>

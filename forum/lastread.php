@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.6 - 2007 04 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,7 @@ if (!empty($change_cat))
 {
 	$new_cat = '';
 	try {
-		$new_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($change_cat);
+		$new_cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
@@ -69,7 +69,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
@@ -183,7 +183,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	//Liste des catégories.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-	$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
+	$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 	$method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
@@ -192,7 +192,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	{
 		if ($option->get_raw_value())
 		{
-			$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
+			$cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 			if (!$cat->get_url())
 				$cat_list .= $option->display()->render();
 		}

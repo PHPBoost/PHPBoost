@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.6 - 2007 03 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,12 +68,12 @@ $vars_tpl = array(
 );
 
 //Vérification des autorisations.
-$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
+$authorized_categories = CategoriesService::get_authorized_categories();
 
 //Dernières réponses
 $result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
-LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 WHERE c.id_parent != 0 AND c.id IN :authorized_categories
 ORDER BY t.last_timestamp DESC
 LIMIT 10", array(
@@ -91,7 +91,7 @@ $result->dispose();
 //Les plus vus
 $result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
-LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 WHERE c.id_parent != 0 AND c.id IN :authorized_categories
 ORDER BY t.nbr_views DESC
 LIMIT 10", array(
@@ -109,7 +109,7 @@ $result->dispose();
 //Les plus répondus
 $result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
-LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 WHERE c.id_parent != 0 AND c.id IN :authorized_categories
 ORDER BY t.nbr_msg DESC
 LIMIT 10", array(

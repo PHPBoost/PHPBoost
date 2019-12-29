@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ $id_get = (int)retrieve(GET, 'id', 0);
 $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 //Existance de la catégorie.
-if ($id_get != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->category_exists($id_get))
+if ($id_get != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager()->get_categories_cache()->category_exists($id_get))
 {
 	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
@@ -32,7 +32,7 @@ if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seu
 }
 
 try {
-	$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($id_get);
+	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id_get);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -42,7 +42,7 @@ $locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED && !AppCo
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$categories = array_reverse(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($id_get, true));
+$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($id_get, true));
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
@@ -238,7 +238,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, idcat, title, nbr_msg, last_user_id, last_msg_id, status
+			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, id_category, title, nbr_msg, last_user_id, last_msg_id, status
 			FROM ' . PREFIX . 'forum_topics
 			WHERE id=:id', array(
 				'id' => $idt_get
@@ -278,7 +278,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
 				if ($config->are_multiple_posts_allowed() || ForumAuthorizationsService::check_authorizations()->multiple_posts() || $topic['last_user_id'] != AppContext::get_current_user()->get_id())
-					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
+					$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['id_category'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 				else
 				{
 					$last_page = ceil( $topic['nbr_msg'] / $config->get_number_messages_per_page() );
@@ -314,7 +314,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idt_get));
 
 					//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
-					$categories = array_keys(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($topic['idcat'], true));
+					$categories = array_keys(CategoriesService::get_categories_manager()->get_parents($topic['id_category'], true));
 					PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idt_get), 'WHERE id IN :categories_id', array('categories_id' => $categories));
 
 					//On supprime les marqueurs de messages lus pour ce message.
@@ -666,12 +666,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
 			try {
-				$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+				$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_element();
 				DispatchManager::redirect($error_controller);
 			}
-			if (empty($topic['idcat'])) //Topic inexistant.
+			if (empty($topic['id_category'])) //Topic inexistant.
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'),
                     $LANG['e.forum.nonexistent.topic']);

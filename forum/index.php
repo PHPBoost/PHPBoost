@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 10 25
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -22,7 +22,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ForumCategoriesManageController', '`^/categories/?$`'),
 	new UrlControllerMapper('ForumCategoriesFormController', '`^/categories/add/?$`'),
 	new UrlControllerMapper('ForumCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('ForumDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	new UrlControllerMapper('ForumHomeController',  '`^/([0-9]+)-([a-z0-9-_]+)/?$`', array('cat', 'rewrited_name')),
 	new UrlControllerMapper('ForumHomeController', '`^/?$`'),

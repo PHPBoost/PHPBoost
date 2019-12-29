@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 21
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ if (!empty($change_cat))
 {
 	$new_cat = '';
 	try {
-		$new_cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($change_cat);
+		$new_cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
@@ -32,7 +32,7 @@ $quote_get = $request->get_getint('quote', 0);
 
 //On va chercher les infos sur le topic
 try {
-	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get));
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get));
 } catch (RowNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -40,14 +40,14 @@ try {
 $topic['title'] = stripslashes($topic['title']);
 
 //Existance de la catégorie.
-if ($topic['idcat'] != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->category_exists($topic['idcat']))
+if ($topic['id_category'] != Category::ROOT_CATEGORY && !CategoriesService::get_categories_manager()->get_categories_cache()->category_exists($topic['id_category']))
 {
 	$controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($controller);
 }
 
 try {
-	$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($topic['idcat']);
+	$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($topic['id_category']);
 } catch (CategoryNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -55,7 +55,7 @@ try {
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$categories = array_reverse(CategoriesService::get_categories_manager('forum', 'idcat')->get_parents($topic['idcat'], true));
+$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($topic['id_category'], true));
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
@@ -70,7 +70,7 @@ require_once('../kernel/header.php');
 $rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Autorisation en lecture.
-if (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
+if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -88,7 +88,7 @@ $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.
-$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic['idcat'])->moderation();
+$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation();
 if ($check_group_edit_auth)
 {
 	$tpl->put_all(array(
@@ -166,12 +166,12 @@ $vars_tpl = array(
 	'DESC'                    => !empty($topic['subtitle']) ? stripslashes($topic['subtitle']) : '',
 	'PAGINATION'              => $pagination->display(),
 	'USER_ID'                 => $topic['user_id'],
-	'ID'                      => $topic['idcat'],
+	'ID'                      => $topic['id_category'],
 	'IDTOPIC'                 => $id_get,
 	'PAGE'                    => $page,
 	'TITLE_T'                 => stripslashes($topic['title']),
 	'DISPLAY_MSG'             => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
-	'U_MSG_SET_VIEW'          => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '')),
+	'U_MSG_SET_VIEW'          => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['id_category'], '')),
 	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 	'U_ONCHANGE'              => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
@@ -413,7 +413,7 @@ while ( $row = $result->fetch() )
 		'C_FORUM_USER_EDITOR_LOGIN'   => !empty($row['login_edit']),
 		'C_FORUM_MODERATOR'           => $moderator,
 		'U_FORUM_USER_PROFILE'        => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_FORUM_MSG_EDIT'            => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
+		'U_FORUM_MSG_EDIT'            => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['id_category'] . '&amp;idt=' . $id_get),
 		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->rel(),
 		'U_FORUM_MSG_DEL'             => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_FORUM_WARNING'             => url('.php?action=warning&amp;id=' . $row['user_id']),
@@ -531,7 +531,7 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 //Liste des catégories.
 $search_category_children_options = new SearchCategoryChildrensOptions();
 $search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-$categories_tree = CategoriesService::get_categories_manager('forum', 'idcat')->get_select_categories_form_field('cats', '', $topic['idcat'], $search_category_children_options);
+$categories_tree = CategoriesService::get_categories_manager()->get_select_categories_form_field('cats', '', $topic['id_category'], $search_category_children_options);
 $method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
 $method->setAccessible(true);
 $categories_tree_options = $method->invoke($categories_tree);
@@ -540,7 +540,7 @@ foreach ($categories_tree_options as $option)
 {
 	if ($option->get_raw_value())
 	{
-		$cat = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($option->get_raw_value());
+		$cat = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($option->get_raw_value());
 		if (!$cat->get_url())
 			$cat_list .= $option->display()->render();
 	}
@@ -607,7 +607,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'L_ERROR_AUTH_WRITE' => $LANG['e.forum.topic.locked']
 	));
 }
-elseif (!ForumAuthorizationsService::check_authorizations($topic['idcat'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->write()) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
@@ -630,7 +630,7 @@ else
 		'ICON_TRACK'          => $img_track_display,
 		'ICON_SUBSCRIBE_PM'   => $img_track_pm_display,
 		'ICON_SUBSCRIBE'      => $img_track_mail_display,
-		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token()),
+		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['id_category'] . '&amp;new=n_msg&amp;token=' . AppContext::get_session()->get_token()),
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.

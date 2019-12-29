@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,7 +36,7 @@ if (!empty($view_msg)) // Display all user's messages
 
 	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
 
-	$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, true, 'forum', 'idcat');
+	$authorized_categories = CategoriesService::get_authorized_categories();
 
 	$nbr_msg = 0;
 
@@ -46,7 +46,7 @@ if (!empty($view_msg)) // Display all user's messages
 			$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 			FROM " . PREFIX . "forum_msg msg
 			LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-			WHERE msg.user_id = :user_id AND t.idcat IN :authorized_categories", array(
+			WHERE msg.user_id = :user_id AND t.id_category IN :authorized_categories", array(
 				'authorized_categories' => $authorized_categories,
 				'user_id' => $view_msg
 			));
@@ -76,19 +76,19 @@ if (!empty($view_msg)) // Display all user's messages
 			msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.contents,
 			m2.display_name AS login_edit,
 			m.groups, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned,
-			t.title, t.status, t.idcat,
+			t.title, t.status, t.id_category,
 			c.name,
 			s.user_id AS connect,
 			ext_field.user_avatar, m.posted_msg, ext_field.user_sign,
 			" . $extended_fields_to_recover_list . "m.warning_percentage, m.delay_readonly, m.delay_banned
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-		LEFT JOIN " . ForumSetup::$forum_cats_table . " c ON c.id = t.idcat
+		LEFT JOIN " . ForumSetup::$forum_cats_table . " c ON c.id = t.id_category
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = :user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp
-		WHERE msg.user_id = :id AND t.idcat IN :authorized_categories
+		WHERE msg.user_id = :id AND t.id_category IN :authorized_categories
 		ORDER BY msg.id DESC
 		LIMIT :number_items_per_page OFFSET :display_from", array(
 			'id' => $view_msg,
@@ -186,7 +186,7 @@ if (!empty($view_msg)) // Display all user's messages
 				'GROUP_COLOR'      => $group_color,
 				'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_VARS_ANCRE'     => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
-				'U_FORUM_CAT'      => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php'),
+				'U_FORUM_CAT'      => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
 				'FORUM_CAT'        => $row['name'],
 				'U_TITLE_T'        => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 				'TITLE_T'          => stripslashes($row['title'])

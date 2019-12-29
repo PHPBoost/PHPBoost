@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 4.1 - 2015 02 25
 */
 
@@ -90,8 +90,8 @@ class ForumCategoriesCache extends CategoriesCache
 
 	protected function get_category_elements_number($id_category)
 	{
-		$topics_number = ForumService::count_topics('WHERE idcat = :id_category', array('id_category' => $id_category));
-		$messages_number = ForumService::count_messages('WHERE idcat = :id_category', array('id_category' => $id_category));
+		$topics_number = ForumService::count_topics('WHERE id_category = :id_category', array('id_category' => $id_category));
+		$messages_number = ForumService::count_messages('WHERE id_category = :id_category', array('id_category' => $id_category));
 
 		return array(
 			'topics_number' => (int)$topics_number,

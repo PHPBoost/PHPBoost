@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -94,7 +94,7 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
@@ -175,7 +175,7 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'subtitle' => array('type' => 'string', 'length' => 75, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -193,7 +193,7 @@ class ForumSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
+				'id_category' => array('type' => 'key', 'fields' => array('id_category', 'last_user_id', 'last_timestamp', 'type')),
 				'title' => array('type' => 'fulltext', 'fields' => 'title')
 
 		));
@@ -346,7 +346,7 @@ class ForumSetup extends DefaultModuleSetup
 	{
 		$this->querier->insert(self::$forum_topics_table, array(
 			'id' => 1,
-			'idcat' => 2,
+			'id_category' => 2,
 			'title' => $this->messages['sample.thread.title'],
 			'subtitle' => $this->messages['sample.thread.subtitle'],
 			'user_id' => 1,

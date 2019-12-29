@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 29
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -21,24 +21,24 @@ $alert_post = $request->get_postint('id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
 
 try {
-	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id = :id', array('id' => $topic_id));
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'subtitle'), 'WHERE id = :id', array('id' => $topic_id));
 } catch (RowNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
 
-$category = CategoriesService::get_categories_manager('forum', 'idcat')->get_categories_cache()->get_category($topic['idcat']);
+$category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($topic['id_category']);
 
 $topic_name = !empty($topic['title']) ? stripslashes($topic['title']) : '';
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
+$Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($LANG['alert_topic'], '');
 
 define('TITLE', $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
-if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
+if (empty($alert) && empty($alert_post) || empty($topic['id_category']))
 	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
@@ -138,7 +138,7 @@ $vars_tpl = array(
 	'MODO'             => $total_modo,
 	'MEMBER'           => $total_member,
 	'GUEST'            => $total_visit,
-	'U_FORUM_CAT'      => 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php'),
+	'U_FORUM_CAT'      => 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '.php'),
 	'FORUM_CAT'        => $category->get_name(),
 	'U_TITLE_T'        => 'topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php'),
 	'TITLE_T'          => stripslashes($topic['title']),
