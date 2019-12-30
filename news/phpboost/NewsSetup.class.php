@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -104,7 +104,7 @@ class NewsSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
 			'description' => $this->messages['cat.description'],
-			'image' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 

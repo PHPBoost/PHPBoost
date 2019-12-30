@@ -61,9 +61,9 @@
 						<div class="cell-name align-center"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
 					</div>
 					<div class="cell-body">
-						# IF sub_categories_list.C_CATEGORY_IMAGE #
+						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 							<div class="cell-thumbnail cell-landscape">
-								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}"><i class="far fa-eye"></i></a>
 							</div>
 						# ENDIF #

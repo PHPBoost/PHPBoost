@@ -24,10 +24,10 @@
 							{sub_categories_list.WEBLINKS_NUMBER}
 						</span>
 					</div>
-					# IF sub_categories_list.C_CATEGORY_IMAGE #
+					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 						<div class="cell-body">
 							<div class="cell-thumbnail">
-								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">${LangLoader::get_message('see.category', 'categories-common')}</a>
 							</div>
 						</div>

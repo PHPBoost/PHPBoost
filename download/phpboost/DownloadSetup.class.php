@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2014 08 24
 */
 
@@ -107,7 +107,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
-			'image' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 

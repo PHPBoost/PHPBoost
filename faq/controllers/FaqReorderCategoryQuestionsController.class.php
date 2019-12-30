@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 12
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2014 08 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -62,7 +62,7 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
+			'CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()

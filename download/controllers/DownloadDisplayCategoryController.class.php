@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,14 +59,14 @@ class DownloadDisplayCategoryController extends ModuleController
 
 			if ($nbr_cat_displayed > $subcategories_pagination->get_display_from() && $nbr_cat_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$category_image = $category->get_image()->rel();
+				$category_thumbnail = $category->get_thumbnail()->rel();
 
 				$this->tpl->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_IMAGE' => !empty($category_image),
+					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_MORE_THAN_ONE_DOWNLOADFILE' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
-					'CATEGORY_IMAGE' => $category_image,
+					'CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'DOWNLOADFILES_NUMBER' => $category->get_elements_number(),
 					'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
@@ -134,7 +134,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
+			'CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
