@@ -84,15 +84,10 @@
    left: -0.309em;
 }
 
-.form-field-radio-button.field-required:after,
-.form-field-multiple-checkbox.field-required:after{
-	left: -2em;
-}
-
-.constraint-status-right .form-field-radio-button.field-required:after,
-.constraint-statuts-right .form-field-checkbox:after,
-.constraint-status-right .form-field-multiple-checkbox.field-required:after {
-	left: -1.309em;
+.form-field-radio-button.field-required,
+.form-field-checkbox.field-required,
+.form-field-multiple-checkbox.field-required {
+	padding-left: 1.618em;
 }
 
 /* --- Error text --- */
