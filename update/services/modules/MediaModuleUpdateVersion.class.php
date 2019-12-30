@@ -16,8 +16,6 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		
 		$this->content_tables = array(PREFIX . 'media');
 		$this->delete_old_files_list = array(
-			'/controllers/categories/MediaCategoriesManageController.class.php',
-			'/controllers/categories/MediaDeleteCategoryController.class.php',
 			'/phpboost/MediaComments.class.php',
 			'/phpboost/MediaNewContent.class.php',
 			'/phpboost/MediaNotation.class.php',
@@ -25,6 +23,9 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/MediaHomePageExtensionPoint.class.php',
 			'/services/MediaAuthorizationsService.class.php',
 			'/util/AdminMediaDisplayResponse.class.php'
+		);
+		$this->delete_old_folders_list = array(
+			'/controllers/categories'
 		);
 		
 		$this->database_columns_to_modify = array(
