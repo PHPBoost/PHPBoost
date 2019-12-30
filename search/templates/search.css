@@ -9,12 +9,9 @@
 
 /* -- Zone de saisie de la recherche
 -------------------------------------------*/
-.search-field {
-	text-align: center;
-}
 
 #forms-selection {
-	padding: 5px 0;
+	padding: 0;
 }
 
 #forms-selection a {
@@ -23,12 +20,9 @@
 	text-decoration: none;
 }
 
-#forms-selection a:hover {
-	background-color: rgba(0, 0, 0, 0.2);
-}
-
-#forms-selection a.SFL-current {
-	background-color: rgba(0, 0, 0, 0.1);
+.cell-options {
+	min-width: 0;
+	width: auto;
 }
 
 .SpecializedForm {
@@ -51,17 +45,6 @@
 
 /* -- Zone des resultats
 -------------------------------------------*/
-.resultsChoices {
-	position: relative;
-	top: 5px;
-	width: 100%;
-	text-align: right;
-}
-
-.resultsChoices span {
-	position: relative;
-	top: 2px;
-}
 
 .results {
 	margin-top: 30px;

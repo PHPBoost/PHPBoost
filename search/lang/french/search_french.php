@@ -14,6 +14,7 @@
 
 //Généralités
 $LANG['title_search'] = 'Recherche';
+$LANG['search.searched.text'] = 'Texte recherché';
 $LANG['your_search'] = 'Votre recherche';
 $LANG['search'] = 'Rechercher';
 $LANG['search_results'] = 'Résultats de la recherche';

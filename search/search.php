@@ -48,7 +48,8 @@ define('TITLE', $LANG['title_search']);
 require_once('../kernel/header.php');
 $tpl->assign_vars(Array(
 	'L_TITLE_SEARCH' => TITLE,
-	'L_SEARCH' => $LANG['title_search'],
+	'L_SEARCHED_TEXT' => $LANG['search.searched.text'],
+	'L_SEARCH' => $LANG['search'],
 	'TEXT_SEARCHED' => $unsecure_search,
 	'L_SEARCH_ALL' => $LANG['search_all'],
 	'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],

@@ -78,6 +78,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'IS_ALL_CHECKED'       => $where == 'all' ? ' checked="checked"' : '' ,
 			'L_CATEGORY'           => $LANG['category'],
 			'L_ALL_CATS'           => $LANG['all'],
+			'L_ALL_DATES'          => $LANG['all'],
 			'IS_ALL_CATS_SELECTED' => ($id_category == '-1') ? ' selected="selected"' : '',
 			'CATS'                 => $cat_list,
 		));

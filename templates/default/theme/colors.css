@@ -637,6 +637,9 @@ a[class*='lightcase-icon-']:hover {
 	border-color: #BDC2C9;
 }
 
+.cell-list li:hover,
+.cell-list .current { background-color: rgba(54, 100, 147, 0.1); }
+
 .cell-mini [class*="cell-"] { background-color: transparent; }
 
 .no-style .cell-header,

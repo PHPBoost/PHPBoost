@@ -1,4 +1,4 @@
-		<script><!--
+		<script>
 			// Crée un lien de pagination javascript
 			function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 			{
@@ -8,7 +8,7 @@
 			    pagin += '">';
 			    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
 			    pagin += '</span>&nbsp;';
-			    
+
 			    return pagin;
 			}
 
@@ -24,40 +24,40 @@
 			            nbPagesBefore = 3;
 			            nbPagesAfter = 3;
 			        }
-			        
+
 			        var before = Math.max(0, page - nbPagesBefore);
 			        var after = Math.min(nbPages, page + nbPagesAfter + 1);
-			        
+
 			        var fctName = 'ChangePagination';
 			        var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
-			        
+
 			        // Début
 			        if (page != 0)
 			            pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
-			        
+
 			        // Before
 			        for ( var i = before; i < page; i++)
 			            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
-			        
+
 			        // Page courante
 			        pagin += writePagin(fctName, fctArgs, true, page + 1, page);
-			        
+
 			        // After
 			        for ( var i = page + 1; i < after; i++)
 			            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
-			        
+
 			        // Fin
 			        if (page != nbPages - 1)
 			            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1);
 			    }
-			    
+
 			    // On cache tous les autre résultats du module
 			    for ( var i = 0; i < nbPages; i++)
 			    	jQuery('#' + blocName + '_' + i).fadeOut();
-			        
+
 			    // On montre la page demandée
 			    jQuery('#' + blocName + '_' + page).fadeIn();
-			    
+
 			    // Mise à jour de la pagination
 			    jQuery('#' + blocPagin).html(pagin);
 			}
@@ -68,10 +68,10 @@
 			const RESULTS_LIST = 'results_list_';
 			const PAGINATION_RESULTS = 'pagination_results_';
 			const NB_RESULTS_PER_PAGE = {NB_RESULTS_PER_PAGE};
-			
+
 			var nbResults = new Array();
 			nbResults['{SEARCH_IN}'] = {NB_RESULTS};
-			
+
 			# IF C_SIMPLE_SEARCH #
 				var modulesResults = new Array('all');
 				var idSearch = new Array();
@@ -79,16 +79,16 @@
 					modulesResults.push('{results.MODULE_NAME}');
 					idSearch['{results.MODULE_NAME}'] = '{results.ID_SEARCH}';
 				# END results #
-				
+
 				var calculatedResults = new Array('all');
-				
+
 				function HideResults()
 				// Cache tous les résultats
 				{
 					for( var i = 0; i < modulesResults.length; i++ )
 						jQuery('#' + RESULTS + modulesResults[i]).fadeOut();
 				}
-				
+
 				function ChangeResults()
 				// Change le cadre des résultats
 				{
@@ -100,14 +100,14 @@
 						XMLHttpRequest_search_module(module);
 					}
 				}
-				
+
 				function GetFormData()
 				// Reconstitution d'une chaine "POSTABLE" à partir des formulaires
 				{
 					var dataString = "";
 					var form = document.getElementById('mini-search-form');
 					var elements = form.elements;
-					
+
 					for (var i = 0; i < form.length; i++)
 					{
 						if (elements[i].name)
@@ -122,7 +122,7 @@
 										selectedChilds.push(escape_xmlhttprequest(elements[i].options[j].value));
 								}
 
-								dataString += selectedChilds.join('&' + elements[i].name.replace('[', '%5B').replace(']', '%5D') + '='); 
+								dataString += selectedChilds.join('&' + elements[i].name.replace('[', '%5B').replace(']', '%5D') + '=');
 							}
 							else
 							{
@@ -134,7 +134,7 @@
 					}
 					return dataString;
 				}
-				
+
 				function XMLHttpRequest_search_module(module)
 				// Affiche les résultats de la recherche pour le module particulier <module>
 				{
@@ -159,7 +159,7 @@
 									document.getElementById(INFOS_RESULTS + module).innerHTML = resultsAJAX['nbResults'];
 									document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
 									ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
-									
+
 									// Met à jour la liste des résultats affiché, pour ne pas les rechercher
 									// dans la base de donnée si ils sont déjà dans le html.
 									calculatedResults.push(module);
@@ -173,14 +173,14 @@
 					xmlhttprequest_sender(xhr_object, GetFormData() + '&moduleName=' + module + '&idSearch=' + idSearch[module]);
 				}
 			# ENDIF #
-		
-		--></script>
+
+		</script>
 
 		<section id="results">
 		   <header>
 				<h1>{L_SEARCH_RESULTS}</h1>
 				# IF C_SIMPLE_SEARCH #
-					<div id="results_choices" class="resultsChoices" style="display: none;">
+					<div id="results_choices" class="align-right" style="display: none;">
 						<span>{L_PRINT}</span>
 						<select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
 							<option value="all">{L_TITLE_ALL_RESULTS}</option>
@@ -196,7 +196,7 @@
 					<span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
 					<div id="infos_results_{SEARCH_IN}" class="infosResults">
 						# IF NB_RESULTS #
-							{NB_RESULTS} 
+							{NB_RESULTS}
 						# ENDIF #
 						{L_NB_RESULTS_FOUND}
 					</div>
@@ -230,10 +230,8 @@
 			<footer>{L_HITS}</footer>
 		</section>
 		<script>
-		<!--
 			ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
 			jQuery('#' + RESULTS + '{SEARCH_IN}_0').fadeIn();
 
 			jQuery('#results_choices').fadeIn();
-		-->
 		</script>
