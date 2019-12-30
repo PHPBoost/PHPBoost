@@ -23,7 +23,7 @@ class RichCategory extends Category
 		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'is_url' => true, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldUploadPictureFile',
 			'label' => LangLoader::get_message('form.picture', 'common'),
-			'default_value' => self::get_default_image()->relative()
+			'default_value' => self::get_default_thumbnail()->relative()
 			)
 		));
 	}
