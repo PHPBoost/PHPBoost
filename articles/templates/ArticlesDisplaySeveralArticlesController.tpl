@@ -25,10 +25,10 @@
 						</span>
 					</div>
 					# IF C_DISPLAY_CATS_ICON #
-						# IF sub_categories_list.C_CATEGORY_IMAGE #
+						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 							<div class="cell-body">
 								<div class="cell-thumbnail cell-landscape">
-									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 									<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
 										${LangLoader::get_message('see.category', 'categories-common')}: {sub_categories_list.CATEGORY_NAME}
 									</a>

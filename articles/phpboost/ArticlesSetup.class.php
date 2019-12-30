@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -104,7 +104,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
-			'image' => '/templates/default/images/default_category_thumbnail.png'
+			'thumbnail' => '/templates/default/images/default_category_thumbnail.png'
 		));
 	}
 
