@@ -151,6 +151,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$value = (isset($attribute['attribute_field_parameters']) && preg_match('/Choice/', $attribute['attribute_field_parameters']['field_class'])) ? $this->form->get_value($id)->get_raw_value() : $this->form->get_value($id);
+			if ($attribute['is_url'])
+				$value = new Url($value);
+			
 			$this->get_category()->set_additional_property($id, $value);
 		}
 	}
@@ -175,7 +178,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				$field_class = $parameters['field_class'];
 				$options = isset($parameters['options']) ? $parameters['options'] : array();
 				$default_value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
-				$fieldset->add_field(new $field_class($id, $parameters['label'], $default_value, $options));
+				$fieldset->add_field(new $field_class($id, $parameters['label'], $this->is_new_category ? $default_value : $this->get_category()->get_additional_property($id), $options));
 			}
 		}
 	}
