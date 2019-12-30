@@ -17,8 +17,8 @@ $url_controller_mappers = array(
 
 	//Categories
 	new UrlControllerMapper('DefaultCategoriesManageController', '`^/categories/?$`'),
-	new UrlControllerMapper('DefaultRichCategoriesFormController', '`^/categories/add/?$`'),
-	new UrlControllerMapper('DefaultRichCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?$`'),
+	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	new UrlControllerMapper('GalleryDisplayCategoryController',  '`^/([0-9]+)-([a-z0-9-_]+)/?$`', array('cat', 'rewrited_name')),
