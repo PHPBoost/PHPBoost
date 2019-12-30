@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 12 01
+ * @version     PHPBoost 5.3 - last update: 2018 12 30
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ class NewsletterHomeController extends ModuleController
 				$this->view->assign_block_vars('streams_list', array(
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
 					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
-					'IMAGE' => Url::to_rel($row['image']),
+					'THUMBNAIL' => Url::to_rel($row['thumbnail']),
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
 					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],

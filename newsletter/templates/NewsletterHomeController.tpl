@@ -55,7 +55,7 @@
 				# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a> ({streams_list.SUBSCRIBERS_NUMBER})# ELSE #${LangLoader::get_message('error.auth', 'status-messages-common')}# ENDIF #
 			</td>
 			<td>
-				<img src="{streams_list.IMAGE}" alt="{streams_list.NAME}" />
+				<img src="{streams_list.THUMBNAIL}" alt="{streams_list.NAME}" />
 			</td>
 		</tr>
 		# END streams_list #
