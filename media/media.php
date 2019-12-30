@@ -92,7 +92,7 @@ elseif ($id_media > 0)
 		'ID' => $id_media,
 		'C_DISPLAY_MEDIA' => true,
 		'C_ROOT_CATEGORY' => $media['id_category'] == Category::ROOT_CATEGORY,
-		'C_MODO' => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
+		'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
 		'C_DISPLAY_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 		'C_DISPLAY_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 		'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['timestamp']),

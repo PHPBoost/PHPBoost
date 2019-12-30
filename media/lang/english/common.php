@@ -18,6 +18,9 @@ $lang['media.actions.add'] = 'Add multimedia file';
 $lang['media.manage'] = 'Manage multimedia files';
 $lang['media.management'] = 'Multimedia files management';
 
+$lang['media.item'] = 'fichier multimédia';
+$lang['media.items'] = 'fichiers multimédia';
+
 $lang['content_type'] = 'Type of files allowed';
 $lang['content_type.music_and_video'] = 'Music and Video';
 $lang['content_type.music'] = 'Music';

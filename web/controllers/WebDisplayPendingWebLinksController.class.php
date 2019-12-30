@@ -29,7 +29,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
-		$this->tpl = new FileTemplate('web/WebDisplaySeveralWebLinksController.tpl');
+		$this->tpl = new FileTemplate('web/WebSeveralItemsController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = WebConfig::load();
 	}
@@ -76,7 +76,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
+		$number_columns_display_per_line = $this->config->get_categories_number_per_row();
 
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,

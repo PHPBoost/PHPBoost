@@ -30,7 +30,7 @@ class WebDisplayWebLinkController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
-		$this->tpl = new FileTemplate('web/WebDisplayWebLinkController.tpl');
+		$this->tpl = new FileTemplate('web/WebItemController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 

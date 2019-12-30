@@ -33,7 +33,7 @@ class WebDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'web');
-		$this->tpl = new FileTemplate('web/WebDisplaySeveralWebLinksController.tpl');
+		$this->tpl = new FileTemplate('web/WebSeveralItemsController.tpl');
 		$this->tpl->add_lang($this->lang);
 		$this->config = WebConfig::load();
 		$this->comments_config = CommentsConfig::load();
@@ -73,7 +73,7 @@ class WebDisplayCategoryController extends ModuleController
 			}
 		}
 
-		$nbr_column_cats_per_line = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$nbr_column_cats_per_line = ($nbr_cat_displayed > $this->config->get_categories_number_per_row()) ? $this->config->get_categories_number_per_row() : $nbr_cat_displayed;
 		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
 
 		$condition = 'WHERE id_category = :id_category
@@ -109,16 +109,13 @@ class WebDisplayCategoryController extends ModuleController
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
-
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line,
+			'COLUMNS_NUMBER' => $this->config->get_categories_number_per_row(),
 			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('web'),
 			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('web'),
 			'C_MODERATE' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),

@@ -27,6 +27,13 @@ class MediaDisplayCategoryController extends ModuleController
 		return $this->generate_response();
 	}
 
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'media');
+		$this->tpl = new FileTemplate('media/media.tpl');
+		$this->tpl->add_lang($this->lang);
+	}
+
 	private function build_view()
 	{
 		global $LANG, $MEDIA_LANG;
@@ -70,14 +77,12 @@ class MediaDisplayCategoryController extends ModuleController
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'CATEGORY_IMAGE' => $category_image,
-					'MEDIAFILES_NUMBER' => sprintf(($category->get_elements_number() > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $category->get_elements_number()),
+					'ITEMS_TEXT' => $category->get_elements_number() > 1 ? $this->lang['media.items'] : $this->lang['media.item'],
+					'ITEMS_NUMBER' => sprintf($category->get_elements_number()),
 					'U_CATEGORY' => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
-
-		$nbr_column_cats_per_line = ($nbr_cat_displayed > $config->get_columns_number_per_line()) ? $config->get_columns_number_per_line() : $nbr_cat_displayed;
-		$nbr_column_cats_per_line = !empty($nbr_column_cats_per_line) ? $nbr_column_cats_per_line : 1;
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
@@ -86,13 +91,12 @@ class MediaDisplayCategoryController extends ModuleController
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => $category_description,
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_MODO' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'L_BY' => $MEDIA_LANG['media_added_by'],
-			'C_SEVERAL_CATS_COLUMNS' => $nbr_column_cats_per_line > 1,
-			'NUMBER_CATS_COLUMNS' => $nbr_column_cats_per_line,
+			'NUMBER_CATS_COLUMNS' => $config->get_columns_number_per_line(),
 			'CATEGORY_NAME' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? LangLoader::get_message('module_title', 'common', 'media') : $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
@@ -237,13 +241,6 @@ class MediaDisplayCategoryController extends ModuleController
 			)));
 		}
 		$result->dispose();
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'media');
-		$this->tpl = new FileTemplate('media/media.tpl');
-		$this->tpl->add_lang($this->lang);
 	}
 
 	private function get_category()

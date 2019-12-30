@@ -11,9 +11,10 @@
 
 class WebConfig extends AbstractConfigData
 {
-	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
-	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
+	const CATEGORIES_NUMBER_PER_ROW = 'categories_number_per_row';
+	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const ITEMS_NUMBER_PER_ROW = 'items_number_per_row';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
@@ -25,9 +26,9 @@ class WebConfig extends AbstractConfigData
 	const PARTNERS_NUMBER_IN_MENU = 'partners_number_in_menu';
 	const AUTHORIZATIONS = 'authorizations';
 
-	const DISPLAY_SUMMARY = 'summary';
-	const DISPLAY_ALL_CONTENT = 'all_content';
-	const DISPLAY_TABLE = 'table';
+	const SUMMARY_VIEW = 'summary_view';
+	const FULL_VIEW = 'full_view';
+	const TABLE_VIEW = 'table_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
@@ -53,14 +54,24 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
 	}
 
-	public function get_columns_number_per_line()
+	public function get_categories_number_per_row()
 	{
-		return $this->get_property(self::COLUMNS_NUMBER_PER_LINE);
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_ROW);
 	}
 
-	public function set_columns_number_per_line($value)
+	public function set_categories_number_per_row($value)
 	{
-		$this->set_property(self::COLUMNS_NUMBER_PER_LINE, $value);
+		$this->set_property(self::CATEGORIES_NUMBER_PER_ROW, $value);
+	}
+
+	public function get_items_number_per_row()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_ROW);
+	}
+
+	public function set_items_number_per_row($value)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_ROW, $value);
 	}
 
 	public function get_category_display_type()
@@ -75,12 +86,12 @@ class WebConfig extends AbstractConfigData
 
 	public function is_category_displayed_summary()
 	{
-		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_SUMMARY;
+		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::SUMMARY_VIEW;
 	}
 
 	public function is_category_displayed_table()
 	{
-		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_TABLE;
+		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::TABLE_VIEW;
 	}
 
 	public function get_items_default_sort_field()
@@ -107,7 +118,7 @@ class WebConfig extends AbstractConfigData
 	{
 		return $this->get_property(self::DEFAULT_CONTENTS);
 	}
-    
+
 	public function set_default_contents($value)
 	{
 		$this->set_property(self::DEFAULT_CONTENTS, $value);
@@ -196,8 +207,9 @@ class WebConfig extends AbstractConfigData
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
-			self::COLUMNS_NUMBER_PER_LINE => 3,
-			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
+			self::CATEGORIES_NUMBER_PER_ROW => 3,
+			self::ITEMS_NUMBER_PER_ROW => 2,
+			self::CATEGORY_DISPLAY_TYPE => self::SUMMARY_VIEW,
 			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
 			self::DEFAULT_CONTENTS => '',

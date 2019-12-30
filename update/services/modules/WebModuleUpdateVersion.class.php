@@ -22,6 +22,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/WebHomePageExtensionPoint.class.php',
 			'/services/WebAuthorizationsService.class.php',
 			'/services/WebKeywordsCache.class.php',
+			'/templates/WebDisplaySeveralWebLinksController.tpl',
+			'/templates/WebDisplayWebLinkController.tpl',
 			'/util/AdminWebDisplayResponse.class.php'
 		);
 		$this->delete_old_folders_list = array(

@@ -447,6 +447,7 @@ class WebLink
 			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
 			array(
 			'C_VISIBLE' => $this->is_visible(),
+			'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_READ_MORE' => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $description != @strip_tags($contents, '<br><br/>'),
