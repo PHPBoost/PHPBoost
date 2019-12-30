@@ -302,16 +302,7 @@ aside:not(#menu-left):not(#menu-right) {
 }
 
 #message-maintain {
-	position: absolute;
 	z-index: 20;
-	top: 1em;
-	width: 100%;
-	opacity: 0.98;
-	text-align: center;
-}
-
-#message-maintain > div {
-	margin: 0 auto;
 }
 
 #release {

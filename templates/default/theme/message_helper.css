@@ -1,7 +1,7 @@
 .message-helper {
 	position: relative;
 	display: block;
-	margin: 0.309em auto 1em auto;
+	margin: 0.309em 0 1em;
 	padding: 0.618em 0.618em 0.618em 2.618em;
 	height: auto;
 	border-width: 1px;
