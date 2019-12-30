@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,6 +42,7 @@ class AdminCommentsConfigController extends AdminController
 			$this->form->get_field_by_id('number_comments_display')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('max_links_comment')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('order_display_comments')->set_hidden(!$this->configuration->are_comments_enabled());
+			$this->form->get_field_by_id('forbidden_tags')->set_selected_options($this->configuration->get_forbidden_tags());
 			$this->form->get_field_by_id('forbidden_tags')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('comments_unauthorized_modules')->set_hidden(!$this->configuration->are_comments_enabled());
 			$this->form->get_field_by_id('comments_unauthorized_modules')->set_selected_options($this->configuration->get_comments_unauthorized_modules());
