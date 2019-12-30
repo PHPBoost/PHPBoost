@@ -51,6 +51,19 @@ class RichCategory extends Category
 		$this->set_additional_property('image', $image);
 	}
 
+	public function get_thumbnail()
+	{
+		if (!$this->get_additional_property('image') instanceof Url)
+			return self::get_default_image();
+
+		return $this->get_additional_property('image');
+	}
+
+	public function set_thumbnail(Url $thumbnail)
+	{
+		$this->set_additional_property('image', $thumbnail);
+	}
+
 	protected static function get_default_image()
 	{
 		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_category_thumbnail.png');
