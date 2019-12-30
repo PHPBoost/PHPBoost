@@ -75,7 +75,7 @@ abstract class CategoriesCache implements CacheData
 
 	abstract public function get_root_category();
 
-	protected function is_contribution_enabled()
+	public function is_contribution_enabled()
 	{
 		return ModulesManager::get_module(self::get_class()->get_module_identifier())->get_configuration()->has_contribution();
 	}
