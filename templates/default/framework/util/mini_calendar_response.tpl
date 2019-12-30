@@ -1,5 +1,7 @@
 <div class="cell-body date-select-container grouped-inputs">
-	<a class="date-select-nav" href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('next', 'common')}"><i class="fa fa-caret-left fa-large" aria-hidden="true"></i></a>
+	<a class="date-select-nav" href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('next', 'common')}">
+		<i class="fa fa-caret-left fa-large" aria-hidden="true"></i>
+	</a>
 	<select onchange="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(YEAR)}, jQuery(this).val(), 1, ${escapejs(CALENDAR_NUMBER)});" class="date-select-month">
 		# START month #
 			{month.MONTH}
@@ -10,7 +12,9 @@
 			{year.YEAR}
 		# END year #
 	</select>
-	<a class="date-select-nav" href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('previous', 'common')}"><i class="fa fa-caret-right fa-large" aria-hidden="true"></i></a>
+	<a class="date-select-nav" href="" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('previous', 'common')}">
+		<i class="fa fa-caret-right fa-large" aria-hidden="true"></i>
+	</a>
 </div>
 <div class="cell-table">
 	<table class="date-picker">

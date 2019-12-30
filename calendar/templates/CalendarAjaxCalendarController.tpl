@@ -19,10 +19,12 @@
 	}
 </script>
 
-<div id="date_select_form" # IF C_MINI_MODULE #class="cell-form"# ENDIF #>
+<div id="date-select-form" # IF C_MINI_MODULE #class="cell-form"# ENDIF #>
 	<form method="post">
 		<div class="grouped-inputs">
-			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});return false;" aria-label="{PREVIOUS_MONTH_TITLE}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});return false;" aria-label="{PREVIOUS_MONTH_TITLE}">
+				<i class="fa fa-caret-left" aria-hidden="true"></i>
+			</a>
 			<label for="CalendarAjaxCalendarController_month" class="sr-only">{@month}</label>
 			<select# IF C_MINI_MODULE # class="small"# ENDIF # name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 				# START months #
@@ -35,7 +37,9 @@
 					<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
 				# END years #
 			</select>
-			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});return false;" aria-label="{NEXT_MONTH_TITLE}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+			<a class="grouped-element bgc link-color" href="#" onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});return false;" aria-label="{NEXT_MONTH_TITLE}">
+				<i class="fa fa-caret-right" aria-hidden="true"></i>
+			</a>
 		</div>
 	</form>
 </div>

@@ -7,6 +7,11 @@
 	width: 100%;
 }
 
+#date-select-form .grouped-element,
+#date-select-form select {
+	border-width: 0;
+}
+
 .location-map {
 	margin: 0.618em 0;
 }

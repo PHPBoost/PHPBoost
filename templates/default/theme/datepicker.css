@@ -24,13 +24,14 @@
 	position: relative;
 }
 
-.label-time:after {
+.label-time::after {
     position: absolute;
-    top: -0.618em;
-    right: 0.309em;
+    bottom: calc(100% + 0.228em);
+    right: 0.228em;
     content: attr(data-time);
     padding: 0.228em;
     line-height: 0.5;
+    font-size: 0.809em
 }
 
 .form-element .fa-calendar-alt {

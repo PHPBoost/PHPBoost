@@ -251,8 +251,6 @@ select:hover { background-color: #ECF2F8; }
 textarea:focus,
 select:focus { background-color: #ECF2F8; }
 
-.label-time:after { background-color: #FFFFFF; }
-
 [disabled],
 [disabled]:hover {
 	background-color: #BDC2C9;
@@ -387,7 +385,6 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 
 .calendar-table a:hover { background-color: rgba(54, 100, 147, 0.1); }
 
-.label-time:after { background-color: #FFFFFF; }
 .calendar-container > a { background-color: #ECF2F8; }
 
 /* --- Font Awesome icons --------------------------------------------------- */
