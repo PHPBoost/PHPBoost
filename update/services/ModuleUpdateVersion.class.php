@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 03
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 3.0 - 2012 02 26
 */
 
@@ -48,6 +48,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 			$this->add_database_columns();
 			$this->delete_database_columns();
 			$this->modify_database_columns();
+			$this->modify_database_categories_columns();
 
 			$this->add_database_keys();
 			$this->delete_database_keys();
@@ -115,6 +116,26 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 					if (isset($columns[$old_name]))
 						$this->querier->inject('ALTER TABLE ' . $table['table_name'] . ' CHANGE ' . $old_name . ' ' . $new_name);
 				}
+			}
+		}
+	}
+
+	/**
+	 * Updates categories columns in the database.
+	 */
+	private function modify_database_categories_columns()
+	{
+		$module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		
+		if ($module_configuration->has_categories())
+		{
+			$table_name = $module_configuration->get_categories_table_name();
+			if (in_array($table_name, $this->tables_list))
+			{
+				$columns = $this->db_utils->desc_table($table_name);
+				
+				if (isset($columns['image']))
+					$this->querier->inject('ALTER TABLE ' . $table_name . ' CHANGE image thumbnail VARCHAR(255) NOT NULL DEFAULT ""');
 			}
 		}
 	}
