@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 07
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@phpboost.com>
@@ -74,6 +74,11 @@ abstract class CategoriesCache implements CacheData
 	abstract public function get_module_identifier();
 
 	abstract public function get_root_category();
+
+	protected function is_contribution_enabled()
+	{
+		return ModulesManager::get_module(self::get_class()->get_module_identifier())->get_configuration()->has_contribution();
+	}
 
 	protected function get_category_elements_number($id_category)
 	{

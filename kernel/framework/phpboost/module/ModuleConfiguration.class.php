@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 24
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -160,6 +160,11 @@ class ModuleConfiguration
 	{
 		$categories_cache_class = TextHelper::ucfirst($this->module_id) . 'CategoriesCache';
 		return class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache');
+	}
+
+	public function has_contribution()
+	{
+		return $this->contribution_interface;
 	}
 
 	private function load_configuration($config_ini_file)

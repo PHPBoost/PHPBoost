@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 06
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -147,6 +147,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 
 		$this->get_category()->set_authorizations($autorizations);
+		
+		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
+		{
+			$value = (isset($attribute['attribute_field_parameters']) && preg_match('/Choice/', $attribute['attribute_field_parameters']['field_class'])) ? $this->form->get_value($id)->get_raw_value() : $this->form->get_value($id);
+			$this->get_category()->set_additional_property($id, $value);
+		}
 	}
 
 	private function build_fieldset_options(HTMLForm $form)
@@ -161,7 +167,17 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
-
+		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
+		{
+			if (isset($attribute['attribute_field_parameters']))
+			{
+				$parameters = $attribute['attribute_field_parameters'];
+				$field_class = $parameters['field_class'];
+				$options = isset($parameters['options']) ? $parameters['options'] : array();
+				$default_value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
+				$fieldset->add_field(new $field_class($id, $parameters['label'], $default_value, $options));
+			}
+		}
 	}
 
 	/**
@@ -209,12 +225,20 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	 */
 	public function get_authorizations_settings()
 	{
-		return array(
+		$authorizations = array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
+		
+		if (!$this->get_categories_manager()->get_categories_cache()->is_contribution_enabled())
+		{
+			unset($authorizations[2]);
+			$authorizations = array_values($authorizations);
+		}
+		
+		return $authorizations;
 	}
 
 	/**

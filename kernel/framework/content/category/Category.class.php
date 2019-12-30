@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 24
+ * @version     PHPBoost 5.3 - last update: 2019 12 30
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -163,17 +163,26 @@ class Category
 			unset($parameters['key']);
 		}
 		
+		self::$additional_attributes_list[$id] = array('is_url' => false);
 		if (isset($parameters['is_url']))
 		{
-			if ($parameters['is_url'] == true)
-				self::$additional_attributes_list[$id] = array('is_url' => $parameters['is_url']);
+			self::$additional_attributes_list[$id]['is_url'] = $parameters['is_url'];
 			
 			unset($parameters['is_url']);
 		}
-		else
-			self::$additional_attributes_list[$id] = array('is_url' => false);
+		if (isset($parameters['attribute_field_parameters']))
+		{
+			self::$additional_attributes_list[$id]['attribute_field_parameters'] = $parameters['attribute_field_parameters'];
+			
+			unset($parameters['attribute_field_parameters']);
+		}
 		
 		self::$additional_attributes_categories_table_fields[$id] = $parameters;
+	}
+
+	public function get_additional_attributes_list()
+	{
+		return self::$additional_attributes_list;
 	}
 
 	public function get_properties()
