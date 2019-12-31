@@ -52,7 +52,7 @@ class NewsletterHomeController extends ModuleController
 				$this->view->assign_block_vars('streams_list', array(
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
 					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
-					'THUMBNAIL' => Url::to_rel($row['thumbnail']),
+					'U_THUMBNAIL' => Url::to_rel($row['thumbnail']),
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
 					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],
