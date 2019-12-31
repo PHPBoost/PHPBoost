@@ -3,23 +3,24 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebLink
 {
 	private $id;
 	private $id_category;
-	private $name;
-	private $rewrited_name;
+	private $title;
+	private $rewrited_title;
 	private $url;
 	private $contents;
-	private $short_contents;
+	private $description;
 
 	private $approbation_type;
 	private $start_date;
@@ -28,11 +29,11 @@ class WebLink
 
 	private $creation_date;
 	private $author_user;
-	private $number_views;
-	private $picture_url;
+	private $views_number;
+	private $thumbnail_url;
 
 	private $partner;
-	private $partner_picture;
+	private $partner_thumbnail;
 	private $privileged_partner;
 
 	private $notation;
@@ -84,24 +85,24 @@ class WebLink
 		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
-	public function get_name()
+	public function get_title()
 	{
-		return $this->name;
+		return $this->title;
 	}
 
-	public function set_name($name)
+	public function set_title($title)
 	{
-		$this->name = $name;
+		$this->title = $title;
 	}
 
-	public function get_rewrited_name()
+	public function get_rewrited_title()
 	{
-		return $this->rewrited_name;
+		return $this->rewrited_title;
 	}
 
-	public function set_rewrited_name($rewrited_name)
+	public function set_rewrited_title($rewrited_title)
 	{
-		$this->rewrited_name = $rewrited_name;
+		$this->rewrited_title = $rewrited_title;
 	}
 
 	public function get_url()
@@ -127,26 +128,26 @@ class WebLink
 		$this->contents = $contents;
 	}
 
-	public function get_short_contents()
+	public function get_description()
 	{
-		return $this->short_contents;
+		return $this->description;
 	}
 
-	public function set_short_contents($short_contents)
+	public function set_description($description)
 	{
-		$this->short_contents = $short_contents;
+		$this->description = $description;
 	}
 
-	public function is_short_contents_enabled()
+	public function is_description_enabled()
 	{
-		return !empty($this->short_contents);
+		return !empty($this->description);
 	}
 
-	public function get_real_short_contents()
+	public function get_real_description()
 	{
-		if ($this->is_short_contents_enabled())
+		if ($this->is_description_enabled())
 		{
-			return FormatingHelper::second_parse($this->short_contents);
+			return FormatingHelper::second_parse($this->description);
 		}
 		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
@@ -228,32 +229,32 @@ class WebLink
 		$this->author_user = $user;
 	}
 
-	public function get_number_views()
+	public function get_views_number()
 	{
-		return $this->number_views;
+		return $this->views_number;
 	}
 
-	public function set_number_views($number_views)
+	public function set_views_number($views_number)
 	{
-		$this->number_views = $number_views;
+		$this->views_number = $views_number;
 	}
 
-	public function get_picture()
+	public function get_thumbnail()
 	{
-		if (!$this->picture_url instanceof Url)
+		if (!$this->thumbnail_url instanceof Url)
 			return $this->get_default_thumbnail();
 
-		return $this->picture_url;
+		return $this->thumbnail_url;
 	}
 
 	public function set_picture(Url $picture)
 	{
-		$this->picture_url = $picture;
+		$this->thumbnail_url = $picture;
 	}
 
-	public function has_picture()
+	public function has_thumbnail()
 	{
-		$picture = $this->picture_url->rel();
+		$picture = $this->thumbnail_url->rel();
 		return !empty($picture);
 	}
 
@@ -276,22 +277,22 @@ class WebLink
 		$this->partner = $partner;
 	}
 
-	public function get_partner_picture()
+	public function get_partner_thumbnail()
 	{
-		if (!$this->partner_picture instanceof Url)
-			return new Url($this->partner_picture);
+		if (!$this->partner_thumbnail instanceof Url)
+			return new Url($this->partner_thumbnail);
 
-		return $this->partner_picture;
+		return $this->partner_thumbnail;
 	}
 
-	public function set_partner_picture(Url $partner_picture)
+	public function set_partner_thumbnail(Url $partner_thumbnail)
 	{
-		$this->partner_picture = $partner_picture;
+		$this->partner_thumbnail = $partner_thumbnail;
 	}
 
-	public function has_partner_picture()
+	public function has_partner_thumbnail()
 	{
-		$picture = $this->partner_picture->rel();
+		$picture = $this->partner_thumbnail->rel();
 		return !empty($picture);
 	}
 
@@ -349,20 +350,20 @@ class WebLink
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
-			'name' => $this->get_name(),
-			'rewrited_name' => $this->get_rewrited_name(),
+			'name' => $this->get_title(),
+			'rewrited_name' => $this->get_rewrited_title(),
 			'url' => $this->get_url()->absolute(),
 			'contents' => $this->get_contents(),
-			'short_contents' => $this->get_short_contents(),
+			'short_contents' => $this->get_description(),
 			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : 0,
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'number_views' => $this->get_number_views(),
-			'picture_url' => $this->get_picture()->relative(),
+			'number_views' => $this->get_views_number(),
+			'picture_url' => $this->get_thumbnail()->relative(),
 			'partner' => (int)$this->is_partner(),
-			'partner_picture' => $this->get_partner_picture()->relative(),
+			'partner_picture' => $this->get_partner_thumbnail()->relative(),
 			'privileged_partner' => (int)$this->is_privileged_partner()
 		);
 	}
@@ -371,20 +372,20 @@ class WebLink
 	{
 		$this->id = $properties['id'];
 		$this->id_category = $properties['id_category'];
-		$this->name = $properties['name'];
-		$this->rewrited_name = $properties['rewrited_name'];
+		$this->title = $properties['name'];
+		$this->rewrited_title = $properties['rewrited_name'];
 		$this->url = new Url($properties['url']);
 		$this->contents = $properties['contents'];
-		$this->short_contents = $properties['short_contents'];
+		$this->description = $properties['short_contents'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
-		$this->number_views = $properties['number_views'];
-		$this->picture_url = new Url($properties['picture_url']);
+		$this->views_number = $properties['number_views'];
+		$this->thumbnail_url = new Url($properties['picture_url']);
 		$this->partner = (bool)$properties['partner'];
-		$this->partner_picture = new Url($properties['partner_picture']);
+		$this->partner_thumbnail = new Url($properties['partner_picture']);
 		$this->privileged_partner = (bool)$properties['privileged_partner'];
 
 		$user = new User();
@@ -413,10 +414,10 @@ class WebLink
 		$this->start_date = new Date();
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
-		$this->number_views = 0;
-		$this->picture_url = self::get_default_thumbnail();
+		$this->views_number = 0;
+		$this->thumbnail_url = self::get_default_thumbnail();
 		$this->url = new Url('');
-		$this->partner_picture = new Url('');
+		$this->partner_thumbnail = new Url('');
 		$this->end_date_enabled = false;
 	}
 
@@ -437,7 +438,7 @@ class WebLink
 	{
 		$category = $this->get_category();
 		$contents = FormatingHelper::second_parse($this->contents);
-		$description = $this->get_real_short_contents();
+		$real_description = $this->get_real_description();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('web', $this->id);
@@ -446,58 +447,59 @@ class WebLink
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
 			array(
-			'C_VISIBLE' => $this->is_visible(),
-			'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
-			'C_EDIT' => $this->is_authorized_to_edit(),
-			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $description != @strip_tags($contents, '<br><br/>'),
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_PICTURE' => $this->has_picture(),
-			'C_IS_PARTNER' => $this->is_partner(),
-			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
-			'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
-			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
-			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('web', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+				// Conditions
+				'C_VISIBLE' => $this->is_visible(),
+				'C_CONTROLS' => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_EDIT' => $this->is_authorized_to_edit(),
+				'C_DELETE' => $this->is_authorized_to_delete(),
+				'C_READ_MORE' => !$this->is_description_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $real_description != @strip_tags($contents, '<br><br/>'),
+				'C_USER_GROUP_COLOR' => !empty($user_group_color),
+				'C_HAS_THUMBNAIL' => $this->has_thumbnail() || $this->has_partner_thumbnail(),
+				'C_IS_PARTNER' => $this->is_partner(),
+				'C_HAS_PARTNER_THUMBNAIL' => $this->has_partner_thumbnail(),
+				'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
+				'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
+				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('web', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 
-			//Weblink
-			'ID' => $this->id,
-			'NAME' => $this->name,
-			'URL' => $this->url->absolute(),
-			'CONTENTS' => $contents,
-			'DESCRIPTION' => $description,
-			'STATUS' => $this->get_status(),
-			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO' => $user->get_display_name(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
-			'NUMBER_VIEWS' => $this->number_views,
-			'L_VISITED_TIMES' => StringVars::replace_vars(LangLoader::get_message('visited_times', 'common', 'web'), array('number_visits' => $this->number_views)),
-			'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
-			'NOTATION' => NotationService::display_active_image($this->get_notation()),
+				// Details
+				'ID' => $this->id,
+				'TITLE' => $this->title,
+				'URL' => $this->url->absolute(),
+				'CONTENTS' => $contents,
+				'DESCRIPTION' => $real_description,
+				'STATUS' => $this->get_status(),
+				'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
+				'PSEUDO' => $user->get_display_name(),
+				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+				'USER_GROUP_COLOR' => $user_group_color,
+				'NUMBER_VIEWS' => $this->views_number,
+				'L_VISITED_TIMES' => StringVars::replace_vars(LangLoader::get_message('visited_times', 'common', 'web'), array('number_visits' => $this->views_number)),
+				'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
+				'NOTATION' => NotationService::display_active_image($this->get_notation()),
+				'C_COMMENTS' => !empty($comments_number),
+				'L_COMMENTS' => CommentsService::get_lang_comments('web', $this->id),
+				'COMMENTS_NUMBER' => $comments_number,
 
-			'C_COMMENTS' => !empty($comments_number),
-			'L_COMMENTS' => CommentsService::get_lang_comments('web', $this->id),
-			'COMMENTS_NUMBER' => $comments_number,
+				// Category
+				'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
+				'CATEGORY_ID' => $category->get_id(),
+				'CATEGORY_NAME' => $category->get_name(),
+				'CATEGORY_DESCRIPTION' => $category->get_description(),
+				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+				'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
-			//Category
-			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
-			'CATEGORY_ID' => $category->get_id(),
-			'CATEGORY_NAME' => $category->get_name(),
-			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
-
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('web', $this->id_category)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_LINK' => WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
-			'U_VISIT' => WebUrlBuilder::visit($this->id)->rel(),
-			'U_DEADLINK' => WebUrlBuilder::dead_link($this->id)->rel(),
-			'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => WebUrlBuilder::edit($this->id)->rel(),
-			'U_DELETE' => WebUrlBuilder::delete($this->id)->rel(),
-			'U_PICTURE' => $this->get_picture()->rel(),
-			'U_PARTNER_PICTURE' => $this->partner_picture->rel(),
-			'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
+				// Links
+				'U_SYNDICATION' => SyndicationUrlBuilder::rss('web', $this->id_category)->rel(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+				'U_ITEM' => WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
+				'U_VISIT' => WebUrlBuilder::visit($this->id)->rel(),
+				'U_DEADLINK' => WebUrlBuilder::dead_link($this->id)->rel(),
+				'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+				'U_EDIT' => WebUrlBuilder::edit($this->id)->rel(),
+				'U_DELETE' => WebUrlBuilder::delete($this->id)->rel(),
+				'U_THUMBNAIL' => $this->get_thumbnail()->rel(),
+				'U_PARTNER_THUMBNAIL' => $this->partner_thumbnail->rel(),
+				'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 			)
 		);
 	}

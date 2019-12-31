@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebService
@@ -50,9 +51,9 @@ class WebService
 	 * @desc Update the number of views of a link.
 	 * @param string[] $weblink : WebLink to update
 	 */
-	public static function update_number_views(WebLink $weblink)
+	public static function update_views_number(WebLink $weblink)
 	{
-		self::$db_querier->update(WebSetup::$web_table, array('number_views' => $weblink->get_number_views()), 'WHERE id=:id', array('id' => $weblink->get_id()));
+		self::$db_querier->update(WebSetup::$web_table, array('number_views' => $weblink->get_views_number()), 'WHERE id=:id', array('id' => $weblink->get_id()));
 	}
 
 	 /**
@@ -68,9 +69,9 @@ class WebService
             DispatchManager::redirect($controller);
         }
 			self::$db_querier->delete(WebSetup::$web_table, 'WHERE id=:id', array('id' => $id));
-		
+
 			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'web', 'id' => $id));
-		
+
 			CommentsService::delete_comments_topic_module('web', $id);
 			KeywordsService::get_keywords_manager()->delete_relations($id);
 			NotationService::delete_notes_id_in_module('web', $id);
@@ -94,7 +95,7 @@ class WebService
 		$weblink->set_properties($row);
 		return $weblink;
 	}
-	
+
 	public static function clear_cache()
 	{
 		Feed::clear_cache('web');

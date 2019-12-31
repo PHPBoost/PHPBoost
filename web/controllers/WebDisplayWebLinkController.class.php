@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebDisplayWebLinkController extends ModuleController
@@ -76,7 +77,7 @@ class WebDisplayWebLinkController extends ModuleController
 		{
 			$comments_topic = new WebCommentsTopic($weblink);
 			$comments_topic->set_id_in_module($weblink->get_id());
-			$comments_topic->set_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
+			$comments_topic->set_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
 
 			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
@@ -144,12 +145,12 @@ class WebDisplayWebLinkController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($weblink->get_name(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
-		$graphical_environment->get_seo_meta_data()->set_description($weblink->get_real_short_contents());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
+		$graphical_environment->set_page_title($weblink->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
+		$graphical_environment->get_seo_meta_data()->set_description($weblink->get_real_description());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
 
-		if ($weblink->has_picture())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($weblink->get_picture());
+		if ($weblink->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($weblink->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'],WebUrlBuilder::home());
@@ -160,7 +161,7 @@ class WebDisplayWebLinkController extends ModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$breadcrumb->add($weblink->get_name(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
+		$breadcrumb->add($weblink->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
 
 		return $response;
 	}

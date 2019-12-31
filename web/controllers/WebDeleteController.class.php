@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebDeleteController extends ModuleController
@@ -22,10 +23,10 @@ class WebDeleteController extends ModuleController
 		$this->check_authorizations();
 
 		WebService::delete($weblink->get_id());
-		
+
 		WebService::clear_cache();
-		
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), WebUrlBuilder::display($this->weblink->get_category()->get_id(), $this->weblink->get_category()->get_rewrited_name(), $this->weblink->get_id(), $this->weblink->get_rewrited_name())->rel()) ? $request->get_url_referrer() : WebUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('web.message.success.delete', 'common', 'web'), array('name' => $this->weblink->get_name())));
+
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), WebUrlBuilder::display($this->weblink->get_category()->get_id(), $this->weblink->get_category()->get_rewrited_name(), $this->weblink->get_id(), $this->weblink->get_rewrited_title())->rel()) ? $request->get_url_referrer() : WebUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('web.message.success.delete', 'common', 'web'), array('name' => $this->weblink->get_title())));
 	}
 
 	private function get_weblink(HTTPRequestCustom $request)

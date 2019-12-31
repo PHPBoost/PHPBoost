@@ -31,10 +31,6 @@ $lang['link'] = 'Lien';
 $lang['links'] = 'Liens';
 
 //config
-$lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
-$lang['config.category_display_type.display_summary'] = 'Résumé';
-$lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
-$lang['config.category_display_type.display_table'] = 'Tableau';
 $lang['config.display_descriptions_to_guests'] = 'Afficher le résumé aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 $lang['config.partners_menu'] = 'Menu partenaires';
 $lang['config.partners_sort'] = 'Ordre d\'affichage des partenaires';
@@ -53,7 +49,7 @@ $lang['web.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter
 
 //form
 $lang['web.form.partner'] = 'Site partenaire';
-$lang['web.form.partner_picture'] = 'Bannière du partenaire';
+$lang['web.form.partner_thumbnail'] = 'Bannière du partenaire';
 $lang['web.form.privileged_partner'] = 'Partenaire prioritaire';
 $lang['web.form.privileged_partner.explain'] = 'Affiché en tête de liste';
 

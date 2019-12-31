@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 21
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -30,10 +31,6 @@ $lang['link'] = 'Link';
 $lang['links'] = 'Links';
 
 //config
-$lang['config.category_display_type'] = 'Displayed informations in categories';
-$lang['config.category_display_type.display_summary'] = 'Summary';
-$lang['config.category_display_type.display_all_content'] = 'All content';
-$lang['config.category_display_type.display_table'] = 'Table';
 $lang['config.display_descriptions_to_guests'] = 'Display summary to guests if they don\'t have read authorization';
 $lang['config.partners_menu'] = 'Partners menu';
 $lang['config.partners_sort'] = 'Partners display order';
@@ -52,7 +49,7 @@ $lang['web.form.contribution.explain'] = 'You are not authorized to create a new
 
 //form
 $lang['web.form.partner'] = 'Partner site';
-$lang['web.form.partner_picture'] = 'Partner banner';
+$lang['web.form.partner_thumbnail'] = 'Partner banner';
 $lang['web.form.privileged_partner'] = 'Privileged partner';
 $lang['web.form.privileged_partner.explain'] = 'Displayed on top';
 

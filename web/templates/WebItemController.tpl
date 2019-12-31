@@ -5,7 +5,7 @@
 			{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
-		<h1><span id="name" itemprop="name">{NAME}</span></h1>
+		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
 	# IF NOT C_VISIBLE #
 		# INCLUDE NOT_VISIBLE_MESSAGE #
@@ -16,7 +16,7 @@
 			# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 		</span>
 
-		<meta itemprop="url" content="{U_LINK}">
+		<meta itemprop="url" content="{U_ITEM}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
 		# IF C_COMMENTS_ENABLED #
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
@@ -27,17 +27,17 @@
 			<div class="options infos">
 				<div class="align-center">
 					# IF C_IS_PARTNER #
-						# IF C_HAS_PARTNER_PICTURE #
-							<img src="{U_PARTNER_PICTURE}" alt="{NAME}" itemprop="image" />
+						# IF C_HAS_PARTNER_THUMBNAIL #
+							<img src="{U_PARTNER_THUMBNAIL}" alt="{TITLE}" itemprop="image" />
 						# ELSE #
-							# IF C_PICTURE #
-								<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+							# IF C_HAS_THUMBNAIL #
+								<img src="{U_THUMBNAIL}" alt="{TITLE}" itemprop="image" />
 							# ENDIF #
 						# ENDIF #
 						<div class="spacer"></div>
 					# ELSE #
-						# IF C_PICTURE #
-							<img src="{U_PICTURE}" alt="{NAME}" itemprop="image" />
+						# IF C_HAS_THUMBNAIL #
+							<img src="{U_THUMBNAIL}" alt="{TITLE}" itemprop="image" />
 						# ENDIF #
 					# ENDIF #
 						<a href="{U_VISIT}" class="button alt-button">

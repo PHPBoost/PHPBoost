@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,6 +54,7 @@ $lang['unknown_size'] = 'Taille inconnue';
 
 $lang['items_number'] = 'Nombre d\'éléments';
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
+$lang['see.details'] = 'Voir les détails';
 
 $lang['maximum'] = 'Maximum';
 $lang['minimum'] = 'Minimum';

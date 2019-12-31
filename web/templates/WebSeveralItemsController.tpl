@@ -15,13 +15,13 @@
 	# ENDIF #
 
 	# IF C_SUB_CATEGORIES #
-		<div class="cell-flex cell-tile cell-columns-{COLUMNS_NUMBER}">
+		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_NUMBER_PER_ROW}">
 			# START sub_categories_list #
 				<div class="cell" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" aria-label="{sub_categories_list.WEBLINKS_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_WEBLINK #${TextHelper::lcfirst(LangLoader::get_message('links', 'common', 'web'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('link', 'common', 'web'))}# ENDIF #">
-							{sub_categories_list.WEBLINKS_NUMBER}
+						<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(LangLoader::get_message('links', 'common', 'web'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('link', 'common', 'web'))}# ENDIF #">
+							{sub_categories_list.ITEMS_NUMBER}
 						</span>
 					</div>
 					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
@@ -40,12 +40,12 @@
 		# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
 	# ENDIF #
 
-	# IF C_WEBLINKS #
-		# IF C_MORE_THAN_ONE_WEBLINK #
+	# IF C_ITEMS #
+		# IF C_SEVERAL_ITEMS #
 			# INCLUDE SORT_FORM #
 			<div class="spacer"></div>
 		# ENDIF #
-		# IF C_CATEGORY_DISPLAYED_TABLE #
+		# IF C_TABLE_VIEW #
 			<table class="table">
 				<thead>
 					<tr>
@@ -61,7 +61,7 @@
 					# START weblinks #
 						<tr>
 							<td>
-								<a href="{weblinks.U_LINK}" itemprop="name"# IF weblinks.C_NEW_CONTENT # class="new-content"# ENDIF#>{weblinks.NAME}</a>
+								<a href="{weblinks.U_ITEM}" itemprop="name"# IF weblinks.C_NEW_CONTENT # class="new-content"# ENDIF#>{weblinks.TITLE}</a>
 							</td>
 							<td>
 								# IF weblinks.C_KEYWORDS #
@@ -100,109 +100,82 @@
 				</tbody>
 			</table>
 		# ELSE #
-			<div class="# IF C_CATEGORY_DISPLAYED_SUMMARY #cell-flex cell-columns-{COLUMNS_NUMBER}# ELSE #cell-row# ENDIF #">
+			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_NUMBER_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START weblinks #
 					<article id="article-web-{weblinks.ID}" class="web-item several-items cell# IF weblinks.C_IS_PARTNER # content-friends# ENDIF ## IF weblinks.C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF weblinks.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header class="cell-header">
-							<h2 class="cell-name"><a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a></h2>
+							<h2 class="cell-name"><a href="{weblinks.U_ITEM}" itemprop="name">{weblinks.TITLE}</a></h2>
+						</header>
+						<div class="cell-infos">
+							<div class="more">
+								<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.NUMBER_VIEWS}</span>
+								# IF C_COMMENTS_ENABLED #
+									<span class="pinned">
+										<i class="fa fa-comments" aria-hidden="true"></i>
+										# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
+									</span>
+								# ENDIF #
+								# IF C_NOTATION_ENABLED #
+									<span class="pinned">{weblinks.STATIC_NOTATION}</span>
+								# ENDIF #
+							</div>
 							# IF weblinks.C_CONTROLS #
 								<span class="controls align-right">
 									# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 									# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 								</span>
 							# ENDIF #
-						</header>
+						</div>
 
-						# IF C_CATEGORY_DISPLAYED_SUMMARY #
-							<div class="more">
-								<span><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.NUMBER_VIEWS}</span>
-								# IF C_COMMENTS_ENABLED #
-									| <i class="fa fa-comments" aria-hidden="true"></i>
-									# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
-								# ENDIF #
-								# IF weblinks.C_KEYWORDS #
-									| <i class="fa fa-tags" aria-hidden="true"></i>
-									# START weblinks.keywords #
-										<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a>
-										# IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
-									# END weblinks.keywords #
-								# ENDIF #
-								# IF C_NOTATION_ENABLED #
-									<span class="float-right">{weblinks.STATIC_NOTATION}</span>
-								# ENDIF #
-								<div class="spacer"></div>
-							</div>
-							<div class="content">
-								# IF weblinks.C_PICTURE #
-								<a href="{weblinks.U_LINK}" class="item-thumbnail">
-									<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-								</a>
-								# ENDIF #
-								{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_LINK}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
-								<div class="spacer"></div>
-							</div>
-						# ELSE #
-							<div class="content">
-								<div class="options infos">
-									<div class="align-center">
-										# IF weblinks.C_IS_PARTNER #
-											# IF weblinks.C_HAS_PARTNER_PICTURE #
-												<img src="{weblinks.U_PARTNER_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-											# ELSE #
-												# IF weblinks.C_PICTURE #
-													<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-												# ENDIF #
-											# ENDIF #
-										<div class="spacer"></div>
+						<div class="cell-body">
+							# IF weblinks.C_HAS_THUMBNAIL #
+								<div class="cell-thumbnail">
+									# IF weblinks.C_IS_PARTNER #
+										# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
+											<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
 										# ELSE #
-											# IF weblinks.C_PICTURE #
-												<img src="{weblinks.U_PICTURE}" alt="{weblinks.NAME}" itemprop="image" />
-											# ENDIF #
-										<div class="spacer"></div>
+											<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
 										# ENDIF #
-										# IF weblinks.C_VISIBLE #
-											<a href="{weblinks.U_VISIT}" class="button alt-button">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
-											</a>
-											# IF IS_USER_CONNECTED #
-											<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button alt-button" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-												<i class="fa fa-unlink" aria-hidden="true"></i>
-											</a>
-											# ENDIF #
-										# ELSE #
-											# IF C_PENDING #
-											<a href="{weblinks.U_VISIT}" class="button alt-button">
-												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
-											</a>
-											# ENDIF #
+									# ELSE #
+										<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+									# ENDIF #
+									<a class="cell-thumbnail-caption" href="{weblinks.U_ITEM}">
+										${LangLoader::get_message('see.details', 'common')}
+									</a>
+								</div>
+							# ENDIF #
+							<div class="cell-content">
+								<div class="cell-infos">
+									<span></span>
+									# IF weblinks.C_VISIBLE #
+									<span>
+										<a href="{weblinks.U_VISIT}" class="button submit small">
+											<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+										</a>
+										# IF IS_USER_CONNECTED #
+										<a href="{weblinks.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+											<i class="fa fa-unlink" aria-hidden="true"></i>
+										</a>
 										# ENDIF #
-									</div>
-									<h6>{@link_infos}</h6>
-									<span class="infos-options"><span class="text-strong">{@visits_number} : </span>{weblinks.NUMBER_VIEWS}</span>
-									# IF NOT C_CATEGORY #<span class="infos-options"><span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><a itemprop="about" href="{weblinks.U_CATEGORY}">{weblinks.CATEGORY_NAME}</a></span># ENDIF #
-									# IF weblinks.C_KEYWORDS #
-									<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
-									<span class="infos-options">
-										# START weblinks.keywords #
-										<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a># IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
-										# END weblinks.keywords #
 									</span>
-									# ENDIF #
-									# IF C_COMMENTS_ENABLED #
-									<span class="infos-options"># IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}</span>
-									# ENDIF #
-									# IF C_NOTATION_ENABLED #
-									<div class="spacer"></div>
-									<div class="align-center">{weblinks.NOTATION}</div>
+									# ELSE #
+										# IF C_PENDING #
+											<a href="{weblinks.U_VISIT}" class="button submit small">
+												<i class="fa fa-globe" aria-hidden="true"></i> {@visit}
+											</a>
+										# ENDIF #
 									# ENDIF #
 								</div>
-
-								<div itemprop="text">{weblinks.CONTENTS}</div>
+								# IF C_FULL_ITEM_DISPLAY #
+									<div itemprop="text">{weblinks.CONTENTS}</div>
+								# ELSE #
+									{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+								# ENDIF #
 							</div>
-						# ENDIF #
+						</div>
 
 						<footer>
-							<meta itemprop="url" content="{weblinks.U_LINK}">
+							<meta itemprop="url" content="{weblinks.U_ITEM}">
 							<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>
 							# IF C_COMMENTS_ENABLED #
 								<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">

@@ -98,11 +98,11 @@
 
 @media (min-width: 769px) {
 	.cell-row .cell-thumbnail {
-		max-width: 30%;
+		width: 30%;
 		padding: 0.618em;
 	}
 
-	.cell-row .cell-content { max-width: 70%; }
+	.cell-row .cell-content { width: 70%; }
 }
 
 /* --- Modal ---------------------------------------------------------------- */

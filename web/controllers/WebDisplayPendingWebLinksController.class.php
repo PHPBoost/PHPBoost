@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebDisplayPendingWebLinksController extends ModuleController
@@ -71,21 +72,21 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY web.privileged_partner DESC, ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
+		LIMIT :items_number_per_page OFFSET :display_from', array_merge($parameters, array(
+			'items_number_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_per_line = $this->config->get_categories_number_per_row();
-
 		$this->tpl->put_all(array(
-			'C_WEBLINKS' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
+			'C_ITEMS' => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line,
+			'C_GRID_VIEW' => $this->config->is_display_in_grid_view(),
+			'C_LIST_VIEW' => $this->config->is_display_in_list_view(),
+			'C_TABLE_VIEW' => $this->config->is_display_in_table_view(),
+			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
+			'CATEGORIES_NUMBER_PER_ROW' => $this->config->get_categories_number_per_row(),
+			'ITEMS_NUMBER_PER_ROW' => $this->config->get_items_number_per_row(),
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('web'),
 			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('web'),
 			'C_PAGINATION' => $pagination->has_several_pages(),

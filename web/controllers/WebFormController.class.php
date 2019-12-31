@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebFormController extends ModuleController
@@ -61,7 +62,7 @@ class WebFormController extends ModuleController
 		$fieldset = new FormFieldsetHTMLHeading('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_weblink()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_weblink()->get_title(), array('required' => true)));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -75,40 +76,40 @@ class WebFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('short_contents_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_short_contents_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('description_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_description_enabled(),
 			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
-			if (HTMLForms.getField("short_contents_enabled").getValue()) {
-				HTMLForms.getField("short_contents").enable();
+			if (HTMLForms.getField("description_enabled").getValue()) {
+				HTMLForms.getField("description").enable();
 			} else {
-				HTMLForms.getField("short_contents").disable();
+				HTMLForms.getField("description").disable();
 			}'))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->common_lang['form.short_contents'], $this->get_weblink()->get_short_contents(), array(
-			'hidden' => !$this->get_weblink()->is_short_contents_enabled(),
+		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_weblink()->get_description(), array(
+			'hidden' => !$this->get_weblink()->is_description_enabled(),
 		)));
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_picture()->relative()));
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_weblink()->get_thumbnail()->relative()));
 
 		$other_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
-					HTMLForms.getField("partner_picture").enable();
+					HTMLForms.getField("partner_thumbnail").enable();
 					HTMLForms.getField("privileged_partner").enable();
-					if (HTMLForms.getField("partner_picture").getValue())
-						jQuery("#' . __CLASS__ . '_partner_picture_preview").show();
+					if (HTMLForms.getField("partner_thumbnail").getValue())
+						jQuery("#' . __CLASS__ . '_partner_thumbnail_preview").show();
 				} else {
-					HTMLForms.getField("partner_picture").disable();
-					jQuery("#' . __CLASS__ . '_partner_picture_preview").hide();
+					HTMLForms.getField("partner_thumbnail").disable();
+					jQuery("#' . __CLASS__ . '_partner_thumbnail_preview").hide();
 					HTMLForms.getField("privileged_partner").disable();
 				}'
 			)
 		)));
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('partner_thumbnail', $this->lang['web.form.partner_thumbnail'], $this->get_weblink()->get_partner_thumbnail()->relative(), array(
 			'hidden' => !$this->get_weblink()->is_partner()
 		)));
 
@@ -247,21 +248,21 @@ class WebFormController extends ModuleController
 	{
 		$weblink = $this->get_weblink();
 
-		$weblink->set_name($this->form->get_value('name'));
-		$weblink->set_rewrited_name(Url::encode_rewrite($weblink->get_name()));
+		$weblink->set_title($this->form->get_value('title'));
+		$weblink->set_rewrited_title(Url::encode_rewrite($weblink->get_title()));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
-		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
+		$weblink->set_description(($this->form->get_value('description_enabled') ? $this->form->get_value('description') : ''));
 		$weblink->set_picture(new Url($this->form->get_value('picture')));
 
 		$weblink->set_partner($this->form->get_value('partner'));
 		if ($this->form->get_value('partner'))
 		{
-			$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
+			$weblink->set_partner_thumbnail(new Url($this->form->get_value('partner_thumbnail')));
 			$weblink->set_privileged_partner($this->form->get_value('privileged_partner'));
 		}
 
@@ -358,7 +359,7 @@ class WebFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id);
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($weblink->get_name());
+				$contribution->set_entitled($weblink->get_title());
 				$contribution->set_fixing_url(WebUrlBuilder::edit($id)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('web');
@@ -398,16 +399,16 @@ class WebFormController extends ModuleController
 		elseif ($weblink->is_visible())
 		{
 			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_name())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title())), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_weblink)
-				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_name())));
+				AppContext::get_response()->redirect(WebUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['web.message.success.add'], array('name' => $weblink->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : WebUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['web.message.success.edit'], array('name' => $weblink->get_title())));
 		}
 	}
 
@@ -446,7 +447,7 @@ class WebFormController extends ModuleController
 					$breadcrumb->add($category->get_name(), WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
 			$category = $weblink->get_category();
-			$breadcrumb->add($weblink->get_name(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
+			$breadcrumb->add($weblink->get_title(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_title()));
 			$breadcrumb->add($this->lang['web.edit'], WebUrlBuilder::edit($weblink->get_id()));
 		}
 

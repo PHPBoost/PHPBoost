@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 12 18
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 12 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -37,6 +38,7 @@ $lang['config.columns_number_per_line'] = 'Nombre de colonnes d\'affichage par l
 $lang['config.columns_number_per_line.description'] = 'Catégories et éléments';
 $lang['config.categories.number.per.row'] = 'Nombre de catégories par ligne';
 $lang['config.items.number.per.row'] = 'Nombre d\'éléments par ligne';
+$lang['config.full.item.display'] = 'Affichage complet des éléments';
 $lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par défaut';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.comments_enabled'] = 'Activer les commentaires';

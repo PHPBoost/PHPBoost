@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebConfig extends AbstractConfigData
@@ -15,10 +16,10 @@ class WebConfig extends AbstractConfigData
 	const CATEGORIES_NUMBER_PER_ROW = 'categories_number_per_row';
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const ITEMS_NUMBER_PER_ROW = 'items_number_per_row';
-	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
 	const DEFAULT_CONTENTS = 'default_contents';
+	const FULL_ITEM_DISPLAY = 'full_item_display';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const PARTNERS_SORT_FIELD = 'partners_sort_field';
@@ -26,23 +27,14 @@ class WebConfig extends AbstractConfigData
 	const PARTNERS_NUMBER_IN_MENU = 'partners_number_in_menu';
 	const AUTHORIZATIONS = 'authorizations';
 
-	const SUMMARY_VIEW = 'summary_view';
-	const FULL_VIEW = 'full_view';
+	const DISPLAY_TYPE = 'display_type';
+	const GRID_VIEW = 'grid_view';
+	const LIST_VIEW = 'list_view';
 	const TABLE_VIEW = 'table_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
 	const NUMBER_CARACTERS_BEFORE_CUT = 150;
-
-	public function get_items_number_per_page()
-	{
-		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
-	}
-
-	public function set_items_number_per_page($value)
-	{
-		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
-	}
 
 	public function get_categories_number_per_page()
 	{
@@ -64,6 +56,16 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::CATEGORIES_NUMBER_PER_ROW, $value);
 	}
 
+	public function get_items_number_per_page()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
+	}
+
+	public function set_items_number_per_page($value)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+
 	public function get_items_number_per_row()
 	{
 		return $this->get_property(self::ITEMS_NUMBER_PER_ROW);
@@ -74,24 +76,44 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_NUMBER_PER_ROW, $value);
 	}
 
-	public function get_category_display_type()
+	public function display_full_item()
 	{
-		return $this->get_property(self::CATEGORY_DISPLAY_TYPE);
+		$this->set_property(self::FULL_ITEM_DISPLAY, true);
 	}
 
-	public function set_category_display_type($value)
+	public function display_condensed_item()
 	{
-		$this->set_property(self::CATEGORY_DISPLAY_TYPE, $value);
+		$this->set_property(self::FULL_ITEM_DISPLAY, false);
 	}
 
-	public function is_category_displayed_summary()
+	public function is_full_item_displayed()
 	{
-		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::SUMMARY_VIEW;
+		return $this->get_property(self::FULL_ITEM_DISPLAY);
 	}
 
-	public function is_category_displayed_table()
+	public function get_display_type()
 	{
-		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::TABLE_VIEW;
+		return $this->get_property(self::DISPLAY_TYPE);
+	}
+
+	public function set_display_type($value)
+	{
+		$this->set_property(self::DISPLAY_TYPE, $value);
+	}
+
+	public function is_display_in_grid_view()
+	{
+		return $this->get_property(self::DISPLAY_TYPE) == self::GRID_VIEW;
+	}
+
+	public function is_display_in_list_view()
+	{
+		return $this->get_property(self::DISPLAY_TYPE) == self::LIST_VIEW;
+	}
+
+	public function is_display_in_table_view()
+	{
+		return $this->get_property(self::DISPLAY_TYPE) == self::TABLE_VIEW;
 	}
 
 	public function get_items_default_sort_field()
@@ -205,11 +227,12 @@ class WebConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
 			self::CATEGORIES_NUMBER_PER_ROW => 3,
+			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::ITEMS_NUMBER_PER_ROW => 2,
-			self::CATEGORY_DISPLAY_TYPE => self::SUMMARY_VIEW,
+			self::FULL_ITEM_DISPLAY => false,
+			self::DISPLAY_TYPE => self::GRID_VIEW,
 			self::ITEMS_DEFAULT_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
 			self::DEFAULT_CONTENTS => '',
