@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -119,15 +119,15 @@ class GalleryDisplayCategoryController extends ModuleController
 
 				if ($nbr_cat_displayed > $pagination->get_display_from() && $nbr_cat_displayed <= ($pagination->get_display_from() + $pagination->get_number_items_per_page()))
 				{
-					$category_image = $cat->get_image()->rel();
+					$category_thumbnail = $cat->get_thumbnail()->rel();
 					$elements_number = $cat->get_elements_number();
 
 					$this->tpl->assign_block_vars('sub_categories_list', array(
-						'C_CATEGORY_IMAGE' => !empty($category_image),
+						'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 						'C_SEVERAL_PICTURES' => $elements_number['pics_aprob'] > 1,
 						'CATEGORY_ID' => $category->get_id(),
 						'CATEGORY_NAME' => $cat->get_name(),
-						'CATEGORY_IMAGE' => $category_image,
+						'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 						'PICTURES_NUMBER' => sprintf($elements_number['pics_aprob']),
 						'U_CATEGORY' => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
 					));

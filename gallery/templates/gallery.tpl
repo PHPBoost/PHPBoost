@@ -300,8 +300,8 @@
 					</div>
 					<div class="cell-body">
 						<div class="cell-thumbnail cell-landscape" itemprop="thumbnail">
-							# IF sub_categories_list.C_CATEGORY_IMAGE #
-								<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="{sub_categories_list.CATEGORY_NAME}" />
+							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 							# ENDIF #
 							<a class="cell-thumbnail-caption small" href="{sub_categories_list.U_CATEGORY}" aria-label="{sub_categories_list.CATEGORY_NAME}">
 								${LangLoader::get_message('see.category', 'categories-common')}

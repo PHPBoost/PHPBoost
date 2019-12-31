@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,14 +146,14 @@ if ($total_cat > 0)
 			$multiple_x = $i / $nbr_column_cats;
 			$display_tr_end = is_int($multiple_x);
 
-			$category_image = $cat->get_image()->rel();
+			$category_thumbnail = $cat->get_thumbnail()->rel();
 			$elements_number = $cat->get_elements_number();
 
 			$tpl->assign_block_vars('cat.list', array(
-				'C_IMG' => !empty($category_image),
+				'C_IMG' => !empty($category_thumbnail),
 				'IDCAT' => $cat->get_id(),
 				'CAT' => $cat->get_name(),
-				'IMG' => $category_image,
+				'IMG' => $category_thumbnail,
 				'C_DISPLAY_TR_START' => $display_tr_start,
 				'C_DISPLAY_TR_END' => $display_tr_end,
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $elements_number['pics_aprob'], $elements_number['pics_unaprob'])
