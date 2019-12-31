@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			if ($this->get_category()->get_id())
 				$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 
-			$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', self::$common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
+			$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		}
 
 		$this->build_fieldset_options($form);
@@ -100,7 +100,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
+		$root_auth = self::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$common_lang['authorizations'], !$this->get_category()->auth_is_equals($root_auth),
 		array('description' => self::$lang['category.form.authorizations.description'], 'events' => array('click' => '
@@ -111,7 +111,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}')
 		)));
 
-		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
+		$auth_settings = new AuthorizationsSettings(self::get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth))));
 
@@ -196,11 +196,11 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$category = $this->get_category();
 		if ($category->get_id())
 		{
-			$this->get_categories_manager()->update($category);
+			self::get_categories_manager()->update($category);
 		}
 		else
 		{
-			$this->get_categories_manager()->add($category);
+			self::get_categories_manager()->add($category);
 		}
 	}
 
@@ -214,15 +214,15 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$id_category = $this->get_id_category();
 			if (!empty($id_category))
 			{
-				$this->category = $this->get_categories_manager()->get_categories_cache()->get_category($id_category);
+				$this->category = self::get_categories_manager()->get_categories_cache()->get_category($id_category);
 			}
 			else
 			{
-				$category_class = $this->get_categories_manager()->get_categories_cache()->get_category_class();
+				$category_class = self::get_categories_manager()->get_categories_cache()->get_category_class();
 				$this->is_new_category = true;
 				$this->category = new $category_class();
 				$this->category->set_id_parent(AppContext::get_request()->get_getint('id_parent', Category::ROOT_CATEGORY));
-				$this->category->set_authorizations($this->get_categories_manager()->get_categories_cache()->get_root_category()->get_authorizations());
+				$this->category->set_authorizations(self::get_categories_manager()->get_categories_cache()->get_root_category()->get_authorizations());
 			}
 		}
 		return $this->category;
@@ -231,7 +231,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	/**
 	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
 	 */
-	public function get_authorizations_settings()
+	public static function get_authorizations_settings()
 	{
 		$authorizations = array(
 			new ActionAuthorization(self::$common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
@@ -240,7 +240,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			new MemberDisabledActionAuthorization(self::$common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 		
-		if (!$this->get_categories_manager()->get_categories_cache()->is_contribution_enabled())
+		if (!self::get_categories_manager()->get_categories_cache()->is_contribution_enabled())
 		{
 			unset($authorizations[2]);
 			$authorizations = array_values($authorizations);
@@ -286,14 +286,17 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	}
 
 	/**
+	 * @return CategoriesManager
+	 */
+	protected static function get_categories_manager()
+	{
+		return CategoriesService::get_categories_manager();
+	}
+
+	/**
 	 * @return string id of the category to edit / delete
 	 */
 	abstract protected function get_id_category();
-
-	/**
-	 * @return CategoriesManager
-	 */
-	abstract protected function get_categories_manager();
 
 	/**
 	 * @return Url

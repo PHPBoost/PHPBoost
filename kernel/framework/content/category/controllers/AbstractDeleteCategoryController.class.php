@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 29
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$children = $this->get_category_children($category);
 		if (empty($children) && !$this->get_category_items_exists($category))
 		{
-			$this->get_categories_manager()->delete($this->get_category()->get_id());
+			self::get_categories_manager()->delete($this->get_category()->get_id());
 			$this->clear_cache();
 			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
 		}
@@ -53,25 +53,25 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		{
 			if ($this->form->get_value('delete_category_and_content'))
 			{
-				$this->get_categories_manager()->delete($this->get_category()->get_id());
+				self::get_categories_manager()->delete($this->get_category()->get_id());
 				foreach ($children as $id => $category)
 				{
-					$this->get_categories_manager()->delete($id);
+					self::get_categories_manager()->delete($id);
 				}
 			}
 			else
 			{
 				$id_parent = $this->form->get_value('move_in_other_cat')->get_raw_value();
-				$this->get_categories_manager()->move_items_into_another($category, $id_parent);
+				self::get_categories_manager()->move_items_into_another($category, $id_parent);
 
 				$children = $this->get_category_children($category, false);
 				foreach ($children as $id => $category)
 				{
-					$this->get_categories_manager()->move_into_another($category, $id_parent);
+					self::get_categories_manager()->move_into_another($category, $id_parent);
 				}
 
-				$this->get_categories_manager()->delete($this->get_category()->get_id());
-				$categories_cache = $this->get_categories_manager()->get_categories_cache()->get_class();
+				self::get_categories_manager()->delete($this->get_category()->get_id());
+				$categories_cache = self::get_categories_manager()->get_categories_cache()->get_class();
 				$categories_cache::invalidate();
 			}
 			$this->clear_cache();
@@ -107,7 +107,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($this->get_category()->get_id());
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('move_in_other_cat', $this->lang['delete.move_in_other_cat'], $this->get_category()->get_id_parent(), $options));
+		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('move_in_other_cat', $this->lang['delete.move_in_other_cat'], $this->get_category()->get_id_parent(), $options));
 
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -122,14 +122,14 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($category->get_id());
 		$options->set_enable_recursive_exploration($enable_recursive_exploration);
-		return $this->get_categories_manager()->get_children($category->get_id(), $options);
+		return self::get_categories_manager()->get_children($category->get_id(), $options);
 	}
 
 	private function get_category_items_exists(Category $category)
 	{
 		return PersistenceContext::get_querier()->row_exists(
-		$this->get_categories_manager()->get_categories_items_parameters()->get_table_name_contains_items(),
-		'WHERE '.$this->get_categories_manager()->get_categories_items_parameters()->get_field_name_id_category().'=:id_category',
+		self::get_categories_manager()->get_categories_items_parameters()->get_table_name_contains_items(),
+		'WHERE '.self::get_categories_manager()->get_categories_items_parameters()->get_field_name_id_category().'=:id_category',
 		array('id_category' => $category->get_id()
 		));
 	}
@@ -137,9 +137,9 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	private function get_category()
 	{
 		$id_category = $this->get_id_category();
-		if (!empty($id_category) && $this->get_categories_manager()->get_categories_cache()->category_exists($id_category))
+		if (!empty($id_category) && self::get_categories_manager()->get_categories_cache()->category_exists($id_category))
 		{
-			return $this->get_categories_manager()->get_categories_cache()->get_category($id_category);
+			return self::get_categories_manager()->get_categories_cache()->get_category($id_category);
 		}
 		throw new CategoryNotFoundException($id_category);
 	}
@@ -197,14 +197,17 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	}
 
 	/**
+	 * @return CategoriesManager
+	 */
+	protected static function get_categories_manager()
+	{
+		return CategoriesService::get_categories_manager();
+	}
+
+	/**
 	 * @return string id of the category to edit / delete
 	 */
 	abstract protected function get_id_category();
-
-	/**
-	 * @return CategoriesManager
-	 */
-	abstract protected function get_categories_manager();
 
 	/**
 	 * @return Url

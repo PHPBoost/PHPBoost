@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 08 22
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,7 +39,7 @@ abstract class AbstractCategoriesManageController extends ModuleController
 
 	private function build_view()
 	{
-		$categories_cache = $this->get_categories_manager()->get_categories_cache()->get_class();
+		$categories_cache = self::get_categories_manager()->get_categories_cache()->get_class();
 		$categories = $categories_cache::load()->get_categories();
 
 		$number_categories = count($categories);
@@ -93,7 +93,7 @@ abstract class AbstractCategoriesManageController extends ModuleController
 		if ($request->get_postvalue('submit', false))
 		{
 			$categories = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
-			$categories_cache = $this->get_categories_manager()->get_categories_cache();
+			$categories_cache = self::get_categories_manager()->get_categories_cache();
 
 			foreach ($categories as $position => $tree)
 			{
@@ -101,7 +101,7 @@ abstract class AbstractCategoriesManageController extends ModuleController
 				$children = $tree->children[0];
 				$category = $categories_cache->get_category($id);
 
-				$this->get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
+				self::get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
 
 				$this->update_children_positions($children, $category->get_id());
 			}
@@ -122,9 +122,9 @@ abstract class AbstractCategoriesManageController extends ModuleController
 				{
 					$id = $tree->id;
 					$children = $tree->children[0];
-					$category = $this->get_categories_manager()->get_categories_cache()->get_category($id);
+					$category = self::get_categories_manager()->get_categories_cache()->get_category($id);
 
-					$this->get_categories_manager()->update_position($category, $id_parent, ($position +1));
+					self::get_categories_manager()->update_position($category, $id_parent, ($position +1));
 
 					$this->update_children_positions($children, $category->get_id());
 				}
@@ -171,7 +171,10 @@ abstract class AbstractCategoriesManageController extends ModuleController
 	/**
 	 * @return CategoriesManager
 	 */
-	abstract protected function get_categories_manager();
+	protected static function get_categories_manager()
+	{
+		return CategoriesService::get_categories_manager();
+	}
 
 	/**
 	 * @param int $category Category

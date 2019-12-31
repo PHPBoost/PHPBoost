@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2019 12 31
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -26,15 +26,10 @@ class RootCategory extends Category
 	 */
 	public static function get_authorizations_settings()
 	{
-		$common_lang = LangLoader::get('common');
-
-		return array(
-			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new VisitorDisabledActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-			new MemberDisabledActionAuthorization($common_lang['authorizations.categories_management'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
-		);
+		return array_merge(
+			DefaultCategoriesFormController::get_authorizations_settings(), array(
+			new MemberDisabledActionAuthorization(LangLoader::get_message('authorizations.categories_management', 'common'), Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
+		));
 	}
 }
 ?>
