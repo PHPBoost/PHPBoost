@@ -171,9 +171,9 @@ $lang = array(
 						<fieldset>
 							<legend>Make a donation</legend>
 							<div class="fielset-inset">
-								If you want to support PHPBoost financially you can donate via paypal :
+								If you want to financially support PHPBoost, you can donate via paypal :
 
-								<div class="center">
+								<div class="align-center">
 									<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 										<input type="hidden" name="cmd" value="_s-xclick">
 										<input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
