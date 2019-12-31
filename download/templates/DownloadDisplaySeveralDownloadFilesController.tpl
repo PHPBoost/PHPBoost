@@ -21,7 +21,7 @@
 			<div class="subcat-content">
 				# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 					<a class="subcat-thumbnail" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-						<img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+						<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
 					</a>
 				# ENDIF #
 				<a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>

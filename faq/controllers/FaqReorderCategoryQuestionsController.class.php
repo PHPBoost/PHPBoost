@@ -62,7 +62,7 @@ class FaqReorderCategoryQuestionsController extends ModuleController
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()

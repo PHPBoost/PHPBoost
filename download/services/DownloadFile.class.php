@@ -564,7 +564,7 @@ class DownloadFile
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+			'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),

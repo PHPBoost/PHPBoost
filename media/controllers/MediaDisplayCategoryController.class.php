@@ -76,7 +76,7 @@ class MediaDisplayCategoryController extends ModuleController
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
-					'CATEGORY_THUMBNAIL' => $category_thumbnail,
+					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'ITEMS_TEXT' => $category->get_elements_number() > 1 ? $this->lang['media.items'] : $this->lang['media.item'],
 					'ITEMS_NUMBER' => sprintf($category->get_elements_number()),
 					'U_CATEGORY' => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()

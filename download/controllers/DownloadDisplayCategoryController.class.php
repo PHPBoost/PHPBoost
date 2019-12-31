@@ -66,7 +66,7 @@ class DownloadDisplayCategoryController extends ModuleController
 					'C_MORE_THAN_ONE_DOWNLOADFILE' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
-					'CATEGORY_THUMBNAIL' => $category_thumbnail,
+					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'DOWNLOADFILES_NUMBER' => $category->get_elements_number(),
 					'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
@@ -134,7 +134,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
@@ -150,10 +150,10 @@ class DownloadDisplayCategoryController extends ModuleController
 			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
-			
+
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
-			
+
 			foreach ($downloadfile->get_sources() as $name => $url)
 			{
 				$this->tpl->assign_block_vars('downloadfiles.sources', $downloadfile->get_array_tpl_source_vars($name));

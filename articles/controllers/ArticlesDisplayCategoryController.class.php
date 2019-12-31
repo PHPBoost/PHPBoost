@@ -143,7 +143,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 					'C_MORE_THAN_ONE_ARTICLE' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
-					'CATEGORY_THUMBNAIL' => $category_thumbnail,
+					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'ARTICLES_NUMBER' => $category->get_elements_number(),
 					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
@@ -160,7 +160,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'NUMBER_CATS_COLUMNS' => $this->config->get_categories_number_per_row()
