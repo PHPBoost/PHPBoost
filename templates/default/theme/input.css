@@ -19,6 +19,8 @@
 	cursor: not-allowed;
 }
 
+[disabled]{ opacity: 0.3; }
+
 [type="text"],
 [type="email"],
 [type="url"],

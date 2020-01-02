@@ -253,7 +253,6 @@ select:focus { background-color: #ECF2F8; }
 
 [disabled],
 [disabled]:hover {
-	background-color: #BDC2C9;
 	border-color: #AAB2BD;
 }
 
@@ -675,7 +674,7 @@ a:hover,
 	color: #4E8EC1;
 	border-color: #4E8EC1;
 }
-.bgc.link-color:hover { background-color: rgba(0, 102, 204, 0.3);}
+
 .bgc-full:hover.link-color { color: #FFFFFF}
 
 .dropdown-container {
