@@ -206,6 +206,10 @@ body {
 
 optgroup { border-color: #BDC2C9; }
 
+select[multiple] option[selected] {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5lcDwADswGuOFa9+gAAAABJRU5ErkJggg==); 
+}
+
 legend { border-color: #BDC2C9; }
 
 .grouped-element { border-color: #BDC2C9; }
