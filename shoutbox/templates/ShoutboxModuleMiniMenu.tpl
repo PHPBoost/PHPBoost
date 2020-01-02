@@ -115,32 +115,44 @@
 			<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label>
 			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="2" cols="16"></textarea>
 		</div>
-		<nav id="shoutbox-bbcode-container" class="shout-spacing">
+		<nav id="shoutbox-bbcode-container">
 			# IF C_DISPLAY_SHOUT_BBCODE #
-			<ul class="bbcode-container">
+			<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
 				<li class="bbcode-elements bbcode-block-shoutbox">
-					<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);"> <i class="far fa-fw fa-smile" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('bbcode.smileys', 'common', 'BBCode')}</span></a>
-					<div class="bbcode-block-container" style="display: none;" id="bb-block1shout-contents">
-						<ul class="bbcode-container shoutbox-smileys bkgd-main" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
-							# START smileys #
-								<li>
-									<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" aria-label="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}" /></a>
-								</li>
-							# END smileys #
-						</ul>
+					<span class="bbcode-button" data-modal data-target="bb-shoutbox-smileys" aria-label="${LangLoader::get_message('bbcode.smileys', 'common', 'BBCode')}">
+						<i class="far fa-fw fa-smile" aria-hidden="true"></i>
+					</span>
+					<div id="bb-shoutbox-smileys" class="modal modal-animation">
+						<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+						<div class="content-panel cell">
+							<div class="cell-header">
+								${LangLoader::get_message('bbcode.smileys', 'common', 'BBCode')}
+							</div>
+							<div class="cell-list cell-list-inline">
+								<ul>
+									# START smileys #
+										<li>
+											<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" aria-label="{smileys.CODE}">
+												<img src="{smileys.URL}" alt="{smileys.CODE}" />
+											</span>
+										</li>
+									# END smileys #
+								</ul>
+							</div>
+						</div>
 					</div>
 				</li>
 				<li class="bbcode-elements">
-					<a href="" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.bold', 'common', 'BBCode')}"><i class="fa fa-fw fa-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
+					<a class="bbcode-button" href="" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.bold', 'common', 'BBCode')}"><i class="fa fa-fw fa-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
 				</li>
 				<li class="bbcode-elements">
-					<a href="" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.italic', 'common', 'BBCode')}"><i class="fa fa-fw fa-italic# IF C_ITALIC_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
+					<a class="bbcode-button" href="" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.italic', 'common', 'BBCode')}"><i class="fa fa-fw fa-italic# IF C_ITALIC_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
 				</li>
 				<li class="bbcode-elements">
-					<a href="" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.underline', 'common', 'BBCode')}"><i class="fa fa-fw fa-underline# IF C_UNDERLINE_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
+					<a class="bbcode-button" href="" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.underline', 'common', 'BBCode')}"><i class="fa fa-fw fa-underline# IF C_UNDERLINE_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
 				</li>
 				<li class="bbcode-elements">
-					<a href="" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.strike', 'common', 'BBCode')}"><i class="fa fa-fw fa-strikethrough# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
+					<a class="bbcode-button" href="" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" aria-label="${LangLoader::get_message('bbcode.strike', 'common', 'BBCode')}"><i class="fa fa-fw fa-strikethrough# IF C_STRIKE_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>
 				</li>
 			</ul>
 			# ENDIF #

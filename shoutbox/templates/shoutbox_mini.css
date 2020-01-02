@@ -17,24 +17,14 @@
 	padding-left: 1.5em;
 }
 
-.shout-spacing {
-	margin: 0.618em 0;
-	position: relative;
-}
-
 .bbcode-elements.bbcode-block-shoutbox {
 	position: static !important;
 }
 
-.shout-spacing .bbcode-block-container {
-	top: 100%;
+.cell-mini #shoutbox-bbcode-container [class*="cell-"] {
+    background-color: #ECF2F8 !important;
 }
-.shout-spacing .shoutbox-smileys {
-	width: 100%;
-	position: absolute;
-	z-index: 10
-}
-.shout-spacing
+
 .bbcode-block-container::after {
     border-color: transparent;
 }
