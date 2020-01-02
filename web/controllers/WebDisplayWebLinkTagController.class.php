@@ -91,7 +91,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'C_GRID_VIEW' => $this->config->is_display_in_grid_view(),
 			'C_LIST_VIEW' => $this->config->is_display_in_list_view(),
 			'C_TABLE_VIEW' => $this->config->is_display_in_table_view(),
-			'C_MODERATE' => '',
+			'C_MODERATE' => CategoriesAuthorizationsService::check_authorizations()->moderation(),
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'CATEGORIES_NUMBER_PER_ROW' => $this->config->get_categories_number_per_row(),
 			'ITEMS_NUMBER_PER_ROW' => $this->config->get_items_number_per_row(),
