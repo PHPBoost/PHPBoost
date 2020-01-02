@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 02
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,10 +32,15 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	private $category;
 	protected $is_new_category;
 
+	public static function __static()
+	{
+		self::$lang = LangLoader::get('categories-common');
+		self::$common_lang = LangLoader::get('common');
+	}
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		$this->init();
 		$this->build_form($request);
 
 		$tpl = new StringTemplate('# INCLUDE FORM #');
@@ -54,12 +59,6 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$tpl->put('FORM', $this->form->display());
 
 		return $this->generate_response($tpl);
-	}
-
-	private function init()
-	{
-		self::$lang = LangLoader::get('categories-common');
-		self::$common_lang = LangLoader::get('common');
 	}
 
 	protected function build_form(HTTPRequestCustom $request)
