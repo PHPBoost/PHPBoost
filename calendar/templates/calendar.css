@@ -3,10 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-#calendar {
-	width: 100%;
-}
-
 #date-select-form .grouped-element,
 #date-select-form select {
 	border-width: 0;
@@ -16,65 +12,9 @@
 	margin: 0.618em 0;
 }
 
-#module-calendar hr {
-	width: 70%;
-	clear: both;
-}
-
-/* Affichage de du titre de l'evenement dans le tableau de l'administration */
-table tbody tr th.column-title {
-	width: 28%;
-}
-
-/* Affichage du mini calendrier dans une colonne */
-
-.legend-color {
-	font-size: 1.618em;
-}
-
-.legend {
-	padding-right: 1.309em;
-}
-
 .calendar-table th,
 .calendar-table td {
     width: calc(100% / 8);
-}
-
-.calendar-table.mini-calendar th,
-.calendar-table.mini-calendar .calendar-week,
-.calendar-table.mini-calendar td a {
-	padding: 0.809em;
-	font-size: 0.809em;
-}
-
-.calendar-table.mini-calendar td a {
-    display: block;
-}
-
-@media (min-width: 481px) {
-	.calendar-table.mini-calendar th,
-	.calendar-table.mini-calendar .calendar-week,
-	.calendar-table.mini-calendar td a {
-		padding: 0.809em 0.1618em;
-	}
-}
-
-@media (min-width: 769px) {
-	.calendar-table.mini-calendar th,
-	.calendar-table.mini-calendar .calendar-week,
-	.calendar-table.mini-calendar td a {
-		padding: 0.309em 0;
-		font-size: 0.618em;
-	}
-}
-
-@media (min-width: 1025px) {
-	.calendar-table.mini-calendar th,
-	.calendar-table.mini-calendar .calendar-week,
-	.calendar-table.mini-calendar td a {
-		font-size: 0.809em;
-	}
 }
 
 td[class*="calendar-"],
@@ -86,8 +26,4 @@ td[class*="calendar-"]:last-child {
 .calendar-table td a {
     padding: 0.456em;
     display: block;
-}
-
-td.calendar-week {
-	padding: 0.456em;
 }
