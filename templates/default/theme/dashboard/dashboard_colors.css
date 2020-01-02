@@ -232,7 +232,7 @@ select:focus {
 }
 
 .mini-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	color: #0066cc;
+	color: #366493;
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::before {
