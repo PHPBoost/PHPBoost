@@ -1,6 +1,10 @@
 <script>
 	jQuery(document).ready(function() {
-		var nbr_element = jQuery('#mini-gallery-slideshow li').length;
+		var nbr_element = jQuery('#mini-gallery-slideshow li').length,
+			windowHeight = jQuery('#scrolling-images').outerHeight();
+
+		jQuery('.mini-picture').css('height', windowHeight);
+
 		# IF C_HORIZONTAL_SCROLL #
 			jQuery('#mini-gallery-slideshow').css('max-width', (nbr_element * 150) + 'px');
 		# ENDIF #
@@ -23,26 +27,30 @@
 	});
 </script>
 <div class="cell-body">
-	<div id="scrolling_images">
-		# IF C_STATIC #
-			# START pics_mini #
-				<a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a>
-			# END pics_mini #
+	<div id="scrolling-images">
+		# IF C_NO_ITEM #
+			<div class="mini-picture"><em>{L_NO_RANDOM_PICS}</em></div>
 		# ELSE #
-			# IF NOT C_NO_RANDOM_PICS #
+			# IF C_STATIC #
+				# START pics_mini #
+					<div class="mini-picture">
+						<a href="{pics_mini.U_PICS}#pics_max">
+							<img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" />
+						</a>
+					</div>
+				# END pics_mini #
+			# ELSE #
 				<ul id="mini-gallery-slideshow" class="# IF C_VERTICAL_SCROLL #vertical# ENDIF ## IF C_FADE #fade# ENDIF ## IF C_HORIZONTAL_SCROLL #horizontal# ENDIF #">
 					# START pics_mini #
-						<li><a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
+						<li class="mini-picture"><a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}" height="{pics_mini.HEIGHT}" /></a></li>
 					# END pics_mini #
 				</ul>
 			# ENDIF #
 		# ENDIF #
-		# IF C_NO_RANDOM_PICS #
-			<div class="spacer"></div>
-			<span class="smaller"><em>{L_NO_RANDOM_PICS}</em></span>
-		# ENDIF #
 	</div>
 </div>
 <div class="cell-body">
-	<div class="cell-content align-center"><a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a></div>
+	<div class="cell-content align-center">
+		<a class="button small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a>
+	</div>
 </div>

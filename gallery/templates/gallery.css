@@ -3,28 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-/* --- module mini ---------------------------------------------------------- */
-
-#scrolling_images {
-	position: relative;
-	height: 150px;
-	overflow: hidden;
-}
-
-#module-mini-gallery ul {
-	margin: 0 auto;
-	list-style: none;
-}
-
-#mini-gallery-slideshow li {
-	height: 150px;
-}
-
-#mini-gallery-slideshow.fade li 			{ display: none; 		 }
-#mini-gallery-slideshow.vertical li 		{ display: inline-block; }
-#mini-gallery-slideshow.horizontal li 		{ display: block; 		 }
-#mini-gallery-slideshow.fade ul:first-child { display: block; 		 }
-
 /* --- Tools menu for filters ----------------------------------------------- */
 @media (min-width: 769px) {
 	#cssmenu-galleryfilter ul {

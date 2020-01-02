@@ -107,17 +107,17 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			switch ($config->get_scroll_type())
 			{
 				case GalleryConfig::STATIC_SCROLL :
-				$tpl->put('C_FADE', true);
-				break;
+					$tpl->put('C_FADE', true);
+					break;
 				case GalleryConfig::VERTICAL_DYNAMIC_SCROLL :
-				$tpl->put('C_VERTICAL_SCROLL', true);
-				break;
+					$tpl->put('C_VERTICAL_SCROLL', true);
+					break;
 				case GalleryConfig::HORIZONTAL_DYNAMIC_SCROLL :
-				$tpl->put('C_HORIZONTAL_SCROLL', true);
-				break;
+					$tpl->put('C_HORIZONTAL_SCROLL', true);
+					break;
 				case GalleryConfig::NO_SCROLL :
-				$tpl->put('C_STATIC', true);
-				break;
+					$tpl->put('C_STATIC', true);
+					break;
 			}
 
 			$Gallery = new Gallery();
@@ -154,7 +154,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		}
 
 		$tpl->put_all(array(
-			'C_NO_RANDOM_PICS' => ($i == 0),
+			'C_NO_ITEM' => count($gallery_mini) == 0,
 			'ARRAY_PICS' => $array_pics_mini,
 			'HEIGHT_DIV' => $config->get_mini_max_height(),
 			'SUM_HEIGHT' => $sum_height + 10,
@@ -166,7 +166,6 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			'L_NO_RANDOM_PICS' => $LANG['no_random_img'],
 			'L_GALLERY' => $LANG['gallery']
 		));
-
 		return $tpl->render();
 	}
 }

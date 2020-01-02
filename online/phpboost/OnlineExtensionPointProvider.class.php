@@ -7,6 +7,7 @@
  * @since       PHPBoost 3.0 - 2011 09 19
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class OnlineExtensionPointProvider extends ExtensionPointProvider
@@ -19,7 +20,8 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('online.css');
+		$module_css_files->adding_running_module_displayed_file('online.css');
+		$module_css_files->adding_always_displayed_file('online_mini.css');
 		return $module_css_files;
 	}
 
