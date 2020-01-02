@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 02
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -454,7 +454,8 @@ class WebLink
 				'C_DELETE' => $this->is_authorized_to_delete(),
 				'C_READ_MORE' => !$this->is_description_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $real_description != @strip_tags($contents, '<br><br/>'),
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-				'C_HAS_THUMBNAIL' => $this->has_thumbnail() || $this->has_partner_thumbnail(),
+				'C_IS_ADORNED' => $this->has_thumbnail() || $this->has_partner_thumbnail(),
+				'C_HAS_THUMBNAIL' => $this->has_thumbnail(),
 				'C_IS_PARTNER' => $this->is_partner(),
 				'C_HAS_PARTNER_THUMBNAIL' => $this->has_partner_thumbnail(),
 				'C_IS_PRIVILEGED_PARTNER' => $this->is_privileged_partner(),
@@ -472,7 +473,7 @@ class WebLink
 				'PSEUDO' => $user->get_display_name(),
 				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR' => $user_group_color,
-				'NUMBER_VIEWS' => $this->views_number,
+				'VIEWS_NUMBER' => $this->views_number,
 				'L_VISITED_TIMES' => StringVars::replace_vars(LangLoader::get_message('visited_times', 'common', 'web'), array('number_visits' => $this->views_number)),
 				'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
 				'NOTATION' => NotationService::display_active_image($this->get_notation()),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 02
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -84,6 +84,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_GRID_VIEW' => $this->config->is_display_in_grid_view(),
 			'C_LIST_VIEW' => $this->config->is_display_in_list_view(),
 			'C_TABLE_VIEW' => $this->config->is_display_in_table_view(),
+			'C_MODERATE' => '',
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'CATEGORIES_NUMBER_PER_ROW' => $this->config->get_categories_number_per_row(),
 			'ITEMS_NUMBER_PER_ROW' => $this->config->get_items_number_per_row(),
@@ -91,7 +92,6 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('web'),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$comments_config->module_comments_is_enabled('web') + (int)$content_management_config->module_notation_is_enabled('web')
 		));
 
 		while ($row = $result->fetch())

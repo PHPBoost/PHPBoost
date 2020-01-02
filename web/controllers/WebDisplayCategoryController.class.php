@@ -128,7 +128,6 @@ class WebDisplayCategoryController extends ModuleController
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$this->comments_config->module_comments_is_enabled('web') + (int)$this->content_management_config->module_notation_is_enabled('web'),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),

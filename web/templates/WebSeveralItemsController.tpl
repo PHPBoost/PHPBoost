@@ -49,8 +49,7 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>${LangLoader::get_message('form.name', 'common')}</th>
-						<th class="col-small">${LangLoader::get_message('form.keywords', 'common')}</th>
+						<th>${LangLoader::get_message('form.name', 'common')} <span class="small more">(${LangLoader::get_message('see.details', 'common')})</span></th>
 						<th class="col-small">{@visits_number}</th>
 						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
 						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
@@ -64,16 +63,7 @@
 								<a href="{weblinks.U_ITEM}" itemprop="name"# IF weblinks.C_NEW_CONTENT # class="new-content"# ENDIF#>{weblinks.TITLE}</a>
 							</td>
 							<td>
-								# IF weblinks.C_KEYWORDS #
-									# START weblinks.keywords #
-										<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a># IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
-									# END weblinks.keywords #
-								# ELSE #
-									${LangLoader::get_message('none', 'common')}
-								# ENDIF #
-							</td>
-							<td>
-								{weblinks.NUMBER_VIEWS}
+								{weblinks.VIEWS_NUMBER}
 							</td>
 							# IF C_NOTATION_ENABLED #
 								<td>
@@ -108,7 +98,7 @@
 						</header>
 						<div class="cell-infos">
 							<div class="more">
-								<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.NUMBER_VIEWS}</span>
+								<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.VIEWS_NUMBER}</span>
 								# IF C_COMMENTS_ENABLED #
 									<span class="pinned">
 										<i class="fa fa-comments" aria-hidden="true"></i>
@@ -128,7 +118,7 @@
 						</div>
 
 						<div class="cell-body">
-							# IF weblinks.C_HAS_THUMBNAIL #
+							# IF weblinks.C_IS_ADORNED #
 								<div class="cell-thumbnail">
 									# IF weblinks.C_IS_PARTNER #
 										# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
@@ -137,7 +127,9 @@
 											<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
 										# ENDIF #
 									# ELSE #
-										<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+										# IF weblinks.C_HAS_THUMBNAIL #
+											<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+										# ENDIF #
 									# ENDIF #
 									<a class="cell-thumbnail-caption" href="{weblinks.U_ITEM}">
 										${LangLoader::get_message('see.details', 'common')}
