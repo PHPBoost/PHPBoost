@@ -19,7 +19,7 @@
 	cursor: not-allowed;
 }
 
-[disabled]{ opacity: 0.5; }
+[disabled]{ opacity: 0.8; }
 
 [type="text"],
 [type="email"],
