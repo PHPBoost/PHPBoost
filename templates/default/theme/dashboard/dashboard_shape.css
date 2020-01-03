@@ -75,6 +75,10 @@ body {
 	flex: 1 1 auto;
 }
 
+#admin-contents{
+	padding: 0.618em;
+}
+
 @media (min-width: 769px) {
 	#admin-contents{
 		padding: 0.618em 2em;

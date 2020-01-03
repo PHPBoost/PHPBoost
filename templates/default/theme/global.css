@@ -62,6 +62,11 @@ a.pinned { cursor: pointer; }
 	border-color: transparent;
 }
 
+.xmlhttprequest-result-search span {
+	display: block;
+	padding: 0.309em 0.618em;
+}
+
 /* --- Authorized reader --- */
 .authorized-reader {
     border-width: 0 0 0 3px;

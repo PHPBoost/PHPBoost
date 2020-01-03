@@ -44,38 +44,38 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 		{
 			if (!empty($member))
 			{
-				echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($insert_member))
 			{
-				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['display_name']) .'\';return false">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['display_name']) .'\';return false">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($add_member_auth))
 			{
-				echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($admin_member))
 			{
-				echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a>';
 			}
 			if (!empty($warning_member))
 			{
-				echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($punish_member))
 			{
-				echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['display_name'] . '</a></span>';
 			}
 			$i++;
 		}
 		if ($i == 0) //Aucun membre trouvé.
 		{
-			echo $LANG['no_result'];
+			echo '<span>' . $LANG['no_result'] . '</span>';
 		}
 	}
 	else
 	{
-		echo $LANG['no_result'];
+		echo '<span>' . $LANG['no_result'] . '</span>';
 	}
 }
 elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Recherche d'un membre
@@ -92,27 +92,27 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 
 			if (!empty($warning_user))
 			{
-				echo '<a href="' . $url_warn . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="' . $url_warn . '">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($punish_user))
 			{
-				echo '<a href="' . $url_punish . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="' . $url_punish . '">' . $row['display_name'] . '</a></span>';
 			}
 			elseif (!empty($ban_user))
 			{
-				echo '<a href="' . $url_ban . '">' . $row['display_name'] . '</a><br />';
+				echo '<span><a href="' . $url_ban . '">' . $row['display_name'] . '</a></span>';
 			}
 			$i++;
 		}
 
 		if ($i == 0) //Aucun membre trouvé.
 		{
-			echo $LANG['no_result'];
+			echo '<span>' . $LANG['no_result'] . '</span>';
 		}
 	}
 	else
 	{
-		echo $LANG['no_result'];
+		echo '<span>' . $LANG['no_result'] . '</span>';
 	}
 }
 else

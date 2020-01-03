@@ -1,37 +1,43 @@
-		<section id="module-user-moderation-panel">
-			<header>
-				<h1>{L_MODERATION_PANEL}</h1>
-			</header>
-			<div class="content">
-			# IF C_MODO_PANEL_USER #
-				<table class="table">
-					<tbody>
-						<tr>
-							<td>
-								<a class="infos-options" href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
-									<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
-								</a>
-								<a href="{U_WARNING}">{L_USERS_WARNING}</a>
-							</td>
-							<td>
-								<a class="infos-options" href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
-									<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
-								</a>
-								<a href="{U_PUNISH}">{L_USERS_PUNISHMENT}</a>
-							</td>
-							<td>
-								<a class="infos-options" href="{U_BAN}" aria-label="{L_USERS_BAN}">
-									<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
-								</a>
-								<a href="{U_BAN}">{L_USERS_BAN}</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				# IF C_MODO_PANEL_USER_LIST #
+<section id="module-user-moderation-panel">
+	<header>
+		<h1>{L_MODERATION_PANEL}</h1>
+	</header>
+	<div class="content">
+		# IF C_MODO_PANEL_USER #
+			<div class="cell-flex cell-columns-3">
+				<div class="cell">
+					<div class="cell-body">
+						<div class="cell-content align-center">
+							<a class="infos-options" href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
+								<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
+								<span class="d-block">{L_USERS_WARNING}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="cell">
+					<div class="cell-body">
+						<div class="cell-content align-center">
+							<a class="infos-options" href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
+								<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
+								<span class="d-block">{L_USERS_PUNISHMENT}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="cell">
+					<div class="cell-body">
+						<div class="cell-content align-center">
+							<a class="infos-options" href="{U_BAN}" aria-label="{L_USERS_BAN}">
+								<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
+								<span class="d-block">{L_USERS_BAN}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			# IF C_MODO_PANEL_USER_LIST #
 				<script>
-				<!--
 					function XMLHttpRequest_search()
 					{
 						var login = jQuery('#login').val();
@@ -51,7 +57,6 @@
 						else
 							alert("{L_REQUIRE_LOGIN}");
 					}
-					-->
 				</script>
 
 				<form action="{U_ACTION}" method="post" class="fieldset-content">
@@ -59,13 +64,13 @@
 						<legend>{L_SEARCH_USER}</legend>
 						<div class="form-element">
 							<label for="login">{L_SEARCH_USER} <span class="field-description">{L_JOKER}</span></label>
-							<div class="form-field">
+							<div class="form-field grouped-inputs">
 								<input type="text" maxlength="25" id="login" value="" name="login">
 								<input type="hidden" name="token" value="{TOKEN}">
-								<button class="button small" onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
-								<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+								<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
 							</div>
 						</div>
+							<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 					</fieldset>
 				</form>
 
@@ -105,22 +110,18 @@
 						# ENDIF #
 					</tbody>
 				</table>
-				# ENDIF #
+			# ENDIF #
 
-
-
-				# IF C_MODO_PANEL_USER_INFO #
+			# IF C_MODO_PANEL_USER_INFO #
 				<script>
-				<!--
-				function change_textarea_level(replace_value, regex)
-				{
-					var contents = document.getElementById('action_contents').value;
-					{REPLACE_VALUE}
-					document.getElementById('action_contents').value = contents;
+					function change_textarea_level(replace_value, regex)
+					{
+						var contents = document.getElementById('action_contents').value;
+						{REPLACE_VALUE}
+						document.getElementById('action_contents').value = contents;
 
-					# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
-				}
-				-->
+						# IF C_TINYMCE_EDITOR # setTinyMceContent(contents); # ENDIF #
+					}
 				</script>
 
 				<form action="{U_ACTION_INFO}" method="post">
@@ -156,14 +157,13 @@
 					</fieldset>
 
 					<fieldset class="fieldset-submit">
-						<legend></legend>
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="valid_user" value="true" class="button submit">{L_CHANGE_INFO}</button>
 					</fieldset>
 				</form>
-				# ENDIF #
+			# ENDIF #
 
-				# IF C_MODO_PANEL_USER_BAN #
+			# IF C_MODO_PANEL_USER_BAN #
 				<form action="{U_ACTION_INFO}" method="post">
 					<fieldset>
 						<legend>{L_ACTION_INFO}</legend>
@@ -198,8 +198,8 @@
 						<button type="submit" name="valid_user" value="true" class="button submit">{L_BAN}</button>
 					</fieldset>
 				</form>
-				# ENDIF #
 			# ENDIF #
-				</div>
-			<footer></footer>
-		</section>
+		# ENDIF #
+	</div>
+	<footer></footer>
+</section>

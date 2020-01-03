@@ -116,15 +116,6 @@ article footer ul.pagination {
 	}
 }
 
-.moderation-type-block {
-	display: block;
-	text-align: center;
-}
-
-.moderation-type-block > span {
-	display: block;
-}
-
 
 /* --- creation de topic --- */
 #add_poll_field_link {
