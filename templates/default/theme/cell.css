@@ -1,3 +1,9 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 .cell header,
 .cell footer,
 .cell-header button {
@@ -173,9 +179,9 @@
 	margin: 0 !important;
 }
 
-.cell .formatter-title {
-	display: block;
-}
+.cell .formatter-title { display: block; }
+
+.cell .formatter-blockquote .formatter-title { padding-left: 1.618em; }
 
 .cell-footer {
 	padding: 0.618em;

@@ -1,6 +1,6 @@
 /*
- * Copy this file in your theme to customize the module.
- * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
  * Contains all elements colors
 */
@@ -207,7 +207,7 @@ body {
 optgroup { border-color: #BDC2C9; }
 
 select[multiple] option[selected] {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5lcDwADswGuOFa9+gAAAABJRU5ErkJggg==);
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5n8HwAEMwIuxlyf1QAAAABJRU5ErkJggg==);
 }
 
 select[multiple] option[disabled] { color: #BF263C; }

@@ -1,3 +1,9 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 * {
-    background-color: rgba(54, 100, 147, 0.15);
+    background-color: rgba(54, 100, 147, 0.05);
 }

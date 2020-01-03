@@ -1,3 +1,9 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 .message-helper {
 	position: relative;
 	display: block;
@@ -27,7 +33,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.message-helper-small {
+.text-helper .message-helper-small {
 	width: 50%;
 }
 

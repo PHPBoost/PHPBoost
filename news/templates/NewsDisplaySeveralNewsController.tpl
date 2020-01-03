@@ -10,7 +10,7 @@
 	</header>
 	<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{COLUMNS_NUMBER}# ELSE #cell-row# ENDIF #">
 		# IF C_NEWS_NO_AVAILABLE #
-			<div class="align-center">
+			<div class="message-helper bgc notice cell-4-4">
 				${LangLoader::get_message('no_item_now', 'common')}
 			</div>
 		# ELSE #

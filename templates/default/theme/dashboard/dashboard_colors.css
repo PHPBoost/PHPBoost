@@ -1,4 +1,7 @@
 /*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
  * Contains all the elements colors of the dashboard if not in colors.css or if different
 */
 
@@ -68,16 +71,16 @@ article .addon-menu-title,
 .multiple-select-button,
 .addon-menu-title,
 .submit.addon-menu-title              { background-color: #366493; border-color: #366493; }
-.default-addon .addon-menu-title      { background-color: #2F9674; border-color: #2F9674; }
-.deactivate-element .addon-menu-title { background-color: #888888; border-color: #888888; }
-.not-compatible .addon-menu-title     { background-color: #913636; border-color: #913636; }
+.default-addon .addon-menu-title      { background-color: #2ABA66; border-color: #2ABA66; }
+.deactivate-element .addon-menu-title { background-color: #BDC2C9; border-color: #BDC2C9; }
+.not-compatible .addon-menu-title     { background-color: #BF263C; border-color: #BF263C; }
 
 .addon.not-compatible {
-	border-color: #913636;
+	border-color: #BF263C;
 }
 
 span.not-compatible {
-	color: #913636;
+	color: #BF263C;
 }
 
 .multiple-select-button:hover,
@@ -92,12 +95,12 @@ span.not-compatible {
 .addon-menu-title.opened a { color: #FFFFFF; }
 
 .deactivate-element .addon-menu-container:hover .addon-menu-title,
-.deactivate-element .addon-menu-container.opened .addon-menu-title { color: #888888; }
+.deactivate-element .addon-menu-container.opened .addon-menu-title { color: #BDC2C9; }
 
 .not-compatible .addon-menu-container:hover .addon-menu-title,
-.not-compatible .addon-menu-container.opened .addon-menu-title { color: #913636; }
+.not-compatible .addon-menu-container.opened .addon-menu-title { color: #BF263C; }
 
-.default-addon .addon-menu-container:hover .addon-menu-title { color: #2F9674; }
+.default-addon .addon-menu-container:hover .addon-menu-title { color: #2ABA66; }
 
 .addon-menu-content {
 	background-color: #FFFFFF;
@@ -109,22 +112,22 @@ span.not-compatible {
 	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.deactivate-element .addon-menu-content { border-color: #888888; }
-.not-compatible .addon-menu-content     { border-color: #913636; }
+.deactivate-element .addon-menu-content { border-color: #BDC2C9; }
+.not-compatible .addon-menu-content     { border-color: #BF263C; }
 
 .addon-menu-item > * { background-color: #366493; }
 
 .not-compatible .addon-menu-item:hover > *,
-.not-compatible .addon-menu-item > .submit:hover { background-color: rgba(145, 54, 54, 0.2); color: #913636; }
+.not-compatible .addon-menu-item > .submit:hover { background-color: rgba(145, 54, 54, 0.2); color: #BF263C; }
 
 .addon-auth-content {
 	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 	background-color: #FFFFFF;
 }
 
 .addon-auth i { color: #366493; }
-.default-addon .addon-auth i { color: #DDDDDD; }
+.default-addon .addon-auth i { color: #BDC2C9; }
 
 .multiple-select-button .select-all-button {
 	background-color: transparent;
@@ -158,7 +161,7 @@ table thead th a { color: #FFFFFF; }
 /* --- Form elements --------------------------------------------------------- */
 .button {
 	background-color: #FFFFFF;
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 }
 
 .button-hover {
@@ -236,15 +239,20 @@ select:focus {
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::before {
-	border-color: #DDDDDD;
+	border-color: #BF263C;
+}
+
+.custom-checkbox .checkbox [type="checkbox"]:checked + span::before {
+	border-color: #2ABA66;
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::after {
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: #BF263C;
+	color: #FFFFFF;
 }
 
 .custom-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	background-color: #0066cc;
+	background-color: #2ABA66;
 	color: #FFFFFF;
 }
 
@@ -256,12 +264,12 @@ select:focus {
 
 .custom-radio .radio [type="radio"]:not(:checked) + span:after,
 .custom-radio .radio [type="radio"]:checked + span:after {
-	background-color: #DDDDDD;
+	background-color: #BDC2C9;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 }
 
 .custom-radio .radio [type="radio"]:checked + span:after {
-	background-color: #0066cc;
+	background-color: #366493;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
 }
 
@@ -310,12 +318,12 @@ nav.admin-index a {
 }
 
 .modal-menu > li > a {
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 	color: #555555;
 }
 
 #admin-quick-menu {
-	background-color: #353535;
+	background-color: #323133;
 }
 
 #admin-quick-menu li .quick-link {
@@ -328,7 +336,7 @@ nav.admin-index a {
 
 	#admin-quick-menu {
 		background-color: #FFFFFF;
-		border-color: #DDDDDD;
+		border-color: #BDC2C9;
 	}
 
 	#admin-quick-menu li .quick-link {
@@ -336,7 +344,7 @@ nav.admin-index a {
 	}
 
 	#admin-quick-menu li:hover .quick-link {
-		color: #0066CC;
+		color: #4E8EC1;
 	}
 }
 
@@ -344,70 +352,16 @@ nav.admin-index a {
 	background-color: #FFFFFF;
 }
 
-.admin-extend-menu .fa-cog 								{ color: #999999; }
-.admin-extend-menu li:hover .fa-cog 					{ color: #777777; }
-
-.admin-extend-menu .fa-download 						{ color: #F86227; }
-.admin-extend-menu li:hover .fa-download 				{ color: #D6511C; }
-
-.admin-extend-menu .fa-clock 							{ color: #FCC44C; }
-.admin-extend-menu li:hover .fa-clock 					{ color: #E5AF39; }
-
-.admin-extend-menu .fa-image    						{ color: #05BAB0; }
-.admin-extend-menu li:hover .fa-image   				{ color: #058480; }
-
-.admin-extend-menu .fa-language 						{ color: #2ECC71; }
-.admin-extend-menu li:hover .fa-language 				{ color: #16A352; }
-
-.admin-extend-menu .fa-bell 							{ color: #F1C40F; }
-.admin-extend-menu li:hover .fa-bell 					{ color: #D8B00E; }
-
-.admin-extend-menu .fa-sync 							{ color: #DDDDDD; }
-.admin-extend-menu li:hover .fa-sync 				{ color: #BBBBBB; }
-
-.admin-extend-menu .fa-exclamation-triangle 			{ color: #BA4B49; }
-.admin-extend-menu li:hover .fa-exclamation-triangle 	{ color: #880000; }
-
-.admin-extend-menu .fa-building 						{ color: #34495E; }
-.admin-extend-menu li:hover .fa-building 				{ color: #1B344D; }
-
-.admin-extend-menu .fa-user 							{ color: #1FA6D5; }
-.admin-extend-menu li:hover .fa-user 					{ color: #1589B1; }
-
-.admin-extend-menu .fa-users 							{ color: #3498DB; }
-.admin-extend-menu li:hover .fa-users 					{ color: #1B7CBD; }
-
-.admin-extend-menu .fa-bars 							{ color: #9B59B6; }
-.admin-extend-menu li:hover .fa-bars 					{ color: #8533A7; }
-
-.admin-extend-menu .fa-square 						    { color: #3A3A3A; }
-.admin-extend-menu li:hover .fa-square				    { color: #212121; }
-
-.admin-extend-menu .fa-list-ul 							{ color: #1FA6D5; }
-.admin-extend-menu li:hover .fa-list-ul 				{ color: #1589B1; }
-
-.admin-extend-menu .fa-file 							{ color: #E67E22; }
-.admin-extend-menu li:hover .fa-file 				    { color: #CA6A14; }
-
-.admin-extend-menu .fa-comment 							{ color: #FC4C7D; }
-.admin-extend-menu li:hover .fa-comment 				{ color: #E03363; }
-
-.admin-extend-menu .fa-smile 						    { color: #FCC44C; }
-.admin-extend-menu li:hover .fa-smile 				    { color: #E5AF39; }
-
-.admin-extend-menu .fa-cubes 							{ color: #05BAB0; }
-.admin-extend-menu li:hover .fa-cubes 					{ color: #058480; }
-
 /* --- Menu Manager --- */
 @media (max-width: 769px) {
     .themesmanagement {
-    	background-color: #353535;
+    	background-color: #323133;
     	color: #FFFFFF;
     }
 
     .themesmanagement select {
         background-color: #FFFFFF;
-        color: #353535
+        color: #323133
     }
 }
 
@@ -420,26 +374,26 @@ nav.admin-index a {
 
 .menu-block-libelle {
 	background-color: #FFFFFF;
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 }
 
 .menus-block-add {
 	background-color: #FFFFFF;
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 }
 
 .menus-block-add-links:last-child {
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 }
 
 .menus-block-container {
 	background-color: #FFFFFF;
-	border-color: #DDDDDD;
+	border-color: #BDC2C9;
 }
 
 #mod_header, #mod_subheader, #mod_left,
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
-	border-color: #888888;
+	border-color: #BDC2C9;
 }

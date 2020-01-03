@@ -1,7 +1,9 @@
-/* --------------------------------------
-		lightcase.css
-Contient les elements pour l'affichage dea lightbox pour afficher les media en overlay
--------------------------------------- */
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * lightcase plugin css
+*/
 
 /* icons */
 [class*='lightcase-icon-']:before {

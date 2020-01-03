@@ -1,4 +1,9 @@
-/* --- flex layout ---------------------------------------------------------- */
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 .cell-flex {
 	display: flex;
 	flex-direction: column;

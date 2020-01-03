@@ -155,22 +155,27 @@
 						<h2><i class="fa fa-comment" aria-hidden="true"></i> {L_LAST_COMMENTS}</h2>
 					</div>
 					<div class="cell-list">
-						<form method="post" class="fieldset-content">
+						<form method="post" class="fieldset-content mini-checkbox">
 							<ul>
 								# IF C_COMMENTS #
 									# START comments_list #
-									<li>
-										<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
-										<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-										<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
-											<i class="far fa-hand-point-right" aria-hidden="true"></i>
-										</a>
-										<span class="smaller">{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
-										{comments_list.CONTENT}
-									</li>
+										<li>
+											<label class="checkbox" for="multiple-checkbox-{comments_list.COMMENT_NUMBER}">
+												<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{comments_list.COMMENT_NUMBER}" name="delete-checkbox-{comments_list.COMMENT_NUMBER}" onclick="delete_button_display({COMMENTS_NUMBER});" />
+												<span>&nbsp;</span>
+											</label>
+											<span class="controls">
+												<a href="{comments_list.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+												<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
+													<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i>
+												</a>
+											</span>											
+											<span>{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
+											{comments_list.CONTENT}
+										</li>
 									# END comments_list #
 									<li>
-										<p class="smaller align-center"><a href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+										<p class="align-center"><a class="d-inline-block button bgc-full link-color" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 									</li>
 									<li class="mini-checkbox">
 										<label for="delete-all-checkbox" class="checkbox">
@@ -202,19 +207,21 @@
 					<div class="cell-header">
 						<h2><i class="far fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
 					</div>
-					<div class="cell-textarea">
-						<form action="admin_index.php" class="form-content" method="post">
-							<div class="fieldset-inset">
-								<div class="form-element full-field">
-									<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
+					<div class="cell-form">
+						<div class="cell-textarea">
+							<form action="admin_index.php" class="form-content" method="post">
+								<div class="fieldset-inset">
+									<div class="form-element full-field">
+										<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
+									</div>
+									<p class="align-center">
+										<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
+										<button type="reset" class="button reset" value="true">{L_RESET}</button>
+										<input type="hidden" name="token" value="{TOKEN}">
+									</p>
 								</div>
-								<p class="align-center">
-									<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
-									<button type="reset" class="button reset" value="true">{L_RESET}</button>
-									<input type="hidden" name="token" value="{TOKEN}">
-								</p>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

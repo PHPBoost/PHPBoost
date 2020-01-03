@@ -1,7 +1,9 @@
-/* --------------------------------------
-		print.css
-Mise en forme d'une page pour l'impression
---------------------------------------*/
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 * {
 	margin: 0;
 	padding: 0;

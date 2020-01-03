@@ -1,4 +1,9 @@
-/* --- Cookie Bar --- */
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
 .cookiebar-container {
 	z-index: 100;
 	left: 0;

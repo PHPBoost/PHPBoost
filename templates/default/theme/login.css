@@ -1,7 +1,8 @@
-/* --------------------------------------
-		login.css
-Contient les elements pour afficher la page de connexion a l'administration ou au site lorsqu'il est en maintenance.
--------------------------------------- */
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
 
 #global {
 	padding: 2.618em;
