@@ -41,29 +41,29 @@
 			</div>
 
 			<div id="support-pbt">
-					<h5 class="menu-title">
-						<div class="pbt-logo"></div>
-						<span>{L_NEED_HELP}</span>
-					</h5>
-					<nav class="admin-menu">
-						<ul>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/forum">
-									<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
-								</a>
-							</li>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/faq">
-									<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
-								</a>
-							</li>
-							<li class="admin-li">
-								<a href="https://www.phpboost.com/wiki">
-									<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
-								</a>
-							</li>
-						</ul>
-					</nav>
+				<h5 class="menu-title">
+					<div class="pbt-logo"></div>
+					<span>{L_NEED_HELP}</span>
+				</h5>
+				<nav class="admin-menu">
+					<ul>
+						<li class="admin-li">
+							<a href="https://www.phpboost.com/forum">
+								<i class="fa fa-fw fa-globe" aria-hidden="true"></i> {L_INDEX_SUPPORT}
+							</a>
+						</li>
+						<li class="admin-li">
+							<a href="https://www.phpboost.com/faq">
+								<i class="fa fa-fw fa-question-circle" aria-hidden="true"></i> {L_INDEX_FAQ}
+							</a>
+						</li>
+						<li class="admin-li">
+							<a href="https://www.phpboost.com/wiki">
+								<i class="fa fa-fw fa-book" aria-hidden="true"></i> {L_INDEX_DOCUMENTATION}
+							</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>

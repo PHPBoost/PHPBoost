@@ -1,145 +1,11 @@
-
-/* --- ######################################################################
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
- *                            admin_content.css
- *
- *            Contient la mise en forme des pages specifiques aux modules
- *            - conteneur de page
- *            - drag and drop
- *            - page d'accueil
- *            - pages des bases de donnees
- *            - pages des statistiques
- *            - pages des menus
- *
- * --- ###################################################################### ---*/
+ * Dashboard specifics
+*/
 
-
-/* --- Conteneurs, elements de module, ... =========================================== */
-section,
-article {
-	margin: auto auto 10px auto;
-	width: 96%;
-	vertical-align: top;
-}
-
-section header,
-article header {
-	margin: 0 0 20px 0;
-}
-
-/* --- Titre d'une page ou d'un element d'un module ================================== */
-section header h1,
-article header h1 {
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-section header h1,
-article header h1 {
-	font-size: 1.6em;
-	font-weight: bold;
-}
-
-section header h2,
-article header h2 {
-	margin-left: 16px;
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-section header h2,
-article header h2 {
-	font-size: 1.4em;
-	font-weight: bold;
-}
-
-section header h3,
-article header h3 {
-	margin-left: 16px;
-	border-width: 0 0 1px 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-section header h3,
-article header h3 {
-	font-size: 1.3em;
-	font-weight: bold;
-}
-
-/* --- Titre d'une pied de page ou d'un element d'un module ================================== */
-section footer,
-article footer {
-	margin-bottom: 15px;
-}
-
-/* --- Icones avec les actions (edition, suppression, etc) =================== */
-.align-right {
-    text-align: right;
-}
-
-span.actions {
-	float: right;
-}
-
-span.actions a {
-	font-size: 1em;
-}
-
-.more {
-	font-size: .95em;
-	font-style: italic;
-}
-
-/* Contenu */
-.content {
-	word-wrap: break-word;
-	padding: 0.618em;
-}
-
-.content::after,
-.content::before {
-    content: '';
-    display: block;
-    clear: both;
-}
-
-.options {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	padding: 0.456em 0.809em;
-}
-
-@media (min-width: 769px) {
-	.options {
-		float: right;
-		margin: 0 0 15px 15px;
-	}
-}
-
-.options h6 {
-	font-size: 1.1em;
-}
-
-.infos-options {
-	display: block;
-	margin: 0;
-}
-
-/* --- Gestion des Categories --- */
-#cats-elements-list {
-	position: relative;
-	padding: 5px;
-}
-
-.preview img {
-	overflow: hidden;
-}
-
-/* --- Page d'accueil ------------------------------------------------------- */
+/* --- Home page ------------------------------------------------------------ */
 .welcome-desc h2 {
 	padding: 0 0 0.382em;
 }
@@ -154,41 +20,10 @@ span.actions a {
 	background-size: cover;
 }
 
+/* --- System report --- */
+
 .system-report {
 	font-family: monospace;
-}
-
-.admin-index-comments .fieldset-inset {
-	max-height: 400px;
-	overflow: auto;
-}
-
-.admin-index-comments p.smaller {
-	margin-top: 15px;
-}
-
-div[class*="admin-index"] {
-	margin: 20px 5px 0;
-}
-
-div[class*="admin-index"] h2 {
-	padding: 0 0 8px;
-	border-width: 0 0 2px 0;
-	border-style: solid;
-	border-color: transparent;
-}
-
-@media (min-width: 769px) {
-
-	div[class*="admin-index"] {
-		margin: 20px 20px 0;
-	}
-}
-
-/* --- updates --- */
-.update-desc {
-	padding: 10px 5px 5px 5px;
-	text-align: justify;
 }
 
 /* --- database =============================================================== */
