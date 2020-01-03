@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 01 03
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -148,7 +148,7 @@ class GuestbookController extends ModuleController
 				}
 			}
 
-			GuestbookMessagesCache::invalidate();
+			GuestbookCache::invalidate();
 			$page = AppContext::get_request()->get_getint('page', 1);
 			if ($page > 1 && $deleted_messages_number == GuestbookConfig::load()->get_items_per_page())
 				$page--;
