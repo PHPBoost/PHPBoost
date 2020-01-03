@@ -207,8 +207,10 @@ body {
 optgroup { border-color: #BDC2C9; }
 
 select[multiple] option[selected] {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5lcDwADswGuOFa9+gAAAABJRU5ErkJggg==); 
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5lcDwADswGuOFa9+gAAAABJRU5ErkJggg==);
 }
+
+select[multiple] option[disabled] { color: #BF263C; }
 
 legend { border-color: #BDC2C9; }
 
