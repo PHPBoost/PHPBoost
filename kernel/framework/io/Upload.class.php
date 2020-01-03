@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 04
+ * @version     PHPBoost 5.3 - last update: 2020 01 03
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ class Upload
 	public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{
 		$file = $_FILES[$filepostname];
-		if ($file)
+		if (isset($file['name']) && isset($file['name'][0]) && !empty($file['name'][0]))
 		{
 			$this->isMultiple = is_array($file['name']);
 			$files_number = $this->isMultiple ? count(array_keys($file['name'])) : 1;
@@ -136,6 +136,8 @@ class Upload
 					$this->error = 'e_upload_error';
 			}
 		}
+		else
+			$this->error = 'e_upload_no_selected_file';
 		
 		return $this->error ? false : true;
 	}

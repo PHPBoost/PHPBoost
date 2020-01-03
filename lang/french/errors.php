@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 09 08
+ * @version     PHPBoost 5.3 - last update: 2020 01 03
  * @since       PHPBoost 1.5 - 2006 06 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 ####################################################
@@ -26,6 +27,7 @@ $LANG['e_upload_error'] = 'Erreur lors de l\'upload du fichier';
 $LANG['e_unlink_disabled'] = 'Fonction de suppression des fichiers désactivée sur votre serveur';
 $LANG['e_upload_failed_unwritable'] = 'Upload impossible, interdiction d\'écriture dans ce dossier';
 $LANG['e_upload_already_exist'] = 'Le fichier existe déjà, écrasement non autorisé';
+$LANG['e_upload_no_selected_file'] = 'Aucun fichier n\'a été sélectionné';
 $LANG['e_max_data_reach'] = 'Taille maximale atteinte, supprimez d\'anciens fichiers';
 
 //Membres

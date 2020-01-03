@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 09 08
+ * @version     PHPBoost 5.3 - last update: 2020 01 03
  * @since       PHPBoost 1.5 - 2006 06 27
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 ####################################################
@@ -26,6 +27,7 @@ $LANG['e_upload_error'] = 'Error while uploading file';
 $LANG['e_unlink_disabled'] = 'File deleting function not supported by your server';
 $LANG['e_upload_failed_unwritable'] = 'Impossible to upload because writing in this directory is not allowed';
 $LANG['e_upload_already_exist'] = 'File already exists, overwrite is not allowed';
+$LANG['e_upload_no_selected_file'] = 'No file has been selected';
 $LANG['e_max_data_reach'] = 'Max size reached, delete old files';
 
 //Members
