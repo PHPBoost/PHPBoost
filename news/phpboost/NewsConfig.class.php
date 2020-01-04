@@ -23,7 +23,7 @@ class NewsConfig extends AbstractConfigData
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const NB_VIEW_ENABLED = 'nb_view_enabled';
 
-    const DEFAULT_CONTENTS = 'default_contents';
+	const DEFAULT_CONTENTS = 'default_contents';
 
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_GRID_VIEW = 'grid';
@@ -128,7 +128,7 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
 
-        public function get_default_contents()
+	public function get_default_contents()
 	{
 		return $this->get_property(self::DEFAULT_CONTENTS);
 	}
@@ -172,7 +172,7 @@ class NewsConfig extends AbstractConfigData
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
-            self::DEFAULT_CONTENTS => '',
+			self::DEFAULT_CONTENTS => '',
 			self::DISPLAY_TYPE => self::DISPLAY_LIST_VIEW,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS => array()
