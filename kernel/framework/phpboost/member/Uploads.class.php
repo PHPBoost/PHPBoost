@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 22
+ * @version     PHPBoost 5.3 - last update: 2020 01 04
  * @since       PHPBoost 1.6 - 2007 04 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -228,10 +228,16 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
-			$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
-			if (empty($change_user_id))
-				$change_user_id = -1;
-			self::$db_querier->update(DB_TABLE_UPLOAD, array('idcat' => $to, 'user_id' => $change_user_id), 'WHERE id = :id', array('id' => $move));
+			$change_user_id = 0;
+			try {
+				$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
+			} catch (RowNotFoundException $e) {}
+			
+			$properties = array('idcat' => $to);
+			if (!empty($change_user_id))
+				$properties['user_id'] = $change_user_id;
+			
+			self::$db_querier->update(DB_TABLE_UPLOAD, $properties, 'WHERE id = :id', array('id' => $move));
 			return '';
 		}
 		else
