@@ -318,13 +318,7 @@
 									<span id="search_img"></span>
 								</span>
 								<span>
-									<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
-									<script>
-									<!--
-										document.getElementById('search_member').style.display = 'none';
-										document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
-									-->
-									</script>
+									<button type="button" id="search_member" name="search_member" class="submit" onclick="XMLHttpRequest_search();">{L_SEARCH}</button>
 									<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 								</span>
 							</td>
@@ -347,7 +341,7 @@
 									<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color: {user_list.GROUP_COLOR};"# ENDIF # title="{user_list.LOGIN}">{user_list.LOGIN}</a>
 								</td>
 								<td class="td25P">
-									{user_list.INFO_FULL}
+									{user_list.INFO}
 								</td>
 								<td class="td25P">
 									<a href="{user_list.U_ACTION_USER}"><i class="fa fa-lock"></i></a>
