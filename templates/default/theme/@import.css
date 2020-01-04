@@ -31,6 +31,7 @@
 @import url('../../default/theme/pagination.css') screen;
 @import url('../../default/theme/message_helper.css') screen;
 @import url('../../default/theme/global.css') screen;
+@import url('../../default/theme/content.css') screen;
 
 @import url('../../default/theme/dashboard/dashboard_shape.css') screen;
 @import url('../../default/theme/dashboard/dashboard_menus.css') screen;

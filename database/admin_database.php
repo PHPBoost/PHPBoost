@@ -539,6 +539,8 @@ else
 			'L_RESTORE_FROM_UPLOADED_FILE' => sprintf($LANG['import_file_explain'], File::get_formated_size($upload_max_filesize)),
 			'RESTORE_UPLOADED_FILE_MAX_SIZE' => $upload_max_filesize,
 			'L_RESTORE_UPLOADED_FILE_SIZE_EXCEEDED' => StringVars::replace_vars(LangLoader::get_message('upload.max_file_size_exceeded', 'status-messages-common'), array('max_file_size' => File::get_formated_size($upload_max_filesize))),
+			'MAX_FILE_SIZE' => File::get_formated_size($upload_max_filesize),
+			'ALLOWED_EXTENSIONS' => 'zip", "sql',
 			'L_RESTORE_NOW' => $LANG['db_restore'],
 			'L_TABLE_LIST' => $LANG['db_table_list'],
 			'L_TABLE_NAME' => $LANG['db_table_name'],

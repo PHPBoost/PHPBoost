@@ -26,31 +26,6 @@
 	font-family: monospace;
 }
 
-/* --- database =============================================================== */
-.db-restore {
-	padding: 5px;
-}
-
-.block-contents1 {
-	margin-bottom: 5px;
-	padding: 5px 5px 7px 5px;
-}
-
-.db-executed-query {
-	margin: 0;
-}
-
-.db-executed-query p {
-	font-size: 1em;
-}
-
-.db-query-result {
-	margin: auto;
-	padding: 18px 2px;
-	width: 99%;
-	overflow: auto;
-}
-
 /* --- statistiques =============================================================== */
 @media (max-width: 768px) {
 	#menustats .js-menu-button {

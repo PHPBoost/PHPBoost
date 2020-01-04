@@ -21,6 +21,13 @@ class DatabaseExtensionPointProvider extends ExtensionPointProvider
 		return new CLICommandsList(array('dump' => 'CLIDumpCommand', 'restoredb' => 'CLIRestoreDBCommand'));
 	}
 
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('database.css');
+		return $module_css_files;
+	}
+
 	public function tree_links()
 	{
 		return new DatabaseTreeLinks();

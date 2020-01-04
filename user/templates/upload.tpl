@@ -363,7 +363,7 @@
                                     </div>
                                     <div class="modal-container">
                                         <button class="button upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
-                                        <div id="button upload-helper" class="modal modal-animation">
+                                        <div id="upload-helper" class="modal modal-animation">
                                             <div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
                                             <div class="content-panel">
                                                 <h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
