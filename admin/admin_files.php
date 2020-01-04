@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 22
+ * @version     PHPBoost 5.3 - last update: 2020 01 04
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,12 +68,11 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = 0;
+			$user_id = AppContext::get_current_user()->get_id();
 			try {
-				$check_user_folder = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
 			} catch (RowNotFoundException $e) {}
 
-			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_id();
 			$user_id = max($user_id, $folder_member);
 
 			foreach ($Upload->get_files_parameters() as $parameters)
@@ -124,7 +123,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-	$user_id = 0;
+	$user_id = AppContext::get_current_user()->get_id();
 	try {
 		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
 	} catch (RowNotFoundException $e) {}
