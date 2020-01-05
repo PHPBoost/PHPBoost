@@ -101,21 +101,6 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $value);
 	}
 
-	public function is_display_in_grid_view()
-	{
-		return $this->get_property(self::DISPLAY_TYPE) == self::GRID_VIEW;
-	}
-
-	public function is_display_in_list_view()
-	{
-		return $this->get_property(self::DISPLAY_TYPE) == self::LIST_VIEW;
-	}
-
-	public function is_display_in_table_view()
-	{
-		return $this->get_property(self::DISPLAY_TYPE) == self::TABLE_VIEW;
-	}
-
 	public function get_items_default_sort_field()
 	{
 		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);

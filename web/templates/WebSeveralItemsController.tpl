@@ -96,28 +96,28 @@
 						<header class="cell-header">
 							<h2 class="cell-name"><a href="{weblinks.U_ITEM}" itemprop="name">{weblinks.TITLE}</a></h2>
 						</header>
-						<div class="cell-infos">
-							<div class="more">
-								<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.VIEWS_NUMBER}</span>
-								# IF C_COMMENTS_ENABLED #
-									<span class="pinned">
-										<i class="fa fa-comments" aria-hidden="true"></i>
-										# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
+						<div class="cell-body">
+							<div class="cell-infos">
+								<div class="more">
+									<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.VIEWS_NUMBER}</span>
+									# IF C_COMMENTS_ENABLED #
+										<span class="pinned">
+											<i class="fa fa-comments" aria-hidden="true"></i>
+											# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
+										</span>
+									# ENDIF #
+									# IF C_NOTATION_ENABLED #
+										<span class="pinned">{weblinks.STATIC_NOTATION}</span>
+									# ENDIF #
+								</div>
+								# IF weblinks.C_CONTROLS #
+									<span class="controls align-right">
+										# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+										# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 									</span>
 								# ENDIF #
-								# IF C_NOTATION_ENABLED #
-									<span class="pinned">{weblinks.STATIC_NOTATION}</span>
-								# ENDIF #
 							</div>
-							# IF weblinks.C_CONTROLS #
-								<span class="controls align-right">
-									# IF weblinks.C_EDIT #<a href="{weblinks.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-									# IF weblinks.C_DELETE #<a href="{weblinks.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-								</span>
-							# ENDIF #
-						</div>
 
-						<div class="cell-body">
 							# IF weblinks.C_IS_ADORNED #
 								<div class="cell-thumbnail">
 									# IF weblinks.C_IS_PARTNER #
