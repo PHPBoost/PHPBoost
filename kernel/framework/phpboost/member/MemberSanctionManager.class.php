@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 06 08
+ * @version     PHPBoost 5.3 - last update: 2020 01 05
  * @since       PHPBoost 3.0 - 2011 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -56,6 +56,7 @@ class MemberSanctionManager
 			self::$db_querier->update(DB_TABLE_MEMBER, array('delay_banned' => $punish_duration), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 
 			self::$db_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('autoconnect_key' => ''), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 
 			if ($send_confirmation == self::SEND_MAIL)
 			{
@@ -77,6 +78,7 @@ class MemberSanctionManager
 			if ($level_punish == 100)
 			{
 				self::$db_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+				self::$db_querier->update(DB_TABLE_MEMBER, array('autoconnect_key' => ''), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 
 				self::send_mail($user_id, self::$lang['ban_title_mail'], self::$lang['ban_mail']);
 			}
