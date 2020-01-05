@@ -100,22 +100,25 @@
 </script>
 # IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
 
-<div id="shoutbox-messages-container" class="cell-body cell-content# IF C_HORIZONTAL # shout-horizontal# ENDIF #"># INCLUDE SHOUTBOX_MESSAGES #</div>
+<div class="cell-body# IF C_HORIZONTAL # shout-horizontal# ENDIF #">
+	<div id="shoutbox-messages-container" class="cell-content">
+		# INCLUDE SHOUTBOX_MESSAGES #
+	</div>
+</div>
 # IF C_DISPLAY_FORM #
-	<form class="cell-form" action="#" method="post">
-		<div class="shout-form-container shout-pseudo-container">
-			# IF NOT C_MEMBER #
-				<label for="shout-pseudo"><span class="small">${LangLoader::get_message('form.name', 'common')}</span></label>
-				<input maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo not-connected" value="	${LangLoader::get_message('visitor', 'user-common')}">
-			# ELSE #
-				<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">
-			# ENDIF #
+	<form action="#" method="post">
+		# IF NOT C_MEMBER #
+			<div class="cell-form grouped-inputs">
+				<span class="grouped-element">${LangLoader::get_message('form.name', 'common')}</span>
+				<input type="text" name="shout-pseudo" id="shout-pseudo" class="grouped-element shout-pseudo not-connected" value="${LangLoader::get_message('visitor', 'user-common')}">
+			</div>
+		# ELSE #
+			<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">
+		# ENDIF #
+		<div class="cell-textarea">
+			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="3" cols="16" placeholder="${LangLoader::get_message('message', 'main')}..."></textarea>
 		</div>
-		<div class="shout-form-container shout-contents-container">
-			<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label>
-			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="2" cols="16"></textarea>
-		</div>
-		<nav id="shoutbox-bbcode-container">
+		<nav class="cell-body" id="shoutbox-bbcode-container">
 			# IF C_DISPLAY_SHOUT_BBCODE #
 			<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
 				<li class="bbcode-elements bbcode-block-shoutbox">
@@ -157,22 +160,19 @@
 			</ul>
 			# ENDIF #
 		</nav>
-		<div class="shout-spacing small">
-			<div class="grouped-inputs">
-				<button class="button submit grouped-element" onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
-				<input type="hidden" name="token" value="{TOKEN}">
-				<a class="grouped-element" href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
-			</div>
+		<div class="cell-form grouped-inputs">
+			<button class="button submit flex-wide" onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
+			<input type="hidden" name="token" value="{TOKEN}">
+			<a class="grouped-element" href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
 		</div>
 	</form>
 # ELSE #
 	# IF C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE #
-		<span class="message-helper bgc warning">{@error.post.unauthorized}</span>
-		<p class="shout-spacing">
-			<a href="" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="${LangLoader::get_message('refresh', 'main')}"><i class="fa fa-sync" aria-hidden="true"></i></a>
-		</p>
+		<div class="cell-alert">
+			<div class="message-helper bgc warning">{@error.post.unauthorized}</div>
+		</div>
 	# ENDIF #
 # ENDIF #
-<div class="cell-body">
-	<div class="cell-content align-center"><a class="button small" href="${relative_url(ShoutboxUrlBuilder::home())}">{@archives}</a></div>
+<div class="cell-footer">
+	<div class="align-center"><a class="button small" href="${relative_url(ShoutboxUrlBuilder::home())}">{@archives}</a></div>
 </div>

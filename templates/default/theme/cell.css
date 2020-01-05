@@ -68,15 +68,11 @@
 	padding: 0.618em;
 }
 
-.cell-infos.center {
-	justify-content: center;
-}
-
 .cell-content {
     padding: 0.618em;
 }
 
-.cell-content .message-helper {
+.cell-alert .message-helper {
 	margin: 0;
 }
 
@@ -139,6 +135,8 @@
 .cell-list-inline ul li:first-child {
 	padding: 0.228em 0.809em;
 }
+
+.cell-textarea textarea { border-width: 0; }
 
 /* --- table --- */
 .cell-table {
