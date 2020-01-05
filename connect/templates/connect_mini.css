@@ -29,6 +29,10 @@
 	flex-direction: column;
 }
 
+#module-connect .cell-list li:hover {
+    background-color: transparent;
+}
+
 @media (min-width: 768px) {
 	#module-connect .js-menu-button {
 		display: none;
