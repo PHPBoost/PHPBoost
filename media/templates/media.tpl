@@ -109,7 +109,7 @@
 							# IF file.C_HAS_PICTURE #
 								<div class="cell-thumbnail">
 									<img itemprop="thumbnailUrl" src="{file.PICTURE}" alt="{file.NAME}" />
-									<a class="cell-thumbnail-caption" href="{file.U_MEDIA_LINK}" arial-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
+									<a class="cell-thumbnail-caption" href="{file.U_MEDIA_LINK}" aria-label="${LangLoader::get_message('see.details', 'common')}"><i class="fa fa-2x fa-play-circle"></i></a>
 								</div>
 							# ENDIF #
 							# IF file.C_DESCRIPTION #
