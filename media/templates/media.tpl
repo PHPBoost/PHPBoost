@@ -113,10 +113,8 @@
 								</div>
 							# ENDIF #
 							# IF file.C_DESCRIPTION #
-								<div class="cell-body">
-									<div itemprop="text" class="cell-content">
-										{file.DESCRIPTION}
-									</div>
+								<div itemprop="text" class="cell-content">
+									{file.DESCRIPTION}
 								</div>
 							# ENDIF #
 						</div>
