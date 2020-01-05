@@ -644,12 +644,7 @@ a[class*='lightcase-icon-']:hover {
 
 .cell-mini [class*="cell-"] { background-color: transparent; }
 
-.no-style .cell-header,
-.no-style .cell-infos,
-.no-style .cell-body,
-.no-style .cell-list,
-.no-style .cell-table,
-.no-style .cell-footer {
+.no-style {
 	background-color: transparent !important;
 	border-color: transparent !important;
 }

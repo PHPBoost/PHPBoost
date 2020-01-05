@@ -3,16 +3,18 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 19
+ * @version     PHPBoost 5.3 - last update: 2020 01 05
  * @since       PHPBoost 4.1 - 2015 02 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MediaConfig extends AbstractConfigData
 {
-	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const CATEGORIES_NUMBER_PER_PAGE = 'categories_number_per_page';
-	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
+	const CATEGORIES_NUMBER_PER_ROW = 'categories_number_per_row';
+	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const ITEMS_NUMBER_PER_ROW = 'items_number_per_row';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const MAX_VIDEO_WIDTH = 'max_video_width';
 	const MAX_VIDEO_HEIGHT = 'max_video_height';
@@ -20,19 +22,13 @@ class MediaConfig extends AbstractConfigData
 	const ROOT_CATEGORY_CONTENT_TYPE = 'root_category_content_type';
 	const AUTHORIZATIONS = 'authorizations';
 
+	const DISPLAY_TYPE = 'display_type';
+	const GRID_VIEW = 'grid_view';
+	const LIST_VIEW = 'list_view';
+
 	const CONTENT_TYPE_MUSIC_AND_VIDEO = 0;
 	const CONTENT_TYPE_MUSIC = 1;
 	const CONTENT_TYPE_VIDEO = 2;
-
-	public function get_items_number_per_page()
-	{
-		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
-	}
-
-	public function set_items_number_per_page($value)
-	{
-		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
-	}
 
 	public function get_categories_number_per_page()
 	{
@@ -44,14 +40,44 @@ class MediaConfig extends AbstractConfigData
 		$this->set_property(self::CATEGORIES_NUMBER_PER_PAGE, $value);
 	}
 
-	public function get_columns_number_per_line()
+	public function get_categories_number_per_row()
 	{
-		return $this->get_property(self::COLUMNS_NUMBER_PER_LINE);
+		return $this->get_property(self::CATEGORIES_NUMBER_PER_ROW);
 	}
 
-	public function set_columns_number_per_line($value)
+	public function set_categories_number_per_row($value)
 	{
-		$this->set_property(self::COLUMNS_NUMBER_PER_LINE, $value);
+		$this->set_property(self::CATEGORIES_NUMBER_PER_ROW, $value);
+	}
+
+	public function get_items_number_per_page()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
+	}
+
+	public function set_items_number_per_page($value)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+
+	public function get_items_number_per_row()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_ROW);
+	}
+
+	public function set_items_number_per_row($value)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_ROW, $value);
+	}
+
+	public function get_display_type()
+	{
+		return $this->get_property(self::DISPLAY_TYPE);
+	}
+
+	public function set_display_type($display_type)
+	{
+		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
 
 	public function display_author()
@@ -140,9 +166,11 @@ class MediaConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ITEMS_NUMBER_PER_PAGE => 25,
 			self::CATEGORIES_NUMBER_PER_PAGE => 10,
-			self::COLUMNS_NUMBER_PER_LINE => 2,
+			self::CATEGORIES_NUMBER_PER_ROW => 2,
+			self::ITEMS_NUMBER_PER_PAGE => 25,
+			self::ITEMS_NUMBER_PER_ROW => 2,
+			self::DISPLAY_TYPE => self::GRID_VIEW,
 			self::AUTHOR_DISPLAYED => true,
 			self::MAX_VIDEO_WIDTH => 900,
 			self::MAX_VIDEO_HEIGHT => 570,
