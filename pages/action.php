@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 08 02
+ * @version     PHPBoost 5.3 - last update: 2020 01 05
  * @since       PHPBoost 1.6 - 2007 08 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -180,7 +180,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		PagesCategoriesCache::invalidate();
 
 		//On redirige soit vers l'article parent soit vers la catégorie
-		if (array_key_exists($page_infos['id_cat'], $categories) && $categories[$categories['id_cat']]['id_parent'] > 0)
+		if (array_key_exists($page_infos['id_cat'], $categories) && $categories[$page_infos['id_cat']]['id_parent'] > 0)
 		{
 			$title = $categories[$categories[$page_infos['id_cat']]['id_parent']]['title'];
 			AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . Url::encode_rewrite($title), Url::encode_rewrite($title), '&'));
