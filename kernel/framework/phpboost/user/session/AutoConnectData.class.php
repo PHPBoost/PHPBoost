@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2020 01 05
+ * @version     PHPBoost 5.2 - last update: 2020 01 06
  * @since       PHPBoost 3.0 - 2010 11 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -83,9 +83,8 @@ class AutoConnectData
 
 	public function is_valid()
 	{
-		$now = new Date();
 		$condition = 'WHERE user_id=:user_id AND autoconnect_key=:key AND delay_banned < :now AND warning_percentage < 100';
-		$parameters = array('user_id' => $this->user_id, 'key' => $this->key, 'now' => $now->get_timestamp());
+		$parameters = array('user_id' => $this->user_id, 'key' => $this->key, 'now' => time());
 		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
 	}
 
