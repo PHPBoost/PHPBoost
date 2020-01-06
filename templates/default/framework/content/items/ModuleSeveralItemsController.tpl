@@ -28,15 +28,17 @@
 							{sub_categories_list.ITEMS_NUMBER}
 						</span>
 					</div>
-					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-						<div class="cell-body">
-							<div class="cell-thumbnail">
-								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-									${LangLoader::get_message('see.category', 'categories-common')}
-								</a>
+					# IF C_ENABLED_CATEGORY_THUMBNAIL #
+						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+							<div class="cell-body">
+								<div class="cell-thumbnail">
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+									<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+										${LangLoader::get_message('see.category', 'categories-common')}
+									</a>
+								</div>
 							</div>
-						</div>
+						# ENDIF #
 					# ENDIF #
 				</div>
 			# END sub_categories_list #
@@ -58,7 +60,7 @@
 						<th>{@Title}</th>
 						# IF C_ENABLED_AUTHOR #<th class="col-small">{@Author}</th># ENDIF #
 						# IF C_ENABLED_DATE #<th class="col-small">{@Date}</th># ENDIF #
-						# IF .C_ENABLED_CATEGORY #<th class="col-small">{@Category}</th># ENDIF #
+						# IF C_ENABLED_CATEGORY #<th class="col-small">{@Category}</th># ENDIF #
 						# IF C_ENABLED_VIEWS #<th class="col-small">{@Views}</th># ENDIF #
 						# IF C_ENABLED_VISITS #<th class="col-small">{@Visits}</th># ENDIF #
 						# IF C_ENABLED_DOWNLOADS #<th class="col-small">{@Downloads}</th># ENDIF #
