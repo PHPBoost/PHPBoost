@@ -51,8 +51,8 @@
 					<tr>
 						<th>${LangLoader::get_message('form.name', 'common')} <span class="small more">(${LangLoader::get_message('see.details', 'common')})</span></th>
 						<th class="col-small">{@visits_number}</th>
-						# IF C_NOTATION_ENABLED #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
-						# IF C_COMMENTS_ENABLED #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
+						# IF C_ENABLED_NOTATION #<th>${LangLoader::get_message('note', 'common')}</th># ENDIF #
+						# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 						# IF C_MODERATE #<th class="col-smaller"></th># ENDIF #
 					</tr>
 				</thead>
@@ -65,12 +65,12 @@
 							<td>
 								{weblinks.VIEWS_NUMBER}
 							</td>
-							# IF C_NOTATION_ENABLED #
+							# IF C_ENABLED_NOTATION #
 								<td>
 									{weblinks.STATIC_NOTATION}
 								</td>
 							# ENDIF #
-							# IF C_COMMENTS_ENABLED #
+							# IF C_ENABLED_COMMENTS #
 								<td>
 									# IF weblinks.C_COMMENTS # {weblinks.COMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
 								</td>
@@ -100,13 +100,13 @@
 							<div class="cell-infos">
 								<div class="more">
 									<span class="pinned"><i class="fa fa-eye" aria-hidden="true"></i> {weblinks.VIEWS_NUMBER}</span>
-									# IF C_COMMENTS_ENABLED #
+									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden="true"></i>
 											# IF weblinks.C_COMMENTS # {weblinks.COMMENTS_NUMBER} # ENDIF # {weblinks.L_COMMENTS}
 										</span>
 									# ENDIF #
-									# IF C_NOTATION_ENABLED #
+									# IF C_ENABLED_NOTATION #
 										<span class="pinned">{weblinks.STATIC_NOTATION}</span>
 									# ENDIF #
 								</div>
@@ -169,7 +169,7 @@
 						<footer>
 							<meta itemprop="url" content="{weblinks.U_ITEM}">
 							<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>
-							# IF C_COMMENTS_ENABLED #
+							# IF C_ENABLED_COMMENTS #
 								<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{weblinks.COMMENTS_NUMBER} UserComments">
 							# ENDIF #

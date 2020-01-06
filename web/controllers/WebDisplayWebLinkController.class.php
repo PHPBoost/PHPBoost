@@ -67,8 +67,8 @@ class WebDisplayWebLinkController extends ModuleController
 		$has_keywords = count($keywords) > 0;
 
 		$this->tpl->put_all(array_merge($weblink->get_array_tpl_vars(), array(
-			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('web'),
-			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('web'),
+			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
 			'C_KEYWORDS' => $has_keywords,
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
 		)));

@@ -64,13 +64,13 @@
 							<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span>
 							<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 						</li>
-						# IF C_COMMENTS_ENABLED #
+						# IF C_ENABLED_COMMENTS #
 							<li>
 								<span># IF C_COMMENTS # {COMMENTS_NUMBER} # ENDIF # {L_COMMENTS}</span>
 							</li>
 						# ENDIF #
 						# IF C_VISIBLE #
-							# IF C_NOTATION_ENABLED #
+							# IF C_ENABLED_NOTATION #
 								<li class="align-center">
 									{NOTATION}
 								</li>
@@ -94,7 +94,7 @@
 				# END keywords #
 			</aside>
 		# ENDIF #
-		# IF C_COMMENTS_ENABLED #
+		# IF C_ENABLED_COMMENTS #
 			<aside>
 				# INCLUDE COMMENTS #
 			</aside>
@@ -102,7 +102,7 @@
 		<footer>
 			<meta itemprop="url" content="{U_ITEM}">
 			<meta itemprop="description" content="${escape(DESCRIPTION)}" />
-			# IF C_COMMENTS_ENABLED #
+			# IF C_ENABLED_COMMENTS #
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 			# ENDIF #

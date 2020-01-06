@@ -88,8 +88,8 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'CATEGORIES_NUMBER_PER_ROW' => $this->config->get_categories_number_per_row(),
 			'ITEMS_NUMBER_PER_ROW' => $this->config->get_items_number_per_row(),
-			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('web'),
-			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('web'),
+			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
 		));
