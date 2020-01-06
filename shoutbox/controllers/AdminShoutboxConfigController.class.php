@@ -6,7 +6,7 @@
  * @version     PHPBoost 5.3 - last update: 2020 01 05
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminShoutboxConfigController extends AdminModuleController
