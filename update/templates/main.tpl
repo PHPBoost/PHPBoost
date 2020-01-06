@@ -80,11 +80,11 @@ ${resources('update/update')}
 		</header>
 
 		<div id="global">
-			<div class="admin-main">
-				<div class="admin-content">
+			<div id="admin-main">
+				<div id="admin-contents">
 					<section>
 						<header>
-							<h1><div class="site-logo"></div> {STEP_TITLE}</h1>
+							<h1><div id="site-logo"></div> {STEP_TITLE}</h1>
 						</header>
 						<article>
 							# INCLUDE UpdateStep #
