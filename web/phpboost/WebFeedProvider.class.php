@@ -40,7 +40,7 @@ class WebFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT web.id, web.id_category, web.name, web.rewrited_name, web.contents, web.description, web.creation_date, web.partner_thumbnail, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT web.id, web.id_category, web.name, web.rewrited_name, web.contents, web.short_contents, web.creation_date, web.partner_thumbnail, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . WebSetup::$web_table . ' web
 				LEFT JOIN '. WebSetup::$web_cats_table .' cat ON cat.id = web.id_category
 				WHERE web.id_category IN :ids_categories

@@ -76,7 +76,7 @@ class WebSetup extends DefaultModuleSetup
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'name'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'short_contents' => array('type' => 'fulltext', 'fields' => 'description')
+				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$web_table, $fields, $options);
