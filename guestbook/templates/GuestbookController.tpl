@@ -4,18 +4,8 @@
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
-		<div class="flex-between">
-			<div></div>
-			<div class="modal-container cell-flex cell-tile cell-message">
-				<button class="button submit" data-modal data-target="guestbook-sign"><i class="fa fa-file-signature"></i> {@guestbook.add}</button>
-				<div id="guestbook-sign" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div class="content-panel cell">
-						# INCLUDE FORM #
-					</div>
-				</div>
-			</div>
-		</div>
+		
+		# INCLUDE FORM #
 
 		# IF C_PAGINATION #
 			<div class="align-center"># INCLUDE PAGINATION #</div>

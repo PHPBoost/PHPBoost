@@ -4,18 +4,8 @@
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
-		<div class="flex-between">
-			<div></div>
-			<div class="modal-container cell-flex cell-tile cell-message">
-				<button class="button submit" data-modal data-target="{MODULE_ID}-sign"><i class="far fa-plus-square"></i> {@add.message}</button>
-				<div id="{MODULE_ID}-sign" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
-					<div class="content-panel cell">
-						# INCLUDE FORM #
-					</div>
-				</div>
-			</div>
-		</div>
+
+		# INCLUDE FORM #
 
 		# IF C_PAGINATION #
 			<div class="align-center"># INCLUDE PAGINATION #</div>
