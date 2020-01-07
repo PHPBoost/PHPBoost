@@ -6,9 +6,9 @@
 		</div>
 		<h1>
 			# IF C_PENDING #
-				{MODULE_ID} {@pending.items}
+				{@module.title} {@pending.items}
 			# ELSE #
-				{MODULE_ID}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
+				{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# ENDIF #
 		</h1>
 	</header>
