@@ -169,7 +169,7 @@
 												<a href="{comments_list.U_LINK}" aria-label="${LangLoader::get_message('pm_conversation_link', 'main')}">
 													<i class="far fa-fw fa-hand-point-right" aria-hidden="true"></i>
 												</a>
-											</span>											
+											</span>
 											<span>{L_BY} # IF comments_list.C_VISITOR #{comments_list.PSEUDO}# ELSE #<a href="{comments_list.U_PROFILE}" class="{comments_list.LEVEL_CLASS}" # IF comments_list.C_GROUP_COLOR # style="color:{comments_list.GROUP_COLOR}" # ENDIF #>{comments_list.PSEUDO}</a># ENDIF #</span> :
 											{comments_list.CONTENT}
 										</li>
@@ -207,21 +207,15 @@
 					<div class="cell-header">
 						<h2><i class="far fa-edit" aria-hidden="true"></i> {L_WRITING_PAD}</h2>
 					</div>
-					<div class="cell-form">
-						<div class="cell-textarea">
-							<form action="admin_index.php" class="form-content" method="post">
-								<div class="fieldset-inset">
-									<div class="form-element full-field">
-										<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
-									</div>
-									<p class="align-center">
-										<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
-										<button type="reset" class="button reset" value="true">{L_RESET}</button>
-										<input type="hidden" name="token" value="{TOKEN}">
-									</p>
-								</div>
-							</form>
-						</div>
+					<div class="cell-textarea">
+						<form action="admin_index.php" class="form-content" method="post">
+							<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
+							<fieldset class="fieldset-submit">
+								<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
+								<button type="reset" class="button reset" value="true">{L_RESET}</button>
+								<input type="hidden" name="token" value="{TOKEN}">
+							</fieldset>
+						</form>
 					</div>
 				</div>
 			</div>

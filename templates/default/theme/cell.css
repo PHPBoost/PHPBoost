@@ -33,6 +33,7 @@
 [class*="cell-"] + .cell-list,
 [class*="cell-"] + .cell-table,
 [class*="cell-"] + .cell-form,
+[class*="cell-"] + .cell-textarea,
 [class*="cell-"] + .cell-footer {
 	border-width: 0 1px 1px;
 }
