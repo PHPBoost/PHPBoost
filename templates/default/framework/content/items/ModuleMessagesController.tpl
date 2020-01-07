@@ -1,6 +1,6 @@
 <section id="module-{MODULE_ID}">
 	<header>
-		<h1>{@module.title}</h1>
+		<h1>{MODULE_NAME}</h1>
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
