@@ -4,12 +4,21 @@
 	</header>
 	<div class="content">
 		# INCLUDE MSG #
-
-		# INCLUDE FORM #
+		<div class="flex-between">
+			<div></div>
+			<div class="modal-container cell-flex cell-tile cell-message">
+				<button class="button submit" data-modal data-target="guestbook-sign"><i class="fa fa-file-signature"></i> {@guestbook.add}</button>
+				<div id="guestbook-sign" class="modal modal-animation">
+					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="content-panel cell">
+						# INCLUDE FORM #
+					</div>
+				</div>
+			</div>
+		</div>
 
 		# IF C_PAGINATION #
 			<div class="align-center"># INCLUDE PAGINATION #</div>
-			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
 			<div class="message-helper bgc notice message-helper-small align-center">${LangLoader::get_message('no_item_now', 'common')}</div>
@@ -32,7 +41,7 @@
 							</h3>
 							<div class="message-actions">
 								# IF messages.C_DELETE #
-								<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" onclick="delete_button_display({MESSAGES_NUMBER});" />
+									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{messages.MESSAGE_NUMBER}" name="delete-checkbox-{messages.MESSAGE_NUMBER}" onclick="delete_button_display({MESSAGES_NUMBER});" />
 								# ENDIF #
 								# IF messages.C_EDIT #
 									<a href="{messages.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
@@ -44,7 +53,7 @@
 						</div>
 						<div class="message-infos">
 							<time datetime="{messages.DATE}">${LangLoader::get_message('the', 'common')} {messages.DATE}</time>
-							<a href="\#m{messages.U_ANCHOR}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{messages.ID}</a>
+							<a href="{messages.U_ANCHOR}" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#{messages.ID}</a>
 						</div>
 					</div>
 				</header>
