@@ -13,49 +13,52 @@
 	# ENDIF #
 	<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item single-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 		<div class="flex-between">
-			<div class="more">
-				# IF C_ENABLED_AUTHOR #
-					# IF C_AUTHOR_DISPLAYED #
-						# IF C_AUTHOR_CUSTOM_NAME #
-							<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
-						# ELSE #
-							# IF NOT C_ID_CARD #
-								<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
-									<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
-								</span>
+			# IF C_MORE_OPTIONS #
+				<div class="more">
+					# IF C_ENABLED_AUTHOR #
+						# IF C_AUTHOR_DISPLAYED #
+							# IF C_AUTHOR_CUSTOM_NAME #
+								<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
+							# ELSE #
+								# IF NOT C_ID_CARD #
+									<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
+										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+									</span>
+								# ENDIF #
 							# ENDIF #
 						# ENDIF #
 					# ENDIF #
-				# ENDIF #
-				# IF C_ENABLED_DATE #
-					<span class="pinned">
-						<i class="far fa-calendar-alt" aria-hidden></i>
-						<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-							# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
-						</time>
-					</span>
-				# ENDIF #
-				# IF C_ENABLED_CATEGORY #
-					<span class="pinned">
-						<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {CATEGORY_NAME}</a>
-					</span>
-				# ENDIF #
-				# IF C_ENABLED_VIEWS #
-					<span class="pinned" aria-label="{VIEWS_NUMBER} {@views}">
-						<i class="fa fa-eye" aria-hidden></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
-					</span>
-				# ENDIF #
-				# IF C_ENABLED_NOTATION #
-					<li class="align-center">
-						{NOTATION}
-					</li>
-				# ENDIF #
-				# IF C_ENABLED_COMMENTS #
-					<span class="pinned">
-						<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {COMMENTS_NUMBER} # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #</a>
-					</span>
-				# ENDIF #
-			</div>
+					# IF C_ENABLED_DATE #
+						<span class="pinned">
+							<i class="far fa-calendar-alt" aria-hidden></i>
+							<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+								# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
+							</time>
+						</span>
+					# ENDIF #
+					# IF C_ENABLED_CATEGORY #
+						<span class="pinned">
+							<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {CATEGORY_NAME}</a>
+						</span>
+					# ENDIF #
+					# IF C_ENABLED_VIEWS #
+						<span class="pinned" aria-label="{VIEWS_NUMBER} {@views}">
+							<i class="fa fa-eye" aria-hidden></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+						</span>
+					# ENDIF #
+					# IF C_ENABLED_NOTATION #
+						<li class="align-center">
+							{NOTATION}
+						</li>
+					# ENDIF #
+					# IF C_ENABLED_COMMENTS #
+						<span class="pinned">
+							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {COMMENTS_NUMBER} # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #</a>
+						</span>
+					# ENDIF #
+				</div>
+			# ENDIF #
+
 			# IF C_CONTROLS #
 				<div class="controls align-right">
 					# IF C_EDIT #
@@ -69,7 +72,98 @@
 		</div>
 
 		<div class="content">
-			# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
+			# IF C_CELL_OPTIONS #
+				<div class="cell cell-options">
+					<div class="cell-header">
+						<h6 class="cell-name">{@item.infos}</h6>
+					</div>
+					# IF C_HAS_THUMBNAIL #
+						<div class="cell-body">
+							<div class="cell-thumbnail">
+								<img src="{U_PARTNER_THUMBNAIL}" alt="{TITLE}" itemprop="image" />
+							</div>
+						</div>
+					# ENDIF #
+					<div class="cell-list">
+						<ul>
+							# IF C_ENABLED_VISIT #
+								<li class="li-stretch">
+									<a href="{U_VISIT}" class="button submit">
+										<i class="fa fa-globe" aria-hidden="true"></i> {@go.visit}
+									</a>
+									# IF IS_USER_CONNECTED #
+										<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+											<i class="fa fa-unlink" aria-hidden="true"></i>
+										</a>
+									# ENDIF #
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">{@visits.number} : </span>
+									<span>{VISITS_NUMBER}</span>
+								</li>
+							# ENDIF #
+							# IF C_ENABLED_DOWNLOAD #
+								<li class="li-stretch">
+									<a href="{U_DOWNLOAD}" class="button submit">
+										<i class="fa fa-globe" aria-hidden="true"></i> {@go.download}
+									</a>
+									# IF IS_USER_CONNECTED #
+										<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
+											<i class="fa fa-unlink" aria-hidden="true"></i>
+										</a>
+									# ENDIF #
+								</li>
+								<li class="li-stretch">
+									<span class="text-strong">{@downloads.number} : </span>
+									<span>{DOWNLOADS_NUMBER}</span>
+								</li>
+							# ENDIF #
+							# IF C_ENABLED_AUTHOR #
+								# IF C_AUTHOR_DISPLAYED #
+									<li class="li-stretch">
+										<span class="text-strong">{@Author} : </span>
+										# IF C_AUTHOR_CUSTOM_NAME #
+											<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
+										# ELSE #
+											# IF NOT C_ID_CARD #
+												<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
+													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+												</span>
+											# ENDIF #
+										# ENDIF #
+									</li>
+								# ENDIF #
+							# ENDIF #
+							# IF C_ENABLED_DATE #
+								<li class="li-stretch">
+									<span class="text-strong">{@Date} : </span>
+									<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+										# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
+									</time>
+								</li>
+							# ENDIF #
+							# IF C_ENABLED_CATEGORY #
+								<li class="li-stretch">
+									<span class="text-strong">{@Category} : </span>
+									<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
+								</li>
+							# ENDIF #
+							# IF C_ENABLED_COMMENTS #
+								<li>
+									<span># IF C_COMMENTS # {COMMENTS_NUMBER} # ENDIF # {L_COMMENTS}</span>
+								</li>
+							# ENDIF #
+							# IF C_ENABLED_NOTATION #
+								<li class="align-center">
+									{NOTATION}
+								</li>
+							# ENDIF #
+						</ul>
+					</div>
+				</div>
+			# ELSE #
+				# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
+			# ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
 		</div>
