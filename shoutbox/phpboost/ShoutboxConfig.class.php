@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 07
  * @since       PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -220,7 +220,7 @@ class ShoutboxConfig extends AbstractConfigData
 	{
 		$tags_list = array();
 
-		foreach (ContentFormattingService::get_tags_list() as $tag => $parameters)
+		foreach (ContentFormattingService::get_available_tags() as $tag => $parameters)
 		{
 			if (!in_array($tag, array('b', 'i', 'fa', 'p', 's', 'u')))
 				$tags_list[] = $tag;
