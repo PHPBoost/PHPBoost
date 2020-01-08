@@ -3,19 +3,28 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 04
+ * @version     PHPBoost 5.3 - last update: 2020 01 08
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
-*/
-
+ */
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+// Personal or public files
 $request = AppContext::get_request();
+$upload_lang = LangLoader::get('upload-common');
+$is_public_checkbox = ($request->get_postvalue('is_public_checkbox', 1) === 'on' ? 1 : 0);
+$item_id = $request->get_int('item_id', 0);
+$status = $request->get_int('status', 0);
+
+if ($item_id)
+{
+	PersistenceContext::get_querier()->update(PREFIX . "upload", array('public' => $status), 'WHERE id = :id', array('id' => $item_id));
+}
 
 $folder = $request->get_getint('f', 0);
 $folder_member = $request->get_getint('fm', 0);
@@ -27,6 +36,7 @@ $del_file = $request->get_getint('del', 0);
 $get_error = $request->get_getvalue('error', '');
 $get_l_error = $request->get_getvalue('erroru', '');
 $show_member = $request->get_getvalue('showm', false);
+$show_public = $request->get_getvalue('showp', false);
 $move_folder = $request->get_getint('movefd', 0);
 $move_file = $request->get_getint('movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
@@ -71,16 +81,17 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 			$user_id = AppContext::get_current_user()->get_id();
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
-			} catch (RowNotFoundException $e) {}
+			} catch (RowNotFoundException $e) {
+				
+			}
 
 			$user_id = max($user_id, $folder_member);
 
 			foreach ($Upload->get_files_parameters() as $parameters)
 			{
-				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => $user_id, 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
+				$result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('public' => $is_public_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => $user_id, 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
 				$id_file = $result->get_last_inserted_id();
 			}
-
 		}
 	}
 	else
@@ -92,7 +103,6 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-
 	//Suppression du dossier et de tout le contenu
 	Uploads::Del_folder($del_folder);
 
@@ -104,7 +114,6 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf.
-
 	//Suppression de tout les dossiers enfants.
 	Uploads::Empty_folder_member($empty_folder);
 
@@ -113,7 +122,6 @@ elseif (!empty($empty_folder)) //Vide un dossier membre.
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-
 	//Suppression d'un fichier.
 	Uploads::Del_file($del_file, -1, Uploads::ADMIN_NO_CHECK);
 
@@ -126,7 +134,9 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	$user_id = AppContext::get_current_user()->get_id();
 	try {
 		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
-	} catch (RowNotFoundException $e) {}
+	} catch (RowNotFoundException $e) {
+		
+	}
 
 	$move_list_parent = array();
 
@@ -177,7 +187,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			FROM " . DB_TABLE_UPLOAD . " u
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 			WHERE u.user_id = :user_id", array(
-				'user_id' => $folder_member
+			'user_id' => $folder_member
 		));
 	}
 	else
@@ -186,7 +196,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			FROM " . DB_TABLE_UPLOAD_CAT . " uc
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 			WHERE uc.id = :id", array(
-				'id' => $folder
+			'id' => $folder
 		));
 	}
 
@@ -203,22 +213,22 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$url = Uploads::get_admin_url($folder, '');
 
 	$template->put_all(array(
-		'FOLDER_ID'            => !empty($folder) ? $folder : '0',
-		'URL'                  => $url,
-		'L_FILES_MANAGEMENT'   => $LANG['files_management'],
-		'L_FILES_ACTION'       => $LANG['files_management'],
-		'L_CONFIG_FILES'       => $LANG['files_config'],
-		'L_MOVE_TO'            => $LANG['moveto'],
-		'L_ROOT'               => $LANG['root'],
-		'L_URL'                => $LANG['url'],
-		'L_SUBMIT'             => $LANG['submit']
+		'FOLDER_ID' => !empty($folder) ? $folder : '0',
+		'URL' => $url,
+		'L_FILES_MANAGEMENT' => $LANG['files_management'],
+		'L_FILES_ACTION' => $LANG['files_management'],
+		'L_CONFIG_FILES' => $LANG['files_config'],
+		'L_MOVE_TO' => $LANG['moveto'],
+		'L_ROOT' => $LANG['root'],
+		'L_URL' => $LANG['url'],
+		'L_SUBMIT' => $LANG['submit']
 	));
 
 	if ($get_error == 'folder_contains_folder')
 		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
 
 	//liste des fichiers disponibles
-	include_once(PATH_TO_ROOT .'/user/upload_functions.php');
+	include_once(PATH_TO_ROOT . '/user/upload_functions.php');
 	$cats = array();
 
 	if (empty($folder_member))
@@ -259,21 +269,20 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;
-		switch ($info_move['type'])
-		{
+		switch ($info_move['type']) {
 			//Images
 			case 'jpg':
 			case 'png':
 			case 'gif':
 			case 'bmp':
-			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT .'/upload/' . $info_move['path']);
-			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+				list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $info_move['path']);
+				$size_img = ' (' . $width_source . 'x' . $height_source . ')';
 
-			//On affiche l'image réelle si elle n'est pas trop grande.
-			if ($width_source < 350 && $height_source < 350)
-			{
-				$display_real_img = true;
-			}
+				//On affiche l'image réelle si elle n'est pas trop grande.
+				if ($width_source < 350 && $height_source < 350)
+				{
+					$display_real_img = true;
+				}
 		}
 
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
@@ -282,7 +291,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'C_DISPLAY_REAL_IMG' => $display_real_img,
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
 		$template->put_all(array(
@@ -313,7 +322,7 @@ else
 			FROM " . DB_TABLE_UPLOAD . " u
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 			WHERE u.user_id = :user_id", array(
-				'user_id' => $folder_member
+			'user_id' => $folder_member
 		));
 	}
 	else
@@ -322,7 +331,7 @@ else
 			FROM " . DB_TABLE_UPLOAD_CAT . " uc
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 			WHERE uc.id = :id", array(
-				'id' => $folder
+			'id' => $folder
 		));
 	}
 
@@ -330,7 +339,7 @@ else
 	$result->dispose();
 
 	//Gestion des erreurs.
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
+	$array_error = array('e_upload_no_file', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 	if ($get_error == 'incomplete')
@@ -354,11 +363,9 @@ else
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
 		'URL' => $url,
-
 		'MAX_FILE_SIZE' => ServerConfiguration::get_upload_max_filesize(),
-        'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
-		'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_extensions()),
-
+		'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
+		'ALLOWED_EXTENSIONS' => implode('", "', FileUploadConfig::load()->get_authorized_extensions()),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -382,7 +389,13 @@ else
 		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
-		'L_URL' => $LANG['url']
+		'L_URL' => $LANG['url'],
+		'L_PUBLIC_CHECKBOX' => $upload_lang['public.checkbox'],
+		'L_PUBLIC_TITLE' => $upload_lang['public.title'],
+		'L_PERSONAL_TITLE' => $upload_lang['personal.title'],
+		'L_CHANGE_PERSONAL' => $upload_lang['change.to.personal'],
+		'L_CHANGE_PUBLIC' => $upload_lang['change.to.public'],
+		'L_POSTOR' => $upload_lang['posted.by']
 	));
 
 	if ($folder == 0 && !$show_member && empty($folder_member))
@@ -396,7 +409,7 @@ else
 		));
 	}
 
-	$total_folder_size = $total_files = $total_directories = 0;
+	list($total_folder_size, $total_public_size, $total_personal_files, $total_public_files, $total_directories) = array(0, 0, 0, 0, 0);
 
 	if ($show_member)
 	{
@@ -410,7 +423,7 @@ else
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 			WHERE u.user_id <> -1
 			ORDER BY name", array(
-				'id' => $folder
+			'id' => $folder
 		));
 	}
 	elseif (!empty($folder_member) && empty($folder))
@@ -419,7 +432,7 @@ else
 			FROM " . DB_TABLE_UPLOAD_CAT . "
 			WHERE id_parent = 0 AND user_id = :user_id
 			ORDER BY name", array(
-				'user_id' => $folder_member
+			'user_id' => $folder_member
 		));
 	}
 	else
@@ -428,7 +441,7 @@ else
 			FROM " . DB_TABLE_UPLOAD_CAT . "
 			WHERE id_parent = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
 			ORDER BY name", array(
-				'id' => $folder
+			'id' => $folder
 		));
 	}
 
@@ -454,36 +467,30 @@ else
 	}
 	$result->dispose();
 
-	if (!$show_member) //Dossier membres.
+	//Affichage des fichiers contenu dans le dossier
+	$types = array('personal_files' => 'up.idcat = 0 AND up.user_id = :user_id', 'public_files' => 'up.public = 1');
+	foreach ($types as $loop_id => $where_clause)
 	{
+
 		$now = new Date();
-		if (!empty($folder_member) && empty($folder))
+		if (!empty($folder_member) && empty($folder) || $show_public)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
-			FROM " . DB_TABLE_UPLOAD . " up
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-			WHERE up.idcat = 0 AND up.user_id = :user_id", array(
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.groups
+    	FROM " . DB_TABLE_UPLOAD . " up
+    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+        WHERE " . $where_clause . "
+    	ORDER BY up.name", array(
 				'user_id' => $folder_member
 			));
 		}
-		else
-		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
-			FROM " . DB_TABLE_UPLOAD . " up
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-			WHERE idcat = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1'), array(
-				'id' => $folder
-			));
-		}
-		//Affichage des fichiers contenu dans le dossier
+
 		while ($row = $result->fetch())
 		{
 			$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';
-			switch ($row['type'])
-			{
+			switch ($row['type']) {
 				// Images
 				case 'jpg':
 				case 'jpeg':
@@ -520,12 +527,20 @@ else
 					$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
 					$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			}
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 
-			$template->assign_block_vars('files', array(
+			$template->assign_block_vars($loop_id, array(
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
 				'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
-				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)),  // Ficher ajouté il y a moins de 2 minutes
+				'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // Ficher ajouté il y a moins de 2 minutes
 				'ID' => $row['id'],
+				'C_POSTOR_EXIST' => !empty($row['display_name']),
+				'POSTOR' => $row['display_name'],
+				'POSTOR_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'C_POSTOR_GROUP_COLOR' => !empty($group_color),
+				'POSTOR_GROUP_COLOR' => $group_color,
+				'U_POSTOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'C_IS_PUBLIC_FILE' => $row['public'] == 1,
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
 				'NAME' => $name_cut,
@@ -533,36 +548,44 @@ else
 				'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE' => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '">',
-				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1" data-rel="lightcase:collection"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
-
 			));
-
-			$total_folder_size += $row['size'];
-			$total_files++;
+			if ($loop_id == 'public_files')
+			{
+				$total_public_files ++;
+				$total_public_size += $row['size'];
+			}
+			else
+			{
+				$total_personal_files ++;
+				$total_folder_size += $row['size'];
+			}
 		}
+
 		$result->dispose();
 	}
 
 
 	$total_size = 0;
 	try {
-	$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
-	} catch (RowNotFoundException $e) {}
-
+		$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
+	} catch (RowNotFoundException $e) {
+		
+	}
 	$template->put_all(array(
-		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+		'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
+		'C_PUBLIC_FILES_EXIST' => $total_public_files > 0,
+		'C_SHOW_PUBLIC_FILES' => $show_public,
+		'TOTAL_SIZE' => File::get_formated_size($total_size * 1024),
+		'TOTAL_PUBLIC_SIZE' => File::get_formated_size($total_public_size * 1024),
+		'TOTAL_FOLDER_SIZE' => File::get_formated_size($total_folder_size * 1024),
 		'TOTAL_FOLDERS' => $total_directories,
-		'TOTAL_FILES' => $total_files
+		'TOTAL_PERSONAL_FILES' => $total_personal_files,
+		'TOTAL_PUBLIC_FILES' => $total_public_files,
+		'L_NO_ITEM' => LangLoader::get_message('no_item_now', 'common'),
 	));
-
-	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
-		$template->put_all(array(
-			'C_EMPTY_FOLDER' => true,
-			'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
-		));
 
 	$template->display();
 }
