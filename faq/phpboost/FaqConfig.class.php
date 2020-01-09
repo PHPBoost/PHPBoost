@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 09
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -119,7 +119,7 @@ class FaqConfig extends AbstractConfigData
 			self::DISPLAY_CONTROLS => true,
 			self::ITEMS_DEFAULT_SORT_FIELD => FaqQuestion::SORT_ALPHABETIC,
 			self::ITEMS_DEFAULT_SORT_MODE => FaqQuestion::ASC,
-			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root.category.description', 'config', 'faq'),
+			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('faq', 2, 2),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);
 	}

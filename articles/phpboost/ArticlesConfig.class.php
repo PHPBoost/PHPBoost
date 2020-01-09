@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 08
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -209,7 +209,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::DATE_UPDATED_DISPLAYED           => false,
 			self::DISPLAY_TYPE                     => self::DISPLAY_GRID_VIEW,
-			self::ROOT_CATEGORY_DESCRIPTION        => LangLoader::get_message('root_category_description', 'config', 'articles'),
+			self::ROOT_CATEGORY_DESCRIPTION        => CategoriesService::get_default_root_category_description('articles'),
 			self::AUTHORIZATIONS                   => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
 			self::DEFERRED_OPERATIONS              => array()
 		);

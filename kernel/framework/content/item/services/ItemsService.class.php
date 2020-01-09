@@ -37,7 +37,7 @@ class ItemsService
 		$module_lang = LangLoader::get($filename, $module_id);
 		$parameters = array();
 		
-		foreach (array('items', 'item', 'all.items', 'last.items', 'an.item', 'the.item') as $element)
+		foreach (array('all.items', 'last.items', 'an.item', 'the.item', 'items', 'item') as $element)
 		{
 			$parameters[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
 			$parameters[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);

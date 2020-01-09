@@ -23,7 +23,7 @@ $lang['the.item'] = 'the :item';
 $lang['items.management'] = ':Items management';
 $lang['items.manage'] = 'Manage :items';
 $lang['item.add'] = 'Add :an_item';
-$lang['item.edit'] = 'Edit :item';
+$lang['item.edit'] = 'Edit :the_item';
 $lang['items.pending'] = 'Pending :items';
 
 //SEO

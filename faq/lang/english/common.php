@@ -15,6 +15,9 @@
 
 $lang['faq.module.title'] = 'FAQ';
 
+$lang['items'] = 'questions';
+$lang['item'] = 'question';
+
 $lang['faq.question.add'] = 'Add question';
 $lang['faq.question.edit'] = 'Question edition';
 $lang['faq.questions.pending'] = 'Pending questions';
