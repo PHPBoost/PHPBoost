@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 07 30
+ * @version   	PHPBoost 5.2 - last update: 2020 01 09
  * @since   	PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -265,7 +265,7 @@ class UserEditProfileController extends AbstractController
 
 		if ($this->user->get_level() != User::ADMIN_LEVEL || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMIN_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
-			$form->add_button(new FormButtonLink($this->lang['delete-account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->rel(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member'])));
+			$form->add_button(new FormButtonLink($this->lang['delete-account'], UserUrlBuilder::edit_profile($this->user->get_id(), 'delete-account')->relative(), '', 'delete-account warning', ($this->user->get_id() != AppContext::get_current_user()->get_id() ? $this->lang['delete-account.confirmation.admin'] : $this->lang['delete-account.confirmation.member'])));
 		}
 
 		$this->form = $form;
