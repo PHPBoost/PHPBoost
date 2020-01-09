@@ -447,7 +447,7 @@
 		<div class="cell-flex cell-tile cell-inline">
 			# START public_files #
 			<div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-				<span class="infos-options"><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+				<span class="infos-options"><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
 				<span id="imgf{public_files.ID}"></span>
 				<div class="cell-header">
 					<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
