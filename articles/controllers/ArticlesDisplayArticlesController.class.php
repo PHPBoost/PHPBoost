@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 09
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -121,7 +121,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS'           => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PAGE_NAME'          => $page_name,
-			'U_EDIT_ARTICLE'     => $page_name !== '' ? ItemsUrlBuilder::edit($this->article->get_id(), $current_page)->rel() : ItemsUrlBuilder::edit($this->article->get_id())->rel()
+			'U_EDIT_ARTICLE'     => $page_name !== '' ? ItemsUrlBuilder::edit($this->article->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->article->get_id())->rel()
 		)));
 
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
