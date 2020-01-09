@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 01 08
  * @since       PHPBoost 5.3 - 2019 11 11
 */
 
@@ -47,6 +47,42 @@ class CategoriesService
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . Environment::get_running_module_name());
 		}
 		return self::$categories_manager;
+	}
+
+	public static function get_default_root_category_description($module_id, $categories_number = 1, $items_number = 1, $module_lang_filename = 'common')
+	{
+		$categories_lang = LangLoader::get('categories-common');
+		$module_lang = LangLoader::get($module_lang_filename, $module_id);
+		$items_lang = ItemsService::get_items_lang($module_id, $module_lang_filename);
+		$elements_number_lang_parameter = isset($module_lang['default.created.elements.number']) ? $module_lang['default.created.elements.number'] : $categories_lang['default.created.elements.number'];
+		$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
+		
+		if (isset($module_lang['default.root.category.description']))
+		{
+			return $module_lang['default.root.category.description'];
+		}
+		else
+		{
+			$elements_number = '';
+			if (!empty($categories_number))
+			{
+				$elements_number .= ($categories_number > 1 ? $categories_number . ' ' . TextHelper::lcfirst($categories_lang['categories']) : TextHelper::ucfirst($categories_lang['a.category'])) . (!empty($items_number) ? ' ' . TextHelper::lcfirst(LangLoader::get_message('and', 'common')) . ' ' : '');
+			}
+			if (!empty($items_number))
+			{
+				$elements_number .= ($items_number > 1 ? $items_number . ' ' . TextHelper::lcfirst($items_lang['items']) : (!empty($items_number) ? TextHelper::lcfirst($items_lang['an.item']) : TextHelper::ucfirst($items_lang['an.item'])));
+			}
+			
+			return StringVars::replace_vars($categories_lang['default.root.category.description'], array(
+				'module_name'             => $module_configuration->get_name(),
+				'created_elements_number' => StringVars::replace_vars($elements_number_lang_parameter, array('elements_number' => $elements_number)),
+				'configuration_link'      => ModulesUrlBuilder::configuration($module_id)->relative(),
+				'add_category_link'       => CategoriesUrlBuilder::add_category(Category::ROOT_CATEGORY, $module_id)->relative(),
+				'add_item_link'           => ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
+				'items'                   => TextHelper::lcfirst($items_lang['items']),
+				'documentation_link'      => $module_configuration->get_documentation() ? $module_configuration->get_documentation() : 'https://www.phpboost.com'
+			));
+		}
 	}
 }
 ?>
