@@ -18,6 +18,8 @@ $lang['module_title'] = 'Downloads';
 $lang['items'] = 'files';
 $lang['item'] = 'file';
 
+$lang['an.item'] = 'a file';
+
 $lang['download.actions.add'] = 'Add file';
 $lang['download.add'] = 'New file';
 $lang['download.edit'] = 'File edition';

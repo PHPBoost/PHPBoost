@@ -18,6 +18,8 @@ $lang['module_title'] = 'Web Links';
 $lang['items'] = 'links';
 $lang['item'] = 'link';
 
+$lang['an.item'] = 'a link';
+
 $lang['web.actions.add'] = 'Add link';
 $lang['web.add'] = 'New link';
 $lang['web.edit'] = 'Link edition';

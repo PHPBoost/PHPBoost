@@ -17,6 +17,8 @@ $lang['module_title'] = 'Multimedia';
 $lang['items'] = 'multimedia files';
 $lang['item'] = 'multimedia file';
 
+$lang['an.item'] = 'a :multimedia file';
+
 $lang['media.actions.add'] = 'Add multimedia file';
 $lang['media.manage'] = 'Manage multimedia files';
 $lang['media.management'] = 'Multimedia files management';
