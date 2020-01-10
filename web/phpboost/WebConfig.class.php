@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 10
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -222,7 +222,7 @@ class WebConfig extends AbstractConfigData
 			self::ITEMS_DEFAULT_SORT_MODE => WebLink::ASC,
 			self::DEFAULT_CONTENTS => '',
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
-			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
+			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('web'),
 			self::PARTNERS_SORT_FIELD => WebLink::SORT_ALPHABETIC,
 			self::PARTNERS_SORT_MODE => WebLink::ASC,
 			self::PARTNERS_NUMBER_IN_MENU => 5,
