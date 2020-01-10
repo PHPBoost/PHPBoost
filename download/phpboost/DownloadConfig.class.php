@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 27
+ * @version     PHPBoost 5.3 - last update: 2020 01 10
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -269,7 +269,7 @@ class DownloadConfig extends AbstractConfigData
 			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
-			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'download'),
+			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('download'),
 			self::SORT_TYPE => DownloadFile::SORT_NUMBER_DOWNLOADS,
 			self::FILES_NUMBER_IN_MENU => 5,
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
