@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 10
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -45,9 +45,10 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit($id, $module_id = '')
+	public static function edit($id, $module_id = '', $additional_parameter = null)
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/'. $id .'/edit/');
+		$additional_parameter = !empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : (!is_int($additional_parameter) ? $additional_parameter . '/' : '')) : '';
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/'. $id .'/edit/' . $additional_parameter);
 	}
 
 	/**

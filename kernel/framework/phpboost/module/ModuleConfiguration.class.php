@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 10
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -182,14 +182,30 @@ class ModuleConfiguration
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
-		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
+		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', preg_replace('/\s/', '', $config['enabled_features'])) : array();
-		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : 'Item';
+		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : $this->module_id;
 		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : $this->module_id . '_cats';
+	}
+
+	private function get_default_item_class_name()
+	{
+		$item_class_name = TextHelper:ucfirst($this->module_id);
+		if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
+			return $item_class_name;
+		
+		if (substr($item_class_name, -1) == 's')
+		{
+			$item_class_name = substr($item_class_name, 0, -1);
+			if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
+				return $item_class_name;
+		}
+		
+		return 'Item';
 	}
 
 	private function load_description($desc_ini_file)
