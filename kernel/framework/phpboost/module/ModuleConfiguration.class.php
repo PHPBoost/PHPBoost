@@ -194,17 +194,17 @@ class ModuleConfiguration
 
 	private function get_default_item_class_name()
 	{
-		$item_class_name = TextHelper:ucfirst($this->module_id);
+		$item_class_name = TextHelper::ucfirst($this->module_id);
 		if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
 			return $item_class_name;
-		
+
 		if (substr($item_class_name, -1) == 's')
 		{
 			$item_class_name = substr($item_class_name, 0, -1);
 			if (class_exists($item_class_name) && is_subclass_of($item_class_name, 'Item'))
 				return $item_class_name;
 		}
-		
+
 		return 'Item';
 	}
 
