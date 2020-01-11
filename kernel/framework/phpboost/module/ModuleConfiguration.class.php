@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 11
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -164,7 +164,15 @@ class ModuleConfiguration
 
 	public function has_contribution()
 	{
-		return $this->contribution_interface;
+		return (bool)$this->contribution_interface;
+	}
+	
+	public function get_configuration_parameters()
+	{
+		if ($this->configuration_name)
+			return call_user_func(array($this->configuration_name, 'load'));
+		else
+			throw new Exception('Class ' . TextHelper::ucfirst($this->module_id) . 'Config does not exist in module ' . $this->module_id);
 	}
 
 	private function load_configuration($config_ini_file)
@@ -181,15 +189,25 @@ class ModuleConfiguration
 		$this->compatibility          = $config['compatibility'];
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
+		$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->configuration_name ? ModulesUrlBuilder::admin($this->module_id) : '');
 		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', preg_replace('/\s/', '', $config['enabled_features'])) : array();
 		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
-		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : $this->module_id;
-		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : $this->module_id . '_cats';
+		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name ? $this->module_id : '');
+		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->item_name ? $this->module_id . '_cats' : '');
+	}
+
+	private function get_default_configuration_class_name()
+	{
+		$configuration_class_name = TextHelper::ucfirst($this->module_id) . 'Config';
+		if (class_exists($configuration_class_name) && is_subclass_of($configuration_class_name, 'AbstractConfigData'))
+			return $configuration_class_name;
+
+		return '';
 	}
 
 	private function get_default_item_class_name()

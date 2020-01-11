@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 11
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -28,9 +28,17 @@ class ModulesUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function admin($module_id = '')
+	{
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/admin/');
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function configuration($module_id = '')
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/admin/config');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/admin/config/');
 	}
 
 	/**
