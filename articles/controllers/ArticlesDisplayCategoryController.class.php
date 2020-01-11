@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 11
  * @since       PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -215,19 +215,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		if ($this->category === null)
 		{
-			$id = AppContext::get_request()->get_getstring('id_category', 0);
-			if (!empty($id))
-			{
-				try {
-					$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category($id);
-				} catch (CategoryNotFoundException $e) {
-					$error_controller = PHPBoostErrors::unexisting_page();
-					DispatchManager::redirect($error_controller);
-				}
-			}
-			else
-			{
-				$this->category = CategoriesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+			$id = AppContext::get_request()->get_getstring('id_category', Category::ROOT_CATEGORY);
+			try {
+				$this->category = CategoriesService::get_categories_manager('articles')->get_categories_cache()->get_category($id);
+			} catch (CategoryNotFoundException $e) {
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		return $this->category;
