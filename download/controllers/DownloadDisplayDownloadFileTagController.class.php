@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadDisplayDownloadFileTagController extends ModuleController
@@ -84,17 +85,18 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		)));
 
-		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
-
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line,
-			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('download'),
-			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('download'),
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
+			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
+			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
+			'C_TABLE_VIEW' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
+			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
+			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
+			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
@@ -116,7 +118,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
-			
+
 			foreach ($downloadfile->get_sources() as $name => $url)
 			{
 				$this->tpl->assign_block_vars('downloadfiles.sources', $downloadfile->get_array_tpl_source_vars($name));
@@ -141,8 +143,8 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
 			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
 			new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR]),
-			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_DOWNLOADS]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_VIEWS])
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DOWNLOADS_NUMBER]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_VIEWS_NUMBERS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
@@ -196,7 +198,7 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'download\' AND relation.id_in_module = download.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['downloadfiles_number'], (int)DownloadConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $result['downloadfiles_number'], (int)DownloadConfig::load()->get_items_per_page());
 		$pagination->set_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -241,12 +243,12 @@ class DownloadDisplayDownloadFileTagController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['download.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
 		$breadcrumb->add($this->get_keyword()->get_name(), DownloadUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		return $response;

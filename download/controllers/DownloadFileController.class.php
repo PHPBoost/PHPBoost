@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadFileController extends AbstractController
@@ -33,8 +34,8 @@ class DownloadFileController extends AbstractController
 		}
 		else if ($this->downloadfile !== null && $this->downloadfile->is_visible())
 		{
-			$this->downloadfile->set_number_downloads($this->downloadfile->get_number_downloads() + 1);
-			DownloadService::update_number_downloads($this->downloadfile);
+			$this->downloadfile->set_downloads_number($this->downloadfile->get_downloads_number() + 1);
+			DownloadService::update_downloads_number($this->downloadfile);
 			DownloadCache::invalidate();
 
 			if (Url::check_url_validity($this->downloadfile->get_url()->absolute()) || Url::check_url_validity($this->downloadfile->get_url()->relative()))
@@ -65,7 +66,7 @@ class DownloadFileController extends AbstractController
 		$response = new SiteDisplayResponse(new StringTemplate(''));
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->downloadfile->get_name(), LangLoader::get_message('module_title', 'common', 'download'));
+		$graphical_environment->set_page_title($this->downloadfile->get_title(), LangLoader::get_message('module.title', 'common', 'download'));
 		$graphical_environment->get_seo_meta_data()->set_description($this->downloadfile->get_real_short_contents());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::download($this->downloadfile->get_id()));
 

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadDisplayCategoryController extends ModuleController
@@ -50,7 +51,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
 		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests()));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_per_page(), $field, $mode, $page, $subcategories_page);
 
 		$nbr_cat_displayed = 0;
 		foreach ($subcategories as $id => $category)
@@ -63,7 +64,7 @@ class DownloadDisplayCategoryController extends ModuleController
 
 				$this->tpl->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-					'C_MORE_THAN_ONE_DOWNLOADFILE' => $category->get_elements_number() > 1,
+					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
@@ -73,7 +74,7 @@ class DownloadDisplayCategoryController extends ModuleController
 			}
 		}
 
-		$number_columns_cats_display_per_line_cats = ($nbr_cat_displayed > $this->config->get_columns_number_per_line()) ? $this->config->get_columns_number_per_line() : $nbr_cat_displayed;
+		$number_columns_cats_display_per_line_cats = ($nbr_cat_displayed > $this->config->get_categories_per_row()) ? $this->config->get_categories_per_row() : $nbr_cat_displayed;
 		$number_columns_cats_display_per_line_cats = !empty($number_columns_cats_display_per_line_cats) ? $number_columns_cats_display_per_line_cats : 1;
 
 		$condition = 'WHERE id_category = :id_category
@@ -108,20 +109,21 @@ class DownloadDisplayCategoryController extends ModuleController
 		)));
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
-		$number_columns_display_per_line = $this->config->get_columns_number_per_line();
 
 		$this->tpl->put_all(array(
 			'C_FILES' => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_FILE' => $result->get_rows_count() > 1,
-			'C_CATEGORY_DISPLAYED_SUMMARY' => $this->config->is_category_displayed_summary(),
-			'C_CATEGORY_DISPLAYED_TABLE' => $this->config->is_category_displayed_table(),
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
+			'C_GRID_VIEW' => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
+			'C_LIST_VIEW' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
+			'C_TABLE_VIEW' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
+			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'C_SEVERAL_COLUMNS' => $number_columns_display_per_line > 1,
-			'COLUMNS_NUMBER' => $number_columns_display_per_line,
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
-			'C_COMMENTS_ENABLED' => $this->comments_config->module_comments_is_enabled('download'),
-			'C_NOTATION_ENABLED' => $this->content_management_config->module_notation_is_enabled('download'),
-			'C_NB_VIEW_ENABLED' => $this->config->get_nb_view_enabled(),
+			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
+			'C_ENABLED_VIEWS_NUMBER' => $this->config->get_enabled_views_number(),
 			'C_MODERATION' => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_CATEGORY' => true,
@@ -179,8 +181,8 @@ class DownloadDisplayCategoryController extends ModuleController
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DATE]),
 			new FormFieldSelectChoiceOption($common_lang['form.name'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_ALPHABETIC]),
 			new FormFieldSelectChoiceOption($common_lang['author'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_AUTHOR]),
-			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_DOWNLOADS]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_NUMBER_VIEWS])
+			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_DOWNLOADS_NUMBER]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], DownloadFile::SORT_FIELDS_URL_VALUES[DownloadFile::SORT_VIEWS_NUMBERS])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
@@ -208,7 +210,7 @@ class DownloadDisplayCategoryController extends ModuleController
 	{
 		$downloadfiles_number = DownloadService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $downloadfiles_number, (int)DownloadConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $downloadfiles_number, (int)DownloadConfig::load()->get_items_per_page());
 		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -220,9 +222,9 @@ class DownloadDisplayCategoryController extends ModuleController
 		return $pagination;
 	}
 
-	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $field, $mode, $page, $subcategories_page)
+	private function get_subcategories_pagination($subcategories_number, $categories_per_page, $field, $mode, $page, $subcategories_page)
 	{
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_per_page);
 		$pagination->set_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page, '%d'));
 
 		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
@@ -276,7 +278,7 @@ class DownloadDisplayCategoryController extends ModuleController
 	{
 		if (AppContext::get_current_user()->is_guest())
 		{
-			if (($this->config->are_descriptions_displayed_to_guests() && (!Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || $this->config->get_category_display_type() == DownloadConfig::DISPLAY_ALL_CONTENT)) || (!$this->config->are_descriptions_displayed_to_guests() && !DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
+			if (($this->config->are_descriptions_displayed_to_guests() && (!Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS) || $this->config->get_display_type() == DownloadConfig::LIST_VIEW)) || (!$this->config->are_descriptions_displayed_to_guests() && !DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->read()))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -302,9 +304,9 @@ class DownloadDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module_title'], $page);
+			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['module.title'], $page);
 		else
-			$graphical_environment->set_page_title($this->lang['module_title'], '', $page);
+			$graphical_environment->set_page_title($this->lang['module.title'], '', $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
@@ -313,7 +315,7 @@ class DownloadDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)

@@ -13,10 +13,12 @@
 #                       French                     #
 ####################################################
 
-$lang['module_title'] = 'Téléchargements';
+$lang['module.title'] = 'Téléchargements';
 
 $lang['items'] = 'fichiers';
 $lang['item'] = 'fichier';
+
+$lang['an.item'] = 'un fichier';
 
 $lang['download.actions.add'] = 'Ajouter un fichier';
 $lang['download.add'] = 'Ajout d\'un fichier';
@@ -28,14 +30,14 @@ $lang['download.management'] = 'Gestion des fichiers';
 $lang['most_downloaded_files'] = 'Meilleurs téléchargements';
 $lang['last_download_files'] = 'Derniers fichiers en téléchargement';
 $lang['download'] = 'Télécharger';
-$lang['downloaded_times'] = 'Téléchargé :number_downloads fois';
+$lang['downloaded_times'] = 'Téléchargé :downloads_number fois';
 $lang['downloads_number'] = 'Nombre de téléchargements';
 $lang['file_infos'] = 'Informations sur le fichier';
 $lang['file'] = 'Fichier';
 $lang['files'] = 'Fichiers';
 $lang['software_version'] = 'Version';
 $lang['download.view'] = 'vues';
-$lang['download.number.view'] = 'Nombre de vues';
+$lang['download.views.number'] = 'Nombre de vues';
 
 // Mini access
 $lang['download.sort.date'] = 'Date';
@@ -44,10 +46,10 @@ $lang['download.sort.dls'] = 'Nombre de téléchargements';
 $lang['download.sort.notes'] = 'Note';
 
 //config
-$lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
-$lang['config.category_display_type.display_summary'] = 'Résumé';
-$lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
-$lang['config.category_display_type.display_table'] = 'Tableau';
+$lang['config.display_type'] = 'Affichage des informations dans les catégories';
+$lang['config.display_type.display_summary'] = 'Résumé';
+$lang['config.display_type.display_all_content'] = 'Tout le contenu';
+$lang['config.display_type.display_table'] = 'Tableau';
 $lang['config.display_descriptions_to_guests'] = 'Afficher le résumé des fichiers aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 $lang['config.downloaded_files_menu'] = 'Menu téléchargements';
 $lang['config.sort_type'] = 'Ordre d\'affichage des fichiers';
@@ -55,7 +57,7 @@ $lang['config.sort_type.explain'] = 'Sens décroissant';
 $lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
 $lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
-$lang['admin.config.download_number_view_enabled'] = 'Activer l\'affichage du nombre de vues';
+$lang['admin.config.download_views_number_enabled'] = 'Activer l\'affichage du nombre de vues';
 $lang['download.default.contents'] = 'Contenu par défaut du Téléchargement';
 
 //authorizations
@@ -70,7 +72,7 @@ $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
 $lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un fichier, cependant vous pouvez en proposer un.';
 
 //Form
-$lang['download.form.reset_number_downloads'] = 'Réinitialiser le nombre de téléchargements';
+$lang['download.form.reset_downloads_number'] = 'Réinitialiser le nombre de téléchargements';
 $lang['download.form.determine_file_size_automatically'] = 'Déterminer la taille du fichier automatiquement';
 $lang['download.form.file_size'] = 'Taille du fichier';
 $lang['download.form.file_size_unit'] = 'Unité';

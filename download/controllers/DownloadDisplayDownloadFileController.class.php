@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadDisplayDownloadFileController extends ModuleController
@@ -22,7 +23,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 
 		$this->init();
 
-		$this->count_number_view($request);
+		$this->count_views_number($request);
 
 		$this->build_view();
 
@@ -56,7 +57,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		return $this->downloadfile;
 	}
 
-	private function count_number_view(HTTPRequestCustom $request)
+	private function count_views_number(HTTPRequestCustom $request)
 	{
 		if (!$this->downloadfile->is_visible())
 		{
@@ -64,10 +65,10 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($this->downloadfile->get_category()->get_id(), $this->downloadfile->get_category()->get_rewrited_name(), $this->downloadfile->get_id(), $this->downloadfile->get_rewrited_name())->rel()))
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), DownloadUrlBuilder::display($this->downloadfile->get_category()->get_id(), $this->downloadfile->get_category()->get_rewrited_name(), $this->downloadfile->get_id(), $this->downloadfile->get_rewrited_title())->rel()))
 			{
-				$this->downloadfile->set_number_view($this->downloadfile->get_number_view() + 1);
-				DownloadService::update_number_view($this->downloadfile);
+				$this->downloadfile->set_views_number($this->downloadfile->get_views_number() + 1);
+				DownloadService::update_views_number($this->downloadfile);
 			}
 		}
 	}
@@ -85,8 +86,8 @@ class DownloadDisplayDownloadFileController extends ModuleController
 
 		$this->tpl->put_all(array_merge($downloadfile->get_array_tpl_vars(), array(
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('download'),
-			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('download'),
+			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS' => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING),
@@ -97,14 +98,14 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		{
 			$comments_topic = new DownloadCommentsTopic($downloadfile);
 			$comments_topic->set_id_in_module($downloadfile->get_id());
-			$comments_topic->set_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
+			$comments_topic->set_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
 
 			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
 
 		if ($has_keywords)
 			$this->build_keywords_view($keywords);
-		
+
 		foreach ($downloadfile->get_sources() as $name => $url)
 		{
 			$this->tpl->assign_block_vars('sources', $downloadfile->get_array_tpl_source_vars($name));
@@ -170,15 +171,15 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($downloadfile->get_name(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module_title']);
+		$graphical_environment->set_page_title($downloadfile->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->lang['module.title']);
 		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_real_short_contents());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
 
-		if ($downloadfile->has_picture())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($downloadfile->get_picture());
+		if ($downloadfile->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($downloadfile->get_thumbnail());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'],DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'],DownloadUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($downloadfile->get_id_category(), true));
 		foreach ($categories as $id => $category)
@@ -186,7 +187,7 @@ class DownloadDisplayDownloadFileController extends ModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$breadcrumb->add($downloadfile->get_name(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
+		$breadcrumb->add($downloadfile->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()));
 
 		return $response;
 	}

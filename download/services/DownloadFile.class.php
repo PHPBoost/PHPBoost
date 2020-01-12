@@ -3,20 +3,21 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadFile
 {
 	private $id;
 	private $id_category;
-	private $name;
-	private $rewrited_name;
+	private $title;
+	private $rewrited_title;
 	private $url;
 	private $size;
 	private $formated_size;
@@ -30,14 +31,14 @@ class DownloadFile
 
 	private $creation_date;
 	private $updated_date;
-	private $number_view;
+	private $views_number;
 	private $author_user;
 	private $author_custom_name;
 	private $author_custom_name_enabled;
 
-	private $picture_url;
+	private $thumbnail_url;
 	private $software_version;
-	private $number_downloads;
+	private $downloads_number;
 	private $notation;
 	private $keywords;
 	private $sources;
@@ -48,16 +49,16 @@ class DownloadFile
 	const SORT_UPDATED_DATE     = 'updated_date';
 	const SORT_NOTATION         = 'average_notes';
 	const SORT_NUMBER_COMMENTS  = 'number_comments';
-	const SORT_NUMBER_DOWNLOADS = 'number_downloads';
-	const SORT_NUMBER_VIEWS 	= 'number_view';
+	const SORT_DOWNLOADS_NUMBER = 'downloads_number';
+	const SORT_VIEWS_NUMBERS 	= 'views_number';
 
 	const SORT_FIELDS_URL_VALUES = array(
 		self::SORT_ALPHABETIC => 'name',
 		self::SORT_AUTHOR => 'author',
 		self::SORT_DATE => 'date',
 		self::SORT_UPDATED_DATE => 'updated',
-		self::SORT_NUMBER_DOWNLOADS => 'download',
-		self::SORT_NUMBER_VIEWS => 'views',
+		self::SORT_DOWNLOADS_NUMBER => 'download',
+		self::SORT_VIEWS_NUMBERS => 'views',
 		self::SORT_NOTATION => 'notes',
 		self::SORT_NUMBER_COMMENTS => 'comments'
 	);
@@ -94,24 +95,24 @@ class DownloadFile
 		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 	}
 
-	public function get_name()
+	public function get_title()
 	{
-		return $this->name;
+		return $this->title;
 	}
 
-	public function set_name($name)
+	public function set_title($title)
 	{
-		$this->name = $name;
+		$this->title = $title;
 	}
 
-	public function get_rewrited_name()
+	public function get_rewrited_title()
 	{
-		return $this->rewrited_name;
+		return $this->rewrited_title;
 	}
 
-	public function set_rewrited_name($rewrited_name)
+	public function set_rewrited_title($rewrited_title)
 	{
-		$this->rewrited_name = $rewrited_name;
+		$this->rewrited_title = $rewrited_title;
 	}
 
 	public function get_url()
@@ -178,7 +179,7 @@ class DownloadFile
 		{
 			return FormatingHelper::second_parse($this->short_contents);
 		}
-		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT);
+		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)DownloadConfig::CHARACTERS_TO_DISPLAY);
 	}
 
 	public function get_approbation_type()
@@ -288,33 +289,33 @@ class DownloadFile
 		return $this->author_custom_name_enabled;
 	}
 
-	public function set_number_view($number_view)
+	public function set_views_number($views_number)
 	{
-		$this->number_view = $number_view;
+		$this->views_number = $views_number;
 	}
 
-	public function get_number_view()
+	public function get_views_number()
 	{
-		return $this->number_view;
+		return $this->views_number;
 	}
 
-	public function get_picture()
+	public function get_thumbnail()
 	{
-		if (!$this->picture_url instanceof Url)
+		if (!$this->thumbnail_url instanceof Url)
 			return $this->get_default_thumbnail();
 
-		return $this->picture_url;
+		return $this->thumbnail_url;
 	}
 
-	public function set_picture(Url $picture)
+	public function set_thumbnail(Url $thumbnail)
 	{
-		$this->picture_url = $picture;
+		$this->thumbnail_url = $thumbnail;
 	}
 
-	public function has_picture()
+	public function has_thumbnail()
 	{
-		$picture = $this->picture_url->rel();
-		return !empty($picture);
+		$thumbnail = $this->thumbnail_url->rel();
+		return !empty($thumbnail);
 	}
 
 	public function get_default_thumbnail()
@@ -336,14 +337,14 @@ class DownloadFile
 		$this->software_version = $software_version;
 	}
 
-	public function get_number_downloads()
+	public function get_downloads_number()
 	{
-		return $this->number_downloads;
+		return $this->downloads_number;
 	}
 
-	public function set_number_downloads($number_downloads)
+	public function set_downloads_number($downloads_number)
 	{
-		$this->number_downloads = $number_downloads;
+		$this->downloads_number = $downloads_number;
 	}
 
 	public function get_notation()
@@ -405,8 +406,8 @@ class DownloadFile
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
-			'name' => $this->get_name(),
-			'rewrited_name' => $this->get_rewrited_name(),
+			'name' => $this->get_title(),
+			'rewrited_name' => $this->get_rewrited_title(),
 			'url' => $this->get_url()->relative(),
 			'size' => $this->get_size(),
 			'contents' => $this->get_contents(),
@@ -418,9 +419,9 @@ class DownloadFile
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'number_downloads' => $this->get_number_downloads(),
-			'number_view' => $this->get_number_view(),
-			'picture_url' => $this->get_picture()->relative(),
+			'number_downloads' => $this->get_downloads_number(),
+			'number_view' => $this->get_views_number(),
+			'picture_url' => $this->get_thumbnail()->relative(),
 			'software_version' => $this->get_software_version(),
 			'sources' => TextHelper::serialize($this->get_sources())
 		);
@@ -430,21 +431,21 @@ class DownloadFile
 	{
 		$this->id = $properties['id'];
 		$this->id_category = $properties['id_category'];
-		$this->name = $properties['name'];
-		$this->rewrited_name = $properties['rewrited_name'];
+		$this->title = $properties['name'];
+		$this->rewrited_title = $properties['rewrited_name'];
 		$this->url = new Url($properties['url']);
 		$this->size = $properties['size'];
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
-		$this->number_view = $properties['number_view'];
+		$this->views_number = $properties['number_view'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->number_downloads = $properties['number_downloads'];
-		$this->picture_url = new Url($properties['picture_url']);
+		$this->downloads_number = $properties['number_downloads'];
+		$this->thumbnail_url = new Url($properties['picture_url']);
 		$this->software_version = $properties['software_version'];
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
 
@@ -473,7 +474,7 @@ class DownloadFile
 	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
 		$this->id_category = $id_category;
-                $this->contents = DownloadConfig::load()->get_default_contents();
+        $this->contents = DownloadConfig::load()->get_default_contents();
 		$this->url = new Url('');
 		$this->size = 0;
 		$this->approbation_type = self::APPROVAL_NOW;
@@ -481,9 +482,9 @@ class DownloadFile
 		$this->start_date = new Date();
 		$this->end_date = new Date();
 		$this->creation_date = new Date();
-		$this->number_downloads = 0;
-		$this->number_view = 0;
-		$this->picture_url = self::get_default_thumbnail();
+		$this->downloads_number = 0;
+		$this->views_number = 0;
+		$this->thumbnail_url = self::get_default_thumbnail();
 		$this->software_version = '';
 		$this->sources = array();
 		$this->end_date_enabled = false;
@@ -521,62 +522,65 @@ class DownloadFile
 			Date::get_array_tpl_vars($this->updated_date, 'updated_date'),
 			Date::get_array_tpl_vars($this->start_date, 'differed_start_date'),
 			array(
- 			'C_VISIBLE' => $this->is_visible(),
-			'C_EDIT' => $this->is_authorized_to_edit(),
-			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_READ_MORE' => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > DownloadConfig::NUMBER_CARACTERS_BEFORE_CUT && $description != @strip_tags($contents, '<br><br/>'),
-			'C_SIZE' => !empty($this->size),
-			'C_PICTURE' => $this->has_picture(),
-			'C_SOFTWARE_VERSION' => !empty($this->software_version),
-			'C_AUTHOR_CUSTOM_NAME' => $this->is_author_custom_name_enabled(),
-			'C_NB_VIEW_ENABLED' => $config->get_nb_view_enabled(),
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_UPDATED_DATE' => $this->has_updated_date(),
-			'C_SOURCES' => $nbr_sources > 0,
-			'C_DIFFERED' => $this->approbation_type == self::APPROVAL_DATE,
-			'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
+				// Conditions
+	 			'C_VISIBLE'              => $this->is_visible(),
+				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_EDIT'                 => $this->is_authorized_to_edit(),
+				'C_DELETE'               => $this->is_authorized_to_delete(),
+				'C_READ_MORE'            => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > DownloadConfig::CHARACTERS_TO_DISPLAY && $description != @strip_tags($contents, '<br><br/>'),
+				'C_SIZE'                 => !empty($this->size),
+				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
+				'C_SOFTWARE_VERSION'     => !empty($this->software_version),
+				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
+				'C_ENABLED_VIEWS_NUMBER' => $config->get_enabled_views_number(),
+				'C_USER_GROUP_COLOR'     => !empty($user_group_color),
+				'C_UPDATED_DATE'         => $this->has_updated_date(),
+				'C_SOURCES'              => $nbr_sources > 0,
+				'C_DIFFERED'             => $this->approbation_type == self::APPROVAL_DATE,
+				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_start_date() != null ? $this->get_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_visible(),
 
-			//Downloadlink
-			'ID' => $this->id,
-			'NAME' => $this->name,
-			'SIZE' => $this->formated_size,
-			'CONTENTS' => $contents,
-			'DESCRIPTION' => $description,
-			'STATUS' => $this->get_status(),
-			'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
-			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO' => $user->get_display_name(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
-			'SOFTWARE_VERSION' => $this->software_version,
-			'NUMBER_DOWNLOADS' => $this->number_downloads,
-			'NUMBER_VIEW' => $this->get_number_view(),
-			'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('downloaded_times', 'common', 'download'), array('number_downloads' => $this->number_downloads)),
-			'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation()),
-			'NOTATION' => NotationService::display_active_image($this->get_notation()),
+				// Item
+				'ID'                 => $this->id,
+				'TITLE'              => $this->title,
+				'SIZE'               => $this->formated_size,
+				'CONTENTS'           => $contents,
+				'DESCRIPTION'        => $description,
+				'STATUS'             => $this->get_status(),
+				'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
+				'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,
+				'PSEUDO'             => $user->get_display_name(),
+				'USER_LEVEL_CLASS'   => UserService::get_level_class($user->get_level()),
+				'USER_GROUP_COLOR'   => $user_group_color,
+				'SOFTWARE_VERSION'   => $this->software_version,
+				'DOWNLOADS_NUMBER'   => $this->downloads_number,
+				'VIEWS_NUMBER'       => $this->get_views_number(),
+				'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('downloaded_times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
+				'STATIC_NOTATION'    => NotationService::display_static_image($this->get_notation()),
+				'NOTATION'           => NotationService::display_active_image($this->get_notation()),
 
-			'C_COMMENTS' => !empty($comments_number),
-			'L_COMMENTS' => CommentsService::get_lang_comments('download', $this->id),
-			'COMMENTS_NUMBER' => $comments_number,
+				'C_COMMENTS'      => !empty($comments_number),
+				'L_COMMENTS'      => CommentsService::get_lang_comments('download', $this->id),
+				'COMMENTS_NUMBER' => $comments_number,
 
-			//Category
-			'C_ROOT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY,
-			'CATEGORY_ID' => $category->get_id(),
-			'CATEGORY_NAME' => $category->get_name(),
-			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-			'U_EDIT_CATEGORY' => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
+				// Category
+				'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
+				'CATEGORY_ID'          => $category->get_id(),
+				'CATEGORY_NAME'        => $category->get_name(),
+				'CATEGORY_DESCRIPTION' => $category->get_description(),
+				'U_CATEGORY'           => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? DownloadUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($category->get_id())->rel(),
 
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_LINK' => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
-			'U_DOWNLOAD' => DownloadUrlBuilder::download($this->id)->rel(),
-			'U_DEADLINK' => DownloadUrlBuilder::dead_link($this->id)->rel(),
-			'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => DownloadUrlBuilder::edit($this->id)->rel(),
-			'U_DELETE' => DownloadUrlBuilder::delete($this->id)->rel(),
-			'U_PICTURE' => $this->get_picture()->rel(),
-			'U_COMMENTS' => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
+				// Links
+				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+				'U_ITEM'           => DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
+				'U_DOWNLOAD'       => DownloadUrlBuilder::download($this->id)->rel(),
+				'U_DEADLINK'       => DownloadUrlBuilder::dead_link($this->id)->rel(),
+				'U_EDIT'           => DownloadUrlBuilder::edit($this->id)->rel(),
+				'U_DELETE'         => DownloadUrlBuilder::delete($this->id)->rel(),
+				'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
+				'U_COMMENTS'       => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 			)
 		);
 	}

@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadService
@@ -50,14 +51,14 @@ class DownloadService
 	 * @desc Update the number of downloads of a file.
 	 * @param string[] $downloadfile : DownloadFile to update
 	 */
-	public static function update_number_downloads(DownloadFile $downloadfile)
+	public static function update_downloads_number(DownloadFile $downloadfile)
 	{
-		self::$db_querier->update(DownloadSetup::$download_table, array('number_downloads' => $downloadfile->get_number_downloads()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+		self::$db_querier->update(DownloadSetup::$download_table, array('number_downloads' => $downloadfile->get_downloads_number()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
 	}
 
-	public static function update_number_view(DownloadFile $downloadfile)
+	public static function update_views_number(DownloadFile $downloadfile)
 	{
-		self::$db_querier->update(DownloadSetup::$download_table, array('number_view' => $downloadfile->get_number_view()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
+		self::$db_querier->update(DownloadSetup::$download_table, array('number_view' => $downloadfile->get_views_number()), 'WHERE id=:id', array('id' => $downloadfile->get_id()));
 	}
 
 	 /**
@@ -73,9 +74,9 @@ class DownloadService
             DispatchManager::redirect($controller);
         }
 			self::$db_querier->delete(DownloadSetup::$download_table, 'WHERE id=:id', array('id' => $id));
-		
+
 			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'download', 'id' => $id));
-		
+
 			CommentsService::delete_comments_topic_module('download', $id);
 			KeywordsService::get_keywords_manager()->delete_relations($id);
 			NotationService::delete_notes_id_in_module('download', $id);
@@ -99,7 +100,7 @@ class DownloadService
 		$downloadfile->set_properties($row);
 		return $downloadfile;
 	}
-	
+
 	public static function clear_cache()
 	{
 		Feed::clear_cache('download');

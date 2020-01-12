@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 21
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -84,7 +84,7 @@ class DownloadManageController extends AdminModuleController
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$row = array(
-				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()), $downloadfile->get_name()), 'left'),
+				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_title()), $downloadfile->get_title()), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($downloadfile->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
@@ -138,11 +138,11 @@ class DownloadManageController extends AdminModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['download.management'], $this->lang['module_title'], $page);
+		$graphical_environment->set_page_title($this->lang['download.management'], $this->lang['module.title'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], DownloadUrlBuilder::home());
+		$breadcrumb->add($this->lang['module.title'], DownloadUrlBuilder::home());
 
 		$breadcrumb->add($this->lang['download.management'], DownloadUrlBuilder::manage());
 

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 09
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadModuleMiniMenu extends ModuleMiniMenu
@@ -55,8 +56,8 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 			'C_FILES' => !empty($downloadfiles),
 			'C_SORT_BY_DATE' => $config->is_sort_type_date(),
 			'C_SORT_BY_NOTATION' => $config->is_sort_type_notation(),
-			'C_SORT_BY_NUMBER_DOWNLOADS' => $config->is_sort_type_number_downloads(),
-			'C_SORT_BY_NUMBER_VIEWS' => $config->is_sort_type_number_views()
+			'C_SORT_BY_DOWNLOADS_NUMBER' => $config->is_sort_type_downloads_number(),
+			'C_SORT_BY_VIEWS_NUMBERS' => $config->is_sort_type_views_numbers()
 		));
 
 		$displayed_position = 1;
