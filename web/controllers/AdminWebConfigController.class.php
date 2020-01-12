@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class AdminWebConfigController extends AdminModuleController
 		{
 			$this->save();
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== WebConfig::LIST_VIEW);
-			$this->form->get_field_by_id('items_number_per_row')->set_hidden($this->config->get_display_type() !== WebConfig::GRID_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== WebConfig::GRID_VIEW);
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 
@@ -70,12 +70,12 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => $this->get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_number_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories_per_page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_number_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -84,7 +84,7 @@ class AdminWebConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-        $fieldset->add_field(new FormFieldNumberEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(),
+        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -105,19 +105,19 @@ class AdminWebConfigController extends AdminModuleController
 			),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_number_per_row").enable();
+					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("full_item_display").disable();
 				} else if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::LIST_VIEW . '\') {
 					HTMLForms.getField("full_item_display").enable();
-					HTMLForms.getField("items_number_per_row").disable();
+					HTMLForms.getField("items_per_row").disable();
 				} else {
-					HTMLForms.getField("items_number_per_row").disable();
+					HTMLForms.getField("items_per_row").disable();
 					HTMLForms.getField("full_item_display").disable();
 				}'
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== WebConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
@@ -193,18 +193,18 @@ class AdminWebConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
 		if($this->form->get_value('display_type') == WebConfig::GRID_VIEW)
-			$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
+			$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 
 		if ($this->form->get_value('full_item_display'))
 			$this->config->display_full_item();
 		else
 			$this->config->display_condensed_item();
 
-		$this->config->set_categories_number_per_page($this->form->get_value('categories_number_per_page'));
-		$this->config->set_categories_number_per_row($this->form->get_value('categories_number_per_row'));
+		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
+		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 
 		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();

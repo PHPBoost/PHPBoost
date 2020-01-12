@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 12
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -51,7 +51,7 @@ class WebDisplayCategoryController extends ModuleController
 		$subcategories_page = $request->get_getint('subcategories_page', 1);
 
 		$subcategories = CategoriesService::get_categories_manager()->get_categories_cache()->get_children($this->get_category()->get_id(), CategoriesService::get_authorized_categories($this->get_category()->get_id(), $this->config->are_descriptions_displayed_to_guests()));
-		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_number_per_page(), $field, $mode, $page, $subcategories_page);
+		$subcategories_pagination = $this->get_subcategories_pagination(count($subcategories), $this->config->get_categories_per_page(), $field, $mode, $page, $subcategories_page);
 
 		$nbr_cat_displayed = 0;
 		foreach ($subcategories as $id => $category)
@@ -99,9 +99,9 @@ class WebDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY web.privileged_partner DESC, ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :items_number_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'user_id' => AppContext::get_current_user()->get_id(),
-			'items_number_per_page' => $pagination->get_number_items_per_page(),
+			'items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
 
@@ -115,8 +115,8 @@ class WebDisplayCategoryController extends ModuleController
 			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_NUMBER_PER_ROW' => $this->config->get_categories_number_per_row(),
-			'ITEMS_NUMBER_PER_ROW' => $this->config->get_items_number_per_row(),
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('web'),
 			'C_MODERATE' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
@@ -195,7 +195,7 @@ class WebDisplayCategoryController extends ModuleController
 	{
 		$weblinks_number = WebService::count($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_per_page());
 		$pagination->set_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d', $subcategories_page));
 
 		if ($pagination->current_page_is_empty() && $page > 1)
@@ -207,9 +207,9 @@ class WebDisplayCategoryController extends ModuleController
 		return $pagination;
 	}
 
-	private function get_subcategories_pagination($subcategories_number, $categories_number_per_page, $field, $mode, $page, $subcategories_page)
+	private function get_subcategories_pagination($subcategories_number, $categories_per_page, $field, $mode, $page, $subcategories_page)
 	{
-		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_number_per_page);
+		$pagination = new ModulePagination($subcategories_page, $subcategories_number, (int)$categories_per_page);
 		$pagination->set_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page, '%d'));
 
 		if ($pagination->current_page_is_empty() && $subcategories_page > 1)
