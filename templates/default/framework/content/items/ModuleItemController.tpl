@@ -249,7 +249,7 @@
 
 	<footer>
 		<meta itemprop="url" content="{U_ITEM}">
-		<meta itemprop="description" content="${escape(SHORT_CONTENTS)}" />
+		<meta itemprop="description" content="${escape(SUMMARY)}" />
 		# IF C_HAS_THUMBNAIL #<meta itemprop="thumbnailUrl" content="{U_THUMBNAIL}"># ENDIF #
 		# IF C_ENABLED_COMMENTS #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
