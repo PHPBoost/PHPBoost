@@ -85,7 +85,7 @@
 							</div>
 						</div>
 					# ENDIF #
-					<div class="cell-list">
+					<div class="cell-list small">
 						<ul>
 							# IF C_ENABLED_VISIT #
 								<li class="li-stretch">
@@ -249,7 +249,7 @@
 
 	<footer>
 		<meta itemprop="url" content="{U_ITEM}">
-		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+		<meta itemprop="description" content="${escape(SHORT_CONTENTS)}" />
 		# IF C_HAS_THUMBNAIL #<meta itemprop="thumbnailUrl" content="{U_THUMBNAIL}"># ENDIF #
 		# IF C_ENABLED_COMMENTS #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">

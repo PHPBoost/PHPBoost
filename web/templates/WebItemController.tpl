@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				# ENDIF #
-				<div class="cell-list">
+				<div class="cell-list small">
 					<ul>
 						<li class="li-stretch">
 							<a href="{U_VISIT}" class="button submit">
@@ -101,7 +101,7 @@
 		# ENDIF #
 		<footer>
 			<meta itemprop="url" content="{U_ITEM}">
-			<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+			<meta itemprop="description" content="${escape(SHORT_CONTENTS)}" />
 			# IF C_ENABLED_COMMENTS #
 				<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">

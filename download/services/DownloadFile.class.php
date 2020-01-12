@@ -509,7 +509,7 @@ class DownloadFile
 	{
 		$category = $this->get_category();
 		$contents = FormatingHelper::second_parse($this->contents);
-		$description = $this->get_real_short_contents();
+		$short_contents = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('download', $this->id);
@@ -527,7 +527,7 @@ class DownloadFile
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                 => $this->is_authorized_to_edit(),
 				'C_DELETE'               => $this->is_authorized_to_delete(),
-				'C_READ_MORE'            => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > DownloadConfig::CHARACTERS_TO_DISPLAY && $description != @strip_tags($contents, '<br><br/>'),
+				'C_READ_MORE'            => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > DownloadConfig::CHARACTERS_TO_DISPLAY && $short_contents != @strip_tags($contents, '<br><br/>'),
 				'C_SIZE'                 => !empty($this->size),
 				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
 				'C_SOFTWARE_VERSION'     => !empty($this->software_version),
@@ -544,7 +544,7 @@ class DownloadFile
 				'TITLE'              => $this->title,
 				'SIZE'               => $this->formated_size,
 				'CONTENTS'           => $contents,
-				'DESCRIPTION'        => $description,
+				'SHORT_CONTENTS'     => $short_contents,
 				'STATUS'             => $this->get_status(),
 				'AUTHOR_CUSTOM_NAME' => $this->author_custom_name,
 				'C_AUTHOR_EXIST'     => $user->get_id() !== User::VISITOR_LEVEL,

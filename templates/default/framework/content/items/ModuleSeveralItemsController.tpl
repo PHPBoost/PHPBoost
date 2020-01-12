@@ -266,7 +266,7 @@
 									# IF C_FULL_ITEM_DISPLAY #
 										{module_items.CONTENTS}
 									# ELSE #
-										{module_items.DESCRIPTION}
+										{module_items.SHORT_CONTENTS}
 										# IF module_items.C_READ_MORE #... <a href="{module_items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 									# ENDIF #
 								</div>
@@ -275,7 +275,7 @@
 
 						<footer>
 							<meta itemprop="url" content="{module_items.U_ITEM}">
-							<meta itemprop="description" content="${escape(module_items.DESCRIPTION)}"/>
+							<meta itemprop="description" content="${escape(module_items.SHORT_CONTENTS)}"/>
 							# IF C_COMMENTS_ENABLED #
 								<meta itemprop="discussionUrl" content="{module_items.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{module_items.COMMENTS_NUMBER} UserComments">

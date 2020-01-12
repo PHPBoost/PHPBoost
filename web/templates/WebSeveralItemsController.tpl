@@ -161,14 +161,14 @@
 								# IF C_FULL_ITEM_DISPLAY #
 									<div itemprop="text">{weblinks.CONTENTS}</div>
 								# ELSE #
-									{weblinks.DESCRIPTION}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+									{weblinks.SHORT_CONTENTS}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 								# ENDIF #
 							</div>
 						</div>
 
 						<footer>
 							<meta itemprop="url" content="{weblinks.U_ITEM}">
-							<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>
+							<meta itemprop="description" content="${escape(weblinks.SHORT_CONTENTS)}"/>
 							# IF C_ENABLED_COMMENTS #
 								<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{weblinks.COMMENTS_NUMBER} UserComments">
