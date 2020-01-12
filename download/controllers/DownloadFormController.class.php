@@ -120,17 +120,17 @@ class DownloadFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_contents(), array('rows' => 15, 'required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('short_contents_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_downloadfile()->is_short_contents_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_downloadfile()->is_summary_enabled(),
 			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => DownloadConfig::CHARACTERS_TO_DISPLAY)), 'events' => array('click' => '
-			if (HTMLForms.getField("short_contents_enabled").getValue()) {
-				HTMLForms.getField("short_contents").enable();
+			if (HTMLForms.getField("summary_enabled").getValue()) {
+				HTMLForms.getField("summary").enable();
 			} else {
-				HTMLForms.getField("short_contents").disable();
+				HTMLForms.getField("summary").disable();
 			}'))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_short_contents(), array(
-			'hidden' => !$this->get_downloadfile()->is_short_contents_enabled(),
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_downloadfile()->get_summary(), array(
+			'hidden' => !$this->get_downloadfile()->is_summary_enabled(),
 		)));
 
 		if ($this->config->is_author_displayed())
@@ -302,7 +302,7 @@ class DownloadFormController extends ModuleController
 
 		$downloadfile->set_url(new Url($this->form->get_value('url')));
 		$downloadfile->set_contents($this->form->get_value('contents'));
-		$downloadfile->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
+		$downloadfile->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$downloadfile->set_thumbnail(new Url($this->form->get_value('thumbnail')));
 		$downloadfile->set_software_version($this->form->get_value('software_version'));
 

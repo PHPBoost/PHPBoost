@@ -40,7 +40,7 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 		$now = new Date();
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
-		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->are_descriptions_displayed_to_guests());
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->is_summary_displayed_to_guests());
 		$mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$field = $request->get_getstring('field', DownloadFile::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 

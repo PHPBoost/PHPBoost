@@ -67,7 +67,7 @@ class DownloadFileController extends AbstractController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->downloadfile->get_title(), LangLoader::get_message('module.title', 'common', 'download'));
-		$graphical_environment->get_seo_meta_data()->set_description($this->downloadfile->get_real_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_description($this->downloadfile->get_real_summary());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::download($this->downloadfile->get_id()));
 
 		return $response;

@@ -107,7 +107,7 @@
 		# ENDIF #
 		<footer>
 			<meta itemprop="url" content="{U_ITEM}">
-			<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+			<meta itemprop="description" content="${escape(SUMMARY)}" />
 			# IF C_ENABLED_COMMENTS #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">

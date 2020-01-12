@@ -22,7 +22,7 @@ class DownloadConfig extends AbstractConfigData
 	const DEFAULT_CONTENTS = 'default_contents';
 
 	const FULL_ITEM_DISPLAY = 'full_item_display';
-	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
+	const SUMMARY_DISPLAYED_TO_GUESTS = 'summary_displayed_to_guests';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const NB_VIEW_ENABLED = 'nb_view_enabled';
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
@@ -136,19 +136,19 @@ class DownloadConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_CONTENTS, $value);
 	}
 
-	public function display_descriptions_to_guests()
+	public function display_summary_to_guests()
 	{
-		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, true);
+		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, true);
 	}
 
-	public function hide_descriptions_to_guests()
+	public function hide_summary_to_guests()
 	{
-		$this->set_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS, false);
+		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, false);
 	}
 
-	public function are_descriptions_displayed_to_guests()
+	public function is_summary_displayed_to_guests()
 	{
-		return $this->get_property(self::DESCRIPTIONS_DISPLAYED_TO_GUESTS);
+		return $this->get_property(self::SUMMARY_DISPLAYED_TO_GUESTS);
 	}
 
 	public function display_author()
@@ -286,7 +286,7 @@ class DownloadConfig extends AbstractConfigData
 			self::ITEMS_DEFAULT_SORT_FIELD => DownloadFile::SORT_UPDATED_DATE,
 			self::ITEMS_DEFAULT_SORT_MODE => DownloadFile::DESC,
 			self::DEFAULT_CONTENTS => '',
-			self::DESCRIPTIONS_DISPLAYED_TO_GUESTS => false,
+			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 			self::AUTHOR_DISPLAYED => true,
 			self::NB_VIEW_ENABLED => false,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('download'),

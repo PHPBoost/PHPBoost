@@ -44,7 +44,7 @@ class AdminDownloadConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('display_descriptions_to_guests')->set_hidden($this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
+			$this->form->get_field_by_id('display_summary_to_guests')->set_hidden($this->config->get_display_type() == DownloadConfig::TABLE_VIEW);
 			$this->form->get_field_by_id('full_item_display')->set_hidden($this->config->get_display_type() !== DownloadConfig::LIST_VIEW);
 			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== DownloadConfig::GRID_VIEW);
 			$this->form->get_field_by_id('oldest_file_day_in_menu')->set_hidden(!$this->config->is_limit_oldest_file_day_in_menu_enabled());
@@ -110,15 +110,15 @@ class AdminDownloadConfigController extends AdminModuleController
 			array('events' => array('click' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
-					HTMLForms.getField("display_descriptions_to_guests").enable();
+					HTMLForms.getField("display_summary_to_guests").enable();
 					HTMLForms.getField("full_item_display").disable();
 				} else if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::LIST_VIEW . '\') {
 					HTMLForms.getField("full_item_display").enable();
-					HTMLForms.getField("display_descriptions_to_guests").enable();
+					HTMLForms.getField("display_summary_to_guests").enable();
 					HTMLForms.getField("items_per_row").disable();
 				} else {
 					HTMLForms.getField("items_per_row").disable();
-					HTMLForms.getField("display_descriptions_to_guests").disable();
+					HTMLForms.getField("display_summary_to_guests").disable();
 					HTMLForms.getField("full_item_display").disable();
 				}'
 			))
@@ -138,7 +138,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['config.display_descriptions_to_guests'], $this->config->are_descriptions_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->lang['config.display_summary_to_guests'], $this->config->is_summary_displayed_to_guests(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW
@@ -268,10 +268,10 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		if ($this->config->get_display_type() != DownloadConfig::TABLE_VIEW)
 		{
-			if ($this->form->get_value('display_descriptions_to_guests'))
-				$this->config->display_descriptions_to_guests();
+			if ($this->form->get_value('display_summary_to_guests'))
+				$this->config->display_summary_to_guests();
 			else
-				$this->config->hide_descriptions_to_guests();
+				$this->config->hide_summary_to_guests();
 		}
 
 		if ($this->form->get_value('author_displayed'))

@@ -189,7 +189,7 @@
 									# IF C_FULL_ITEM_DISPLAY #
 										{downloadfiles.CONTENTS}
 									# ELSE #
-										{downloadfiles.SHORT_CONTENTS}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
+										{downloadfiles.SUMMARY}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
 									# ENDIF #
 								</div>
 							</div>
@@ -197,7 +197,7 @@
 
 						<footer>
 							<meta itemprop="url" content="{downloadfiles.U_ITEM}">
-							<meta itemprop="description" content="${escape(downloadfiles.SHORT_CONTENTS)}"/>
+							<meta itemprop="description" content="${escape(downloadfiles.SUMMARY)}"/>
 							# IF C_ENABLED_COMMENTS #
 								<meta itemprop="discussionUrl" content="{downloadfiles.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{downloadfiles.COMMENTS_NUMBER} UserComments">
