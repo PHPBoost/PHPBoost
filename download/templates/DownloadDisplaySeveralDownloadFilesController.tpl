@@ -8,6 +8,12 @@
 			# IF C_PENDING #{@download.pending}# ELSE #{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
+	# IF C_DISPLAY_SUMMARY_TO_GUEST #
+		<div class="cat-description">
+			plop
+		</div>
+	# ENDIF #
+
 	# IF C_CATEGORY_DESCRIPTION #
 		<div class="cat-description">
 			{CATEGORY_DESCRIPTION}

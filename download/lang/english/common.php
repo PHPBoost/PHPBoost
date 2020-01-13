@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -50,7 +50,6 @@ $lang['config.display_type'] = 'Displayed informations in categories';
 $lang['config.display_type.display_summary'] = 'Summary';
 $lang['config.display_type.display_all_content'] = 'All content';
 $lang['config.display_type.display_table'] = 'Table';
-$lang['config.display_summary_to_guests'] = 'Display summary files to guests if they don\'t have read permission';
 $lang['config.downloaded_files_menu'] = 'Downloaded files menu';
 $lang['config.sort_type'] = 'Files display order';
 $lang['config.sort_type.explain'] = 'Descending mode';

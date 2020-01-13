@@ -118,8 +118,6 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_TABLE_VIEW' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'C_AUTHOR_DISPLAYED' => $this->config->is_author_displayed(),
 			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('download'),
@@ -131,6 +129,9 @@ class DownloadDisplayCategoryController extends ModuleController
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'PAGINATION' => $pagination->display(),
 			'TABLE_COLSPAN' => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),

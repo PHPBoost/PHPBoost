@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -138,7 +138,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->lang['config.display_summary_to_guests'], $this->config->is_summary_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->admin_common_lang['config.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
 			array(
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW
