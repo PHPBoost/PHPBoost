@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 08
+ * @version     PHPBoost 5.3 - last update: 2020 01 13
  * @since       PHPBoost 5.3 - 2020 01 08
 */
 
@@ -41,6 +41,14 @@ class ItemsService
 		{
 			$parameters[str_replace('.', '_', TextHelper::ucfirst($element))] = isset($module_lang[$element]) ? TextHelper::ucfirst($module_lang[$element]) : TextHelper::ucfirst($items_lang[$element]);
 			$parameters[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
+		}
+		
+		foreach ($parameters as $id => $value)
+		{
+			$parameters[$id] = StringVars::replace_vars($value, array(
+				'items' => (isset($module_lang['items']) ? $module_lang['items'] : $items_lang['items']),
+				'item'  => (isset($module_lang['item']) ? $module_lang['item'] : $items_lang['item'])
+			));
 		}
 		
 		foreach ($items_lang as $id => &$item_lang)

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 13
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -57,6 +57,45 @@ class ItemsUrlBuilder
 	public static function delete($id, $module_id = '')
 	{
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name, $anchor = '', $module_id = '')
+	{
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/' . $anchor);
+	}
+	/**
+	 * @return Url
+	 */
+	public static function display_item($id, $rewrited_title, $anchor = '', $module_id = '')
+	{
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '-' . $rewrited_title . '/' . $anchor);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_comments($id_category, $rewrited_name_category, $id, $rewrited_title, $module_id = '')
+	{
+		return self::display($id_category, $rewrited_name_category, $id, $rewrited_title, '#comments-list', $module_id);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_item_comments($id, $rewrited_title, $module_id = '')
+	{
+		return self::display_item($id, $rewrited_title, '#comments-list', $module_id);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_pending($module_id = '')
+	{
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/pending/');
 	}
 }
 ?>
