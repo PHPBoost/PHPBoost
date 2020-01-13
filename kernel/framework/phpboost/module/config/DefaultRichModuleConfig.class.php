@@ -101,49 +101,34 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 		$this->set_property(self::DEFAULT_CONTENT, $value);
 	}
 
-	public function display_summary_to_guests()
-	{
-		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, true);
-	}
-
-	public function hide_summary_to_guests()
-	{
-		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, false);
-	}
-
-	public function is_summary_displayed_to_guests()
+	public function get_summary_displayed_to_guests()
 	{
 		return $this->get_property(self::SUMMARY_DISPLAYED_TO_GUESTS);
 	}
 
-	public function display_author()
+	public function set_summary_displayed_to_guests(bool $value)
 	{
-		$this->set_property(self::AUTHOR_DISPLAYED, true);
+		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, $value);
 	}
 
-	public function hide_author()
-	{
-		$this->set_property(self::AUTHOR_DISPLAYED, false);
-	}
-
-	public function is_author_displayed()
+	public function get_author_displayed()
 	{
 		return $this->get_property(self::AUTHOR_DISPLAYED);
 	}
 
-	public function enable_views_number()
+	public function set_author_displayed(bool $value)
 	{
-		$this->set_property(self::VIEWS_NUMBER_ENABLED, true);
+		$this->set_property(self::AUTHOR_DISPLAYED, $value);
 	}
 
-	public function disable_views_number()
-	{
-		$this->set_property(self::VIEWS_NUMBER_ENABLED, false);
-	}
-
-	public function are_views_number_enabled()
+	public function get_views_number_enabled()
 	{
 		return $this->get_property(self::VIEWS_NUMBER_ENABLED);
+	}
+
+	public function set_views_number_enabled(bool $value)
+	{
+		$this->set_property(self::VIEWS_NUMBER_ENABLED, $value);
 	}
 
 	public function get_root_category_description()
