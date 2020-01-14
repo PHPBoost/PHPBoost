@@ -184,8 +184,6 @@
 
 .cell .formatter-title { display: block; }
 
-.cell .formatter-blockquote .formatter-title { padding-left: 1.618em; }
-
 .cell-footer {
 	padding: 0.618em;
 	text-align: right;
