@@ -182,7 +182,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description($this->module_id),
 			self::DISPLAY_TYPE                => self::GRID_VIEW,
 			self::DEFERRED_OPERATIONS         => array()
-		);
+		));
 	}
 }
 ?>
