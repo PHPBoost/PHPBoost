@@ -133,12 +133,13 @@ class UserUsersListController extends AbstractController
 	private function build_select_group_form()
 	{
 		$form = new HTMLForm('groups', '', false);
+		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHTML('show_group');
+		$fieldset = new FormFieldsetHorizontal('show_group', array('description' =>$this->lang['groups.select'], 'css_class' => 'grouped-inputs'));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', '', $this->build_select_groups(),
-			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select','', '', $this->build_select_groups(),
+			array('class' => 'grouped-element', 'events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
 		)));
 
 		$groups = $this->groups_cache->get_groups();

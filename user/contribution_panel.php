@@ -330,11 +330,12 @@ else
 		{
 			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
 			{
-				$template->assign_block_vars('row', array());
+				$template->assign_block_vars('row', array(
+					'MODULES_PER_ROW' => NUMBER_OF_MODULES_PER_LINE,
+				));
 			}
 
 			$template->assign_block_vars('row.module', array(
-				'WIDTH' => (int)(100. / (NUMBER_OF_MODULES_PER_LINE)),
 				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module->get_id() . '/' . url($contribution_interface),
 				'MODULE_ID' => $module->get_id(),
 				'MODULE_NAME' => $module->get_configuration()->get_name(),

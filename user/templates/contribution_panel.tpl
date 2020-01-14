@@ -13,67 +13,95 @@
 					<thead>
 						<tr>
 							<th>
-								# IF NOT C_ORDER_ENTITLED_ASC #
-									<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_ENTITLED_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_ENTITLED}
-								# IF NOT C_ORDER_ENTITLED_DESC #
-									<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_ENTITLED_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_MODULE_ASC #
-									<a href="{U_ORDER_MODULE_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_MODULE_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_MODULE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_MODULE}
-								# IF NOT C_ORDER_MODULE_DESC #
-									<a href="{U_ORDER_MODULE_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_MODULE_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_MODULE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_STATUS_ASC #
-									<a href="{U_ORDER_STATUS_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_STATUS_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_STATUS_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_STATUS}
-								# IF NOT C_ORDER_STATUS_DESC #
-									<a href="{U_ORDER_STATUS_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_STATUS_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_STATUS_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_CREATION_DATE_ASC #
-									<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_CREATION_DATE}
-								# IF NOT C_ORDER_CREATION_DATE_DESC #
-									<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_FIXING_DATE_ASC #
-									<a href="{U_ORDER_FIXING_DATE_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_FIXING_DATE_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_FIXING_DATE}
-								# IF NOT C_ORDER_FIXING_DATE_DESC #
-									<a href="{U_ORDER_FIXING_DATE_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_FIXING_DATE_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_POSTER_ASC #
-									<a href="{U_ORDER_POSTER_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_POSTER_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_POSTER_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_POSTER}
-								# IF NOT C_ORDER_POSTER_DESC #
-									<a href="{U_ORDER_POSTER_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_POSTER_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_POSTER_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 							<th>
-								# IF NOT C_ORDER_FIXER_ASC #
-									<a href="{U_ORDER_FIXER_ASC}" class="fa fa-arrow-up"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_FIXER_ASC # sort-active# ENDIF #">
+									<a href="{U_ORDER_FIXER_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">
+										<i class="fa fa-caret-up" aria-hidden="true"></i>
+									</a>
+								</span>
 								{L_FIXER}
-								# IF NOT C_ORDER_FIXER_DESC #
-									<a href="{U_ORDER_FIXER_DESC}" class="fa fa-arrow-down"></a>
-								# ENDIF #
+								<span class="html-table-header-sortable# IF C_ORDER_FIXER_DESC # sort-active# ENDIF #">
+									<a href="{U_ORDER_FIXER_DESC}" aria-label="${LangLoader::get_message('sort.desc', 'common')}">
+										<i class="fa fa-caret-down" aria-hidden="true"></i>
+									</a>
+								</span>
 							</th>
 						</tr>
 					</thead>
@@ -144,14 +172,17 @@
 					<p>{L_CONTRIBUTE_EXPLAIN}</p>
 
 					# START row #
+					<div class="cell-flex cell-tile cell-columns-{row.MODULES_PER_ROW}">
 						# START row.module #
-							<div class="contribution-module-container" style="width:{row.module.WIDTH}%;">
-								<a class="infos-options" href="{row.module.U_MODULE_LINK}">
-									<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}.png" alt="{row.module.LINK_TITLE}" />
-								</a>
-								<a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a>
+							<div class="cell">
+								<div class="cell-header">
+									<div class="cell-name"><a href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
+									<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}_mini.png" alt="{row.module.LINK_TITLE}" />
+								</div>
 							</div>
 						# END row.module #
+
+					</div>
 						<div class="spacer"></div>
 					# END row #
 				# ELSE #
