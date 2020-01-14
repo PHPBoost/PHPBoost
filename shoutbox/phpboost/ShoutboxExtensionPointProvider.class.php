@@ -3,25 +3,17 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 27
+ * @version     PHPBoost 5.3 - last update: 2020 01 14
  * @since       PHPBoost 2.0 - 2008 07 07
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
 */
 
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+class ShoutboxExtensionPointProvider extends ModuleExtensionPointProvider
 {
 	public function __construct()
 	{
 		parent::__construct('shoutbox');
-	}
-
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('shoutbox.css');
-		$module_css_files->adding_always_displayed_file('shoutbox_mini.css');
-		return $module_css_files;
 	}
 
 	public function home_page()
@@ -41,12 +33,7 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 
 	public function tree_links()
 	{
-		return new ShoutboxTreeLinks();
-	}
-
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/shoutbox/index.php')));
+		return new DefaultTreeLinks($this->get_id(), false);
 	}
 }
 ?>
