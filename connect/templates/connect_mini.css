@@ -29,6 +29,10 @@
 	flex-direction: column;
 }
 
+#module-connect .cell-list li a {
+	padding-right: 0.618em;
+}
+
 #module-connect .cell-list li:hover {
     background-color: transparent;
 }
