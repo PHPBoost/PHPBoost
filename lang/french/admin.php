@@ -149,6 +149,7 @@ $LANG['automatic_menu'] = 'Automatique';
 $LANG['vertical_menu'] = 'Menu vertical déroulant';
 $LANG['horizontal_menu'] = 'Menu horizontal déroulant';
 $LANG['static_menu'] = 'Menu statique';
+$LANG['push_menu'] = 'Menu Push';
 $LANG['available_menus'] = 'Menus disponibles';
 $LANG['no_available_menus'] = 'Aucun menu disponible';
 $LANG['menu_header'] = 'Tête de page';

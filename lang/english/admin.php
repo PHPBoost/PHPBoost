@@ -150,6 +150,7 @@ $LANG['automatic_menu'] = 'Automatic';
 $LANG['vertical_menu'] = 'Vertical scrolling menu';
 $LANG['horizontal_menu'] = 'Horizontal scrolling menu';
 $LANG['static_menu'] = 'Static menu';
+$LANG['push_menu'] = 'Push menu';
 $LANG['available_menus'] = 'Available menus';
 $LANG['no_available_menus'] = 'No menus available';
 $LANG['menu_header'] = 'Header';
