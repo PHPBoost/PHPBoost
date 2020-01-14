@@ -22,12 +22,12 @@
 
 			if (!hide_folder)
 				{
-					document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x" aria-hidden="true"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
+					document.getElementById('new-folder').innerHTML += '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
 					document.getElementById('folder-name').focus();
 				} else
 				{
 					document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-					document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x" aria-hidden="true"></i> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div>';
+					document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
 					document.getElementById('folder-name').focus();
 					this.divid--;
 					hide_folder = false;
@@ -98,7 +98,32 @@
 								{
 									if (xhr_object.responseText > 0)
 										{
-											document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="fa fa-folder fa-4x" aria-hidden="true"></i></a><br /> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /> <div class="upload-repertory-controls"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a></span></span> <span><a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="fa fa-trash-alt" data-confirmation="delete-element"></a></span> <span><a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a></span> <span id="img' + xhr_object.responseText + '"></div>';
+											var newFolder = '\
+											<div class="cell-header">\
+												<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
+													<a href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a>\
+												</div>\
+												<i class="far fa-folder" aria-hidden></i>\
+											</div>\
+											<div class="cell-list">\
+												<ul>\
+													<li class="li-stretch">\
+														<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
+															<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
+																<i class="far fa-edit" aria-hidden></i>\
+															</a>\
+														</span>\
+														<a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
+															<i class="far fa-trash-alt" aria-hidden></i>\
+														</a>\
+														<a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label="{L_MOVETO}">\
+															<i class="fa fa-share" aria-hidden></i>\
+														</a>\
+													</li>\
+													<span id="img' + xhr_object.responseText + '"></span>\
+												</ul>\
+											</div>';
+											document.getElementById('new-folder' + divid).innerHTML =  newFolder;
 											var total_folder = document.getElementById('total-folder').innerHTML;
 											total_folder++;
 											document.getElementById('total-folder').innerHTML = total_folder;
@@ -336,174 +361,215 @@
 		<legend>{L_FOLDER_CONTENT}</legend>
 		<div class="fieldset-inset">
 			# IF C_EMPTY_FOLDER #
-			<div id="empty-folder" class="message-helper bgc notice">{L_EMPTY_FOLDER}</div>
-			<span id="new-folder"></span>
+				<div id="empty-folder" class="message-helper bgc notice">{L_EMPTY_FOLDER}</div>
+				<span id="new-folder"></span>
 			# ELSE #
-			<div id="public-folder" class="upload-elements-repertory">
-				<div class="upload-element-icon">
-					<a href="admin_files.php?showp=1"><i class="far fa-folder fa-4x" aria-hidden="true"></i></a>
-				</div>
-				<span id="public-folder"><a href="admin_files.php?showp=1" class="com">{L_PUBLIC_TITLE}</a></span><br />
-				<div class="upload-repertory-controls">
-					<span id="img-public-folder"></span>
-				</div>
-			</div>
-			# START folder #
-			<div id="members-folder" class="upload-elements-repertory">
-				<div class="upload-element-icon">
-					<a href="admin_files.php{folder.U_FOLDER}"><i class="# IF folder.C_MEMBER_FOLDER #fa fa-users# ELSE #far fa-folder# ENDIF # fa-4x" aria-hidden="true"></i></a>
-				</div>
-				<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span><br />
-				<div class="upload-repertory-controls">
-					# IF folder.C_TYPEFOLDER #<span id="fhref{folder.ID}"><a href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit" aria-hidden="true"></i></a></span># ENDIF #
-					<span>
-						# IF NOT folder.C_MEMBERS_FOLDER #<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="fa fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-					</span>
-					<span>
-						# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a># ENDIF #
-					</span>
-					<span id="img{folder.ID}"></span>
-				</div>
-			</div>
-			# END folder #
-			<span id="new-folder"></span>
-
-			# START personal_files #
-			<div class="upload-elements-file">
-				# IF personal_files.C_ENABLED_THUMBNAILS #
-				# IF personal_files.C_IMG #
-				<a href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-					<div class="upload-element-picture" style="background-image: url({personal_files.URL})"></div>
-				</a>
-				<div class="upload-element-name# IF personal_files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{personal_files.ID}">{personal_files.NAME}</div>
-				# ELSE #
-				<a class="# IF personal_files.C_RECENT_FILE #upload-recent-file# END IF #" href="{personal_files.URL}" {personal_files.LIGHTBOX}>
-					<div class="upload-element-icon"><i class="{personal_files.IMG} fa-fw fa-4x"></i></div>
-				</a>
-				<div class="upload-element-name# IF personal_files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{personal_files.ID}">{personal_files.NAME}</div>
-				# ENDIF #
-				# ELSE #
-				<div class="upload-element-name# IF personal_files.C_RECENT_FILE # upload-recent-file# ENDIF #" id="fi1{personal_files.ID}">
-					# IF personal_files.C_IMG #
-					<a href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection"><i class="{personal_files.IMG} fa-lg"></i></a>
-					# ELSE #
-					<a class="# IF personal_files.C_RECENT_FILE #upload-recent-file# END IF #" href="{personal_files.URL}" {personal_files.LIGHTBOX}><i class="{personal_files.IMG} fa-lg"></i></a>
-					# ENDIF #
-					{personal_files.NAME}
-				</div>
-				# ENDIF #
-				<span id="fi{personal_files.ID}"></span>
-				{personal_files.BBCODE}
-				<div class="upload-file-controls">
-					<span id="fihref{personal_files.ID}"><a href="javascript:display_rename_file('{personal_files.ID}', '{personal_files.NAME_WITH_SLASHES}', '{personal_files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></span>
-					<a href="admin_files.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
-					<a href="admin_files{personal_files.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
-						{personal_files.INSERT}
-					# IF personal_files.C_IS_PUBLIC_FILE #
-					<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
-						<i id="status_{personal_files.ID}" class="fas fa-users"></i>
-					</a>
-					# ELSE #
-					<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-						<i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
-					</a>
-					# ENDIF #
-					</a>
-				</div>
-				<span class="text-strong">{personal_files.FILETYPE}</span><br />
-				<span class="text-strong">{personal_files.SIZE}</span>
-				<span id="imgf{personal_files.ID}"></span>
-			</div>
-			# END personal_files #
-			# ENDIF #
-			# IF C_PERSONAL_SUMMARY #
-			<div class="cell-flex cell-tile cell-options">
-				<div class="cell">
-					<div class="cell-list">
-						<ul class="small">
-							<li class="li-stretch"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
-							<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
-							<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
-							<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
-						</ul>
+				<div class="cell-flex cell-tile cell-inline">
+					<div id="public-folder" class="cell">
+						<div class="cell-header">
+							<div class="cell-name"><a href="admin_files.php?showp=1">{L_PUBLIC_TITLE}</a></div>
+							<i class="far fa-folder" aria-hidden="true"></i>
+						</div>
 					</div>
+
+					# START folder #
+						<div id="members-folder-{folder.ID}" class="cell">
+							<div class="cell-header">
+								<div id="f{folder.ID}" class="cell-name ellipsis"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></div>
+								<i class="# IF folder.C_MEMBER_FOLDER #fa fa-users# ELSE #far fa-folder# ENDIF #" aria-hidden></i>
+							</div>
+							# IF NOT folder.C_MEMBERS_FOLDER #
+								<div class="cell-list">
+									<ul>
+										<li class="li-stretch">
+											# IF folder.C_TYPEFOLDER #
+												<a id="fhref{folder.ID}" href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a>
+											# ENDIF #
+											# IF NOT folder.C_MEMBERS_FOLDER #
+												<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden></i></a>
+											# ENDIF #
+											# IF folder.C_TYPEFOLDER #
+												<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden></i></a>
+											# ENDIF #
+										</li>
+										<span id="img{folder.ID}"></span>
+									</ul>
+								</div>
+							# ENDIF #
+						</div>
+					# END folder #
+					<div id="new-folder" class="cell"></div>
 				</div>
-			</div>
+				<div class="cell-flex cell-tile cell-inline">
+					# START personal_files #
+						<div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF #">
+							<span id="imgf{personal_files.ID}"></span>
+							<div class="cell-header">
+								<div id="fi1{personal_files.ID}" class="cell-name ellipsis">{personal_files.NAME}</div>
+								<span id="fi{personal_files.ID}"></span>
+								# IF NOT personal_files.C_ENABLED_THUMBNAILS #
+									<a href="{personal_files.URL}" {personal_files.LIGHTBOX}>
+										<i class="{personal_files.IMG} fa-lg" aria-hidden></i>
+									</a>
+								# ENDIF #
+							</div>
+							# IF personal_files.C_ENABLED_THUMBNAILS #
+								<div class="cell-body">
+									<div class="cell-thumbnail cell-landscape cell-center">
+										# IF personal_files.C_IMG #
+											<img src="{personal_files.URL}" alt="{personal_files.NAME}">
+											<a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
+												<i class="fa fa-eye" aria-hidden></i>
+											</a>
+										# ELSE #
+											<i class="{personal_files.IMG} fa-fw fa-4x"></i>
+											<a class="cell-thumbnail-caption" href="{personal_files.URL}" {personal_files.LIGHTBOX}>
+												<i class="{personal_files.IMG}"> </i>
+											</a>
+										# ENDIF #
+									</div>
+								</div>
+							# ENDIF #
+							<div class="cell-form grouped-inputs">
+								{personal_files.BBCODE}
+								<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}">
+									<i class="fa fa-copy" aria-hidden="true"></i>
+								</a>
+							</div>
+
+							<div class="cell-list">
+								<ul>
+									<li class="li-stretch">
+										<a id="fihref{personal_files.ID}" href="javascript:display_rename_file('{personal_files.ID}', '{personal_files.NAME_WITH_SLASHES}', '{personal_files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}">
+											<i class="far fa-edit" aria-hidden></i>
+										</a>
+										<a href="admin_files.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element">
+											<i class="far fa-trash-alt" aria-hidden></i>
+										</a>
+										<a href="admin_files{personal_files.U_MOVE}" aria-label="{L_MOVETO}">
+											<i class="fa fa-share" aria-hidden></i>
+										</a>
+										# IF personal_files.C_IS_PUBLIC_FILE #
+											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
+												<i id="status_{personal_files.ID}" class="fas fa-users" aria-hidden></i>
+											</a>
+										# ELSE #
+											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
+												<i id="status_{personal_files.ID}" class="fas fa-user-shield" aria-hidden></i>
+											</a>
+										# ENDIF #
+									</li>
+								</ul>
+							</div>
+							<div class="cell-list">
+								<ul class="small">
+									<li class="li-stretch">
+										<span>{personal_files.FILETYPE}</span>
+										<span>{personal_files.SIZE}</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+					# END personal_files #
+				</div>
+
+				# IF C_PERSONAL_SUMMARY #
+					<div class="cell-tile cell-options">
+						<div class="cell">
+							<div class="cell-list">
+								<ul class="small">
+									<li class="li-stretch"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
+									<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
+									<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
+									<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				# ENDIF #
+
 			# ENDIF #
 		</div>
 		# IF C_SHOW_PUBLIC_FILES #
-		<div class="cell-flex cell-tile cell-options">
-			<div class="cell">
-				<div class="cell-list">
-					<ul class="small">
-						<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong></li>
-						<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_PUBLIC_SIZE}</strong></li>
-						<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
-					</ul>
+			# IF C_PUBLIC_FILES_EXIST #
+				<div class="cell-flex cell-tile cell-inline">
+					# START public_files #
+						<div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
+							<span class="infos-options"><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							<span id="imgf{public_files.ID}"></span>
+							<div class="cell-header">
+								<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
+								# IF NOT public_files.C_ENABLED_THUMBNAILS #
+									<a href="{public_files.URL}">
+										<i class="far {public_files.IMG}"></i>
+									</a>
+								# ENDIF #
+								<span id="fi{public_files.ID}"></span>
+							</div>
+							# IF public_files.C_ENABLED_THUMBNAILS #
+								<div class="cell-body">
+									<div class="cell-thumbnail cell-landscape cell-center">
+										# IF public_files.C_IMG #
+											<img src="{public_files.URL}" alt="{public_files.NAME}">
+											<a class="cell-thumbnail-caption" href="{public_files.URL}">
+												<i class="fa fa-eye"></i>
+											</a>
+										# ELSE #
+											<i class="far {public_files.IMG} fa-4x"></i>
+											<a class="cell-thumbnail-caption" href="{public_files.URL}">
+												<i class="far {public_files.IMG}"></i>
+											</a>
+										# ENDIF #
+									</div>
+								</div>
+							# ENDIF #
+							<div class="cell-form grouped-inputs">
+								{public_files.BBCODE}
+								<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+							</div>
+							<div class="cell-list">
+								<ul>
+									<li class="li-stretch">
+										{public_files.RENAME_FILE}
+										<a href="admin_files.php?del={public_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+										# IF public_files.C_IS_PUBLIC_FILE #
+											<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
+												<i id="status_{public_files.ID}" class="fas fa-users"></i>
+											</a>
+										# ELSE #
+											<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
+												<i id="status_{public_files.ID}" class="fas fa-user-shield"></i>
+											</a>
+										# ENDIF #
+									</li>
+								</ul>
+							</div>
+							<div class="cell-list">
+								<ul class="small">
+									<li class="li-stretch">
+										<span>{public_files.FILETYPE}</span>
+										<span>{public_files.SIZE}</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					# END public_files #
 				</div>
-			</div>
-		</div>
-		# IF C_PUBLIC_FILES_EXIST #	
-		<div class="cell-flex cell-tile cell-inline">
-			# START public_files #
-			<div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-				<span class="infos-options"><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
-				<span id="imgf{public_files.ID}"></span>
-				<div class="cell-header">
-					<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
-					<a href="{public_files.URL}">
-						<i class="far {public_files.IMG}"></i>
-					</a>
-					<span id="fi{public_files.ID}"></span>
-				</div>
-				<div class="cell-body">
-					<div class="cell-thumbnail cell-landscape">
-						# IF public_files.C_IMG #
-						<img src="{public_files.URL}" alt="{public_files.NAME}">
-						<a class="cell-thumbnail-caption" href="{public_files.URL}">
-							<i class="fa fa-eye"></i>
-						</a>
-						# ELSE #
-						<i class="far {public_files.IMG} fa-4x"></i>
-						<a class="cell-thumbnail-caption" href="{public_files.URL}">
-							<i class="far {public_files.IMG}"></i>
-						</a>
-						# ENDIF #
+				<div class="cell-flex cell-tile cell-options">
+					<div class="cell">
+						<div class="cell-list">
+							<ul class="small">
+								<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong></li>
+								<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_PUBLIC_SIZE}</strong></li>
+								<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="cell-form grouped-inputs">
-					{public_files.BBCODE}
-					<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
-				</div>
-				<div class="cell-list">
-					<ul>
-						<li class="li-stretch">
-							{public_files.RENAME_FILE}
-							<a href="admin_files.php?del={public_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{L_DELETE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-							# IF public_files.C_IS_PUBLIC_FILE #
-							<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
-								<i id="status_{public_files.ID}" class="fas fa-users"></i>
-							</a>
-							# ELSE #
-							<a href="#" id="status_function_{public_files.ID}" onclick="change_status({public_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-								<i id="status_{public_files.ID}" class="fas fa-user-shield"></i>
-							</a>
-							# ENDIF #
-
-						</li>
-					</ul>
-				</div>
-				<div class="cell-list">
-					<ul class="small">
-						<li class="li-stretch"><span>{public_files.FILETYPE}</span> <span>{public_files.SIZE}</span></li>
-					</ul>
-				</div>	
-			</div>
-			# END public_files #
-		</div>
-		# ELSE #			
-		<span class="message-helper bgc notice">{L_NO_ITEM}</span>
-		# ENDIF #
+			# ELSE #
+				<span class="message-helper bgc notice">{L_NO_ITEM}</span>
+			# ENDIF #
 		# ENDIF #
 	</fieldset>
 </div>

@@ -85,6 +85,10 @@
 	align-items: flex-start;
 }
 
+.cell-thumbnail.cell-center {
+	align-items: center;
+}
+
 .cell-thumbnail-caption {
     position: absolute;
     top: 0;

@@ -5,56 +5,72 @@
 			self.close();
 		}
 	</script>
-	<section id="module-user-upload-move">
+	<section id="module-user-upload-move" class="content">
 		<header><h1>{L_FILES_MANAGEMENT}</h1></header>
-		<div class="content">
-			<div class="upload-address-bar">
-				<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
-			</div>
-			# INCLUDE message_helper #
-			<form action="{TARGET}" method="post">
-				<div class="upload-elements-container">
-					# START folder #
-						<div class="upload-elements-move-folder">
-							<i class="fa fa-folder" aria-hidden="true"></i> {folder.NAME}
+		<div class="upload-address-bar">
+			<a href="upload.php?root=1{POPUP}"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
+		</div>
+		# INCLUDE message_helper #
+		<form action="{TARGET}" method="post">
+			<div class="cell-flex cell-inline cell-tile">
+				# START folder #
+					<div class="cell">
+						<div class="cell-body no-style">
+							<div class="cell-content">
+								<i class="fa fa-folder" aria-hidden="true"></i> {folder.NAME}
+							</div>
 						</div>
-					# END folder #
+					</div>
+				# END folder #
 
-					# START file #
-						<div class="upload-elements-move-file">
-							# IF file.C_DISPLAY_REAL_IMG #
-								<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
-							# ELSE #
-								<i class="fa {file.FILE_ICON}"></i>
-							# ENDIF #
-							<span class="infos-options">{file.NAME}</span>
-							<span class="infos-options smaller">{file.FILETYPE}</span>
-							<span class="infos-options smaller">{file.SIZE}</span>
+				# START file #
+					<div class="cell">
+						<div class="cell-body">
+							<div class="cell-thumbnail">
+								# IF file.C_DISPLAY_REAL_IMG #
+									<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
+								# ELSE #
+									<i class="fa {file.FILE_ICON} fa-4x"></i>
+								# ENDIF #
+							</div>
 						</div>
-					# END file #
+						<div class="cell-list">
+							<ul>
+								<li class="small">{file.NAME}</li>
+								<li class="small">{file.FILETYPE}</li>
+								<li class="small">{file.SIZE}</li>
+							</ul>
+						</div>
+					</div>
+				# END file #
 
-					<div class="upload-elements-move-to">
-						<strong class="infos-options">{L_MOVE_TO}</strong>
+				<div class="cell">
+					<div class="cell-infos no-style">
+						<span class="text-strong">{L_MOVE_TO}</span>
 						<i class="fa fa-arrow-right" aria-hidden="true"></i>
 					</div>
-					<div class="upload-elements-move-to-cat">
-						<script src="{PATH_TO_ROOT}/templates/default/plugins/upload.js"></script>
-						<script>
-							var path = '{PATH_TO_ROOT}/templates/{THEME}';
-							var selected_cat = {SELECTED_CAT};
-						</script>
-						<span class="infos-options upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
-						{FOLDERS}
+				</div>
+				<div class="cell">
+					<div class="cell-body">
+						<div class="cell-content">
+							<script src="{PATH_TO_ROOT}/templates/default/plugins/upload.js"></script>
+							<script>
+								var path = '{PATH_TO_ROOT}/templates/{THEME}';
+								var selected_cat = {SELECTED_CAT};
+							</script>
+							<span class="infos-options upload-root-cat"><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
+							{FOLDERS}
+						</div>
 					</div>
 				</div>
-				<div class="spacer"></div>
-				<fieldset class="fieldset-submit">
-					<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" value="true" name="valid" class="button submit">{L_SUBMIT}</button>
-				</fieldset>
-			</form>
-		</div>
+			</div>
+			<div class="spacer"></div>
+			<fieldset class="fieldset-submit">
+				<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
+				<input type="hidden" name="token" value="{TOKEN}">
+				<button type="submit" value="true" name="valid" class="button submit">{L_SUBMIT}</button>
+			</fieldset>
+		</form>
 		<footer></footer>
 	</section>
 	{FOOTER}

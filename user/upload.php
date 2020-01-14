@@ -9,7 +9,8 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
- */
+*/
+
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 $upload_lang = LangLoader::get('upload-common'); // load lang file

@@ -160,7 +160,32 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new-folder' + divid).innerHTML = '<span id="img' + xhr_object.responseText + '"></span><div class="cell-header"><div id="f' + xhr_object.responseText + '" class="cell-name ellipsis"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></div><i class="fa fa-folder"></i></div><div class="cell-list"><ul><li class="li-stretch"><span id="fhref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a></span> <span><a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a></span> <span><a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}" class="fa fa-share"></a></span></li></ul></div>';
+						var newFolder = '\
+						<div class="cell-header">\
+							<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
+								<a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a>\
+							</div>\
+							<i class="fa fa-folder" aria-hidden></i>\
+						</div>\
+						<div class="cell-list">\
+							<ul>\
+								<li class="li-stretch">\
+									<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
+										<a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
+											<i class="far fa-edit" aria-hidden></i>\
+										</a>\
+									</span>\
+									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
+										<i class="far fa-trash-alt" aria-hidden></i>\
+									</a>\
+									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}">\
+										<i class="fa fa-share" aria-hidden></i>\
+									</a>\
+								</li>\
+								<span id="img' + xhr_object.responseText + '"></span>\
+							</ul>\
+						</div>';
+						document.getElementById('new-folder' + divid).innerHTML = newFolder;
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -447,17 +472,17 @@
 		                            	<span class="change-name" id="fi{personal_files.ID}"></span>
 										# IF NOT personal_files.C_ENABLED_THUMBNAILS #
 				                            <a href="{personal_files.URL}" {personal_files.LIGHTBOX}>
-				                                <i class="far {personal_files.IMG}"> </i>
+				                                <i class="far {personal_files.IMG}" aria-hidden> </i>
 				                            </a>
 										# ENDIF #
 									</div>
 		                            # IF personal_files.C_ENABLED_THUMBNAILS #
 										<div class="cell-body">
-											<div class="cell-thumbnail cell-landscape">
+											<div class="cell-thumbnail cell-landscape cell-center">
 											 	# IF personal_files.C_IMG #
 											 		<img src="{personal_files.URL}" alt="{personal_files.NAME}">
 						                            <a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-														<i class="fa fa-eye"></i>
+														<i class="fa fa-eye" aria-hidden></i>
 						                            </a>
 					                            # ELSE #
 					                                <i class="far {personal_files.IMG} fa-4x"></i>
@@ -491,7 +516,6 @@
 						                                <i id="status_{personal_files.ID}" class="fas fa-user-shield"></i>
 						                            </a>
 					                            # ENDIF #
-
 											</li>
 										</ul>
 		                            </div>
