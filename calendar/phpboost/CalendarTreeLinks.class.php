@@ -26,7 +26,7 @@ class CalendarTreeLinks extends DefaultTreeLinks
 	{
 		$requested_date = $this->get_requested_date();
 		
-		$tree->add_link(new ModuleLink(LangLoader::get_message('calendar.events.list', 'common', 'calendar'), CalendarUrlBuilder::events_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->authorizations->read()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('calendar.events.list', 'common', 'calendar'), CalendarUrlBuilder::events_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->get_authorizations()->read()));
 	}
 	
 	private function get_requested_date()

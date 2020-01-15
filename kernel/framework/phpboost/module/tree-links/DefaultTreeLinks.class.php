@@ -38,6 +38,14 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	}
 
 	/**
+	 * @return string Return the authorizations checker
+	 */
+	public function get_authorizations()
+	{
+		return $this->authorizations;
+	}
+
+	/**
 	 * @return string Return the id of the module
 	 */
 	public function get_module_id()
