@@ -88,7 +88,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$this->get_module_additional_actions_tree_links($tree);
 		
-		if (ModulesManager::get_module($this->module_id)->get_configuration()->get_admin_main_page())
+		if (ModulesManager::get_module($this->module_id)->get_configuration()->get_admin_main_page() && $this->display_configuration_link())
 			$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), ModulesUrlBuilder::configuration($this->module_id)));
 		
 		if (ModulesManager::get_module($this->module_id)->get_configuration()->get_documentation())
@@ -107,9 +107,14 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		return ItemsUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id);
 	}
 
-	private function check_write_authorization()
+	protected function check_write_authorization()
 	{
 		return ModulesManager::get_module($this->module_id)->get_configuration()->has_contribution() ? ($this->authorizations->write() || $this->authorizations->contribution()) : $this->authorizations->write();
+	}
+
+	protected function display_configuration_link()
+	{
+		return true;
 	}
 
 	protected function get_module_additional_actions_tree_links(&$tree) {}

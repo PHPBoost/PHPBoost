@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 14
+ * @version     PHPBoost 5.3 - last update: 2020 01 15
  * @since       PHPBoost 4.0 - 2013 11 26
  * @contributor xela <xela@phpboost.com>
 */
@@ -26,7 +26,7 @@ class CalendarTreeLinks extends DefaultTreeLinks
 	{
 		$requested_date = $this->get_requested_date();
 		
-		$tree->add_link(new ModuleLink(LangLoader::get_message('calendar.events.list', 'common', 'calendar'), CalendarUrlBuilder::events_list($requested_date['year'], $requested_date['month'], $requested_date['day']), CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->get_module_id())->read()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('calendar.events.list', 'common', 'calendar'), CalendarUrlBuilder::events_list($requested_date['year'], $requested_date['month'], $requested_date['day']), $this->authorizations->read()));
 	}
 	
 	private function get_requested_date()
