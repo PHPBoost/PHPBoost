@@ -37,20 +37,29 @@
 
 							# START file #
 								<div class="cell">
-									<div class="cell-body">
-										<div class="cell-thumbnail">
-											# IF file.C_DISPLAY_REAL_IMG #
-												<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
-											# ELSE #
-												<i class="{file.FILE_ICON} fa-4x" aria-hidden></i>
-											# ENDIF #
-										</div>
+									<div class="cell-header">
+										<div class="cell-name">{file.NAME}</div>
+										# IF NOT file.C_ENABLED_THUMBNAILS #
+											<i class="{file.FILE_ICON}" aria-hidden></i>
+										# ENDIF #
 									</div>
+									# IF file.C_ENABLED_THUMBNAILS #
+										<div class="cell-body">
+											<div class="cell-thumbnail cell-landscape cell-center">
+												# IF file.C_REAL_IMG #
+													<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
+												# ELSE #
+													<i class="{file.FILE_ICON} fa-4x" aria-hidden></i>
+												# ENDIF #
+											</div>
+										</div>
+									# ENDIF #
 									<div class="cell-list">
 										<ul>
-											<li class="small">{file.NAME}</li>
-											<li class="small">{file.FILETYPE}</li>
-											<li class="small">{file.SIZE}</li>
+											<li class="li-stretch">
+												<span>{file.FILETYPE}</span>
+												<span>{file.SIZE}</span>
+											</li>
 										</ul>
 									</div>
 								</div>

@@ -408,14 +408,14 @@
 								<div id="fi1{personal_files.ID}" class="cell-name ellipsis">{personal_files.NAME}</div>
 								<span id="fi{personal_files.ID}"></span>
 								# IF NOT personal_files.C_ENABLED_THUMBNAILS #
-									<a href="{personal_files.URL}" {personal_files.LIGHTBOX}>
+									<a href="{personal_files.URL}" {personal_files.LIGHTBOX} aria-label="${Langloader::get_message('see.details', 'common')}">
 										<i class="{personal_files.IMG} fa-lg" aria-hidden></i>
 									</a>
 								# ENDIF #
 							</div>
 							# IF personal_files.C_ENABLED_THUMBNAILS #
 								<div class="cell-body">
-									<div class="cell-thumbnail cell-landscape cell-center">
+									<div class="cell-thumbnail cell-landscape cell-center" aria-label="${Langloader::get_message('see.details', 'common')}">
 										# IF personal_files.C_IMG #
 											<img src="{personal_files.URL}" alt="{personal_files.NAME}">
 											<a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
@@ -501,14 +501,14 @@
 							<div class="cell-header">
 								<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>
 								# IF NOT public_files.C_ENABLED_THUMBNAILS #
-									<a href="{public_files.URL}">
+									<a href="{public_files.URL}" aria-label="${Langloader::get_message('see.details', 'common')}">
 										<i class="far {public_files.IMG}"></i>
 									</a>
 								# ENDIF #
 								<span id="fi{public_files.ID}"></span>
 							</div>
 							# IF public_files.C_ENABLED_THUMBNAILS #
-								<div class="cell-body">
+								<div class="cell-body" aria-label="${Langloader::get_message('see.details', 'common')}">
 									<div class="cell-thumbnail cell-landscape cell-center">
 										# IF public_files.C_IMG #
 											<img src="{public_files.URL}" alt="{public_files.NAME}">
