@@ -1,196 +1,196 @@
 <script>
 <!--
-function check_form()
-{
-	if(document.getElementById('menu_element_{ID}_name').value == "") {
-		alert("{L_REQUIRE_NAME}");
-		return false;
-	}
-	return true;
-}
-
-var idMax = {ID_MAX};
-
-function initSortableMenu() {
-	jQuery("ul#menu_element_{ID}_list").sortable({
-		handle: '.sortable-selector',
-		placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
-	});
-}
-
-function get_sortable_sequence() {
-	var sequence = jQuery("ul#menu_element_{ID}_list").sortable("serialize").get();
-	return sequence[0];
-}
-
-function build_menu_elements_tree() {
-	jQuery('#menu_tree').val(JSON.stringify(get_sortable_sequence()));
-}
-
-function toggleProperties(id) {
-	if (jQuery("#menu_element_" + id + "_properties").is(':hidden'))
-	{   //Si les propriétés sont repliées, on les affiche
-		jQuery("#menu_element_" + id + "_properties").fadeIn();
-		jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-minus"></i>');
-	}
-	else
-	{   //Sinon, on les cache
-		jQuery("#menu_element_" + id + "_properties").fadeOut();
-		jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-cog"></i>');
-	}
-}
-
-var authForm = {J_AUTH_FORM};
-function getAuthForm(id) {
-	return authForm.replace(/##UID##/g, id);
-}
-
-function addSubElement(menu_element_id) {
-	var id = idMax++;
-
-	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
-	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
-	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('menu.element', 'admin'))}}).appendTo('#menu_element_' + id);
-
-	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
-
-	jQuery('<span/>', {class : 'grouped-element bgc-full link-color'}).appendTo('#menu_inputs_' + id);
-	jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
-
-	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_ELEMENT}}).appendTo('#menu_label_name_' + id);
-
-	jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
-
-	jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
-
-	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
-
-	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
-	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
-
-	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
-
-	jQuery('<fieldset/>', {id : 'menu_element_' + id + '_properties', style : 'display:none;'}).appendTo('#menu_element_' + id);
-	jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
-	jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element full-field'}).appendTo('#menu_element_' + id + '_properties');
-	jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
-
-	initSortableMenu();
-}
-
-function addSubMenu(menu_element_id) {
-	var id = idMax++;
-
-	jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
-	jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
-	jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('sub.menu', 'admin'))}}).appendTo('#menu_element_' + id);
-
-	jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
-
-	jQuery('<span/>', {class : 'grouped-element bgc-full notice'}).appendTo('#menu_inputs_' + id);
-	jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
-
-	jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_MENU}}).appendTo('#menu_label_name_' + id);
-
-	jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
-
-	jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
-	jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
-
-	jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
-	jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
-
-	jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
-	jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
-	jQuery('#menu_element_' + id + '_actions').append(' ');
-	jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
-
-	jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
-
-	jQuery('<fieldset/>', {id : 'menu_element_' + id + '_properties', style : 'display:none;'}).appendTo('#menu_element_' + id);
-	jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
-	jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element full-field'}).appendTo('#menu_element_' + id + '_properties');
-	jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
-	jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
-
-	jQuery('<hr/>').appendTo('#menu_element_' + id);
-	jQuery('<ul/>', {id : 'menu_element_' + id + '_list', class : 'sortable-block'}).appendTo('#menu_element_' + id);
-
-	jQuery('<fieldset/>', {id : 'menu_element_' + id + '_buttons', class : 'fieldset-submit'}).appendTo('#menu_element_' + id);
-	jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_element', name : 'menu_element_' + id + '_add_sub_element', value : {JL_ADD_SUB_ELEMENT}, onclick : 'addSubElement(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_ELEMENT}).appendTo('#menu_element_' + id + '_buttons');
-	jQuery('#menu_element_' + id + '_buttons').append(' ');
-
-	jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : {JL_ADD_SUB_MENU}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_MENU}).appendTo('#menu_element_' + id + '_buttons');
-
-	addSubElement('menu_element_' + id);
-}
-
-function deleteElement(element_id)
-{
-	if (confirm({JL_DELETE_ELEMENT}))
+	function check_form()
 	{
-		jQuery('#' + element_id).remove();
+		if(document.getElementById('menu_element_{ID}_name').value == "") {
+			alert("{L_REQUIRE_NAME}");
+			return false;
+		}
+		return true;
+	}
+
+	var idMax = {ID_MAX};
+
+	function initSortableMenu() {
+		jQuery("ul#menu_element_{ID}_list").sortable({
+			handle: '.sortable-selector',
+			placeholder: '<div class="dropzone">' + ${escapejs(LangLoader::get_message('position.drop_here', 'common'))} + '</div>'
+		});
+	}
+
+	function get_sortable_sequence() {
+		var sequence = jQuery("ul#menu_element_{ID}_list").sortable("serialize").get();
+		return sequence[0];
+	}
+
+	function build_menu_elements_tree() {
+		jQuery('#menu_tree').val(JSON.stringify(get_sortable_sequence()));
+	}
+
+	function toggleProperties(id) {
+		if (jQuery("#menu_element_" + id + "_properties").is(':hidden'))
+		{   //Si les propriétés sont repliées, on les affiche
+			jQuery("#menu_element_" + id + "_properties").fadeIn();
+			jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-minus"></i>');
+		}
+		else
+		{   //Sinon, on les cache
+			jQuery("#menu_element_" + id + "_properties").fadeOut();
+			jQuery("#menu_element_" + id + "_more_image").html('<i class="fa fa-cog"></i>');
+		}
+	}
+
+	var authForm = {J_AUTH_FORM};
+	function getAuthForm(id) {
+		return authForm.replace(/##UID##/g, id);
+	}
+
+	function addSubElement(menu_element_id) {
+		var id = idMax++;
+
+		jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
+		jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
+		jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('menu.element', 'admin'))}}).appendTo('#menu_element_' + id);
+
+		jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
+
+		jQuery('<span/>', {class : 'grouped-element bgc-full link-color'}).appendTo('#menu_inputs_' + id);
+		jQuery('<i/>', {class : 'fa fa-globe', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
+
+		jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_ELEMENT}}).appendTo('#menu_label_name_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
+
+		jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
+
+		jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
+		jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
+		jQuery('#menu_element_' + id + '_actions').append(' ');
+		jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
+
+		jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
+
+		jQuery('<fieldset/>', {id : 'menu_element_' + id + '_properties', style : 'display:none;'}).appendTo('#menu_element_' + id);
+		jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
+		jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element full-field'}).appendTo('#menu_element_' + id + '_properties');
+		jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
+		jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
+
 		initSortableMenu();
 	}
-}
 
-function image_preview(input,image,is_value = false)
-{
-	if (is_value == true)
-		var url = input;
-	else
-		var url = input.value;
+	function addSubMenu(menu_element_id) {
+		var id = idMax++;
 
-	if (url != '') {
-		jQuery.ajax({
-			url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
-			type: "post",
-			dataType: "json",
-			async: false,
-			data: {url_to_check : url, token : TOKEN},
-			success: function(returnData) {
-				if (returnData.is_valid == 1) {
-					if (url.charAt(0) == '/')
-						image.src = PATH_TO_ROOT + url;
-					else
-						image.src = url;
+		jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
+		jQuery('<div/>', {class : 'sortable-selector', 'aria-label' : ${escapejs(LangLoader::get_message('position.move', 'common'))}, title : ${escapejs(LangLoader::get_message('position.move', 'common'))}}).appendTo('#menu_element_' + id);
+		jQuery('<div/>', {id : 'menu_title_' + id, class : 'sortable-title', 'aria-label' : ${escapejs(Langloader::get_message('sub.menu', 'admin'))}}).appendTo('#menu_element_' + id);
 
-					jQuery('#' + image.id).show();
-				}
-				else {
+		jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
+
+		jQuery('<span/>', {class : 'grouped-element bgc-full notice'}).appendTo('#menu_inputs_' + id);
+		jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
+
+		jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_NAME}).appendTo('#menu_label_name_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_name', name : 'menu_element_' + id + '_name', placeholder : {JL_ADD_SUB_MENU}}).appendTo('#menu_label_name_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_URL}).appendTo('#menu_label_url_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text({JL_IMAGE}).appendTo('#menu_label_image_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
+
+		jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
+
+		jQuery('<div/>', {id : 'menu_element_' + id + '_actions', class : 'sortable-actions'}).appendTo('#menu_element_' + id);
+		jQuery('<a/>', {id : 'menu_element_' + id + '_more_image', 'aria-label' : {JL_MORE}, onclick: 'toggleProperties(' + id + ');return false;'}).html('<i class="fa fa-cog" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
+		jQuery('#menu_element_' + id + '_actions').append(' ');
+		jQuery('<a/>', {id : 'menu_element_' + id + '_delete_image', 'aria-label' : {JL_DELETE}, onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#menu_element_' + id + '_actions');
+
+		jQuery('<div/>', {class : 'spacer'}).appendTo('#menu_element_' + id);
+
+		jQuery('<fieldset/>', {id : 'menu_element_' + id + '_properties', style : 'display:none;'}).appendTo('#menu_element_' + id);
+		jQuery('<legend/>').text({JL_PROPERTIES}).appendTo('#menu_element_' + id + '_properties');
+		jQuery('<div/>', {id : 'menu_element_' + id + '_authorizations', class : 'form-element full-field'}).appendTo('#menu_element_' + id + '_properties');
+		jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text({JL_AUTHORIZATIONS} + ' ').appendTo('#menu_element_' + id + '_authorizations');
+		jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
+
+		jQuery('<hr/>').appendTo('#menu_element_' + id);
+		jQuery('<ul/>', {id : 'menu_element_' + id + '_list', class : 'sortable-block'}).appendTo('#menu_element_' + id);
+
+		jQuery('<fieldset/>', {id : 'menu_element_' + id + '_buttons', class : 'fieldset-submit'}).appendTo('#menu_element_' + id);
+		jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_element', name : 'menu_element_' + id + '_add_sub_element', value : {JL_ADD_SUB_ELEMENT}, onclick : 'addSubElement(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_ELEMENT}).appendTo('#menu_element_' + id + '_buttons');
+		jQuery('#menu_element_' + id + '_buttons').append(' ');
+
+		jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : {JL_ADD_SUB_MENU}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text({JL_ADD_SUB_MENU}).appendTo('#menu_element_' + id + '_buttons');
+
+		addSubElement('menu_element_' + id);
+	}
+
+	function deleteElement(element_id)
+	{
+		if (confirm({JL_DELETE_ELEMENT}))
+		{
+			jQuery('#' + element_id).remove();
+			initSortableMenu();
+		}
+	}
+
+	function image_preview(input,image,is_value = false)
+	{
+		if (is_value == true)
+			var url = input;
+		else
+			var url = input.value;
+
+		if (url != '') {
+			jQuery.ajax({
+				url: PATH_TO_ROOT + "/kernel/framework/ajax/dispatcher.php?url=/url_validation/",
+				type: "post",
+				dataType: "json",
+				async: false,
+				data: {url_to_check : url, token : TOKEN},
+				success: function(returnData) {
+					if (returnData.is_valid == 1) {
+						if (url.charAt(0) == '/')
+							image.src = PATH_TO_ROOT + url;
+						else
+							image.src = url;
+
+						jQuery('#' + image.id).show();
+					}
+					else {
+						image.src = '';
+						jQuery('#' + image.id).hide();
+					}
+				},
+				error: function(returnData) {
 					image.src = '';
 					jQuery('#' + image.id).hide();
 				}
-			},
-			error: function(returnData) {
-				image.src = '';
-				jQuery('#' + image.id).hide();
-			}
-		});
-	} else {
-		image.src = '';
-		jQuery('#' + image.id).hide();
+			});
+		} else {
+			image.src = '';
+			jQuery('#' + image.id).hide();
+		}
 	}
-}
 
-jQuery(document).ready(function() {
-	initSortableMenu();
-});
+	jQuery(document).ready(function() {
+		initSortableMenu();
+	});
 -->
 </script>
 <div id="admin-contents">

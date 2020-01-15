@@ -40,7 +40,9 @@
 	</head>
 
 	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
-		# INCLUDE BODY #
+		<div id="push-container">
+			# INCLUDE BODY #
+		</div>		
 		# INCLUDE JS_BOTTOM #
 	</body>
 </html>

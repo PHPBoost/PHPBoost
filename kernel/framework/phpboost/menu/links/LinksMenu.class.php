@@ -23,6 +23,7 @@ class LinksMenu extends LinksMenuElement
 	const VERTICAL_MENU = 'vertical';
 	const HORIZONTAL_MENU = 'horizontal';
 	const STATIC_MENU = 'static';
+	const PUSH_MENU = 'push';
 
 	/* Deprecated */
 	const VERTICAL_SCROLLING_MENU = 'vertical_scrolling';
@@ -125,7 +126,10 @@ class LinksMenu extends LinksMenuElement
 			// Get the good Template object
 			if (!is_object($template) || !($template instanceof Template))
 			{
-				$tpl = new FileTemplate('framework/menus/links.tpl');
+				if($this->type == self::PUSH_MENU)
+					$tpl = new FileTemplate('framework/menus/push.tpl');
+				else
+					$tpl = new FileTemplate('framework/menus/links.tpl');
 			}
 			else
 			{
@@ -199,7 +203,10 @@ class LinksMenu extends LinksMenuElement
 		// Get the good Template object
 		if (!is_object($template) || !($template instanceof Template))
 		{
-			$tpl = new FileTemplate('framework/menus/links/links.tpl');
+			if($this->type == self::PUSH_MENU)
+				$tpl = new FileTemplate('framework/menus/push.tpl');
+			else
+				$tpl = new FileTemplate('framework/menus/links.tpl');
 		}
 		else
 		{
@@ -281,7 +288,7 @@ class LinksMenu extends LinksMenuElement
 	*/
 	public static function get_menu_types_list()
 	{
-		return array(self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU);
+		return array(self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU, self::PUSH_MENU);
 	}
 
 	/**
