@@ -169,20 +169,21 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 		return array_merge(
 			parent::get_default_values(),
 			array(
-			self::CATEGORIES_PER_PAGE         => 10,
-			self::CATEGORIES_PER_ROW          => 3,
-			self::ITEMS_PER_PAGE              => 15,
-			self::ITEMS_PER_ROW               => 2,
-			self::ITEMS_DEFAULT_SORT_FIELD    => Item::SORT_DATE,
-			self::ITEMS_DEFAULT_SORT_MODE     => Item::DESC,
-			self::DEFAULT_CONTENT             => '',
-			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
-			self::AUTHOR_DISPLAYED            => true,
-			self::VIEWS_NUMBER_ENABLED        => false,
-			self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description($this->module_id),
-			self::DISPLAY_TYPE                => self::GRID_VIEW,
-			self::DEFERRED_OPERATIONS         => array()
-		));
+				self::CATEGORIES_PER_PAGE         => 10,
+				self::CATEGORIES_PER_ROW          => 3,
+				self::ITEMS_PER_PAGE              => 15,
+				self::ITEMS_PER_ROW               => 2,
+				self::ITEMS_DEFAULT_SORT_FIELD    => Item::SORT_DATE,
+				self::ITEMS_DEFAULT_SORT_MODE     => Item::DESC,
+				self::DEFAULT_CONTENT             => '',
+				self::SUMMARY_DISPLAYED_TO_GUESTS => false,
+				self::AUTHOR_DISPLAYED            => true,
+				self::VIEWS_NUMBER_ENABLED        => false,
+				self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description($this->module_id),
+				self::DISPLAY_TYPE                => self::GRID_VIEW,
+				self::DEFERRED_OPERATIONS         => array()
+			)
+		);
 	}
 }
 ?>
