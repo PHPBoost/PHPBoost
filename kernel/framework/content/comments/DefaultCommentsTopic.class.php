@@ -39,7 +39,7 @@ class DefaultCommentsTopic extends CommentsTopic
 	{
 		if ($this->item === null)
 		{
-			$this->item = ItemsService::get_items_manager($this->module_id)->get_item('WHERE ' . $this->module->get_configuration()->get_items_table_name() . '.id=:id', array('id' => $this->get_id_in_module()));
+			$this->item = ItemsService::get_items_manager($this->module_id)->get_item($this->get_id_in_module());
 		}
 		return $this->item;
 	}
