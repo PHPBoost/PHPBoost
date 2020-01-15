@@ -49,7 +49,7 @@
 		pushContent: '#push-container',
 		insertClose: true,
 		closeLevels: false,
-		position: "bottom", // left, right, top, bottom
+		position: "left", // left, right, top, bottom
 		levelOpen: "overlap", // overlap, expand, false
 		levelSpacing: 40,
 		navClass: '',
