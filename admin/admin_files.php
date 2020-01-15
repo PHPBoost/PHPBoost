@@ -82,7 +82,7 @@ elseif (!empty($_FILES['upload_file']['name'])) //Ajout d'un fichier.
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $folder));
 			} catch (RowNotFoundException $e) {
-				
+
 			}
 
 			$user_id = max($user_id, $folder_member);
@@ -135,7 +135,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	try {
 		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
 	} catch (RowNotFoundException $e) {
-		
+
 	}
 
 	$move_list_parent = array();
@@ -547,8 +547,9 @@ else
 				'NAME_WITH_SLASHES' => addslashes($row['name']),
 				'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-				'BBCODE' => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '">',
-				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+				'BBCODE' => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" value="' . $bbcode . '">',
+				'DISPLAYED_CODE' => '/upload/' . $row['path'],
+                'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 				'LIGHTBOX' => !empty($size_img) ? ' data-lightbox="1" data-rel="lightcase:collection"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 			));
@@ -572,7 +573,7 @@ else
 	try {
 		$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
 	} catch (RowNotFoundException $e) {
-		
+
 	}
 	$template->put_all(array(
 		'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
