@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 09
+ * @version     PHPBoost 5.3 - last update: 2020 01 15
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -129,7 +129,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		//Affichage commentaires
 		if ($comments_config->module_comments_is_enabled('articles'))
 		{
-			$comments_topic = new ArticlesCommentsTopic($this->article);
+			$comments_topic = new DefaultCommentsTopic('articles', $this->article);
 			$comments_topic->set_id_in_module($this->article->get_id());
 			$comments_topic->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 
