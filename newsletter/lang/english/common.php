@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 10 31
+ * @version   	PHPBoost 5.2 - last update: 2020 01 15
  * @since   	PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -100,6 +100,7 @@ $lang['newsletter.view_archives'] = 'View Archives';
 $lang['newsletter.view_subscribers'] = 'View record';
 $lang['newsletter.title'] = 'Title of the newsletter';
 $lang['newsletter.contents'] = 'Content';
+$lang['newsletter.contents.explain'] = 'Use <b>:user_display_name</b> to display the member\'s nickname if needed (will be replaced by visitor for non-member members).';
 
 //Messages
 $lang['stream.message.success.add'] = 'The stream <b>:name</b> has been added';
