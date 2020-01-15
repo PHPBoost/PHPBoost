@@ -322,25 +322,19 @@ elseif (!empty($del_folder))
             case 'png':
             case 'gif':
             case 'bmp':
-                list($width_source, $height_source) = @getimagesize('../upload/' . $info_move['path']);
-                $size_img = ' (' . $width_source . 'x' . $height_source . ')';
-
-                // The actual image is displayed if it is not too big
-                if ($width_source < 350 && $height_source < 350)
-                {
-                    $display_real_img = true;
-                }
+                $display_real_img = true;
         }
 
         $cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, AppContext::get_current_user()->get_id());
 
         $tpl->assign_block_vars('file', array(
-            'C_DISPLAY_REAL_IMG' => $display_real_img,
+			'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
+            'C_REAL_IMG' => $display_real_img,
             'NAME' => $info_move['name'],
             'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
             'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
-            'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
-        ));
+            'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
+        	));
         $tpl->put_all(array(
             'SELECTED_CAT' => $info_move['idcat'],
             'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
