@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 4.0 - 2014 05 22
 */
 
@@ -18,10 +18,11 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/WebComments.class.php',
+			'/phpboost/WebHomePageExtensionPoint.class.php',
 			'/phpboost/WebNewContent.class.php',
 			'/phpboost/WebNotation.class.php',
 			'/phpboost/WebSitemapExtensionPoint.class.php',
-			'/phpboost/WebHomePageExtensionPoint.class.php',
+			'/phpboost/WebTreeLinks.class.php',
 			'/services/WebAuthorizationsService.class.php',
 			'/services/WebKeywordsCache.class.php',
 			'/templates/WebDisplaySeveralWebLinksController.tpl',

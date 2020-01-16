@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor xela <xela@phpboost.com>
 */
@@ -19,10 +19,11 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/DownloadComments.class.php',
+			'/phpboost/DownloadHomePageExtensionPoint.class.php',
 			'/phpboost/DownloadNewContent.class.php',
 			'/phpboost/DownloadNotation.class.php',
 			'/phpboost/DownloadSitemapExtensionPoint.class.php',
-			'/phpboost/DownloadHomePageExtensionPoint.class.php',
+			'/phpboost/DownloadTreeLinks.class.php',
 			'/services/DownloadKeywordsCache.class.php',
 			'/util/AdminDownloadDisplayResponse.class.php'
 		);
