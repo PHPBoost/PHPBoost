@@ -17,6 +17,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->content_tables = array(PREFIX . 'articles');
 		$this->delete_old_files_list = array(
 			'/controllers/ArticlesDeleteController.class.php',
+			'/controllers/ArticlesManageController.class.php',
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/ArticlesComments.class.php',
