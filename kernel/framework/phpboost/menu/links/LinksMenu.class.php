@@ -173,7 +173,7 @@ class LinksMenu extends LinksMenuElement
 				'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
 				'DEPTH' => $this->depth
 			));
-Debug::dump($this->pushed_content);
+			
 			if ($this->type == self::AUTOMATIC_MENU)
 			{
 				$tpl->put_all(array(
