@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,8 +21,7 @@ abstract class AdminModuleController extends AbstractController
 		}
 		else if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
 		{
-			$module = ModulesManager::get_module(Environment::get_running_module_name());
-			if (!$module->is_activated())
+			if (!self::get_module()->is_activated())
 			{
 				return PHPBoostErrors::module_not_activated();
 			}
@@ -34,7 +33,7 @@ abstract class AdminModuleController extends AbstractController
 		return $this;
 	}
 	
-	public final function get_module()
+	public static function get_module()
 	{
 		return ModulesManager::get_module(Environment::get_running_module_name());
 	}
