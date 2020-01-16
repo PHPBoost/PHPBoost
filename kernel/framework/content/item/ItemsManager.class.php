@@ -90,11 +90,11 @@ class ItemsManager
 	 */
 	public static function get_item(int $id)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, notes.average_notes, notes.number_notes, note.note
+		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, average_notes.average_notes, average_notes.number_notes, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :current_user_id
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :user_id
 		WHERE ' . self::$module_id . '.id=:id', array(
 			'module_id'       => self::$module_id,
 			'id'              => $id,
@@ -129,13 +129,13 @@ class ItemsManager
 		$now = new Date();
 		$items = array();
 		
-		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note
+		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.number_comments, average_notes.average_notes, average_notes.number_notes, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = :module_id AND relation.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = ' . self::$module_id . '.id AND com.module_id = :module_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :user_id
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
@@ -203,7 +203,7 @@ class ItemsManager
 	/**
 	 * @return mixed[] new Item
 	 */
-	protected static function get_item_class()
+	public static function get_item_class()
 	{
 		$class_name = self::$module->get_configuration()->get_item_name();
 		return new $class_name();
