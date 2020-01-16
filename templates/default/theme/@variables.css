@@ -16,6 +16,7 @@
     --lighten: 255, 255, 255;
 
 /* main */
+    --main-darker  : #1c334a;
     --main-rgb     : 50, 100, 147;
     --main-dark    : #366493;
     --main-light   : #4E8EC1;

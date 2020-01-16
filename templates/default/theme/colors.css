@@ -551,39 +551,37 @@ h3.formatter-title { border-color: #366393; }
 .small-screen .menu-button.menu-opened:after,
 .small-screen .submenu-button.submenu-opened:after { background-color: rgba(54, 100, 147, 0.1); }
 
-/* --- pushmenu --- */
+/* --- pushmenu ------------------------------------------------------------- */
 
-.pushmenu h2 { color: #1b3958; }
+.pushmenu h2 { color: #1c334a; }
 
 .pushmenu::after,
 .pushmenu .nav-wrapper::after { background-color: rgba(0, 0, 0, 0.3); }
 
-.pushmenu .nav-container,
-.pushmenu .nav-wrapper,
-.pushmenu ul { background-color: #336ca6; }
+.pushmenu .nav-container {
+	background-image: linear-gradient(to bottom, #366493 0%, #1c334a 100%);
+	background-color: #366493;
+	color: #FFFFFF;
+}
 
-.pushmenu a,
 .pushmenu .nav-item {
-    border-color: #2c5d8f;
+    border-color: #4E8EC1;
     background-color: rgba(0, 0, 0, 0);
     color: #fff;
 }
 
-.pushmenu:not(.touch-device) a:hover { background-color: #31679e; }
+.pushmenu:not(.touch-device) .nav-item:hover { background-color: #1c334a; }
 
 .pushmenu li.nav-close a,
 .pushmenu li.nav-back a {
-    background-color: #2c5d8f;
-    border-color: #295887;
+    background-color: #1c334a;
+    border-color: #4E8EC1;
 }
-
-.pushmenu li.nav-close a:hover,
-.pushmenu li.nav-back a:hover { background-color: #2b5c8d; }
 
 .pushmenu li.nav-close span::before,
 .pushmenu li.nav-close span::after { border-color: #ffffff; }
 
-.pushmenu a[href]:not([href="#"])>span.nav-next { border-color: #2c5d8f; }
+.pushmenu a[href]:not([href="#"])>span.nav-next { border-color: #4E8EC1; }
 
 .pushmenu span.nav-next::before,
 .pushmenu li.nav-back span::before { border-color: #FFFFFF; }
@@ -599,11 +597,11 @@ h3.formatter-title { border-color: #366393; }
     background-color: transparent;
 }
 
-.pushmenu.nav-levels-expand .nav-container li.level-open,
-.pushmenu.nav-levels-none .nav-container li.level-open { background-color: #2e6296; }
+.pushmenu.nav-levels-expand .nav-container li.level-open > .nav-item,
+.pushmenu.nav-levels-none .nav-container li.level-open > .nav-item { background-color: #1c334a; }
 
 .pushmenu.nav-levels-expand .nav-container li.level-open a,
-.pushmenu.nav-levels-none .nav-container li.level-open a { border-color: #295887; }
+.pushmenu.nav-levels-none .nav-container li.level-open a { border-color: #4E8EC1; }
 
 .pushmenu.nav-levels-expand .nav-container li.level-open a:hover,
 .pushmenu.nav-levels-none .nav-container li.level-open a:hover { background-color: #2f649a; }

@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 5.3 - last update: 2020 01 15
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 5.3 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
@@ -214,7 +214,7 @@ function _typeof(n) {
                                             var c = _("<li>").addClass(e.classes).append(o);
                                             if (u.append(c), H.levelSpacing && ("expand" === H.levelOpen || !1 === H.levelOpen || "none" === H.levelOpen)) {
                                                 var i = H.levelSpacing * m;
-                                                i && u.css("text-indent", "".concat(i, "px"))
+                                                i && u.css("padding-left", "".concat('1.309', "em"))
                                             }
                                             if (e.subnav.length) {
                                                 var s = m + 1,
