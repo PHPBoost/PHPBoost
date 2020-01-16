@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 13
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 5.3 - 2020 01 10
 */
 
@@ -13,7 +13,6 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 {
 	const CATEGORIES_PER_PAGE = 'categories_per_page';
 	const CATEGORIES_PER_ROW = 'categories_per_row';
-	const ITEMS_PER_PAGE = 'items_per_page';
 	const ITEMS_PER_ROW = 'items_per_row';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
 	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
@@ -49,16 +48,6 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	public function set_categories_per_row($value)
 	{
 		$this->set_property(self::CATEGORIES_PER_ROW, $value);
-	}
-
-	public function get_items_per_page()
-	{
-		return $this->get_property(self::ITEMS_PER_PAGE);
-	}
-
-	public function set_items_per_page($value)
-	{
-		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 
 	public function get_items_per_row()
@@ -171,7 +160,6 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			array(
 				self::CATEGORIES_PER_PAGE         => 10,
 				self::CATEGORIES_PER_ROW          => 3,
-				self::ITEMS_PER_PAGE              => 15,
 				self::ITEMS_PER_ROW               => 2,
 				self::ITEMS_DEFAULT_SORT_FIELD    => Item::SORT_DATE,
 				self::ITEMS_DEFAULT_SORT_MODE     => Item::DESC,
