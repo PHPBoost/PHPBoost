@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 15
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -90,13 +90,13 @@ class ItemsManager
 	 */
 	public static function get_item(int $id)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT :module_id.*, member.*, notes.average_notes, notes.number_notes, note.note
-		FROM ' . self::$items_table . ' :module_id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = :module_id.author_user_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = :module_id.id AND notes.module_name = :module_id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = :module_id.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-		WHERE :module_id.id=:id', array(
-			'module_id'       => self::$module_id, 
+		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, notes.average_notes, notes.number_notes, note.note
+		FROM ' . self::$items_table . ' ' . self::$module_id . '
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :current_user_id
+		WHERE ' . self::$module_id . '.id=:id', array(
+			'module_id'       => self::$module_id,
 			'id'              => $id,
 			'current_user_id' => AppContext::get_current_user()->get_id()
 		));
@@ -129,16 +129,17 @@ class ItemsManager
 		$now = new Date();
 		$items = array();
 		
-		$result = self::$db_querier->select('SELECT :module_id.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note
-		FROM ' . self::$items_table . ' :module_id
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = :module_id AND relation.id_in_module = :module_id.id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = :module_id.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = :module_id.id AND com.module_id = :module_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = :module_id.id AND notes.module_name = :module_id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = :module_id.id AND note.module_name = :module_id AND note.user_id = :user_id
+		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note
+		FROM ' . self::$items_table . ' ' . self::$module_id . '
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = :module_id AND relation.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = ' . self::$module_id . '.id AND com.module_id = :module_id
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+			'module_id' => self::$module_id,
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),
 			'number_items_per_page' => $number_items_per_page,
