@@ -23,7 +23,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
 
 	//Manage articles
-	new UrlControllerMapper('ArticlesManageController', '`^/manage/?$`'),
+	new UrlControllerMapper('DefaultManageItemsController', '`^/manage/?$`'),
 	new UrlControllerMapper('ArticlesFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('ArticlesFormController', '`^(?:/([0-9]+))/edit/?([0-9]+)?/?$`', array('id', 'page')),
 	new UrlControllerMapper('DefaultDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
