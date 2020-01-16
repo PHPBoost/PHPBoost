@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -146,11 +146,21 @@ $LANG['menus_links_add'] = 'Links menu';
 $LANG['menus_feed_add'] = 'Feed menu';
 $LANG['menus_edit'] = 'Edit menu';
 $LANG['menus_add'] = 'Add menu';
-$LANG['automatic_menu'] = 'Automatic';
-$LANG['vertical_menu'] = 'Vertical scrolling menu';
-$LANG['horizontal_menu'] = 'Horizontal scrolling menu';
-$LANG['static_menu'] = 'Static menu';
-$LANG['push_menu'] = 'Push menu';
+$LANG['automatic.menu'] = 'Automatic';
+$LANG['vertical.menu'] = 'Vertical scrolling menu';
+$LANG['horizontal.menu'] = 'Horizontal scrolling menu';
+$LANG['static.menu'] = 'Static menu';
+$LANG['push.menu'] = 'Push menu';
+$LANG['push.menu.disabled.body'] = 'Disable content when menu is open';
+$LANG['push.menu.open.type'] = 'Menu opening';
+$LANG['push.menu.open.type.left'] = 'From the left';
+$LANG['push.menu.open.type.right'] = 'From the right';
+$LANG['push.menu.open.type.top'] = 'From the top';
+$LANG['push.menu.open.type.bottom'] = 'From the bottom';
+$LANG['push.menu.tab.type'] = 'Type of tab expansion';
+$LANG['push.menu.tab.type.overlap'] = 'Overlap';
+$LANG['push.menu.tab.type.expand'] = 'Expand';
+$LANG['push.menu.tab.type.none'] = 'None';
 $LANG['available_menus'] = 'Available menus';
 $LANG['no_available_menus'] = 'No menus available';
 $LANG['menu_header'] = 'Header';
