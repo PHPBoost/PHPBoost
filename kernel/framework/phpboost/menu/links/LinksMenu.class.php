@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LinksMenu extends LinksMenuElement
@@ -163,6 +164,11 @@ class LinksMenu extends LinksMenuElement
 				'C_FIRST_MENU' => $this->depth == 0,
 				'C_HAS_CHILD' => $elements_number,
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
+				'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+				'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
+				'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
+				'PUSHMENU_OPENING' => $this->pushmenu_opening,
+				'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
 				'DEPTH' => $this->depth
 			));
 
@@ -237,6 +243,11 @@ class LinksMenu extends LinksMenuElement
 			'C_FIRST_MENU' => $this->depth == 0,
 			'C_HAS_CHILD' => $elements_number,
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
+			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+			'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
+			'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
+			'PUSHMENU_OPENING' => $this->pushmenu_opening,
+			'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
 			'DEPTH' => $this->depth,
 			'ID' => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##'

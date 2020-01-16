@@ -29,13 +29,17 @@
 		maxWidth: false,
 		customToggle: jQuery('.toggle-{ID}'), // null
 		navTitle: '{TITLE}', // null
-		levelTitles: true, // overlap only
 		pushContent: '#push-container',
-		position: "left", // left, right, top, bottom
-		levelOpen: "overlap", // overlap, expand, false
+		position: '{PUSHMENU_OPENING}', // left, right, top, bottom
+		# IF C_FALSE_EXPANDING #
+			levelOpen: false,
+		# ELSE #
+			levelOpen: '{PUSHMENU_EXPANDING}', // 'overlap', 'expand', false
+		# ENDIF #
+		levelTitles: true, // overlap only
 		levelSpacing: 40, // px - overlap only
 		navClass: '',
-		disableBody: true,
+		disableBody: {DISABLED_BODY},
 		closeOnClick: true, // if disableBody is true
 		insertClose: true,
 		labelClose: ${escapejs(LangLoader::get_message('close', 'main'))},

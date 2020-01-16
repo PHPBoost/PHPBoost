@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -105,7 +106,10 @@ if ($action == 'save')
 	//Menu enabled?
 	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
+	$menu->set_disabled_body((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_disabled_body', false));
 	$menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
+	$menu->set_pushmenu_opening(retrieve(POST, 'menu_element_' . $menu_uid . '_open_type', Menu::PUSHMENU_LEFT));
+	$menu->set_pushmenu_expanding(retrieve(POST, 'menu_element_' . $menu_uid . '_tab_type', Menu::PUSHMENU_OVERLAP));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(
 		Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
 	));
@@ -166,6 +170,9 @@ $tpl->put_all(array(
 	'L_RESET' => $LANG['reset'],
 	'ACTION' => 'save',
 	'L_TYPE' => $LANG['type'],
+	'L_PUSHMENU_DISABLED_BODY' => $LANG['push.menu.disabled.body'],
+	'L_PUSHMENU_OPENING' => $LANG['push.menu.open.type'],
+	'L_PUSHMENU_EXPANDING' => $LANG['push.menu.tab.type'],
 	'L_CONTENT' => $LANG['content'],
 	'L_AUTHORIZATIONS' => $LANG['authorizations'],
 	'L_ADD' => LangLoader::get_message('add', 'common'),
@@ -231,6 +238,7 @@ $tpl->put_all(array(
 	),
 	'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
+	'C_PUSHMENU_DISABLED_BODY' => $menu->is_disabled_body(),
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),
@@ -243,7 +251,7 @@ foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
 	$tpl->assign_block_vars('type', array(
 		'NAME' => $type_name,
-		'L_NAME' => $LANG[$type_name . '_menu'],
+		'L_NAME' => $LANG[$type_name . '.menu'],
 		'SELECTED' => $menu->get_type() == $type_name ? ' selected="selected"' : ''
 	));
 }
@@ -252,6 +260,39 @@ foreach ($array_location as $key => $name)
 {
 	$tpl->assign_block_vars('location', array(
 		'C_SELECTED' => $block == $key,
+		'VALUE' => $key,
+		'NAME' => $name
+	));
+}
+
+// Types of pushmenu opening
+$array_opening = array(
+	Menu::PUSHMENU_LEFT => $LANG['push.menu.open.type.left'],
+	Menu::PUSHMENU_RIGHT => $LANG['push.menu.open.type.right'],
+	Menu::PUSHMENU_TOP => $LANG['push.menu.open.type.top'],
+	Menu::PUSHMENU_BOTTOM => $LANG['push.menu.open.type.bottom']
+);
+
+foreach ($array_opening as $key => $name)
+{
+	$tpl->assign_block_vars('opening', array(
+		'C_SELECTED' => $menu->get_pushmenu_opening() == $key,
+		'VALUE' => $key,
+		'NAME' => $name
+	));
+}
+
+// Types of pushmenu expanding tabs
+$array_expanding = array(
+	Menu::PUSHMENU_OVERLAP => $LANG['push.menu.tab.type.overlap'],
+	Menu::PUSHMENU_EXPAND => $LANG['push.menu.tab.type.expand'],
+	Menu::PUSHMENU_NONE => $LANG['push.menu.tab.type.none']
+);
+
+foreach ($array_expanding as $key => $name)
+{
+	$tpl->assign_block_vars('expanding', array(
+		'C_SELECTED' => $menu->get_pushmenu_expanding() == $key,
 		'VALUE' => $key,
 		'NAME' => $name
 	));

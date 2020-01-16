@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 07 26
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 2.0 - 2008 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class Menu
@@ -28,6 +29,15 @@ abstract class Menu
 	const BLOCK_POSITION__LEFT = 7;
 	const BLOCK_POSITION__RIGHT = 8;
 	const BLOCK_POSITION__ALL = 9;
+
+	const PUSHMENU_LEFT = 'left';
+	const PUSHMENU_RIGHT = 'right';
+	const PUSHMENU_TOP = 'top';
+	const PUSHMENU_BOTTOM = 'bottom';
+
+	const PUSHMENU_OVERLAP = 'overlap';
+	const PUSHMENU_EXPAND = 'expand';
+	const PUSHMENU_NONE = 'false';
 
 	const MENU__CLASS = 'Menu';
 
@@ -66,6 +76,21 @@ abstract class Menu
 	* @var bool menu hidden or not with small screens
 	*/
 	protected $hidden_with_small_screens = false;
+	/**
+	* @access protected
+	* @var bool disabled body content or not with push menu
+	*/
+	protected $disabled_body = false;
+	/**
+	 * @access protected
+	 * @var string the position of the push menu
+	 */
+	public $pushmenu_opening = self::PUSHMENU_LEFT;
+	/**
+	 * @access protected
+	 * @var string the position of the push menu
+	 */
+	public $pushmenu_expanding = self::PUSHMENU_OVERLAP;
 	/**
 	 * @access protected
 	 * @var Array<Filter> The filter list
@@ -138,7 +163,8 @@ abstract class Menu
 	{
 		$template->put_all(array(
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
-			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
+			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
+			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
 		));
 	}
 
@@ -176,6 +202,18 @@ abstract class Menu
 	* @param bool $value true if menu hidden with small screens
 	*/
 	public function set_hidden_with_small_screens($value) { $this->hidden_with_small_screens = $value; }
+	/*
+	* @param bool $value true if body is disabled with push menu
+	*/
+	public function set_disabled_body($value) { $this->disabled_body = $value; }
+	/*
+	* @param string $value opening type of the push menu
+	*/
+	public function set_pushmenu_opening($value) { $this->pushmenu_opening = $value; }
+	/*
+	* @param string $value expanding type of the push menu
+	*/
+	public function set_pushmenu_expanding($value) { $this->pushmenu_expanding = $value; }
 
 	## Getters ##
 	/**
@@ -210,6 +248,18 @@ abstract class Menu
 	* @return bool check if menu is hidden with small screens
 	*/
 	public function is_hidden_with_small_screens() { return $this->hidden_with_small_screens; }
+	/**
+	* @return bool check if body is disabled (pushmenu)
+	*/
+	public function is_disabled_body() { return $this->disabled_body; }
+	/**
+	* @return string the opening of the pushmenu
+	*/
+	public function get_pushmenu_opening() { return $this->pushmenu_opening; }
+	/**
+	* @return string the expanding of the pushmenu
+	*/
+	public function get_pushmenu_expanding() { return $this->pushmenu_expanding; }
 	/**
 	* @return string the menu filters
 	*/

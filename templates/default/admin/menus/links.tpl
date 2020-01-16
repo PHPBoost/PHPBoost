@@ -190,6 +190,18 @@
 
 	jQuery(document).ready(function() {
 		initSortableMenu();
+
+		jQuery(".push-options").hide();
+		if(jQuery('.menu-type select').children('option:selected').val() == 'push') {
+			jQuery(".push-options").show();
+		};
+		jQuery('.menu-type select').change(function(){
+			var selectedType = $(this).children('option:selected').val();
+			if(selectedType == 'push')
+				jQuery(".push-options").fadeIn();
+			else
+				jQuery(".push-options").fadeOut();
+		});
 	});
 -->
 </script>
@@ -212,20 +224,8 @@
 					<div class="form-field"><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}"></div>
 				</div>
 				<div class="form-element third-field">
-					<label for="menu_element_{ID}_type">{L_TYPE}</label>
-					<div class="form-field">
-						<label>
-							<select name="menu_element_{ID}_type" id="menu_element_{ID}_type">
-								# START type #
-									<option value="{type.NAME}"{type.SELECTED}>{type.L_NAME}</option>
-								# END type #
-							</select>
-						</label>
-					</div>
-				</div>
-				<div class="form-element third-field">
 					<label for="menu_element_{ID}_location">{L_LOCATION}</label>
-					<div class="form-field"><label>
+					<div class="form-field">
 						<select name="menu_element_{ID}_location" id="menu_element_{ID}_location">
 							# START location #
 								<option value="{location.VALUE}" # IF location.C_SELECTED # selected="selected"# ENDIF #>
@@ -233,7 +233,7 @@
 								</option>
 							# END location #
 						</select>
-					</label></div>
+					</div>
 				</div>
 				<div class="form-element third-field">
 					<label for="menu_element_{ID}_enabled">{L_STATUS}</label>
@@ -243,6 +243,51 @@
 							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 						</select>
 					</label></div>
+				</div>
+				<div class="form-element third-field menu-type">
+					<label for="menu_element_{ID}_type">{L_TYPE}</label>
+					<div class="form-field">
+						<select name="menu_element_{ID}_type" id="menu_element_{ID}_type">
+							# START type #
+								<option value="{type.NAME}"{type.SELECTED}>{type.L_NAME}</option>
+							# END type #
+						</select>
+					</div>
+				</div>
+				<div class="form-element third-field top-field custom-checkbox push-options">
+					<label for="menu_element_{ID}_disabled_body">{L_PUSHMENU_DISABLED_BODY}</label>
+					<div class="form-field">
+						<div class="form-field-checkbox">
+							<label class="checkbox" for="menu_element_{ID}_disabled_body">
+								<input type="checkbox" name="menu_element_{ID}_disabled_body" id="menu_element_{ID}_disabled_body"# IF C_PUSHMENU_DISABLED_BODY # checked="checked"# ENDIF #>
+								<span>&nbsp;</span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-element third-field push-options">
+					<label for="menu_element_{ID}_open_type">{L_PUSHMENU_OPENING}</label>
+					<div class="form-field">
+						<select name="menu_element_{ID}_open_type" id="menu_element_{ID}_open_type">
+							# START opening #
+								<option value="{opening.VALUE}" # IF opening.C_SELECTED # selected="selected"# ENDIF #>
+									{opening.NAME}
+								</option>
+							# END opening #
+						</select>
+					</div>
+				</div>
+				<div class="form-element third-field push-options">
+					<label for="menu_element_{ID}_tab_type">{L_PUSHMENU_EXPANDING}</label>
+					<div class="form-field">
+						<select name="menu_element_{ID}_tab_type" id="menu_element_{ID}_tab_type">
+							# START expanding #
+								<option value="{expanding.VALUE}" # IF expanding.C_SELECTED # selected="selected"# ENDIF #>
+									{expanding.NAME}
+								</option>
+							# END expanding #
+						</select>
+					</div>
 				</div>
 				<div class="form-element third-field top-field custom-checkbox">
 					<label for="menu_element_{ID}_hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>
