@@ -33,15 +33,15 @@ class Article extends Item
 	private $published;
 	private $publishing_start_date;
 	private $publishing_end_date;
-	private $date_created;
+	private $creation_date;
 	private $end_date_enabled;
-	private $date_updated;
+	private $update_date;
 
 	private $sources;
 	private $keywords;
 
 	const SORT_ALPHABETIC = 'title';
-	const SORT_DATE = 'date_created';
+	const SORT_DATE = 'creation_date';
 	const SORT_AUTHOR = 'display_name';
 	const SORT_NUMBER_VIEWS = 'number_view';
 	const SORT_NOTATION = 'average_notes';
@@ -294,24 +294,24 @@ class Article extends Item
 		return $this->end_date_enabled;
 	}
 
-	public function set_date_created(Date $date_created)
+	public function set_creation_date(Date $creation_date)
 	{
-		$this->date_created = $date_created;
+		$this->creation_date = $creation_date;
 	}
 
-	public function get_date_created()
+	public function get_creation_date()
 	{
-		return $this->date_created;
+		return $this->creation_date;
 	}
 
-	public function get_date_updated()
+	public function get_update_date()
 	{
-		return $this->date_updated;
+		return $this->update_date;
 	}
 
-	public function set_date_updated(Date $date_updated)
+	public function set_update_date(Date $update_date)
 	{
-		$this->date_updated = $date_updated;
+		$this->update_date = $update_date;
 	}
 
 	public function add_source($source)
@@ -380,8 +380,8 @@ class Article extends Item
 			'published'             => $this->get_publishing_state(),
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : 0,
 			'publishing_end_date'   => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : 0,
-			'date_created'          => $this->get_date_created()->get_timestamp(),
-			'date_updated'          => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : 0,
+			'creation_date'         => $this->get_creation_date()->get_timestamp(),
+			'update_date'           => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : 0,
 			'sources'               => TextHelper::serialize($this->get_sources())
 		);
 	}
@@ -401,8 +401,8 @@ class Article extends Item
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date($properties['publishing_end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['publishing_end_date']);
-		$this->set_date_created(new Date($properties['date_created'], Timezone::SERVER_TIMEZONE));
-		$this->date_updated = !empty($properties['date_updated']) ? new Date($properties['date_updated'], Timezone::SERVER_TIMEZONE) : null;
+		$this->set_creation_date(new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE));
+		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array());
 
 		$user = new User();
@@ -434,7 +434,7 @@ class Article extends Item
 		$this->published = self::PUBLISHED_NOW;
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
-		$this->date_created = new Date();
+		$this->creation_date = new Date();
 		$this->sources = array();
 		$this->picture_url = self::get_default_thumbnail();
 		$this->number_view = 0;
@@ -466,13 +466,13 @@ class Article extends Item
 		$nbr_sources      = count($sources);
 
 		return array_merge(
-			Date::get_array_tpl_vars($this->date_created, 'date'),
-			Date::get_array_tpl_vars($this->date_updated, 'date_updated'),
+			Date::get_array_tpl_vars($this->creation_date, 'date'),
+			Date::get_array_tpl_vars($this->update_date, 'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'),
 			Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'),
 			array(
 			// Conditions
-			'C_CONTROLS'		   			  => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+			'C_CONTROLS'                      => $this->is_authorized_to_manage(),
 			'C_EDIT'                          => $this->is_authorized_to_edit(),
 			'C_DELETE'                        => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE'                   => $this->has_picture(),
@@ -481,13 +481,13 @@ class Article extends Item
 			'C_PUBLISHING_START_AND_END_DATE' => $this->publishing_start_date != null && $this->publishing_end_date != null,
 			'C_PUBLISHING_START_DATE'         => $this->publishing_start_date != null,
 			'C_PUBLISHING_END_DATE'           => $this->publishing_end_date != null,
-			'C_DATE_UPDATED'                  => $this->date_updated != null,
+			'C_UPDATE_DATE'                   => $this->update_date != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
-			'C_AUTHOR_CUSTOM_NAME' 			  => $this->is_author_custom_name_enabled(),
+			'C_AUTHOR_CUSTOM_NAME'            => $this->is_author_custom_name_enabled(),
 			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
-			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_date_created()->get_timestamp()) && $this->is_published(),
+			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 			'C_ID_CARD' 					  => ContentManagementConfig::load()->module_id_card_is_enabled('articles') && $this->is_published(),
 
 			// Articles

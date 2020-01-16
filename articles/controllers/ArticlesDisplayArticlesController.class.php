@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 15
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -293,14 +293,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		$additionnal_properties = array(
 			'article:section' => $this->category->get_name(),
-			'article:published_time' => $this->article->get_date_created()->format(Date::FORMAT_ISO8601)
+			'article:published_time' => $this->article->get_creation_date()->format(Date::FORMAT_ISO8601)
 		);
 
 		if ($this->article->get_keywords())
 			$additionnal_properties['article:tag'] = $this->article->get_keywords_name();
 
-		if ($this->article->get_date_updated() !== null)
-			$additionnal_properties['article:modified_time'] = $this->article->get_date_updated()->format(Date::FORMAT_ISO8601);
+		if ($this->article->get_update_date() !== null)
+			$additionnal_properties['article:modified_time'] = $this->article->get_update_date()->format(Date::FORMAT_ISO8601);
 
 		if ($this->article->get_publishing_end_date() !== null)
 			$additionnal_properties['article:expiration_time'] = $this->article->get_publishing_end_date()->format(Date::FORMAT_ISO8601);

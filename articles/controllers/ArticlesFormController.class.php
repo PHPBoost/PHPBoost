@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 21
+ * @version     PHPBoost 5.3 - last update: 2020 01 16
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -158,7 +158,7 @@ class ArticlesFormController extends ModuleController
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('date_created', $this->common_lang['form.date.creation'], $this->get_article()->get_date_created(),
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_article()->get_creation_date(),
 				array('required' => true)
 			));
 
@@ -348,7 +348,7 @@ class ArticlesFormController extends ModuleController
 		if (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->moderation())
 		{
 			if ($article->get_id() === null)
-				$article->set_date_created(new Date());
+				$article->set_creation_date(new Date());
 
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
 			$article->clean_publishing_start_and_end_date();
@@ -360,11 +360,11 @@ class ArticlesFormController extends ModuleController
 		{
 			if ($this->form->get_value('update_creation_date'))
 			{
-				$article->set_date_created(new Date());
+				$article->set_creation_date(new Date());
 			}
 			else
 			{
-				$article->set_date_created($this->form->get_value('date_created'));
+				$article->set_creation_date($this->form->get_value('creation_date'));
 			}
 
 			$rewrited_title = $this->form->get_value('rewrited_title', '');
@@ -427,7 +427,7 @@ class ArticlesFormController extends ModuleController
 		else
 		{
 			$now = new Date();
-			$article->set_date_updated($now);
+			$article->set_update_date($now);
 			$id_article = $article->get_id();
 			ArticlesService::update($article);
 		}

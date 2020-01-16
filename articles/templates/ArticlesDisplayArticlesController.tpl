@@ -111,8 +111,8 @@
 				# END keywords #
 			</aside>
 		# ENDIF #
-		# IF C_DATE_UPDATED #
-			<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{DATE_UPDATED_ISO8601}" itemprop="datePublished">{DATE_UPDATED}</time></i></aside>
+		# IF C_UPDATE_DATE #
+			<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></aside>
 		# ENDIF #
 		# IF C_NOTATION_ENABLED #
 			<aside>

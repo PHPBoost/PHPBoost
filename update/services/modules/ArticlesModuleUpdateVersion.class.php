@@ -41,7 +41,9 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'articles',
 				'columns' => array(
-					'contents' => 'contents MEDIUMTEXT'
+					'contents'     => 'contents MEDIUMTEXT',
+					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0'
+					'date_updated' => 'update_date INT(11) NOT NULL DEFAULT 0'
 				)
 			)
 		);
