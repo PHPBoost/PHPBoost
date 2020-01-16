@@ -462,7 +462,7 @@ else
 	$result->dispose();
 
 	//Affichage des fichiers contenu dans le dossier
-	$types = array('personal_files' => 'up.idcat = 0 AND up.user_id = :user_id', 'public_files' => 'up.public = 1');
+	$types = array('personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'public_files' => 'up.public = 1');
 	foreach ($types as $loop_id => $where_clause)
 	{
 
@@ -470,11 +470,21 @@ else
 		if (!empty($folder_member) && empty($folder) || $show_public)
 		{
 			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.groups
-    	FROM " . DB_TABLE_UPLOAD . " up
-    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-        WHERE " . $where_clause . "
-    	ORDER BY up.name", array(
-				'user_id' => $folder_member
+	    	FROM " . DB_TABLE_UPLOAD . " up
+	    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+	        WHERE " . $where_clause . "
+	    	ORDER BY up.name", array(
+	            	'idcat' => 0,
+					'user_id' => $folder_member
+			));
+		}
+		else
+		{
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.public, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.groups
+			FROM " . DB_TABLE_UPLOAD . " up
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+			WHERE idcat = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1'), array(
+				'id' => $folder
 			));
 		}
 
