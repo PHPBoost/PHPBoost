@@ -82,6 +82,11 @@ abstract class Menu
 	*/
 	protected $disabled_body = false;
 	/**
+	* @access protected
+	* @var bool push body content or not with push menu
+	*/
+	protected $pushed_content = false;
+	/**
 	 * @access protected
 	 * @var string the position of the push menu
 	 */
@@ -165,6 +170,7 @@ abstract class Menu
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+			'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
 		));
 	}
 
@@ -206,6 +212,10 @@ abstract class Menu
 	* @param bool $value true if body is disabled with push menu
 	*/
 	public function set_disabled_body($value) { $this->disabled_body = $value; }
+	/*
+	* @param bool $value true if content is pushed with push menu
+	*/
+	public function set_pushed_content($value) { $this->pushed_content = $value; }
 	/*
 	* @param string $value opening type of the push menu
 	*/
@@ -252,6 +262,10 @@ abstract class Menu
 	* @return bool check if body is disabled (pushmenu)
 	*/
 	public function is_disabled_body() { return $this->disabled_body; }
+	/**
+	* @return bool check if body is pushed (pushmenu)
+	*/
+	public function is_pushed_content() { return $this->pushed_content; }
 	/**
 	* @return string the opening of the pushmenu
 	*/

@@ -254,7 +254,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-element third-field top-field custom-checkbox push-options">
+				<div class="form-element top-field custom-checkbox push-options">
 					<label for="menu_element_{ID}_disabled_body">{L_PUSHMENU_DISABLED_BODY}</label>
 					<div class="form-field">
 						<div class="form-field-checkbox">
@@ -265,7 +265,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-element third-field push-options">
+				<div class="form-element top-field custom-checkbox push-options">
+					<label for="menu_element_{ID}_pushed_content">{L_PUSHMENU_PUSHED_CONTENT}</label>
+					<div class="form-field">
+						<div class="form-field-checkbox">
+							<label class="checkbox" for="menu_element_{ID}_pushed_content">
+								<input type="checkbox" name="menu_element_{ID}_pushed_content" id="menu_element_{ID}_pushed_content"# IF C_PUSHMENU_PUSHED_CONTENT # checked="checked"# ENDIF #>
+								<span>&nbsp;</span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-element push-options">
 					<label for="menu_element_{ID}_open_type">{L_PUSHMENU_OPENING}</label>
 					<div class="form-field">
 						<select name="menu_element_{ID}_open_type" id="menu_element_{ID}_open_type">
@@ -277,7 +288,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-element third-field push-options">
+				<div class="form-element push-options">
 					<label for="menu_element_{ID}_tab_type">{L_PUSHMENU_EXPANDING}</label>
 					<div class="form-field">
 						<select name="menu_element_{ID}_tab_type" id="menu_element_{ID}_tab_type">

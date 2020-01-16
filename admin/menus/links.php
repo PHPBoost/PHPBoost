@@ -107,6 +107,7 @@ if ($action == 'save')
 	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
 	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
 	$menu->set_disabled_body((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_disabled_body', false));
+	$menu->set_pushed_content((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_pushed_content', false));
 	$menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	$menu->set_pushmenu_opening(retrieve(POST, 'menu_element_' . $menu_uid . '_open_type', Menu::PUSHMENU_LEFT));
 	$menu->set_pushmenu_expanding(retrieve(POST, 'menu_element_' . $menu_uid . '_tab_type', Menu::PUSHMENU_OVERLAP));
@@ -171,6 +172,7 @@ $tpl->put_all(array(
 	'ACTION' => 'save',
 	'L_TYPE' => $LANG['type'],
 	'L_PUSHMENU_DISABLED_BODY' => $LANG['push.menu.disabled.body'],
+	'L_PUSHMENU_PUSHED_CONTENT' => $LANG['push.menu.pushed.content'],
 	'L_PUSHMENU_OPENING' => $LANG['push.menu.open.type'],
 	'L_PUSHMENU_EXPANDING' => $LANG['push.menu.tab.type'],
 	'L_CONTENT' => $LANG['content'],
@@ -239,6 +241,7 @@ $tpl->put_all(array(
 	'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 	'C_PUSHMENU_DISABLED_BODY' => $menu->is_disabled_body(),
+	'C_PUSHMENU_PUSHED_CONTENT' => $menu->is_pushed_content(),
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),

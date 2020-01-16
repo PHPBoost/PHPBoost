@@ -29,7 +29,7 @@
 		maxWidth: false,
 		customToggle: jQuery('.toggle-{ID}'), // null
 		navTitle: '{TITLE}', // null
-		pushContent: '#push-container',
+		pushContent: '{PUSHED_CONTENT}',
 		position: '{PUSHMENU_OPENING}', // left, right, top, bottom
 		# IF C_FALSE_EXPANDING #
 			levelOpen: false,

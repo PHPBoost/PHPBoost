@@ -165,13 +165,15 @@ class LinksMenu extends LinksMenuElement
 				'C_HAS_CHILD' => $elements_number,
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 				'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+				'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
 				'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
 				'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
+				'PUSHED_CONTENT' => $this->pushed_content ? '#push-container' : '',
 				'PUSHMENU_OPENING' => $this->pushmenu_opening,
 				'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
 				'DEPTH' => $this->depth
 			));
-
+Debug::dump($this->pushed_content);
 			if ($this->type == self::AUTOMATIC_MENU)
 			{
 				$tpl->put_all(array(
@@ -244,8 +246,10 @@ class LinksMenu extends LinksMenuElement
 			'C_HAS_CHILD' => $elements_number,
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+			'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
 			'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
 			'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
+			'PUSHED_CONTENT' => $this->pushed_content ? '#push-container' : '',
 			'PUSHMENU_OPENING' => $this->pushmenu_opening,
 			'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
 			'DEPTH' => $this->depth,
