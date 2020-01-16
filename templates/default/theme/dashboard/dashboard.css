@@ -63,3 +63,10 @@
     }
 
 }
+
+/* --- push menu --- */
+
+.pushmenu .nav-container { width: 230px; }
+
+.pushmenu.nav-position-left .nav-container  { transform: translate3d(-230px, 0, 0); }
+.pushmenu.nav-position-right .nav-container { transform: translate3d(230px, 0, 0); }
