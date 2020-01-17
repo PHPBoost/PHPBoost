@@ -606,6 +606,8 @@ h3.formatter-title { border-color: #366393; }
 .pushmenu.nav-levels-expand .nav-container li.level-open a:hover,
 .pushmenu.nav-levels-none .nav-container li.level-open a:hover { background-color: #2f649a; }
 
+.nav-levels-overlap .nav-wrapper { background-image: linear-gradient(to bottom, #366493 0%, #1c334a 100%); }
+
 /* --- lightcase --- */
 a[class*='lightcase-icon-'], a[class*='lightcase-icon-']:focus { color: rgba(255, 255, 255, 0.2); }
 

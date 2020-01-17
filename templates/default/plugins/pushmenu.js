@@ -214,7 +214,7 @@ function _typeof(n) {
                                             var c = _("<li>").addClass(e.classes).append(o);
                                             if (u.append(c), H.levelSpacing && ("expand" === H.levelOpen || !1 === H.levelOpen || "none" === H.levelOpen)) {
                                                 var i = H.levelSpacing * m;
-                                                i && u.css("padding-left", "".concat('1.309', "em"))
+                                                i && u.css("padding-left", "".concat(i/2, "px"))
                                             }
                                             if (e.subnav.length) {
                                                 var s = m + 1,
