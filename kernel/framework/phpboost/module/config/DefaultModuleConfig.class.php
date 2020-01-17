@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 5.3 - 2020 01 10
+ * @contributor xela <xela@phpboost.com>
 */
 
 class DefaultModuleConfig extends AbstractConfigData
@@ -78,5 +79,66 @@ class DefaultModuleConfig extends AbstractConfigData
 	{
 		ConfigManager::save(self::$module_id, self::load(), 'config');
 	}
+
+	/**
+	 * Getters/Setters virtualization.
+	 *
+	 * It allow to call get or set methods without declare them in ModuleConfig.class.php 
+	 * You need only to declare constants and a return array of default values in a get_default_value() method.
+	 *
+	 * @param string $method method name ( ex : get_constant_value or set_constant_value($arguments) )
+	 * @param array|string $arguments parameter to set.
+	 */
+  	public function __call($method, $arguments)
+    {
+    	if ( !$this->current_class_has_method($method) && !empty($this->get_class_constants()) )
+      	{
+        	//Do a get
+	        if (preg_match('#^get_(.+)#', $method, $matches))
+	        {
+	        	$constant_value = $matches[1];
+	          	if ( in_array($constant_value, $this->get_class_constants()) )
+	            {
+			        return $this->get_property($constant_value);
+	            }
+	        }
+	        //Do a set
+	        if (preg_match('#^set_(.+)#', $method, $matches))
+	        {
+	            $constant_value = $matches[1];
+	          	if ( in_array($constant_value, $this->get_class_constants()) && $this->current_class_has_method('get_default_value'))
+	            {
+	                $argument_type = gettype($arguments[0]);
+	                $default_argument_type = gettype($this->get_default_values()[$constant_value]);
+					settype($arguments[0], $default_argument_type);
+	                if (!$arguments[0])
+	                {
+	                	throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected');
+	                }
+	                else
+	                {
+			            return $this->set_property($constant_value, $arguments[0]);
+	                }
+	            }
+	        }
+    	}
+    }
+
+	/**
+	 * @return array All constants array in current class.
+	 */
+    public function get_class_constants()
+	{
+    	$reflect = new ReflectionClass(get_class($this));
+    	return $reflect->getConstants();
+	}
+
+	/**
+	 * @return bool For checking if a method exists in current class.
+	 */
+    public function current_class_has_method($method)
+    {
+    	return method_exists(get_class($this), $method);
+    }
 }
 ?>
