@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -205,7 +205,15 @@ class Category
 		foreach (self::$additional_attributes_list as $id => $attribute)
 		{
 			if ($attribute['is_url'])
-				$properties[$id] = $this->additional_attributes_values[$id]->relative();
+			{
+				if ($this->additional_attributes_values[$id] instanceof Url)
+					$properties[$id] = $this->additional_attributes_values[$id]->relative();
+				else
+				{
+					$value = new Url($this->additional_attributes_values[$id]);
+					$properties[$id] = $value->relative();
+				}
+			}
 			else
 				$properties[$id] = $this->additional_attributes_values[$id];
 		}

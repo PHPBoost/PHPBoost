@@ -33,26 +33,6 @@ class DefaultModuleConfig extends AbstractConfigData
 			self::__static();
 	}
 
-	public function get_items_per_page()
-	{
-		return $this->get_property(self::ITEMS_PER_PAGE);
-	}
-
-	public function set_items_per_page($value)
-	{
-		$this->set_property(self::ITEMS_PER_PAGE, $value);
-	}
-
-	public function get_authorizations()
-	{
-		return $this->get_property(self::AUTHORIZATIONS);
-	}
-
-	public function set_authorizations(Array $authorizations)
-	{
-		$this->set_property(self::AUTHORIZATIONS, $authorizations);
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -89,56 +69,56 @@ class DefaultModuleConfig extends AbstractConfigData
 	 * @param string $method method name ( ex : get_constant_value or set_constant_value($arguments) )
 	 * @param array|string $arguments parameter to set.
 	 */
-  	public function __call($method, $arguments)
-    {
-    	if ( !$this->current_class_has_method($method) && !empty($this->get_class_constants()) )
-      	{
-        	//Do a get
-	        if (preg_match('#^get_(.+)#', $method, $matches))
-	        {
-	        	$constant_value = $matches[1];
-	          	if ( in_array($constant_value, $this->get_class_constants()) )
-	            {
-			        return $this->get_property($constant_value);
-	            }
-	        }
-	        //Do a set
-	        if (preg_match('#^set_(.+)#', $method, $matches))
-	        {
-	            $constant_value = $matches[1];
-	          	if ( in_array($constant_value, $this->get_class_constants()) && $this->current_class_has_method('get_default_value'))
-	            {
-	                $argument_type = gettype($arguments[0]);
-	                $default_argument_type = gettype($this->get_default_values()[$constant_value]);
+	public function __call($method, $arguments)
+	{
+		if ( !$this->current_class_has_method($method) && !empty($this->get_class_constants()) )
+		{
+			//Do a get
+			if (preg_match('#^get_(.+)#', $method, $matches))
+			{
+				$constant_value = $matches[1];
+				if ( in_array($constant_value, $this->get_class_constants()) )
+				{
+					return $this->get_property($constant_value);
+				}
+			}
+			//Do a set
+			if (preg_match('#^set_(.+)#', $method, $matches))
+			{
+				$constant_value = $matches[1];
+				if ( in_array($constant_value, $this->get_class_constants()) && $this->current_class_has_method('get_default_value'))
+				{
+					$argument_type = gettype($arguments[0]);
+					$default_argument_type = gettype($this->get_default_values()[$constant_value]);
 					settype($arguments[0], $default_argument_type);
-	                if (!$arguments[0])
-	                {
-	                	throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected');
-	                }
-	                else
-	                {
-			            return $this->set_property($constant_value, $arguments[0]);
-	                }
-	            }
-	        }
-    	}
-    }
+					if (!$arguments[0])
+					{
+						throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected');
+					}
+					else
+					{
+						return $this->set_property($constant_value, $arguments[0]);
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * @return array All constants array in current class.
 	 */
-    public function get_class_constants()
+	public function get_class_constants()
 	{
-    	$reflect = new ReflectionClass(get_class($this));
-    	return $reflect->getConstants();
+		$reflect = new ReflectionClass(get_class($this));
+		return $reflect->getConstants();
 	}
 
 	/**
 	 * @return bool For checking if a method exists in current class.
 	 */
-    public function current_class_has_method($method)
-    {
-    	return method_exists(get_class($this), $method);
-    }
+	public function current_class_has_method($method)
+	{
+		return method_exists(get_class($this), $method);
+	}
 }
 ?>

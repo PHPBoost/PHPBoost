@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 5.3 - 2020 01 10
 */
 
@@ -29,126 +29,6 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	const TABLE_VIEW = 'table_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
-
-	public function get_categories_per_page()
-	{
-		return $this->get_property(self::CATEGORIES_PER_PAGE);
-	}
-
-	public function set_categories_per_page($value)
-	{
-		$this->set_property(self::CATEGORIES_PER_PAGE, $value);
-	}
-
-	public function get_categories_per_row()
-	{
-		return $this->get_property(self::CATEGORIES_PER_ROW);
-	}
-
-	public function set_categories_per_row($value)
-	{
-		$this->set_property(self::CATEGORIES_PER_ROW, $value);
-	}
-
-	public function get_items_per_row()
-	{
-		return $this->get_property(self::ITEMS_PER_ROW);
-	}
-
-	public function set_items_per_row($value)
-	{
-		$this->set_property(self::ITEMS_PER_ROW, $value);
-	}
-
-	public function get_items_default_sort_field()
-	{
-		return $this->get_property(self::ITEMS_DEFAULT_SORT_FIELD);
-	}
-
-	public function set_items_default_sort_field($value)
-	{
-		$this->set_property(self::ITEMS_DEFAULT_SORT_FIELD, $value);
-	}
-
-	public function get_items_default_sort_mode()
-	{
-		return $this->get_property(self::ITEMS_DEFAULT_SORT_MODE);
-	}
-
-	public function set_items_default_sort_mode($value)
-	{
-		$this->set_property(self::ITEMS_DEFAULT_SORT_MODE, $value);
-	}
-
-	public function get_default_content()
-	{
-		return $this->get_property(self::DEFAULT_CONTENT);
-	}
-
-	public function set_default_content($value)
-	{
-		$this->set_property(self::DEFAULT_CONTENT, $value);
-	}
-
-	public function get_summary_displayed_to_guests()
-	{
-		return $this->get_property(self::SUMMARY_DISPLAYED_TO_GUESTS);
-	}
-
-	public function set_summary_displayed_to_guests(bool $value)
-	{
-		$this->set_property(self::SUMMARY_DISPLAYED_TO_GUESTS, $value);
-	}
-
-	public function get_author_displayed()
-	{
-		return $this->get_property(self::AUTHOR_DISPLAYED);
-	}
-
-	public function set_author_displayed(bool $value)
-	{
-		$this->set_property(self::AUTHOR_DISPLAYED, $value);
-	}
-
-	public function get_views_number_enabled()
-	{
-		return $this->get_property(self::VIEWS_NUMBER_ENABLED);
-	}
-
-	public function set_views_number_enabled(bool $value)
-	{
-		$this->set_property(self::VIEWS_NUMBER_ENABLED, $value);
-	}
-
-	public function get_root_category_description()
-	{
-		return $this->get_property(self::ROOT_CATEGORY_DESCRIPTION);
-	}
-
-	public function set_root_category_description($value)
-	{
-		$this->set_property(self::ROOT_CATEGORY_DESCRIPTION, $value);
-	}
-
-	public function get_display_type()
-	{
-		return $this->get_property(self::DISPLAY_TYPE);
-	}
-
-	public function set_display_type($value)
-	{
-		$this->set_property(self::DISPLAY_TYPE, $value);
-	}
-
-	public function get_deferred_operations()
-	{
-		return $this->get_property(self::DEFERRED_OPERATIONS);
-	}
-
-	public function set_deferred_operations(Array $deferred_operations)
-	{
-		$this->set_property(self::DEFERRED_OPERATIONS, $deferred_operations);
-	}
 
 	/**
 	 * {@inheritdoc}
