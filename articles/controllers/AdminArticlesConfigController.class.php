@@ -99,7 +99,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('display_descriptions_to_guests', $this->lang['articles.display.descriptions.to.guests'], $this->config->are_descriptions_displayed_to_guests(),
+		$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->lang['articles.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -195,10 +195,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		$this->config->set_items_default_sort_field($items_default_sort[0]);
 		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
-		if ($this->form->get_value('display_descriptions_to_guests'))
-			$this->config->display_descriptions_to_guests();
-		else
-			$this->config->hide_descriptions_to_guests();
+		$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
 		$this->config->set_default_contents($this->form->get_value('default_contents'));
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());

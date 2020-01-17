@@ -55,7 +55,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
-		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->are_descriptions_displayed_to_guests());
+		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 
