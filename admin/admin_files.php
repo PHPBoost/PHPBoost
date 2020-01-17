@@ -204,11 +204,11 @@ elseif (!empty($move_folder) || !empty($move_file))
 	$result->dispose();
 
 	if ($show_member)
-		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
 	elseif (empty($folder))
-		$url = '/';
+		$url = '';
 	else
 		$url = Uploads::get_admin_url($folder, '');
 
@@ -343,11 +343,11 @@ else
 		$template->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
 
 	if ($show_member)
-		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = Uploads::get_admin_url($folder, ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> |');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', ' | <a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a> | <a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a> | ');
 	elseif (empty($folder))
-		$url = '/';
+		$url = '';
 	else
 		$url = Uploads::get_admin_url($folder, '');
 
@@ -580,7 +580,7 @@ else
 
 	}
 	$template->put_all(array(
-		'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
+		'C_PERSONAL_SUMMARY' => ($total_directories > 0 || $total_personal_files > 0) && !$show_public,
 		'C_PUBLIC_FILES_EXIST' => $total_public_files > 0,
 		'C_SHOW_PUBLIC_FILES' => $show_public,
 		'TOTAL_SIZE' => File::get_formated_size($total_size * 1024),

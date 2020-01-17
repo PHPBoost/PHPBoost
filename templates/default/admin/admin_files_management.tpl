@@ -337,20 +337,20 @@
 		<legend>{L_FILES_ACTION}</legend>
 		<div class="fieldset-inset">
 			<div class="upload-address-bar">
-				<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}<span id="public-url"></span>
+				<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}# IF C_SHOW_PUBLIC_FILES # | {L_PUBLIC_TITLE}# ENDIF #
 			</div>
 
 			<div class="upload-address-bar-links">
-				<a href="admin_files.php?root=1">
+				<a class="button" href="admin_files.php?root=1">
 					<i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}
 				</a>
-				<a href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
+				<a class="button" href="admin_files.php?# IF C_MEMBER_ROOT_FOLDER #showm=1# ELSE #fup={FOLDER_ID}{FOLDERM_ID}# ENDIF #">
 					<i class="fa fa-level-up-alt" aria-hidden="true"></i> {L_FOLDER_UP}
 				</a>
-				<a href="javascript:display_new_folder();">
+				<a class="button success" href="javascript:display_new_folder();">
 					<i class="fa fa-plus" aria-hidden="true"></i> {L_FOLDER_NEW}
 				</a>
-				<a href="javascript:document.getElementById('inputfiles').click();">
+				<a class="button success" href="javascript:document.getElementById('inputfiles').click();">
 					<i class="fa fa-save" aria-hidden="true"></i> {L_ADD_FILES}
 				</a>
 			</div>
@@ -358,7 +358,23 @@
 	</fieldset>
 
 	<fieldset class="upload-elements-container">
-		<legend>{L_FOLDER_CONTENT}</legend>
+		<legend>{L_FOLDER_CONTENT} : {URL}# IF C_SHOW_PUBLIC_FILES # {L_PUBLIC_TITLE}# ENDIF #</legend>
+		# IF C_PERSONAL_SUMMARY #
+			<div class="cell align-right">
+				<span class="pinned question"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></span>
+				<span class="pinned question"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></span>
+				<span class="pinned question"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></span>
+				<span class="pinned moderator"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></span>
+			</div>
+		# ENDIF #
+		# IF C_SHOW_PUBLIC_FILES #
+			<div class="cell align-right">
+				<span class="pinned question"><span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong></span>
+				<span class="pinned question"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_PUBLIC_SIZE}</strong></span>
+				<span class="pinned moderator"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></span>
+			</div>
+		# ENDIF #
+
 		<div class="fieldset-inset">
 			# IF C_EMPTY_FOLDER #
 				<div id="empty-folder" class="message-helper bgc notice">{L_EMPTY_FOLDER}</div>
@@ -474,20 +490,6 @@
 					# END personal_files #
 				</div>
 
-				# IF C_PERSONAL_SUMMARY #
-					<div class="cell-tile cell-options">
-						<div class="cell">
-							<div class="cell-list">
-								<ul class="small">
-									<li class="li-stretch"><span id="total-folder">{L_FOLDERS} :</span> <strong>{TOTAL_FOLDERS}</strong></li>
-									<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></li>
-									<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></li>
-									<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				# ENDIF #
 
 			# ENDIF #
 		</div>
@@ -556,17 +558,6 @@
 						</div>
 					# END public_files #
 				</div>
-				<div class="cell-flex cell-tile cell-options">
-					<div class="cell">
-						<div class="cell-list">
-							<ul class="small">
-								<li class="li-stretch"><span>{L_FILES} :</span> <strong>{TOTAL_PUBLIC_FILES}</strong></li>
-								<li class="li-stretch"><span>{L_FOLDER_SIZE} :</span> <strong>{TOTAL_PUBLIC_SIZE}</strong></li>
-								<li class="li-stretch"><span>{L_DATA} :</span> <strong>{TOTAL_SIZE}</strong></li>
-							</ul>
-						</div>
-					</div>
-				</div>
 			# ELSE #
 				<span class="message-helper bgc notice">{L_NO_ITEM}</span>
 			# ENDIF #
@@ -586,11 +577,8 @@
 	});
 
 	var urlPath = $(location).attr("href").split('/'),
-			publicPath = 'admin_files.php?showp=1',
-			urlEnd = urlPath[urlPath.length - 1];
+		publicPath = 'admin_files.php?showp=1',
+		urlEnd = urlPath[urlPath.length - 1];
 	if (urlEnd === publicPath)
-		{
-			jQuery('#members-folder, #public-folder').hide();
-			jQuery('#public-url').text(${escapejs(LangLoader::get_message('public.title', 'upload-common'))});
-		}
+		jQuery('#members-folder, #public-folder').hide();
 </script>
