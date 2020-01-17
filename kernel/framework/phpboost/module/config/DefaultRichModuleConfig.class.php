@@ -47,7 +47,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 				self::SUMMARY_DISPLAYED_TO_GUESTS => false,
 				self::AUTHOR_DISPLAYED            => true,
 				self::VIEWS_NUMBER_ENABLED        => false,
-				self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description($this->module_id),
+				self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description(self::$module_id),
 				self::DISPLAY_TYPE                => self::GRID_VIEW,
 				self::DEFERRED_OPERATIONS         => array()
 			)
