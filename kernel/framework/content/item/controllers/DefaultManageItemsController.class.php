@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 5.3 - 2020 01 16
 */
 
@@ -19,7 +19,6 @@ class DefaultManageItemsController extends AbstractItemController
 		if (!$this->check_authorizations())
 			$this->display_user_not_authorized_page();
 
-		$this->lang = ItemsService::get_items_lang(self::get_module()->get_id());
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
@@ -44,7 +43,7 @@ class DefaultManageItemsController extends AbstractItemController
 
 		$table_model = new SQLHTMLTableModel(self::get_module()->get_configuration()->get_items_table_name(), 'table', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
-		$table_model->set_caption($this->lang['items.management']);
+		$table_model->set_caption($this->items_lang['items.management']);
 
 		$table = new HTMLTable($table_model);
 
@@ -107,7 +106,7 @@ class DefaultManageItemsController extends AbstractItemController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->tpl->put('table', $table->display());
+		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
 	}
@@ -145,15 +144,15 @@ class DefaultManageItemsController extends AbstractItemController
 
 	private function generate_response($page = 1)
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['items.management'], self::get_module()->get_configuration()->get_name(), $page);
+		$graphical_environment->set_page_title($this->items_lang['items.management'], self::get_module()->get_configuration()->get_name(), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::manage());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
-		$breadcrumb->add($this->lang['items.management'], ItemsUrlBuilder::manage());
+		$breadcrumb->add($this->items_lang['items.management'], ItemsUrlBuilder::manage());
 
 		return $response;
 	}
