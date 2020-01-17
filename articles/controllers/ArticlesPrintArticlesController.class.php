@@ -3,34 +3,23 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 02
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-class ArticlesPrintArticlesController extends ModuleController
+class ArticlesPrintArticlesController extends AbstractItemController
 {
-	private $lang;
-	private $view;
 	private $article;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view($request);
 
 		return new SiteNodisplayResponse($this->view);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('framework/content/print.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_article()
@@ -42,7 +31,7 @@ class ArticlesPrintArticlesController extends ModuleController
 			{
 				try
 				{
-					$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
+					$this->article = self::get_items_manager()->get_item($id);
 				}
 				catch (RowNotFoundException $e)
 				{
@@ -66,7 +55,12 @@ class ArticlesPrintArticlesController extends ModuleController
 		));
 	}
 
-	private function check_authorizations()
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('framework/content/print.tpl');
+	}
+
+	protected function check_authorizations()
 	{
 		$article = $this->get_article();
 

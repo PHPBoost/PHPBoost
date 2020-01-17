@@ -56,7 +56,7 @@
 				<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
-		<div class="# IF C_DISPLAY_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+		<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 			# START articles #
 				<article
 					id="articles-item-{articles.ID}"

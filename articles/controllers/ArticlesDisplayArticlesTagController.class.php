@@ -117,13 +117,13 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_PAGINATION'            => $pagination->has_several_pages(),
 			'PAGINATION'              => $pagination->display(),
 			'C_NO_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 0,
-			'C_DISPLAY_GRID_VIEW'     => $this->config->get_display_type() == ArticlesConfig::DISPLAY_GRID_VIEW,
+			'C_GRID_VIEW'             => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_ARTICLES_CAT'          => false,
 			'C_COMMENTS_ENABLED'      => $this->comments_config->module_comments_is_enabled('articles'),
 			'C_NOTATION_ENABLED'      => $this->content_management_config->module_notation_is_enabled('articles'),
 			'C_ARTICLES_FILTERS'      => true,
 			'CATEGORY_NAME'           => $this->get_keyword()->get_name(),
-			'CATEGORIES_PER_ROW'      => $this->config->get_categories_number_per_row(),
+			'CATEGORIES_PER_ROW'      => $this->config->get_categories_per_row(),
 			'ITEMS_PER_ROW' 	      => $this->config->get_items_number_per_row(),
 		));
 
@@ -207,7 +207,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id
 		' . $condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_items_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

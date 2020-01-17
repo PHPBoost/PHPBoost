@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,7 +11,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ArticlesFormController extends ModuleController
+class ArticlesFormController extends AbstractItemController
 {
 	/**
 	 * @var HTMLForm
@@ -22,9 +22,6 @@ class ArticlesFormController extends ModuleController
 	 */
 	private $submit_button;
 
-	private $tpl;
-
-	private $lang;
 	private $common_lang;
 
 	private $article;
@@ -42,19 +39,16 @@ class ArticlesFormController extends ModuleController
 			$this->redirect();
 		}
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'FORM' => $this->form->display(),
 			'C_TINYMCE_EDITOR' => AppContext::get_current_user()->get_editor() == 'TinyMCE'
 		));
 
-		return $this->build_response($this->tpl);
+		return $this->build_response();
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'articles');
-		$this->tpl = new FileTemplate('articles/ArticlesFormController.tpl');
-		$this->tpl->add_lang($this->lang);
 		$this->common_lang = LangLoader::get('common');
 	}
 
@@ -227,7 +221,7 @@ class ArticlesFormController extends ModuleController
 		{
 			$current_page = $request->get_getstring('page', '');
 
-			$this->tpl->put('C_PAGE', !empty($current_page));
+			$this->view->put('C_PAGE', !empty($current_page));
 
 			if (!empty($current_page))
 			{
@@ -247,7 +241,7 @@ class ArticlesFormController extends ModuleController
 
 				$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
-				$this->tpl->put('PAGE', TextHelper::to_js_string($page_name));
+				$this->view->put('PAGE', TextHelper::to_js_string($page_name));
 			}
 		}
 	}
@@ -279,7 +273,7 @@ class ArticlesFormController extends ModuleController
 			{
 				try
 				{
-					$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
+					$this->article = self::get_items_manager()->get_item($id);
 				}
 				catch(RowNotFoundException $e)
 				{
@@ -297,7 +291,12 @@ class ArticlesFormController extends ModuleController
 		return $this->article;
 	}
 
-	private function check_authorizations()
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('articles/ArticlesFormController.tpl');
+	}
+
+	protected function check_authorizations()
 	{
 		$article = $this->get_article();
 
@@ -422,21 +421,21 @@ class ArticlesFormController extends ModuleController
 		if ($article->get_id() === null)
 		{
 			$article->set_author_user(AppContext::get_current_user());
-			$id_article = ArticlesService::add($article);
+			$id_article = self::get_items_manager()->add($article);
 		}
 		else
 		{
 			$now = new Date();
 			$article->set_update_date($now);
 			$id_article = $article->get_id();
-			ArticlesService::update($article);
+			self::get_items_manager()->update($article);
 		}
 
 		$this->contribution_actions($article, $id_article);
 
 		KeywordsService::get_keywords_manager()->put_relations($id_article, $this->form->get_value('keywords'));
 
-		ArticlesService::clear_cache();
+		self::get_items_manager()->clear_cache();
 	}
 
 	private function contribution_actions(Article $article, $id_article)
@@ -501,13 +500,13 @@ class ArticlesFormController extends ModuleController
 		}
 	}
 
-	private function build_response(View $tpl)
+	private function build_response()
 	{
 		$article = $this->get_article();
 
 		$location_id = $article->get_id() ? 'article-edit-'. $article->get_id() : '';
 
-		$response = new SiteDisplayResponse($tpl, $location_id);
+		$response = new SiteDisplayResponse($this->view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,10 +12,8 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ArticlesDisplayArticlesController extends ModuleController
+class ArticlesDisplayArticlesController extends AbstractItemController
 {
-	private $lang;
-	private $tpl;
 	private $article;
 	private $category;
 
@@ -23,20 +21,11 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->check_pending_article($request);
 
 		$this->build_view($request);
 
 		return $this->generate_response();
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('common', 'articles');
-		$this->tpl = new FileTemplate('articles/ArticlesDisplayArticlesController.tpl');
-		$this->tpl->add_lang($this->lang);
 	}
 
 	private function get_article()
@@ -48,7 +37,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				try
 				{
-					$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
+					$this->article = self::get_items_manager()->get_item($id);
 				}
 				catch (RowNotFoundException $e)
 				{
@@ -66,7 +55,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		if (!$this->article->is_published())
 		{
-			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
+			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
 		}
 		else
 		{
@@ -108,14 +97,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		foreach ($this->article->get_sources() as $name => $url)
 		{
-			$this->tpl->assign_block_vars('sources', $this->article->get_array_tpl_source_vars($name));
+			$this->view->assign_block_vars('sources', $this->article->get_array_tpl_source_vars($name));
 		}
 
 		$this->build_keywords_view();
 
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
-		$this->tpl->put_all(array_merge($this->article->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($this->article->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('articles'),
 			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('articles'),
 			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),
@@ -133,7 +122,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			$comments_topic->set_id_in_module($this->article->get_id());
 			$comments_topic->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 
-			$this->tpl->put('COMMENTS', $comments_topic->display());
+			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 	}
 
@@ -152,7 +141,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 
-		$this->tpl->put('FORM', $form->display());
+		$this->view->put('FORM', $form->display());
 	}
 
 	private function build_pages_pagination($current_page, $nbr_pages, $array_page)
@@ -165,7 +154,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				$previous_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1);
 
-				$this->tpl->put_all(array(
+				$this->view->put_all(array(
 					'U_PREVIOUS_PAGE' => $previous_page,
 					'L_PREVIOUS_TITLE' => $array_page[1][$current_page-2]
 				));
@@ -175,23 +164,23 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				$next_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1);
 
-				$this->tpl->put_all(array(
+				$this->view->put_all(array(
 					'U_NEXT_PAGE' => $next_page,
 					'L_NEXT_TITLE' => $array_page[1][$current_page]
 				));
 			}
 
-			$this->tpl->put_all(array(
+			$this->view->put_all(array(
 				'C_PAGINATION' => true,
 				'C_FIRST_PAGE' => $current_page == 1,
-				'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
-				'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
+				'C_PREVIOUS_PAGE' => $current_page != 1,
+				'C_NEXT_PAGE' => $current_page != $nbr_pages,
 				'PAGINATION_ARTICLES' => $pagination->display()
 			));
 		}
 		else
 		{
-			$this->tpl->put('C_FIRST_PAGE', true);
+			$this->view->put('C_FIRST_PAGE', true);
 		}
 	}
 
@@ -212,12 +201,12 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$keywords = $this->article->get_keywords();
 		$nbr_keywords = count($keywords);
-		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
+		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
 
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -226,7 +215,12 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 	}
 
-	private function check_authorizations()
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('articles/ArticlesDisplayArticlesController.tpl');
+	}
+
+	protected function check_authorizations()
 	{
 		$article = $this->get_article();
 
@@ -279,7 +273,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->article->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . $this->lang['articles.module.title']);
