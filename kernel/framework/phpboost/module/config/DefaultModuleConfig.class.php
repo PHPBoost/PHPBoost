@@ -73,7 +73,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Saves the configuration in the database. Has it become persistent.
+	 * Saves the configuration in the database. As it become persistent.
 	 */
 	public static function save()
 	{
@@ -83,8 +83,8 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Getters/Setters virtualization.
 	 *
-	 * It allow to call get or set methods without declare them in ModuleConfig.class.php 
-	 * You need only to declare constants and a return array of default values in a get_default_value() method.
+	 * It allows to call get or set methods without declaring them in ModuleConfig.class.php
+	 * You only need to declare constants and a return array of default values in a get_default_value() method.
 	 *
 	 * @param string $method method name ( ex : get_constant_value or set_constant_value($arguments) )
 	 * @param array|string $arguments parameter to set.
