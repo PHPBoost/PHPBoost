@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 17
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -94,7 +94,7 @@ class ItemsManager
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :user_id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
 		WHERE ' . self::$module_id . '.id=:id', array(
 			'module_id'       => self::$module_id,
 			'id'              => $id,
@@ -135,15 +135,15 @@ class ItemsManager
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :user_id
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'module_id' => self::$module_id,
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'timestamp_now' => $now->get_timestamp(),
+			'module_id'             => self::$module_id,
+			'current_user_id'       => AppContext::get_current_user()->get_id(),
+			'timestamp_now'         => $now->get_timestamp(),
 			'number_items_per_page' => $number_items_per_page,
-			'display_from' => $display_from
+			'display_from'          => $display_from
 		)));
 		
 		while ($row = $result->fetch())
