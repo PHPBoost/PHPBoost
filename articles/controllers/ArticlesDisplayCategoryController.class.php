@@ -302,9 +302,9 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->category->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles.module.title'], $page);
+			$graphical_environment->set_page_title($this->category->get_name(), self::get_module()->get_configuration()->get_name(), $page);
 		else
-			$graphical_environment->set_page_title($this->lang['articles.module.title'], '', $page);
+			$graphical_environment->set_page_title(self::get_module()->get_configuration()->get_name(), '', $page);
 
 		$description = $this->category->get_description();
 		if (empty($description))
@@ -313,7 +313,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)

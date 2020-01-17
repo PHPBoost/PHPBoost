@@ -216,12 +216,12 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['articles.pending.items'], $this->lang['articles.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['articles.pending.items'], self::get_module()->get_configuration()->get_name(), $page);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending'], $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 		$breadcrumb->add($this->lang['articles.pending.items'], ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, $page));
 
 		return $response;

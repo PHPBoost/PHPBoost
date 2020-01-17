@@ -510,12 +510,12 @@ class ArticlesFormController extends AbstractItemController
 		$graphical_environment = $response->get_graphical_environment();
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
 		if ($article->get_id() === null)
 		{
 			$breadcrumb->add($this->lang['articles.add.item'], ItemsUrlBuilder::add($article->get_id_category()));
-			$graphical_environment->set_page_title($this->lang['articles.add.item'], $this->lang['articles.module.title']);
+			$graphical_environment->set_page_title($this->lang['articles.add.item'], self::get_module()->get_configuration()->get_name());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::add($article->get_id_category()));
 		}
@@ -534,7 +534,7 @@ class ArticlesFormController extends AbstractItemController
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['articles.edit.item'], $this->lang['articles.module.title']);
+			$graphical_environment->set_page_title($this->lang['articles.edit.item'], self::get_module()->get_configuration()->get_name());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::edit($article->get_id()));
 		}

@@ -276,7 +276,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->article->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . $this->lang['articles.module.title']);
+		$graphical_environment->set_page_title($this->article->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_real_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
 
@@ -302,7 +302,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$graphical_environment->get_seo_meta_data()->set_additionnal_properties($additionnal_properties);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['articles.module.title'], ModulesUrlBuilder::home());
+		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
 		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
 		foreach ($categories as $id => $category)
