@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 19
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -19,19 +19,13 @@ class ItemsManager
 	public static function __static()
 	{
 		self::$db_querier  = PersistenceContext::get_querier();
-		self::$module_id   = Environment::get_running_module_name();
-		self::$module      = ModulesManager::get_module(self::$module_id);
-		self::$items_table = self::$module->get_configuration()->get_items_table_name();
 	}
 
 	public function __construct($module_id = '')
 	{
-		if ($module_id)
-		{
-			self::$module_id   = $module_id;
-			self::$module      = ModulesManager::get_module(self::$module_id);
-			self::$items_table = self::$module->get_configuration()->get_items_table_name();
-		}
+		self::$module_id   = $module_id ? $module_id : Environment::get_running_module_name();
+		self::$module      = ModulesManager::get_module(self::$module_id);
+		self::$items_table = self::$module->get_configuration()->get_items_table_name();
 	}
 
 	 /**
