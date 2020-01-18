@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -39,7 +39,7 @@ class ItemsManager
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
-	public static function count($condition = '', $parameters = array())
+	public function count($condition = '', $parameters = array())
 	{
 		return self::$db_querier->count(self::$items_table, $condition, $parameters);
 	}
@@ -48,7 +48,7 @@ class ItemsManager
 	 * @desc Create a new item.
 	 * @param string[] $item new Item
 	 */
-	public static function add(Item $item)
+	public function add(Item $item)
 	{
 		$result = self::$db_querier->insert(self::$items_table, $item->get_properties());
 		return $result->get_last_inserted_id();
@@ -58,7 +58,7 @@ class ItemsManager
 	 * @desc Update an item.
 	 * @param string[] $item Item to update
 	 */
-	public static function update(Item $item)
+	public function update(Item $item)
 	{
 		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', array('id', $item->get_id()));
 	}
@@ -67,7 +67,7 @@ class ItemsManager
 	 * @desc Delete an item.
 	 * @param int $id Item identifier
 	 */
-	public static function delete(int $id)
+	public function delete(int $id)
 	{
 		if (AppContext::get_current_user()->is_readonly())
 		{
@@ -88,7 +88,7 @@ class ItemsManager
 	 * @desc Return the item with all its properties.
 	 * @param int $id Item identifier
 	 */
-	public static function get_item(int $id)
+	public function get_item(int $id)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*, average_notes.average_notes, average_notes.number_notes, note.note
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
@@ -110,7 +110,7 @@ class ItemsManager
 	 * @desc Updates the views number of the item.
 	 * @param string[] $item Item to update
 	 */
-	public static function update_views_number(Item $item)
+	public function update_views_number(Item $item)
 	{
 		self::$db_querier->update(self::$items_table, array('views_number' => $item->get_views_number() + 1), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
@@ -124,7 +124,7 @@ class ItemsManager
 	 * @param string $condition Restriction to apply to the item
 	 * @param array $parameters Parameters of the condition
 	 */
-	public static function get_items(int $number_items_per_page, int $display_from, $sort_field, $sort_mode, $condition = '', array $parameters = array())
+	public function get_items(int $number_items_per_page, int $display_from, $sort_field, $sort_mode, $condition = '', array $parameters = array())
 	{
 		$now = new Date();
 		$items = array();
@@ -160,7 +160,7 @@ class ItemsManager
 	 /**
 	 * @desc Clear caches files
 	 */
-	public static function clear_cache()
+	public function clear_cache()
 	{
 		Feed::clear_cache(self::$module_id);
 		KeywordsCache::invalidate();
@@ -168,13 +168,13 @@ class ItemsManager
 		if (self::$module->get_configuration()->has_categories())
 			CategoriesService::get_categories_manager()->regenerate_cache();
 		
-		self::clear_module_cache();
+		$this->clear_module_cache();
 	}
 
 	 /**
 	 * @desc Clear module caches files if needed
 	 */
-	protected static function clear_module_cache()
+	protected function clear_module_cache()
 	{
 		$cache_classes = array(ucfirst(self::$module_id) . 'Cache', ucfirst(self::$module_id) . 'MiniMenuCache');
 		foreach ($cache_classes as $cache_class)
