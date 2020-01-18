@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,24 +69,6 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
-		));
-
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
-			array('min' => 1, 'max' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
-		));
-
-		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles.display.categories.icon'], $this->config->are_cats_icon_enabled(),
-			array('class' => 'custom-checkbox')
-		));
-
-		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
-		));
-
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
@@ -94,7 +76,7 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
 
-		$fieldset->add_field(new FormFieldNumberEditor('number_character_to_cut', $this->lang['articles.characters.number.to.cut'], $this->config->get_number_character_to_cut(),
+		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['articles.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array('min' => 20, 'max' => 1000, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(20, 1000))
 		));
@@ -125,7 +107,24 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['articles.default.contents'], $this->config->get_default_contents(),
+		$fieldset_categories->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['articles.default.contents'], $this->config->get_default_contents(),
+			array('rows' => 8, 'cols' => 47)
+		));
+
+		$fieldset_categories = new FormFieldsetHTML('categories', LangLoader::get_message('categories', 'categories-common'));
+		$form->add_fieldset($fieldset_categories);
+
+		$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories_number_per_page'], $this->config->get_categories_per_page(),
+			array('min' => 1, 'max' => 50, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
+
+		$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
+			array('min' => 1, 'max' => 4, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 4))
+		));
+
+		$fieldset_categories->add_field(new FormFieldRichTextEditor('root_category_description', $this->admin_common_lang['config.root_category_description'], $this->config->get_root_category_description(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -178,25 +177,20 @@ class AdminArticlesConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
-		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
-		if ($this->form->get_value('display_icon_cats'))
-			$this->config->enable_cats_icon();
-		else
-			$this->config->disable_cats_icon();
-		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
-
-		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_items_per_page($this->form->get_value('items_number_per_page'));
-		if($this->config->get_display_type() == ArticlesConfig::GRID_VIEW)
-			$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
-		$items_default_sort = $this->form->get_value('items_default_sort')->get_raw_value();
-		$items_default_sort = explode('-', $items_default_sort);
+		$items_default_sort = explode('-', $this->form->get_value('items_default_sort')->get_raw_value());
 		$this->config->set_items_default_sort_field($items_default_sort[0]);
 		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
-		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
+		$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number', $this->config->get_auto_cut_characters_number()));
 		$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
+		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		if($this->config->get_display_type() == ArticlesConfig::GRID_VIEW)
+			$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
 		$this->config->set_default_contents($this->form->get_value('default_contents'));
+
+		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
+		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
+		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 

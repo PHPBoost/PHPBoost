@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,9 +19,6 @@ $lang['items'] = 'articles';
 $lang['item'] = 'article';
 
 $lang['articles.module.title'] = 'Articles';
-$lang['articles.items'] = 'articles';
-$lang['articles.item'] = 'article';
-$lang['articles.management'] = 'Articles management';
 $lang['articles.add.item'] = 'Add an article';
 $lang['articles.edit.item'] = 'Article edition';
 $lang['articles.feed.name'] = 'Last articles';
@@ -30,7 +27,6 @@ $lang['articles.summary'] = 'Summary :';
 $lang['articles.print.item'] = 'Print an article';
 
 // Configuration
-$lang['articles.display.categories.icon'] = 'Dipslay categories icon';
 $lang['articles.characters.number.to.cut'] = 'Maximum number of characters to cut the article\'s description';
 $lang['articles.summary.displayed.to.guests'] = 'Display condensed articles to guests if they don\'t have read authorization';
 $lang['articles.default.contents'] = 'Article default content';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -55,9 +55,6 @@ class Article extends Item
 		self::SORT_NOTATION => 'notes',
 		self::SORT_NUMBER_COMMENTS => 'comments'
 	);
-
-	const ASC = 'ASC';
-	const DESC = 'DESC';
 
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;
@@ -140,7 +137,7 @@ class Article extends Item
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`usU', FormatingHelper::second_parse($this->contents), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			return TextHelper::cut_string(@strip_tags($clean_contents[0], '<br><br/>'), (int)ArticlesConfig::load()->get_number_character_to_cut());
+			return TextHelper::cut_string(@strip_tags($clean_contents[0], '<br><br/>'), (int)ArticlesConfig::load()->get_auto_cut_characters_number());
 		}
 	}
 
@@ -458,7 +455,7 @@ class Article extends Item
 	public function get_array_tpl_vars()
 	{
 		$category         = $this->get_category();
-		$contents	      = FormatingHelper::second_parse($this->contents);
+		$contents         = FormatingHelper::second_parse($this->contents);
 		$description      = $this->get_real_description();
 		$user             = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -484,7 +481,7 @@ class Article extends Item
 			'C_UPDATE_DATE'                   => $this->update_date != null,
 			'C_AUTHOR_DISPLAYED'              => $this->get_author_name_displayed(),
 			'C_AUTHOR_CUSTOM_NAME'            => $this->is_author_custom_name_enabled(),
-			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_number_character_to_cut() && $description != @strip_tags($contents, '<br><br/>'),
+			'C_READ_MORE'                     => !$this->get_description_enabled() && TextHelper::strlen($contents) > ArticlesConfig::load()->get_auto_cut_characters_number() && $description != @strip_tags($contents, '<br><br/>'),
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
 			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),

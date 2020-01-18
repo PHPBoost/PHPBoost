@@ -20,21 +20,19 @@
 				<div class="cell" itemscope>
 					<div class="cell-header" itemprop="about">
 						<h5 class="cell-name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" aria-label="{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #{@articles.items}# ELSE #{@articles.item}# ENDIF #">
+						<span class="small pinned notice" aria-label="{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #{@items}# ELSE #{@item}# ENDIF #">
 							{sub_categories_list.ARTICLES_NUMBER}
 						</span>
 					</div>
-					# IF C_DISPLAY_CATS_ICON #
-						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-							<div class="cell-body">
-								<div class="cell-thumbnail cell-landscape">
-									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-									<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
-										${LangLoader::get_message('see.category', 'categories-common')}
-									</a>
-								</div>
+					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+						<div class="cell-body">
+							<div class="cell-thumbnail cell-landscape">
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
+									${LangLoader::get_message('see.category', 'categories-common')}
+								</a>
 							</div>
-						# ENDIF #
+						</div>
 					# ENDIF #
 				</div>
 			# END sub_categories_list #

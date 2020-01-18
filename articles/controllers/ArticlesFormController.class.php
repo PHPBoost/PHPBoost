@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -95,7 +95,7 @@ class ArticlesFormController extends AbstractItemController
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.description.enabled'], $this->get_article()->get_description_enabled(),
 			array('description' => StringVars::replace_vars($this->lang['articles.description.enabled.annex'],
 			array(
-				'number' => ArticlesConfig::load()->get_number_character_to_cut())),
+				'number' => ArticlesConfig::load()->get_auto_cut_characters_number())),
 				'events' => array('click' => '
 					if (HTMLForms.getField("enable_description").getValue()) {
 						HTMLForms.getField("description").enable();
@@ -105,7 +105,7 @@ class ArticlesFormController extends AbstractItemController
 		))));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.description'],
-			array('number' =>ArticlesConfig::load()->get_number_character_to_cut())), $this->get_article()->get_description(),
+			array('number' =>ArticlesConfig::load()->get_auto_cut_characters_number())), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 
