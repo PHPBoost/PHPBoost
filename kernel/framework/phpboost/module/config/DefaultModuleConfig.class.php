@@ -80,17 +80,17 @@ class DefaultModuleConfig extends AbstractConfigData
 				$constant_value = $matches[1];
 				if ( in_array($constant_value, $this->get_class_constants()) && $this->current_class_has_method('get_default_value'))
 				{
+					if ($arguments[0] === null)
+					{
+						throw new Exception('Method ' . $matches[0] . '() must contain one argument.');
+					}
+					
 					$argument_type = gettype($arguments[0]);
 					$default_argument_type = gettype($this->get_default_values()[$constant_value]);
-					settype($arguments[0], $default_argument_type);
-					/*if ($argument_type !== $default_argument_type)
-					{
-						throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected in ' . $matches[0] . '().');
-					}
-					else
-					{*/
-						return $this->set_property($constant_value, $arguments[0]);
-					//}
+					if ($argument_type != $default_argument_type)
+						settype($arguments[0], $default_argument_type);
+					
+					return $this->set_property($constant_value, $arguments[0]);
 				}
 			}
 		}
