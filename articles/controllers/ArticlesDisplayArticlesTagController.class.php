@@ -167,15 +167,15 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 		$sort_options = array(
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
 			new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_VIEWS_NUMBER]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_VIEWS_NUMBER]),
 			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_COMMENTS_NUMBER]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_COMMENTS_NUMBER]);
 
 		if ($this->content_management_config->module_notation_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))

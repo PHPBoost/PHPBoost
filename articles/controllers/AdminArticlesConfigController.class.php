@@ -154,22 +154,22 @@ class AdminArticlesConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], Article::SORT_DATE . '-' . Article::DESC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], Article::SORT_ALPHABETIC . '-' . Article::ASC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], Article::SORT_ALPHABETIC . '-' . Article::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'] . ' - ' . $common_lang['sort.asc'], Article::SORT_VIEWS_NUMBER . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'] . ' - ' . $common_lang['sort.desc'], Article::SORT_VIEWS_NUMBER . '-' . Article::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number.views'] . ' - ' . $common_lang['sort.asc'], Article::SORT_VIEWS_NUMBER . '-' . Article::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number.views'] . ' - ' . $common_lang['sort.desc'], Article::SORT_VIEWS_NUMBER . '-' . Article::DESC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.asc'], Article::SORT_AUTHOR . '-' . Article::ASC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.desc'], Article::SORT_AUTHOR . '-' . Article::DESC)
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('articles'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.asc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.desc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('articles'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.asc'], Article::SORT_NOTATION . '-' . Article::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.desc'], Article::SORT_NOTATION . '-' . Article::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.asc'], Article::SORT_NOTATION . '-' . Article::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.desc'], Article::SORT_NOTATION . '-' . Article::DESC);
 		}
 
 		return $sort_options;

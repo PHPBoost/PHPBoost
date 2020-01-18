@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -138,10 +138,10 @@ class WebDisplayWebLinkTagController extends ModuleController
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_COMMENTS]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NUMBER_COMMENTS]);
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NOTATION]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], WebLink::SORT_FIELDS_URL_VALUES[WebLink::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
 			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -178,14 +178,14 @@ class AdminWebConfigController extends AdminModuleController
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NUMBER_COMMENTS . '-' . WebLink::DESC);
 		}
 
 		if ($this->content_management_config->module_notation_is_enabled('web'))
 		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NOTATION . '-' . WebLink::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NOTATION . '-' . WebLink::DESC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.asc'], WebLink::SORT_NOTATION . '-' . WebLink::ASC);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.desc'], WebLink::SORT_NOTATION . '-' . WebLink::DESC);
 		}
 
 		return $sort_options;
