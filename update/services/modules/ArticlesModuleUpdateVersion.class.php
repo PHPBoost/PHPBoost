@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -29,6 +29,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/ArticlesTreeLinks.class.php',
 			'/services/ArticlesAuthorizationsService.class.php',
 			'/services/ArticlesKeywordsCache.class.php',
+			'/services/ArticlesService.class.php',
 			'/templates/ArticlesFormFieldSelectSources.tpl',
 			'/util/AdminArticlesDisplayResponse.class.php'
 		);
@@ -43,6 +44,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 				'table_name' => PREFIX . 'articles',
 				'columns' => array(
 					'contents'     => 'contents MEDIUMTEXT',
+					'number_view'  => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'date_updated' => 'update_date INT(11) NOT NULL DEFAULT 0'
 				)

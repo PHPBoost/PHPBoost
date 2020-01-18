@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,7 +60,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 16777215),
-			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
@@ -118,7 +118,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.title']),
 			'description' => $this->messages['default.article.description'],
 			'contents' => $this->messages['default.article.contents'],
-			'number_view' => 0,
+			'views_number' => 0,
 			'author_user_id' => 1,
 			'author_custom_name' => '',
 			'author_name_displayed' => Article::AUTHOR_NAME_DISPLAYED,

@@ -28,7 +28,7 @@
 					<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>
 				</span>
 				<span class="pinned">
-					<i class="far fa-eye" aria-hidden="true"></i> <span aria-label="{NUMBER_VIEW} {@articles.sort.field.views}">{NUMBER_VIEW}</span>
+					<i class="far fa-eye" aria-hidden="true"></i> <span aria-label="{VIEWS_NUMBER} {@articles.sort.field.views}">{VIEWS_NUMBER}</span>
 				</span>
 				# IF C_COMMENTS_ENABLED #
 					<span class="pinned">

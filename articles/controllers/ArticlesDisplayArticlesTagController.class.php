@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 06 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -11,13 +11,10 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class ArticlesDisplayArticlesTagController extends ModuleController
+class ArticlesDisplayArticlesTagController extends AbstractItemController
 {
-	private $lang;
-	private $tpl;
 	private $keyword;
 
-	private $config;
 	private $comments_config;
 	private $content_management_config;
 
@@ -34,11 +31,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'articles');
-		$this->tpl = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
-		$this->tpl->add_lang($this->lang);
-		$this->config = ArticlesConfig::load();
-
 		$this->comments_config = CommentsConfig::load();
 		$this->content_management_config = ContentManagementConfig::load();
 	}
@@ -111,7 +103,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'C_ARTICLES'              => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
 			'C_PAGINATION'            => $pagination->has_several_pages(),
@@ -134,11 +126,11 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 
 			$this->build_keywords_view($article);
 
-			$this->tpl->assign_block_vars('articles', $article->get_array_tpl_vars());
+			$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
 
 			foreach ($article->get_sources() as $name => $url)
 			{
-				$this->tpl->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
 			}
 		}
 		$result->dispose();
@@ -148,12 +140,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	{
 		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);
-		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
+		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
 
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->tpl->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
@@ -175,12 +167,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$sort_options = array(
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
 			new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_VIEWS]),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_VIEWS_NUMBER]),
 			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('articles'))
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NUMBER_COMMENTS]);
+			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_COMMENTS_NUMBER]);
 
 		if ($this->content_management_config->module_notation_is_enabled('articles'))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
@@ -197,7 +189,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->tpl->put('FORM', $form->display());
+		$this->view->put('FORM', $form->display());
 	}
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
@@ -219,7 +211,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		return $pagination;
 	}
 
-	private function check_authorizations()
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
+	}
+
+	protected function check_authorizations()
 	{
 		if (!(CategoriesAuthorizationsService::check_authorizations()->read()))
 		{
@@ -233,7 +230,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$sort_field = $request->get_getstring('field', Article::SORT_FIELDS_URL_VALUES[$this->config->get_items_default_sort_field()]);
 		$sort_mode = $request->get_getstring('sort', $this->config->get_items_default_sort_mode());
 		$page = $request->get_getint('page', 1);
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), self::get_module()->get_configuration()->get_name(), $page);

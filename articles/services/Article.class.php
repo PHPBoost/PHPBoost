@@ -22,7 +22,7 @@ class Article extends Item
 	private $description;
 	private $contents;
 	private $picture_url;
-	private $number_view;
+	private $views_number;
 
 	private $author_custom_name;
 	private $author_custom_name_enabled;
@@ -39,22 +39,6 @@ class Article extends Item
 
 	private $sources;
 	private $keywords;
-
-	const SORT_ALPHABETIC = 'title';
-	const SORT_DATE = 'creation_date';
-	const SORT_AUTHOR = 'display_name';
-	const SORT_NUMBER_VIEWS = 'number_view';
-	const SORT_NOTATION = 'average_notes';
-	const SORT_NUMBER_COMMENTS = 'number_comments';
-
-	const SORT_FIELDS_URL_VALUES = array(
-		self::SORT_ALPHABETIC => 'title',
-		self::SORT_DATE => 'date',
-		self::SORT_AUTHOR => 'author',
-		self::SORT_NUMBER_VIEWS => 'views',
-		self::SORT_NOTATION => 'notes',
-		self::SORT_NUMBER_COMMENTS => 'comments'
-	);
 
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;
@@ -179,14 +163,14 @@ class Article extends Item
 			return new Url('/templates/default/images/default_item_thumbnail.png');
 	}
 
-	public function set_number_view($number_view)
+	public function set_views_number($views_number)
 	{
-		$this->number_view = $number_view;
+		$this->views_number = $views_number;
 	}
 
-	public function get_number_view()
+	public function get_views_number()
 	{
-		return $this->number_view;
+		return $this->views_number;
 	}
 
 	public function get_author_name_displayed()
@@ -370,8 +354,8 @@ class Article extends Item
 			'description'           => $this->get_description(),
 			'contents'              => $this->get_contents(),
 			'picture_url'           => $this->get_picture()->relative(),
-			'number_view'           => $this->get_number_view(),
-			'author_custom_name' 	=> $this->get_author_custom_name(),
+			'views_number'          => $this->get_views_number(),
+			'author_custom_name'    => $this->get_author_custom_name(),
 			'author_user_id'        => $this->get_author_user()->get_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
 			'published'             => $this->get_publishing_state(),
@@ -392,7 +376,7 @@ class Article extends Item
 		$this->set_description($properties['description']);
 		$this->set_contents($properties['contents']);
 		$this->set_picture(new Url($properties['picture_url']));
-		$this->set_number_view($properties['number_view']);
+		$this->set_views_number($properties['views_number']);
 		$this->set_author_name_displayed($properties['author_name_displayed']);
 		$this->set_publishing_state($properties['published']);
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date($properties['publishing_start_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -434,7 +418,7 @@ class Article extends Item
 		$this->creation_date = new Date();
 		$this->sources = array();
 		$this->picture_url = self::get_default_thumbnail();
-		$this->number_view = 0;
+		$this->views_number = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
 	}
@@ -485,7 +469,7 @@ class Article extends Item
 			'C_SOURCES'                       => $nbr_sources > 0,
 			'C_DIFFERED'                      => $this->published == self::PUBLISHED_DATE,
 			'C_NEW_CONTENT'                   => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('articles', $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
-			'C_ID_CARD' 					  => ContentManagementConfig::load()->module_id_card_is_enabled('articles') && $this->is_published(),
+			'C_ID_CARD'                       => ContentManagementConfig::load()->module_id_card_is_enabled('articles') && $this->is_published(),
 
 			// Articles
 			'ID'                            => $this->get_id(),
@@ -493,15 +477,15 @@ class Article extends Item
 			'STATUS'                        => $this->get_status(),
 			'L_COMMENTS'                    => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'COMMENTS_NUMBER'               => CommentsService::get_comments_number('articles', $this->get_id()),
-			'NUMBER_VIEW'                   => $this->get_number_view(),
+			'VIEWS_NUMBER'                  => $this->get_views_number(),
 			'NOTE'                          => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
-			'AUTHOR_CUSTOM_NAME' 			=> $this->author_custom_name,
+			'AUTHOR_CUSTOM_NAME'            => $this->author_custom_name,
 			'C_AUTHOR_EXIST'                => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO'                        => $user->get_display_name(),
 			'DESCRIPTION'                   => $description,
 			'USER_LEVEL_CLASS'              => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR'              => $user_group_color,
-			'ID_CARD' 						=> IdcardService::display_idcard($user),
+			'ID_CARD'                       => IdcardService::display_idcard($user),
 
 			// Categories
 			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,

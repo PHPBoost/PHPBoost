@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -61,8 +61,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		{
 			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($this->article->get_category()->get_id(), $this->article->get_category()->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel()))
 			{
-				$this->article->set_number_view($this->article->get_number_view() + 1);
-				ArticlesService::update_number_view($this->article);
+				self::get_items_manager()->update_views_number($this->article);
 			}
 		}
 	}
