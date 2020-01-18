@@ -34,6 +34,7 @@
 			hide_folder = false;
 		}
 	}
+
 	function display_rename_folder(id, previous_name, previous_cut_name)
 	{
 		if (document.getElementById('f' + id))
@@ -42,6 +43,7 @@
 			document.getElementById('finput' + id).focus();
 		}
 	}
+
 	function rename_folder(id_folder, previous_name, previous_cut_name)
 	{
 		var name = document.getElementById("finput" + id_folder).value;
@@ -78,6 +80,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 	}
+	
 	function add_folder(id_parent, user_id, divid)
 	{
 		var name = document.getElementById("folder-name").value;
@@ -154,6 +157,7 @@
 			hide_folder = true;
 		}
 	}
+
 	function display_rename_file(id, previous_name, previous_cut_name)
 	{
 		if (document.getElementById('fi' + id))
@@ -164,6 +168,7 @@
 			document.getElementById('fiinput' + id).focus();
 		}
 	}
+
 	function rename_file(id_file, previous_name, previous_cut_name)
 	{
 		var name = document.getElementById("fiinput" + id_file).value;
@@ -238,12 +243,10 @@
 			}
 		});
 	}
-
 </script>
 
 <nav id="admin-quick-menu">
-	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');
-				return false;">
+	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 		<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 	</a>
 	<ul>
@@ -257,7 +260,6 @@
 </nav>
 
 <div id="admin-contents">
-
 	<div id="new-multiple-files">
 		# INCLUDE message_helper #
 		<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">

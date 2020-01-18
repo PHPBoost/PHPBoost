@@ -553,13 +553,13 @@ h3.formatter-title { border-color: #366393; }
 
 /* --- pushmenu ------------------------------------------------------------- */
 
-.pushmenu h2 { color: #1c334a; }
+.pushmenu h2 { color: #FFFFFF; }
 
 .pushmenu::after,
 .pushmenu .nav-wrapper::after { background-color: rgba(0, 0, 0, 0.3); }
 
 .pushmenu .nav-container {
-	background-image: linear-gradient(to bottom, #366493 0%, #1c334a 100%);
+	background-image: linear-gradient(to bottom, #366493 0%, #1C334A 100%);
 	background-color: #366493;
 	color: #FFFFFF;
 }
@@ -567,19 +567,20 @@ h3.formatter-title { border-color: #366393; }
 .pushmenu .nav-item {
     border-color: #4E8EC1;
     background-color: rgba(0, 0, 0, 0);
-    color: #fff;
+    color: #FFFFFF;
 }
 
-.pushmenu:not(.touch-device) .nav-item:hover { background-color: #1c334a; }
+.pushmenu:not(.touch-device) .nav-item:hover { background-color: #1C334A; }
 
 .pushmenu li.nav-close a,
 .pushmenu li.nav-back a {
-    background-color: #1c334a;
-    border-color: #4E8EC1;
+    background-color: #4E8EC1;
+    border-color: #1C334A;
+    color: #FFFFFF;
 }
 
 .pushmenu li.nav-close span::before,
-.pushmenu li.nav-close span::after { border-color: #ffffff; }
+.pushmenu li.nav-close span::after { border-color: #FFFFFF; }
 
 .pushmenu a[href]:not([href="#"])>span.nav-next { border-color: #4E8EC1; }
 
@@ -598,7 +599,7 @@ h3.formatter-title { border-color: #366393; }
 }
 
 .pushmenu.nav-levels-expand .nav-container li.level-open > .nav-item,
-.pushmenu.nav-levels-none .nav-container li.level-open > .nav-item { background-color: #1c334a; }
+.pushmenu.nav-levels-none .nav-container li.level-open > .nav-item { background-color: #1C334A; }
 
 .pushmenu.nav-levels-expand .nav-container li.level-open a,
 .pushmenu.nav-levels-none .nav-container li.level-open a { border-color: #4E8EC1; }
@@ -606,7 +607,7 @@ h3.formatter-title { border-color: #366393; }
 .pushmenu.nav-levels-expand .nav-container li.level-open a:hover,
 .pushmenu.nav-levels-none .nav-container li.level-open a:hover { background-color: #2f649a; }
 
-.nav-levels-overlap .nav-wrapper { background-image: linear-gradient(to bottom, #366493 0%, #1c334a 100%); }
+.nav-levels-overlap .nav-wrapper { background-image: linear-gradient(to bottom, #366493 0%, #1C334A 100%); }
 
 /* --- lightcase --- */
 a[class*='lightcase-icon-'], a[class*='lightcase-icon-']:focus { color: rgba(255, 255, 255, 0.2); }
