@@ -6,7 +6,7 @@
 		<div class="sbx-menu bgc-main">
 			<span class="close-btn bkgd-sub"><i class="far fa-window-close" aria-hidden="true" aria-hidden="true"></i> {@mini.close}</span>
 			<div class="sbx-inset">
-				<div class="sbx-menu-item sbx-text">
+				<div id="sbx-details" class="sbx-menu-item sbx-text">
 					<div class="item-2x small" aria-label="{@mini.version.pbt}">
 						<span class="sr-only">{@mini.version.pbt} : </span>{PBT_VERSION}
 					</div>
@@ -38,7 +38,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="sbx-menu-item">
+				<div id="sbx-tools" class="sbx-menu-item">
 					<div class="sbx-item-title bgc-title">{@mini.tools}</div>
 					# IF C_CSS_CACHE_ENABLED #
 						<div class="item-form item-2x" aria-label="{@mini.disable.css.cache}"># INCLUDE DISABLE_CSS_CACHE #</div>
@@ -90,7 +90,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="sbx-menu-item">
+				<div id="sbx-admin" class="sbx-menu-item">
 					<div class="sbx-item-title bgc-title">{@mini.personalization}</div>
 					<div class="item-3x" aria-label="{@mini.menus}/{@title.config}">
 						<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
@@ -179,7 +179,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="sbx-menu-item">
+				<div id="sbx-sbx" class="sbx-menu-item">
 					<div class="sbx-item-title bgc-title">{@sandbox.module.title}</div>
 					<div class="item-4x" aria-label="{@title.form.builder}"><a href="{PATH_TO_ROOT}/sandbox/form"><i class="far fa-square fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.form.builder}</span></a></div>
 					<div class="item-4x" aria-label="{@title.css}"><a href="{PATH_TO_ROOT}/sandbox/css"><i class="fab fa-css3 fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.css}</span></a></div>
@@ -190,21 +190,18 @@
 					<div class="item-4x" aria-label="{@title.table.builder}"><a href="{PATH_TO_ROOT}/sandbox/table"><i class="fa fa-table fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.table.builder}</span></a></div>
 					<div class="item-4x" aria-label="{@title.config}"><a href="${relative_url(SandboxUrlBuilder::config())}"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i> <span class="sr-only">{@title.config}</span></a></div>
 				</div>
-				<div class="sbx-menu-item">
-					<div class="sbx-item-title bgc-title">{@mini.themes.switcher}</div>
-					<div class="item-form item-2x3">
+				<div id="sbx-theme" class="sbx-menu-item">
+					<div class="sbx-item-title bgc-title">
+						{@mini.themes.switcher} <a class="pinned notice small" href="?switchtheme={DEFAULT_THEME}" aria-label="{@mini.default.theme}"><i class="fa fa-sync-alt"></i></a>
+					</div>
+					<div class="item-form">
 						<form action="{REWRITED_SCRIPT}" method="get">
-							<label for="switchtheme">
-								<select id="switchtheme" name="switchtheme" onchange="document.location = '?switchtheme=' + this.options[this.selectedIndex].value;">
+							<select id="switchtheme" name="switchtheme" onchange="document.location = '?switchtheme=' + this.options[this.selectedIndex].value;">
 								# START themes #
 									<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
 								# END themes #
-								</select>
-							</label>
+							</select>
 						</form>
-					</div>
-					<div class="item-3x">
-						<a href="?switchtheme={DEFAULT_THEME}">{@mini.default.theme}</a>
 					</div>
 				</div>
 			</div>
@@ -213,5 +210,4 @@
 	<script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/validator.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/default/plugins/form/form.js"></script>
-
 # ENDIF #

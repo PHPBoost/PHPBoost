@@ -161,3 +161,8 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+#sbx-theme .item-form,
+#sbx-theme .item-form select {
+    width: 100%
+}
