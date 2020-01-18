@@ -85,7 +85,7 @@ class DefaultModuleConfig extends AbstractConfigData
 					settype($arguments[0], $default_argument_type);
 					if (!$arguments[0])
 					{
-						throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected');
+						throw new Exception('Error variable\'s type or value. ' . ucfirst($default_argument_type) . ' is expected in ' . $matches[0] . '.');
 					}
 					else
 					{
