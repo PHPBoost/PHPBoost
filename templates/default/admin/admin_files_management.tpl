@@ -1,268 +1,278 @@
 <script>
 	function popup_upload(path, width, height, scrollbars)
-		{
-			if (height == '0')
-				height = screen.height - 150;
-			if (width == '0')
-				width = screen.width - 200;
-			window.open(path, "", "width=" + width + ", height=" + height + ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
-		}
+	{
+		if (height == '0')
+			height = screen.height - 150;
+		if (width == '0')
+			width = screen.width - 200;
+		window.open(path, "", "width=" + width + ", height=" + height + ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
+	}
+
 	var hide_folder = false;
 	var empty_folder = 0;
-
 	function display_new_folder()
+	{
+		if (document.getElementById('empty-folder'))
+			document.getElementById('empty-folder').style.display = 'none';
+
+		if (typeof this.divid == 'undefined')
+			this.divid = 0;
+		else
+			this.divid++;
+
+		if (!hide_folder)
 		{
-			if (document.getElementById('empty-folder'))
-				document.getElementById('empty-folder').style.display = 'none';
-
-			if (typeof this.divid == 'undefined')
-				this.divid = 0;
-			else
-				this.divid++;
-
-			if (!hide_folder)
-				{
-					document.getElementById('new-folder').innerHTML += '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
-					document.getElementById('folder-name').focus();
-				} else
-				{
-					document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-					document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
-					document.getElementById('folder-name').focus();
-					this.divid--;
-					hide_folder = false;
-				}
+			document.getElementById('new-folder').innerHTML += '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
+			document.getElementById('folder-name').focus();
 		}
+		else
+		{
+			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
+			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"> <input type="text" name="folder-name" id="folder-name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div><i class="fa fa-folder" aria-hidden="true"></i></div></div>';
+			document.getElementById('folder-name').focus();
+			this.divid--;
+			hide_folder = false;
+		}
+	}
 	function display_rename_folder(id, previous_name, previous_cut_name)
+	{
+		if (document.getElementById('f' + id))
 		{
-			if (document.getElementById('f' + id))
-				{
-					document.getElementById('f' + id).innerHTML = '<input type="text" name="finput' + id + '" id="finput' + id + '" value="' + previous_name + '" onblur="rename_folder(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
-					document.getElementById('finput' + id).focus();
-				}
+			document.getElementById('f' + id).innerHTML = '<input type="text" name="finput' + id + '" id="finput' + id + '" value="' + previous_name + '" onblur="rename_folder(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
+			document.getElementById('finput' + id).focus();
 		}
+	}
 	function rename_folder(id_folder, previous_name, previous_cut_name)
-		{
-			var name = document.getElementById("finput" + id_folder).value;
-			var regex = /\/|\.|\\|\||\?|<|>|\"/;
+	{
+		var name = document.getElementById("finput" + id_folder).value;
+		var regex = /\/|\.|\\|\||\?|<|>|\"/;
 
-			document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-			if (name != '' && regex.test(name)) //interdiction des caract�res sp�ciaux dans le nom.
+		document.getElementById('img' + id_folder).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+		if (name != '' && regex.test(name)) // Prohibition of special characters in the name.
+		{
+			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
+			document.getElementById('img' + id_folder).innerHTML = '';
+		}
+		else if (name != '')
+		{
+			data = "id_folder=" + id_folder + "&name=" + name + "&previous_name=" + previous_name + "&user_id=" + {USER_ID};
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_folder=1');
+			xhr_object.onreadystatechange = function()
+			{
+				if (xhr_object.readyState == 4 && xhr_object.status == 200)
 				{
-					alert("{L_FOLDER_FORBIDDEN_CHARS}");
-					document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
+					if (xhr_object.responseText != "")
+					{
+						document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
+						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+					}
+					else
+					{
+						alert("{L_FOLDER_ALREADY_EXIST}");
+						document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
+					}
 					document.getElementById('img' + id_folder).innerHTML = '';
-				} else if (name != '')
-				{
-					data = "id_folder=" + id_folder + "&name=" + name + "&previous_name=" + previous_name + "&user_id=" + {USER_ID};
-					var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_folder=1');
-					xhr_object.onreadystatechange = function()
-						{
-							if (xhr_object.readyState == 4 && xhr_object.status == 200)
-								{
-									if (xhr_object.responseText != "")
-										{
-											document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
-											document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
-										} else
-										{
-											alert("{L_FOLDER_ALREADY_EXIST}");
-											document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + previous_cut_name + '</a>';
-										}
-									document.getElementById('img' + id_folder).innerHTML = '';
-								}
-						}
-					xmlhttprequest_sender(xhr_object, data);
 				}
+			}
+			xmlhttprequest_sender(xhr_object, data);
 		}
+	}
 	function add_folder(id_parent, user_id, divid)
+	{
+		var name = document.getElementById("folder-name").value;
+		var regex = /\/|\.|\\|\||\?|<|>|\"/;
+
+		if (name != '' && regex.test(name)) // Prohibition of special characters in the name.
 		{
-			var name = document.getElementById("folder-name").value;
-			var regex = /\/|\.|\\|\||\?|<|>|\"/;
-
-			if (name != '' && regex.test(name)) //interdiction des caracteres speciaux dans la nom.
-				{
-					alert("{L_FOLDER_FORBIDDEN_CHARS}");
-					document.getElementById('new-folder' + divid).innerHTML = '';
-					document.getElementById('new-folder' + divid).style.display = 'none';
-					hide_folder = true;
-					if (document.getElementById('empty-folder') && empty_folder == 0)
-						document.getElementById('empty-folder').style.display = 'block';
-				} else if (name != '')
-				{
-					data = "name=" + name + "&user_id=" + user_id + "&id_parent=" + id_parent;
-					var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&new_folder=1');
-					xhr_object.onreadystatechange = function()
-						{
-							if (xhr_object.readyState == 4 && xhr_object.status == 200)
-								{
-									if (xhr_object.responseText > 0)
-										{
-											var newFolder = '\
-											<div class="cell-header">\
-												<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
-													<a href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a>\
-												</div>\
-												<i class="far fa-folder" aria-hidden></i>\
-											</div>\
-											<div class="cell-list">\
-												<ul>\
-													<li class="li-stretch">\
-														<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
-															<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
-																<i class="far fa-edit" aria-hidden></i>\
-															</a>\
-														</span>\
-														<a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
-															<i class="far fa-trash-alt" aria-hidden></i>\
-														</a>\
-														<a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label="{L_MOVETO}">\
-															<i class="fa fa-share" aria-hidden></i>\
-														</a>\
-													</li>\
-													<span id="img' + xhr_object.responseText + '"></span>\
-												</ul>\
-											</div>';
-											document.getElementById('new-folder' + divid).innerHTML =  newFolder;
-											var total_folder = document.getElementById('total-folder').innerHTML;
-											total_folder++;
-											document.getElementById('total-folder').innerHTML = total_folder;
-
-											empty_folder++;
-										} else
-										{
-											alert("{L_FOLDER_ALREADY_EXIST}");
-											document.getElementById('new-folder' + divid).innerHTML = '';
-											document.getElementById('new-folder' + divid).style.display = 'none';
-											hide_folder = true;
-										}
-								}
-						}
-					xmlhttprequest_sender(xhr_object, data);
-				} else
-				{
-					if (document.getElementById('empty-folder') && empty_folder == 0)
-						document.getElementById('empty-folder').style.display = 'block';
-					document.getElementById('new-folder' + divid).innerHTML = '';
-					document.getElementById('new-folder' + divid).style.display = 'none';
-					hide_folder = true;
-				}
+			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			document.getElementById('new-folder' + divid).innerHTML = '';
+			document.getElementById('new-folder' + divid).style.display = 'none';
+			hide_folder = true;
+			if (document.getElementById('empty-folder') && empty_folder == 0)
+				document.getElementById('empty-folder').style.display = 'block';
 		}
+		else if (name != '')
+		{
+			data = "name=" + name + "&user_id=" + user_id + "&id_parent=" + id_parent;
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&new_folder=1');
+			xhr_object.onreadystatechange = function()
+				{
+					if (xhr_object.readyState == 4 && xhr_object.status == 200)
+					{
+						if (xhr_object.responseText > 0)
+						{
+							var newFolder = '\
+							<div class="cell-header">\
+								<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
+									<a href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a>\
+								</div>\
+								<i class="far fa-folder" aria-hidden></i>\
+							</div>\
+							<div class="cell-list">\
+								<ul>\
+									<li class="li-stretch">\
+										<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
+											<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
+												<i class="far fa-edit" aria-hidden></i>\
+											</a>\
+										</span>\
+										<a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
+											<i class="far fa-trash-alt" aria-hidden></i>\
+										</a>\
+										<a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label="{L_MOVETO}">\
+											<i class="fa fa-share" aria-hidden></i>\
+										</a>\
+									</li>\
+									<span id="img' + xhr_object.responseText + '"></span>\
+								</ul>\
+							</div>';
+							document.getElementById('new-folder' + divid).innerHTML =  newFolder;
+							var total_folder = document.getElementById('total-folder').innerHTML;
+							total_folder++;
+							document.getElementById('total-folder').innerHTML = total_folder;
+
+							empty_folder++;
+						}
+						else
+						{
+							alert("{L_FOLDER_ALREADY_EXIST}");
+							document.getElementById('new-folder' + divid).innerHTML = '';
+							document.getElementById('new-folder' + divid).style.display = 'none';
+							hide_folder = true;
+						}
+					}
+				}
+			xmlhttprequest_sender(xhr_object, data);
+		}
+		else
+		{
+			if (document.getElementById('empty-folder') && empty_folder == 0)
+				document.getElementById('empty-folder').style.display = 'block';
+			document.getElementById('new-folder' + divid).innerHTML = '';
+			document.getElementById('new-folder' + divid).style.display = 'none';
+			hide_folder = true;
+		}
+	}
 	function display_rename_file(id, previous_name, previous_cut_name)
+	{
+		if (document.getElementById('fi' + id))
 		{
-			if (document.getElementById('fi' + id))
-				{
-					document.getElementById('fi1' + id).style.display = 'none';
-					document.getElementById('fi' + id).style.display = 'inline';
-					document.getElementById('fi' + id).innerHTML = '<input type="text" name="fiinput' + id + '" id="fiinput' + id + '" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
-					document.getElementById('fiinput' + id).focus();
-				}
+			document.getElementById('fi1' + id).style.display = 'none';
+			document.getElementById('fi' + id).style.display = 'inline';
+			document.getElementById('fi' + id).innerHTML = '<input type="text" name="fiinput' + id + '" id="fiinput' + id + '" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');">';
+			document.getElementById('fiinput' + id).focus();
 		}
+	}
 	function rename_file(id_file, previous_name, previous_cut_name)
+	{
+		var name = document.getElementById("fiinput" + id_file).value;
+		var regex = /\/|\\|\||\?|<|>|\"/;
+
+		document.getElementById('imgf' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+		if (name != '' && regex.test(name)) // Prohibition of special characters in the name.
 		{
-			var name = document.getElementById("fiinput" + id_file).value;
-			var regex = /\/|\\|\||\?|<|>|\"/;
-
-			document.getElementById('imgf' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-			if (name != '' && regex.test(name)) //interdiction des caracteres speciaux dans la nom.
-				{
-					alert("{L_FOLDER_FORBIDDEN_CHARS}");
-					document.getElementById('fi1' + id_file).style.display = 'inline';
-					document.getElementById('fi' + id_file).style.display = 'none';
-					document.getElementById('imgf' + id_file).innerHTML = '';
-				} else if (name != '')
-				{
-					data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name + "&user_id=" + {USER_ID};
-					var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_file=1');
-					xhr_object.onreadystatechange = function()
-						{
-							if (xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
-								{
-									if (xhr_object.responseText == '/')
-										{
-											alert("{L_FOLDER_ALREADY_EXIST}");
-											document.getElementById('fi1' + id_file).style.display = 'inline';
-											document.getElementById('fi' + id_file).style.display = 'none';
-										} else
-										{
-											document.getElementById('fi' + id_file).style.display = 'none';
-											document.getElementById('fi1' + id_file).style.display = 'inline';
-											document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
-											document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
-										}
-									document.getElementById('imgf' + id_file).innerHTML = '';
-								} else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
-								{
-									document.getElementById('fi' + id_file).style.display = 'none';
-									document.getElementById('fi1' + id_file).style.display = 'inline';
-									document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
-									document.getElementById('imgf' + id_file).innerHTML = '';
-								}
-						}
-					xmlhttprequest_sender(xhr_object, data);
-				}
+			alert("{L_FOLDER_FORBIDDEN_CHARS}");
+			document.getElementById('fi1' + id_file).style.display = 'inline';
+			document.getElementById('fi' + id_file).style.display = 'none';
+			document.getElementById('imgf' + id_file).innerHTML = '';
 		}
+		else if (name != '')
+		{
+			data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name + "&user_id=" + {USER_ID};
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_file=1');
+			xhr_object.onreadystatechange = function()
+			{
+				if (xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '')
+				{
+					if (xhr_object.responseText == '/')
+					{
+						alert("{L_FOLDER_ALREADY_EXIST}");
+						document.getElementById('fi1' + id_file).style.display = 'inline';
+						document.getElementById('fi' + id_file).style.display = 'none';
+					}
+					else
+					{
+						document.getElementById('fi' + id_file).style.display = 'none';
+						document.getElementById('fi1' + id_file).style.display = 'inline';
+						document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
+						document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					}
+					document.getElementById('imgf' + id_file).innerHTML = '';
+				}
+				else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
+				{
+					document.getElementById('fi' + id_file).style.display = 'none';
+					document.getElementById('fi1' + id_file).style.display = 'inline';
+					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('imgf' + id_file).innerHTML = '';
+				}
+			}
+			xmlhttprequest_sender(xhr_object, data);
+		}
+	}
 
-	var delay = 300; //Delai apres lequel le bloc est automatiquement masque, apres le depart de la souris.
+	var delay = 300; // Delay after which the block is automatically hidden, after the mouse leaves.
 	var timeout;
 	var displayed = false;
-	//Affiche le bloc.
+	// Display the block
 	function upload_display_block(divID)
+	{
+		var i;
+
+		if (timeout)
+			clearTimeout(timeout);
+
+		var block = document.getElementById('move' + divID);
+		if (block.style.display == 'none')
 		{
-			var i;
-
-			if (timeout)
-				clearTimeout(timeout);
-
-			var block = document.getElementById('move' + divID);
-			if (block.style.display == 'none')
-				{
-					block.style.display = 'block';
-					displayed = true;
-				} else
-				{
-					block.style.display = 'none';
-					displayed = false;
-				}
+			block.style.display = 'block';
+			displayed = true;
 		}
-	//Cache le bloc.
+		else
+		{
+			block.style.display = 'none';
+			displayed = false;
+		}
+	}
+	// Hide the block
 	function upload_hide_block(idfield, stop)
+	{
+		if (stop && timeout)
+			clearTimeout(timeout);
+		else if (displayed)
 		{
-			if (stop && timeout)
-				{
-					clearTimeout(timeout);
-				} else if (displayed)
-				{
-					clearTimeout(timeout);
-					timeout = setTimeout('upload_display_block(\'' + idfield + '\')', delay);
-				}
+			clearTimeout(timeout);
+			timeout = setTimeout('upload_display_block(\'' + idfield + '\')', delay);
 		}
+	}
 
 	function change_status(id, status)
-		{
-			jQuery.ajax({
-				url: "{PATH_TO_ROOT}/admin/admin_files.php",
-				type: "post",
-				data: {
-					token: '{TOKEN}',
-					item_id: id,
-					status: status
-				},
-				success: function(returnData)
-					{
-						if (status === 0)
-							{
-								$('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user-shield');
-								$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 1)");
-							} else
-							{
-								$('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-users');
-								$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 0)");
-							}
-						location.reload();
-					}
-			});
-		}
+	{
+		jQuery.ajax({
+			url: "{PATH_TO_ROOT}/admin/admin_files.php",
+			type: "post",
+			data: {
+				token: '{TOKEN}',
+				item_id: id,
+				status: status
+			},
+			success: function(returnData)
+			{
+				if (status === 0)
+				{
+					$('#status_' + id).removeClass('fas fa-user').addClass('fas fa-user-shield');
+					$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 1)");
+				}
+				else
+				{
+					$('#status_' + id).removeClass('fas fa-user-shield').addClass('fas fa-users');
+					$('#status_function_' + id).attr("onclick", "change_status(" + id + ", 0)");
+				}
+				location.reload();
+			}
+		});
+	}
 
 </script>
 
