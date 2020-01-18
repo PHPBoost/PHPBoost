@@ -154,8 +154,8 @@ class AdminArticlesConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], Article::SORT_DATE . '-' . Article::DESC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], Article::SORT_ALPHABETIC . '-' . Article::ASC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], Article::SORT_ALPHABETIC . '-' . Article::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number.views'] . ' - ' . $common_lang['sort.asc'], Article::SORT_VIEWS_NUMBER . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.number.views'] . ' - ' . $common_lang['sort.desc'], Article::SORT_VIEWS_NUMBER . '-' . Article::DESC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.asc'], Article::SORT_VIEWS_NUMBER . '-' . Article::ASC),
+			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.desc'], Article::SORT_VIEWS_NUMBER . '-' . Article::DESC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.asc'], Article::SORT_AUTHOR . '-' . Article::ASC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.desc'], Article::SORT_AUTHOR . '-' . Article::DESC)
 		);

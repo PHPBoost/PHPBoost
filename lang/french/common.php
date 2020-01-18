@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 18
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -87,9 +87,9 @@ $lang['sort'] = 'Trier';
 $lang['sort_options'] = 'Options de tri';
 $lang['sort_by'] = 'Trier par';
 $lang['sort_by.alphabetic'] = 'Alphabétique';
-$lang['sort_by.number_views'] = 'Vues';
-$lang['sort_by.best_note'] = 'Meilleure note';
-$lang['sort_by.number_comments'] = 'Nombre de commentaires';
+$lang['sort_by.views.number'] = 'Vues';
+$lang['sort_by.best.note'] = 'Meilleure note';
+$lang['sort_by.comments.number'] = 'Nombre de commentaires';
 $lang['sort.asc'] = 'Croissant';
 $lang['sort.desc'] = 'Décroissant';
 
