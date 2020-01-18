@@ -91,7 +91,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 			'C_PAGINATION'             => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE'   => $result->get_rows_count() == 0,
 			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'       	   => $this->config->get_items_number_per_row(),
+			'ITEMS_PER_ROW'       	   => $this->config->get_items_per_row(),
 			'C_ONE_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 1,
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION'               => $pagination->display(),

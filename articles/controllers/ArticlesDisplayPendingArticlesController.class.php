@@ -116,7 +116,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 				'C_PAGINATION'       => $pagination->has_several_pages(),
 				'PAGINATION'         => $pagination->display(),
 				'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-				'ITEMS_PER_ROW' 	 => $this->config->get_items_number_per_row(),
+				'ITEMS_PER_ROW' 	 => $this->config->get_items_per_row(),
 			));
 
 			while($row = $result->fetch())

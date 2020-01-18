@@ -116,7 +116,7 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 			'C_ARTICLES_FILTERS'      => true,
 			'CATEGORY_NAME'           => $this->get_keyword()->get_name(),
 			'CATEGORIES_PER_ROW'      => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' 	      => $this->config->get_items_number_per_row(),
+			'ITEMS_PER_ROW' 	      => $this->config->get_items_per_row(),
 		));
 
 		while ($row = $result->fetch())

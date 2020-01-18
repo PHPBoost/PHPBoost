@@ -44,7 +44,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('items_number_per_row')->set_hidden($this->config->get_display_type() !== ArticlesConfig::GRID_VIEW);
+			$this->form->get_field_by_id('items_per_row')->set_hidden($this->config->get_display_type() !== ArticlesConfig::GRID_VIEW);
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 
@@ -92,13 +92,13 @@ class AdminArticlesConfigController extends AdminModuleController
 			),
 			array('events' => array('change' => '
 				if (HTMLForms.getField("display_type").getValue() === \'' . ArticlesConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_number_per_row").enable();
+					HTMLForms.getField("items_per_row").enable();
 				} else {
-					HTMLForms.getField("items_number_per_row").disable();
+					HTMLForms.getField("items_per_row").disable();
 				}'))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_number_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_number_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== ArticlesConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4,
@@ -185,7 +185,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		if($this->config->get_display_type() == ArticlesConfig::GRID_VIEW)
-			$this->config->set_items_number_per_row($this->form->get_value('items_number_per_row'));
+			$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 		$this->config->set_default_contents($this->form->get_value('default_contents'));
 
 		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
