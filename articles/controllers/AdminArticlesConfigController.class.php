@@ -177,7 +177,7 @@ class AdminArticlesConfigController extends AdminModuleController
 
 	private function save()
 	{
-		$this->config->set_items_per_page($this->form->get_value('items_number_per_page'));
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 		$items_default_sort = explode('-', $this->form->get_value('items_default_sort')->get_raw_value());
 		$this->config->set_items_default_sort_field($items_default_sort[0]);
 		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
