@@ -212,41 +212,6 @@
 		}
 	}
 
-	var delay = 300; // Delay after which the block is automatically hidden, after the mouse leaves.
-	var timeout;
-	var displayed = false;
-	// Display the block
-	function upload_display_block(divID)
-	{
-		var i;
-
-		if (timeout)
-			clearTimeout(timeout);
-
-		var block = document.getElementById('move' + divID);
-		if (block.style.display == 'none')
-		{
-			block.style.display = 'block';
-			displayed = true;
-		}
-		else
-		{
-			block.style.display = 'none';
-			displayed = false;
-		}
-	}
-	// Hide the block
-	function upload_hide_block(idfield, stop)
-	{
-		if (stop && timeout)
-			clearTimeout(timeout);
-		else if (displayed)
-		{
-			clearTimeout(timeout);
-			timeout = setTimeout('upload_display_block(\'' + idfield + '\')', delay);
-		}
-	}
-
 	function change_status(id, status)
 	{
 		jQuery.ajax({
