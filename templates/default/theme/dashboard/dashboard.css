@@ -17,11 +17,18 @@
     font-size: 1.482em;
 }
 
-.cell-body textarea {margin: 0;}
+.cell-body textarea { margin: 0; }
 
-#writing_pad_content {
-	height: 264px;
+#writing_pad_content { height: 264px; }
+
+/* --- Alerts --- */
+.alert-priority {
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
+
+td.alert-priority { border-width: 0 0 1px 1px; }
 
 /* --- multitabs --- */
 .close-modal { width: calc(100% - 230px); }
@@ -58,9 +65,7 @@
 /* --- sortable menu edition --- */
 @media (min-width: 769px) {
     .menu-elements-container .sortable-selector,
-    .menu-elements-container .sortable-actions {
-        margin: 1.228em 0 0;
-    }
+    .menu-elements-container .sortable-actions { margin: 1.228em 0 0; }
 
 }
 

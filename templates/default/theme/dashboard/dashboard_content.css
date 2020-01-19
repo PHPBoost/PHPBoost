@@ -26,7 +26,7 @@
 	font-family: monospace;
 }
 
-/* --- statistiques =============================================================== */
+/* --- statistiques --------------------------------------------------------- */
 @media (max-width: 768px) {
 	#menustats .js-menu-button {
 		display: block;
