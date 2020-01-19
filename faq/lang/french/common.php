@@ -35,10 +35,10 @@ $lang['faq.show.answers'] = 'Montrer toutes les réponses';
 $lang['faq.hide.answers'] = 'Cacher toutes les réponses';
 
 //config
-$lang['config.display.type.accordion'] = 'Type d\'affichge des réponses';
+$lang['config.display.type.accordion'] = 'Type d\'affichage des réponses';
 $lang['config.display.type.basic'] = 'Affichage indépendant';
 $lang['config.display.type.siblings'] = 'Affichage séparé';
-$lang['config.display.controls'] = 'Afficher le controle total';
+$lang['config.display.controls'] = 'Afficher le contrôle total';
 $lang['config.display.controls.explain'] = 'Afficher les boutons pour ouvrir/fermer toutes les réponses';
 $lang['config.items.default.sort.explain'] = 'Sur la page "Questions en attente"';
 
