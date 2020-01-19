@@ -152,6 +152,7 @@ $LANG['horizontal.menu'] = 'Horizontal scrolling menu';
 $LANG['static.menu'] = 'Static menu';
 $LANG['push.menu'] = 'Push menu';
 $LANG['push.menu.disabled.body'] = 'Disable content when menu is open';
+$LANG['push.menu.pushed.content'] = 'Push content when menu is open';
 $LANG['push.menu.open.type'] = 'Menu opening';
 $LANG['push.menu.open.type.left'] = 'From the left';
 $LANG['push.menu.open.type.right'] = 'From the right';

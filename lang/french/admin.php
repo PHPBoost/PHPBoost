@@ -151,6 +151,7 @@ $LANG['horizontal.menu'] = 'Menu horizontal déroulant';
 $LANG['static.menu'] = 'Menu statique';
 $LANG['push.menu'] = 'Menu Push';
 $LANG['push.menu.disabled.body'] = 'Désactiver le contenu du site à l\'ouverture du menu';
+$LANG['push.menu.pushed.content'] = 'Pousser le contenu du site à l\'ouverture du menu';
 $LANG['push.menu.open.type'] = 'Type d\'ouverture du menu';
 $LANG['push.menu.open.type.left'] = 'Depuis la gauche';
 $LANG['push.menu.open.type.right'] = 'Depuis la droite';
