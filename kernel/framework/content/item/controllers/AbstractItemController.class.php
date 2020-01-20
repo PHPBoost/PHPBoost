@@ -27,9 +27,9 @@ abstract class AbstractItemController extends ModuleController
 		if ($this->view !== null)
 			$this->view->add_lang($this->lang);
 		
-		if (self::get_module()->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::get_module()->get_id())
+		if (self::get_module()->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'comments';
-		if (self::get_module()->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id())
+		if (self::get_module()->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'notation';
 		
 		$this->tpl->put_all(array(
