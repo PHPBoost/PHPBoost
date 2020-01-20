@@ -15,9 +15,6 @@
 }
 
 /* --- gallery list --------------------------------------------------------- */
-.cell-flex .cell-thumbnail {
-    align-items: center;
-}
 
 .pic-name-input {
 	width: 100%;
