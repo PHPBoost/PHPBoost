@@ -32,7 +32,7 @@ abstract class AbstractItemController extends ModuleController
 		if (self::get_module()->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'notation';
 		
-		$this->tpl->put_all(array(
+		$this->view->put_all(array(
 			'MODULE_NAME'        => self::get_module()->get_configuration()->get_name(),
 			'C_ENABLED_COMMENTS' => in_array('comments', $this->enabled_features),
 			'C_ENABLED_NOTATION' => in_array('notation', $this->enabled_features)
