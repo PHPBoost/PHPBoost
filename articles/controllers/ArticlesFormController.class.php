@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 20
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -487,16 +487,16 @@ class ArticlesFormController extends AbstractItemController
 		elseif ($article->is_published())
 		{
 			if ($this->is_new_article)
-				AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id()), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1))), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id())), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_article)
-				AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles(), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::get_module()->get_id()), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ArticlesUrlBuilder::display_pending_articles()), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::get_module()->get_id())), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
 		}
 	}
 
@@ -525,9 +525,9 @@ class ArticlesFormController extends AbstractItemController
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
-					$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+					$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::get_module()->get_id()));
 			}
-			$breadcrumb->add($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
+			$breadcrumb->add($article->get_title(), ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), '', self::get_module()->get_id()));
 
 			$breadcrumb->add($this->lang['articles.edit.item'], ItemsUrlBuilder::edit($article->get_id()));
 

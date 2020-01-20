@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 20
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -70,8 +70,6 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 	{
 		$current_page = $request->get_getint('page', 1);
 		$config = ArticlesConfig::load();
-		$comments_config = CommentsConfig::load();
-		$content_management_config = ContentManagementConfig::load();
 
 		$this->category = $this->article->get_category();
 
@@ -104,18 +102,16 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
 		$this->view->put_all(array_merge($this->article->get_array_tpl_vars(), array(
-			'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('articles'),
-			'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('articles'),
-			'KERNEL_NOTATION'    => NotationService::display_active_image($this->article->get_notation()),
-			'CONTENTS'           => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGE_NAME'          => $page_name,
-			'U_EDIT_ARTICLE'     => $page_name !== '' ? ItemsUrlBuilder::edit($this->article->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->article->get_id())->rel()
+			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
+			'CONTENTS'        => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
+			'PAGE_NAME'       => $page_name,
+			'U_EDIT_ARTICLE'  => $page_name !== '' ? ItemsUrlBuilder::edit($this->article->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->article->get_id())->rel()
 		)));
 
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 
 		//Affichage commentaires
-		if ($comments_config->module_comments_is_enabled('articles'))
+		if (in_array('comments', $this->enabled_features))
 		{
 			$comments_topic = new DefaultCommentsTopic('articles', $this->article);
 			$comments_topic->set_id_in_module($this->article->get_id());

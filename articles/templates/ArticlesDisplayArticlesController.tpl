@@ -3,7 +3,7 @@
 	<header>
 		<div class="align-right controls">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
-			{@articles.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
+			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -30,7 +30,7 @@
 				<span class="pinned">
 					<i class="far fa-eye" aria-hidden="true"></i> <span aria-label="{VIEWS_NUMBER} {@articles.sort.field.views}">{VIEWS_NUMBER}</span>
 				</span>
-				# IF C_COMMENTS_ENABLED #
+				# IF C_ENABLED_COMMENTS #
 					<span class="pinned">
 						<i class="far fa-comments" aria-hidden="true"></i> <a itemprop="discussionUrl" class="small" href="{U_COMMENTS}"> {L_COMMENTS}</a>
 					</span>
@@ -114,12 +114,12 @@
 		# IF C_UPDATE_DATE #
 			<aside><i>${LangLoader::get_message('form.date.update', 'common')} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></aside>
 		# ENDIF #
-		# IF C_NOTATION_ENABLED #
+		# IF C_ENABLED_NOTATION #
 			<aside>
 				{KERNEL_NOTATION}
 			</aside>
 		# ENDIF #
-		# IF C_COMMENTS_ENABLED #
+		# IF C_ENABLED_COMMENTS #
 			<aside>
 				# INCLUDE COMMENTS #
 			</aside>
@@ -131,7 +131,7 @@
 		<meta itemprop="description" content="${escape(DESCRIPTION)}">
 		<meta itemprop="datePublished" content="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #">
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
-		# IF C_COMMENTS_ENABLED #
+		# IF C_ENABLED_COMMENTS #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
 		# ENDIF #

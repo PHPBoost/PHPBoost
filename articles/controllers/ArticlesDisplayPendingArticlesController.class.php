@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 01 20
  * @since       PHPBoost 4.0 - 2013 03 28
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -38,7 +38,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE]),
 				new FormFieldSelectChoiceOption($common_lang['form.title'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC]),
 				new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
-			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			), array('events' => array('change' => 'document.location = "'. ItemsUrlBuilder::display_pending(self::get_module()->get_id())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -46,7 +46,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
 			),
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display_pending(self::get_module()->get_id())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
 		$this->form = $form;
@@ -103,7 +103,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 			'C_PENDING'               => true,
 			'C_GRID_VIEW'             => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_LIST_VIEW'             => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
-			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
+			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_NO_ARTICLE_AVAILABLE'  => $nbr_articles_pending == 0
 		));
 
@@ -111,12 +111,10 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 		{
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
-				'C_COMMENTS_ENABLED' => $comments_config->module_comments_is_enabled('articles'),
-				'C_NOTATION_ENABLED' => $content_management_config->module_notation_is_enabled('articles'),
 				'C_PAGINATION'       => $pagination->has_several_pages(),
 				'PAGINATION'         => $pagination->display(),
 				'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-				'ITEMS_PER_ROW' 	 => $this->config->get_items_per_row(),
+				'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 			));
 
 			while($row = $result->fetch())

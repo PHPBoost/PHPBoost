@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 20
  * @since       PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,24 +14,14 @@
 class ArticlesDisplayCategoryController extends AbstractItemController
 {
 	private $category;
-	private $comments_config;
-	private $content_management_config;
-
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-
 		$this->check_authorizations();
 
 		$this->build_view($request);
 
 		return $this->generate_response($request);
-	}
-
-	private function init()
-	{
-		$this->comments_config = CommentsConfig::load();
-		$this->content_management_config = ContentManagementConfig::load();
 	}
 
 	private function build_view(HTTPRequestCustom $request)
@@ -82,16 +72,14 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 
 		$this->view->put_all(array(
 			'C_ARTICLES'               => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_ARTICLE'  => $result->get_rows_count() > 1,
+			'C_SEVERAL_ITEMS'          => $result->get_rows_count() > 1,
 			'C_GRID_VIEW'              => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_LIST_VIEW'              => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
-			'C_COMMENTS_ENABLED'       => $this->comments_config->module_comments_is_enabled('articles'),
-			'C_NOTATION_ENABLED'       => $this->content_management_config->module_notation_is_enabled('articles'),
 			'C_ARTICLES_FILTERS'       => true,
 			'C_PAGINATION'             => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE'   => $result->get_rows_count() == 0,
 			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'       	   => $this->config->get_items_per_row(),
+			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
 			'C_ONE_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 1,
 			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
 			'PAGINATION'               => $pagination->display(),
@@ -132,7 +120,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 
 				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-					'C_MORE_THAN_ONE_ARTICLE' => $category->get_elements_number() > 1,
+					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 					'CATEGORY_ID' => $category->get_id(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
@@ -176,10 +164,10 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
-		if ($this->comments_config->module_comments_is_enabled('articles'))
+		if (in_array('comments', $this->enabled_features))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_COMMENTS_NUMBER]);
 
-		if ($this->content_management_config->module_notation_is_enabled('articles'))
+		if (in_array('notation', $this->enabled_features))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
@@ -327,7 +315,6 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());
 		return $object->view;

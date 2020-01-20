@@ -5,7 +5,7 @@
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"> <i class="far fa-fw fa-edit" aria-hidden="true"></i> </a># ENDIF ## ENDIF #
 		</div>
 		<h1>
-			# IF C_PENDING #{@articles.pending.items}# ELSE #{@articles.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
+			# IF C_PENDING #{@articles.pending.items}# ELSE #{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 	</header>
 	# IF C_CATEGORY_DESCRIPTION #
@@ -20,7 +20,7 @@
 				<div class="cell" itemscope>
 					<div class="cell-header" itemprop="about">
 						<h5 class="cell-name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" aria-label="{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_MORE_THAN_ONE_ARTICLE #{@items}# ELSE #{@item}# ENDIF #">
+						<span class="small pinned notice" aria-label="{sub_categories_list.ARTICLES_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
 							{sub_categories_list.ARTICLES_NUMBER}
 						</span>
 					</div>
@@ -48,7 +48,7 @@
 			</div>
 		# ENDIF #
 	# ELSE #
-		# IF C_MORE_THAN_ONE_ARTICLE #
+		# IF C_SEVERAL_ITEMS #
 			# IF C_ARTICLES_FILTERS #
 				# INCLUDE FORM #
 				<div class="spacer"></div>
@@ -107,7 +107,7 @@
 					<footer>
 						<meta itemprop="url" content="{articles.U_ARTICLE}">
 						<meta itemprop="description" content="${escape(articles.DESCRIPTION)}"/>
-						# IF C_COMMENTS_ENABLED #
+						# IF C_ENABLED_COMMENTS #
 							<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 							<meta itemprop="interactionCount" content="{articles.COMMENTS_NUMBER} UserComments">
 						# ENDIF #

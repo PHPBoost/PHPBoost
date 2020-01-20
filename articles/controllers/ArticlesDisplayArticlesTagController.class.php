@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 20
  * @since       PHPBoost 4.0 - 2013 06 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,24 +15,13 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 {
 	private $keyword;
 
-	private $comments_config;
-	private $content_management_config;
-
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view($request);
 
 		return $this->generate_response($request);
-	}
-
-	private function init()
-	{
-		$this->comments_config = CommentsConfig::load();
-		$this->content_management_config = ContentManagementConfig::load();
 	}
 
 	private function get_keyword()
@@ -105,18 +94,16 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 
 		$this->view->put_all(array(
 			'C_ARTICLES'              => $result->get_rows_count() > 0,
-			'C_MORE_THAN_ONE_ARTICLE' => $result->get_rows_count() > 1,
+			'C_SEVERAL_ITEMS'         => $result->get_rows_count() > 1,
 			'C_PAGINATION'            => $pagination->has_several_pages(),
 			'PAGINATION'              => $pagination->display(),
 			'C_NO_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 0,
 			'C_GRID_VIEW'             => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_ARTICLES_CAT'          => false,
-			'C_COMMENTS_ENABLED'      => $this->comments_config->module_comments_is_enabled('articles'),
-			'C_NOTATION_ENABLED'      => $this->content_management_config->module_notation_is_enabled('articles'),
 			'C_ARTICLES_FILTERS'      => true,
 			'CATEGORY_NAME'           => $this->get_keyword()->get_name(),
 			'CATEGORIES_PER_ROW'      => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' 	      => $this->config->get_items_per_row(),
+			'ITEMS_PER_ROW'           => $this->config->get_items_per_row(),
 		));
 
 		while ($row = $result->fetch())
@@ -171,10 +158,10 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 			new FormFieldSelectChoiceOption($common_lang['author'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR])
 		);
 
-		if ($this->comments_config->module_comments_is_enabled('articles'))
+		if (in_array('comments', $this->enabled_features))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_COMMENTS_NUMBER]);
 
-		if ($this->content_management_config->module_notation_is_enabled('articles'))
+		if (in_array('notation', $this->enabled_features))
 			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'], Article::SORT_FIELDS_URL_VALUES[Article::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
