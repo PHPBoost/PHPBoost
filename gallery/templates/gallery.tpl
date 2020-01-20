@@ -13,6 +13,7 @@
 			pics_displayed = 0;
 		}
 	}
+
 	function display_pics_popup(path, width, height)
 	{
 		width = parseInt(width);
@@ -23,6 +24,7 @@
 			width = screen.width - 200;
 		window.open(path, '', 'width='+(width+17)+', height='+(height+17)+', location=no, status=no, toolbar=no, scrollbars=1, resizable=yes');
 	}
+
 	function display_rename_file(id, previous_name, previous_cut_name)
 	{
 		if( document.getElementById('fi' + id) )
@@ -33,6 +35,7 @@
 			document.getElementById('fiinput' + id).focus();
 		}
 	}
+
 	function rename_file(id_file, previous_cut_name)
 	{
 		var name = document.getElementById("fiinput" + id_file).value;
@@ -70,6 +73,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 	}
+
 	function pics_aprob(id_file, aprob)
 	{
 		document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
@@ -135,6 +139,7 @@
 			started = true;
 		}
 	}
+
 	//Cache le bloc.
 	function pics_hide_block(idfield, stop)
 	{
@@ -198,6 +203,7 @@
 			}
 		}
 	}
+
 	//incrément le nombre de vues d'une image.
 	var already_view = false;
 	var incr_pics_displayed = 0;
@@ -251,28 +257,28 @@
 	<div class="gallery-tools-container">
 		<nav id="cssmenu-galleryfilter" class="cssmenu cssmenu-right cssmenu-actionslinks cssmenu-tools">
 			<ul class="level-0 hidden">
-				<li><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_DISPLAY}</a>
+				<li><a class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> <span>{L_DISPLAY}</span></a>
 					<ul class="level-1">
-						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_BEST_VIEWS}</a></li>
-						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> {L_BEST_NOTES}</a></li># ENDIF #
+						<li><a href="{U_BEST_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> <span>{L_BEST_VIEWS}</span></a></li>
+						# IF C_NOTATION_ENABLED #<li><a href="{U_BEST_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{L_BEST_NOTES}</span></a></li># ENDIF #
 					</ul>
 				</li>
 				<li><a class="cssmenu-title"><i class="fa fa-sort" aria-hidden="true"></i> {L_ORDER_BY}</a>
 					<ul class="level-1">
-						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag" aria-hidden="true"></i> {L_NAME}</a></li>
-						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock" aria-hidden="true"></i> {L_DATE}</a></li>
-						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> {L_VIEWS}</a></li>
+						<li><a href="{U_ORDER_BY_NAME}" class="cssmenu-title"><i class="fa fa-tag" aria-hidden="true"></i> <span>{L_NAME}</span></a></li>
+						<li><a href="{U_ORDER_BY_DATE}" class="cssmenu-title"><i class="fa fa-clock" aria-hidden="true"></i> <span>{L_DATE}</span></a></li>
+						<li><a href="{U_ORDER_BY_VIEWS}" class="cssmenu-title"><i class="fa fa-eye" aria-hidden="true"></i> <span>{L_VIEWS}</span></a></li>
 						# IF C_NOTATION_ENABLED #
-						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> {L_NOTES}</a></li>
+						<li><a href="{U_ORDER_BY_NOTES}" class="cssmenu-title"><i class="far fa-star" aria-hidden="true"></i> <span>{L_NOTES}</span></a></li>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
-						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments" aria-hidden="true"></i> {L_COM}</a></li># ENDIF #
+						<li><a href="{U_ORDER_BY_COM}" class="cssmenu-title"><i class="fa fa-comments" aria-hidden="true"></i> <span>{L_COM}</span></a></li># ENDIF #
 					</ul>
 				</li>
 				<li><a class="cssmenu-title"><i class="fa fa-sort-alpha-down"></i> {L_DIRECTION}</a>
 					<ul class="level-1">
-						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-down" aria-hidden="true"></i> {L_ASC}</a></li>
-						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-up" aria-hidden="true"></i> {L_DESC}</a></li>
+						<li><a href="{U_ASC}" class="cssmenu-title"><i class="fa fa-sort-amount-down" aria-hidden="true"></i> <span>{L_ASC}</span></a></li>
+						<li><a href="{U_DESC}" class="cssmenu-title"><i class="fa fa-sort-amount-up" aria-hidden="true"></i> <span>{L_DESC}</span></a></li>
 					</ul>
 				</li>
 			</ul>
@@ -281,6 +287,7 @@
 			jQuery("#cssmenu-galleryfilter").menumaker({
 				title: "${LangLoader::get_message('sort_options', 'common')}",
 				format: "multitoggle",
+				actionslinks: true,
 				breakpoint: 768
 			});
 			jQuery(document).ready(function() {

@@ -1,7 +1,7 @@
 <section id="module-wiki">
 	<header>
-		<div class="align-right">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss" aria-hidden="true"></i></a>
+		<div class="align-right controls">
+			<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{CATEGORY_TITLE}
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
