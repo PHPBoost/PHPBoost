@@ -62,7 +62,11 @@
     jQuery('.accordion-container.siblings [data-accordion]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
     jQuery('.tabs-container [data-tabs]').multiTabs({ pluginType: 'tabs' });
 
+// Wizard
     jQuery('.wizard-container').wizard();
+
+// Selectimg
+	jQuery('.select-to-list').selectimg();
 
 // sizes of .cell-thumbnail
 	jQuery('.cell-thumbnail.cell-landscape').each(function() {

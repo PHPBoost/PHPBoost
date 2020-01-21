@@ -522,6 +522,14 @@ h3.formatter-title { border-color: #366393; }
     box-shadow: 0 0 0 transparent;
 }
 
+.cssmenu-select .has-sub > .cssmenu-title {
+	background-color: #ECF2F8;
+	border-color: #BDC2C9;
+	color: #555555;
+}
+
+.cssmenu-select .has-sub:hover > .cssmenu-title { background-color: #ECF2F8; }
+
 .small-screen.cssmenu ul ul,
 .small-screen.cssmenu-actionslinks ul { box-shadow: 0 0 0 transparent; }
 
