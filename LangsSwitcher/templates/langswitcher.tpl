@@ -13,7 +13,7 @@
 							name="switchlang"
 							onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
 							# START langs #
-								<option data-option-img="# IF C_HAS_PICTURE #{LANG_PICTURE_URL}# ENDIF #" value="{langs.IDNAME}"# IF langs.C_SELECTED # selected="selected"# ENDIF #>{langs.NAME}</option>
+								<option data-option-img="# IF C_HAS_PICTURE #{langs.LANG_PICTURE_URL}# ENDIF #" value="{langs.IDNAME}"# IF langs.C_SELECTED # selected="selected"# ENDIF #>{langs.NAME}</option>
 							# END langs #
 						</select>
 					</div>

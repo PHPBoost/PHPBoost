@@ -127,6 +127,11 @@ a.grouped-element,
 	align-items: center;
 }
 
+.grouped-inputs .cssmenu-select span,
+.grouped-inputs .cssmenu-select a {
+	justify-content: flex-start;
+}
+
 .grouped-inputs .grouped-element input:not([type="checkbox"]):not([type="radio"]),
 .grouped-inputs .grouped-element select {
 	width: 100%;
@@ -135,6 +140,13 @@ a.grouped-element,
 .grouped-inputs span {
 	padding: 0.228em 0.618em;
 }
+
+.grouped-inputs .cssmenu-select span,
+.grouped-inputs .cssmenu-select a {
+	justify-content: flex-start;
+}
+
+.grouped-inputs .cssmenu-select span { padding: 0; }
 
 .grouped-inputs button i,
 .grouped-inputs a i,

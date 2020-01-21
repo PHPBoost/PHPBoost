@@ -79,6 +79,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 			$tpl->assign_block_vars('langs', array(
 				'C_SELECTED' => $user->get_locale() == $lang->get_id(),
 				'NAME' => $lang->get_configuration()->get_name(),
+				'LANG_PICTURE_URL' => $lang->get_configuration()->get_picture_url()->rel(),
 				'IDNAME' => $lang->get_id()
 			));
 		}
