@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 21
  * @since       PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -71,20 +71,17 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 		)));
 
 		$this->view->put_all(array(
-			'C_ARTICLES'               => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'          => $result->get_rows_count() > 1,
-			'C_GRID_VIEW'              => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
-			'C_LIST_VIEW'              => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
-			'C_ARTICLES_FILTERS'       => true,
-			'C_PAGINATION'             => $pagination->has_several_pages(),
-			'C_NO_ARTICLE_AVAILABLE'   => $result->get_rows_count() == 0,
-			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
-			'C_ONE_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 1,
-			'C_TWO_ARTICLES_AVAILABLE' => $result->get_rows_count() == 2,
-			'PAGINATION'               => $pagination->display(),
-			'ID_CAT'                   => $this->get_category()->get_id(),
-			'U_EDIT_CATEGORY'          => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
+			'C_ITEMS'            => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'        => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
+			'C_LIST_VIEW'        => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
+			'C_SORTING_FORM'     => true,
+			'C_PAGINATION'       => $pagination->has_several_pages(),
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
+			'PAGINATION'         => $pagination->display(),
+			'ID_CAT'             => $this->get_category()->get_id(),
+			'U_EDIT_CATEGORY'    => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
 		while($row = $result->fetch())
@@ -188,7 +185,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 			)
 		));
 
-		$this->view->put('FORM', $form->display());
+		$this->view->put('SORTING_FORM', $form->display());
 	}
 
 	private function get_category()

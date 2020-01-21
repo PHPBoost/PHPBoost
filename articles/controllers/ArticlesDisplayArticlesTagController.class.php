@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 21
  * @since       PHPBoost 4.0 - 2013 06 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -93,17 +93,15 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
 		$this->view->put_all(array(
-			'C_ARTICLES'              => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'         => $result->get_rows_count() > 1,
-			'C_PAGINATION'            => $pagination->has_several_pages(),
-			'PAGINATION'              => $pagination->display(),
-			'C_NO_ARTICLE_AVAILABLE'  => $result->get_rows_count() == 0,
-			'C_GRID_VIEW'             => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
-			'C_ARTICLES_CAT'          => false,
-			'C_ARTICLES_FILTERS'      => true,
-			'CATEGORY_NAME'           => $this->get_keyword()->get_name(),
-			'CATEGORIES_PER_ROW'      => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'           => $this->config->get_items_per_row(),
+			'C_ITEMS'            => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'        => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
+			'C_PAGINATION'       => $pagination->has_several_pages(),
+			'PAGINATION'         => $pagination->display(),
+			'C_SORTING_FORM'     => true,
+			'CATEGORY_NAME'      => $this->get_keyword()->get_name(),
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 		));
 
 		while ($row = $result->fetch())
@@ -176,7 +174,7 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 
-		$this->view->put('FORM', $form->display());
+		$this->view->put('SORTING_FORM', $form->display());
 	}
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)

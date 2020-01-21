@@ -41,16 +41,10 @@
 	# ENDIF #
 
 
-	# IF C_NO_ARTICLE_AVAILABLE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="align-center">
-				${LangLoader::get_message('no_item_now', 'common')}
-			</div>
-		# ENDIF #
-	# ELSE #
+	# IF C_ITEMS #
 		# IF C_SEVERAL_ITEMS #
-			# IF C_ARTICLES_FILTERS #
-				# INCLUDE FORM #
+			# IF C_SORTING_FORM #
+				# INCLUDE SORTING_FORM #
 				<div class="spacer"></div>
 			# ENDIF #
 		# ENDIF #
@@ -115,6 +109,12 @@
 				</article>
 			# END articles #
 		</div>
+	# ELSE #
+		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+			<div class="align-center">
+				${LangLoader::get_message('no_item_now', 'common')}
+			</div>
+		# ENDIF #
 	# ENDIF #
 		<div class="spacer"></div>
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
