@@ -64,7 +64,7 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->config->get_summary_displayed_to_guests());
 
-		$condition = 'WHERE relation.id_keyword = :id_keyword
+		$condition = 'WHERE keywords_relations.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
 		$parameters = array(
@@ -76,25 +76,13 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note
-		FROM ' . ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		' . $condition . '
-		ORDER BY ' .$sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		)));
-
+		$items = self::get_items_manager()->get_items($pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field, $sort_mode, $condition, $parameters, true);
+		
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
 		$this->view->put_all(array(
-			'C_ITEMS'            => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+			'C_ITEMS'            => !empty($items),
+			'C_SEVERAL_ITEMS'    => count($items) > 1,
 			'C_GRID_VIEW'        => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_PAGINATION'       => $pagination->has_several_pages(),
 			'PAGINATION'         => $pagination->display(),
@@ -104,21 +92,17 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 		));
 
-		while ($row = $result->fetch())
+		foreach ($items as $item)
 		{
-			$article = new Article();
-			$article->set_properties($row);
+			$this->build_keywords_view($item);
 
-			$this->build_keywords_view($article);
+			$this->view->assign_block_vars('articles', $item->get_array_tpl_vars());
 
-			$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
-
-			foreach ($article->get_sources() as $name => $url)
+			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('articles.sources', $item->get_array_tpl_source_vars($name));
 			}
 		}
-		$result->dispose();
 	}
 
 	private function build_keywords_view(Article $article)
@@ -179,12 +163,9 @@ class ArticlesDisplayArticlesTagController extends AbstractItemController
 
 	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
-		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_articles
-		FROM '. ArticlesSetup::$articles_table .' articles
-		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id
-		' . $condition, $parameters);
+		$result = self::get_items_manager()->count_items_having_keyword($condition, $parameters);
 
-		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $result['items_number'], ArticlesConfig::load()->get_items_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 
 		if ($pagination->current_page_is_empty() && $page > 1)

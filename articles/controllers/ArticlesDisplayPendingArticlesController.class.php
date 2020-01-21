@@ -63,7 +63,7 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 		$sort_mode = TextHelper::strtoupper($mode);
 		$sort_mode = (in_array($sort_mode, array(Article::ASC, Article::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, array(Article::SORT_FIELDS_URL_VALUES[Article::SORT_ALPHABETIC], Article::SORT_FIELDS_URL_VALUES[Article::SORT_AUTHOR], Article::SORT_FIELDS_URL_VALUES[Article::SORT_DATE])))
+		if (in_array($field, Article::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, Article::SORT_FIELDS_URL_VALUES);
 		else
 			$sort_field = Article::SORT_DATE;
@@ -80,34 +80,19 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($sort_mode), $page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note
-		FROM '. ArticlesSetup::$articles_table .' articles
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = :user_id
-		' . $condition . '
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		)));
-
-		$nbr_articles_pending = $result->get_rows_count();
+		$items = self::get_items_manager()->get_items($pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field, $sort_mode, $condition, $parameters);
 
 		$this->build_sorting_form($field, TextHelper::strtolower($sort_mode));
 
-		$this->view->put_all(array(
-			'C_PENDING'               => true,
-			'C_ITEMS'                 => $nbr_articles_pending > 0,
-			'C_SEVERAL_ITEMS'         => $result->get_rows_count() > 1,
-			'C_GRID_VIEW'             => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
-			'C_LIST_VIEW'             => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW
-		));
+		$this->view->put('C_PENDING', true);
 
-		if ($nbr_articles_pending > 0)
+		if (!empty($items))
 		{
 			$this->view->put_all(array(
+				'C_ITEMS'            => true,
+				'C_SEVERAL_ITEMS'    => count($items) > 1,
+				'C_GRID_VIEW'        => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
+				'C_LIST_VIEW'        => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
 				'C_SORTING_FORM'     => true,
 				'C_PAGINATION'       => $pagination->has_several_pages(),
 				'PAGINATION'         => $pagination->display(),
@@ -115,22 +100,18 @@ class ArticlesDisplayPendingArticlesController extends AbstractItemController
 				'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 			));
 
-			while($row = $result->fetch())
+			foreach ($items as $item)
 			{
-				$article = new Article();
-				$article->set_properties($row);
+				$this->build_keywords_view($item);
 
-				$this->build_keywords_view($article);
+				$this->view->assign_block_vars('articles', $item->get_array_tpl_vars());
 
-				$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
-
-				foreach ($article->get_sources() as $name => $url)
+				foreach ($item->get_sources() as $name => $url)
 				{
-					$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+					$this->view->assign_block_vars('articles.sources', $item->get_array_tpl_source_vars($name));
 				}
 			}
 		}
-		$result->dispose();
 	}
 
 	private function build_sources_view(Article $article)

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 19
+ * @version     PHPBoost 5.3 - last update: 2020 01 21
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -36,6 +36,19 @@ class ItemsManager
 	public function count($condition = '', $parameters = array())
 	{
 		return self::$db_querier->count(self::$items_table, $condition, $parameters);
+	}
+
+	 /**
+	 * @desc Count items number having a specific keyword.
+	 * @param string $condition (optional) : Restriction to apply to the list of items
+	 * @param array $parameters (optional) : Parameters list to apply to the condition
+	 */
+	public function count_items_having_keyword($condition = '', $parameters = array())
+	{
+		return self::$db_querier->select_single_row_query('SELECT COUNT(*) AS items_number
+		FROM ' . self::$items_table . ' ' . self::$module_id . '
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id
+		' . $condition, $parameters);
 	}
 
 	 /**
@@ -118,7 +131,7 @@ class ItemsManager
 	 * @param string $condition Restriction to apply to the item
 	 * @param array $parameters Parameters of the condition
 	 */
-	public function get_items(int $number_items_per_page, int $display_from, $sort_field, $sort_mode, $condition = '', array $parameters = array())
+	public function get_items(int $number_items_per_page, int $display_from, $sort_field, $sort_mode, $condition = '', array $parameters = array(), $keywords = false)
 	{
 		$now = new Date();
 		$items = array();
@@ -127,7 +140,7 @@ class ItemsManager
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' comments_topic ON comments_topic.module_id = :module_id AND comments_topic.id_in_module = ' . self::$module_id . '.id
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id
+		' . $keywords ? 'LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id' : '') . '
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
 		' . $condition . '

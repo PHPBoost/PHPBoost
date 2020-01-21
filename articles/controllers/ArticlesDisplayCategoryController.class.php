@@ -56,23 +56,11 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 
 		$pagination = $this->get_pagination($condition, $parameters, $field, $sort_mode, $page, $subcategories_page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
-		FROM ' . ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = :user_id
-		' . $condition . '
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		)));
+		$items = self::get_items_manager()->get_items($pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field, $sort_mode, $condition, $parameters);
 
 		$this->view->put_all(array(
-			'C_ITEMS'            => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
+			'C_ITEMS'            => !empty($items),
+			'C_SEVERAL_ITEMS'    => count($items) > 1,
 			'C_GRID_VIEW'        => $this->config->get_display_type() == ArticlesConfig::GRID_VIEW,
 			'C_LIST_VIEW'        => $this->config->get_display_type() == ArticlesConfig::LIST_VIEW,
 			'C_SORTING_FORM'     => true,
@@ -84,21 +72,17 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 			'U_EDIT_CATEGORY'    => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
-		while($row = $result->fetch())
+		foreach ($items as $item)
 		{
-			$article = new Article();
-			$article->set_properties($row);
+			$this->build_keywords_view($item);
 
-			$this->build_keywords_view($article);
+			$this->view->assign_block_vars('articles', $item->get_array_tpl_vars());
 
-			$this->view->assign_block_vars('articles', $article->get_array_tpl_vars());
-
-			foreach ($article->get_sources() as $name => $url)
+			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('articles.sources', $article->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('articles.sources', $item->get_array_tpl_source_vars($name));
 			}
 		}
-		$result->dispose();
 	}
 
 	private function build_categories_listing_view(Date $now, $field, $mode, $page, $subcategories_page)
