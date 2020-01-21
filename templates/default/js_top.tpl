@@ -37,6 +37,7 @@
 <script src="{PATH_TO_ROOT}/templates/default/plugins/lightcase.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/menumaker.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/multitabs.js"></script>
+<script src="{PATH_TO_ROOT}/templates/default/plugins/selectimg.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/pushmenu.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/sortable.js"></script>
 <script src="{PATH_TO_ROOT}/templates/default/plugins/wizard.js"></script>

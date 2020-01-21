@@ -6,16 +6,18 @@
 			<form action="{REWRITED_SCRIPT}" method="get">
 				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ELSE #cell-input# ENDIF #">
 					# IF C_HORIZONTAL #<span class="grouped-element">{@switch.lang}</span># ENDIF #
-					<select
-						id="switchlang"
-						class="flag-selector"
-						# IF C_HAS_PICTURE #style="background-image: url('{LANG_PICTURE_URL}')"# ENDIF #
-						name="switchlang"
-						onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
-						# START langs #
-							<option # IF C_HAS_PICTURE #style="background-image: url('{LANG_PICTURE_URL}')"# ENDIF # value="{langs.IDNAME}"# IF langs.C_SELECTED # selected="selected"# ENDIF #>{langs.NAME}</option>
-						# END langs #
-					</select>
+					<div class="grouped-element">
+						<select
+							id="switchlang"
+							class="flag-selector select-to-list"
+							name="switchlang"
+							onchange="document.location = '{URL}' + this.options[this.selectedIndex].value;">
+							# START langs #
+								<option data-option-img="# IF C_HAS_PICTURE #{LANG_PICTURE_URL}# ENDIF #" value="{langs.IDNAME}"# IF langs.C_SELECTED # selected="selected"# ENDIF #>{langs.NAME}</option>
+							# END langs #
+						</select>
+					</div>
+
 					# IF C_HORIZONTAL #<a class="grouped-element" href="{URL}{DEFAULT_LANG}">{@default.lang}</a># ENDIF #
 				</div>
 			</form>

@@ -80,6 +80,7 @@ class InstallDisplayResponse extends AbstractResponse
 			{
 				$langs[] = array(
 					'LANG' => $folder->get_name(),
+					'FLAG' => $info_lang['identifier'],
 					'LANG_NAME' => $info_lang['name'],
 					'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
 				);

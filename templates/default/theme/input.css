@@ -157,7 +157,7 @@ a.grouped-element,
 	border-width: 1px 1px 0;
 }
 
-/* inputs with sup labels */
+/* --- inputs with sup labels --- */
 .grouped-inputs.large-inputs-group {
 	flex-wrap: wrap;
 }
@@ -198,4 +198,12 @@ a.grouped-element,
 	.inputs-with-sup .label-sup span {
 		display: inline-block;
 	}
+}
+
+/* --- Fake select with pictures -------------------------------------------- */
+.image-selector {
+	padding-left: 3.309em;
+	background-position: 0.309em;
+	background-repeat: no-repeat;
+	background-size: contain;
 }

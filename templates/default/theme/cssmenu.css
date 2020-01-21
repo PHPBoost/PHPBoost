@@ -197,6 +197,35 @@
 }
 */
 
+/* --- Cssmenu select (fake select) --- */
+.cssmenu-select,
+.cssmenu-select li,
+.cssmenu-select li .cssmenu-title {
+	width: 100%;
+	text-align: left;
+}
+
+.cssmenu-select ul li.has-sub > .cssmenu-title:after {
+	content: '\f078';
+	transition: 0.2s;
+}
+
+.cssmenu-select ul li.has-sub:hover > .cssmenu-title:after {
+	content: '\f077';
+	transition: 0.2s;
+}
+
+.cssmenu-select .options-list li .cssmenu-title {
+	cursor: pointer;
+}
+
+.cssmenu-select .has-sub > .cssmenu-title {
+	padding: 0.309em 1.618em 0.309em 0.309em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
+
 /* --- Small screens  ------------------------------------------------------- */
 /* change the viewprot limit in /templates/default/framework/menus/link.tpl */
 
