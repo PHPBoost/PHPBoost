@@ -66,18 +66,20 @@
 		<div id="main-content" itemprop="mainContentOfPage">
 			# INCLUDE ACTIONS_MENU #
 			<nav id="breadcrumb" itemprop="breadcrumb">
-				<ol>
-					<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-						<a href="{START_PAGE}" itemprop="url">
-							<span itemprop="title">{L_INDEX}</span>
+				<ol itemscope itemtype="http://schema.org/BreadcrumbList">
+					<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
+						<a href="{START_PAGE}" itemprop="item">
+							<span itemprop="name">{L_INDEX}</span>
+    						<meta itemprop="position" content="1" />
 						</a>
 					</li>
 					# START link_bread_crumb #
-					<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
-						<a href="{link_bread_crumb.URL}" itemprop="url">
-							<span itemprop="title">{link_bread_crumb.TITLE}</span>
-						</a>
-					</li>
+						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
+							<a href="{link_bread_crumb.URL}" itemprop="item">
+								<span itemprop="name">{link_bread_crumb.TITLE}</span>
+	    						<meta itemprop="position" content="{BREADCRUMB_POSITION}" />
+							</a>
+						</li>
 					# END link_bread_crumb #
 				</ol>
 			</nav>
