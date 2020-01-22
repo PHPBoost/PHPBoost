@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 26
+ * @version     PHPBoost 5.3 - last update: 2020 01 22
  * @since       PHPBoost 3.0 - 2009 10 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -366,6 +366,11 @@ class HTTPRequestCustom
 	public function get_site_url()
 	{
 		return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_http_host();
+	}
+
+	public function get_current_url()
+	{
+		return $this->get_site_url() . $_SERVER['REQUEST_URI'];
 	}
 
 	// get full site domain url
