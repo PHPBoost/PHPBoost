@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 21
+ * @version     PHPBoost 5.3 - last update: 2020 01 22
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -47,7 +47,7 @@ class ItemsManager
 	{
 		return self::$db_querier->select_single_row_query('SELECT COUNT(*) AS items_number
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
-		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = :module_id AND keywords_relations.id_in_module = ' . self::$module_id . '.id
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = \'' . self::$module_id . '\' AND keywords_relations.id_in_module = ' . self::$module_id . '.id
 		' . $condition, $parameters);
 	}
 
