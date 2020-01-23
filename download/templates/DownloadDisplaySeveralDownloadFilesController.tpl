@@ -65,9 +65,9 @@
 							<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('form.date.update', 'common')}</span>
 						</th>
-						<th class="col-small" aria-label="{@downloads_number}">
+						<th class="col-small" aria-label="{@download.number}">
 							<i class="fa fa-fw fa-download hidden-small-screens" aria-hidden></i>
-							<span class="hidden-large-screens">{@downloads_number}</span>
+							<span class="hidden-large-screens">{@download.number}</span>
 						</th>
 						# IF C_ENABLED_VIEWS_NUMBER #
 							<th class="col-small" aria-label="{@download.views.number}">

@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadSetup extends DefaultModuleSetup
@@ -63,12 +64,12 @@ class DownloadSetup extends DefaultModuleSetup
 			'approbation_type' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'updated_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'number_downloads' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'downloads_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'sources' => array('type' => 'text', 'length' => 65000),
 			'software_version' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
@@ -129,8 +130,8 @@ class DownloadSetup extends DefaultModuleSetup
 			'updated_date' => time(),
 			'author_custom_name' => '',
 			'author_user_id' => 1,
-			'number_downloads' => 0,
-			'number_view' => 0,
+			'downloads_number' => 0,
+			'views_number' => 0,
 			'sources' => TextHelper::serialize(array()),
 			'picture_url' => '/templates/default/images/default_item_thumbnail.png'
 		));

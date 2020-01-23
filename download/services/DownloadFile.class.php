@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -419,8 +419,8 @@ class DownloadFile
 			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
-			'number_downloads' => $this->get_downloads_number(),
-			'number_view' => $this->get_views_number(),
+			'downloads_number' => $this->get_downloads_number(),
+			'views_number' => $this->get_views_number(),
 			'picture_url' => $this->get_thumbnail()->relative(),
 			'software_version' => $this->get_software_version(),
 			'sources' => TextHelper::serialize($this->get_sources())
@@ -437,14 +437,14 @@ class DownloadFile
 		$this->size = $properties['size'];
 		$this->contents = $properties['contents'];
 		$this->summary = $properties['short_contents'];
-		$this->views_number = $properties['number_view'];
+		$this->views_number = $properties['views_number'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->updated_date = !empty($properties['updated_date']) ? new Date($properties['updated_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->downloads_number = $properties['number_downloads'];
+		$this->downloads_number = $properties['downloads_number'];
 		$this->thumbnail_url = new Url($properties['picture_url']);
 		$this->software_version = $properties['software_version'];
 		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
@@ -554,7 +554,7 @@ class DownloadFile
 				'SOFTWARE_VERSION'   => $this->software_version,
 				'DOWNLOADS_NUMBER'   => $this->downloads_number,
 				'VIEWS_NUMBER'       => $this->get_views_number(),
-				'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('downloaded_times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
+				'L_DOWNLOADED_TIMES' => StringVars::replace_vars(LangLoader::get_message('download.times', 'common', 'download'), array('downloads_number' => $this->downloads_number)),
 				'STATIC_NOTATION'    => NotationService::display_static_image($this->get_notation()),
 				'NOTATION'           => NotationService::display_active_image($this->get_notation()),
 

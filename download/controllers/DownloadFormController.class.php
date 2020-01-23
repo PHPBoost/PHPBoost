@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -79,7 +79,7 @@ class DownloadFormController extends ModuleController
 
 		$fieldset->add_field(new FormFieldUploadFile('url', $this->common_lang['form.url'], $this->get_downloadfile()->get_url()->relative(), array('required' => true)));
 
-		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine_file_size_automatically'], $this->is_file_size_automatic(),
+		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.determine.file.size.automatically'], $this->is_file_size_automatic(),
 			array('events' => array('click' => '
 			if (HTMLForms.getField("determine_file_size_automatically_enabled").getValue()) {
 				HTMLForms.getField("file_size").disable();
@@ -99,11 +99,11 @@ class DownloadFormController extends ModuleController
 		else
 			$file_size = $file_size_unit = 0;
 
-		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file_size'], $file_size,
+		$fieldset->add_field(new FormFieldDecimalNumberEditor('file_size', $this->lang['download.form.file.size'], $file_size,
 			array('min' => 0, 'step' => 0.01, 'hidden' => $this->is_file_size_automatic(), 'required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file_size_unit'], $file_size_unit,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('file_size_unit', $this->lang['download.form.file.size.unit'], $file_size_unit,
 			array(
 				new FormFieldSelectChoiceOption('', ''),
 				new FormFieldSelectChoiceOption($this->common_lang['unit.kilobytes'], $this->common_lang['unit.kilobytes']),
@@ -115,7 +115,7 @@ class DownloadFormController extends ModuleController
 
 		if ($this->get_downloadfile()->get_id() !== null && $this->get_downloadfile()->get_downloads_number() > 0)
 		{
-			$fieldset->add_field(new FormFieldCheckbox('reset_downloads_number', $this->lang['download.form.reset_downloads_number']));
+			$fieldset->add_field(new FormFieldCheckbox('reset_downloads_number', $this->lang['download.form.reset.downloads.number']));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_downloadfile()->get_contents(), array('rows' => 15, 'required' => true)));
@@ -154,7 +154,7 @@ class DownloadFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.picture'], $this->get_downloadfile()->get_thumbnail()->relative()));
 
-		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software_version'], $this->get_downloadfile()->get_software_version()));
+		$other_fieldset->add_field(new FormFieldTextEditor('software_version', $this->lang['software.version'], $this->get_downloadfile()->get_software_version()));
 
 		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_downloadfile()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 

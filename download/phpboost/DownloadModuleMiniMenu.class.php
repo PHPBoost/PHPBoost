@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -22,7 +22,7 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		return DownloadConfig::load()->is_sort_type_date() ? LangLoader::get_message('last_download_files', 'common', 'download') : LangLoader::get_message('most_downloaded_files', 'common', 'download');
+		return DownloadConfig::load()->is_sort_type_date() ? LangLoader::get_message('last.download.files', 'common', 'download') : LangLoader::get_message('most.downloaded.files', 'common', 'download');
 	}
 
 	public function is_displayed()

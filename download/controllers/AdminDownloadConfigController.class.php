@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -77,7 +77,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -124,7 +124,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
@@ -149,14 +149,14 @@ class AdminDownloadConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.downloaded_files_menu']);
+		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.downloaded.files.menu']);
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
 			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.update', 'common'), DownloadFile::SORT_UPDATED_DATE),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), DownloadFile::SORT_DATE),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('form.name', 'common'), DownloadFile::SORT_ALPHABETIC),
-			new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_DOWNLOADS_NUMBER),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_DOWNLOADS_NUMBER),
 			new FormFieldSelectChoiceOption($this->lang['sort_by.views.number'], DownloadFile::SORT_VIEWS_NUMBERS),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('author', 'common'), DownloadFile::SORT_AUTHOR)
 		);
@@ -225,8 +225,8 @@ class AdminDownloadConfigController extends AdminModuleController
 			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_ALPHABETIC . '-' . DownloadFile::DESC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::ASC),
 			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_AUTHOR . '-' . DownloadFile::DESC),
-			new FormFieldSelectChoiceOption($this->lang['downloads_number'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::ASC),
-			new FormFieldSelectChoiceOption($this->lang['downloads_number'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::DESC),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::ASC),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_DOWNLOADS_NUMBER . '-' . DownloadFile::DESC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.asc'], DownloadFile::SORT_VIEWS_NUMBERS . '-' . DownloadFile::ASC),
 			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.desc'], DownloadFile::SORT_VIEWS_NUMBERS . '-' . DownloadFile::DESC)
 		);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 13
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -27,22 +27,22 @@ $lang['download.pending'] = 'Fichiers en attente';
 $lang['download.manage'] = 'Gérer les fichiers';
 $lang['download.management'] = 'Gestion des fichiers';
 
-$lang['most_downloaded_files'] = 'Meilleurs téléchargements';
-$lang['last_download_files'] = 'Derniers fichiers en téléchargement';
+$lang['most.downloaded.files'] = 'Meilleurs téléchargements';
+$lang['last.download.files'] = 'Derniers fichiers en téléchargement';
 $lang['download'] = 'Télécharger';
-$lang['downloaded_times'] = 'Téléchargé :downloads_number fois';
-$lang['downloads_number'] = 'Nombre de téléchargements';
-$lang['file_infos'] = 'Informations sur le fichier';
+$lang['download.times'] = 'Téléchargé :downloads_number fois';
+$lang['downloads.number'] = 'Nombre de téléchargements';
+$lang['file.infos'] = 'Informations sur le fichier';
 $lang['file'] = 'Fichier';
 $lang['files'] = 'Fichiers';
-$lang['software_version'] = 'Version';
+$lang['software.version'] = 'Version';
 $lang['download.view'] = 'vues';
 $lang['download.views.number'] = 'Nombre de vues';
 
 // Mini access
 $lang['download.sort.date'] = 'Date';
 $lang['download.sort.trophy'] = 'Position';
-$lang['download.sort.dls'] = 'Nombre de téléchargements';
+$lang['download.sort.downloads.number'] = 'Nombre de téléchargements';
 $lang['download.sort.notes'] = 'Note';
 
 //config
@@ -50,11 +50,11 @@ $lang['config.display_type'] = 'Affichage des informations dans les catégories'
 $lang['config.display_type.display_summary'] = 'Résumé';
 $lang['config.display_type.display_all_content'] = 'Tout le contenu';
 $lang['config.display_type.display_table'] = 'Tableau';
-$lang['config.downloaded_files_menu'] = 'Menu téléchargements';
-$lang['config.sort_type'] = 'Ordre d\'affichage des fichiers';
+$lang['config.downloaded.files.menu'] = 'Menu téléchargements';
+$lang['config.sort_type'] = 'Ordre d\'affichage des éléments';
 $lang['config.sort_type.explain'] = 'Sens décroissant';
-$lang['config.files_number_in_menu'] = 'Nombre de fichiers affichés maximum';
-$lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des fichiers dans le menu';
+$lang['config.files_number_in_menu'] = 'Nombre maximum d\'éléments affichés';
+$lang['config.limit_oldest_file_day_in_menu'] = 'Limiter l\'âge des éléments dans le menu';
 $lang['config.oldest_file_day_in_menu'] = 'Age maximum (en jours)';
 $lang['admin.config.download_views_number_enabled'] = 'Activer l\'affichage du nombre de vues';
 $lang['download.default.contents'] = 'Contenu par défaut du Téléchargement';
@@ -71,15 +71,15 @@ $lang['download.seo.description.pending'] = 'Tous les fichiers en attente.';
 $lang['download.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un fichier, cependant vous pouvez en proposer un.';
 
 //Form
-$lang['download.form.reset_downloads_number'] = 'Réinitialiser le nombre de téléchargements';
-$lang['download.form.determine_file_size_automatically'] = 'Déterminer la taille du fichier automatiquement';
-$lang['download.form.file_size'] = 'Taille du fichier';
-$lang['download.form.file_size_unit'] = 'Unité';
+$lang['download.form.reset.downloads.number'] = 'Réinitialiser le nombre de téléchargements';
+$lang['download.form.determine.file.size.automatically'] = 'Déterminer la taille du fichier automatiquement';
+$lang['download.form.file.size'] = 'Taille du fichier';
+$lang['download.form.file.size.unit'] = 'Unité';
 
 //Messages
 $lang['download.message.success.add'] = 'Le fichier <b>:name</b> a été ajouté';
 $lang['download.message.success.edit'] = 'Le fichier <b>:name</b> a été modifié';
 $lang['download.message.success.delete'] = 'Le fichier <b>:name</b> a été supprimé';
-$lang['download.message.error.file_not_found'] = 'Fichier introuvable, le lien est peut-être mort.';
-$lang['download.message.warning.unauthorized_to_download_file'] = 'Vous n\'êtes pas autorisé à télécharger le fichier.';
+$lang['download.message.error.file.not.found'] = 'Fichier introuvable, le lien est peut-être mort.';
+$lang['download.message.warning.unauthorized.to.download.file'] = 'Vous n\'êtes pas autorisé à télécharger le fichier.';
 ?>

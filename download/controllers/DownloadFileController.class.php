@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -50,7 +50,7 @@ class DownloadFileController extends AbstractController
 			}
 			else
 			{
-				$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('download.message.error.file_not_found', 'common', 'download'), UserErrorController::WARNING);
+				$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('download.message.error.file.not.found', 'common', 'download'), UserErrorController::WARNING);
 				DispatchManager::redirect($error_controller);
 			}
 		}

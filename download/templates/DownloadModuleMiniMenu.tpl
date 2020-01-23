@@ -8,9 +8,9 @@
 				</th>
 				<th>${LangLoader::get_message('form.name', 'common')}</th>
 				# IF NOT C_SORT_BY_DATE #
-					<th aria-label="# IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.dls}# ELSE #{@download.sort.notes}# ENDIF #">
+					<th aria-label="# IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.downloads.number}# ELSE #{@download.sort.notes}# ENDIF #">
 						<i class="fa# IF C_SORT_BY_DOWNLOADS_NUMBER # fa-download# ELSE #r fa-star# ENDIF # hidden-small-screens" aria-hidden="true"></i>
-						<span class="hidden-large-screens"># IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.dls}# ELSE #{@download.sort.notes}# ENDIF #</span>
+						<span class="hidden-large-screens"># IF C_SORT_BY_DOWNLOADS_NUMBER #{@download.sort.downloads.number}# ELSE #{@download.sort.notes}# ENDIF #</span>
 					</th>
 				# ENDIF #
 			</tr>
