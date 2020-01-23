@@ -153,7 +153,7 @@
 		# ELSE #
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START module_items #
-					<article id="{MODULE_ID}-item-{module_items.ID}" class="{MODULE_ID}-item several-items cell# IF module_items.C_PRIME_ITEM # prime-item# ENDIF## IF module_items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="{MODULE_ID}-item-{module_items.ID}" class="{MODULE_ID}-item several-items cell# IF module_items.C_PRIME_ITEM # prime-item# ENDIF ## IF module_items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header class="cell-header">
 							<h2 class="cell-name"><a href="{module_items.U_ITEM}" itemprop="name">{module_items.TITLE}</a></h2>
 						</header>
