@@ -15,7 +15,7 @@ abstract class ModuleController extends AbstractController
 {
 	protected static $module_id;
 
-	public function __static()
+	public static function __static()
 	{
 		self::$module_id = Environment::get_running_module_name();
 	}
