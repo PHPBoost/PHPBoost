@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 11
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2013 03 19
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -24,7 +24,7 @@ class ArticlesExtensionPointProvider extends ModuleExtensionPointProvider
 
 	public function home_page()
 	{
-		return new DefaultHomePageDisplay($this->get_id(), ArticlesDisplayCategoryController::get_view());
+		return new DefaultHomePageDisplay($this->get_id(), ArticlesDisplayCategoryController::get_view($this->get_id()));
 	}
 
 	public function scheduled_jobs()

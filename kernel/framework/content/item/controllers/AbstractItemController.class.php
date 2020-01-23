@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -17,8 +17,9 @@ abstract class AbstractItemController extends ModuleController
 	protected $view;
 	protected $enabled_features = array();
 
-	public function __construct()
+	public function __construct($module_id = '')
 	{
+		parent::__construct($module_id);
 		$this->config = self::get_module()->get_configuration()->get_configuration_parameters();
 		$this->lang = LangLoader::get('common', self::get_module()->get_id());
 		$this->items_lang = ItemsService::get_items_lang(self::get_module()->get_id());
@@ -38,7 +39,7 @@ abstract class AbstractItemController extends ModuleController
 			'C_ENABLED_NOTATION' => in_array('notation', $this->enabled_features)
 		));
 	}
-	
+
 	/**
 	 * @return ItemsManager
 	 */
