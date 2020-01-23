@@ -366,19 +366,22 @@
 				<script>jQuery("#sandbox-actionslinks").menumaker({ title: "{@cssmenu.actionslinks}", format: "multitoggle", breakpoint: 768 }); </script>
 
 				<nav id="breadcrumb" itemprop="breadcrumb">
-					<ol>
-						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-							<a href="{PATH_TO_ROOT}/" itemprop="url">
-								<span itemprop="title">{@cssmenu.breadcrumb.index}</span>
+					<ol itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
+							<a href="{PATH_TO_ROOT}/" itemprop="item">
+								<span itemprop="name">{@cssmenu.breadcrumb.index}</span>
+								<meta itemprop="position" content="1" />
 							</a>
 						</li>
-						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-							<a href="{PATH_TO_ROOT}/sandbox" itemprop="url">
-								<span itemprop="title">{@cssmenu.breadcrumb.sandbox}</span>
+						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
+							<a href="{PATH_TO_ROOT}/sandbox" itemprop="item">
+								<span itemprop="name">{@cssmenu.breadcrumb.sandbox}</span>
+								<meta itemprop="position" content="2" />
 							</a>
 						</li>
-						<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
 							<span itemprop="title">{@cssmenu.breadcrumb.cssmenu}</span>
+							<meta itemprop="position" content="3" />
 						</li>
 					</ol>
 				</nav>
