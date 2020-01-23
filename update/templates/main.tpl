@@ -17,6 +17,7 @@ ${resources('update/update')}
 		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/default/plugins/@global.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/default/plugins/selectimg.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
@@ -40,9 +41,8 @@ ${resources('update/update')}
 									class="lang-selector"
 									name="new_language"
 									onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;"
-									style="background-image: url('{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png')">
 									# START lang #
-										<option value="{lang.LANG}" {lang.SELECTED} style="background-image: url({PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png)">
+										<option value="{lang.LANG}" {lang.SELECTED} data-option-img="{PATH_TO_ROOT}/images/stats/countries/{LANG_IDENTIFIER}.png">
 											{lang.LANG_NAME}
 										</option>
 									# END lang #
@@ -97,5 +97,8 @@ ${resources('update/update')}
 				<span>${LangLoader::get_message('powered_by', 'main')} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
 			</footer>
 		</div>
+		<script>
+			jQuery('.lang-selector').selectimg();
+		</script>
 	</body>
 </html>

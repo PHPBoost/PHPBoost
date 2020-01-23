@@ -16,36 +16,42 @@
             params = $.extend(defaults, params);
 
             return this.each(function() {
-                jQuery(this).hide();
+                jQuery(this).hide(); // Hide the select
+                // Creation of the list structure which will replace it
                 var formList = jQuery(this).parent(),
-                    navList = jQuery('<nav/>', {class : 'cssmenu cssmenu-horizontal cssmenu-select'}).prependTo(formList),
+                    navList = jQuery('<nav/>', {class : 'cssmenu cssmenu-select cssmenu-horizontal'}).prependTo(formList),
                     uSelect = jQuery('<ul/>').appendTo(navList),
                     liSelect = jQuery('<li/>', {class : 'has-sub'}).prependTo(uSelect),
                     uList = jQuery('<ul/>', {class : 'options-list'}).appendTo(liSelect);
-                var option = jQuery(this).children('option');
+
+                var option = jQuery(this).children('option'), // define all options of the select
+                    optionFirst = jQuery(this).children('option').first();// define first option of the list
+
+                var selectHasSelected = jQuery(this).val().length; // check if one of the options is selected
+
+                // build the item structure
+                var selectedItem = jQuery('<a/>').prependTo(liSelect),
+                    selectedText = jQuery('<span/>').appendTo(selectedItem),
+                    selectedImg = jQuery('<img/>').prependTo(selectedItem),
+                    selectedIcon = jQuery('<i/>').prependTo(selectedItem);
+
                 jQuery.each(option ,function() {
+                    // Get values of each option
                     var textOption = jQuery(this).text(),
                         imgOption = jQuery(this).attr('data-option-img'),
                         iconOption = jQuery(this).attr('data-option-icon'),
                         valueOption = jQuery(this).val(),
                         selectedOption = jQuery(this).attr('selected');
-                    if(selectedOption == 'selected')
+
+                    if(selectHasSelected && selectedOption == 'selected') // if one of the option is already selected
                     {
-                        var selectedItem = jQuery('<a/>')
-                                .addClass('cssmenu-title current')
-                                .attr('name', valueOption)
-                                .prependTo(liSelect),
-                            selectedText = jQuery('<span/>')
-                               	.text(textOption)
-                                .appendTo(selectedItem);
+                        // Send its values to the fake select display
+                        selectedItem.addClass('cssmenu-title current').attr('name', valueOption);
+                        selectedText.text(textOption);
                         if(imgOption)
-                            var selectedImg = jQuery('<img/>')
-                                .attr('src', imgOption)
-                                .prependTo(selectedItem);
+                            selectedImg.attr('src', imgOption);
                         if(iconOption)
-                            var selectedIcon = jQuery('<i/>')
-                                .addClass('fa fa-'+ iconOption)
-                                .prependTo(selectedItem);
+                            selectedIcon.addClass(iconOption);
                     }
                     var optionLi = jQuery('<li/>', {value : valueOption}).appendTo(uList),
                         optionItem = jQuery('<a/>')
@@ -55,20 +61,41 @@
                         optionText = jQuery('<span/>')
                            	.text(textOption)
                             .appendTo(optionItem);
-                        if(imgOption)
-                            var imgItem = jQuery('<img/>')
-                                .attr('src', imgOption)
-                                .prependTo(optionItem);
-                        if(iconOption)
-                            var iconItem = jQuery('<i/>')
-                                .addClass('fa fa-'+ iconOption)
-                                .prependTo(optionItem);
+                    if(imgOption)
+                        var imgItem = jQuery('<img/>')
+                            .attr('src', imgOption)
+                            .prependTo(optionItem);
+                    if(iconOption)
+                        var iconItem = jQuery('<i/>')
+                            .addClass(iconOption)
+                            .prependTo(optionItem);
 
                 });
-                var select = jQuery(this);
-                jQuery('.options-list a').on('click', function() {
-                    var newOption = jQuery(this).attr('name');
-                    jQuery(select).val(newOption).trigger('change');
+
+                // Open/close submenu
+                var select = jQuery(this),
+                    toggleButton = select.siblings('nav').find('ul li a');
+                jQuery(toggleButton).on('click', function(e) {
+                    jQuery(toggleButton).closest('.cssmenu-select').toggleClass('cssmenu-open');
+                    e.preventDefault();
+                });
+
+                jQuery('.options-list a').on('click', function() { // When an option is clicked
+                    // Get values of the chosen option
+                    var newOption = jQuery(this).attr('name'),
+                        newText = jQuery(this).text(),
+                        newImg = jQuery(this).find('img').attr('src'),
+                        newIcon = jQuery(this).find('i').attr('class') ;
+
+                    // Send values to the fake select display
+                    selectedText.text(newText);
+                    if(newImg)
+                        selectedImg.attr('src', newImg);
+                    if(newIcon)
+                        selectedIcon.addClass(newIcon);
+
+                    // Change val() of the real select
+                    jQuery(select).val(newOption).change();
                 });
             });
         }
