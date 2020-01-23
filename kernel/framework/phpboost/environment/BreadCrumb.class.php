@@ -72,7 +72,10 @@ class BreadCrumb
 			$this->add($this->graphical_environment->get_page_title(), REWRITED_SCRIPT);
 		}
 
-		$tpl->put('START_PAGE', TPL_PATH_TO_ROOT . '/');
+		$tpl->put_all(array(
+			'START_PAGE' => TPL_PATH_TO_ROOT . '/',
+			'L_INDEX'    => LangLoader::get_message('home', 'main')
+		));
 
 		$output = array_slice($this->array_links, -1, 1);
 		$position = 2;
