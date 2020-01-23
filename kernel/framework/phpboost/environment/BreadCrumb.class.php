@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 1.6 - 2007 02 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,19 +72,19 @@ class BreadCrumb
 			$this->add($this->graphical_environment->get_page_title(), REWRITED_SCRIPT);
 		}
 
-		$tpl->put_all(array(
-			'START_PAGE' => TPL_PATH_TO_ROOT . '/',
-			'L_INDEX'    => LangLoader::get_message('home', 'main')
-		));
+		$tpl->put('START_PAGE', TPL_PATH_TO_ROOT . '/');
 
 		$output = array_slice($this->array_links, -1, 1);
+		$position = 2;
 		foreach ($this->array_links as $key => $array)
 		{
 			$tpl->assign_block_vars('link_bread_crumb', array(
 				'C_CURRENT' => $output[0] == $array,
-				'URL'   => $array[1],
-				'TITLE' => $array[0]
+				'URL'       => $array[1],
+				'TITLE'     => $array[0],
+				'POSITION'  => $position
 			));
+			$position++;
 		}
 	}
 

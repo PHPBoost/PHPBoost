@@ -69,7 +69,7 @@
 				<ol itemscope itemtype="http://schema.org/BreadcrumbList">
 					<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem">
 						<a href="{START_PAGE}" itemprop="item">
-							<span itemprop="name">{L_INDEX}</span>
+							<span itemprop="name">${LangLoader::get_message('home', 'main')}</span>
     						<meta itemprop="position" content="1" />
 						</a>
 					</li>
@@ -77,7 +77,7 @@
 						<li itemprop="itemListElement" itemscope itemtype="http://data-vocabulary.org/ListItem" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
 							<a href="{link_bread_crumb.URL}" itemprop="item">
 								<span itemprop="name">{link_bread_crumb.TITLE}</span>
-	    						<meta itemprop="position" content="{BREADCRUMB_POSITION}" />
+	    						<meta itemprop="position" content="{link_bread_crumb.POSITION}" />
 							</a>
 						</li>
 					# END link_bread_crumb #
