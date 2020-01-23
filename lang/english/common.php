@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -62,6 +62,7 @@ $lang['maximum'] = 'Maximum';
 $lang['minimum'] = 'Minimum';
 
 $lang['filters'] = 'Filters';
+$lang['click.to.select'] = 'Click to select an option';
 $lang['table_footer_stats'] = ':start to :end of :total elements';
 
 //Multimedia
@@ -87,7 +88,7 @@ $lang['sort'] = 'Sort';
 $lang['sort_options'] = 'Sort options';
 $lang['sort_by'] = 'Sort by';
 $lang['sort_by.alphabetic'] = 'Alphabetic';
-$lang['sort_by.views.number'] = 'Views';
+$lang['sort_by.views.number'] = 'Views number';
 $lang['sort_by.best.note'] = 'Best note';
 $lang['sort_by.comments.number'] = 'Comments number';
 $lang['sort.asc'] = 'Ascending';

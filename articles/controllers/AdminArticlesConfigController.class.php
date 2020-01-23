@@ -119,7 +119,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
+		$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));

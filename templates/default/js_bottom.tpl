@@ -66,7 +66,9 @@
     jQuery('.wizard-container').wizard();
 
 // Selectimg
-	jQuery('.select-to-list').selectimg();
+	jQuery('.select-to-list').selectimg({
+		ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
+	});
 
 // sizes of .cell-thumbnail
 	jQuery('.cell-thumbnail.cell-landscape').each(function() {

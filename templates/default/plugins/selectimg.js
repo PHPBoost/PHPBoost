@@ -11,12 +11,13 @@
     $.fn.extend({
         selectimg: function(params) {
             var defaults = {
-                selector : ''
+                ariaLabel : 'Click to select'
             };
             params = $.extend(defaults, params);
 
             return this.each(function() {
                 jQuery(this).hide(); // Hide the select
+
                 // Creation of the list structure which will replace it
                 var formList = jQuery(this).parent(),
                     navList = jQuery('<nav/>', {class : 'cssmenu cssmenu-select cssmenu-horizontal'}).prependTo(formList),
@@ -30,7 +31,7 @@
                 var selectHasSelected = jQuery(this).val().length; // check if one of the options is selected
 
                 // build the item structure
-                var selectedItem = jQuery('<a/>').prependTo(liSelect),
+                var selectedItem = jQuery('<a/>',{'aria-label' : params.ariaLabel}).prependTo(liSelect),
                     selectedText = jQuery('<span/>').appendTo(selectedItem),
                     selectedImg = jQuery('<img/>').prependTo(selectedItem),
                     selectedIcon = jQuery('<i/>').prependTo(selectedItem);
@@ -45,7 +46,7 @@
 
                     if(selectHasSelected && selectedOption == 'selected') // if one of the option is already selected
                     {
-                        // Send its values to the fake select display
+                        // Send its values to the fake selector
                         selectedItem.addClass('cssmenu-title current').attr('name', valueOption);
                         selectedText.text(textOption);
                         if(imgOption)
@@ -87,7 +88,7 @@
                         newImg = jQuery(this).find('img').attr('src'),
                         newIcon = jQuery(this).find('i').attr('class') ;
 
-                    // Send values to the fake select display
+                    // Send values to the fake selector
                     selectedText.text(newText);
                     if(newImg)
                         selectedImg.attr('src', newImg);

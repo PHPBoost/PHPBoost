@@ -114,7 +114,9 @@ ${resources('install/install')}
 			</footer>
 		</div>
 		<script>
-			jQuery('.lang-selector').selectimg();
+			jQuery('.lang-selector').selectimg({
+				ariaLabel : ${escapejs(LangLoader::get_message('click.to.select', 'common'))}
+			});
 		</script>
 	</body>
 </html>
