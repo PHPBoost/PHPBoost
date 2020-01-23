@@ -93,9 +93,36 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_pending($module_id = '')
+	public static function display_category($id, $rewrited_name, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1, $subcategories_page = 1)
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/pending/');
+		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
+		$page = $page !== 1 || $subcategories_page !== 1 ? $page . '/' : '';
+		$subcategories_page = $subcategories_page !== 1 ? $subcategories_page . '/' : '';
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $category . $sort_field . $sort_mode . $page . $subcategories_page);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_tag($rewrited_name, $module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
+	{
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function display_pending($module_id = '', $sort_field = '', $sort_mode = '', $page = 1)
+	{
+		$sort_field = $sort_field !== '' ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/pending/' . $sort_field . $sort_mode . $page);
 	}
 }
 ?>
