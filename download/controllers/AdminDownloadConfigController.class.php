@@ -96,8 +96,6 @@ class AdminDownloadConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-
-
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
