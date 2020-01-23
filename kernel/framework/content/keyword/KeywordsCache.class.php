@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 5.1 - 2018 11 09
 */
 
@@ -27,7 +27,7 @@ class KeywordsCache implements CacheData
 		{
 			$keyword = new Keyword();
 			$keyword->set_properties($row);
-			$this->keywords[$row['id_in_module']][$row['name']] = $keyword;
+			$this->keywords[$row['id_in_module']][$row['rewrited_name']] = $keyword;
 		}
 		$result->dispose();
 	}
@@ -55,17 +55,17 @@ class KeywordsCache implements CacheData
 	 * Loads and returns the keywords cached data.
 	 * @return KeywordsCache The cached data
 	 */
-	public static function load()
+	public static function load($module_id = '')
 	{
-		return CacheManager::load(__CLASS__, self::get_module_identifier(), 'keywords');
+		return CacheManager::load(__CLASS__, ($module_id ? $module_id : self::get_module_identifier()), 'keywords');
 	}
 
 	/**
 	 * Invalidates keywords cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate($module_id = '')
 	{
-		CacheManager::invalidate(self::get_module_identifier(), 'keywords');
+		CacheManager::invalidate(($module_id ? $module_id : self::get_module_identifier()), 'keywords');
 	}
 }
 ?>

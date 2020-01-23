@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 19
+ * @version     PHPBoost 5.3 - last update: 2020 01 23
  * @since       PHPBoost 4.0 - 2013 08 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -19,9 +19,9 @@ class KeywordsManager
 
 	private $db_querier;
 
-	public function __construct()
+	public function __construct($module_id = '')
 	{
-		$this->module_id = KeywordsCache::get_module_identifier();
+		$this->module_id = $module_id ? $module_id : KeywordsCache::get_module_identifier();
 
 		$this->db_querier = PersistenceContext::get_querier();
 	}
@@ -69,7 +69,7 @@ class KeywordsManager
 
 	public function get_keywords($id_in_module)
 	{
-		return KeywordsCache::load()->get_keywords($id_in_module);
+		return KeywordsCache::load($this->module_id)->get_keywords($id_in_module);
 	}
 
 	public function delete_relations($id_in_module)
