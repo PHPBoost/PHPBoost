@@ -22,8 +22,8 @@
 								<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
 							# ELSE #
 								# IF NOT C_ID_CARD #
-									<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
-										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+									<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
 									</span>
 								# ENDIF #
 							# ENDIF #
@@ -54,7 +54,7 @@
 					# ENDIF #
 					# IF C_ENABLED_COMMENTS #
 						<span class="pinned">
-							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {COMMENTS_NUMBER} # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #</a>
+							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {L_COMMENTS}</a>
 						</span>
 					# ENDIF #
 				</div>
@@ -127,8 +127,8 @@
 											<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
 										# ELSE #
 											# IF NOT C_ID_CARD #
-												<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
-													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+												<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
+													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
 												</span>
 											# ENDIF #
 										# ENDIF #

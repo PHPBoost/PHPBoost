@@ -18,34 +18,32 @@
 		</div>
 	# ENDIF #
 
-	# IF C_ENABLED_CATEGORY #
-		# IF C_SUB_CATEGORIES #
-			<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
-				# START sub_categories_list #
-					<div class="cell" itemscope>
-						<div class="cell-header">
-							<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-							<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@module.items}# ELSE #{@module.item}# ENDIF #">
-								{sub_categories_list.ITEMS_NUMBER}
-							</span>
-						</div>
-						# IF C_ENABLED_CATEGORY_THUMBNAIL #
-							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-								<div class="cell-body">
-									<div class="cell-thumbnail">
-										<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-										<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-											${LangLoader::get_message('see.category', 'categories-common')}
-										</a>
-									</div>
-								</div>
-							# ENDIF #
-						# ENDIF #
+	# IF C_SUB_CATEGORIES #
+		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
+			# START sub_categories_list #
+				<div class="cell" itemscope>
+					<div class="cell-header">
+						<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
+						<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@module.items}# ELSE #{@module.item}# ENDIF #">
+							{sub_categories_list.ITEMS_NUMBER}
+						</span>
 					</div>
-				# END sub_categories_list #
-			</div>
-			# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
-		# ENDIF #
+					# IF C_ENABLED_CATEGORY_THUMBNAIL #
+						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+							<div class="cell-body">
+								<div class="cell-thumbnail">
+									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+									<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+										${LangLoader::get_message('see.category', 'categories-common')}
+									</a>
+								</div>
+							</div>
+						# ENDIF #
+					# ENDIF #
+				</div>
+			# END sub_categories_list #
+		</div>
+		# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
 	# ENDIF #
 
 	# IF C_ITEMS #
@@ -75,7 +73,7 @@
 							<td>
 								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 							</td>
-							# IF items.C_ENABLED_AUTHOR #
+							# IF C_ENABLED_AUTHOR #
 								<td>
 									# IF items.C_AUTHOR_DISPLAYED #
 										<i class="far fa-user"></i>
@@ -83,7 +81,7 @@
 											<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 										# ELSE #
 											# IF items.C_AUTHOR_EXIST #
-												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_USER_GROUP_COLOR # {items.USER_GROUP_COLOR}# ELSE # {items.USER_LEVEL_CLASS}# ENDIF #">
+												<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 													{items.PSEUDO}
 												</a>
 											# ELSE #
@@ -93,7 +91,7 @@
 									# ENDIF #
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_DATE #
+							# IF C_ENABLED_DATE #
 								<td>
 									<time datetime="# IF NOT items.C_DIFFERED #{items.DATE_ISO8601}# ELSE #{items.PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 										# IF NOT items.C_DIFFERED #
@@ -104,44 +102,40 @@
 									</time>
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_CATEGORY #
+							# IF C_ENABLED_CATEGORY #
 								<td>
 									<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {items.CATEGORY_NAME}</a>
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_VIEWS #
+							# IF C_ENABLED_VIEWS #
 								<td>
 									{items.VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_VISITS #
+							# IF C_ENABLED_VISITS #
 								<td class="col-small">
 									{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_DOWNLOADS #
+							# IF C_ENABLED_DOWNLOADS #
 								<td class="col-small">
 									{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_NOTATION #
+							# IF C_ENABLED_NOTATION #
 								<td>
 									{items.STATIC_NOTATION}
 								</td>
 							# ENDIF #
-							# IF items.C_ENABLED_COMMENTS #
+							# IF C_ENABLED_COMMENTS #
 								<td>
 									{items.COMMENTS_NUMBER} # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF items.C_CONTROLS #
 								<td>
-									# IF items.C_EDIT #
-										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a>
-									# ENDIF #
-									# IF items.C_DELETE #
-										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a>
-									# ENDIF #
+									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a>
+									<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a>
 								</td>
 							# ENDIF #
 						</tr>
@@ -158,14 +152,14 @@
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									# IF items.C_ENABLED_AUTHOR #
+									# IF C_ENABLED_AUTHOR #
 										# IF items.C_AUTHOR_DISPLAYED #
 											<i class="far fa-user"></i>
 											# IF items.C_AUTHOR_CUSTOM_NAME #
 												<span class="pinned">{items.AUTHOR_CUSTOM_NAME}</span>
 											# ELSE #
 												# IF items.C_AUTHOR_EXIST #
-													<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_USER_GROUP_COLOR # {items.USER_GROUP_COLOR}# ELSE # {items.USER_LEVEL_CLASS}# ENDIF #">
+													<a itemprop="author" href="{items.U_AUTHOR}" class="pinned# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
 														{items.PSEUDO}
 													</a>
 												# ELSE #
@@ -174,7 +168,7 @@
 											# ENDIF #
 										# ENDIF #
 									# ENDIF #
-									# IF items.C_ENABLED_DATE #
+									# IF C_ENABLED_DATE #
 										<span class="pinned">
 											<i class="far fa-calendar-alt"></i>
 											<time datetime="# IF items.C_DIFFERED #{items.PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
@@ -186,38 +180,38 @@
 											</time>
 										</span>
 									# ENDIF #
-									# IF items.C_ENABLED_CATEGORY #
+									# IF C_ENABLED_CATEGORY #
 										<span class="pinned">
 											<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {items.CATEGORY_NAME}</a>
 										</span>
 									# ENDIF #
-									# IF items.C_ENABLED_VIEWS #
+									# IF C_ENABLED_VIEWS #
 										<span class="pinned" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden></i> {items.VIEWS_NUMBER}</span>
 									# ENDIF #
-									# IF items.C_ENABLED_VISITS #
+									# IF C_ENABLED_VISITS #
 										<span class="pinned">
 											{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
 										</span>
 									# ENDIF #
-									# IF items.C_ENABLED_DOWNLOADS #
+									# IF C_ENABLED_DOWNLOADS #
 										<span class="pinned">
 											{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
 										</span>
 									# ENDIF #
-									# IF items.C_ENABLED_NOTATION #
+									# IF C_ENABLED_NOTATION #
 										<span class="pinned">{items.STATIC_NOTATION}</span>
 									# ENDIF #
-									# IF items.C_ENABLED_COMMENTS #
+									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden></i>
-											{items.COMMENTS_NUMBER}  # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
+											{items.L_COMMENTS}
 										</span>
 									# ENDIF #
 								</div>
 								# IF items.C_CONTROLS #
 									<div class="controls align-right">
-										# IF items.C_EDIT #<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a># ENDIF #
-										# IF items.C_DELETE #<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a># ENDIF #
+										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a>
+										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a>
 									</div>
 								# ENDIF #
 							</div>
@@ -230,7 +224,7 @@
 								</div>
 							# ENDIF #
 							<div class="cell-content">
-								# IF items.C_ENABLED_VISIT #
+								# IF C_ENABLED_VISIT #
 									<div class="cell-infos">
 										<span></span>
 										<span>
@@ -245,7 +239,7 @@
 										</span>
 									</div>
 								# ENDIF #
-								# IF items.C_ENABLED_DOWNLOAD #
+								# IF C_ENABLED_DOWNLOAD #
 									<div class="cell-infos">
 										<span></span>
 										<span>
