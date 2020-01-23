@@ -122,7 +122,7 @@
 							# IF C_ENABLED_AUTHOR #
 								# IF C_AUTHOR_DISPLAYED #
 									<li class="li-stretch">
-										<span class="text-strong">{@Author} : </span>
+										<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
 										# IF C_AUTHOR_CUSTOM_NAME #
 											<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
 										# ELSE #
@@ -137,7 +137,7 @@
 							# ENDIF #
 							# IF C_ENABLED_DATE #
 								<li class="li-stretch">
-									<span class="text-strong">{@Date} : </span>
+									<span class="text-strong">${TextHelper::ucfirst(@date)} : </span>
 									<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 										# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
 									</time>
@@ -145,7 +145,7 @@
 							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
 								<li class="li-stretch">
-									<span class="text-strong">{@Category} : </span>
+									<span class="text-strong">${TextHelper::ucfirst(@category)} : </span>
 									<span><a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span>
 								</li>
 							# ENDIF #

@@ -50,23 +50,23 @@
 
 	# IF C_ITEMS #
 		# IF C_SEVERAL_ITEMS #
-				# INCLUDE SORTING_FORM #
-				<div class="spacer"></div>
+			# INCLUDE SORTING_FORM #
+			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_TABLE_VIEW #
 			<table class="table">
 				<thead>
 					<tr>
-						<th>{@Title}</th>
-						# IF C_ENABLED_AUTHOR #<th class="col-small">{@Author}</th># ENDIF #
-						# IF C_ENABLED_DATE #<th class="col-small">{@Date}</th># ENDIF #
-						# IF C_ENABLED_CATEGORY #<th class="col-small">{@Category}</th># ENDIF #
-						# IF C_ENABLED_VIEWS #<th class="col-small">{@Views}</th># ENDIF #
-						# IF C_ENABLED_VISITS #<th class="col-small">{@Visits}</th># ENDIF #
-						# IF C_ENABLED_DOWNLOADS #<th class="col-small">{@Downloads}</th># ENDIF #
-						# IF C_ENABLED_NOTATION #<th class="col-small">{@Note}</th># ENDIF #
-						# IF C_ENABLED_COMMENTS #<th class="col-small">{@Comments}</th># ENDIF #
-						# IF C_CONTROLS #<th class="col-smaller">{@Controls}</th># ENDIF #
+						<th>${TextHelper::ucfirst(@title)}</th>
+						# IF C_ENABLED_AUTHOR #<th class="col-small">${TextHelper::ucfirst(@author)}</th># ENDIF #
+						# IF C_ENABLED_DATE #<th class="col-small">${TextHelper::ucfirst(@date)}</th># ENDIF #
+						# IF C_ENABLED_CATEGORY #<th class="col-small">${TextHelper::ucfirst(@category)}</th># ENDIF #
+						# IF C_ENABLED_VIEWS #<th class="col-small">${TextHelper::ucfirst(@views)}</th># ENDIF #
+						# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
+						# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
+						# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
+						# IF C_ENABLED_COMMENTS #<th class="col-small">${TextHelper::ucfirst(@comments)}</th># ENDIF #
+						# IF C_CONTROLS #<th class="col-smaller">${TextHelper::ucfirst(@controls)}</th># ENDIF #
 					</tr>
 				</thead>
 				<tbody>
