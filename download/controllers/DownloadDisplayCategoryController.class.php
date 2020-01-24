@@ -198,8 +198,8 @@ class DownloadDisplayCategoryController extends ModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc', array('data_option_img' => '/news/news_mini.png')),
-				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc', array('data_option_img' => '/articles/articles_mini.png'))
+				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc', array('data_option_icon' => 'fa fa-arrow-up')),
+				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc', array('data_option_icon' => 'fa fa-arrow-down'))
 			),
 			array('select_to_list' => true, 'events' => array('change' => 'document.location = "' . DownloadUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

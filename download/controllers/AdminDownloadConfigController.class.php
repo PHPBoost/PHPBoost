@@ -155,22 +155,22 @@ class AdminDownloadConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadFile::SORT_UPDATED_DATE),
-			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'], DownloadFile::SORT_DATE),
-			new FormFieldSelectChoiceOption($this->common_lang['form.name'], DownloadFile::SORT_ALPHABETIC),
-			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_DOWNLOADS_NUMBER),
-			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'], DownloadFile::SORT_VIEWS_NUMBERS),
-			new FormFieldSelectChoiceOption($this->common_lang['author'], DownloadFile::SORT_AUTHOR)
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.update'], DownloadFile::SORT_UPDATED_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.date.creation'], DownloadFile::SORT_DATE, array('data_option_icon' => 'far fa-calendar-alt')),
+			new FormFieldSelectChoiceOption($this->common_lang['form.name'], DownloadFile::SORT_ALPHABETIC, array('data_option_icon' => 'fa fa-sort-alpha-up')),
+			new FormFieldSelectChoiceOption($this->common_lang['author'], DownloadFile::SORT_AUTHOR, array('data_option_icon' => 'far fa-user')),
+			new FormFieldSelectChoiceOption($this->lang['downloads.number'], DownloadFile::SORT_DOWNLOADS_NUMBER, array('data_option_icon' => 'fa fa-download')),
+			new FormFieldSelectChoiceOption($this->common_lang['sort_by.views.number'], DownloadFile::SORT_VIEWS_NUMBERS, array('data_option_icon' => 'fa fa-eye')),
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadFile::SORT_NUMBER_COMMENTS);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.comments.number'], DownloadFile::SORT_NUMBER_COMMENTS, array('data_option_icon' => 'far fa-comments'));
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadFile::SORT_NOTATION);
+			$sort_options[] = new FormFieldSelectChoiceOption($this->common_lang['sort_by.best.note'], DownloadFile::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(), $sort_options,
-			array('description' => $this->lang['config.sort_type.explain'])
+			array('select_to_list' => true, 'description' => $this->lang['config.sort_type.explain'])
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(),
