@@ -10,11 +10,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2017 03 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 24
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
@@ -63,7 +64,8 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'CSS_CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'C_SELECT_TO_LIST' => $this->is_select_to_list()
 		));
 
 		foreach ($this->get_options() as $option)

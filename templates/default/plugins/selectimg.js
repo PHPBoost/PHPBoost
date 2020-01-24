@@ -50,10 +50,11 @@
                         selectedItem.addClass('cssmenu-title current').attr('name', valueOption);
                         selectedText.text(textOption);
                         if(imgOption)
-                            selectedImg.attr('src', imgOption);
+                            selectedImg.attr('src', imgOption).attr('alt', textOption);
                         if(iconOption)
                             selectedIcon.addClass(iconOption);
                     }
+                    // Build the complete list of options
                     var optionLi = jQuery('<li/>', {value : valueOption}).appendTo(uList),
                         optionItem = jQuery('<a/>')
                             .addClass('cssmenu-title')
@@ -62,9 +63,11 @@
                         optionText = jQuery('<span/>')
                            	.text(textOption)
                             .appendTo(optionItem);
+                    if(selectedOption) optionLi.addClass('current'); // Add current class to the selected option
                     if(imgOption)
                         var imgItem = jQuery('<img/>')
                             .attr('src', imgOption)
+                            .attr('alt', textOption)
                             .prependTo(optionItem);
                     if(iconOption)
                         var iconItem = jQuery('<i/>')

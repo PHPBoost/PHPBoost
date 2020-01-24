@@ -7,10 +7,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 05 31
+ * @version     PHPBoost 5.3 - last update: 2020 01 24
  * @since       PHPBoost 3.0 - 2010 01 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractFormField implements FormField
@@ -43,6 +44,10 @@ abstract class AbstractFormField implements FormField
 	 * @var boolean
 	 */
 	protected $disabled = false;
+	/**
+	 * @var boolean
+	 */
+	protected $select_to_list = false;
 	/**
 	 * @var boolean
 	 */
@@ -372,6 +377,10 @@ abstract class AbstractFormField implements FormField
 					$this->set_disabled($value);
 					unset($field_options['disabled']);
 					break;
+				case 'select_to_list':
+					$this->set_select_to_list($value);
+					unset($field_options['select_to_list']);
+					break;
 				case 'readonly':
 					$this->set_readonly($value);
 					unset($field_options['readonly']);
@@ -487,6 +496,7 @@ abstract class AbstractFormField implements FormField
 			'FIELDSET_ID' => $this->fieldset_id,
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
 			'C_DISABLED' => $this->is_disabled(),
+			'C_SELECT_TO_LIST' => $this->is_select_to_list(),
 			'C_READONLY' => $this->is_readonly(),
 			'C_HIDDEN' => $this->is_hidden(),
 			'C_PATTERN' => $this->has_pattern(),
@@ -562,6 +572,26 @@ abstract class AbstractFormField implements FormField
 	protected function set_disabled($disabled)
 	{
 		$this->disabled = $disabled;
+	}
+
+	public function is_select_to_list()
+	{
+		return $this->select_to_list;
+	}
+
+	public function transformed_select()
+	{
+		$this->set_select_to_list(true);
+	}
+
+	public function not_transformed_select()
+	{
+		$this->set_select_to_list(false);
+	}
+
+	protected function set_select_to_list($select_to_list)
+	{
+		$this->select_to_list = $select_to_list;
 	}
 
 	public function is_readonly()

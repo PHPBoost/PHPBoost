@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 28
+ * @version     PHPBoost 5.3 - last update: 2020 01 24
  * @since       PHPBoost 3.0 - 2010 01 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
@@ -17,6 +18,8 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	private $raw_value = '';
 	private $active;
 	private $disable = false;
+	private $data_option_img = '';
+	private $data_option_icon = '';
 
 	/**
 	 * @var FormField
@@ -102,6 +105,26 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		return $this->disable;
 	}
 
+	public function set_data_option_img($value)
+	{
+		$this->data_option_img = $value;
+	}
+
+	protected function get_data_option_img()
+	{
+		return $this->data_option_img;
+	}
+
+	public function set_data_option_icon($value)
+	{
+		$this->data_option_icon = $value;
+	}
+
+	protected function get_data_option_icon()
+	{
+		return $this->data_option_icon;
+	}
+
 	protected function get_field_id()
 	{
 		return $this->get_field()->get_html_id();
@@ -137,6 +160,14 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 				case 'disable':
 					$this->set_disable($value);
 					unset($field_choice_options['disable']);
+					break;
+				case 'data_option_img':
+					$this->set_data_option_img($value);
+					unset($field_choice_options['data_option_img']);
+					break;
+				case 'data_option_icon':
+					$this->set_data_option_icon($value);
+					unset($field_choice_options['data_option_icon']);
 					break;
 				default :
 					throw new FormBuilderException('The class ' . get_class($this) . ' hasn\'t the ' . $attribute . ' attribute');
