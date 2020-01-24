@@ -416,14 +416,14 @@ td.calendar-weekend { background-color: rgba(54, 100, 147, 0.1); }
 .moderator     { color: #967ADC; border-color: #967ADC; }
 .administrator { color: #323133; border-color: #323133; }
 
-.notice:hover        { color: #BDC2C9; border-color: #BDC2C9;}
-.question:hover      { color: #4FD2FA; border-color: #4FD2FA;}
-.success:hover       { color: #2EDC82; border-color: #2EDC82;}
-.warning:hover       { color: #FC7D5F; border-color: #FC7D5F;}
-.error:hover         { color: #DA4453; border-color: #DA4453;}
-.member:hover        { color: #48DEBE; border-color: #48DEBE;}
-.moderator:hover     { color: #ACA0FA; border-color: #ACA0FA;}
-.administrator:hover { color: #676773; border-color: #676773;}
+.button.notice:hover        { color: #BDC2C9; border-color: #BDC2C9;}
+.button.question:hover      { color: #4FD2FA; border-color: #4FD2FA;}
+.button.success:hover       { color: #2EDC82; border-color: #2EDC82;}
+.button.warning:hover       { color: #FC7D5F; border-color: #FC7D5F;}
+.button.error:hover         { color: #DA4453; border-color: #DA4453;}
+.button.member:hover        { color: #48DEBE; border-color: #48DEBE;}
+.button.moderator:hover     { color: #ACA0FA; border-color: #ACA0FA;}
+.button.administrator:hover { color: #676773; border-color: #676773;}
 
 .bgc.notice        { background-color: rgba(170, 178, 189, 0.2); }
 .bgc.question      { background-color: rgba(59, 175, 218, 0.2); }
