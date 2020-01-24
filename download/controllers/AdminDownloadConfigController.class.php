@@ -103,11 +103,13 @@ class AdminDownloadConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], DownloadConfig::LIST_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], DownloadConfig::TABLE_VIEW)
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], DownloadConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], DownloadConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
 			),
-			array('events' => array('click' => '
+			array(
+				'select_to_list' => true,
+				'events' => array('click' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
