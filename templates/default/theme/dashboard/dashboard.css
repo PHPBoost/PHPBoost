@@ -75,3 +75,6 @@ td.alert-priority { border-width: 0 0 1px 1px; }
 
 .pushmenu.nav-position-left .nav-container  { transform: translate3d(-230px, 0, 0); }
 .pushmenu.nav-position-right .nav-container { transform: translate3d(230px, 0, 0); }
+
+/* --- Debugger --- */
+.debugger { margin-left : 240px; }

@@ -243,7 +243,7 @@ class Debug
 	{
 		if (self::$html_output)
 		{
-			echo '<pre>'; print_r($object); echo '</pre>';
+			echo '<pre class="debugger">'; print_r($object); echo '</pre>';
 		}
 		else
 		{
