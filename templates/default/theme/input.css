@@ -99,12 +99,23 @@ option {
 	width: auto;
 }
 
+.grouped-auto { flex-direction: column }
+
+@media (min-width: 769px) {
+	.grouped-auto { flex-direction: row }
+}
+
+
 .grouped-right { justify-content: flex-end;   }
 .grouped-left  { justify-content: flex-start; }
 
 .grouped-element {
 	border-width: 1px 0 1px 1px;
 	border-style: solid;
+}
+
+.grouped-auto .grouped-element {
+	border-width: 1px;
 }
 
 a.grouped-element,

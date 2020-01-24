@@ -84,7 +84,8 @@
                     e.preventDefault();
                 });
 
-                jQuery('.options-list a').on('click', function() { // When an option is clicked
+                jQuery('.options-list a').on('click', function(e) { // When an option is clicked
+                    e.preventDefault();
                     // Get values of the chosen option
                     var newOption = jQuery(this).attr('name'),
                         newText = jQuery(this).text(),
@@ -94,9 +95,9 @@
                     // Send values to the fake selector
                     jQuery(this).closest('nav').find(selectedText).text(newText);
                     if(newImg)
-                        jQuery(this).closest('nav').find(selectedImg).attr('src', newImg);
+                        jQuery(this).closest('nav').find(selectedImg).removeAttr('src').attr('src', newImg);
                     if(newIcon)
-                        jQuery(this).closest('nav').find(selectedIcon).addClass(newIcon);
+                        jQuery(this).closest('nav').find(selectedIcon).removeClass().addClass(newIcon);
 
                     // Change val() of the real select
                     jQuery(select).val(newOption).change();
