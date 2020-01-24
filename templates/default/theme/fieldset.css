@@ -74,7 +74,7 @@ fieldset p {
 
 .horizontal-fieldset-desc,
 .horizontal-fieldset-element  {
-	display: inline-block;
+	display: block;
 	vertical-align: middle;
 	margin-right: 1em;
 }
@@ -96,5 +96,10 @@ fieldset[id*="_captcha_fieldset"] .fieldset-inset {
 @media (min-width: 769px) {
 	fieldset[id*="_captcha_fieldset"] {
 		padding: 0 1.309em;
+	}
+
+	.horizontal-fieldset-desc,
+	.horizontal-fieldset-element  {
+		display: inline-block;
 	}
 }
