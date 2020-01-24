@@ -16,7 +16,10 @@
             params = $.extend(defaults, params);
 
             return this.each(function() {
+
                 jQuery(this).hide(); // Hide the select
+
+                var option = jQuery(this).children('option'); // define all options of the list
 
                 // Creation of the list structure which will replace it
                 var formList = jQuery(this).parent(),
@@ -24,9 +27,6 @@
                     uSelect = jQuery('<ul/>').appendTo(navList),
                     liSelect = jQuery('<li/>', {class : 'has-sub'}).prependTo(uSelect),
                     uList = jQuery('<ul/>', {class : 'options-list'}).appendTo(liSelect);
-
-                var option = jQuery(this).children('option'), // define all options of the select
-                    optionFirst = jQuery(this).children('option').first();// define first option of the list
 
                 var selectHasSelected = jQuery(this).val().length; // check if one of the options is selected
 
@@ -92,11 +92,11 @@
                         newIcon = jQuery(this).find('i').attr('class') ;
 
                     // Send values to the fake selector
-                    selectedText.text(newText);
+                    jQuery(this).closest('nav').find(selectedText).text(newText);
                     if(newImg)
-                        selectedImg.attr('src', newImg);
+                        jQuery(this).closest('nav').find(selectedImg).attr('src', newImg);
                     if(newIcon)
-                        selectedIcon.addClass(newIcon);
+                        jQuery(this).closest('nav').find(selectedIcon).addClass(newIcon);
 
                     // Change val() of the real select
                     jQuery(select).val(newOption).change();
