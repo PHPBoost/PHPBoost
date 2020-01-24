@@ -83,6 +83,10 @@
 		var widthRef = $(this).innerWidth();
 		$(this).outerHeight(widthRef * 16 / 9);
 	});
+
+	jQuery(window).ready(function() {
+  		jQuery('.body-wrapper').animate({opacity: 1}, 300);
+	});
 </script>
 
 # IF C_COOKIEBAR_ENABLED #

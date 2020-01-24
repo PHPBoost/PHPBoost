@@ -17,10 +17,14 @@ body {
 	font-size: 1.456em;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
+	min-height: 100vh;
+}
+
+.body-wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	min-height: 100vh;
+	opacity: 0;
 }
 
 @media (min-width: 769px) {
