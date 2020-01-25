@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,12 +70,12 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories_per_page'], $this->config->get_categories_per_page(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->admin_common_lang['config.categories.per.page'], $this->config->get_categories_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.number.per.row'], $this->config->get_categories_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->admin_common_lang['config.categories.per.row'], $this->config->get_categories_per_row(),
 			array('min' => 1, 'max' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
@@ -84,7 +84,7 @@ class AdminWebConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47)
 		));
 
-        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items_per_page'], $this->config->get_items_per_page(),
+        $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->admin_common_lang['config.items.per.page'], $this->config->get_items_per_page(),
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
@@ -103,7 +103,7 @@ class AdminWebConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], WebConfig::LIST_VIEW),
 				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.table'], WebConfig::TABLE_VIEW)
 			),
-			array('events' => array('click' => '
+			array('events' => array('change' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . WebConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("full_item_display").disable();
@@ -117,7 +117,7 @@ class AdminWebConfigController extends AdminModuleController
 			))
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.number.per.row'], $this->config->get_items_per_row(),
+		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->admin_common_lang['config.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== WebConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true),
