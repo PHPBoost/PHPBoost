@@ -6,4 +6,4 @@
 		}
 	</script>
 # ENDIF #
-<button type="reset" class="button reset-button" # IF C_ONCLICK_FUNCTION #onclick="XMLHttpRequest_reset_{HTML_ID}();" # ENDIF #value="true">{L_RESET}</button>
+<button class="button reset-button" type="reset" value="true"# IF C_ONCLICK_FUNCTION # onclick="XMLHttpRequest_reset_{HTML_ID}();"# ENDIF #>{L_RESET}</button>
