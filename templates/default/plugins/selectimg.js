@@ -102,6 +102,11 @@
                     // Change val() of the real select
                     jQuery(select).val(newOption).change();
                 });
+
+                jQuery(document).on('click', function(event) {
+                    if (jQuery(event.target).is('.cssmenu-select *') === false)
+                        jQuery('.cssmenu-open').removeClass('cssmenu-open');
+                });
             });
         }
     });
