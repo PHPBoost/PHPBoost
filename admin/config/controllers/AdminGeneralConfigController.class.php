@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2011 08 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -90,14 +90,21 @@ class AdminGeneralConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
-			array('rows' => 4, 'class' => 'full-field', 'description' => $this->lang['general-config.site_description-explain'], 'class' => 'full-field')
+			array(
+				'rows' => 4, 'class' => 'full-field',
+				'description' => $this->lang['general-config.site_description-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
-			array('required' => true, 'class' => 'top-field', 'events' => array('change' => $this->construct_javascript_picture_theme() .
-			' var theme_id = HTMLForms.getField("default_theme").getValue();
-			jQuery(\'#img_theme\').attr(\'src\', theme[theme_id]);
-			jQuery(\'#preview_theme\').attr(\'href\', theme[theme_id]);'))
+			array(
+				'required' => true, 'class' => 'top-field',
+				'events' => array('change' => $this->construct_javascript_picture_theme() . '
+					var theme_id = HTMLForms.getField("default_theme").getValue();
+					jQuery(\'#img_theme\').attr(\'src\', theme[theme_id]);
+					jQuery(\'#preview_theme\').attr(\'href\', theme[theme_id]);'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
@@ -108,17 +115,23 @@ class AdminGeneralConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_module_home_page(), $this->list_modules_home_page(),
-			array('required' => false, 'class' => 'top-field', 'events' => array('change' =>
-				'if (HTMLForms.getField("start_page").getValue() == "other") {
-					HTMLForms.getField("other_start_page").enable();
-				} else {
-					HTMLForms.getField("other_start_page").disable();
-				}'
-			))
+			array(
+				'required' => false, 'class' => 'top-field',
+				'events' => array('change' => '
+					if (HTMLForms.getField("start_page").getValue() == "other") {
+						HTMLForms.getField("other_start_page").enable();
+					} else {
+						HTMLForms.getField("other_start_page").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
-			array('class' => 'top-field', 'required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
+			array(
+				'class' => 'top-field', 'required' => false,
+				'hidden' => $this->general_config->get_module_home_page() != 'other'
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled(),
@@ -126,11 +139,17 @@ class AdminGeneralConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('page_bench', $this->lang['general-config.page_bench'], $this->graphical_environment_config->is_page_bench_enabled(),
-			array('class' => 'third-field custom-checkbox', 'description' => $this->lang['general-config.page_bench-explain'])
+			array(
+				'class' => 'third-field custom-checkbox',
+				'description' => $this->lang['general-config.page_bench-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_theme_author', $this->lang['general-config.display_theme_author'], $this->graphical_environment_config->get_display_theme_author(),
-			array('class' => 'third-field custom-checkbox', 'description' => $this->lang['general-config.display_theme_author-explain'])
+			array(
+				'class' => 'third-field custom-checkbox',
+				'description' => $this->lang['general-config.display_theme_author-explain']
+			)
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

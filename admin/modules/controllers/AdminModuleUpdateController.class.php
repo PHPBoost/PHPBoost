@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 15
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminModuleUpdateController extends AdminController
@@ -82,8 +83,13 @@ class AdminModuleUpdateController extends AdminController
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.update_module']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.update.warning_before_update'], array('class' => 'full-field')));
-        $fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))), array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')));
+		$fieldset->add_field(new FormFieldFree('warnings', '', $this->lang['modules.update.warning_before_update'],
+			array('class' => 'full-field')
+		));
+
+        $fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['modules.upload_description'], array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))),
+			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

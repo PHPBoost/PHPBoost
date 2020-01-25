@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 05
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -102,12 +102,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], (int)$this->extended_field['required'],
-			array('class' => 'top-field custom-checkbox', 'description' => $this->lang['field.required_explain'])
+			array(
+				'class' => 'top-field custom-checkbox',
+				'description' => $this->lang['field.required_explain']
+			)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $this->extended_field['field_type'],
-			$this->get_array_select_type(),
-			array('class' => 'top-field', 'disabled' => $this->is_type_select_disabled(), 'events' => array('change' => $this->get_events_select_type()))
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $this->extended_field['field_type'], $this->get_array_select_type(),
+			array(
+				'class' => 'top-field',
+				'disabled' => $this->is_type_select_disabled(),
+				'events' => array('change' => $this->get_events_select_type())
+			)
 		));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $this->extended_field['default_value'],
@@ -126,13 +132,17 @@ class AdminExtendedFieldMemberEditController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['regex.phone-number'], '8'),
 				new FormFieldSelectChoiceOption($this->lang['regex.personnal-regex'], '6'),
 			),
-			array('description' => $this->lang['field.regex-explain'], 'events' => array('change' => '
-				if (HTMLForms.getField("regex_type").getValue() == 6) {
-					HTMLForms.getField("regex").enable();
-					jQuery("#' . __CLASS__ . '_regex").focus();
-				} else {
-					HTMLForms.getField("regex").disable();
-				}'))
+			array(
+				'description' => $this->lang['field.regex-explain'],
+				'events' => array('change' => '
+					if (HTMLForms.getField("regex_type").getValue() == 6) {
+						HTMLForms.getField("regex").enable();
+						jQuery("#' . __CLASS__ . '_regex").focus();
+					} else {
+						HTMLForms.getField("regex").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex,

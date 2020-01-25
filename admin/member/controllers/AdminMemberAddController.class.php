@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 02
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2010 12 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,10 +54,13 @@ class AdminMemberAddController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($display_name = new FormFieldTextEditor('display_name', $this->lang['display_name'], '',
-			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
-				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
-					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-				}')
+			array(
+				'maxlength' => 100, 'required' => true,
+				'events' => array('blur' => '
+					if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
+						HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+					}'
+				)
 			),
 			array(new FormFieldConstraintLengthRange(3, 100), new FormFieldConstraintDisplayNameExists())
 		));

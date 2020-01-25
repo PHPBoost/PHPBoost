@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.0 - 2013 07 08
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -80,11 +80,14 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldEditors('formatting_language', $this->lang['content.config.default-formatting-language'], $this->content_formatting_config->get_default_editor(),
-			array ('class' => 'top-field', 'description' => $this->lang['content.config.default-formatting-language-explain'])
+			array (
+				'class' => 'top-field',
+				'description' => $this->lang['content.config.default-formatting-language-explain']
+			)
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->content_formatting_config->get_forbidden_tags(),
-			$this->generate_forbidden_tags_option(), array('size' => 10)
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->content_formatting_config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+			array('size' => 10)
 		));
 
 		$fieldset = new FormFieldsetHTML('html-language-config', $this->lang['content.config.html-language']);
@@ -98,7 +101,10 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(),
-			array('required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
+			array(
+				'required' => true,
+				'description' => $this->lang['content.config.max-pm-number-explain']
+			),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
@@ -109,16 +115,19 @@ class AdminContentConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
-			'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
+		$fieldset->add_field(new FormFieldNumberEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(),
+			array(
+				'required' => true,
+				'description' => $this->lang['content.config.delay-flood-explain']
+			),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['content.config.captcha-used'], $this->content_management_config->get_used_captcha_module(),
-			$this->generate_captcha_available_option(), array('description' => $this->lang['content.config.captcha-used-explain'])
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['content.config.captcha-used'], $this->content_management_config->get_used_captcha_module(), $this->generate_captcha_available_option(),
+			array('description' => $this->lang['content.config.captcha-used-explain'])
 		));
 
 		$fieldset = new FormFieldsetHTML('tagnew_config', $this->lang['content.config.new-content-config']);
@@ -141,12 +150,20 @@ class AdminContentConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('new_content_duration', $this->lang['content.config.new-content-duration'], $this->content_management_config->get_new_content_duration(),
-			array('class' => 'top-field', 'min' => 1, 'required' => true, 'description' => $this->lang['content.config.new-content-duration-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled()),
+			array(
+				'class' => 'top-field', 'min' => 1, 'required' => true,
+				'description' => $this->lang['content.config.new-content-duration-explain'],
+				'hidden' => !$this->content_management_config->is_new_content_enabled()
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 9999))
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('new_content_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_new_content_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('newcontent'),
-			array('size' => 12, 'description' => $this->admin_common_lang['config.new-content.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_new_content_enabled())
+			array(
+				'size' => 12,
+				'description' => $this->admin_common_lang['config.new-content.forbidden-module-explain'],
+				'hidden' => !$this->content_management_config->is_new_content_enabled()
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('notation_config', $this->lang['notation.config']);
@@ -168,12 +185,19 @@ class AdminContentConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->content_management_config->get_notation_scale(),
-			array('class' => 'top-field', 'min' => 3, 'max' => 20, 'required' => true, 'hidden' => !$this->content_management_config->is_notation_enabled()),
+			array(
+				'class' => 'top-field', 'min' => 3, 'max' => 20, 'required' => true,
+				'hidden' => !$this->content_management_config->is_notation_enabled()
+			),
 			array(new FormFieldConstraintIntegerRange(3, 20))
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('notation_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->content_management_config->get_notation_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('notation'),
-			array('size' => 6, 'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'], 'hidden' => !$this->content_management_config->is_notation_enabled())
+			array(
+				'size' => 6,
+				'description' => $this->admin_common_lang['config.notation.forbidden-module-explain'],
+				'hidden' => !$this->content_management_config->is_notation_enabled()
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('sharing_config', $this->lang['content.config.sharing']);
@@ -206,7 +230,8 @@ class AdminContentConfigController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('content_sharing_print_enabled', $this->lang['content.config.content-sharing-print-enabled'], $this->content_management_config->is_content_sharing_print_enabled(),
 			array(
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['content.config.content-sharing-print-enabled.explain'], 'hidden' => !$this->content_management_config->is_content_sharing_enabled()
+				'description' => $this->lang['content.config.content-sharing-print-enabled.explain'],
+				'hidden' => !$this->content_management_config->is_content_sharing_enabled()
 			)
 		));
 

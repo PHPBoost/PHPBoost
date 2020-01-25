@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 18
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2010 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -57,11 +57,23 @@ class AdminMailConfigController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('general_config', $this->lang['mail-config.general_mail_config']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['mail-config.default_mail_sender'], $this->config->get_default_mail_sender(), array('required' => true, 'description' => $this->lang['mail-config.default_mail_sender_explain'])));
+		$fieldset->add_field(new FormFieldMailEditor('default_mail_sender', $this->lang['mail-config.default_mail_sender'], $this->config->get_default_mail_sender(),
+			array(
+				'required' => true,
+				'description' => $this->lang['mail-config.default_mail_sender_explain']
+			)
+		));
 
-		$fieldset->add_field(new FormFieldMailEditor('admin_addresses', $this->lang['mail-config.administrators_mails'], implode(',', $this->config->get_administrators_mails()), array('required' => true, 'multiple' => true, 'description' => $this->lang['mail-config.administrators_mails_explain'])));
+		$fieldset->add_field(new FormFieldMailEditor('admin_addresses', $this->lang['mail-config.administrators_mails'], implode(',', $this->config->get_administrators_mails()),
+			array(
+				'required' => true, 'multiple' => true,
+				'description' => $this->lang['mail-config.administrators_mails_explain']
+			)
+		));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail-config.mail_signature'], $this->config->get_mail_signature(), array('description' => $this->lang['mail-config.mail_signature_explain'])));
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('mail_signature', $this->lang['mail-config.mail_signature'], $this->config->get_mail_signature(),
+			array('description' => $this->lang['mail-config.mail_signature_explain'])
+		));
 
 		$smtp_enabled = $this->config->is_smtp_enabled();
 
@@ -85,13 +97,23 @@ class AdminMailConfigController extends AdminController
 
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(), array('required' => true, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`iu'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(),
+			array('required' => true, 'disabled' => !$smtp_enabled),
+			array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`iu'))
+		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(), array('min' => 1, 'max' => 65535, 'disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
+		$fieldset->add_field(new FormFieldNumberEditor('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(),
+			array('min' => 1, 'max' => 65535, 'disabled' => !$smtp_enabled),
+			array(new FormFieldConstraintIntegerRange(0, 65535))
+		));
 
-		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(), array('disabled' => !$smtp_enabled), array()));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(),
+			array('disabled' => !$smtp_enabled),
+			array()
+		));
 
-		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['mail-config.smtp_password'], $this->config->get_smtp_password(), array('disabled' => !$smtp_enabled)));
+		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['mail-config.smtp_password'], $this->config->get_smtp_password(),
+			array('disabled' => !$smtp_enabled)));
 
 		$none_protocol_option = new FormFieldSelectChoiceOption($this->lang['mail-config.smtp_secure_protocol_none'], 'none');
 		$ssl_protocol_option = new FormFieldSelectChoiceOption($this->lang['mail-config.smtp_secure_protocol_ssl'], 'ssl');
@@ -108,7 +130,10 @@ class AdminMailConfigController extends AdminController
 			default:
 				$default_protocol_option = $none_protocol_option;
 		}
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('smtp_protocol', $this->lang['mail-config.smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('smtp_protocol', $this->lang['mail-config.smtp_secure_protocol'], $default_protocol_option,
+			array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option),
+			array('disabled' => !$smtp_enabled)
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

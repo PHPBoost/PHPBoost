@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 10
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -171,7 +171,8 @@ class AdminThemesNotInstalledListController extends AdminController
 
 		$fieldset->add_field(new FormFieldFilePicker('file', StringVars::replace_vars($this->lang['themes.upload_description'],
 			array('max_size' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()))),
-			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')));
+			array('class' => 'full-field', 'authorized_extensions' => 'gz|zip')
+		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

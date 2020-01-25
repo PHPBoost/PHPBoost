@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 27
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -59,15 +59,24 @@ class AdminFilesConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['size_limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
-			array('min' => 0, 'step' => 0.05, 'description' => $this->lang['size_limit_explain'], 'required' => true)
+			array(
+				'min' => 0, 'step' => 0.05, 'required' => true,
+				'description' => $this->lang['size_limit_explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('bandwidth_protect', $this->lang['bandwidth_protect'], $this->file_upload_config->get_enable_bandwidth_protect(),
-			array('class' => 'custom-checkbox', 'description' => $this->lang['bandwidth_protect_explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['bandwidth_protect_explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['files_thumb'], $this->file_upload_config->get_display_file_thumbnail(),
-			array('class' => 'custom-checkbox', 'description' => $this->lang['files_thumb_explain'])
+			array(
+				'class' => 'custom-checkbox',
+				'description' => $this->lang['files_thumb_explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('extend_extensions', $this->lang['extend_extensions'],  $extensions['extend_extensions'],

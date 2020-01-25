@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 29
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 2.0 - 2008 08 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminSyndicationCacheController extends AdminController
@@ -53,7 +54,9 @@ class AdminSyndicationCacheController extends AdminController
 		$fieldset = new FormFieldsetHTMLHeading('syndication_cache', $this->lang['syndication_cache']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache'], array('class' => 'full-field')));
+		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_syndication_cache'],
+			array('class' => 'full-field')
+		));
 
 		$this->submit_button = new FormButtonSubmit($this->lang['clear_cache'], 'button');
 		$form->add_button($this->submit_button);

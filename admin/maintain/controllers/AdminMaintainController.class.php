@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 26
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -84,18 +84,20 @@ class AdminMaintainController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_type', $this->lang['maintain_type'], $this->get_maintain_type(), $this->build_maintain_select_options(),
-			array('events' => array('change' =>
-				'if (HTMLForms.getField("maintain_type").getValue() == "during") {
-					HTMLForms.getField("maintain_during").enable();
-					HTMLForms.getField("maintain_until").disable();
-				} else if (HTMLForms.getField("maintain_type").getValue() == "until") {
-					HTMLForms.getField("maintain_during").disable();
-					HTMLForms.getField("maintain_until").enable();
-				} else {
-					HTMLForms.getField("maintain_during").disable();
-					HTMLForms.getField("maintain_until").disable();
-				}'
-			))
+			array(
+				'events' => array('change' => '
+					if (HTMLForms.getField("maintain_type").getValue() == "during") {
+						HTMLForms.getField("maintain_during").enable();
+						HTMLForms.getField("maintain_until").disable();
+					} else if (HTMLForms.getField("maintain_type").getValue() == "until") {
+						HTMLForms.getField("maintain_during").disable();
+						HTMLForms.getField("maintain_until").enable();
+					} else {
+						HTMLForms.getField("maintain_during").disable();
+						HTMLForms.getField("maintain_until").disable();
+					}'
+				)
+			)
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_during', LangLoader::get_message('during', 'main'), $this->get_maintain_during_select_option(), $this->build_maintain_during_select_options(),
@@ -109,8 +111,8 @@ class AdminMaintainController extends AdminController
 		$fieldset->add_field(new FormFieldCheckbox('display_duration', $this->lang['display_duration'], $this->maintenance_config->get_display_duration(),
 			array(
 				'class' => 'custom-checkbox',
-				'events' => array('click' =>
-					'if (HTMLForms.getField("display_duration").getValue()) {
+				'events' => array('click' => '
+					if (HTMLForms.getField("display_duration").getValue()) {
 						HTMLForms.getField("display_duration_for_admin").enable();
 					} else {
 						HTMLForms.getField("display_duration_for_admin").disable();

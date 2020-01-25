@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -136,11 +136,14 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 		$fieldset = new FormFieldsetHTML('summerization', $this->admin_lang['system_report_summerization']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain'], array('class' => 'half-field')));
+		$fieldset->add_field(new FormFieldLabel($this->admin_lang['system_report_summerization_explain'],
+			array('class' => 'half-field')
+		));
 
 		$fieldset->add_element(new FormButtonButton($this->admin_lang['copy_report'], 'copy_code_clipboard(\'system-report_report-content\')', 'copy_report', 'copy-to-clipboard', '', 'system-report'));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization, array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization,
+			array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
 		));
 
 		$this->form = $form;

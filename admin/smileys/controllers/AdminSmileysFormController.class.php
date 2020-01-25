@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 24
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminSmileysFormController extends AdminController
@@ -67,7 +68,10 @@ class AdminSmileysFormController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['explain_upload_img'],
-			array('class' => 'full-field', 'multiple' => true, 'authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions())))
+			array(
+				'class' => 'full-field', 'multiple' => true,
+				'authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions()))
+			)
 		));
 
 		$this->upload_submit_button = new FormButtonDefaultSubmit();
@@ -136,17 +140,25 @@ class AdminSmileysFormController extends AdminController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('url_smiley', $this->lang['smiley_available'], $this->smiley['url_smiley'],
 			$this->generate_available_smileys_pictures_list(),
-			array('events' => array('change' => '
-				if (HTMLForms.getField("url_smiley").getValue() != \'\') {
-					jQuery(\'#smiley-img\').attr(\'src\', \'' . Url::to_rel('/images/smileys/') . '\' + HTMLForms.getField("url_smiley").getValue());
-					HTMLForms.getField("img_smiley").enable();
-				} else {
-					HTMLForms.getField("img_smiley").disable();
-				}'
-			))
+			array(
+				'events' => array('change' => '
+					if (HTMLForms.getField("url_smiley").getValue() != \'\') {
+						jQuery(\'#smiley-img\').attr(\'src\', \'' . Url::to_rel('/images/smileys/') . '\' + HTMLForms.getField("url_smiley").getValue());
+						HTMLForms.getField("img_smiley").enable();
+					} else {
+						HTMLForms.getField("img_smiley").disable();
+					}'
+				)
+			)
 		));
 
-		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '', array('id' => 'smiley-img', 'alt' => $this->smiley['code_smiley'], 'aria-label' => $this->smiley['code_smiley']));
+		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '',
+			array(
+				'id' => 'smiley-img',
+				'alt' => $this->smiley['code_smiley'],
+				'aria-label' => $this->smiley['code_smiley']
+			)
+		);
 
 		$fieldset->add_field(new FormFieldFree('img_smiley', LangLoader::get_message('form.picture.preview', 'common'), $img_smiley->display(),
 			array('hidden' => !$this->smiley['idsmiley'])

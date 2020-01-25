@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2011 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,12 +89,18 @@ class AdminCommentsConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(),
-			array('required' => true, 'hidden' => !$this->configuration->are_comments_enabled()),
+			array(
+				'required' => true,
+				'hidden' => !$this->configuration->are_comments_enabled()
+			),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(),
-			array('required' => true, 'hidden' => !$this->configuration->are_comments_enabled()),
+			array(
+				'required' => true,
+				'hidden' => !$this->configuration->are_comments_enabled()
+			),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 
@@ -106,13 +112,19 @@ class AdminCommentsConfigController extends AdminController
 			array('hidden' => !$this->configuration->are_comments_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),
-			$this->generate_forbidden_tags_option(),
-			array('size' => 12, 'hidden' => !$this->configuration->are_comments_enabled())
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
+			array(
+				'size' => 12,
+				'hidden' => !$this->configuration->are_comments_enabled()
+			)
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->admin_common_lang['config.forbidden-module'], $this->configuration->get_comments_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('comments'),
-			array('size' => 12, 'description' => $this->admin_common_lang['config.comments.forbidden-module-explain'], 'hidden' => !$this->configuration->are_comments_enabled())
+			array(
+				'size' => 12,
+				'description' => $this->admin_common_lang['config.comments.forbidden-module-explain'],
+				'hidden' => !$this->configuration->are_comments_enabled()
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['comments.config.authorization']);

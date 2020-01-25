@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 06
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -87,17 +87,25 @@ class AdminMemberConfigController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
-			), array('hidden' => !$this->user_accounts_config->is_registration_enabled(), 'events' => array('change' => '
-				if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
-					HTMLForms.getField("unactivated_accounts_timeout").enable();
-				} else {
-					HTMLForms.getField("unactivated_accounts_timeout").disable();
-				}')
+			),
+			array(
+				'hidden' => !$this->user_accounts_config->is_registration_enabled(),
+				'events' => array('change' => '
+					if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
+						HTMLForms.getField("unactivated_accounts_timeout").enable();
+					} else {
+						HTMLForms.getField("unactivated_accounts_timeout").disable();
+					}'
+				)
 			)
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (int)$this->user_accounts_config->get_unactivated_accounts_timeout(),
-			array('min' => 1, 'max' => 365, 'description' => $this->lang['members.config.unactivated-accounts-timeout-explain'], 'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION),
+			array(
+				'min' => 1, 'max' => 365,
+				'description' => $this->lang['members.config.unactivated-accounts-timeout-explain'],
+				'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
@@ -133,7 +141,10 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['security.config.forbidden-mail-domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
-			array('class' => 'half-field', 'description' => $this->lang['security.config.forbidden-mail-domains.explain'])
+			array(
+				'class' => 'half-field',
+				'description' => $this->lang['security.config.forbidden-mail-domains.explain']
+			)
 		));
 
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
@@ -161,7 +172,10 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_accounts_config->get_max_avatar_weight(),
-			array('class' => 'top-field', 'description' => $this->lang['members.config.maximal-weight-avatar-explain']),
+			array(
+				'class' => 'top-field',
+				'description' => $this->lang['members.config.maximal-weight-avatar-explain']
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
@@ -193,16 +207,15 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $this->user_accounts_config->get_welcome_message(), array(
-			'rows' => 8, 'cols' => 47)
+		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $this->user_accounts_config->get_welcome_message(),
+			array('rows' => 8, 'cols' => 47)
 		));
 
 		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
 		$fieldset->set_description($this->lang['members.rules.registration-agreement-description']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'],
-			UserAccountsConfig::load()->get_registration_agreement(),
+		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], UserAccountsConfig::load()->get_registration_agreement(),
 			array('rows' => 8, 'cols' => 47)
 		));
 

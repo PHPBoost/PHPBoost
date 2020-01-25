@@ -78,15 +78,24 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(),
-			array('class' => 'third-field', 'description' => $this->lang['advanced-config.site_url-explain'], 'required' => true)
+			array(
+				'class' => 'third-field', 'required' => true,
+				'description' => $this->lang['advanced-config.site_url-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['advanced-config.site_path'], $this->general_config->get_site_path(),
-			array('class' => 'third-field', 'description' => $this->lang['advanced-config.site_path-explain'])
+			array(
+				'class' => 'third-field',
+				'description' => $this->lang['advanced-config.site_path-explain']
+			)
 		));
 
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
-			array('class' => 'third-field', 'description' => $this->lang['advanced-config.site_timezone-explain'])
+			array(
+				'class' => 'third-field',
+				'description' => $this->lang['advanced-config.site_timezone-explain']
+			)
 		));
 
 		if ($request->get_is_localhost() || $request->get_is_subdomain())
@@ -155,33 +164,36 @@ class AdminAdvancedConfigController extends AdminController
 			)
 		));
 
-		$fieldset->add_field( new FormFieldCheckbox('hsts_security_enabled', $this->lang['advanced-config.hsts_security_enabled'], $this->server_environment_config->is_hsts_security_enabled(), array(
-			'description' => $this->lang['advanced-config.hsts_security.explain'],
-			'hidden' => !$this->server_environment_config->is_redirection_https_enabled(),
-			'events' => array('click' => '
-				if (HTMLForms.getField("hsts_security_enabled").getValue()) {
-					HTMLForms.getField("hsts_security_duration").enable();
-					HTMLForms.getField("hsts_security_subdomain").enable();
-				} else {
-					HTMLForms.getField("hsts_security_duration").disable();
-					HTMLForms.getField("hsts_security_subdomain").disable();
-				}')
+		$fieldset->add_field( new FormFieldCheckbox('hsts_security_enabled', $this->lang['advanced-config.hsts_security_enabled'], $this->server_environment_config->is_hsts_security_enabled(),
+			array(
+				'description' => $this->lang['advanced-config.hsts_security.explain'],
+				'hidden' => !$this->server_environment_config->is_redirection_https_enabled(),
+				'events' => array('click' => '
+					if (HTMLForms.getField("hsts_security_enabled").getValue()) {
+						HTMLForms.getField("hsts_security_duration").enable();
+						HTMLForms.getField("hsts_security_subdomain").enable();
+					} else {
+						HTMLForms.getField("hsts_security_duration").disable();
+						HTMLForms.getField("hsts_security_subdomain").disable();
+					}'
+				)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_config_hsts_security_duration(), array(
-			'min' => 1,
-			'max' => 365,
-			'required' => true,
-			'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
-			'required' => true,
-			'hidden' => !$this->server_environment_config->is_hsts_security_enabled()),
+		$fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['advanced-config.hsts_security_duration'], $this->server_environment_config->get_config_hsts_security_duration(),
+			array(
+				'min' => 1, 'max' => 365, 'required' => true,
+				'description' => $this->lang['advanced-config.hsts_security_duration.explain'],
+				'hidden' => !$this->server_environment_config->is_hsts_security_enabled()
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(), array(
-			'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
-			'hidden' => !$this->server_environment_config->is_hsts_security_enabled())
+		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['advanced-config.hsts_security_subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(),
+			array(
+				'description' => $this->lang['advanced-config.hsts_security_subdomain.explain'],
+				'hidden' => !$this->server_environment_config->is_hsts_security_enabled()
+			)
 		));
 
 		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['advanced-config.url-rewriting']);
@@ -194,18 +206,27 @@ class AdminAdvancedConfigController extends AdminController
 			if ($server_configuration->has_url_rewriting())
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
-					array('class' => 'half-field custom-checkbox', 'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>')
+					array(
+						'class' => 'half-field custom-checkbox',
+						'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>'
+					)
 				));
 			}
 			else
 			{
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED,
-					array('class' => 'half-field custom-checkbox', 'disabled' => true, 'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>')
+					array(
+						'class' => 'half-field custom-checkbox', 'disabled' => true,
+						'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>'
+					)
 				));
 			}
 		} catch (UnsupportedOperationException $ex) {
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
-				array('class' => 'half-field custom-checkbox', 'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>')
+				array(
+					'class' => 'half-field custom-checkbox',
+					'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>'
+				)
 			));
  		}
 
@@ -213,7 +234,10 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
-			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
+			array(
+				'rows' => 7,
+				'description' => $this->lang['advanced-config.htaccess-manual-content.explain']
+			)
 		));
 
 		$robots_file = new File(PATH_TO_ROOT . '/robots.txt');
@@ -222,7 +246,10 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($robots_content_fieldset);
 
 		$robots_content_fieldset->add_field(new FormFieldMultiLineTextEditor('robots_content', $this->lang['advanced-config.robots-content'], $robots_content,
-			array('rows' => 7, 'description' => $this->lang['advanced-config.robots-content.explain'])
+			array(
+				'rows' => 7,
+				'description' => $this->lang['advanced-config.robots-content.explain']
+			)
 		));
 
 		$sessions_config_fieldset = new FormFieldsetHTML('sessions_config', $this->lang['advanced-config.sessions-config']);
@@ -234,12 +261,18 @@ class AdminAdvancedConfigController extends AdminController
 		));
 
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(),
-			array('description' => $this->lang['advanced-config.cookie-duration.explain'], 'required' => true, 'class' => 'third-field'),
+			array(
+				'description' => $this->lang['advanced-config.cookie-duration.explain'],
+				'required' => true, 'class' => 'third-field'
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 
 		$sessions_config_fieldset->add_field(new FormFieldNumberEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(),
-			array('description' => $this->lang['advanced-config.active-session-duration.explain'], 'required' => true, 'class' => 'third-field'),
+			array(
+				'description' => $this->lang['advanced-config.active-session-duration.explain'],
+				'required' => true, 'class' => 'third-field'
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu', '', $this->lang['advanced-config.integer-required']))
 		));
 
@@ -270,7 +303,11 @@ class AdminAdvancedConfigController extends AdminController
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldNumberEditor('cookiebar_duration', $this->lang['advanced-config.cookiebar-duration'], $this->cookiebar_config->get_cookiebar_duration(),
-			array('class' => 'third-field', 'min' => 1, 'max' => 13, 'required' => true, 'description' => $this->lang['advanced-config.cookiebar-duration.desc'], 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled()),
+			array(
+				'class' => 'third-field', 'min' => 1, 'max' => 13, 'required' => true,
+				'description' => $this->lang['advanced-config.cookiebar-duration.desc'],
+				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled()
+			),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(1, 13))
 		));
 
@@ -279,25 +316,41 @@ class AdminAdvancedConfigController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.cookiebar-tracking.notrack'], CookieBarConfig::NOTRACKING_COOKIE),
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.cookiebar-tracking.track'], CookieBarConfig::TRACKING_COOKIE)
 			),
-			array('class' => 'third-field', 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(), 'events' => array('change' =>
-				'if (HTMLForms.getField("cookiebar_tracking_mode").getValue() == \'' . CookieBarConfig::NOTRACKING_COOKIE . '\') {
-					HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('cookiebar-message.notracking', 'user-common') . '");
-				} else {
-					HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('cookiebar-message.tracking', 'user-common') . '");
-				}'
-			))
+			array(
+				'class' => 'third-field',
+				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(),
+				'events' => array('change' =>
+					'if (HTMLForms.getField("cookiebar_tracking_mode").getValue() == \'' . CookieBarConfig::NOTRACKING_COOKIE . '\') {
+						HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('cookiebar-message.notracking', 'user-common') . '");
+					} else {
+						HTMLForms.getField("cookiebar_content").setValue("' . LangLoader::get_message('cookiebar-message.tracking', 'user-common') . '");
+					}'
+				)
+			)
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldMultiLineTextEditor('cookiebar_content', $this->lang['advanced-config.cookiebar-content'], $this->cookiebar_config->get_cookiebar_content(),
-			array('rows' => 7, 'description' => $this->lang['advanced-config.cookiebar-content.explain'], 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
+			array(
+				'rows' => 7, 'required' => true,
+				'description' => $this->lang['advanced-config.cookiebar-content.explain'],
+				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled()
+			)
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldTextEditor('cookiebar_aboutcookie_title', $this->lang['advanced-config.cookiebar-aboutcookie-title'], $this->cookiebar_config->get_cookiebar_aboutcookie_title(),
-			array('class' => 'half-field', 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled())
+			array(
+				'class' => 'half-field', 'required' => true,
+				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled()
+			)
 		));
 
 		$cookiebar_config_fieldset->add_field(new FormFieldRichTextEditor('cookiebar_aboutcookie_content', $this->lang['advanced-config.cookiebar-aboutcookie'], $this->cookiebar_config->get_cookiebar_aboutcookie_content(),
-			array('rows' => 7, 'description' => $this->lang['advanced-config.cookiebar-aboutcookie.explain'], 'required' => true, 'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(), 'reset_value' => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common'))
+			array(
+				'rows' => 7, 'required' => true,
+				'description' => $this->lang['advanced-config.cookiebar-aboutcookie.explain'],
+				'hidden' => !$this->cookiebar_config->is_cookiebar_enabled(),
+				'reset_value' => LangLoader::get_message('cookiebar-message.aboutcookie', 'user-common')
+			)
 		));
 
 		$miscellaneous_fieldset = new FormFieldsetHTML('miscellaneous', $this->lang['advanced-config.miscellaneous']);
@@ -316,9 +369,8 @@ class AdminAdvancedConfigController extends AdminController
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED,
 				array(
-					'class' => 'custom-checkbox',
-					'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>',
-					'disabled' => true
+					'class' => 'custom-checkbox', 'disabled' => true,
+					'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>'
 				)
 			));
 		}
