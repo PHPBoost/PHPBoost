@@ -134,21 +134,21 @@ body {
 	background-color: rgba(54, 100, 147, 0.1);
 }
 
-.button.reset,
-.reset {
+.button.reset-button,
+.reset-button {
 	background-color: #FFFFFF;
 	border-color: #323133;
 	color: #323133;
 }
 
-.button.reset:hover,
-.reset:hover {
+.button.reset-button:hover,
+.reset-button:hover {
 	border-color: #676773;
 	color: #676773;
 }
 
-.button.reset:active,
-.reset:active {
+.button.reset-button:active,
+.reset-button:active {
 	background-color: rgba(50, 49, 51, 0.1);
 }
 
