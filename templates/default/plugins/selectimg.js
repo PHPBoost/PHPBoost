@@ -2,8 +2,8 @@
  * images-selector jQuery plugin - Version: 1.0
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babso@labsoweb.fr>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version     PHPBoost 5.3 - last update: 2020 01 25
  * @since       PHPBoost 5.3 - 2020 01 20
 */
 
@@ -103,6 +103,7 @@
                     jQuery(select).val(newOption).change();
                 });
 
+                // Close all opened fake select when click outside
                 jQuery(document).on('click', function(event) {
                     if (jQuery(event.target).is('.cssmenu-select *') === false)
                         jQuery('.cssmenu-open').removeClass('cssmenu-open');
