@@ -86,7 +86,7 @@
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					{KERNEL_EDITOR}
 					<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
-					<div class="align-center"><button type="button" class="button small" onclick="XMLHttpRequest_preview('contents');">{L_PREVIEW}</button></div>
+					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{L_PREVIEW}</button></div>
 				</div>
 			</div>
 		</fieldset>
@@ -95,7 +95,7 @@
 			<legend>{L_UPDATE}</legend>
 			<div class="fieldset-inset">
 				<button type="submit" name="update" value="true" class="button submit">{L_UPDATE}</button>
-				<button type="reset" class="button reset" value="true">{L_RESET}</button>
+				<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</div>
 		</fieldset>

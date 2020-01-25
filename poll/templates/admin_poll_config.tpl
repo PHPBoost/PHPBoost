@@ -123,7 +123,7 @@
 					<legend>{L_UPDATE}</legend>
 					<div class="fieldset-inset">
 						<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
-						<button type="reset" class="button reset" value="true">{L_RESET}</button>
+						<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</div>
 				</fieldset>

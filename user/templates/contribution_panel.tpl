@@ -303,8 +303,8 @@
 					<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" class="button submit" value="true">{L_SUBMIT}</button>
-					<button type="button" class="button small" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" class="button reset">{L_RESET}</button>
+					<button type="button" class="button preview-button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset-button">{L_RESET}</button>
 				</fieldset>
 			</form>
 		</div>

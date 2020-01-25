@@ -227,8 +227,8 @@
 	<div class="align-center">
 		<input type="hidden" name="token" value="{TOKEN}">
 		<button type="submit" class="button submit" name="pm" value="true">{L_SUBMIT}</button>
-		<button type="button" class="button small" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-		<button type="reset" class="button reset" value="true">{L_RESET}</button>
+		<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+		<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 	</div>
 </form>
 # END post_pm #
@@ -263,8 +263,8 @@
 				<div class="align-center">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>
-					<button type="button" class="button small" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" class="button reset" value="true">{L_RESET}</button>
+					<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 				</div>
 			</div>
 		</div>
@@ -319,8 +319,8 @@
 				<div class="align-center">
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" class="button submit" name="convers" value="true">{L_SUBMIT}</button>
-					<button type="button" class="button small" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" class="button reset" value="true">{L_RESET}</button>
+					<button type="button" class="button preview-button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 				</div>
 			</div>
 		</div>

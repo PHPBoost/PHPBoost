@@ -52,7 +52,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="valid" value="true" class="button submit">{L_UPDATE}</button>
-				<button type="reset" class="button reset" value="true">{L_RESET}</button>
+				<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 				<input type="hidden" name="id_auth" value="{auth.ID}">
 				<input type="hidden" name="token" value="{TOKEN}">
 			</fieldset>
@@ -139,8 +139,8 @@
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" class="button submit" value="true">{L_SUBMIT}</button>
-				<button type="button" class="button small" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{L_PREVIEW}</button>
-				<button type="reset" class="button reset">{L_RESET}</button>
+				<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{L_PREVIEW}</button>
+				<button type="reset" class="button reset-button">{L_RESET}</button>
 			</fieldset>
 		</form>
 		# END status #

@@ -623,7 +623,7 @@
         # IF C_DISPLAY_CLOSE_BUTTON #
 	        <fieldset class="fieldset-submit">
 	            <legend>${LangLoader::get_message('close', 'main')}</legend>
-	            <button type="reset" class="button reset" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
+	            <button type="reset" class="button reset-button" onclick="javascript:close_popup()" value="true">${LangLoader::get_message('close', 'main')}</button>
 	        </fieldset>
         # ENDIF #
     </footer>

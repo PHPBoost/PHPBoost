@@ -349,8 +349,8 @@
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" class="button submit" name="valid" value="true">{L_SUBMIT}</button>
-					<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" class="button reset" value="true">{L_RESET}</button>
+					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
 		</div>

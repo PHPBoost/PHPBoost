@@ -130,7 +130,7 @@
 						<input type="hidden" name="idc" value="{NEXT_ID}">
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" name="add" value="true" class="button submit">{L_ADD}</button>
-						<button type="reset" class="button reset" value="true">{L_RESET}</button>
+						<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 					</div>
 				</fieldset>
 			</form>

@@ -1,8 +1,6 @@
 <script>
-<!--
 	var path = '{PICTURES_DATA_PATH}';
 	var selected_cat = {SELECTED_CAT};
--->
 </script>
 <script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 

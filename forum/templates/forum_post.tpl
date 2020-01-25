@@ -163,12 +163,10 @@
 								</div>
 							</div>
 							<script>
-							<!--
-							if( {NO_DISPLAY_POLL} )
-								document.getElementById('hidepoll').style.display = 'none';
-							else
-								document.getElementById('hidepoll_link').style.display = 'none';
-							-->
+								if( {NO_DISPLAY_POLL} )
+									document.getElementById('hidepoll').style.display = 'none';
+								else
+									document.getElementById('hidepoll_link').style.display = 'none';
 							</script>
 						</fieldset>
 
@@ -177,8 +175,8 @@
 							<input type="hidden" name="idm" value="{IDM}">
 							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="button submit" name="post_topic" value="true">{L_SUBMIT}</button>
-							<button type="button" class="button small" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-							<button type="reset" class="button reset" value="true">{L_RESET}</button>
+							<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 
 							# IF C_DISPLAY_MSG #
 								<p>

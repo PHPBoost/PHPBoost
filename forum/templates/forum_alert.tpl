@@ -7,19 +7,17 @@
 
 			# START alert_form #
 				<script>
-				<!--
-				function check_form_alert(){
-					if(document.getElementById('contents').value == "") {
-						alert("{L_REQUIRE_TEXT}");
-						return false;
+					function check_form_alert(){
+						if(document.getElementById('contents').value == "") {
+							alert("{L_REQUIRE_TEXT}");
+							return false;
+						}
+						if(document.getElementById('title').value == "") {
+							alert("{L_REQUIRE_TITLE}");
+							return false;
+						}
+						return true;
 					}
-					if(document.getElementById('title').value == "") {
-						alert("{L_REQUIRE_TITLE}");
-						return false;
-					}
-					return true;
-				}
-				-->
 				</script>
 
 				<form method="post" action="alert.php" onsubmit="javascript:return check_form_alert();">
@@ -43,8 +41,8 @@
 
 					<fieldset class="fieldset-submit">
 							<button type="submit" name="edit_msg" value="true" class="button submit">{L_SUBMIT}</button>
-							<button onclick="XMLHttpRequest_preview();" class="button small" type="button">{L_PREVIEW}</button>
-							<button type="reset" class="button reset" value="true">{L_RESET}</button>
+							<button onclick="XMLHttpRequest_preview();" class="button preview-button" type="button">{L_PREVIEW}</button>
+							<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 							<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>

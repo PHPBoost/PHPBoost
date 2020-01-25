@@ -143,7 +143,7 @@
 				<div class="fieldset-inset">
 					<input type="hidden" name="id" value="{GROUP_ID}" class="update">
 					<button type="submit" class="button submit" name="valid" value="true">{L_UPDATE}</button>
-					<button type="reset" class="button reset" value="true">{L_RESET}</button>
+					<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</div>
 			</fieldset>

@@ -212,7 +212,7 @@
 							<textarea id="writing_pad_content" name="writing_pad_content">{WRITING_PAD_CONTENT}</textarea>
 							<fieldset class="fieldset-submit">
 								<button type="submit" class="button submit" name="writingpad" value="true">{L_UPDATE}</button>
-								<button type="reset" class="button reset" value="true">{L_RESET}</button>
+								<button type="reset" class="button reset-button" value="true">{L_RESET}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</fieldset>
 						</form>

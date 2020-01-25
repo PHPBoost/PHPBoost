@@ -66,7 +66,7 @@ function CheckForm() {
 					<div class="form-field-textarea">
 						<textarea rows="15" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
-					<div class="align-center"><button type="button" class="button small" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button></div>
+					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button></div>
 				</div>
 				<div class="form-element full-field">
 					<label>{L_AUTHS}</label>
