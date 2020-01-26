@@ -68,7 +68,7 @@
 }
 
 @media (min-width: 1025px) {
-	.form-element > label {
+	.form-element:not(.form-element-textarea) > label {
 		width: 40%;
 	}
 
