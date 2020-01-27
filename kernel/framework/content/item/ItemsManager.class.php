@@ -144,8 +144,8 @@ class ItemsManager
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
 		' . $condition . '
-		' . ($sort_field ? 'ORDER BY ' . $sort_field . ' ' . $sort_mode : '')
-		. ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, array(
+		' . ($sort_field ? 'ORDER BY ' . $sort_field . ' ' . $sort_mode : '') . '
+		' . ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, array(
 			'module_id'             => self::$module_id,
 			'current_user_id'       => AppContext::get_current_user()->get_id(),
 			'timestamp_now'         => $now->get_timestamp(),
