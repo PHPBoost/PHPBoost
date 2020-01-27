@@ -23,9 +23,9 @@
 
 	</head>
 	<body>
-		<div id="push-container">
+		<div id="push-container" class="body-wrapper">
 			# INCLUDE BODY #
-		</div>		
+		</div>
 		# INCLUDE JS_BOTTOM #
 	</body>
 </html>

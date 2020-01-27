@@ -629,14 +629,14 @@ a[class*='lightcase-icon-']:hover {
 
 #lightcase-case { text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
 
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 769px) {
     html:not([data-lc-type=error]) #lightcase-content {
         background-color: #FFFFFF;
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     }
 }
 
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 769px) {
     html[data-lc-type=image] #lightcase-content,
 	html[data-lc-type=video] #lightcase-content { background-color: #323133; }
 }

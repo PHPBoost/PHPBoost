@@ -58,7 +58,7 @@
 	}
 }
 
-@media (max-width: 468px) {
+@media (max-width: 480px) {
 	.cookiebar-more {
 		display: block;
 		margin: 0.618em 0 0.309em 0;
