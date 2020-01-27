@@ -54,7 +54,7 @@
 					# ENDIF #
 					# IF C_ENABLED_COMMENTS #
 						<span class="pinned">
-							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {L_COMMENTS}</a>
+							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {COMMENTS_LABEL}</a>
 						</span>
 					# ENDIF #
 				</div>
@@ -151,7 +151,7 @@
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<li>
-									<span># IF C_COMMENTS # {COMMENTS_NUMBER} # ENDIF # {L_COMMENTS}</span>
+									<span>{COMMENTS_LABEL}</span>
 								</li>
 							# ENDIF #
 							# IF C_ENABLED_NOTATION #

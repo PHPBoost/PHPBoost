@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 13
+ * @version     PHPBoost 5.3 - last update: 2020 01 27
  * @since       PHPBoost 5.3 - 2020 01 02
 */
 
@@ -71,10 +71,13 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 		return false;
 	}
 
-	/* public function scheduled_jobs()
+	public function scheduled_jobs()
 	{
-		return $this->get_class('ScheduledJobs', 'ScheduledJobExtensionPoint');
-	} */
+		if ($class = $this->get_class('ScheduledJobs', 'ScheduledJobExtensionPoint'))
+			return $class;
+		else
+			return new DefaultScheduledJobsModule($this->get_id());
+	}
 
 	public function search()
 	{
@@ -89,8 +92,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	{
 		if ($this->home_page())
 		{
-			$class = $this->get_class('Sitemap', 'SitemapExtensionPoint');
-			if ($class)
+			if ($class = $this->get_class('Sitemap', 'SitemapExtensionPoint'))
 				return $class;
 			else
 				return $this->module->get_configuration()->has_categories() ? new DefaultSitemapCategoriesModule($this->get_id()) : new DefaultSitemapModule($this->get_id());

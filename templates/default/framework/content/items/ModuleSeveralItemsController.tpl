@@ -109,17 +109,17 @@
 							# ENDIF #
 							# IF C_ENABLED_VIEWS #
 								<td>
-									{items.VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+									{items.VIEWS_NUMBER} # IF items.C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF C_ENABLED_VISITS #
 								<td class="col-small">
-									{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
+									{items.VISITS_NUMBER} # IF items.C_SEVERAL_VISITS #{@visits}# ELSE #{@visit}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF C_ENABLED_DOWNLOADS #
 								<td class="col-small">
-									{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
+									{items.DOWNLOADS_NUMBER} # IF items.C_SEVERAL_DOWNLOADS #{@downloads}# ELSE #{@download}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF C_ENABLED_NOTATION #
@@ -129,7 +129,7 @@
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<td>
-									{items.COMMENTS_NUMBER} # IF C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
+									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF items.C_CONTROLS #
@@ -204,7 +204,7 @@
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden></i>
-											{items.L_COMMENTS}
+											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
 										</span>
 									# ENDIF #
 								</div>
@@ -256,7 +256,7 @@
 								# ENDIF #
 								<div itemprop="text">
 									# IF C_FULL_ITEM_DISPLAY #
-										{items.CONTENTS}
+										{items.CONTENT}
 									# ELSE #
 										{items.SUMMARY}
 										# IF items.C_READ_MORE #... <a href="{items.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
