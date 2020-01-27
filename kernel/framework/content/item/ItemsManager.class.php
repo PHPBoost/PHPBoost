@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 01 27
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -124,14 +124,14 @@ class ItemsManager
 
 	 /**
 	 * @desc Return the list of items correspnding to the condition.
+	 * @param string $condition Restriction to apply to the item
+	 * @param array $parameters Parameters of the condition
 	 * @param int $number_items_per_page Number of items to display
 	 * @param int $display_from First item to take into account
 	 * @param string $sort_field Field on which apply the sorting
 	 * @param string $sort_mode Sort mode (asc or desc)
-	 * @param string $condition Restriction to apply to the item
-	 * @param array $parameters Parameters of the condition
 	 */
-	public function get_items(int $number_items_per_page, int $display_from, $sort_field, $sort_mode, $condition = '', array $parameters = array(), $keywords = false)
+	public function get_items($condition = '', array $parameters = array(), int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = '', $keywords = false)
 	{
 		$now = new Date();
 		$items = array();
@@ -144,8 +144,8 @@ class ItemsManager
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
 		' . $condition . '
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		' . ($sort_field ? 'ORDER BY ' . $sort_field . ' ' . $sort_mode : '')
+		. ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, array(
 			'module_id'             => self::$module_id,
 			'current_user_id'       => AppContext::get_current_user()->get_id(),
 			'timestamp_now'         => $now->get_timestamp(),
