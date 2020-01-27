@@ -88,7 +88,7 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 			}
 		}
 
-		if ($i == 0	)
+		if ($i == 0)
 			$section = $this_category;
 
 		return $section;

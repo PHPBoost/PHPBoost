@@ -200,7 +200,7 @@ class ModuleConfiguration
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->configuration_name ? ModulesUrlBuilder::admin($this->module_id) : '');
+		$this->admin_main_page        = !empty($config['admin_main_page']) ? $config['admin_main_page'] : ($this->configuration_name ? ModulesUrlBuilder::admin($this->module_id)->rel() : '');
 		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
