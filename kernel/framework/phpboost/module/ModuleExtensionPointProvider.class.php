@@ -61,14 +61,25 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 		return false;
 	}
 
-	/* public function feeds()
+	public function feeds()
 	{
-		return $this->get_class('FeedProvider');
-	}*/
+		if ($class = $this->get_class('FeedProvider'))
+			return $class;
+		else
+			return $this->module->get_configuration()->has_categories() ? new DefaultCategoriesFeedProvider($this->get_id()) : false;
+	}
 
 	public function home_page()
 	{
 		return false;
+	}
+
+	public function menus()
+	{
+		if ($class = $this->get_class('ModuleMiniMenu'))
+			return new ModuleMenus(array(new $class()));
+		else
+			return false;
 	}
 
 	public function scheduled_jobs()
@@ -82,12 +93,11 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	public function search()
 	{
 		if ($this->module->get_configuration()->feature_is_enabled('search'))
-		{
 			return $this->get_class('Searchable', 'SearchableExtensionPoint');
-		}
-		return false;
+		else
+			return false;
 	}
-	
+
 	public function sitemap()
 	{
 		if ($this->home_page())
@@ -108,7 +118,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/' . $this->get_id() . '/index.php')));
 	}
-	
+
 	private function get_class($extension_point_label, $extension_point_full_name = '')
 	{
 		$extension_point_full_name = !empty($extension_point_full_name) ? $extension_point_full_name : $extension_point_label;

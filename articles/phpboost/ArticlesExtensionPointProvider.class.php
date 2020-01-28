@@ -17,19 +17,9 @@ class ArticlesExtensionPointProvider extends ModuleExtensionPointProvider
 		parent::__construct('articles');
 	}
 
-	public function feeds()
-	{
-		return new ArticlesFeedProvider();
-	}
-
 	public function home_page()
 	{
 		return new DefaultHomePageDisplay($this->get_id(), ArticlesDisplayCategoryController::get_view($this->get_id()));
-	}
-
-	public function search()
-	{
-		return new ArticlesSearchable();
 	}
 }
 ?>

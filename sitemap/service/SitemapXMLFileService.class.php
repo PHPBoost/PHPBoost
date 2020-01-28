@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2020 01 27
  * @since       PHPBoost 3.0 - 2009 12 22
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 /**
@@ -87,6 +88,7 @@ class SitemapXMLFileService
 	 */
 	public static function try_to_generate()
 	{
+		DBFactory::load_prefix();
 		$sitemap = SitemapService::get_public_sitemap();
 		$export_config = self::get_export_config();
 
