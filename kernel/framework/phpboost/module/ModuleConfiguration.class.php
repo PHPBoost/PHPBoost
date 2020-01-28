@@ -34,7 +34,7 @@ class ModuleConfiguration
 	private $contribution_interface;
 	private $url_rewrite_rules;
 	private $documentation;
-	private $enabled_features;
+	private $features;
 	private $item_name;
 	private $items_table_name;
 	private $categories_table_name;
@@ -131,14 +131,14 @@ class ModuleConfiguration
 		return $this->documentation;
 	}
 
-	public function get_enabled_features()
+	public function get_features()
 	{
-		return $this->enabled_features;
+		return $this->features;
 	}
 
 	public function feature_is_enabled($feature_id)
 	{
-		return in_array($feature_id, array_map('trim', $this->enabled_features), true);
+		return in_array($feature_id, array_map('trim', $this->features), true);
 	}
 
 	public function get_item_name()
@@ -210,7 +210,7 @@ class ModuleConfiguration
 		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
-		$this->enabled_features       = !empty($config['enabled_features']) ? explode(',', preg_replace('/\s/', '', $config['enabled_features'])) : array();
+		$this->features               = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
 		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name ? $this->module_id : '');
 		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->item_name ? $this->module_id . '_cats' : '');
