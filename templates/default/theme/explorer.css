@@ -27,6 +27,9 @@
 	min-width: 200px;
 }
 
+.form-field .explorer,
+.form-field .explorer .cats { width: 100%; }
+
 .explorer .content {
 	padding: 0;
 	min-height: 120px;

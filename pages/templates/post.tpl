@@ -75,14 +75,16 @@
 				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
-					<div class="explorer d-inline">
-						<div class="cats">
-							<div class="content">
-								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
-								<ul>
-									<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_ROOT}</a></li>
-									{CAT_LIST}
-								</ul>
+					<div class="form-field">
+						<div class="explorer">
+							<div class="cats">
+								<div class="content">
+									<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
+									<ul>
+										<li><a id="class-0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder" aria-hidden="true"></i>{L_ROOT}</a></li>
+										{CAT_LIST}
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
