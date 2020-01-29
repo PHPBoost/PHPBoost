@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 01 29
  * @since       PHPBoost 4.0 - 2013 12 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -42,7 +42,9 @@ $lang['config.items.per.row'] = 'Nombre d\'éléments par ligne';
 $lang['config.items.per.page'] = 'Nombre d\'éléments par page';
 $lang['config.display.summary.to.guests'] = 'Afficher le résumé des éléments aux visiteurs s\'ils n\'ont pas l\'autorisation de lecture';
 $lang['config.full.item.display'] = 'Affichage complet des éléments';
-$lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par défaut';
+$lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par défaut'; // To be deleted whan all modules will use the new variable
+$lang['config.items.default.sort.field'] = 'Ordre d\'affichage des éléments par défaut';
+$lang['config.items.default.sort.mode'] = 'Sens d\'affichage des éléments par défaut';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';

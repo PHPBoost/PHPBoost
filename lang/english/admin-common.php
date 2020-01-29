@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 01 29
  * @since       PHPBoost 4.0 - 2013 12 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -40,7 +40,9 @@ $lang['config.categories.per.row'] = 'Categories number per row';
 $lang['config.items.per.row'] = 'Items number per row';
 $lang['config.display_summary_to_guests'] = 'Display summary of files to guests if they don\'t have read permission';
 $lang['config.full.item.display'] = 'Full item display';
-$lang['config.items_default_sort'] = 'Items display order per default';
+$lang['config.items_default_sort'] = 'Items display order per default'; // To be deleted whan all modules will use the new variable
+$lang['config.items.default.sort.field'] = 'Default items display order';
+$lang['config.items.default.sort.mode'] = 'Default items display direction';
 $lang['config.author_displayed'] = 'Display author\'s name';
 $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';

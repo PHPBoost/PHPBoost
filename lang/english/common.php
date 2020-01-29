@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 01 29
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -118,11 +118,15 @@ $lang['status.approved.date'] = 'Differed publication';
 //Form
 $lang['form.name'] = 'Name';
 $lang['form.title'] = 'Title';
-$lang['form.contents'] = 'Content';
+$lang['form.content'] = 'Content';
+$lang['form.contents'] = 'Content'; // To be deleted whan all modules will use the new variable
 $lang['form.description'] = 'Description';
-$lang['form.short_contents'] = 'Short content';
-$lang['form.short_contents.enabled'] = 'Personalize short content';
-$lang['form.short_contents.enabled.description'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
+$lang['form.summary'] = 'Summary';
+$lang['form.custom.summary.enabled'] = 'Personalize short content';
+$lang['form.custom.summary.enabled.description'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
+$lang['form.short_contents'] = 'Short content'; // To be deleted whan all modules will use the new variable
+$lang['form.short_contents.enabled'] = 'Personalize short content'; // To be deleted whan all modules will use the new variable
+$lang['form.short_contents.enabled.description'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.'; // To be deleted whan all modules will use the new variable
 $lang['form.author_custom_name_enabled'] = 'Personalize author name';
 $lang['form.author_custom_name'] = 'Author name';
 $lang['form.category'] = 'Location';
@@ -145,6 +149,8 @@ $lang['form.other'] = 'Other';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
 $lang['form.keywords.description'] = 'Only one keyword per row';
+$lang['form.thumbnail'] = 'Picture';
+$lang['form.thumbnail.preview'] = 'Picture preview';
 $lang['form.picture'] = 'Picture';
 $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
