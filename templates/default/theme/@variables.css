@@ -5,105 +5,130 @@
 */
 
 :root {
-    --txt-main    : #555555;
+    --txt-rgb-m    : 85, 85, 85;
+    --txt-main     : #555555;
 
+    --bgc-rgb-m    : 255, 255, 255;
     --bgc-main     : #FFFFFF;
+    --bgc-rgb-o    : 236, 242, 249;
     --bgc-option   : #ECF2F8;
 
+    --bdr-rgb-m    : 189, 194, 201;
     --bdr-main     : #BDC2C9;
 
     --darken : 0, 0, 0;
     --lighten: 255, 255, 255;
 
 /* main */
+    --main-rgb-dr  : 28, 51, 74;
     --main-darker  : #1c334a;
-    --main-rgb     : 50, 100, 147;
+    --main-rgb-d   : 50, 100, 147;
     --main-dark    : #366493;
+    --main-rgb-l   : 78, 142, 193;
     --main-light   : #4E8EC1;
 
 /* error */
-    --ruby-rgb     : 191, 38, 60;
+    --ruby-rgb-d   : 191, 38, 60;
     --ruby-dark    : #BF263C;
+    --ruby-rgb-l   : 218, 68, 83;
     --ruby-light   : #DA4453;
 
 /* warning */
-    --tango-rgb    : 233, 87, 63;
+    --tango-rgb-d  : 233, 87, 63;
     --tango-dark   : #E9573F;
+    --tango-rgb-l  : 252, 125, 95;
     --tango-light  : #FC7D5F;
 
-    --sun-rgb      : 246, 187, 66;
+    --sun-rgb-d    : 246, 187, 66;
     --sun-dark     : #F6BB42;
+    --sun-rgb-l    : 255, 221, 99;
     --sun-light    : #FFDD64;
 
 /* alt - star */
-    --straw-rgb    : 224, 195, 65;
+    --straw-rgb-d  : 224, 195, 65;
     --straw-dark   : #E0C341;
+    --straw-rgb-l  : 232, 225, 95;
     --straw-light  : #E8E15F;
 
-    --grass-rgb    : 140, 193, 82;
+    --grass-rgb-d  : 140, 193, 82;
     --grass-dark   : #8CC152;
+    --grass-rgb-l  : 160, 227, 120;
     --grass-light  : #A0E378;
 
 /* success */
-    --basil-rgb    : 42, 186, 102;
+    --basil-rgb-d  : 42, 186, 102;
     --basil-dark   : #2ABA66;
+    --basil-rgb-l  : 46, 221, 130;
     --basil-light  : #2EDC82;
 
 /* member */
-    --mint-rgb     : 72, 252, 173;
+    --mint-rgb-d   : 72, 252, 173;
     --mint-dark    : #37BC9B;
+    --mint-rgb-l   : 72, 222, 190;
     --mint-light   : #48DEBE;
 
-    --teal-rgb     : 125, 177, 177;
+    --teal-rgb-d   : 125, 177, 177;
     --teal-dark    : #7DB1B1;
+    --teal-rgb-l   : 160, 221, 221;
     --teal-light   : #A0DCDC;
 
 /* question */
-    --aqua-rgb     : 59, 175, 218;
+    --aqua-rgb-d   : 59, 175, 218;
     --aqua-dark    : #3BAFDA;
+    --aqua-rgb-l   : 79, 210, 250;
     --aqua-light   : #4FD2FA;
 
 /* moderator */
-    --lotus-rgb   : 150, 122, 221;
-    --lotus-dark  : #967ADC;
-    --lotus-light : #ACA0FA;
+    --lotus-rgb-d  : 150, 122, 221;
+    --lotus-dark   : #967ADC;
+    --lotus-rgb-l  : 172, 160, 250;
+    --lotus-light  : #ACA0FA;
 
 /* alt-submit */
-    --plum-rgb     : 106, 80, 167;
+    --plum-rgb-d   : 106, 80, 167;
     --plum-dark    : #6A50A7;
+    --plum-rgb-l   : 128, 120, 200;
     --plum-light   : #8078C8;
 
-    --candy-rgb    : 215, 112, 173;
+    --candy-rgb-d  : 215, 112, 173;
     --candy-dark   : #D770AD;
+    --candy-rgb-l  : 236, 150, 210;
     --candy-light  : #EC96D2;
 
-    --bear-rgb     : 170, 142, 105;
+    --bear-rgb-d   : 170, 142, 105;
     --bear-dark    : #AA8E69;
+    --bear-rgb-l   : 186, 180, 150;
     --bear-light   : #BAB496;
 
-    --gravel-rgb   : 122, 112, 99;
+    --gravel-rgb-d : 122, 112, 99;
     --gravel-dark  : #7B7163;
+    --gravel-rgb-l : 142, 145, 130;
     --gravel-light : #8E9182;
 
-    --bole-rgb     : 80, 52, 44;
+    --bole-rgb-d   : 80, 52, 44;
     --bole-dark    : #50342C;
+    --bole-rgb-l   : 98, 80, 70;
     --bole-light   : #625046;
 
-    --polar-rgb    : 245, 247, 250;
+    --polar-rgb-d  : 245, 247, 250;
     --polar-dark   : #E1E1E1;
+    --polar-rgb-l  : 245, 247, 250;
     --polar-light  : #F5F7FA;
 
 /* notice */
-    --mouse-rgb    : 170, 178, 189;
+    --mouse-rgb-d  : 170, 178, 189;
     --mouse-dark   : #AAB2BD;
+    --mouse-rgb-l  : 189, 194, 201;
     --mouse-light  : #BDC2C9;
 
-    --cloud-rgb    : 67, 74, 84;
+    --cloud-rgb-d  : 67, 74, 84;
     --cloud-dark   : #434A54;
+    --cloud-rgb-l  : 116, 125, 135;
     --cloud-light  : #747D87;
 
 /* administrator */
-    --coal-rgb     : 50, 49, 51;
+    --coal-rgb-d   : 50, 49, 51;
     --coal-dark    : #323133;
+    --coal-rgb-l   : 103, 103, 115;
     --coal-light   : #676773;
 }
