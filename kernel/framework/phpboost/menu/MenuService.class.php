@@ -356,7 +356,7 @@ class MenuService
 		$menus = array();
 		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
-			if (MenusProvidersService::module_containing_extension_point($module_id))
+			if ($extension_point !== null)
 			{
 				foreach ($extension_point->get_menus() as $menu)
 				{
