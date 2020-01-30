@@ -8,7 +8,7 @@
 		# IF C_MODULE_AVAILABLE #
 			<div class="cell-flex cell-columns-3 cell-tile">
 				# START modules_not_installed #
-					<article class="cell addon# IF NOT modules_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+					<article class="cell addon# IF NOT modules_not_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
 						<header class="cell-header">
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_not_installed.C_COMPATIBLE #
@@ -25,7 +25,7 @@
 								# IF modules_not_installed.C_COMPATIBLE #
 									<button type="submit" class="button submit addon-menu-title" name="add-{modules_not_installed.ID}" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 								# ELSE #
-									<span class="addon-menu-title">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
+									<span class="addon-menu-title error">${LangLoader::get_message('not_compatible', 'admin-common')}</span>
 								# ENDIF #
 							</div>
 						</header>
@@ -40,11 +40,11 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-									<span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span>
+									<span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
+									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
@@ -73,12 +73,12 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
+		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">
 			<label class="checkbox" for="add-all-checkbox">
-				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" aria-label="{@modules.select_all_modules}" />
-				<span>&nbsp;</span>
+				<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
+				<span aria-label="{@modules.select_all_modules}">&nbsp;</span>
 			</label>
-			<button type="submit" name="add-selected-modules" value="true" class="select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
+			<button type="submit" name="add-selected-modules" value="true" class="button submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 		</div>
 	# ENDIF #
 </form>

@@ -7,7 +7,7 @@
 		# IF C_THEME_AVAILABLE #
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_not_installed #
-			<article class="cell addon# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+			<article class="cell addon# IF NOT themes_not_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
 				<header class="cell-header">
 					# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
 						# IF themes_not_installed.C_COMPATIBLE #
@@ -49,14 +49,14 @@
 						</li>
 						<li class="li-stretch">
 							<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-							<span# IF NOT themes_not_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_not_installed.COMPATIBILITY}</span>
+							<span# IF NOT themes_not_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {themes_not_installed.COMPATIBILITY}</span>
 						</li>
 						<li class="li-stretch">
 							<span class="text-strong">
 								${LangLoader::get_message('author', 'admin-common')} :
 							</span>
 							<span>
-								# IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #<br />
+								# IF themes_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR}</a># ELSE #{themes_not_installed.AUTHOR}# ENDIF # # IF themes_not_installed.C_AUTHOR_WEBSITE #<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #<br />
 							</span>
 						</li>
 						<li class="li-stretch">
@@ -112,10 +112,10 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_THEME_AVAILABLE #
-	<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
+	<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">
 		<label class="checkbox" for="add-all-checkbox">
-			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, null, false);" aria-label="{@themes.select_all_themes}" />
-			<span>&nbsp;</span>
+			<input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, null, false);" />
+			<span aria-label="{@themes.select_all_themes}">&nbsp;</span>
 		</label>
 		<button type="submit" name="add-selected-themes" value="true" class="button submit select-all-button">${LangLoader::get_message('multiple.install_selection', 'admin-common')}</button>
 	</div>

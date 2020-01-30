@@ -8,7 +8,7 @@
 		# IF C_UPDATES #
 			<div class="cell-flex cell-columns-3 cell-tile">
 				# START modules_upgradable #
-					<article class="cell addon">
+					<article class="cell addon# IF NOT modules_upgradable.C_COMPATIBLE # not-compatible error# ENDIF#">
 						<header class="cell-header">
 							# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
 								# IF modules_upgradable.C_COMPATIBLE #
@@ -40,11 +40,11 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('compatibility', 'admin-common')} :</span>
-									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
+									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible error"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
+									<span># IF modules_upgradable.C_AUTHOR_EMAIL #<a href="mailto:{modules_upgradable.AUTHOR_EMAIL}">{modules_upgradable.AUTHOR}</a># ELSE #{modules_upgradable.AUTHOR}# ENDIF # # IF modules_upgradable.C_AUTHOR_WEBSITE #<a href="{modules_upgradable.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
@@ -72,12 +72,12 @@
 		<footer></footer>
 	</section>
 	# IF C_MORE_THAN_ONE_MODULE_AVAILABLE #
-		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox">
+		<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">
 			<label class="checkbox" for="upgrade-all-checkbox">
-				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" aria-label="{@modules.select_all_modules}" />
-				<span>&nbsp;</span>
+				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
+				<span aria-label="{@modules.select_all_modules}">&nbsp;</span>
 			</label>
-			<button type="submit" name="upgrade-selected-modules" value="true" class="select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
+			<button type="submit" name="upgrade-selected-modules" value="true" class="button submit select-all-button">${LangLoader::get_message('multiple.upgrade_selection', 'admin-common')}</button>
 		</div>
 	# ENDIF #
 </form>

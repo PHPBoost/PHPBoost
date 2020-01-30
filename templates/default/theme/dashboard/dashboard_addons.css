@@ -60,10 +60,6 @@
 	text-decoration: none;
 }
 
-.not-compatible {
-	font-weight: 900;
-}
-
 .not-compatible span.addon-menu-title {
 	cursor: not-allowed;
 }

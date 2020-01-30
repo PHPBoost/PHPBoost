@@ -23,7 +23,7 @@
 						# ENDIF #
 						<h3 class="cell-name">{modules_installed.NAME}</h3>
 						<div class="addon-menu-container addon-with-menu">
-							<a href="#" id="addon-menu-title-{modules_installed.MODULE_NUMBER}" class="addon-menu-title">
+							<a href="#" id="addon-menu-title-{modules_installed.MODULE_NUMBER}" class="addon-menu-title bgc-full link-color">
 								# IF modules_installed.C_COMPATIBLE #
 									# IF modules_installed.C_IS_ACTIVATED #
 										${LangLoader::get_message('actions', 'admin-common')}
@@ -57,7 +57,7 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a># ENDIF #</span>
+								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
@@ -83,7 +83,7 @@
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #
 						<div class="cell-footer align-center">
-							<a class="button alt-button smaller" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
+							<a class="button alt-button small" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
 						</div>
 					# ENDIF #
 				</article>
@@ -101,12 +101,12 @@
 
 	# IF C_MORE_THAN_ONE_MODULE_INSTALLED #
 	<div class="addon-menu-container multiple-select-menu-container">
-		<a href="#" class="multiple-select-menu addon-menu-title">${LangLoader::get_message('multiple.select', 'admin-common')}</a>
+		<a href="#" class="multiple-select-menu addon-menu-title bgc-full link-color">${LangLoader::get_message('multiple.select', 'admin-common')}</a>
 		<ul class="addon-menu-content">
-			<li class="addon-menu-checkbox mini-checkbox select-all-checkbox">
+			<li class="addon-menu-checkbox mini-checkbox select-all-checkbox bgc-full link-color">
 				<label class="checkbox" for="delete-all-checkbox">
-					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" aria-label="{@modules.select_all_modules}" />
-					<span>&nbsp;</span>
+					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
+					<span aria-label="{@modules.select_all_modules}">&nbsp;</span>
 				</label>
 			</li>
 			<li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button submit" id="activate-all-button">${LangLoader::get_message('multiple.activate_selection', 'admin-common')}</button></li>

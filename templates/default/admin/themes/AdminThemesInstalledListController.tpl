@@ -4,7 +4,7 @@
 		<header class="legend">{@themes.installed_theme}</header>
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START themes_installed #
-				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+				<article class="cell addon# IF themes_installed.C_IS_DEFAULT_THEME # default-addon# ENDIF ## IF NOT themes_installed.C_IS_ACTIVATED #disabled-addon# ENDIF ## IF NOT themes_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
 					<header class="cell-header">
 						# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 							# IF themes_installed.C_COMPATIBLE #
@@ -20,11 +20,11 @@
 						<div class="addon-menu-container">
 							# IF themes_installed.C_IS_DEFAULT_THEME #
 								<div class="addon-menu-container">
-									<span class="addon-menu-title">{@themes.default}</span>
+									<span class="addon-menu-title bgc-full notice">{@themes.default}</span>
 								</div>
 							# ELSE #
 								<div class="addon-menu-container addon-with-menu">
-									<a href="#" id="addon-menu-title-{themes_installed.THEME_NUMBER}" class="addon-menu-title">
+									<a href="#" id="addon-menu-title-{themes_installed.THEME_NUMBER}" class="addon-menu-title bgc-full link-color">
 										# IF themes_installed.C_COMPATIBLE #
 											# IF themes_installed.C_IS_ACTIVATED #
 												${LangLoader::get_message('actions', 'admin-common')}
@@ -75,7 +75,7 @@
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
-									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="button alt-button smaller">Web</a> # ENDIF #
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a> # ENDIF #
 								</span>
 							</li>
 							<li class="li-stretch">
@@ -112,7 +112,7 @@
 						# IF themes_installed.C_COMPATIBLE #
 							<div class="addon-auth-container">
 								# IF themes_installed.C_IS_DEFAULT_THEME #
-									<span class="addon-auth default-addon" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
+									<span class="addon-auth default-addon notice" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 								# ELSE #
 									<a href="" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
 									<div class="addon-auth-content">
@@ -143,12 +143,12 @@
 
 	# IF C_MORE_THAN_ONE_THEME_INSTALLED #
 		<div class="addon-menu-container multiple-select-menu-container">
-			<a href="#" class="multiple-select-menu addon-menu-title">${LangLoader::get_message('multiple.select', 'admin-common')}</a>
+			<a href="#" class="multiple-select-menu addon-menu-title bgc-full link-color">${LangLoader::get_message('multiple.select', 'admin-common')}</a>
 			<ul class="addon-menu-content">
-				<li class="addon-menu-checkbox mini-checkbox select-all-checkbox">
+				<li class="addon-menu-checkbox mini-checkbox select-all-checkbox bgc-full link-color">
 					<label class="checkbox" for="delete-all-checkbox">
-						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER}, false);" aria-label="{@themes.select_all_themes}" />
-						<span>&nbsp;</span>
+						<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, {DEFAULT_THEME_NUMBER}, false);" />
+						<span aria-label="{@themes.select_all_themes}">&nbsp;</span>
 					</label>
 				</li>
 				<li class="addon-menu-item"><button type="submit" name="delete-selected-themes" value="true" class="button alt-submit" id="delete-all-button">${LangLoader::get_message('multiple.uninstall_selection', 'admin-common')}</button></li>
