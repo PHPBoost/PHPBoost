@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 02 02
+ * @version     PHPBoost 5.3 - last update: 2020 01 30
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -356,12 +356,15 @@ class MenuService
 		$menus = array();
 		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
-			foreach ($extension_point->get_menus() as $menu)
+			if (MenusProvidersService::module_containing_extension_point($module_id))
 			{
-				$menus[get_class($menu)] = array(
-					'module_id' => $module_id,
-					'menu' => $menu
-				);
+				foreach ($extension_point->get_menus() as $menu)
+				{
+					$menus[get_class($menu)] = array(
+						'module_id' => $module_id,
+						'menu' => $menu
+					);
+				}
 			}
 		}
 
