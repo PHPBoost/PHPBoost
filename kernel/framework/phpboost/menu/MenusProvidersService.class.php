@@ -17,7 +17,7 @@ class MenusProvidersService
 		if (self::module_containing_extension_point($module_id))
 		{
 			$provider = self::get_provider($module_id);
-			return ($provider !== null ? $provider->get_menus($module_id) : array();
+			return ($provider !== null ? $provider->get_menus($module_id) : array());
 		}
 	}
 
