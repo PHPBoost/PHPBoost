@@ -15,7 +15,7 @@ jQuery(document).ready(function(){
 			jQuery(this).removeClass('no-js');
 			jQuery(this).attr('onClick', 'bb_hide(' + IDCODE + ', 1, event);');
 			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-message-' + IDCODE + '" class="formatter-hide-message">' + L_HIDE_MESSAGE + '</span>');
-			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button" "aria-label="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-times"></i><span class="formatter-hide-close-button-txt">' + L_HIDE_HIDEBLOCK + '</span></span>');
+			jQuery(this).children('.formatter-content').before('<span id="formatter-hide-close-button-' + IDCODE + '" class="formatter-hide-close-button pinned error" aria-label="' + L_HIDE_HIDEBLOCK + '" onclick="bb_hide(' + IDCODE + ', 0, event);"><i class="fa fa-times"></i></span>');
 			IDCODE = IDCODE + 1;
 		}
 	} );
