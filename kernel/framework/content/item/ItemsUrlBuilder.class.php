@@ -36,10 +36,11 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add($id_category = null, $module_id = '')
+	public static function add($id_category = null, $module_id = '', $additional_parameter = null)
 	{
 		$id_category = !empty($id_category) ? $id_category . '/' : '';
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/add/' . $id_category);
+		$additional_parameter = (!empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : $additional_parameter . '/') : '');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/add/' . $id_category . $additional_parameter);
 	}
 
 	/**
@@ -47,29 +48,30 @@ class ItemsUrlBuilder
 	 */
 	public static function edit($id, $module_id = '', $additional_parameter = null)
 	{
-		$additional_parameter = !empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : (!is_int($additional_parameter) ? $additional_parameter . '/' : '')) : '';
+		$additional_parameter = (!empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : $additional_parameter . '/') : '');
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/'. $id .'/edit/' . $additional_parameter);
 	}
 
 	/**
 	 * @return Url
 	 */
-	public static function delete($id, $module_id = '')
+	public static function delete($id, $module_id = '', $additional_parameter = null)
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
+		$additional_parameter = (!empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : $additional_parameter . '/') : '');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '/delete/' . $additional_parameter . '?token=' . AppContext::get_session()->get_token());
 	}
 
 	/**
 	 * @return Url
 	 */
-	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name, $anchor = '', $module_id = '')
+	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name, $module_id = '', $anchor = '')
 	{
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/' . $anchor);
 	}
 	/**
 	 * @return Url
 	 */
-	public static function display_item($id, $rewrited_title, $anchor = '', $module_id = '')
+	public static function display_item($id, $rewrited_title, $module_id = '', $anchor = '')
 	{
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '-' . $rewrited_title . '/' . $anchor);
 	}
