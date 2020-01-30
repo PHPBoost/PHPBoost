@@ -5,7 +5,7 @@
 
 @import url('../../default/theme/shape.css') screen;
 
-/* @import url('../../default/theme/@variables.css') screen; */
+@import url('../../default/theme/@variables.css') screen;
 @import url('../../default/theme/global.css') screen;
 @import url('../../default/theme/form.css') screen;
 @import url('../../default/theme/fieldset.css') screen;

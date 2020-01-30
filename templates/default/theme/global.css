@@ -134,6 +134,9 @@ a.pinned { cursor: pointer; }
 /* --- Floating sub container --- */
 .dropdown-container {
 	z-index: 10;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
 
 /* --- Coast to coast elements --- */

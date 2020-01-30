@@ -7,35 +7,35 @@
 
  /* --- dashboard_shape.css ---------------------------------------------------- */
 	body {
- 		background-color: #ECF2F8;
-	    color: #555555;
+ 		background-color: var(--bgc-alt);
+	    color: var(--txt-dark);
  	}
 
  	#header-admin {
-		background-image: linear-gradient(to bottom, #366493 0%, #1c334a 100%);
-		background-color: #366493;
-		color: #FFFFFF;
+		background-image: linear-gradient(to bottom, var(--main-dark) 0%, var(--main-darker) 100%);
+		background-color: var(--main-dark);
+		color: var(--txt-light);
  	}
 
 	#site-name {
-		color: #FFFFFF;
+		color: var(--txt-light);
 	}
 
  	#footer {
- 		background-color: #1c334a;
- 		border-color: #366493;
+ 		background-color: var(--main-darker);
+ 		border-color: var(--main-dark);
  	}
 
- 	#footer span { color: #FFFFFF; }
+ 	#footer span { color: var(--txt-light); }
 
 /* --- Content -------------------------------------------------------------- */
 
 .options {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 .db-executed-query {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 /* --- cell.css ------------------------------------------------------------- */
@@ -47,11 +47,11 @@
 .cell-tile .cell-table,
 .cell-tile .cell-form,
 .cell-tile .cell-textarea {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 .cell-thumbnail a:hover {
-    color: #FFFFFF;
+    color: var(--txt-light);
 }
 
 .cell-modal .content-panel.cell {
@@ -62,119 +62,41 @@
 	border-color: transparent;
 }
 
-/* --- Addons (themes/modules/langs) ---------------------------------------- */
-article .addon-menu-title,
-.addon-menu-title a {
-	color: #FFFFFF;
-}
-
-.multiple-select-button,
-.addon-menu-title,
-.submit.addon-menu-title              { background-color: #366493; border-color: #366493; }
-.default-addon .addon-menu-title      { background-color: #2ABA66; border-color: #2ABA66; }
-.deactivate-element .addon-menu-title { background-color: #BDC2C9; border-color: #BDC2C9; }
-.not-compatible .addon-menu-title     { background-color: #BF263C; border-color: #BF263C; }
-
-.addon.not-compatible {
-	border-color: #BF263C;
-}
-
-span.not-compatible {
-	color: #BF263C;
-}
-
-.multiple-select-button:hover,
-.addon-menu-container:hover .addon-menu-title,
-.addon-menu-container.opened .addon-menu-title,
-.addon-menu-title.opened { background-color: #336493; }
-
-.addon-menu-container .addon-menu-title,
-.addon-menu-container.opened .addon-menu-title,
-.addon-menu-container.opened .addon-menu-title a,
-.addon-menu-title.opened,
-.addon-menu-title.opened a { color: #FFFFFF; }
-
-.deactivate-element .addon-menu-container:hover .addon-menu-title,
-.deactivate-element .addon-menu-container.opened .addon-menu-title { color: #BDC2C9; }
-
-.not-compatible .addon-menu-container:hover .addon-menu-title,
-.not-compatible .addon-menu-container.opened .addon-menu-title { color: #BF263C; }
-
-.default-addon .addon-menu-container:hover .addon-menu-title { color: #2ABA66; }
-
-.addon-menu-content {
-	background-color: #FFFFFF;
-	color: #FFFFFF;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-.multiple-select-menu-container .addon-menu-content {
-	box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
-}
-
-.deactivate-element .addon-menu-content { border-color: #BDC2C9; }
-.not-compatible .addon-menu-content     { border-color: #BF263C; }
-
-.addon-menu-item > * { background-color: #366493; }
-
-.not-compatible .addon-menu-item:hover > *,
-.not-compatible .addon-menu-item > .submit:hover { background-color: rgba(145, 54, 54, 0.2); color: #BF263C; }
-
-.addon-auth-content {
-	box-shadow: 0 0 10px rgba(54, 100, 147, 0.2);
-	border-color: #BDC2C9;
-	background-color: #FFFFFF;
-}
-
-.addon-auth i { color: #366493; }
-.default-addon .addon-auth i { color: #BDC2C9; }
-
-.multiple-select-button .select-all-button {
-	background-color: transparent;
-	border: none;
-	box-shadow: none;
-	color: #FFFFFF;
-}
-
-.addon-menu-checkbox {
-	background-color: #366493;
-}
-
 .sortable-element,
 .sortable-element:hover {
-    background-color: #FFFFFF;
+    background-color: var(--bgc-main);
 }
 /* --- Table ----------------------------------------------------------------- */
 table thead th {
-	background-color: #366493;
-	color: #FFFFFF;
+	background-color: var(--main-dark);
+	color: var(--txt-light);
 }
 
-table thead th a { color: #FFFFFF; }
+table thead th a { color: var(--txt-light); }
 
 .html-table-header-sortable:hover a,
 .html-table-header-sortable.sort-active a {
-	background-color: #FFFFFF;
-	color: #555555;
+	background-color: var(--bgc-main);
+	color: var(--txt-dark);
 }
 
 /* --- Form elements --------------------------------------------------------- */
 .button {
-	background-color: #FFFFFF;
-	border-color: #BDC2C9;
+	background-color: var(--bgc-main);
+	border-color: var(--bdr-main);
 }
 
 .button-hover {
-	border-color: #555555;
+	border-color: var(--txt-dark);
 }
 
 .button-active {
-	border-color: #366493;
+	border-color: var(--main-dark);
 }
 
 @media (min-width: 769px) {
 	.form-element {
-		border-color: #dddddd;
+		border-color: var(--bdr-main);;
 	}
 }
 
@@ -190,7 +112,7 @@ table thead th a { color: #FFFFFF; }
 [type=file],
 textarea,
 select {
-	background-color: #ECF2F8;
+	background-color: var(--bgc-alt);
 }
 
 [type=text]:hover,
@@ -204,7 +126,7 @@ select {
 [type=file]:hover,
 textarea:hover,
 select:hover {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 [type=text]:focus,
@@ -218,182 +140,182 @@ select:hover {
 [type=file]:focus,
 textarea:focus,
 select:focus {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 [disabled],
 [disabled]:hover,
 [readonly],
 [readonly]:hover {
-	background-color: #ECF2F8;
+	background-color: var(--bgc-alt);
 }
 
 /* --- Checkbox --- */
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
-	background: #FFFFFF;
-	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+	background-color: var(--bgc-main);
+	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.25);
 }
 
 .mini-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	color: #366493;
+	color: var(--main-dark);
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::before {
-	border-color: #BF263C;
+	border-color: var(--error-dark);
 }
 
 .custom-checkbox .checkbox [type="checkbox"]:checked + span::before {
-	border-color: #2ABA66;
+	border-color: var(--success-dark);
 }
 
 .custom-checkbox .checkbox [type="checkbox"] + span::after {
-	background-color: #BF263C;
-	color: #FFFFFF;
+	background-color: var(--error-dark);
+	color: var(--txt-light);
 }
 
 .custom-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	background-color: #2ABA66;
-	color: #FFFFFF;
+	background-color: var(--success-dark);
+	color: var(--txt-light);
 }
 
 .custom-radio .radio [type="radio"]:not(:checked) + span::before,
 .custom-radio .radio [type="radio"]:checked + span::before {
-	background-color: #FFFFFF;
-	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+	background-color: var(--bgc-main);
+	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.25);
 }
 
 .custom-radio .radio [type="radio"]:not(:checked) + span:after,
 .custom-radio .radio [type="radio"]:checked + span:after {
-	background-color: #BDC2C9;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	background-color: var(--bgc-alt);
+	background-image: linear-gradient(to bottom, rgba(var(--lighten), 0.18) 0%, rgba(var(--darken), 0.1) 100%);
 }
 
 .custom-radio .radio [type="radio"]:checked + span:after {
-	background-color: #366493;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 0%, rgba(56, 56, 56, 0.1) 100%);
+	background-color: var(--main-dark);
+	background-image: linear-gradient(to bottom, rgba(var(--lighten), 0.18) 0%, rgba(var(--darken), 0.1) 100%);
 }
 
 /* --- Lined textarea --- */
 .linedtextarea {
-	background-color: #E5E6E6;
+	background-color: var(--bgc-alt);
 }
 
 .linedwrap .lines {
-	background-color: #E5E6E6;
+	background-color: var(--bgc-alt);
 }
 
 /* -- AdminMenu ModalMenu CssMenu ------------------------------------------- */
 
 /* --- Menu header --- */
 .menu-title {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(var(--darken), 0.2);
 }
 /* --- admin_menus --- */
 
 .admin-menu > ul > li:hover {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(var(--darken), 0.3);
 }
 
-.admin-li.current:not(:hover) > a { background-color: rgba(255, 255, 255, 0.1); }
+.admin-li.current:not(:hover) > a { background-color: rgba(var(--lighten), 0.1); }
 
 .admin-menu ul.modal-menu li:hover > a,
 .modal-menu li.current > a,
 .modal-menu li:hover > a,
-.admin-li.current:hover > a { border-color: #366493; }
+.admin-li.current:hover > a { border-color: var(--main-dark); }
 
 nav.admin-index li:hover {
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(var(--darken), 0.1);
 }
 
 nav.admin-index a {
-	color: #FFFFFF;
+	color: var(--txt-light);
 }
 
 .admin-li > a {
-	color: #FFFFFF;
+	color: var(--txt-light);
 }
 
 .admin-li > a:hover {
-	text-shadow: 3px 3px #152638;
+	text-shadow: 3px 3px var(--main-darker);
 }
 
 .modal-menu > li > a {
-	border-color: #BDC2C9;
-	color: #555555;
+	border-color: var(--bdr-main);
+	color: var(--txt-dark);
 }
 
 #admin-quick-menu {
-	background-color: #323133;
+	background-color: var(--administrator-dark);
 }
 
 #admin-quick-menu li .quick-link {
-	color: #FFFFFF;
+	color: var(--txt-light);
 }
 
-.js-menu-button { color: #FFFFFF}
+.js-menu-button { color: var(--txt-light)}
 
 @media (min-width: 769px) {
 
 	#admin-quick-menu {
-		background-color: #FFFFFF;
-		border-color: #BDC2C9;
+		background-color: var(--bgc-main);
+		border-color: var(--bdr-main);
 	}
 
 	#admin-quick-menu li .quick-link {
-		color: #366493;
+		color: var(--main-dark);
 	}
 
 	#admin-quick-menu li:hover .quick-link {
-		color: #4E8EC1;
+		color: var(--main-light);
 	}
 }
 
 .admin-extend-menu li:hover {
-	background-color: #FFFFFF;
+	background-color: var(--bgc-main);
 }
 
 /* --- Menu Manager --- */
 @media (max-width: 769px) {
     .themesmanagement {
-    	background-color: #323133;
-    	color: #FFFFFF;
+    	background-color: var(--administrator-dark);
+    	color: var(--txt-light);
     }
 
     .themesmanagement select {
-        background-color: #FFFFFF;
-        color: #323133
+        background-color: var(--bgc-main);
+        color: var(--administrator-dark)
     }
 }
 
 @media (min-width: 769px) {
 	.themesmanagement {
-		background-color: #FFFFFF;
-		color: #366493;
+		background-color: var(--bgc-main);
+		color: var(--main-dark);
 	}
 }
 
 .menu-block-libelle {
-	background-color: #FFFFFF;
-	border-color: #BDC2C9;
+	background-color: var(--bgc-main);
+	border-color: var(--bdr-main);
 }
 
 .menus-block-add {
-	background-color: #FFFFFF;
-	border-color: #BDC2C9;
+	background-color: var(--bgc-main);
+	border-color: var(--bdr-main);
 }
 
 .menus-block-add-links:last-child {
-	border-color: #BDC2C9;
+	border-color: var(--bdr-main);
 }
 
 .menus-block-container {
-	background-color: #FFFFFF;
-	border-color: #BDC2C9;
+	background-color: var(--bgc-main);
+	border-color: var(--bdr-main);
 }
 
 #mod_header, #mod_subheader, #mod_left,
 #mod_right, #mod_topcentral,
 #mod_central, #mod_bottomcentral,
 #mod_topfooter, #mod_footer {
-	border-color: #BDC2C9;
+	border-color: var(--bdr-main);
 }
