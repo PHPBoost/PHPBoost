@@ -100,7 +100,7 @@ aside:not(#menu-left):not(#menu-right) {
 .tags-container {}
 
 .suggested-links .cell-thumbnail {
-	max-width: 130px; 
+	max-width: 130px;
 }
 
 .related-links,
@@ -119,16 +119,14 @@ aside:not(#menu-left):not(#menu-right) {
 .suggested-item:hover,
 .related-item:hover { text-decoration: none; }
 
-.suggested-item img,
 .related-item img {
-	max-height: 50px;
+	max-height: 80px;
 }
 
-.suggested-item img,
 .related-item.previous-item img,
-.related-item.previous-item i { padding: 0 0.309em 0 0;}
+.related-item.previous-item i { padding: 0 0.618em 0 0;}
 .related-item.next-item img,
-.related-item.next-item i 	 { padding: 0 0 0 0.309em;}
+.related-item.next-item i 	 { padding: 0 0 0 0.618em;}
 
 @media (min-width: 769px) {
 	.related-links {
@@ -333,7 +331,7 @@ a.wikipedia-link:after {
 	right: 0;
 	content: "\f266" ;
 	font-family: 'Font Awesome 5 Brands';
-	font-weight: 900; /* Solid icons*/
+	font-weight: 900;
 	font-size: 0.618em;
 }
 
