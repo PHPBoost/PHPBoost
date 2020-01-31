@@ -24,11 +24,6 @@ class SocialNetworksModuleMiniMenu extends ModuleMiniMenu
 		return LangLoader::get_message('share', 'user-common');
 	}
 
-	public function is_displayed()
-	{
-		return true;
-	}
-
 	public function get_menu_content()
 	{
 		$tpl = new FileTemplate('SocialNetworks/SocialNetworksModuleMiniMenu.tpl');
