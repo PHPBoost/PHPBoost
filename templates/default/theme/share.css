@@ -4,22 +4,6 @@
  *
 */
 
-.more-element-sharing {
-	position: relative;
-	margin: 0.309em 0 0 0;
-	padding: 0;
-}
-
-@media (min-width: 769px) {
-	.more-element-sharing {
-		margin: 1.309em 0 0.309em 0;
-	}
-}
-
-.sharing-button {
-	display: none;
-}
-
 .sharing-elements-list {
 	list-style-type: none;
 	margin: 0;

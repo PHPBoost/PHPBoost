@@ -1,20 +1,7 @@
-/* -- Sharing Elements -- */
-/* -------------------- */
-.more-element-sharing {
-	position: relative;
-	margin: 0.309em 0 0 0;
-	padding: 0;
-}
-
-@media (min-width: 769px) {
-	.more-element-sharing {
-		margin: 1.309em 0 0.309em 0;
-	}
-}
-
-.sharing-button {
-	display: none;
-}
+/*
+* Copy this file into your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
 
 .sharing-elements-list {
 	list-style-type: none;
