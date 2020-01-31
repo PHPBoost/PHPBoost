@@ -42,34 +42,34 @@
 		# ENDIF #
 
 		# IF C_FILES #
-			<div class="options no-style" id="form">
+			<div class="options" id="form">
 				<script>
 					function change_order()
 					{
 						window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
 					}
 				</script>
-				<div class="horizontal-fieldset grouped-inputs">
-					<span class="horizontal-fieldset-desc grouped-element">{L_ORDER_BY}</span>
+				<div class="horizontal-fieldset">
+					<span class="horizontal-fieldset-desc horizontal-fieldset-element">{L_ORDER_BY}</span>
 					<div class="horizontal-fieldset-element">
-						<div class="form-element grouped-element">
+						<div class="form-element">
 							<div class="form-field form-field-select">
-								<select name="sort" id="sort" class="nav" onchange="change_order()">
-									<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
-									<option value="date"{SELECTED_DATE}>{L_DATE}</option>
-									<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
-									# IF C_DISPLAY_NOTATION #<option value="note"{SELECTED_NOTE}>{L_NOTE}</option># ENDIF #
-									# IF C_DISPLAY_COMMENTS #<option value="com"{SELECTED_COM}>{L_COM}</option># ENDIF #
+								<select class="select-to-list " name="sort" id="sort" class="nav" onchange="change_order()">
+									<option data-option-icon="fa fa-sort-alpha-up" value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+									<option data-option-icon="far fa-calendar-alt" value="date"{SELECTED_DATE}>{L_DATE}</option>
+									<option data-option-icon="fa fa-eye" value="nbr"{SELECTED_NBR}>{L_NBR}</option>
+									# IF C_DISPLAY_NOTATION #<option data-option-icon="far fa-star" value="note"{SELECTED_NOTE}>{L_NOTE}</option># ENDIF #
+									# IF C_DISPLAY_COMMENTS #<option data-option-icon="far fa-comments" value="com"{SELECTED_COM}>{L_COM}</option># ENDIF #
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="horizontal-fieldset-element">
-						<div class="form-element grouped-element">
+						<div class="form-element">
 							<div class="form-field form-field-select">
-								<select name="mode" id="mode" class="nav" onchange="change_order()">
-									<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
-									<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+								<select class="select-to-list " name="mode" id="mode" class="nav" onchange="change_order()">
+									<option data-option-icon="fa fa-arrow-up" value="asc"{SELECTED_ASC}>{L_ASC}</option>
+									<option data-option-icon="fa fa-arrow-down" value="desc"{SELECTED_DESC}>{L_DESC}</option>
 								</select>
 							</div>
 						</div>
@@ -90,7 +90,7 @@
 							<div class="cell-infos">
 								<div class="more">
 									<span class="pinned"><i class="fa fa-user" aria-hidden="true"></i> {file.AUTHOR}</span>
-									<span class="pinned" aria-label="{file.COUNT} ${LangLoader::get_message('sort_by.number_views', 'common')}"><i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}</span>
+									<span class="pinned" aria-label="{file.COUNT} ${LangLoader::get_message('sort_by.views.number', 'common')}"><i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}</span>
 									# IF C_DISPLAY_COMMENTS #
 											<span class="pinned"><i class="fa fa-comments" aria-hidden="true"></i> {file.U_COM_LINK}</span>
 									# ENDIF #
