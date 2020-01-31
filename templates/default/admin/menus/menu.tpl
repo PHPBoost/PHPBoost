@@ -3,7 +3,7 @@
 	<div class="menus-block-top">
 
 		<span id="m{IDMENU}"></span>
-		<h5 class="menus-block-title">{NAME}</h5>
+		<h6 class="menus-block-title">{NAME}</h6>
 
 		<a href="" class="menus-block-move-cursor" onclick="return false;" aria-label="${LangLoader::get_message('move', 'admin')}"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
 		# IF C_EDIT #
