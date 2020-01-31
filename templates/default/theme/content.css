@@ -317,3 +317,29 @@ aside:not(#menu-left):not(#menu-right) {
 .content-privileged-friends {
 	border-width: 7px 1px 1px 1px;
 }
+
+/* --- Wikipedia link --- */
+a.wikipedia-link {
+	position: relative;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: transparent;
+	cursor: help;
+	padding-right: 0.809em;
+}
+
+a.wikipedia-link:after {
+	position: absolute;
+	vertical-align: middle;
+	top: 1px;
+	right: 0;
+	content: "\f266" ;
+	font-family: 'Font Awesome 5 Brands';
+	font-weight: 900; /* Solid icons*/
+	font-size: 0.618em;
+}
+
+/* Publication status */
+.publication-status {
+	font-weight: bold;
+}

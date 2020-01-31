@@ -59,6 +59,12 @@ body {
 	border-color: var(--bdr-main);
 }
 
+/* --- publication status --- */
+.published { color: var(--success-dark)}
+.draft 	   { color: var(--notice-dark)}
+.waiting   { color: var(--warning-dark)}
+
+
 /* --- Progress bar --- */
 .progressbar-container { background-color: var(--bgc-alt); }
 
@@ -745,7 +751,7 @@ a,
 a:hover,
 .link-color:hover {
 	color: var(--main-light);
-	border-color: var(--main-dark); 
+	border-color: var(--main-dark);
 }
 
 .bgc-full:hover.link-color { color: var(--txt-light)}
