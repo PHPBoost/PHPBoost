@@ -1,11 +1,12 @@
-//Recherche d'une chaîne dans une autre.
+// Recherche d'une chaîne dans une autre.
+
 function strpos(haystack, needle)
 {
 	var i = haystack.indexOf(needle, 0); // returns -1
 	return i >= 0 ? i : false;
 }
 
-//Add information hide balise
+// Add information hide balise
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-hide').each( function(){
@@ -21,7 +22,7 @@ jQuery(document).ready(function(){
 	} );
 } );
 
-//Hide / show hide balise content
+// Hide / show hide balise content
 function bb_hide(idcode, show, event)
 {
 	var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
@@ -40,7 +41,7 @@ function bb_hide(idcode, show, event)
 }
 
 
-//Add button "Copy to clipboard" on Coding balise
+// Add button "Copy to clipboard" on Coding balise
 jQuery(document).ready(function(){
 	var IDCODE = 1;
 	jQuery('.formatter-code').each( function(){
@@ -54,7 +55,7 @@ jQuery(document).ready(function(){
 	} );
 } );
 
-//Function copy_code_clipboard
+// Function copy_code_clipboard
 //
 // Description :
 // This function copy the content of your specific selection to clipboard.
@@ -134,7 +135,7 @@ function copy_to_clipboard(tocopy)
 	}
 }
 
-//Function open_submenu
+//xFunction open_submenu
 //
 // Description :
 // This function add CSS Class to the specified CSS ID

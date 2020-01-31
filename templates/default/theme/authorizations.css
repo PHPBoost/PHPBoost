@@ -35,7 +35,8 @@
     }
 
     .advanced-auth-select {
-        min-width: 227px;
+        min-width: 180px;
+        min-height: 106px;
     }
 
     .advanced-auth-input {

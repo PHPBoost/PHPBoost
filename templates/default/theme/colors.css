@@ -60,9 +60,9 @@ body {
 }
 
 /* --- publication status --- */
-.published { color: var(--success-dark)}
-.draft 	   { color: var(--notice-dark)}
-.waiting   { color: var(--warning-dark)}
+.published { color: var(--success-dark); }
+.draft 	   { color: var(--notice-dark); }
+.waiting   { color: var(--warning-dark); }
 
 
 /* --- Progress bar --- */
@@ -213,6 +213,7 @@ optgroup { border-color: var(--bdr-main); }
 
 select[multiple] option[selected] {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5n8HwAEMwIuxlyf1QAAAABJRU5ErkJggg==);
+	color: var(--txt-light);
 }
 
 select[multiple] option[disabled] { color: var(--error-dark); }

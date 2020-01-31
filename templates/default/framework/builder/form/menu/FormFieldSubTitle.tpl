@@ -1,8 +1,8 @@
 <div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display: none;" # ENDIF # class="form-element form-subtitle full-field# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF ## IF C_HAS_CSS_CLASS # {CLASS}# ENDIF #">
 	# IF C_HAS_LABEL #
-		<h3 id="${escape(HTML_ID)}">
+		<span id="${escape(HTML_ID)}" class="subtitle-label">
 			{LABEL}
-		</h3>
+		</span>
 		# IF C_DESCRIPTION #
 		<span class="field-description">{DESCRIPTION}</span>
 		# ENDIF #

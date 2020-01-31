@@ -27,7 +27,7 @@
 				<span id="search_img{IDSELECT}"></span>
 				<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
 			</div>
-			<select id="members_auth{IDSELECT}" class="advanced-auth-select advanced-auth-input" name="members_auth{IDSELECT}[]" size="6" multiple="multiple">
+			<select id="members_auth{IDSELECT}" class="advanced-auth-select advanced-auth-input" name="members_auth{IDSELECT}[]" size="5" multiple="multiple">
 				<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 					# START members_list #
 					<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
