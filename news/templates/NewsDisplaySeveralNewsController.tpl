@@ -43,19 +43,19 @@
 										# ENDIF #
 									</span>
 								# ENDIF #
-								<span class="pinned notice">
+								<span class="pinned">
 									<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT news.C_DIFFERED #{news.DATE_ISO8601}# ELSE #{news.DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT news.C_DIFFERED #{news.DATE}# ELSE #{news.DIFFERED_START_DATE}# ENDIF #</time>
 								</span>
-								<span class="pinned question">
+								<span class="pinned">
 									<a itemprop="about" href="{news.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {news.CATEGORY_NAME}</a>
 								</span>
 								# IF C_COMMENTS_ENABLED #
-									<span class="pinned notice">
+									<span class="pinned">
 										<i class="far fa-comments" aria-hidden="true"></i> # IF news.C_COMMENTS #{news.COMMENTS_NUMBER} # ENDIF # {news.L_COMMENTS}
 									</span>
 								# ENDIF #
 								# IF news.C_NB_VIEW_ENABLED #
-									<span class="pinned notice" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
+									<span class="pinned" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
 								# ENDIF #
 							</div>
 							# IF news.C_CONTROLS #

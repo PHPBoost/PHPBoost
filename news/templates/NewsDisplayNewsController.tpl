@@ -25,14 +25,14 @@
 						# ENDIF #
 					# ENDIF #
 				# ENDIF #
-				<span class="pinned notice">
+				<span class="pinned">
 					<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{DIFFERED_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{DIFFERED_START_DATE}# ENDIF #</time>
 				</span>
-				<span class="pinned question">
+				<span class="pinned">
 					<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 				</span>
-				# IF C_COMMENTS_ENABLED #<span class="pinned question"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
-				# IF C_NB_VIEW_ENABLED #<span class="pinned notice" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
+				# IF C_COMMENTS_ENABLED #<span class="pinned"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
+				# IF C_NB_VIEW_ENABLED #<span class="pinned" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 			</div>
 			# IF C_CONTROLS #
 				<div class="controls align-right">
