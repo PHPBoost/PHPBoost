@@ -62,7 +62,7 @@
 			# ENDIF #
 		# ENDIF #
 
-		<aside>
+		<aside class="sharing-container">
 			${ContentSharingActionsMenuService::display()}
 		</aside>
 
@@ -88,15 +88,23 @@
 		# IF C_SUGGESTED_NEWS #
 			<aside class="suggested-links">
 				<span class="text-strong"><i class="fa fa-lightbulb"></i> ${LangLoader::get_message('suggestions', 'common')} :</span>
-				<ul>
+				<div class="cell-row">
 					# START suggested #
-						<li>
-							<a href="{suggested.U_ITEM}" class="suggested-item">
-								<img src="{suggested.U_THUMBNAIL}" alt="{suggested.NAME}"> {suggested.NAME}
-							</a>
-						</li>
+						<div class="cell">
+							<div class="cell-body">
+								<div class="cell-thumbnail cell-landscape cell-center">
+									<img src="{suggested.U_THUMBNAIL}" alt="{suggested.TITLE}">
+								</div>
+								<div class="cell-content">
+									<a href="{suggested.U_CATEGORY}" class="small">{suggested.CATEGORY_NAME}</a>
+									<a href="{suggested.U_ITEM}" class="suggested-item">
+									 	<h6>{suggested.TITLE}</h6>
+									</a>
+								</div>
+							</div>
+						</div>
 					# END suggested #
-				</ul>
+				</div>
 			</aside>
 		# ENDIF #
 

@@ -123,7 +123,6 @@ class NewsDisplayNewsController extends ModuleController
 		}
 	}
 
-
 	private function build_suggested_news(News $news)
 	{
 		$now = new Date();
@@ -145,7 +144,9 @@ class NewsDisplayNewsController extends ModuleController
 		while ($row = $result->fetch())
 		{
 			$this->tpl->assign_block_vars('suggested', array(
-				'NAME' => $row['name'],
+				'CATEGORY_NAME' => CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_name(),
+				'U_CATEGORY' =>  NewsUrlBuilder::display_category($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name())->rel(),
+				'TITLE' => $row['name'],
 				'U_ITEM' => NewsUrlBuilder::display_news($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
 				'U_THUMBNAIL' => !empty($row['picture_url']) ? Url::to_rel($row['picture_url']) : $news->get_default_thumbnail()->rel()
 			));

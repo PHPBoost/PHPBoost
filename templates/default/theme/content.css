@@ -99,19 +99,17 @@ aside:not(#menu-left):not(#menu-right) {
 .sources-container {}
 .tags-container {}
 
-.suggested-links li {
-	list-style-type: none;
+.suggested-links .cell-thumbnail {
+	max-width: 130px; 
 }
 
 .related-links,
-.suggested-item,
 .related-item {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.suggested-item,
 .related-item { flex-direction: row; }
 
 .related-item {
