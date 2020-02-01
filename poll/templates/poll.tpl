@@ -1,8 +1,8 @@
 	# IF C_POLL_MAIN #
 		<section id="module-poll-main">
 			<header>
-				<div class="align-right">
-					# IF C_IS_ADMIN # <span class="controls"><a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a></span># ENDIF #
+				<div class="align-right controls">
+					# IF C_IS_ADMIN # <a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 				</div>
 				<h1>{L_POLL}</h1>
 			</header>
