@@ -102,7 +102,7 @@ class AdminAdvancedConfigController extends AdminController
 		{
 			$redirection_www_disabled = true;
 			$this->server_environment_config->disable_redirection_www(); /*Disabling is forced*/
-			$redirection_www_enabled_explain = '<span class="text-strong color-notavailable">' . ($request->get_is_localhost() ? $this->lang['advanced-config.redirection_www_enabled.local'] : $this->lang['advanced-config.redirection_www_enabled.subdomain']) . '</span>';
+			$redirection_www_enabled_explain = '<span class="error">' . ($request->get_is_localhost() ? $this->lang['advanced-config.redirection_www_enabled.local'] : $this->lang['advanced-config.redirection_www_enabled.subdomain']) . '</span>';
 		}
 		else
 		{
@@ -143,7 +143,7 @@ class AdminAdvancedConfigController extends AdminController
 			$redirection_https_disabled = true; /* Checkbox is forced to deactivate*/
 			$this->server_environment_config->disable_redirection_https(); /* HTTPS is forced to deactivate */
 			$this->server_environment_config->disable_hsts_security(); /* HSTS is forced to deactivate */
-			$redirection_https_enabled_explain = '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
+			$redirection_https_enabled_explain = '<span class="error">' . $this->lang['advanced-config.redirection_https_enabled.explain-disable']. '</span>';
 		}
 
 		$fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(),
@@ -208,7 +208,7 @@ class AdminAdvancedConfigController extends AdminController
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
 					array(
 						'class' => 'half-field custom-checkbox',
-						'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>'
+						'description' => '<span class="success">' . $this->lang['advanced-config.config.available'] . '</span>'
 					)
 				));
 			}
@@ -217,7 +217,7 @@ class AdminAdvancedConfigController extends AdminController
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED,
 					array(
 						'class' => 'half-field custom-checkbox', 'disabled' => true,
-						'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>'
+						'description' => '<span class="error">' . $this->lang['advanced-config.config.not-available'] . '</span>'
 					)
 				));
 			}
@@ -225,7 +225,7 @@ class AdminAdvancedConfigController extends AdminController
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
 				array(
 					'class' => 'half-field custom-checkbox',
-					'description' => '<span class="text-strong color-unknown">' . $this->lang['advanced-config.config.unknown'] . '</span>'
+					'description' => '<span class="notice">' . $this->lang['advanced-config.config.unknown'] . '</span>'
 				)
 			));
  		}
@@ -361,7 +361,7 @@ class AdminAdvancedConfigController extends AdminController
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(),
 				array(
 					'class' => 'custom-checkbox',
-					'description' => '<span class="text-strong color-available">' . $this->lang['advanced-config.config.available'] . '</span>'
+					'description' => '<span class="success">' . $this->lang['advanced-config.config.available'] . '</span>'
 				)
 			));
 		}
@@ -370,7 +370,7 @@ class AdminAdvancedConfigController extends AdminController
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED,
 				array(
 					'class' => 'custom-checkbox', 'disabled' => true,
-					'description' => '<span class="text-strong color-notavailable">' . $this->lang['advanced-config.config.not-available'] . '</span>'
+					'description' => '<span class="error">' . $this->lang['advanced-config.config.not-available'] . '</span>'
 				)
 			));
 		}
