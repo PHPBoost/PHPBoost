@@ -100,11 +100,11 @@ class AdminAdvancedConfigController extends AdminController
 
 		if ($request->get_is_localhost() || $request->get_is_subdomain())
 		{
-			$subdomain_redirection =  new SpanHTMLElement($this->lang['advanced-config.redirection_www_enabled.subdomain'], array(), 'error');
-			$local_redirection = new SpanHTMLElement($this->lang['advanced-config.redirection_www_enabled.local'], array(), 'error');
+			$subdomain_redirection_desc =  new SpanHTMLElement($this->lang['advanced-config.redirection_www_enabled.subdomain'], array(), 'error');
+			$local_redirection_desc = new SpanHTMLElement($this->lang['advanced-config.redirection_www_enabled.local'], array(), 'error');
 			$redirection_www_disabled = true;
 			$this->server_environment_config->disable_redirection_www(); /*Disabling is forced*/
-			$redirection_www_enabled_explain = $request->get_is_localhost() ? $local_redirection->display() : $subdomain_redirection->display();
+			$redirection_www_enabled_explain = $request->get_is_localhost() ? $local_redirection_desc->display() : $subdomain_redirection_desc->display();
 		}
 		else
 		{
@@ -142,11 +142,11 @@ class AdminAdvancedConfigController extends AdminController
 		}
 		else
 		{
-			$https_redirection = new SpanHTMLElement($this->lang['advanced-config.redirection_https_enabled.explain-disable'], array(), 'error');
+			$https_redirection_desc = new SpanHTMLElement($this->lang['advanced-config.redirection_https_enabled.explain-disable'], array(), 'error');
 			$redirection_https_disabled = true; /* Checkbox is forced to deactivate*/
 			$this->server_environment_config->disable_redirection_https(); /* HTTPS is forced to deactivate */
 			$this->server_environment_config->disable_hsts_security(); /* HSTS is forced to deactivate */
-			$redirection_https_enabled_explain = $https_redirection->display();
+			$redirection_https_enabled_explain = $https_redirection_desc->display();
 		}
 
 		$fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['advanced-config.redirection_https_enabled'], $this->server_environment_config->is_redirection_https_enabled(),
@@ -208,30 +208,30 @@ class AdminAdvancedConfigController extends AdminController
 		try {
 			if ($server_configuration->has_url_rewriting())
 			{
-				$url_rewriting = new SpanHTMLElement($this->lang['advanced-config.config.available'], array(), 'success');
+				$url_rewriting_desc = new SpanHTMLElement($this->lang['advanced-config.config.available'], array(), 'success');
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
 					array(
 						'class' => 'half-field custom-checkbox',
-						'description' => $url_rewriting->display()
+						'description' => $url_rewriting_desc->display()
 					)
 				));
 			}
 			else
 			{
-				$url_rewriting = new SpanHTMLElement($this->lang['advanced-config.config.not-available'], array(), 'error');
+				$url_rewriting_desc = new SpanHTMLElement($this->lang['advanced-config.config.not-available'], array(), 'error');
 				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED,
 					array(
 						'class' => 'half-field custom-checkbox', 'disabled' => true,
-						'description' => $url_rewriting->display()
+						'description' => $url_rewriting_desc->display()
 					)
 				));
 			}
 		} catch (UnsupportedOperationException $ex) {
-			$url_rewriting = new SpanHTMLElement($this->lang['advanced-config.config.unknown'], array(), 'notice');
+			$url_rewriting_desc = new SpanHTMLElement($this->lang['advanced-config.config.unknown'], array(), 'notice');
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(),
 				array(
 					'class' => 'half-field custom-checkbox',
-					'description' => $url_rewriting->display()
+					'description' => $url_rewriting_desc->display()
 				)
 			));
  		}
@@ -364,21 +364,21 @@ class AdminAdvancedConfigController extends AdminController
 
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
-			$page_compression = new SpanHTMLElement($this->lang['advanced-config.config.available'], array(), 'success');
+			$page_compression_desc = new SpanHTMLElement($this->lang['advanced-config.config.available'], array(), 'success');
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(),
 				array(
 					'class' => 'custom-checkbox',
-					'description' => $page_compression->display()
+					'description' => $page_compression_desc->display()
 				)
 			));
 		}
 		else
 		{
-			$page_compression = new SpanHTMLElement($this->lang['advanced-config.config.not-available'], array(), 'error');
+			$page_compression_desc = new SpanHTMLElement($this->lang['advanced-config.config.not-available'], array(), 'error');
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED,
 				array(
 					'class' => 'custom-checkbox', 'disabled' => true,
-					'description' => $page_compression->display()
+					'description' => $page_compression_desc->display()
 				)
 			));
 		}
