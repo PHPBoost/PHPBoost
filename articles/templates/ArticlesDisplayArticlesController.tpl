@@ -16,10 +16,10 @@
 				# IF C_AUTHOR_DISPLAYED #
 					<span class="pinned">
 						# IF C_AUTHOR_CUSTOM_NAME #
-							<i class="fa fa-user" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME}
+							<i class="fa fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 						# ELSE #
 							# IF NOT C_ID_CARD #
-								<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #
+								<i class="fa fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 							# ENDIF #
 						# ENDIF #
 					</span>
@@ -40,10 +40,8 @@
 				</span>
 			</div>
 			<div class="controls align-right">
-				# IF C_EDIT #
+				# IF C_CONTROLS #
 					<a href="{U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-				# ENDIF #
-				# IF C_DELETE #
 					<a href="{U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 				# ENDIF #
 			</div>

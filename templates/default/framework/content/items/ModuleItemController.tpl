@@ -3,7 +3,7 @@
 		<div class="align-right controls">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a># ENDIF #
 			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a>
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a># ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
@@ -19,11 +19,11 @@
 					# IF C_ENABLED_AUTHOR #
 						# IF C_AUTHOR_DISPLAYED #
 							# IF C_AUTHOR_CUSTOM_NAME #
-								<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
+								<span class="pinned"><i class="far fa-user" aria-hidden></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 							# ELSE #
 								# IF NOT C_ID_CARD #
 									<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 									</span>
 								# ENDIF #
 							# ENDIF #
@@ -62,12 +62,8 @@
 
 			# IF C_CONTROLS #
 				<div class="controls align-right">
-					# IF C_EDIT #
 						<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit"></i></a>
-					# ENDIF #
-					# IF C_DELETE #
 						<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt"></i></a>
-					# ENDIF #
 				</div>
 			# ENDIF #
 		</div>
@@ -124,11 +120,11 @@
 									<li class="li-stretch">
 										<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
 										# IF C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned"><i class="far fa-user" aria-hidden></i> {AUTHOR_CUSTOM_NAME}</span>
+											<span class="pinned"><i class="far fa-user" aria-hidden></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 										# ELSE #
 											# IF NOT C_ID_CARD #
 												<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 												</span>
 											# ENDIF #
 										# ENDIF #

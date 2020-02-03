@@ -75,10 +75,8 @@
 							</div>
 							# IF articles.C_CONTROLS #
 								<div class="controls align-right">
-									# IF articles.C_EDIT #
+									# IF articles.C_CONTROLS #
 										<a href="{articles.U_EDIT_ARTICLE}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-									# ENDIF #
-									# IF articles.C_DELETE #
 										<a href="{articles.U_DELETE_ARTICLE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 								</div>

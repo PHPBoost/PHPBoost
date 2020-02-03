@@ -24,7 +24,7 @@
 				<div class="cell" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
-						<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@module.items}# ELSE #{@module.item}# ENDIF #">
+						<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
 							{sub_categories_list.ITEMS_NUMBER}
 						</span>
 					</div>
