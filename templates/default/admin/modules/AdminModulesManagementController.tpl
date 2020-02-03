@@ -57,7 +57,10 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-								<span># IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF # # IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
+								<span>
+									# IF modules_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_installed.AUTHOR_EMAIL}">{modules_installed.AUTHOR}</a># ELSE #{modules_installed.AUTHOR}# ENDIF #
+									# IF modules_installed.C_AUTHOR_WEBSITE #<a href="{modules_installed.AUTHOR_WEBSITE}" class="pinned bgc question">Web</a># ENDIF #
+								</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
@@ -83,7 +86,7 @@
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #
 						<div class="cell-footer align-center">
-							<a class="button alt-button small" href="{modules_installed.L_DOCUMENTATION}">{@module.documentation}</a>
+							<a class="pinned bgc moderator" href="{modules_installed.L_DOCUMENTATION}"><i class="fa fa-book-reader"></i> {@module.documentation}</a>
 						</div>
 					# ENDIF #
 				</article>

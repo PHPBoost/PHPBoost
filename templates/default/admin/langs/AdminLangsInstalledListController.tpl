@@ -72,7 +72,7 @@
 										{langs_installed.AUTHOR}
 									# ENDIF #
 									# IF langs_installed.C_AUTHOR_WEBSITE #
-										<a href="{langs_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a>
+										<a href="{langs_installed.AUTHOR_WEBSITE}" class="pinned bgc question">Web</a>
 									# ENDIF #
 								</span>
 							</li>

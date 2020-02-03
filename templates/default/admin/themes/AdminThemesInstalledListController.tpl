@@ -75,7 +75,8 @@
 							<li class="li-stretch">
 								<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
 								<span>
-									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF # # IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a> # ENDIF #
+									# IF themes_installed.C_AUTHOR_EMAIL # <a href="mailto:{themes_installed.AUTHOR_EMAIL}">@{themes_installed.AUTHOR}</a> # ELSE # {themes_installed.AUTHOR} # ENDIF #
+									# IF themes_installed.C_AUTHOR_WEBSITE # <a href="{themes_installed.AUTHOR_WEBSITE}" class="pinned bgc question">Web</a> # ENDIF #
 								</span>
 							</li>
 							<li class="li-stretch">

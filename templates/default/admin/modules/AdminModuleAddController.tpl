@@ -44,7 +44,9 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('author', 'admin-common')} :</span>
-									<span># IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF # # IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="button alt-button small">Web</a># ENDIF #</span>
+									<span>
+										# IF modules_not_installed.C_AUTHOR_EMAIL #<a href="mailto:{modules_not_installed.AUTHOR_EMAIL}">{modules_not_installed.AUTHOR}</a># ELSE #{modules_not_installed.AUTHOR}# ENDIF #
+										# IF modules_not_installed.C_AUTHOR_WEBSITE #<a href="{modules_not_installed.AUTHOR_WEBSITE}" class="pinned bgc question">Web</a># ENDIF #</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">${LangLoader::get_message('form.date.creation', 'common')} :</span>
