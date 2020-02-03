@@ -63,7 +63,7 @@
 						# IF C_ENABLED_VISITS #<th class="col-small">${TextHelper::ucfirst(@visits)}</th># ENDIF #
 						# IF C_ENABLED_DOWNLOADS #<th class="col-small">${TextHelper::ucfirst(@downloads)}</th># ENDIF #
 						# IF C_ENABLED_NOTATION #<th class="col-small">${TextHelper::ucfirst(@note)}</th># ENDIF #
-						# IF C_ENABLED_COMMENTS #<th class="col-small">${TextHelper::ucfirst(@comments)}</th># ENDIF #
+						# IF C_ENABLED_COMMENTS #<th class="col-small">${LangLoader::get_message('comments', 'comments-common')}</th># ENDIF #
 						# IF C_CONTROLS #<th class="col-smaller">${TextHelper::ucfirst(@controls)}</th># ENDIF #
 					</tr>
 				</thead>
@@ -129,7 +129,7 @@
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<td>
-									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
+									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF items.C_CONTROLS #
@@ -204,7 +204,7 @@
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden></i>
-											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #{@comments}# ELSE #{@comment}# ENDIF #
+											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #
 										</span>
 									# ENDIF #
 								</div>
