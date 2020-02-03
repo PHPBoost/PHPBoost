@@ -337,7 +337,7 @@
 							<span class="infos-options"><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
 						# ENDIF #
 						# IF C_AUTHOR_DISPLAYED #
-							<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #<span class="visitor">${LangLoader::get_message('guest', 'main')}</span># ENDIF #</span>
 						# ENDIF #
 						# IF C_VIEWS_COUNTER_ENABLED #
 							<span class="infos-options"><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>

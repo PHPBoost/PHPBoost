@@ -24,7 +24,7 @@
 								# IF messages.C_AUTHOR_EXIST #
 									<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.USER_LEVEL_CLASS}" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>{messages.PSEUDO}</a>
 								# ELSE #
-									{messages.PSEUDO}
+									<span class="visitor">{messages.PSEUDO}</span>
 								# ENDIF #
 							</h3>
 							<div class="message-actions">

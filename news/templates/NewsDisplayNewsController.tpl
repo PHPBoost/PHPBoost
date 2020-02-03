@@ -16,11 +16,11 @@
 			<div class="more">
 				# IF C_AUTHOR_DISPLAYED #
 					# IF C_AUTHOR_CUSTOM_NAME #
-						<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> {AUTHOR_CUSTOM_NAME}</span>
+						<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 					# ELSE #
 						# IF NOT C_ID_CARD #
 							<span class="pinned {USER_LEVEL_CLASS}"# IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}; border-color:{USER_GROUP_COLOR}" # ENDIF #>
-								<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+								<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 							</span>
 						# ENDIF #
 					# ENDIF #

@@ -31,14 +31,14 @@
 								# IF news.C_AUTHOR_DISPLAYED #
 									<span class="pinned {news.USER_LEVEL_CLASS}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR};border-color:{news.USER_GROUP_COLOR};"# ENDIF #>
 										# IF news.C_AUTHOR_CUSTOM_NAME #
-											<i class="far fa-user" aria-hidden="true"></i> {news.AUTHOR_CUSTOM_NAME}
+											<i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{news.AUTHOR_CUSTOM_NAME}</span>
 										# ELSE #
 											# IF news.C_AUTHOR_EXIST #
 												<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}"# IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>
 													<i class="far fa-user" aria-hidden="true"></i> {news.PSEUDO}
 												</a>
 											# ELSE #
-												<i class="far fa-user" aria-hidden="true"></i> {news.PSEUDO}
+												<i class="far fa-user" aria-hidden="true"></i> <span class="visitor">{news.PSEUDO}</span>
 											# ENDIF #
 										# ENDIF #
 									</span>

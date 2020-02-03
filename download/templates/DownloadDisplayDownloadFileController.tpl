@@ -60,9 +60,9 @@
 								<span class="text-strong">${LangLoader::get_message('author', 'common')} : </span>
 								<span>
 									# IF C_AUTHOR_CUSTOM_NAME #
-										{AUTHOR_CUSTOM_NAME}
+										<span class="custom-author">{AUTHOR_CUSTOM_NAME}</span>
 									# ELSE #
-										# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #
+										# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 									# ENDIF #
 								</span>
 							</li>
