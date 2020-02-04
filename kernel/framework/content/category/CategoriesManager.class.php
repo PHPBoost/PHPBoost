@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 10 24
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -73,10 +73,6 @@ class CategoriesManager
 			if ($order <= 0 || $order > $max_order)
 			{
 				$category->set_order(($max_order + 1));
-
-				$result = $this->db_querier->insert($this->table_name, $category->get_properties());
-				$this->regenerate_cache();
-				return $result->get_last_inserted_id();
 			}
 			else
 			{
@@ -86,11 +82,11 @@ class CategoriesManager
 					$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
 				}
 				$result->dispose();
-
-				$result = $this->db_querier->insert($this->table_name, $category->get_properties());
-				$this->regenerate_cache();
-				return $result->get_last_inserted_id();
 			}
+
+			$result = $this->db_querier->insert($this->table_name, $category->get_properties());
+			$this->regenerate_cache();
+			return $result->get_last_inserted_id();
 		}
 		else
 		{

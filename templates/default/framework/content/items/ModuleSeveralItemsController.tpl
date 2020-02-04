@@ -6,7 +6,7 @@
 		</div>
 		<h1>
 			# IF C_PENDING #
-				{MODULE_NAME} {@items.pending}
+				{@items.pending}
 			# ELSE #
 				{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
 			# ENDIF #
@@ -129,7 +129,7 @@
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
 								<td>
-									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #
+									{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
 								</td>
 							# ENDIF #
 							# IF items.C_CONTROLS #
@@ -204,7 +204,7 @@
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden></i>
-											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #
+											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
 										</span>
 									# ENDIF #
 								</div>

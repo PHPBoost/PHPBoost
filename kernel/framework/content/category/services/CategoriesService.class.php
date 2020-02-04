@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 08
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 5.3 - 2019 11 11
 */
 
@@ -34,17 +34,22 @@ class CategoriesService
 			if (preg_match('/^index\.php\?/suU', $module_id))
 				$module_id = GeneralConfig::load()->get_module_home_page();
 			
+			$module = ModulesManager::get_module($module_id);
+			
 			$categories_cache_class = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			if (class_exists($categories_cache_class) && is_subclass_of($categories_cache_class, 'CategoriesCache'))
-			{
-				$categories_cache = call_user_func($categories_cache_class .'::load');
-				$categories_items_parameters = new CategoriesItemsParameters();
-				$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
-				
-				self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
-			}
+				$categories_cache = call_user_func($categories_cache_class . '::load');
+			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
+				$categories_cache = DefaultRichCategoriesCache::load($module_id);
+			else if ($module->get_configuration()->feature_is_enabled('categories'))
+				$categories_cache = DefaultCategoriesCache::load($module_id);
 			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
-				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . Environment::get_running_module_name());
+				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . $module_id);
+			
+			$categories_items_parameters = new CategoriesItemsParameters();
+			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
+			
+			self::$categories_manager = new CategoriesManager($categories_cache, $categories_items_parameters);
 		}
 		return self::$categories_manager;
 	}

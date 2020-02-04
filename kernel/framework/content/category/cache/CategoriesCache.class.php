@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@phpboost.com>
@@ -152,23 +152,25 @@ abstract class CategoriesCache implements CacheData
 	 * Loads and returns the categories cached data.
 	 * @return CategoriesCache The cached data
 	 */
-	public static function load()
+	public static function load($module_id = '')
 	{
-		return CacheManager::load(get_called_class(), self::get_class()->get_module_identifier(), 'categories');
+		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+			return CacheManager::load(get_called_class(), self::get_class($module_id)->get_module_identifier(), 'categories');
 	}
 
 	/**
 	 * Invalidates categories cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate($module_id = '')
 	{
-		CacheManager::invalidate(self::get_class()->get_module_identifier(), 'categories');
+		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+			CacheManager::invalidate(self::get_class($module_id)->get_module_identifier(), 'categories');
 	}
 
-	public static function get_class()
+	public static function get_class($module_id = '')
 	{
 		$class_name = get_called_class();
-		return new $class_name();
+		return new $class_name($module_id);
 	}
 }
 ?>
