@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 28
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 5.3 - 2020 01 28
 */
 
@@ -54,24 +54,24 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 			ORDER BY creation_date DESC';
 			
 			$parameters = array(
-				'categories_id' => array_keys(CategoriesService::get_categories_manager($this->module_id)->get_children($id_category, new SearchCategoryChildrensOptions(), true)),
+				'categories_id' => array_keys(CategoriesService::get_categories_manager($this->module_id)->get_children($id_category, new SearchCategoryChildrensOptions(), true))
 			);
 			
 			foreach (ItemsService::get_items_manager($this->module_id)->get_items($condition, $parameters, self::MAXIMUM_ITEMS_NUMBER) as $item)
 			{
-				$link = ItemsUrlBuilder::display($item->get_id_category(), ($item->get_id_category() != Category::ROOT_CATEGORY ? $categories_cache->get_category($item->get_id_category())->get_name() : 'root'), $item->get_id(), $item->get_rewrited_title());
-				$item = new FeedItem();
-				$item->set_title($item->get_title());
-				$item->set_link($link);
-				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($item->get_content()));
-				$item->set_date($item->get_creation_date());
-				$item->set_auth(CategoriesService::get_categories_manager($this->module_id)->get_heritated_authorizations($item->get_id_category(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+				$link = ItemsUrlBuilder::display($item->get_id_category(), ($item->get_id_category() != Category::ROOT_CATEGORY ? $categories_cache->get_category($item->get_id_category())->get_name() : 'root'), $item->get_id(), $item->get_rewrited_title(), $this->module_id);
+				$feed_item = new FeedItem();
+				$feed_item->set_title($item->get_title());
+				$feed_item->set_link($link);
+				$feed_item->set_guid($link);
+				$feed_item->set_desc(FormatingHelper::second_parse($item->get_content()));
+				$feed_item->set_date($item->get_creation_date());
+				$feed_item->set_auth(CategoriesService::get_categories_manager($this->module_id)->get_heritated_authorizations($item->get_id_category(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				
 				if ($module->get_configuration()->has_rich_item())
-					$item->set_image_url($item->get_thumbnail());
+					$feed_item->set_image_url($item->get_thumbnail());
 				
-				$data->add_item($item);
+				$data->add_item($feed_item);
 			}
 
 			return $data;
