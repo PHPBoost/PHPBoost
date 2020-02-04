@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -22,13 +22,17 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/french/config.php',
 			'/phpboost/ArticlesComments.class.php',
 			'/phpboost/ArticlesCommentsTopic.class.php',
+			'/phpboost/ArticlesFeedProvider.class.php',
 			'/phpboost/ArticlesHomePageExtensionPoint.class.php',
 			'/phpboost/ArticlesNewContent.class.php',
 			'/phpboost/ArticlesNotation.class.php',
+			'/phpboost/ArticlesSearchable.class.php',
+			'/phpboost/ArticlesScheduledJobs.class.php',
 			'/phpboost/ArticlesSitemapExtensionPoint.class.php',
 			'/phpboost/ArticlesTreeLinks.class.php',
 			'/services/ArticlesAuthorizationsService.class.php',
 			'/services/ArticlesKeywordsCache.class.php',
+			'/services/ArticlesCategoriesCache.class.php',
 			'/services/ArticlesService.class.php',
 			'/templates/ArticlesFormFieldSelectSources.tpl',
 			'/util/AdminArticlesDisplayResponse.class.php'
@@ -43,10 +47,12 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'articles',
 				'columns' => array(
-					'contents'     => 'contents MEDIUMTEXT',
-					'number_view'  => 'views_number INT(11) NOT NULL DEFAULT 0',
-					'date_created' => 'creation_date INT(11) NOT NULL DEFAULT 0',
-					'date_updated' => 'update_date INT(11) NOT NULL DEFAULT 0'
+					'rewrited_title' => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
+					'contents'       => 'content MEDIUMTEXT',
+					'picture_url'    => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'number_view'    => 'views_number INT(11) NOT NULL DEFAULT 0',
+					'date_created'   => 'creation_date INT(11) NOT NULL DEFAULT 0',
+					'date_updated'   => 'update_date INT(11) NOT NULL DEFAULT 0'
 				)
 			)
 		);

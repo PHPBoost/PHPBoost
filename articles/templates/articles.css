@@ -27,7 +27,7 @@
 	}
 }
 
-span.contents + hr {
+span.content + hr {
 	margin: 2.618em 0 1.482em 0;
 	clear: both;
 }

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 23
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -64,6 +64,7 @@ class AdminArticlesConfigController extends AdminModuleController
 
 	private function build_form()
 	{
+		$item_class_name = self::get_module()->get_configuration()->get_item_name();
 		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTMLHeading('configuration', StringVars::replace_vars(LangLoader::get_message('configuration.module.title', 'admin-common'), array('module_name' => self::get_module()->get_configuration()->get_name())));
@@ -73,8 +74,14 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->admin_common_lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options()),
+			array('select_to_list' => true)
+		);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->admin_common_lang['config.items_default_sort'], $this->config->get_items_default_sort_field() . '-' . $this->config->get_items_default_sort_mode(), $this->get_sort_options()));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->admin_common_lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options()),
+			array('select_to_list' => true)
+		);
 
 		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['articles.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array('min' => 20, 'max' => 1000, 'required' => true),
@@ -87,10 +94,11 @@ class AdminArticlesConfigController extends AdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], ArticlesConfig::GRID_VIEW),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], ArticlesConfig::LIST_VIEW)
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.grid'], ArticlesConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display.type.list'], ArticlesConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list'))
 			),
-			array('events' => array('change' => '
+			array('select_to_list' => true,
+				'events' => array('change' => '
 				if (HTMLForms.getField("display_type").getValue() === \'' . ArticlesConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 				} else {
@@ -107,7 +115,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('default_contents', $this->lang['articles.default.contents'], $this->config->get_default_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['articles.default.content'], $this->config->get_default_content(),
 			array('rows' => 8, 'cols' => 47)
 		));
 
@@ -145,48 +153,17 @@ class AdminArticlesConfigController extends AdminModuleController
 		$this->form = $form;
 	}
 
-	private function get_sort_options()
-	{
-		$common_lang = LangLoader::get('common');
-
-		$sort_options = array(
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.asc'], Article::SORT_DATE . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['form.date.creation'] . ' - ' . $common_lang['sort.desc'], Article::SORT_DATE . '-' . Article::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.asc'], Article::SORT_ALPHABETIC . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.alphabetic'] . ' - ' . $common_lang['sort.desc'], Article::SORT_ALPHABETIC . '-' . Article::DESC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.asc'], Article::SORT_VIEWS_NUMBER . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['sort_by.views.number'] . ' - ' . $common_lang['sort.desc'], Article::SORT_VIEWS_NUMBER . '-' . Article::DESC),
-			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.asc'], Article::SORT_AUTHOR . '-' . Article::ASC),
-			new FormFieldSelectChoiceOption($common_lang['author'] . ' - ' . $common_lang['sort.desc'], Article::SORT_AUTHOR . '-' . Article::DESC)
-		);
-
-		if ($this->comments_config->module_comments_is_enabled('articles'))
-		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.asc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.comments.number'] . ' - ' . $common_lang['sort.desc'], Article::SORT_COMMENTS_NUMBER . '-' . Article::DESC);
-		}
-
-		if ($this->content_management_config->module_notation_is_enabled('articles'))
-		{
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.asc'], Article::SORT_NOTATION . '-' . Article::ASC);
-			$sort_options[] = new FormFieldSelectChoiceOption($common_lang['sort_by.best.note'] . ' - ' . $common_lang['sort.desc'], Article::SORT_NOTATION . '-' . Article::DESC);
-		}
-
-		return $sort_options;
-	}
-
 	private function save()
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
-		$items_default_sort = explode('-', $this->form->get_value('items_default_sort')->get_raw_value());
-		$this->config->set_items_default_sort_field($items_default_sort[0]);
-		$this->config->set_items_default_sort_mode(TextHelper::strtolower($items_default_sort[1]));
+		$this->config->set_items_default_sort_field($this->form->get_value('items_default_sort_field')->get_raw_value());
+		$this->config->set_items_default_sort_mode($this->form->get_value('items_default_sort_mode')->get_raw_value());
 		$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number', $this->config->get_auto_cut_characters_number()));
 		$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		if($this->config->get_display_type() == ArticlesConfig::GRID_VIEW)
 			$this->config->set_items_per_row($this->form->get_value('items_per_row'));
-		$this->config->set_default_contents($this->form->get_value('default_contents'));
+		$this->config->set_default_content($this->form->get_value('default_content'));
 
 		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
 		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));

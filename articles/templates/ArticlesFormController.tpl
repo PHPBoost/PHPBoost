@@ -8,7 +8,7 @@
 			# IF C_TINYMCE_EDITOR #
 			tinymce.activeEditor.execCommand('mceInsertContent', false, '[page]' + page + '[/page]');
 			# ELSE #
-			var textarea = document.getElementById('ArticlesFormController_contents');
+			var textarea = document.getElementById('ArticlesFormController_content');
 			var start = textarea.selectionStart;
 			var end = textarea.selectionEnd;
 
@@ -31,7 +31,7 @@
 	function page_to_edit(page) 
 	{
 		var searchText = page;
-		var content_input = document.getElementById('ArticlesFormController_contents');
+		var content_input = document.getElementById('ArticlesFormController_content');
 		var matched_page = content_input.value.indexOf('[page]' + searchText + '[/page]');
 
 		if (matched_page != -1)

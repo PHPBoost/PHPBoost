@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,7 +14,7 @@
 
 class ArticlesDisplayArticlesController extends AbstractItemController
 {
-	private $article;
+	private $item;
 	private $category;
 
 	public function execute(HTTPRequestCustom $request)
@@ -30,14 +30,14 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 
 	private function get_article()
 	{
-		if ($this->article === null)
+		if ($this->item === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try
 				{
-					$this->article = self::get_items_manager()->get_item($id);
+					$this->item = self::get_items_manager()->get_item($id);
 				}
 				catch (RowNotFoundException $e)
 				{
@@ -46,22 +46,22 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 				}
 			}
 			else
-				$this->article = new Article();
+				$this->item = new Article();
 		}
-		return $this->article;
+		return $this->item;
 	}
 
 	private function check_pending_article(HTTPRequestCustom $request)
 	{
-		if (!$this->article->is_published())
+		if (!$this->item->is_published())
 		{
 			$this->view->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
 		}
 		else
 		{
-			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ArticlesUrlBuilder::display_article($this->article->get_category()->get_id(), $this->article->get_category()->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel()))
+			if ($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel()))
 			{
-				self::get_items_manager()->update_views_number($this->article);
+				self::get_items_manager()->update_views_number($this->item);
 			}
 		}
 	}
@@ -71,51 +71,51 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$current_page = $request->get_getint('page', 1);
 		$config = ArticlesConfig::load();
 
-		$this->category = $this->article->get_category();
+		$this->category = $this->item->get_category();
 
-		$article_contents = $this->article->get_contents();
+		$content = $this->item->get_content();
 
 		//If article doesn't begin with a page, we insert one
-		if (TextHelper::substr(trim($article_contents), 0, 6) != '[page]')
+		if (TextHelper::substr(trim($content), 0, 6) != '[page]')
 		{
-			$article_contents = '[page]&nbsp;[/page]' . $article_contents;
+			$content = '[page]&nbsp;[/page]' . $content;
 		}
 
 		//Removing [page] bbcode
-		$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`usU', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$clean_content = preg_split('`\[page\].+\[/page\](.*)`usU', $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
 		//Retrieving pages
-		preg_match_all('`\[page\]([^[]+)\[/page\]`uU', $article_contents, $array_page);
+		preg_match_all('`\[page\]([^[]+)\[/page\]`uU', $content, $array_page);
 
-		$nbr_pages = count($array_page[1]);
+		$pages_number = count($array_page[1]);
 
-		if ($nbr_pages > 1)
+		if ($pages_number > 1)
 			$this->build_form($array_page, $current_page);
 
-		foreach ($this->article->get_sources() as $name => $url)
+		foreach ($this->item->get_sources() as $name => $url)
 		{
-			$this->view->assign_block_vars('sources', $this->article->get_array_tpl_source_vars($name));
+			$this->view->assign_block_vars('sources', $this->item->get_template_source_vars($name));
 		}
 
 		$this->build_keywords_view();
 
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
-		$this->view->put_all(array_merge($this->article->get_array_tpl_vars(), array(
-			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
-			'CONTENTS'        => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
+		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
+			'KERNEL_NOTATION' => NotationService::display_active_image($this->item->get_notation()),
+			'CONTENT'         => isset($clean_content[$current_page-1]) ? FormatingHelper::second_parse($clean_content[$current_page-1]) : '',
 			'PAGE_NAME'       => $page_name,
-			'U_EDIT_ARTICLE'  => $page_name !== '' ? ItemsUrlBuilder::edit($this->article->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->article->get_id())->rel()
+			'U_EDIT'          => $page_name !== '' ? ItemsUrlBuilder::edit($this->item->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->item->get_id())->rel()
 		)));
 
-		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
+		$this->build_pages_pagination($current_page, $pages_number, $array_page);
 
 		//Affichage commentaires
 		if (in_array('comments', $this->enabled_features))
 		{
-			$comments_topic = new DefaultCommentsTopic('articles', $this->article);
-			$comments_topic->set_id_in_module($this->article->get_id());
-			$comments_topic->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+			$comments_topic = new DefaultCommentsTopic('articles', $this->item);
+			$comments_topic->set_id_in_module($this->item->get_id());
+			$comments_topic->set_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles'));
 
 			$this->view->put('COMMENTS', $comments_topic->display());
 		}
@@ -133,21 +133,21 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$article_pages = $this->list_article_pages($array_page);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
+			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 
 		$this->view->put('FORM', $form->display());
 	}
 
-	private function build_pages_pagination($current_page, $nbr_pages, $array_page)
+	private function build_pages_pagination($current_page, $pages_number, $array_page)
 	{
-		if ($nbr_pages > 1)
+		if ($pages_number > 1)
 		{
-			$pagination = $this->get_pagination($nbr_pages, $current_page);
+			$pagination = $this->get_pagination($pages_number, $current_page);
 
-			if ($current_page > 1 && $current_page <= $nbr_pages)
+			if ($current_page > 1 && $current_page <= $pages_number)
 			{
-				$previous_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1);
+				$previous_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . ($current_page - 1);
 
 				$this->view->put_all(array(
 					'U_PREVIOUS_PAGE' => $previous_page,
@@ -155,9 +155,9 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 				));
 			}
 
-			if ($current_page > 0 && $current_page < $nbr_pages)
+			if ($current_page > 0 && $current_page < $pages_number)
 			{
-				$next_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1);
+				$next_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . ($current_page + 1);
 
 				$this->view->put_all(array(
 					'U_NEXT_PAGE' => $next_page,
@@ -169,7 +169,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 				'C_PAGINATION' => true,
 				'C_FIRST_PAGE' => $current_page == 1,
 				'C_PREVIOUS_PAGE' => $current_page != 1,
-				'C_NEXT_PAGE' => $current_page != $nbr_pages,
+				'C_NEXT_PAGE' => $current_page != $pages_number,
 				'PAGINATION_ARTICLES' => $pagination->display()
 			));
 		}
@@ -194,19 +194,15 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 
 	private function build_keywords_view()
 	{
-		$keywords = $this->article->get_keywords();
-		$nbr_keywords = count($keywords);
-		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
+		$keywords = $this->item->get_keywords();
+		$this->view->put('C_KEYWORDS', !empty($keywords));
 
-		$i = 1;
 		foreach ($keywords as $keyword)
 		{
 			$this->view->assign_block_vars('keywords', array(
-				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+				'URL' => ItemsUrlBuilder::display_tag($keyword->get_rewrited_name(), 'articles')->rel(),
 			));
-			$i++;
 		}
 	}
 
@@ -224,7 +220,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 
 		switch ($article->get_publishing_state())
 		{
-			case Article::PUBLISHED_NOW:
+			case Article::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->read())
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
@@ -238,7 +234,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Article::PUBLISHED_DATE:
+			case Article::DEFERRED_PUBLICATION:
 				if (!$article->is_published() && ($not_authorized || ($current_user->get_id() == User::VISITOR_LEVEL)))
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
@@ -252,10 +248,10 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		}
 	}
 
-	private function get_pagination($nbr_pages, $current_page)
+	private function get_pagination($pages_number, $current_page)
 	{
-		$pagination = new ModulePagination($current_page, $nbr_pages, 1, Pagination::LIGHT_PAGINATION);
-		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), '%d'));
+		$pagination = new ModulePagination($current_page, $pages_number, 1, Pagination::LIGHT_PAGINATION);
+		$pagination->set_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '%d'));
 
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 		{
@@ -271,41 +267,41 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->article->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
-		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_real_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->set_page_title($this->item->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
+		$graphical_environment->get_seo_meta_data()->set_description($this->item->get_real_summary());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', AppContext::get_request()->get_getint('page', 1)));
 
-		if ($this->article->has_picture())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($this->article->get_picture());
+		if ($this->item->has_thumbnail())
+			$graphical_environment->get_seo_meta_data()->set_picture_url($this->item->get_thumbnail());
 
 		$graphical_environment->get_seo_meta_data()->set_page_type('article');
 
 		$additionnal_properties = array(
 			'article:section' => $this->category->get_name(),
-			'article:published_time' => $this->article->get_creation_date()->format(Date::FORMAT_ISO8601)
+			'article:published_time' => $this->item->get_creation_date()->format(Date::FORMAT_ISO8601)
 		);
 
-		if ($this->article->get_keywords())
-			$additionnal_properties['article:tag'] = $this->article->get_keywords_name();
+		if ($this->item->get_keywords())
+			$additionnal_properties['article:tag'] = $this->item->get_keywords_name();
 
-		if ($this->article->get_update_date() !== null)
-			$additionnal_properties['article:modified_time'] = $this->article->get_update_date()->format(Date::FORMAT_ISO8601);
+		if ($this->item->get_update_date() !== null)
+			$additionnal_properties['article:modified_time'] = $this->item->get_update_date()->format(Date::FORMAT_ISO8601);
 
-		if ($this->article->get_publishing_end_date() !== null)
-			$additionnal_properties['article:expiration_time'] = $this->article->get_publishing_end_date()->format(Date::FORMAT_ISO8601);
+		if ($this->item->get_publishing_end_date() !== null)
+			$additionnal_properties['article:expiration_time'] = $this->item->get_publishing_end_date()->format(Date::FORMAT_ISO8601);
 
 		$graphical_environment->get_seo_meta_data()->set_additionnal_properties($additionnal_properties);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module()->get_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->item->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), CategoriesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), 'articles'));
 		}
-		$breadcrumb->add($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		$breadcrumb->add($this->item->get_title(), ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles'));
 
 		return $response;
 	}

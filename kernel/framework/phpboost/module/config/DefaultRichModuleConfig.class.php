@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 5.3 - 2020 01 10
 */
 
@@ -41,7 +41,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			parent::get_default_values(),
 			array(
 				self::ITEMS_PER_ROW               => 2,
-				self::ITEMS_DEFAULT_SORT_FIELD    => Item::SORT_DATE,
+				self::ITEMS_DEFAULT_SORT_FIELD    => 'date',
 				self::ITEMS_DEFAULT_SORT_MODE     => Item::DESC,
 				self::DEFAULT_CONTENT             => '',
 				self::SUMMARY_DISPLAYED_TO_GUESTS => false,

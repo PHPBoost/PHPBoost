@@ -1,7 +1,7 @@
 <section id="module-{MODULE_ID}">
 	<header>
 		<div class="align-right controls">
-			# IF C_SYNDICATION #<a href="${relative_url(SyndicationUrlBuilder::rss('{MODULE_ID}', CATEGORY_ID))}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a># ENDIF #
+			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a># ENDIF #
 			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>

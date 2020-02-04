@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 20
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,24 +92,24 @@ class ArticlesFormController extends AbstractItemController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.description.enabled'], $this->get_article()->get_description_enabled(),
-			array('description' => StringVars::replace_vars($this->lang['articles.description.enabled.annex'],
+		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['articles.summary.enabled'], $this->get_article()->get_description_enabled(),
+			array('description' => StringVars::replace_vars($this->lang['articles.summary.enabled.annex'],
 			array(
 				'number' => ArticlesConfig::load()->get_auto_cut_characters_number())),
 				'events' => array('click' => '
-					if (HTMLForms.getField("enable_description").getValue()) {
-						HTMLForms.getField("description").enable();
+					if (HTMLForms.getField("enable_summary").getValue()) {
+						HTMLForms.getField("summary").enable();
 					} else {
-						HTMLForms.getField("description").disable();
+						HTMLForms.getField("summary").disable();
 					}'
 		))));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.description'],
-			array('number' =>ArticlesConfig::load()->get_auto_cut_characters_number())), $this->get_article()->get_description(),
-			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', StringVars::replace_vars($this->lang['articles.summary'],
+			array('number' =>ArticlesConfig::load()->get_auto_cut_characters_number())), $this->get_article()->get_summary(),
+			array('rows' => 3, 'hidden' => !$this->get_article()->get_summary_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_article()->get_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.content'], $this->get_article()->get_content(),
 			array('rows' => 15, 'required' => true)
 		));
 
@@ -139,7 +139,7 @@ class ArticlesFormController extends AbstractItemController
 
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed()));
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
+		$other_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.thumbnail'], $this->get_article()->get_thumbnail()->relative()));
 
 		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
@@ -166,8 +166,8 @@ class ArticlesFormController extends AbstractItemController
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->common_lang['form.approbation'], $this->get_article()->get_publishing_state(),
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Article::PUBLISHED_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Article::PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Article::DEFERRED_PUBLICATION),
 				),
 				array(
 					'events' => array('change' => '
@@ -184,12 +184,12 @@ class ArticlesFormController extends AbstractItemController
 
 			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'],
 				($this->get_article()->get_publishing_start_date() === null ? new Date() : $this->get_article()->get_publishing_start_date()),
-				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE))
+				array('hidden' => ($this->get_article()->get_publishing_state() != Article::DEFERRED_PUBLICATION))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(),
 				array(
-					'hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
+					'hidden' => ($this->get_article()->get_publishing_state() != Article::DEFERRED_PUBLICATION),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -225,19 +225,19 @@ class ArticlesFormController extends AbstractItemController
 
 			if (!empty($current_page))
 			{
-				$article_contents = $this->article->get_contents();
+				$content = $this->article->get_content();
 
 				//If article doesn't begin with a page, we insert one
-				if (TextHelper::substr(trim($article_contents), 0, 6) != '[page]')
+				if (TextHelper::substr(trim($content), 0, 6) != '[page]')
 				{
-					$article_contents = '[page]&nbsp;[/page]' . $article_contents;
+					$content = '[page]&nbsp;[/page]' . $content;
 				}
 
 				//Removing [page] bbcode
-				$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`usU', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+				//$clean_content = preg_split('`\[page\].+\[/page\](.*)`usU', $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
 				//Retrieving pages
-				preg_match_all('`\[page\]([^[]+)\[/page\]`uU', $article_contents, $array_page);
+				preg_match_all('`\[page\]([^[]+)\[/page\]`uU', $content, $array_page);
 
 				$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
@@ -310,7 +310,7 @@ class ArticlesFormController extends AbstractItemController
 		}
 		else
 		{
-			if (!$article->is_authorized_to_edit())
+			if (!$article->is_authorized_to_manage())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -332,12 +332,12 @@ class ArticlesFormController extends AbstractItemController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
-		$article->set_contents($this->form->get_value('contents'));
+		$article->set_summary(($this->form->get_value('enable_summary') ? $this->form->get_value('summary') : ''));
+		$article->set_content($this->form->get_value('content'));
 
 		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Article::AUTHOR_NAME_NOTDISPLAYED;
 		$article->set_author_name_displayed($author_name_displayed);
-		$article->set_picture(new Url($this->form->get_value('picture')));
+		$article->set_thumbnail(new Url($this->form->get_value('thumbnail')));
 
 		if ($this->get_article()->get_author_name_displayed() == true)
 			$article->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $article->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
@@ -371,7 +371,7 @@ class ArticlesFormController extends AbstractItemController
 			$article->set_rewrited_title($rewrited_title);
 
 			$article->set_publishing_state($this->form->get_value('publishing_state')->get_raw_value());
-			if ($article->get_publishing_state() == Article::PUBLISHED_DATE)
+			if ($article->get_publishing_state() == Article::DEFERRED_PUBLICATION)
 			{
 				$config = ArticlesConfig::load();
 				$deferred_operations = $config->get_deferred_operations();

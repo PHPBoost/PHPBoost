@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 27
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 05 13
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -68,7 +68,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
 			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 			'PAGINATION'         => $pagination->display(),
-			'ID_CAT'             => $this->get_category()->get_id(),
+			'CATEGORY_ID'        => $this->get_category()->get_id(),
 			'U_EDIT_CATEGORY'    => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel()
 		));
 
@@ -80,7 +80,7 @@ class ArticlesDisplayCategoryController extends AbstractItemController
 
 			foreach ($item->get_sources() as $name => $url)
 			{
-				$this->view->assign_block_vars('articles.sources', $item->get_array_tpl_source_vars($name));
+				$this->view->assign_block_vars('articles.sources', $item->get_template_source_vars($name));
 			}
 		}
 	}

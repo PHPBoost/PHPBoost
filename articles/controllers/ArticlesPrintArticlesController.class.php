@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -47,11 +47,11 @@ class ArticlesPrintArticlesController extends AbstractItemController
 
 	private function build_view()
 	{
-		$contents = preg_replace('`\[page\](.*)\[/page\]`u', '<h2>$1</h2>', $this->article->get_contents());
+		$content = preg_replace('`\[page\](.*)\[/page\]`u', '<h2>$1</h2>', $this->article->get_content());
 		$this->view->put_all(array(
 			'PAGE_TITLE' => $this->lang['articles.print.item'] . ' - ' . $this->article->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->article->get_title(),
-			'CONTENT' => FormatingHelper::second_parse($contents)
+			'CONTENT' => FormatingHelper::second_parse($content)
 		));
 	}
 
@@ -68,7 +68,7 @@ class ArticlesPrintArticlesController extends AbstractItemController
 
 		switch ($article->get_publishing_state())
 		{
-			case Article::PUBLISHED_NOW:
+			case Article::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
@@ -82,7 +82,7 @@ class ArticlesPrintArticlesController extends AbstractItemController
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Article::PUBLISHED_DATE:
+			case Article::DEFERRED_PUBLICATION:
 				if (!$article->is_published() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

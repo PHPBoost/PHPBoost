@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 17
+ * @version     PHPBoost 5.3 - last update: 2020 02 04
  * @since       PHPBoost 5.3 - 2020 01 16
 */
 
@@ -90,12 +90,13 @@ class DefaultManageItemsController extends AbstractItemController
 			}
 
 			$start_and_end_dates = new SpanHTMLElement($dates, array(), 'smaller');
+			$status = new SpanHTMLElement($item->get_status(), array(), 'publication-status ' . $item->get_status_class());
 
 			$row = array(
 				new HTMLTableRowCell(new LinkHTMLElement(self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'left'),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
-				new HTMLTableRowCell($item->get_status() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
+				new HTMLTableRowCell($status->display() . $br->display() . ($dates ? $start_and_end_dates->display() : '')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display())
 			);
 
