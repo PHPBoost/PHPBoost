@@ -58,9 +58,9 @@
 
 		<div class="content" itemprop="text">
 			# IF C_FIRST_PAGE #
-				# IF C_HAS_PICTURE #<img src="{U_PICTURE}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
+				# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 			# ENDIF #
-			{CONTENTS}
+			{CONTENT}
 		</div>
 		# IF C_PAGINATION #
 			<aside class="flex-between">
@@ -126,7 +126,7 @@
 	</article>
 	<footer>
 		<meta itemprop="url" content="{U_ARTICLE}">
-		<meta itemprop="description" content="${escape(DESCRIPTION)}">
+		<meta itemprop="description" content="${escape(SUMMARY)}">
 		<meta itemprop="datePublished" content="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #">
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
 		# IF C_ENABLED_COMMENTS #
