@@ -50,6 +50,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 					'rewrited_title' => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'       => 'content MEDIUMTEXT',
 					'picture_url'    => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'description'    => 'summary TEXT',
 					'number_view'    => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'date_created'   => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'date_updated'   => 'update_date INT(11) NOT NULL DEFAULT 0'
