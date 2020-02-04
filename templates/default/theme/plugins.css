@@ -77,7 +77,9 @@
 .accordion-animation.active-panel {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
+    transition:
+        opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, 
+        height 0.3s ease;
 }
 
 .accordion .content-panel {
@@ -208,11 +210,6 @@ li:last-child .accordion .content-panel {
     height: 0;
     opacity: 0;
     visibility: hidden;
-    transition:
-        opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-        visibility 0.3s cubic-bezier(0.5,0.5,0.5,0.5),
-        margin 0.3s ease 0.3s,
-        height 0.3s ease 0.3s;
 }
 
 .tabs-animation.active-panel {
