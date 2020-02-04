@@ -13,6 +13,10 @@
 	position: relative;
 }
 
+#module-connect .js-menu-button .stacked {
+	margin: 0 0 0 0.809em;
+}
+
 #module-connect .js-menu-button::after {
 	position: absolute;
 	font-family: 'Font Awesome 5 Free';
