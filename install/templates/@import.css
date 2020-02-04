@@ -2,6 +2,7 @@
 @import url('../../templates/default/theme/font-awesome/css/font-awesome.css');
 @import url('../../templates/default/theme/font-awesome-animation.css');
 
+@import url('../../templates/default/theme/@variables.css') screen;
 @import url('../../templates/default/theme/form.css') screen;
 @import url('../../templates/default/theme/fieldset.css') screen;
 @import url('../../templates/default/theme/input.css') screen;
