@@ -77,50 +77,50 @@
 				# ENDIF #
 			</tbody>
 			# IF C_DISPLAY_FOOTER #
-			<tfoot>
-				<tr>
-					<td colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
-						<div class="html-table-nbr-elements">
-							<span>
-								{ELEMENTS_NUMBER_LABEL}
-							</span>
-						</div>
-						# IF C_PAGINATION_ACTIVATED #
-							# IF C_NB_ROWS_OPTIONS #
-								<div class="flex-between">
-									<div class="table-rows-options">
-										<select name="nbItemsPerPage" onchange="window.location=this.value">
-											# START nbItemsOption #
-											<option value="{nbItemsOption.URL}"
-												# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
-												{nbItemsOption.VALUE}
-											</option>
-											# END nbItemsOption #
-										</select>
+				<tfoot>
+					<tr>
+						<td colspan="{NUMBER_OF_COLUMNS}" class="html-table-footer# IF C_FOOTER_CSS_CLASSES # {FOOTER_CSS_CLASSES}# ENDIF #">
+							<div class="flex-between">
+								# IF C_MULTIPLE_DELETE_DISPLAYED #
+									<div class="mini-checkbox">
+										<label for="delete-all-checkbox" class="checkbox">
+											<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
+											<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
+										</label>
+										<input type="hidden" name="token" value="{TOKEN}" />
+										<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
 									</div>
-							# END IF #
-							<div class="table-pagination">
-								# INCLUDE pagination #
-							</div>
-							# IF C_NB_ROWS_OPTIONS #
+								# ENDIF #
+								<div class="html-table-elements-number">
+									<span>{ELEMENTS_NUMBER_LABEL}</span>
 								</div>
-							# ENDIF #
-						# ENDIF #
-					</td>
-				</tr>
-			</tfoot>
+								# IF C_PAGINATION_ACTIVATED #
+									# IF C_NB_ROWS_OPTIONS #
+										<div class="flex-between">
+											<div class="table-rows-options">
+												<select name="nbItemsPerPage" onchange="window.location=this.value">
+													# START nbItemsOption #
+													<option value="{nbItemsOption.URL}"
+														# IF nbItemsOption.C_SELECTED # selected="selected"# END IF #>
+														{nbItemsOption.VALUE}
+													</option>
+													# END nbItemsOption #
+												</select>
+											</div>
+									# END IF #
+									<div class="table-pagination">
+										# INCLUDE pagination #
+									</div>
+									# IF C_NB_ROWS_OPTIONS #
+										</div>
+									# ENDIF #
+								# ENDIF #
+							</div>
+						</td>
+					</tr>
+				</tfoot>
 			# ENDIF #
 		</table>
-		# IF C_MULTIPLE_DELETE_DISPLAYED #
-			<div class="mini-checkbox">
-				<label for="delete-all-checkbox" class="checkbox">
-					<input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {ELEMENTS_NUMBER});">
-					<span aria-label="${LangLoader::get_message('select.all.elements', 'common')}">&nbsp;</span>
-				</label>
-				<input type="hidden" name="token" value="{TOKEN}" />
-				<button type="submit" id="delete-all-button" name="delete-selected-elements" value="true" class="button submit" data-confirmation="delete-element" disabled="disabled">${LangLoader::get_message('delete', 'common')}</button>
-			</div>
-		# ENDIF #
 	</form>
 # IF C_FILTERS #
 	<script>
