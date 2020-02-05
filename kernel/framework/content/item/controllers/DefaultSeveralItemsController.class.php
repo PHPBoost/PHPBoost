@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 5.3 - 2020 01 22
 */
 
@@ -299,7 +299,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
-					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $page : 1)));
+					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
 			}
 		}
 		else
