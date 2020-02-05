@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 5.3 - 2020 01 28
 */
 
@@ -50,7 +50,7 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 			$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
 			$condition = 'WHERE id_category IN :categories_id
-			AND (published = ' . Item::NOT_PUBLISHED . ($module->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')
+			AND (published = ' . Item::PUBLISHED . ($module->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')
 			ORDER BY creation_date DESC';
 			
 			$parameters = array(
