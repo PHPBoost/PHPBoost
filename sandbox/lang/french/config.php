@@ -18,9 +18,11 @@
 $lang['mini.config.title'] = 'Configuration du mini-module bac à sable';
 $lang['mini.superadmin.enabled'] = 'Limiter l\'accès au menu à un seul administrateur';
 $lang['mini.superadmin.id'] = 'Choix de l\'administrateur';
-$lang['mini.open.menu'] = 'Ouvrir le menu sur le côté :';
-$lang['mini.open.menu.left'] = 'gauche';
+$lang['mini.open.menu'] = 'Ouvrir le menu sur le bord :';
+$lang['mini.open.menu.top'] = 'haut';
 $lang['mini.open.menu.right'] = 'droit';
+$lang['mini.open.menu.left'] = 'gauche';
+$lang['mini.open.menu.bottom'] = 'bas';
 $lang['is.not.admin'] = 'Le membre choisi n\'est pas un administrateur ou n\'existe pas';
 
 // Authorizations

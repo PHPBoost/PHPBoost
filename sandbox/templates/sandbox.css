@@ -66,14 +66,14 @@ body {
 
 .close-summary:hover,
 .sandbox-summary a:hover {
-background-color: rgba(0, 0, 0, 0.05);
+	background-color: rgba(var(--darken), 0.05);
 }
 
 .sandbox-summary > ul > li > a {
 	padding: 0.1618em 0.809em;
 	display: block;
 	text-transform: uppercase;
-	background-color: rgba(0, 0, 0, 0.05);
+	background-color: rgba(var(--darken), 0.05);
 }
 
 .sandbox-summary > ul > li > ul > li > a {
@@ -85,9 +85,12 @@ background-color: rgba(0, 0, 0, 0.05);
 .sandbox-title {
 	padding: 0 0.809em;
 	border-bottom: 1px solid #366493;
-	margin-bottom: 1.618em
+	margin-bottom: 1.618em;
 }
 
- /* --- Source code
- ----------------------------------------------------------------------------- */
- .tpl {margin-bottom: 2.618em;}
+/* --- Source code
+----------------------------------------------------------------------------- */
+.tpl { margin-bottom: 2.618em; }
+.formatter-hide .copy-code { float: none; }
+.formatter-content .formatter-content { padding: 0; max-height: none; border-width: 0; }
+.formatter-content.formatter-code { text-align: right;}

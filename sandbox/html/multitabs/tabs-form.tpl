@@ -1,6 +1,4 @@
-<pre>
-
-$tabs_form = new HTMLForm('HTMLFormID');
+<pre class="language-php"><code class="language-php">$tabs_form = new HTMLForm('HTMLFormID');
 $tabs_form->set_css_class('tabs-container fieldset-content');
 <br />
 $fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
@@ -30,4 +28,4 @@ $fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['
 $tabs_form->add_fieldset($fieldset_tab_three);
 <em>// content of pannel  03</em>
 ...
-<pre>
+</code></pre>

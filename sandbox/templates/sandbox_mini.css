@@ -3,8 +3,45 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
+.fwkboost-mini-sandbox .stacked .stack-event.stack-sup { top: -0.456em; }
+
+.sandbox-mini-form fieldset,
+.sandbox-mini-form .fieldset-inset {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.sandbox-mini-form .button.submit,
+.sandbox-mini-form .button.submit:hover,
+.sandbox-mini-form .button.submit:active {
+    text-align: left;
+    width: 100%
+}
+
+.sandbox-mini-form select {
+    margin: 0 0 0 1em;
+    width: calc(100% - 0.456em);
+}
+
+.sandbox-mini-form { margin: -0.618em 0 -0.618em -1.618em;}
+
+.sandbox-mini-form .button.submit,
+.sandbox-mini-form .button.submit:hover,
+.sandbox-mini-form .button.submit:active{
+    background-color: transparent;
+    border-width: 0;
+}
+
+.sandbox-mini-form span { display: inline-block; }
+.sandbox-mini-form .item-label { padding: 0 0.309em; }
+.item-label { padding: 0 0.618em; }
+
+/*  */
+
 .mini-sbx-left a,
-.mini-sbx-right a{ text-decoration: none;}
+.mini-sbx-right a { text-decoration: none;}
 
 .sbx-menu {
     width: 100%;

@@ -15,7 +15,7 @@
 ####################################################
 
 $lang['form.title'] = 'Formulaire';
-$lang['form.subtitle'] = 'Sous titre de formulaire';
+
 $lang['form.title.inputs'] = 'Champs texte';
 $lang['form.title.textarea'] = 'Textarea';
 $lang['form.title.radio'] = 'Radio / checkbox';
@@ -25,7 +25,8 @@ $lang['form.title.select'] = 'Select';
 $lang['form.title.date'] = 'Date';
 $lang['form.title.authorization'] = 'Autorisation';
 $lang['form.title.orientation'] = 'Orientation';
-$lang['form.desc'] = 'Ceci est une description';
+
+// Text fields
 $lang['form.input.text'] = 'Champ texte';
 $lang['form.input.text.desc'] = 'Contraintes: lettres, chiffres et tiret bas';
 $lang['form.input.text.lorem'] = 'Lorem ipsum';
@@ -59,12 +60,17 @@ $lang['form.input.password'] = 'Mot de passe';
 $lang['form.input.password.desc'] = ' caractères minimum';
 $lang['form.input.password.placeholder'] = 'aaaaaa';
 $lang['form.input.password.confirm'] = 'Confirmation du mot de passe';
+
+// Textareas
 $lang['form.input.multiline.medium'] = 'Champ texte multi lignes moyen';
 $lang['form.input.multiline'] = 'Champ texte multi lignes';
 $lang['form.input.multiline.desc'] = 'Description';
 $lang['form.input.multiline.lorem'] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut tempor lacus.';
 $lang['form.input.rich.text'] = 'Champ texte avec éditeur';
 $lang['form.input.rich.text.placeholder'] = 'Créer un site <strong>facilement</strong>';
+
+// Choices
+$lang['form.input.choices'] = 'Champs à sélection';
 $lang['form.input.checkbox'] = 'Case à cocher';
 $lang['form.input.multiple.checkbox'] = 'Case à cocher multiple';
 $lang['form.input.radio'] = 'Boutons radio';
@@ -82,7 +88,23 @@ $lang['form.input.choice.group.2'] = 'Groupe 2';
 $lang['form.input.timezone'] = 'TimeZone';
 $lang['form.input.user.completion'] = 'Auto complétion utilisateurs';
 
-$lang['form.title.2'] = 'Formulaire 2';
+// Buttons
+$lang['form.all.buttons'] = 'Tous les boutons sont pré-définis avec la classe .button';
+$lang['form.send.button'] = 'Envoyer';
+$lang['form.send.button.alt'] = 'Envoyer .alt';
+$lang['form.preview'] = 'Prévisualiser';
+$lang['form.button'] = 'Bouton';
+$lang['form.buttons'] = 'Boutons';
+$lang['form.button.small'] = 'Bouton .small';
+$lang['form.button.basic'] = 'Bouton .basic';
+$lang['form.button.basic.alt'] = 'Bouton .basic.alt';
+
+// Miscellaneaous
+$lang['form.title.miscellaneous'] = 'Divers';
+
+$lang['form.desc'] = 'Ceci est une description';
+$lang['form.subtitle'] = 'Sous titre de formulaire';
+$lang['form.separator'] = '[] saut de ligne []';
 $lang['form.input.hidden'] = 'Champ caché';
 $lang['form.free.html'] = 'Champ libre';
 $lang['form.date'] = 'Date';
@@ -93,8 +115,8 @@ $lang['form.file.picker'] = 'Fichier';
 $lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
 $lang['form.file.upload'] = 'Lien vers un fichier';
 $lang['form.action.link.list'] = 'Liste de liens';
-$lang['form.action.link.1'] = 'Item de Liste 1';
-$lang['form.action.link.2'] = 'Item de Liste 2';
+$lang['form.action.link.1'] = 'Item avec icône';
+$lang['form.action.link.2'] = 'Item avec image';
 $lang['form.action.link.3'] = 'Item de Liste 3';
 $lang['form.action.link.4'] = 'Item de Liste 4';
 
@@ -112,11 +134,4 @@ $lang['form.authorization.2'] = 'Action 2';
 $lang['form.vertical.desc'] = 'Formulaire vertical';
 $lang['form.horizontal.desc'] = 'Formulaire horizontal';
 
-$lang['form.send.button'] = 'Envoyer';
-$lang['form.send.button.alt'] = 'Envoyer .alt';
-$lang['form.preview'] = 'Prévisualiser';
-$lang['form.button'] = 'Bouton';
-$lang['form.button.small'] = 'Bouton .small';
-$lang['form.button.basic'] = 'Bouton .basic';
-$lang['form.button.basic.alt'] = 'Bouton .basic.alt';
 ?>

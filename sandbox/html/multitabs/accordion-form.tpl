@@ -1,6 +1,4 @@
-<pre>
-
-$accordion_form = new HTMLForm('HTMLFormID');
+<pre class="language-php"><code class="language-php">$accordion_form = new HTMLForm('HTMLFormID');
 $accordion_form->set_css_class('accordion-container siblings fieldset-content');
 <br />
 $fieldset_accordion_controls = new FormFieldsetAccordionControls('accordion_controls', '');
@@ -33,4 +31,4 @@ $fieldset_tab_three = new FormFieldsetMultitabsHTML('targetID-03', $this->lang['
 $accordion_form->add_fieldset($fieldset_tab_three);
 <em>// content of pannel  03</em>
 ...
-<pre>
+</code></pre>

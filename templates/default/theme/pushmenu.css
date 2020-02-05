@@ -265,7 +265,7 @@ body.push-nav-open {
 .pushmenu li.nav-close:not(:first-child) a,
 .pushmenu li.nav-back:not(:first-child) a { margin-top: -1px; }
 
-.pushmenu li.nav-parent .nav-item { padding-right: 3.618em; }
+.pushmenu li.nav-parent > .nav-item { padding-right: 3.618em; }
 
 .pushmenu li.nav-close span,
 .pushmenu li.nav-parent span.nav-next,

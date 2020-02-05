@@ -89,6 +89,14 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function icoboost()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/icoboost');
+	}
+
+	/**
+	 * @return Url
+	 */
 	public static function menu()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/menu');

@@ -21,6 +21,7 @@ class SandboxExtensionPointProvider extends ExtensionPointProvider
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('sandbox.css');
+		$module_css_files->adding_running_module_displayed_file('prism.css');
 		$module_css_files->adding_always_displayed_file('sandbox_mini.css');
 
 		if (ModulesManager::is_module_installed('wiki')  && ModulesManager::is_module_activated('wiki'))

@@ -38,7 +38,7 @@
 		# ENDIF #
 		levelTitles: true, // overlap only
 		levelSpacing: 40, // px - overlap only
-		navClass: '',
+		navClass: 'pushmenu-nav-{ID}',
 		disableBody: {DISABLED_BODY},
 		closeOnClick: true, // if disableBody is true
 		insertClose: true,

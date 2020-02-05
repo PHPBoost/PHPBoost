@@ -245,7 +245,7 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_field(new FormFieldSubTitle('all_buttons', 'All Buttons', ''));
 		$fieldset->add_field(new FormFieldSpacer('all_buttons_explain', 'All buttons must have the <span class="pinned notice">.button</span> class.'));
 		// Buttons
-		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'reset'));
+		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'reset-button'));
 		$fieldset->add_element(new FormButtonButton('.button', '', '', ''));
 		$fieldset->add_element(new FormButtonButton('.alt-button', '', '', 'alt-button'));
 		$fieldset->add_element(new FormButtonButton('.submit', '', '', 'submit'));
@@ -286,6 +286,16 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_element(new FormButtonButton('.error.bgc', '', '', 'bgc error'));
 		$fieldset->add_element(new FormButtonButton('.error.bgc-full', '', '', 'bgc-full error'));
 
+		$fieldset->add_field(new FormFieldSpacer('button_visitor', ''));
+		$fieldset->add_element(new FormButtonButton('.visitor', '', '', 'visitor'));
+		$fieldset->add_element(new FormButtonButton('.visitor.bgc', '', '', 'bgc visitor'));
+		$fieldset->add_element(new FormButtonButton('.visitor.bgc-full', '', '', 'bgc-full visitor'));
+
+		$fieldset->add_field(new FormFieldSpacer('button_custom_author', ''));
+		$fieldset->add_element(new FormButtonButton('.custom-author', '', '', 'custom-author'));
+		$fieldset->add_element(new FormButtonButton('.custom-author.bgc', '', '', 'bgc custom-author'));
+		$fieldset->add_element(new FormButtonButton('.custom-author.bgc-full', '', '', 'bgc-full custom-author'));
+
 		$fieldset->add_field(new FormFieldSpacer('button_member', ''));
 		$fieldset->add_element(new FormButtonButton('.member', '', '', 'member'));
 		$fieldset->add_element(new FormButtonButton('.member.bgc', '', '', 'bgc member'));
@@ -302,7 +312,7 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_element(new FormButtonButton('.administrator.bgc-full', '', '', 'bgc-full administrator'));
 
 
-		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.2']);
+		$fieldset2 = new FormFieldsetHTML('fieldset2', $this->lang['form.title.miscellaneous']);
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA

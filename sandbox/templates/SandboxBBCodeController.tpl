@@ -6,46 +6,46 @@
 	</header>
 
 	<div class="sandbox-summary">
-	  <div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
-        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
-	  </div>
-	  <ul>
-		<li>
-			<a class="summary-link" href="#typography">{@bbcode.title.typography}</a>
-		</li>
-		<li>
-			<a class="summary-link" href="#blocks">{@bbcode.title.blocks}</a>
-			<ul>
-				<li><a href="#paragraph" class="summary-link">{@bbcode.paragraph}</a></li>
-				<li><a href="#block" class="summary-link">{@bbcode.block}</a></li>
-				<li><a href="#fieldset" class="summary-link">{@bbcode.fieldset}</a></li>
-			</ul>
-		</li>
-		<li>
-			<a class="summary-link" href="#code">{@bbcode.title.code}</a>
-			<ul>
-				<li><a href="#quote" class="summary-link">{@bbcode.quote}</a></li>
-				<li><a href="#hidden" class="summary-link">{@bbcode.hidden}</a></li>
-				<li><a href="#php" class="summary-link">{@bbcode.code.php}</a></li>
-			</ul>
-		</li>
-		<li>
-			<a class="summary-link" href="#media">{@bbcode.title.media}</a>
-			<ul>
-				<li><a href="#image" class="summary-link">{@bbcode.image}</a></li>
-				<li><a href="#lightbox" class="summary-link">{@bbcode.lightbox}</a></li>
-				<li><a href="#youtube" class="summary-link">{@bbcode.youtube}</a></li>
-				<li><a href="#movie" class="summary-link">{@bbcode.movie}</a></li>
-				<li><a href="#audio" class="summary-link">{@bbcode.audio}</a></li>
-			</ul>
-		</li>
-		<li>
-			<a class="summary-link" href="#bbcode-table">{@bbcode.title.table}</a>
-		</li>
-		<li>
-			<a class="summary-link" href="#wiki">{@wiki.module}</a>
-		</li>
-	  </ul>
+  		<div class="close-summary" aria-label="${LangLoader::get_message('close_menu', 'admin')} {@sandbox.summary}">
+        	<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+	  	</div>
+	  	<ul>
+			<li>
+				<a class="summary-link" href="#typography">{@bbcode.title.typography}</a>
+			</li>
+			<li>
+				<a class="summary-link" href="#blocks">{@bbcode.title.blocks}</a>
+				<ul>
+					<li><a href="#paragraph" class="summary-link">{@bbcode.paragraph}</a></li>
+					<li><a href="#block" class="summary-link">{@bbcode.block}</a></li>
+					<li><a href="#fieldset" class="summary-link">{@bbcode.fieldset}</a></li>
+				</ul>
+			</li>
+			<li>
+				<a class="summary-link" href="#code">{@bbcode.title.code}</a>
+				<ul>
+					<li><a href="#quote" class="summary-link">{@bbcode.quote}</a></li>
+					<li><a href="#hidden" class="summary-link">{@bbcode.hidden}</a></li>
+					<li><a href="#php" class="summary-link">{@bbcode.code.php}</a></li>
+				</ul>
+			</li>
+			<li>
+				<a class="summary-link" href="#media">{@bbcode.title.media}</a>
+				<ul>
+					<li><a href="#image" class="summary-link">{@bbcode.image}</a></li>
+					<li><a href="#lightbox" class="summary-link">{@bbcode.lightbox}</a></li>
+					<li><a href="#youtube" class="summary-link">{@bbcode.youtube}</a></li>
+					<li><a href="#movie" class="summary-link">{@bbcode.movie}</a></li>
+					<li><a href="#audio" class="summary-link">{@bbcode.audio}</a></li>
+				</ul>
+			</li>
+			<li>
+				<a class="summary-link" href="#bbcode-table">{@bbcode.title.table}</a>
+			</li>
+			<li>
+				<a class="summary-link" href="#wiki">{@wiki.module}</a>
+			</li>
+	 	 </ul>
 	</div>
 	<div class="open-summary">
 		<i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {@sandbox.summary}
@@ -248,8 +248,8 @@
 				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" data-lightbox="formatter" data-rel="lightcase:collection">
 					<img style="max-width: 150px" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="{@bbcode.lightbox}" />
 				</a>
-				<a href="{PATH_TO_ROOT}/templates/{THEME}/theme/images/admin.jpg" data-lightbox="formatter" data-rel="lightcase:collection">
-					<img style="max-width: 150px" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/admin.jpg" alt="{@bbcode.lightbox}" />
+				<a href="{PATH_TO_ROOT}/templates/default/theme/images/admin.jpg" data-lightbox="formatter" data-rel="lightcase:collection">
+					<img style="max-width: 150px" src="{PATH_TO_ROOT}/templates/default/theme/images/admin.jpg" alt="{@bbcode.lightbox}" />
 				</a>
 			</div>
 		</article>
@@ -286,7 +286,7 @@
 			</header>
 			<div class="content">
 				<audio class="audio-player" controls>
-					<source src="http://data.babsoweb.com/private/herbiestyle.mp3" />
+					<source src="http://data.babsoweb.com/babsodata/tom/herbiestyle.mp3" />
 				</audio>
 			</div>
 		</article>
@@ -338,24 +338,25 @@
 		<h2>{@wiki.module}</h2>
 	</div>
 	# IF C_WIKI #
-	<div class="no-style">
-		<article class="block">
-			<p class="message-helper bgc notice">{@wiki.conditions}</p>
-			<div class="content">
-				# START wikimenu #
-					<div class="wiki-summary">
-						<div class="wiki-summary-title">{@wiki.table.of.contents}</div>
-						{wikimenu.MENU}
-					</div>
-				# END wikimenu #
-				{WIKI_CONTENTS}
-			</div>
-		</article>
-	</div>
+		<div class="no-style">
+			<article class="block">
+				<p class="message-helper bgc notice">{@wiki.conditions}</p>
+				<div class="content">
+					# START wikimenu #
+						<div class="wiki-summary">
+							<div class="wiki-summary-title">{@wiki.table.of.contents}</div>
+							{wikimenu.MENU}
+						</div>
+					# END wikimenu #
+					{WIKI_CONTENTS}
+				</div>
+			</article>
+		</div>
 	# ELSE #
-	 {@wiki.not}
+	 	{@wiki.not}
 	# ENDIF #
 
 	<footer></footer>
 </section>
 <script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
+<script src="{PATH_TO_ROOT}/sandbox/templates/js/prism.js"></script>

@@ -14,8 +14,10 @@ class SandboxConfig extends AbstractConfigData
 	const SUPERADMIN_NAME      = 'superadmin_name';
 	const OPEN_MENU    		 = 'open_menu';
 
-	const LEFT_MENU    		 = 'left_menu';
+	const TOP_MENU    		 = 'top_menu';
 	const RIGHT_MENU     	 = 'right_menu';
+	const LEFT_MENU    		 = 'left_menu';
+	const BOTTOM_MENU     	 = 'bottom_menu';
 
 	const AUTHORIZATIONS = 'authorizations';
 

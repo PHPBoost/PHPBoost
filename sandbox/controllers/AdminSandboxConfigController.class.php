@@ -62,6 +62,16 @@ class AdminSandboxConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['mini.config.title']);
 		$form->add_fieldset($fieldset);
 
+		$fieldset->add_field(new FormFieldRadioChoice('open_menu', $this->lang['mini.open.menu'], $this->config->get_open_menu(),
+			array(
+				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.top'], SandboxConfig::TOP_MENU),
+				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.right'], SandboxConfig::RIGHT_MENU),
+				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.bottom'], SandboxConfig::BOTTOM_MENU),
+				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.left'], SandboxConfig::LEFT_MENU)
+			),
+			array('class' => 'inline-radio custom-radio third-field')
+		));
+
 		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['mini.superadmin.enabled'], $this->config->get_superadmin_enabled(),
 			array(
 				'class' => 'custom-checkbox',
@@ -78,14 +88,6 @@ class AdminSandboxConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('superadmin_name', $this->lang['mini.superadmin.id'], $this->config->get_superadmin_name(),
 			array('hidden' => !$this->config->get_superadmin_enabled()),
 			array(new SandboxConstraintUserIsAdmin)
-		));
-
-		$fieldset->add_field(new FormFieldRadioChoice('open_menu', $this->lang['mini.open.menu'], $this->config->get_open_menu(),
-			array(
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.left'], SandboxConfig::LEFT_MENU),
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.right'], SandboxConfig::RIGHT_MENU)
-			),
-			array('class' => 'inline-radio custom-radio')
 		));
 
 		$common_lang = LangLoader::get('common');

@@ -1,4 +1,4 @@
-<pre>
+<pre><code class="language-html">
 &lt;blockquote class="formatter-container formatter-blockquote">
     &lt;span class="formatter-title title-perso">John Doe&lt;/span>
     &lt;div class="formatter-content">
@@ -23,4 +23,4 @@
         &lt;/pre>
     &lt;/div>
 &lt;/div><br />
-</pre>
+</code></pre>

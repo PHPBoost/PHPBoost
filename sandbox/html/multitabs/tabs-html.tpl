@@ -1,5 +1,4 @@
-<pre>
-&lt;div class="tabs-container">
+<pre class="language-html"><code class="language-html">&lt;div class="tabs-container">
     &lt;nav>
         &lt;ul>
             &lt;li>&lt;a href="#" data-tabs data-target="tab-01">Pannel 01&lt;/a>&lt;/li>
@@ -23,4 +22,4 @@
         &lt;/div>
     &lt;/div>
 &lt;/div>
-</pre>
+</code></pre>

@@ -14,13 +14,17 @@
 #                    French                        #
 ####################################################
 
+$lang['mini.config.mini'] = 'Configuration de la mini';
+
 $lang['mini.close'] = 'Fermer le menu';
+$lang['mini.infos'] = 'Infos site';
 $lang['mini.version.pbt'] = 'Version de PHPBoost';
 $lang['mini.version.php'] = 'Version PHP du serveur';
 $lang['mini.version.sql'] = 'Version de MySql';
 $lang['mini.version.date'] = 'Date d\'installation du site';
 $lang['mini.viewport.v'] = 'Hauteur de la fenêtre';
 $lang['mini.viewport.h'] = 'Largeur de la fenêtre';
+
 $lang['mini.tools'] = 'Outils';
 $lang['mini.errors'] = 'Erreurs archivées';
 $lang['mini.404'] = 'Erreurs 404';
@@ -43,6 +47,9 @@ $lang['mini.advanced.config'] = 'Avancée';
 $lang['mini.user'] = 'Utilisateurs';
 $lang['mini.theme'] = 'Thèmes';
 $lang['mini.mod'] = 'Modules';
+
+$lang['mini.fwkboost'] = 'FWKBoost';
+$lang['mini.hashtag'] = '#EffDoublevéKaBouste';
 
 $lang['mini.themes.switcher'] = 'Changer de thème';
 $lang['mini.default.theme'] = 'Thème par défaut';

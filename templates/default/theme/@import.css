@@ -8,6 +8,7 @@
 @import url('../../default/theme/font-awesome/css/font-awesome.css');
 @import url('../../default/theme/font-awesome-animation.css');
 @import url('../../default/theme/lightcase.css') screen;
+@import url('../../default/theme/icoboost/icoboost.css') screen;
 
 @import url('../../default/theme/@variables.css') screen;
 @import url('../../default/theme/form.css') screen;

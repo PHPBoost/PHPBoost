@@ -1,9 +1,7 @@
-<pre>
-
-$wizard_form = new <span style="color: #ff8800">WizardHTMLForm</span>('HTMLFormID');
-$wizard_form->set_css_class('<span style="color: #ff8800">wizard-container</span> fieldset-content');
+<pre class="language-php"><code class="language-php">$wizard_form = new WizardHTMLForm('HTMLFormID');
+$wizard_form->set_css_class('wizard-container fieldset-content');
 <br />
-$fieldset_tab_menu = new <span style="color: #ff8800">FormFieldMenuFieldset</span>('tabmenulistID', '');
+$fieldset_tab_menu = new FormFieldMenuFieldset('tabmenulistID', '');
 $wizard_form->add_fieldset($fieldset_tab_menu);
 <br />
 $fieldset_tab_menu->add_field(new FormFieldActionLinkList('tabitemlistID',
@@ -19,7 +17,7 @@ $fieldset_tab_one = new FormFieldsetHTML('id', 'fieldset title');
 $wizard_form->add_fieldset($fieldset_tab_one);
 <em>// content of pannel 01</em>
 ...
-$fieldset_tab_one->add_field(new <span style="color: #ff8800">FormFieldSubTitle</span>('id','subtitle',''));
+$fieldset_tab_one->add_field(new FormFieldSubTitle('id','subtitle',''));
 ...
 $fieldset_tab_two = new FormFieldsetHTML('id', 'fieldset title');
 $wizard_form->add_fieldset($fieldset_tab_two);
@@ -29,4 +27,4 @@ $fieldset_tab_three = new FormFieldsetHTML('id', 'fieldset title');
 $wizard_form->add_fieldset($fieldset_tab_three);
 <em>// content of pannel  03</em>
 ...
-<pre>
+</code></pre>

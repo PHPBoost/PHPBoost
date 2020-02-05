@@ -1,5 +1,4 @@
-<pre>
-$modal_form = new HTMLForm('modal_form');
+<pre class="language-php"><code class="language-php">$modal_form = new HTMLForm('modal_form');
 $modal_form->set_css_class('modal-container fieldset-content');
 
 // Modal triggers
@@ -18,4 +17,4 @@ $fieldset_modal_one = new FormFieldsetMultitabsHTML('modal-10', $this->lang['mul
 $modal_form->add_fieldset($fieldset_modal_one);
 
 $fieldset_modal_one->set_description($this->common_lang['lorem.large.content']);
-<pre>
+</code></pre>
