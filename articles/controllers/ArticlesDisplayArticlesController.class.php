@@ -126,7 +126,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['table.of.contents']));
+		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['articles.table.of.contents']));
 
 		$form->add_fieldset($fieldset);
 
