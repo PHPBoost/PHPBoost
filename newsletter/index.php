@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 07 14
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,7 +17,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminNewsletterConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Streams
-	new UrlControllerMapper('NewsletterStreamsManageController', '`^/streams/?$`'),
+	new UrlControllerMapper('NewsletterStreamsManagementController', '`^/streams/?$`'),
 	new UrlControllerMapper('NewsletterStreamsFormController', '`^/stream/add/?$`'),
 	new UrlControllerMapper('NewsletterStreamsFormController', '`^/stream/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteStreamController', '`^/stream/([0-9]+)/delete/?$`', array('id')),

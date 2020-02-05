@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,7 +17,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminNewsConfigController', '`^/admin(?:/config)?/?$`'),
 
 	//Categories
-	new UrlControllerMapper('DefaultCategoriesManageController', '`^/categories/?$`'),
+	new UrlControllerMapper('DefaultCategoriesManagementController', '`^/categories/?$`'),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
 	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),

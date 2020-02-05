@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.1 - 2015 05 15
 */
 
-class ForumCategoriesManageController extends DefaultCategoriesManageController
+class ForumCategoriesManagementController extends DefaultCategoriesManagementController
 {
 	protected function get_display_category_url(Category $category)
 	{
