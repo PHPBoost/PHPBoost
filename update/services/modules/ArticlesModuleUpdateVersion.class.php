@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,6 +17,9 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->content_tables = array(PREFIX . 'articles');
 		$this->delete_old_files_list = array(
 			'/controllers/ArticlesDeleteController.class.php',
+			'/controllers/ArticlesDisplayArticlesTagController.class.php',
+			'/controllers/ArticlesDisplayCategoryController.class.php',
+			'/controllers/ArticlesDisplayPendingArticlesController.class.php',
 			'/controllers/ArticlesManageController.class.php',
 			'/lang/english/config.php',
 			'/lang/french/config.php',
@@ -30,17 +33,15 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/ArticlesScheduledJobs.class.php',
 			'/phpboost/ArticlesSitemapExtensionPoint.class.php',
 			'/phpboost/ArticlesTreeLinks.class.php',
-			'/services/ArticlesAuthorizationsService.class.php',
-			'/services/ArticlesKeywordsCache.class.php',
-			'/services/ArticlesCategoriesCache.class.php',
-			'/services/ArticlesService.class.php',
-			'/templates/ArticlesFormFieldSelectSources.tpl',
-			'/util/AdminArticlesDisplayResponse.class.php'
+			'/templates/ArticlesDisplaySeveralArticlesController.tpl',
+			'/templates/ArticlesFormFieldSelectSources.tpl'
 		);
 		$this->delete_old_folders_list = array(
 			'/controllers/categories',
 			'/fields',
-			'/templates/images'
+			'/services',
+			'/templates/images',
+			'/util'
 		);
 
 		$this->database_columns_to_modify = array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,9 +21,7 @@ $lang['the.item'] = 'L\'article';
 
 $lang['articles.add.item'] = 'Ajouter un article';
 $lang['articles.edit.item'] = 'Modification d\'un article';
-$lang['articles.feed.name'] = 'Derniers articles';
-$lang['articles.pending.items'] = 'Articles en attente';
-$lang['articles.summary'] = 'Sommaire :';
+$lang['articles.table.of.contents'] = 'Sommaire :';
 $lang['articles.print.item'] = 'Impression d\'un article';
 
 // Configuration

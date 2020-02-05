@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -126,7 +126,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['articles.summary']));
+		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['table.of.contents']));
 
 		$form->add_fieldset($fieldset);
 
