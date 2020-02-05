@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 05
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -74,14 +74,14 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('min' => 1, 'max' => 50, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->admin_common_lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options()),
-			array('select_to_list' => true)
-		);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->admin_common_lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options()),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->admin_common_lang['config.items.default.sort.field'], $this->config->get_items_default_sort_field(), $item_class_name::get_sorting_field_options(),
 			array('select_to_list' => true)
-		);
+		));
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->admin_common_lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
+			array('select_to_list' => true)
+		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['articles.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
 			array('min' => 20, 'max' => 1000, 'required' => true),
