@@ -181,7 +181,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::bbcode())}">
+							<a href="${relative_url(SandboxUrlBuilder::multitabs())}">
 								<i class="fa fa-list fa-fw" aria-hidden></i>
 								<span class="item-label">{@title.multitabs}</span>
 							</a>
