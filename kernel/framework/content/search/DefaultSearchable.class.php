@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 06
  * @since       PHPBoost 5.3 - 2019 08 20
 */
 
@@ -30,11 +30,11 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 	protected $custom_all_link;
 	
 	protected $field_id = 'id';
-	protected $field_title = 'title'; // remplacer par la fonction dans l'item pour récupérer l'équivalent du title (à passer en static)
-	protected $field_rewrited_title = 'rewrited_title'; // remplacer par la fonction dans l'item pour récupérer l'équivalent du title (à passer en static)
-	protected $field_content = 'content'; // remplacer par la fonction dans l'item pour récupérer l'équivalent du title (à passer en static)
+	protected $field_title = 'title';
+	protected $field_rewrited_title = 'rewrited_title';
+	protected $field_content = 'content';
 	
-	protected $has_summary = false; // Tester si l'item est une sous classe de RichItem
+	protected $has_summary = false;
 	protected $field_summary = 'summary';
 	
 	protected $has_approbation = true;
@@ -48,16 +48,28 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 	
 	protected $max_search_results = 100;
 	
-	public function __construct($module_id)
+	public function __construct($module_id, $custom_link_end = '', $custom_all_link = '', $max_search_results = 100)
 	{
 		$this->module_id = $module_id;
 		$module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		$item_class_name = $module_configuration->get_item_name();
+		
 		$this->table_name = $module_configuration->get_items_table_name();
 		$this->cats_table_name = $module_configuration->has_categories() ? $module_configuration->get_categories_table_name() : '';
-		$this->read_authorization = $module_configuration->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $module_id)->read() : ItemsAuthorizationsService::check_authorizations($module_id)->read();
-		$this->authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ArticlesConfig::load()->get_summary_displayed_to_guests(), $this->module_id);//changer l'appel de la fonction get_summary_displayed_to_guests, si config extends RichConfig on l'appel sinon on met true
+		
+		$this->read_authorization = $module_configuration->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id)->read() : ItemsAuthorizationsService::check_authorizations($this->module_id)->read();
+		$this->authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id);
+		
+		$this->field_title = $item_class_name::get_title_label();
+		$this->field_rewrited_title = 'rewrited_' . $this->field_title;
+		$this->field_content = $item_class_name::get_content_label();
+		$this->has_summary = $module_configuration->has_rich_item();
 		$this->use_keywords = $module_configuration->feature_is_enabled('keywords');
 		$this->has_validation_period = $module_configuration->feature_is_enabled('deferred_publication');
+		
+		$this->custom_link_end = $custom_link_end;
+		$this->custom_all_link = $custom_all_link;
+		$this->max_search_results = $max_search_results;
 	}
 	
 	public function get_search_request($args)

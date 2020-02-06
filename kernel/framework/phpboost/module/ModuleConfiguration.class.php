@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 06
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -213,7 +213,7 @@ class ModuleConfiguration
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name ? $this->module_id : '');
-		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->item_name ? $this->module_id . '_cats' : '');
+		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories ? $this->module_id . '_cats' : '');
 	}
 
 	private function get_default_configuration_class_name()
