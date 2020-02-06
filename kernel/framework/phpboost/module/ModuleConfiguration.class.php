@@ -213,7 +213,7 @@ class ModuleConfiguration
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
 		$this->items_table_name       = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name ? $this->module_id : '');
-		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories ? $this->module_id . '_cats' : '');
+		$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
 	}
 
 	private function get_default_configuration_class_name()
