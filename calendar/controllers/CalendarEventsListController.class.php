@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 01
+ * @version   	PHPBoost 5.2 - last update: 2020 02 06
  * @since   	PHPBoost 4.1 - 2015 04 13
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -17,15 +17,18 @@ class CalendarEventsListController extends ModuleController
 	{
 		$this->check_authorizations();
 
-		$this->init();
+		$this->init($request);
 
 		$current_page = $this->build_table();
 
 		return $this->generate_response($current_page);
 	}
 
-	private function init()
+	private function init(HTTPRequestCustom $request)
 	{
+		if ($request->get_value('display_current_day_events', 0))
+			AppContext::get_response()->redirect(CalendarUrlBuilder::events_list());
+		
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new StringTemplate('# INCLUDE table #');
 	}
