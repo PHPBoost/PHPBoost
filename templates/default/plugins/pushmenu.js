@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 5.3 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
@@ -13,7 +13,7 @@
  *      hc-nav-trigger => push-nav-trigger (trigger css class)
  *      hcOffcanvasNav => pushmenu (plugin name)
  *       - replace properties
- *      push-nav-trigger => concat display block->flex
+ *      push-nav-trigger => concat display block->inline-flex
 */
 
 
@@ -157,7 +157,7 @@ function _typeof(n) {
                         S = function(n) {
                             var e = s.css("display"),
                                 t = !!H.maxWidth && "max-width: ".concat(H.maxWidth - 1, "px");
-                            F("maxWidth") && l.reset(), l.add(".pushmenu.".concat(b), "display: block", t), l.add(".push-nav-trigger.".concat(b), "display: ".concat(e && "none" !== e ? e : "flex"), t), l.add(".push-nav.".concat(b), "display: none", t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-left li.level-open > .nav-wrapper"), "transform: translate3d(-".concat(H.levelSpacing, "px,0,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-right li.level-open > .nav-wrapper"), "transform: translate3d(".concat(H.levelSpacing, "px,0,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-top li.level-open > .nav-wrapper"), "transform: translate3d(0,-".concat(H.levelSpacing, "px,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-bottom li.level-open > .nav-wrapper"), "transform: translate3d(0,".concat(H.levelSpacing, "px,0)"), t), l.insert(), (!n || n && F("pushContent")) && ("string" == typeof H.pushContent ? (f = _(H.pushContent)).length || (f = null) : f = H.pushContent instanceof jQuery ? H.pushContent : null), v.css("transition", "none");
+                            F("maxWidth") && l.reset(), l.add(".pushmenu.".concat(b), "display: block", t), l.add(".push-nav-trigger.".concat(b), "display: ".concat(e && "none" !== e ? e : "inline-flex"), t), l.add(".push-nav.".concat(b), "display: none", t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-left li.level-open > .nav-wrapper"), "transform: translate3d(-".concat(H.levelSpacing, "px,0,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-right li.level-open > .nav-wrapper"), "transform: translate3d(".concat(H.levelSpacing, "px,0,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-top li.level-open > .nav-wrapper"), "transform: translate3d(0,-".concat(H.levelSpacing, "px,0)"), t), l.add(".pushmenu.".concat(b, ".nav-levels-overlap.nav-position-bottom li.level-open > .nav-wrapper"), "transform: translate3d(0,".concat(H.levelSpacing, "px,0)"), t), l.insert(), (!n || n && F("pushContent")) && ("string" == typeof H.pushContent ? (f = _(H.pushContent)).length || (f = null) : f = H.pushContent instanceof jQuery ? H.pushContent : null), v.css("transition", "none");
                             var a = d.hasClass($),
                                 o = ["pushmenu", H.navClass || "", b, H.navClass || "", "nav-levels-" + H.levelOpen || "none", "nav-position-" + H.position, H.disableBody ? "disable-body" : "", U ? "is-ios" : "", z ? "touch-device" : "", a ? $ : ""].join(" ");
                             d.off("click").attr("class", "").addClass(o), H.disableBody && d.on("click", j), n ? O() : setTimeout(O, 1)
