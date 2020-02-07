@@ -21,8 +21,8 @@ class DefaultModuleSetup implements ModuleSetup
 	
 	public static function __static()
 	{
-		self::$db_querier  = PersistenceContext::get_querier();
-		self::$dbms_utils  = PersistenceContext::get_dbms_utils();
+		self::$db_querier = PersistenceContext::get_querier();
+		self::$dbms_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function __construct($module_id)
@@ -124,7 +124,7 @@ class DefaultModuleSetup implements ModuleSetup
 		$this->id_category++;
 	}
 
-	protected function add_item($title, $content, $summary = '', $thumbnail = '/templates/default/images/default_item_thumbnail.png', $id_category = ($this->id_category - 1), $additional_fields = array())
+	protected function add_item($title, $content, $summary = '', $thumbnail = '/templates/default/images/default_item_thumbnail.png', $id_category = Category::ROOT_CATEGORY, $additional_fields = array())
 	{
 		$fields = array(
 			'id' => $this->id_item,
@@ -139,7 +139,7 @@ class DefaultModuleSetup implements ModuleSetup
 		
 		if ($this->module_configuration->has_categories())
 		{
-			$fields['id_category'] = $id_category;
+			$fields['id_category'] = $id_category ? $id_category : ($this->id_category - 1);
 		}
 		
 		if ($this->module_configuration->feature_is_enabled('deferred_publication'))
