@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 08
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 4.0 - 2013 12 05
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -51,6 +52,6 @@ $lang['default.root.category.description'] = 'Welcome to the website :module_nam
 	<li class="formatter-li"> To create categories, <a href=":add_category_link">clic here</a> </li>
 	<li class="formatter-li"> To create :items, <a href=":add_item_link">clic here</a></li>
 </ul>
-To learn more, don \'t hesitate to consult the documentation for the module on <a href=":documentation_link">PHPBoost</a> website.
+To learn more, feel free to consult the documentation for the module on <a href=":documentation_link">PHPBoost</a> website.
 ';
 ?>

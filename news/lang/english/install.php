@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 01 31
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 4.0 - 2012 04 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -42,7 +43,7 @@ To do so : <br />
 <br />
 <h2 class="formatter-title">What should I do if I have problems ?</h2><br />
 <br />
-Do not hesitate to consult the <a href="https://www.phpboost.com/wiki/">PHPBoost documentation</a> or ask your question on the <a href="https://www.phpboost.com/forum/">forum</a> for assistance. As the English community is still young, we strongly recommend that you use the second solution.<br /> <br />
+Feel free to consult the <a href="https://www.phpboost.com/wiki/">PHPBoost documentation</a> or to ask your question on the <a href="https://www.phpboost.com/forum/">forum</a> for assistance. As the English community is still young, we strongly recommend that you use the second solution.<br /> <br />
 <br />
 <p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>';
 ?>
