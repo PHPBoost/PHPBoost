@@ -743,7 +743,9 @@ a,
 	color: var(--main-dark);
 	border-color: var(--main-dark);
 }
+
 .bgc.link-color { background-color: rgba(var(--main-rgb-d), 0.2);}
+
 .bgc-full.link-color {
 	background-color: var(--main-dark);
 	color: var(--txt-light)
@@ -755,7 +757,26 @@ a:hover,
 	border-color: var(--main-dark);
 }
 
+.link-color-alt {
+	color: var(--star-dark);
+	border-color: var(--star-dark);
+}
+
 .bgc-full:hover.link-color { color: var(--txt-light)}
+
+.bgc.link-color-alt { background-color: rgba(var(--star-rgb-d), 0.2);}
+
+.bgc-full.link-color-alt {
+	background-color: var(--star-dark);
+	color: var(--txt-light)
+}
+
+.link-color-alt:hover {
+	color: var(--star-light);
+	border-color: var(--star-dark);
+}
+
+.bgc-full:hover.link-color-alt { color: var(--txt-light)}
 
 .dropdown-container {
 	background-color: var(--bgc-main);

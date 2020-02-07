@@ -66,6 +66,7 @@
 .sortable-element:hover {
     background-color: var(--bgc-main);
 }
+
 /* --- Table ----------------------------------------------------------------- */
 table thead th {
 	background-color: var(--main-dark);
@@ -210,8 +211,8 @@ select:focus {
 .menu-title {
 	background-color: rgba(var(--darken), 0.2);
 }
-/* --- admin_menus --- */
 
+/* --- admin_menus --- */
 .admin-menu > ul > li:hover {
 	background-color: rgba(var(--darken), 0.3);
 }

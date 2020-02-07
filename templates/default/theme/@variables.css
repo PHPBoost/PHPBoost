@@ -23,7 +23,7 @@
     --darken : 0, 0, 0;
     --lighten: 255, 255, 255;
 
-/* main */
+/* .main - .link-color */
     --main-rgb-dr  : 28, 51, 74;
     --main-darker  : #1c334a;
     --main-rgb-d   : 50, 100, 147;
@@ -31,67 +31,67 @@
     --main-rgb-l   : 78, 142, 193;
     --main-light   : #4E8EC1;
 
-/* notice */
+/* .notice */
     --notice-rgb-d   : 170, 142, 105;
     --notice-dark    : #AA8E69;
     --notice-rgb-l   : 186, 180, 150;
     --notice-light   : #BAB496;
 
-/* question */
+/* .question */
     --question-rgb-d   : 59, 175, 218;
     --question-dark    : #3BAFDA;
     --question-rgb-l   : 79, 210, 250;
     --question-light   : #4FD2FA;
 
-/* success */
+/* .success */
     --success-rgb-d  : 42, 186, 102;
     --success-dark   : #2ABA66;
     --success-rgb-l  : 46, 221, 130;
     --success-light  : #2EDC82;
 
-/* warning */
+/* .warning */
     --warning-rgb-d  : 233, 87, 63;
     --warning-dark   : #E9573F;
     --warning-rgb-l  : 252, 125, 95;
     --warning-light  : #FC7D5F;
 
-/* error */
+/* .error */
     --error-rgb-d   : 191, 38, 60;
     --error-dark    : #BF263C;
     --error-rgb-l   : 218, 68, 83;
     --error-light   : #DA4453;
 
-/* star */
+/* .star - .link-color-alt */
     --star-rgb-d  : 224, 195, 65;
     --star-dark   : #E0C341;
     --star-rgb-l  : 232, 225, 95;
     --star-light  : #E8E15F;
 
-/* visitor */
+/* .visitor */
     --visitor-rgb-d   : 54, 140, 161;
     --visitor-dark    : #368CA1;
     --visitor-rgb-l   : 109, 193, 186;
     --visitor-light   : #6DC1BA;
 
-/* custom-author */
+/* .custom-author */
     --custom-author-rgb-d   : 80, 52, 44;
     --custom-author-dark    : #50342C;
     --custom-author-rgb-l   : 98, 80, 70;
     --custom-author-light   : #625046;
 
-/* member */
+/* .member */
     --member-rgb-d   : 72, 252, 173;
     --member-dark    : #37BC9B;
     --member-rgb-l   : 72, 222, 190;
     --member-light   : #48DEBE;
 
-/* moderator */
+/* .moderator */
     --moderator-rgb-d  : 150, 122, 221;
     --moderator-dark   : #967ADC;
     --moderator-rgb-l  : 172, 160, 250;
     --moderator-light  : #ACA0FA;
 
-/* administrator */
+/* .administrator */
     --administrator-rgb-d   : 50, 49, 51;
     --administrator-dark    : #323133;
     --administrator-rgb-l   : 103, 103, 115;
