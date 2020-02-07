@@ -56,7 +56,7 @@ class ArticlesFormController extends AbstractItemController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('articles', $this->get_article()->get_id() === null ? $this->items_lang['item.add'] : $this->lang['item.edit']);
+		$fieldset = new FormFieldsetHTMLHeading('articles', $this->get_article()->get_id() === null ? $this->items_lang['item.add'] : $this->items_lang['item.edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.title'], $this->get_article()->get_title(),
