@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,8 +19,6 @@ $lang['items'] = 'articles';
 $lang['item'] = 'article';
 $lang['the.item'] = 'L\'article';
 
-$lang['articles.add.item'] = 'Ajouter un article';
-$lang['articles.edit.item'] = 'Modification d\'un article';
 $lang['articles.table.of.contents'] = 'Sommaire :';
 $lang['articles.print.item'] = 'Impression d\'un article';
 
@@ -38,14 +36,4 @@ $lang['articles.add.page.title'] = 'Titre de la nouvelle page';
 
 // Sort fields title and mode
 $lang['articles.sort.field.views'] = 'Vues';
-
-// SEO
-$lang['articles.seo.description.root'] = 'Tous les articles du site :site.';
-$lang['articles.seo.description.tag'] = 'Tous les articles sur le sujet :subject.';
-$lang['articles.seo.description.pending'] = 'Tous les articles en attente.';
-
-// Messages
-$lang['articles.message.success.add'] = 'L\'article <b>:title</b> a été ajouté';
-$lang['articles.message.success.edit'] = 'L\'article <b>:title</b> a été modifié';
-$lang['articles.message.success.delete'] = 'L\'article <b>:title</b> a été supprimé';
 ?>

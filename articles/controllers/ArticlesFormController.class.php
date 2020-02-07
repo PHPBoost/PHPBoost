@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,7 @@ class ArticlesFormController extends AbstractItemController
 	{
 		$form = new HTMLForm(__CLASS__);
 
-		$fieldset = new FormFieldsetHTMLHeading('articles', $this->get_article()->get_id() === null ? $this->lang['articles.add.item'] : $this->lang['articles.edit.item']);
+		$fieldset = new FormFieldsetHTMLHeading('articles', $this->get_article()->get_id() === null ? $this->items_lang['item.add'] : $this->lang['item.edit']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.title'], $this->get_article()->get_title(),
@@ -487,16 +487,16 @@ class ArticlesFormController extends AbstractItemController
 		elseif ($article->is_published())
 		{
 			if ($this->is_new_article)
-				AppContext::get_response()->redirect(ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id()), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id()), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $article->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id())), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1), '', self::get_module()->get_id())), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $article->get_title())));
 		}
 		else
 		{
 			if ($this->is_new_article)
-				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::get_module()->get_id()), StringVars::replace_vars($this->lang['articles.message.success.add'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::get_module()->get_id()), StringVars::replace_vars($this->items_lang['items.message.success.add'], array('title' => $article->get_title())));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::get_module()->get_id())), StringVars::replace_vars($this->lang['articles.message.success.edit'], array('title' => $article->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::get_module()->get_id())), StringVars::replace_vars($this->items_lang['items.message.success.edit'], array('title' => $article->get_title())));
 		}
 	}
 
@@ -514,9 +514,9 @@ class ArticlesFormController extends AbstractItemController
 
 		if ($article->get_id() === null)
 		{
-			$breadcrumb->add($this->lang['articles.add.item'], ItemsUrlBuilder::add($article->get_id_category()));
-			$graphical_environment->set_page_title($this->lang['articles.add.item'], self::get_module()->get_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.add.item']);
+			$breadcrumb->add($this->items_lang['item.add'], ItemsUrlBuilder::add($article->get_id_category()));
+			$graphical_environment->set_page_title($this->items_lang['item.add'], self::get_module()->get_configuration()->get_name());
+			$graphical_environment->get_seo_meta_data()->set_description($this->items_lang['item.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::add($article->get_id_category()));
 		}
 		else
@@ -529,13 +529,13 @@ class ArticlesFormController extends AbstractItemController
 			}
 			$breadcrumb->add($article->get_title(), ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), '', self::get_module()->get_id()));
 
-			$breadcrumb->add($this->lang['articles.edit.item'], ItemsUrlBuilder::edit($article->get_id()));
+			$breadcrumb->add($this->items_lang['item.edit'], ItemsUrlBuilder::edit($article->get_id()));
 
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['articles.edit.item'], self::get_module()->get_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit.item']);
+			$graphical_environment->set_page_title($this->items_lang['item.edit'], self::get_module()->get_configuration()->get_name());
+			$graphical_environment->get_seo_meta_data()->set_description($this->items_lang['item.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::edit($article->get_id()));
 		}
 
