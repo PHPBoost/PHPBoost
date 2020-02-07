@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 06
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -153,7 +153,7 @@ class ModuleConfiguration
 
 	public function get_items_table_name()
 	{
-		return PREFIX . $this->items_table_name;
+		return $this->items_table_name ? PREFIX . $this->items_table_name : '';
 	}
 
 	public function get_categories_table_name()

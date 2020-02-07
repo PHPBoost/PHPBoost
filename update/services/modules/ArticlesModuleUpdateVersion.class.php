@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 07
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -48,13 +48,14 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'articles',
 				'columns' => array(
-					'rewrited_title' => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
-					'contents'       => 'content MEDIUMTEXT',
-					'picture_url'    => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
-					'description'    => 'summary TEXT',
-					'number_view'    => 'views_number INT(11) NOT NULL DEFAULT 0',
-					'date_created'   => 'creation_date INT(11) NOT NULL DEFAULT 0',
-					'date_updated'   => 'update_date INT(11) NOT NULL DEFAULT 0'
+					'rewrited_title'        => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
+					'contents'              => 'content MEDIUMTEXT',
+					'picture_url'           => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
+					'description'           => 'summary TEXT',
+					'author_name_displayed' => 'author_name_displayed INT(11) NOT NULL DEFAULT 1',
+					'number_view'           => 'views_number INT(11) NOT NULL DEFAULT 0',
+					'date_created'          => 'creation_date INT(11) NOT NULL DEFAULT 0',
+					'date_updated'          => 'update_date INT(11) NOT NULL DEFAULT 0'
 				)
 			)
 		);
