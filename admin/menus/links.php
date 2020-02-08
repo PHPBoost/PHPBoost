@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 16
+ * @version     PHPBoost 5.3 - last update: 2020 02 08
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -173,8 +173,8 @@ $tpl->put_all(array(
 	'L_TYPE' => $LANG['type'],
 	'L_PUSHMENU_DISABLED_BODY' => $LANG['push.menu.disabled.body'],
 	'L_PUSHMENU_PUSHED_CONTENT' => $LANG['push.menu.pushed.content'],
-	'L_PUSHMENU_OPENING' => $LANG['push.menu.open.type'],
-	'L_PUSHMENU_EXPANDING' => $LANG['push.menu.tab.type'],
+	'L_PUSHMENU_OPENING' => $LANG['push.menu.opening.type'],
+	'L_PUSHMENU_EXPANDING' => $LANG['push.menu.expansion.type'],
 	'L_CONTENT' => $LANG['content'],
 	'L_AUTHORIZATIONS' => $LANG['authorizations'],
 	'L_ADD' => LangLoader::get_message('add', 'common'),
@@ -270,10 +270,10 @@ foreach ($array_location as $key => $name)
 
 // Types of pushmenu opening
 $array_opening = array(
-	Menu::PUSHMENU_LEFT => $LANG['push.menu.open.type.left'],
-	Menu::PUSHMENU_RIGHT => $LANG['push.menu.open.type.right'],
-	Menu::PUSHMENU_TOP => $LANG['push.menu.open.type.top'],
-	Menu::PUSHMENU_BOTTOM => $LANG['push.menu.open.type.bottom']
+	Menu::PUSHMENU_LEFT => $LANG['push.menu.opening.type.left'],
+	Menu::PUSHMENU_RIGHT => $LANG['push.menu.opening.type.right'],
+	Menu::PUSHMENU_TOP => $LANG['push.menu.opening.type.top'],
+	Menu::PUSHMENU_BOTTOM => $LANG['push.menu.opening.type.bottom']
 );
 
 foreach ($array_opening as $key => $name)
@@ -287,9 +287,9 @@ foreach ($array_opening as $key => $name)
 
 // Types of pushmenu expanding tabs
 $array_expanding = array(
-	Menu::PUSHMENU_OVERLAP => $LANG['push.menu.tab.type.overlap'],
-	Menu::PUSHMENU_EXPAND => $LANG['push.menu.tab.type.expand'],
-	Menu::PUSHMENU_NONE => $LANG['push.menu.tab.type.none']
+	Menu::PUSHMENU_OVERLAP => $LANG['push.menu.expansion.type.overlap'],
+	Menu::PUSHMENU_EXPAND => $LANG['push.menu.expansion.type.expand'],
+	Menu::PUSHMENU_NONE => $LANG['push.menu.expansion.type.none']
 );
 
 foreach ($array_expanding as $key => $name)

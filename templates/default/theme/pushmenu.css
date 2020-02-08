@@ -59,6 +59,7 @@ body.push-nav-open {
 .pushmenu li {
     position: relative;
     display: block;
+    flex: auto;
 }
 
 .pushmenu li.level-open>.nav-wrapper { visibility: visible; }
@@ -88,6 +89,8 @@ body.push-nav-open {
     position: relative;
     display: block;
 }
+
+.pushmenu .nav-item p { margin: 0; }
 
 .pushmenu.disable-body::after,
 .pushmenu .nav-wrapper::after {
@@ -220,6 +223,8 @@ body.push-nav-open {
     padding: 0.618em;
 }
 
+.cell-mini .pushmenu-toggle { padding: 0; }
+
 .pushmenu-toggle span {
     padding: 0 0 0 0.618em;
 }
@@ -249,10 +254,6 @@ body.push-nav-open {
     border-width: 1px 0 0;
     border-style: solid;
     border-color: transparent;
-}
-
-.pushmenu li {
-    text-align: left
 }
 
 .pushmenu li.nav-close a,
@@ -388,3 +389,15 @@ body.push-nav-open {
 }
 
 .pushmenu .nav-wrapper-0>.nav-content { padding-bottom: 2.618em; }
+
+/* --- for custom navs --- */
+
+.bottom-nav {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
