@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 02 08
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -20,6 +20,7 @@ class AdminSandboxConfigController extends AdminModuleController
 	private $submit_button;
 
 	private $lang;
+	private $admin_lang;
 
 	/**
 	 * @var GoogleMapsConfig
@@ -34,6 +35,7 @@ class AdminSandboxConfigController extends AdminModuleController
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->admin_lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -52,6 +54,7 @@ class AdminSandboxConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('config', 'sandbox');
+		$this->admin_lang = LangLoader::get('admin');
 		$this->config = SandboxConfig::load();
 	}
 
@@ -62,14 +65,31 @@ class AdminSandboxConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTMLHeading('config', $this->lang['mini.config.title']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('open_menu', $this->lang['mini.open.menu'], $this->config->get_open_menu(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $this->admin_lang['push.menu.opening.type'], $this->config->get_menu_opening_type(),
 			array(
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.top'], SandboxConfig::TOP_MENU),
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.right'], SandboxConfig::RIGHT_MENU),
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.bottom'], SandboxConfig::BOTTOM_MENU),
-				new FormFieldRadioChoiceOption($this->lang['mini.open.menu.left'], SandboxConfig::LEFT_MENU)
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.opening.type.top'], SandboxConfig::TOP_MENU, array('data_option_icon' => 'fa fa-arrow-down')),
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.opening.type.right'], SandboxConfig::RIGHT_MENU, array('data_option_icon' => 'fa fa-arrow-left')),
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.opening.type.bottom'], SandboxConfig::BOTTOM_MENU, array('data_option_icon' => 'fa fa-arrow-up')),
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.opening.type.left'], SandboxConfig::LEFT_MENU, array('data_option_icon' => 'fa fa-arrow-right'))
 			),
-			array('class' => 'inline-radio custom-radio third-field')
+			array('select_to_list' => true)
+		));
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('expansion_type', $this->admin_lang['push.menu.expansion.type'], $this->config->get_expansion_type(),
+			array(
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.expansion.type.overlap'], SandboxConfig::OVERLAP, array('data_option_icon' => 'fa fa-sign-in-alt')),
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.expansion.type.expand'], SandboxConfig::EXPANSION, array('data_option_icon' => 'fa fa-chevron-down')),
+				new FormFieldSelectChoiceOption($this->admin_lang['push.menu.expansion.type.none'], SandboxConfig::NO_EXPANSION, array('data_option_icon' => 'fa fa-times-circle'))
+			),
+			array('select_to_list' => true)
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('disabled_body', $this->admin_lang['push.menu.disabled.body'], $this->config->get_disabled_body(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('pushed_content', $this->admin_lang['push.menu.pushed.content'], $this->config->get_pushed_content(),
+			array('class' => 'custom-checkbox')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['mini.superadmin.enabled'], $this->config->get_superadmin_enabled(),
@@ -112,7 +132,10 @@ class AdminSandboxConfigController extends AdminModuleController
 	{
 		$this->config->set_superadmin_enabled($this->form->get_value('superadmin_enabled'));
 		$this->config->set_superadmin_name($this->form->get_value('superadmin_name'));
-		$this->config->set_open_menu($this->form->get_value('open_menu')->get_raw_value());
+		$this->config->set_menu_opening_type($this->form->get_value('menu_opening_type')->get_raw_value());
+		$this->config->set_expansion_type($this->form->get_value('expansion_type')->get_raw_value());
+		$this->config->set_disabled_body($this->form->get_value('disabled_body'));
+		$this->config->set_pushed_content($this->form->get_value('pushed_content'));
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 27
+ * @version     PHPBoost 5.3 - last update: 2020 02 08
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -134,14 +134,16 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_LEFT_ENABLED'      => !$menus_status->left_columns_is_disabled(),
 			'C_RIGHT_ENABLED'     => !$menus_status->right_columns_is_disabled(),
-			'C_SLIDE_TOP'         => $config->get_open_menu() == SandboxConfig::TOP_MENU,
-			'C_SLIDE_RIGHT'       => $config->get_open_menu() == SandboxConfig::RIGHT_MENU,
-			'C_SLIDE_BOTTOM'      => $config->get_open_menu() == SandboxConfig::BOTTOM_MENU,
-			'C_SLIDE_LEFT'        => $config->get_open_menu() == SandboxConfig::LEFT_MENU,
 			'C_IS_LOCALHOST'      => AppContext::get_request()->get_is_localhost(),
 			'C_IS_SUPERADMIN'     => $is_superadmin,
 			'C_LOGGED_ERRORS'     => ((bool)count($this->get_logged_errors_nb())),
 			'C_404_ERRORS'        => (bool)$nb_404,
+			'C_NO_EXPANSION'      => $config->get_expansion_type() == SandboxConfig::NO_EXPANSION,
+
+			'PUSHED_CONTENT' => $config->get_pushed_content() ? '#push-container' : '',
+			'DISABLED_BODY'  => $config->get_disabled_body() ? 'true' : 'false',
+			'OPENING_TYPE'   => $config->get_menu_opening_type(),
+			'EXPANSION_TYPE' => $config->get_expansion_type(),
 
 			'PBT_VERSION'  => Environment::get_phpboost_version(),
 			'PHP_VERSION'  => ServerConfiguration::get_phpversion(),

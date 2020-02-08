@@ -1,7 +1,7 @@
 # IF C_IS_SUPERADMIN #
-	<div id="module-mini-sandbox" class="# IF C_SLIDE_TOP #mini-sbx-top# ENDIF ## IF C_SLIDE_RIGHT #mini-sbx-right# ENDIF ## IF C_SLIDE_BOTTOM #mini-sbx-bottom# ENDIF ## IF C_SLIDE_LEFT #mini-sbx-left# ENDIF #">
-		<a class="toggle-fwkboost pushmenu-toggle sbx-toggle-btn bgc-full administrator# IF C_HORIZONTAL # toggle-hor# IF C_SLIDE_RIGHT # toggle-right# ELSE # toggle-left# ENDIF ## ENDIF #">
-			<i class="fa fa-wrench" aria-hidden></i> {@sandbox.module.title}
+	<div id="module-mini-sandbox" class="mini-sandbox">
+		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator">
+			<i class="fa fa-wrench" aria-hidden></i> <span>{@sandbox.module.title}</span>
 		</a>
 		<nav id="pushmenu-fwkboost">
 			<ul>
@@ -99,7 +99,10 @@
 					<ul>
 						<li>
 							<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
-								<i class="fa fa-fw fa-bars" aria-hidden></i> {@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span>
+								<span class="stacked">
+									<i class="fa fa-fw fa-bars" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span class="item-label">{@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span></span>
 							</a>
 						</li>
 						<li>
@@ -118,49 +121,72 @@
 						</li>
 						<li>
 							<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
-								<i class="far fa-fw fa-image" aria-hidden></i> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
+								<span class="stacked">
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+									<i class="far fa-fw fa-image" aria-hidden></i>
+								</span> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">
-					 			<i class="far fa-fw fa-image" aria-hidden></i> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.add}</span></span>
+								<span class="stacked">
+									<i class="far fa-fw fa-image" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
-								<i class="fa fa-fw fa-cubes" aria-hidden></i> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
+								<span class="stacked">
+									<i class="fa fa-fw fa-cubes" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
-								<i class="fa fa-fw fa-cubes" aria-hidden></i> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.add}</span></span>
+								<span class="stacked">
+									<i class="fa fa-fw fa-cubes" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminMembersUrlBuilder::management())}">
-								<i class="far fa-fw fa-user" aria-hidden></i> <span class="item-label">{@mini.user} <span class="smaller">{@mini.manage}</span></span>
+								<span class="stacked">
+									<i class="far fa-fw fa-user" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span class="item-label">{@mini.user} <span class="smaller">{@mini.manage}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminMembersUrlBuilder::add())}">
-								<i class="far fa-fw fa-user" aria-hidden></i> <span class="item-label">{@mini.user} <span class="smaller">{@mini.add}</span></span>
+								<span class="stacked">
+									<i class="far fa-fw fa-image" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span class="item-label">{@mini.user} <span class="smaller">{@mini.add}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
-								<i class="fa fa-fw fa-university" aria-hidden></i> <span class="item-label">{@title.config} <span class="smaller">{@mini.general.config}</span></span>
+								<span class="stacked">
+									<i class="fa fa-fw fa-university" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span class="item-label">{@title.config} <span class="smaller">{@mini.general.config}</span></span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
-								<i class="fa fa-fw fa-university" aria-hidden></i> <span class="item-label">{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
+								<span class="stacked">
+									<i class="fa fa-fw fa-university" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span class="item-label">{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li id="mini-sandbox-framework">
 					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span class="item-label">{@mini.fwkboost}</span></span>
-					<div><em class="small">#EffDoublevéKaBouste</em></div>
 					<ul>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::form())}">
@@ -219,7 +245,7 @@
 					</ul>
 				</li>
 				<li id="mini-sandbox-switcher">
-					<span><i class="far fa-image fa-fw alt-button"></i> <span class="item-label">{@mini.themes.switcher}</span></span>
+					<span><i class="far fa-image fa-fw link-color-alt"></i> <span class="item-label">{@mini.themes.switcher}</span></span>
 					<ul>
 						<li>
 							<a href="?switchtheme={DEFAULT_THEME}">
@@ -237,10 +263,22 @@
 						</li>
 					</ul>
 				</li>
-				<li id="mini-sandbox-config">
-					<a class="flex-between" href="${relative_url(SandboxUrlBuilder::config())}">
-						<span></span>
-						<span><i class="fa fa-fw fa-hard-hat fa-lg warning"></i></span>
+			</ul>
+			<ul class="sandbox-controls bottom-nav">
+				<li>
+					<a href="${relative_url(SandboxUrlBuilder::home())}" aria-label="">
+						<span class="stacked">
+							<i class="fa fa-fw fa-hard-hat" aria-hidden></i>
+							<i class="fa fa-home stack-event stack-sup stack-right notice" aria-hidden></i>
+						</span>
+					</a>
+				</li>
+				<li class="align-right">
+					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="">
+						<span class="stacked">
+							<i class="fa fa-fw fa-hard-hat" aria-hidden></i>
+							<i class="fa fa-cog stack-event stack-sup stack-left notice" aria-hidden></i>
+						</span>
 					</a>
 				</li>
 			</ul>
@@ -250,15 +288,19 @@
 	<script>
 	    $('#pushmenu-fwkboost').pushmenu({
 			maxWidth: false,
-			customToggle: jQuery('.toggle-fwkboost'), // null
+			customToggle: jQuery('.fwkboost-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
-			pushContent: '#push-container',
-			position: # IF C_SLIDE_TOP #'right'# ENDIF ## IF C_SLIDE_RIGHT #'right'# ENDIF ## IF C_SLIDE_BOTTOM #'bottom'# ENDIF ## IF C_SLIDE_LEFT #'left'# ENDIF #, // left, right, top, bottom
-			levelOpen: 'overlap', // 'overlap', 'expand', false
+			pushContent: '{PUSHED_CONTENT}',
+			position: '{OPENING_TYPE}', // left, right, top, bottom
+			# IF C_NO_EXPANSION #
+				levelOpen: false,
+			# ELSE #
+				levelOpen: '{EXPANSION_TYPE}', // 'overlap', 'expand', false
+			# ENDIF #
 			levelTitles: true, // overlap only
 			levelSpacing: 40, // px - overlap only
 			navClass: 'fwkboost-mini-sandbox',
-			disableBody: true,
+			disableBody: {DISABLED_BODY},
 			closeOnClick: true, // if disableBody is true
 			insertClose: true,
 			labelClose: ${escapejs(LangLoader::get_message('close', 'main'))},
