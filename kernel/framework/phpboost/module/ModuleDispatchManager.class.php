@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 08
  * @since       PHPBoost 5.3 - 2020 02 07
 */
 
@@ -16,10 +16,10 @@ class ModuleDispatchManager extends DispatchManager
      * @param UrlControllerMapper[] $url_controller_mappers the url controllers mapper list
      * @param string $module id of the module
      */
-    public static function dispatch($module_url_controller_mappers, $module_id)
+    public static function dispatch(array $module_url_controller_mappers, $module_id)
     {
 		$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
-		$url_controller_mappers = array();
+		$url_controller_mappers = $module_url_controller_mappers;
 		
 		//Categories
 		if ($module_configuration->has_categories())
@@ -39,20 +39,18 @@ class ModuleDispatchManager extends DispatchManager
 		if ($module_configuration->feature_is_enabled('keywords'))
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/([a-z0-9-_]+)/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'page', 'field', 'sort', 'page'));
 		
-		$url_controller_mappers = array_merge($url_controller_mappers, $module_url_controller_mappers);
-		
 		//Home page and categories display
 		$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page', 'field', 'sort', 'page', 'subcategories_page'));
 		
-        try
-        {
-            $dispatcher = new Dispatcher($url_controller_mappers);
-            $dispatcher->dispatch();
-        }
-        catch (NoUrlMatchException $ex)
-        {
-            self::handle_dispatch_exception($ex);
-        }
-    }
+		try
+		{
+			$dispatcher = new Dispatcher($url_controller_mappers);
+			$dispatcher->dispatch();
+		}
+		catch (NoUrlMatchException $ex)
+		{
+			self::handle_dispatch_exception($ex);
+		}
+	}
 }
 ?>
