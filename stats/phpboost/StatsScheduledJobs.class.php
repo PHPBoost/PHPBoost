@@ -22,7 +22,7 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 				'pages_detail' => ''
 			));
 
-			//We retrieve the id we just come to create
+			// We retrieve the id we just created
 			$last_stats = $result->get_last_inserted_id();
 		} catch (MySQLQuerierException $e) {
 			$last_stats = PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'id', 'WHERE stats_year = :stats_year AND stats_month = :stats_month AND stats_day = :stats_day', array(
@@ -34,20 +34,20 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 		PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
 
-		//We delete the referer entries older than one week
+		// We delete the referer entries older than one week
 		PersistenceContext::get_querier()->delete(StatsSetup::$stats_referer_table, 'WHERE last_update < :last_update', array('last_update' => time() - 604800));
 
-		//We retrieve the number of pages seen until now
+		// We retrieve the number of page views until now
 		$pages_displayed = StatsSaver::retrieve_stats('pages');
 
-		//We delete the file containing the displayed pages
+		// We delete the file containing the displayed pages
 		$pages_file = new File(PATH_TO_ROOT . '/stats/cache/pages.txt');
 		$pages_file->delete();
 
-		//How much visitors were there today?
+		// How many visitors were there today?
 		$total_visit = PersistenceContext::get_querier()->get_column_value(DB_TABLE_VISIT_COUNTER, 'total', 'WHERE id = 1');
 
-		//We update the stats table: the number of visits today
+		// We update the stats table: the today's number of visits
 		PersistenceContext::get_querier()->update(StatsSetup::$stats_table,
 			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)),
 		'WHERE id=:id', array('id' => $last_stats));
