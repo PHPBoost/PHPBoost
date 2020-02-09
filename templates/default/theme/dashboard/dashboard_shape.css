@@ -20,6 +20,7 @@ body {
 	min-height: 100%;
 	font-size: 1.309em;
 	font-family: 'Open Sans', sans-serif;
+	overflow: hidden;
 }
 
 .body-wrapper {
