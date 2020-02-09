@@ -229,12 +229,15 @@
 	font-size: 1.4rem;
 }
 
+.cssmenu-select .has-sub {
+	margin-bottom: 0.1618em;
+}
+
 .cssmenu-select .has-sub > .cssmenu-title {
 	padding: calc(0.618em - 1px) 1.618em calc(0.618em - 1px) 0.618em;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
-	margin-bottom: 0.1618em;
 }
 
 /* --- Small screens  ------------------------------------------------------- */
