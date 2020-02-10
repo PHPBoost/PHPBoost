@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -25,12 +25,12 @@ class Article extends RichItem
 
 	public function get_author_name_displayed()
 	{
-		return $this->author_name_displayed;
+		return $this->get_additional_property('author_name_displayed');
 	}
 
-	public function set_author_name_displayed($displayed)
+	public function set_author_name_displayed($value)
 	{
-		$this->author_name_displayed = $displayed;
+		$this->set_additional_property('author_name_displayed', $value);
 	}
 
 	public function get_real_summary($parsed_content = '')
@@ -51,7 +51,7 @@ class Article extends RichItem
 	protected function default_properties()
 	{
 		$this->content = ArticlesConfig::load()->get_default_content();
-		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
+		$this->set_additional_property('author_name_displayed', self::AUTHOR_NAME_DISPLAYED);
 	}
 }
 ?>

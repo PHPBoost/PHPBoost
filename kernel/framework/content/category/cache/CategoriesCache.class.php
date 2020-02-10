@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@phpboost.com>
@@ -13,11 +13,46 @@
 
 abstract class CategoriesCache implements CacheData
 {
+	/**
+	 * @var string the module identifier
+	 */
+	protected static $module_id;
+
+	protected static $module;
+	protected static $module_category;
+
 	protected $categories;
+
+	public static function __static()
+	{
+		$module_id = Environment::get_running_module_name();
+		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+		{
+			self::$module_id       = $module_id;
+			self::$module          = ModulesManager::get_module(self::$module_id);
+			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
+			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
+		}
+	}
+
+	public function __construct($module_id = '')
+	{
+		if ($module_id)
+		{
+			self::$module_id       = $module_id;
+			self::$module          = ModulesManager::get_module(self::$module_id);
+			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
+			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
+		}
+		else
+		{
+			self::__static();
+		}
+	}
 
 	public function synchronize()
 	{
-		$categories_cache = self::get_class();
+		$categories_cache = self::get_class($this->get_module_identifier());
 		$category_class = $categories_cache->get_category_class();
 
 		$root_category = $categories_cache->get_root_category();
@@ -65,13 +100,16 @@ abstract class CategoriesCache implements CacheData
 		}
 	}
 
+	public function get_module_identifier()
+	{
+		return self::$module_id;
+	}
+
 	abstract public function get_table_name();
 
 	abstract public function get_table_name_containing_items();
 
 	abstract public function get_category_class();
-
-	abstract public function get_module_identifier();
 
 	abstract public function get_root_category();
 

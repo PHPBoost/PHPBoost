@@ -5,47 +5,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 5.3 - 2019 12 23
 */
 
 class DefaultCategoriesCache extends CategoriesCache
 {
-	/**
-	 * @var string the module identifier
-	 */
-	protected static $module_id;
-
-	protected static $module;
-	protected static $module_category;
-
-	public static function __static()
-	{
-		$module_id = Environment::get_running_module_name();
-		if (!in_array($module_id, array('admin', 'kernel', 'user')))
-		{
-			self::$module_id       = $module_id;
-			self::$module          = ModulesManager::get_module(self::$module_id);
-			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
-			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
-		}
-	}
-
-	public function __construct($module_id = '')
-	{
-		if ($module_id)
-		{
-			self::$module_id       = $module_id;
-			self::$module          = ModulesManager::get_module(self::$module_id);
-			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
-			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
-		}
-		else
-		{
-			self::__static();
-		}
-	}
-
 	public function get_table_name()
 	{
 		return ModulesManager::get_module($this->get_module_identifier())->get_configuration()->get_categories_table_name();
@@ -59,11 +24,6 @@ class DefaultCategoriesCache extends CategoriesCache
 	public function get_category_class()
 	{
 		return self::$module_category ? self::$module_category : CategoriesManager::STANDARD_CATEGORY_CLASS;
-	}
-
-	public function get_module_identifier()
-	{
-		return self::$module_id;
 	}
 
 	protected function get_category_elements_number($id_category)
