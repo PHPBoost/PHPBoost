@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -25,10 +25,13 @@ class DefaultModuleSetup implements ModuleSetup
 		self::$dbms_utils = PersistenceContext::get_dbms_utils();
 	}
 	
-	public function __construct($module_id)
+	public function __construct($module_id = '')
 	{
-		$this->module_id = $module_id;
-		$this->module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		if ($module_id)
+		{
+			$this->module_id = $module_id;
+			$this->module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		}
 	}
 	
 	/* (non-PHPdoc)
@@ -75,7 +78,8 @@ class DefaultModuleSetup implements ModuleSetup
 		
 		if ($this->module_id)
 		{
-			$tables_list[] = $this->module_configuration->get_items_table_name();
+			if ($this->module_configuration->has_items())
+				$tables_list[] = $this->module_configuration->get_items_table_name();
 			
 			if ($this->module_configuration->has_categories())
 				$tables_list[] = $this->module_configuration->get_categories_table_name();
@@ -93,8 +97,11 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 		if ($this->module_id)
 		{
-			$item_class_name = $this->module_configuration->get_item_name();
-			$item_class_name::create_items_table();
+			if ($this->module_configuration->has_items())
+			{
+				$item_class_name = $this->module_configuration->get_item_name();
+				$item_class_name::create_items_table();
+			}
 			
 			if ($this->module_configuration->has_categories())
 			{
@@ -104,10 +111,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 	}
 	
-	private function insert_data()
-	{
-		
-	}
+	private function insert_data() {}
 	
 	protected function add_category($name, $description = '', $thumbnail = '/templates/default/images/default_category_thumbnail.png', $id_parent = 0, $auth = '', $additional_fields = array())
 	{
@@ -153,7 +157,7 @@ class DefaultModuleSetup implements ModuleSetup
 			$fields['sources'] = TextHelper::serialize(array());
 		}
 		
-		if ($this->module_configuration->has_rich_item())
+		if ($this->module_configuration->has_rich_items())
 		{
 			$fields['summary'] = $summary;
 			$fields['thumbnail'] = $thumbnail;

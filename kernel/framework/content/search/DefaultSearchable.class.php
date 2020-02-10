@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 06
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 5.3 - 2019 08 20
 */
 
@@ -52,7 +52,7 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 	{
 		$this->module_id = $module_id;
 		$module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
-		$item_class_name = $module_configuration->get_item_name();
+		$item_class_name = $module_configuration->has_items() ? $module_configuration->get_item_name() : '';
 		
 		$this->table_name = $module_configuration->get_items_table_name();
 		$this->cats_table_name = $module_configuration->has_categories() ? $module_configuration->get_categories_table_name() : '';
@@ -60,10 +60,10 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 		$this->read_authorization = $module_configuration->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id)->read() : ItemsAuthorizationsService::check_authorizations($this->module_id)->read();
 		$this->authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id);
 		
-		$this->field_title = $item_class_name::get_title_label();
+		$this->field_title = $module_configuration->has_items() ? $item_class_name::get_title_label() : 'title';
 		$this->field_rewrited_title = 'rewrited_' . $this->field_title;
-		$this->field_content = $item_class_name::get_content_label();
-		$this->has_summary = $module_configuration->has_rich_item();
+		$this->field_content = $module_configuration->has_items() ? $item_class_name::get_content_label() : 'content';
+		$this->has_summary = $module_configuration->has_rich_items();
 		$this->use_keywords = $module_configuration->feature_is_enabled('keywords');
 		$this->has_validation_period = $module_configuration->feature_is_enabled('deferred_publication');
 		

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,7 +92,7 @@ class ArticlesFormController extends AbstractItemController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['articles.summary.enabled'], $this->get_article()->get_description_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('enable_summary', $this->lang['articles.summary.enabled'], $this->get_article()->get_summary(),
 			array('description' => StringVars::replace_vars($this->lang['articles.summary.enabled.annex'],
 			array(
 				'number' => ArticlesConfig::load()->get_auto_cut_characters_number())),
@@ -106,7 +106,7 @@ class ArticlesFormController extends AbstractItemController
 
 		$fieldset->add_field(new FormFieldRichTextEditor('summary', StringVars::replace_vars($this->lang['articles.summary'],
 			array('number' =>ArticlesConfig::load()->get_auto_cut_characters_number())), $this->get_article()->get_summary(),
-			array('rows' => 3, 'hidden' => !$this->get_article()->get_summary_enabled())
+			array('rows' => 3, 'hidden' => !$this->get_article()->get_summary())
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->common_lang['form.content'], $this->get_article()->get_content(),

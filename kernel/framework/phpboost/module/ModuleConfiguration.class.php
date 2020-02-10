@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,7 +146,12 @@ class ModuleConfiguration
 		return $this->item_name;
 	}
 
-	public function has_rich_item()
+	public function has_items()
+	{
+		return $this->item_name && class_exists($this->item_name) && is_subclass_of($this->item_name, 'Item');
+	}
+
+	public function has_rich_items()
 	{
 		return $this->item_name && class_exists($this->item_name) && is_subclass_of($this->item_name, 'RichItem');
 	}
@@ -238,7 +243,7 @@ class ModuleConfiguration
 				return $item_class_name;
 		}
 
-		return 'Item';
+		return '';
 	}
 
 	private function load_description($desc_ini_file)

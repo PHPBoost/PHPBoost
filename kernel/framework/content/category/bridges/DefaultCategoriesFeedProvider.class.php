@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 5.3 - 2020 01 28
 */
 
@@ -68,7 +68,7 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 				$feed_item->set_date($item->get_creation_date());
 				$feed_item->set_auth(CategoriesService::get_categories_manager($this->module_id)->get_heritated_authorizations($item->get_id_category(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				
-				if ($module->get_configuration()->has_rich_item())
+				if ($module->get_configuration()->has_rich_items())
 					$feed_item->set_image_url($item->get_thumbnail());
 				
 				$data->add_item($feed_item);
