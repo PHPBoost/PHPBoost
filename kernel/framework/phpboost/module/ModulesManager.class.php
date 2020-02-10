@@ -501,7 +501,7 @@ class ModulesManager
 		$module_setup_classname = TextHelper::ucfirst($module_id) . 'Setup';
 		if (self::module_setup_exists($module_setup_classname))
 		{
-			return new $module_setup_classname();
+			return new $module_setup_classname($module_id);
 		}
 		return new DefaultModuleSetup($module_id);
 	}
