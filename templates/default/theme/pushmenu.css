@@ -224,7 +224,6 @@ body.push-nav-open {
 .pushmenu.nav-open[class*='push-nav-'] div.nav-container { transform: translate3d(0, 0, 0); }
 
 .pushmenu-toggle {
-    font-size: 1.231em;
     align-items: center;
     padding: 0.618em;
 }
