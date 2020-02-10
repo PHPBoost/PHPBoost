@@ -4,9 +4,219 @@
 			<i class="fa fa-wrench" aria-hidden></i> <span>{@sandbox.module.title}</span>
 		</a>
 		<nav id="pushmenu-fwkboost">
-			<ul>
+			<ul><li id="mini-sandbox-tools">
+					<span class="mini-toolbox flex-between">
+						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@mini.tools}</span></span>
+						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
+						# IF C_404_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ENDIF ## ENDIF #
+					</span>
+					<ul>
+						<li>
+							# IF C_CSS_CACHE_ENABLED #
+								# INCLUDE DISABLE_CSS_CACHE #
+							# ELSE #
+								# INCLUDE ENABLE_CSS_CACHE #
+							# ENDIF #
+						</li>
+						<li># INCLUDE CLEAN_CSS_CACHE #</li>
+						<li># INCLUDE CLEAN_TPL_CACHE #</li>
+						<li># INCLUDE CLEAN_RSS_CACHE #</li>
+						<li>
+							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
+								<span><i class="fa fa-fw fa-terminal# IF C_LOGGED_ERRORS # warning blink# ENDIF #" aria-hidden></i> <span>{@mini.errors}</span></span>
+								<span# IF C_LOGGED_ERRORS # class="warning blink"# ENDIF #>{ERRORS_NB}</span>
+							</a>
+						</li>
+						<li>
+							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
+								<span><i class="fa fa-fw fa-unlink# IF C_404_ERRORS # warning blink# ENDIF #" aria-hidden></i> <span>{@mini.404}</span></span>
+								<span# IF C_404_ERRORS # class="warning blink"# ENDIF #>{404_NB}</span>
+							</a>
+						</li>
+						<li>
+							<a href="{PATH_TO_ROOT}/database/admin_database.php">
+								<i class="fa fa-fw fa-database" aria-hidden></i> <span>{@mini.database}</span>
+							</a>
+						</li>
+						<li>
+							<a class="flex-between" href="${relative_url(UserUrlBuilder::comments())}">
+								<span><i class="fa fa-fw fa-comments" aria-hidden></i> <span>{@mini.coms}</span></span>
+								<span>{COMMENTS_NB}</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li id="mini-sandbox-custom">
+					<span><i class="fa fa-fw fa-cogs moderator"></i> <span>{@mini.personalization}</span></span>
+					<ul>
+						<li>
+							<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
+								<span class="stacked">
+									<i class="fa fa-fw fa-bars" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span>{@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span></span>
+							</a>
+						</li>
+						<li>
+							# IF C_LEFT_ENABLED #
+								# INCLUDE DISABLE_LEFT_COL #
+							# ELSE #
+								# INCLUDE ENABLE_LEFT_COL #
+							# ENDIF #
+						</li>
+						<li>
+							# IF C_RIGHT_ENABLED #
+								# INCLUDE DISABLE_RIGHT_COL #
+							# ELSE #
+								# INCLUDE ENABLE_RIGHT_COL #
+							# ENDIF #
+						</li>
+						<li>
+							<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
+								<span class="stacked">
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+									<i class="far fa-fw fa-image" aria-hidden></i>
+								</span> <span>{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">
+								<span class="stacked">
+									<i class="far fa-fw fa-image" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span>{@mini.theme} <span class="smaller">{@mini.add}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
+								<span class="stacked">
+									<i class="fa fa-fw fa-cubes" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span>{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
+								<span class="stacked">
+									<i class="fa fa-fw fa-cubes" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span>{@mini.mod} <span class="smaller">{@mini.add}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminMembersUrlBuilder::management())}">
+								<span class="stacked">
+									<i class="far fa-fw fa-user" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span>{@mini.user} <span class="smaller">{@mini.manage}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminMembersUrlBuilder::add())}">
+								<span class="stacked">
+									<i class="far fa-fw fa-image" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span>{@mini.user} <span class="smaller">{@mini.add}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
+								<span class="stacked">
+									<i class="fa fa-fw fa-university" aria-hidden></i>
+									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
+								</span> <span>{@title.config} <span class="smaller">{@mini.general.config}</span></span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
+								<span class="stacked">
+									<i class="fa fa-fw fa-university" aria-hidden></i>
+									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
+								</span> <span>{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li id="mini-sandbox-framework">
+					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></span>
+					<ul>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::form())}">
+								<i class="far fa-square fa-fw" aria-hidden></i>
+								<span>{@title.form.builder}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::css())}">
+								<i class="fab fa-css3 fa-fw" aria-hidden></i>
+								<span>{@title.css}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::bbcode())}">
+								<i class="fa fa-code fa-fw" aria-hidden></i>
+								<span>{@title.bbcode}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::multitabs())}">
+								<i class="fa fa-list fa-fw" aria-hidden></i>
+								<span>{@title.multitabs}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::plugins())}">
+								<i class="fa fa-cube fa-fw" aria-hidden></i>
+								<span>{@title.plugins}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::menu())}">
+								<i class="fa fa-bars fa-fw" aria-hidden></i>
+								<span>{@title.menu}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::table())}">
+								<i class="fa fa-table fa-fw" aria-hidden></i>
+								<span>{@title.table.builder}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::icons())}">
+								<i class="fa fa-bars fa-fw" aria-hidden></i>
+								<span>{@title.icons}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::icoboost())}">
+								<i class="fa iboost fa-iboost-phpboost fa-fw" aria-hidden></i>
+								<span>icoboost</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li id="mini-sandbox-switcher">
+					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@mini.themes.switcher}</span></span>
+					<ul>
+						<li>
+							<a href="?switchtheme={DEFAULT_THEME}">
+								<i class="fa fa-sync-alt" aria-hidden></i> <span>{@mini.default.theme}</span>
+							</a>
+						</li>
+						<li>
+							<form class="sandbox-mini-form switchtheme" action="{REWRITED_SCRIPT}" method="get">
+								<select id="switchtheme" name="switchtheme" onchange="document.location='?switchtheme='+this.options[this.selectedIndex].value;">
+									# START themes #
+										<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
+									# END themes #
+								</select>
+							</form>
+						</li>
+					</ul>
+				</li>
 				<li id="mini-sandbox-infos">
-					<span><i class="fa fa-info fa-fw notice"></i><span class="item-label">{@mini.infos}</span></span>
+					<span><i class="fa fa-info fa-fw notice"></i> <span>{@mini.infos}</span></span>
 					<ul>
 						<li>
 							<div class="flex-between">
@@ -49,217 +259,6 @@
 									<p id="window-height"></p>
 								</span>
 							</div>
-						</li>
-					</ul>
-				</li>
-				<li id="mini-sandbox-tools">
-					<span class="mini-toolbox flex-between">
-						<span><i class="fa fa-toolbox fa-fw error"></i> <span class="item-label">{@mini.tools}</span></span>
-						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
-						# IF C_404_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ENDIF ## ENDIF #
-					</span>
-					<ul>
-						<li>
-							# IF C_CSS_CACHE_ENABLED #
-								# INCLUDE DISABLE_CSS_CACHE #
-							# ELSE #
-								# INCLUDE ENABLE_CSS_CACHE #
-							# ENDIF #
-						</li>
-						<li># INCLUDE CLEAN_CSS_CACHE #</li>
-						<li># INCLUDE CLEAN_TPL_CACHE #</li>
-						<li># INCLUDE CLEAN_RSS_CACHE #</li>
-						<li>
-							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
-								<span><i class="fa fa-fw fa-terminal# IF C_LOGGED_ERRORS # warning blink# ENDIF #" aria-hidden></i> <span class="item-label">{@mini.errors}</span></span>
-								<span# IF C_LOGGED_ERRORS # class="warning blink"# ENDIF #>{ERRORS_NB}</span>
-							</a>
-						</li>
-						<li>
-							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}">
-								<span><i class="fa fa-fw fa-unlink# IF C_404_ERRORS # warning blink# ENDIF #" aria-hidden></i> <span class="item-label">{@mini.404}</span></span>
-								<span# IF C_404_ERRORS # class="warning blink"# ENDIF #>{404_NB}</span>
-							</a>
-						</li>
-						<li>
-							<a href="{PATH_TO_ROOT}/database/admin_database.php">
-								<i class="fa fa-fw fa-database" aria-hidden></i> <span class="item-label">{@mini.database}</span>
-							</a>
-						</li>
-						<li>
-							<a class="flex-between" href="${relative_url(UserUrlBuilder::comments())}">
-								<span><i class="fa fa-fw fa-comments" aria-hidden></i> <span class="item-label">{@mini.coms}</span></span>
-								<span>{COMMENTS_NB}</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li id="mini-sandbox-custom">
-					<span><i class="fa fa-fw fa-cogs moderator"></i> <span class="item-label">{@mini.personalization}</span></span>
-					<ul>
-						<li>
-							<a href="{PATH_TO_ROOT}/admin/menus/menus.php">
-								<span class="stacked">
-									<i class="fa fa-fw fa-bars" aria-hidden></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
-								</span> <span class="item-label">{@mini.menus} <span class="smaller">{@title.config} /  {@mini.add}</span></span>
-							</a>
-						</li>
-						<li>
-							# IF C_LEFT_ENABLED #
-								# INCLUDE DISABLE_LEFT_COL #
-							# ELSE #
-								# INCLUDE ENABLE_LEFT_COL #
-							# ENDIF #
-						</li>
-						<li>
-							# IF C_RIGHT_ENABLED #
-								# INCLUDE DISABLE_RIGHT_COL #
-							# ELSE #
-								# INCLUDE ENABLE_RIGHT_COL #
-							# ENDIF #
-						</li>
-						<li>
-							<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">
-								<span class="stacked">
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
-									<i class="far fa-fw fa-image" aria-hidden></i>
-								</span> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.manage}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminThemeUrlBuilder::add_theme())}">
-								<span class="stacked">
-									<i class="far fa-fw fa-image" aria-hidden></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
-								</span> <span class="item-label">{@mini.theme} <span class="smaller">{@mini.add}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">
-								<span class="stacked">
-									<i class="fa fa-fw fa-cubes" aria-hidden></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
-								</span> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.manage}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminModulesUrlBuilder::add_module())}">
-								<span class="stacked">
-									<i class="fa fa-fw fa-cubes" aria-hidden></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
-								</span> <span class="item-label">{@mini.mod} <span class="smaller">{@mini.add}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminMembersUrlBuilder::management())}">
-								<span class="stacked">
-									<i class="far fa-fw fa-user" aria-hidden></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
-								</span> <span class="item-label">{@mini.user} <span class="smaller">{@mini.manage}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminMembersUrlBuilder::add())}">
-								<span class="stacked">
-									<i class="far fa-fw fa-image" aria-hidden></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
-								</span> <span class="item-label">{@mini.user} <span class="smaller">{@mini.add}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">
-								<span class="stacked">
-									<i class="fa fa-fw fa-university" aria-hidden></i>
-									<i class="fa fa-cog stack-event stack-sup stack-right notice" aria-hidden></i>
-								</span> <span class="item-label">{@title.config} <span class="smaller">{@mini.general.config}</span></span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}">
-								<span class="stacked">
-									<i class="fa fa-fw fa-university" aria-hidden></i>
-									<i class="fa fa-plus stack-event stack-sup stack-right success" aria-hidden></i>
-								</span> <span class="item-label">{@title.config} <span class="smaller">{@mini.advanced.config}</span></span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li id="mini-sandbox-framework">
-					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span class="item-label">{@mini.fwkboost}</span></span>
-					<ul>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::form())}">
-								<i class="far fa-square fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.form.builder}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::css())}">
-								<i class="fab fa-css3 fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.css}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::bbcode())}">
-								<i class="fa fa-code fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.bbcode}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::multitabs())}">
-								<i class="fa fa-list fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.multitabs}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::plugins())}">
-								<i class="fa fa-cube fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.plugins}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::menu())}">
-								<i class="fa fa-bars fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.menu}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::table())}">
-								<i class="fa fa-table fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.table.builder}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::icons())}">
-								<i class="fa fa-bars fa-fw" aria-hidden></i>
-								<span class="item-label">{@title.icons}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::icoboost())}">
-								<i class="fa iboost fa-iboost-phpboost fa-fw" aria-hidden></i>
-								<span class="item-label">icoboost</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li id="mini-sandbox-switcher">
-					<span><i class="far fa-image fa-fw link-color-alt"></i> <span class="item-label">{@mini.themes.switcher}</span></span>
-					<ul>
-						<li>
-							<a href="?switchtheme={DEFAULT_THEME}">
-								<i class="fa fa-sync-alt" aria-hidden></i> {@mini.default.theme}
-							</a>
-						</li>
-						<li>
-							<form class="sandbox-mini-form switchtheme" action="{REWRITED_SCRIPT}" method="get">
-								<select id="switchtheme" name="switchtheme" onchange="document.location='?switchtheme='+this.options[this.selectedIndex].value;">
-									# START themes #
-										<option value="{themes.IDNAME}"# IF themes.C_SELECTED# selected="selected"# ENDIF #>{themes.NAME}</option>
-									# END themes #
-								</select>
-							</form>
 						</li>
 					</ul>
 				</li>

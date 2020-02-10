@@ -27,16 +27,7 @@
 
 .sandbox-mini-form { margin: -0.618em 0 -0.618em -1.618em;}
 
-.sandbox-mini-form .button.submit,
-.sandbox-mini-form .button.submit:hover,
-.sandbox-mini-form .button.submit:active{
-    background-color: transparent;
-    border-width: 0;
-}
-
 .sandbox-mini-form span { display: inline-block; }
-.sandbox-mini-form .item-label { padding: 0 0.309em; }
-.item-label { padding: 0 0.618em; }
 
 /* Toggle button position */
 
