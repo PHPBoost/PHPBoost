@@ -190,9 +190,9 @@ class ModuleConfiguration
 	public function get_configuration_parameters()
 	{
 		if ($this->configuration_name)
-			return call_user_func(array($this->configuration_name, 'load'));
+			return $this->configuration_name::load($this->module_id);
 		else
-			return call_user_func(array('DefaultModuleConfig', 'load'));
+			return DefaultModuleConfig::load($this->module_id);
 	}
 
 	private function load_configuration($config_ini_file)
