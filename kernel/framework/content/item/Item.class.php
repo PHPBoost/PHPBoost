@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 04
+ * @version     PHPBoost 5.3 - last update: 2020 02 10
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -677,8 +677,14 @@ class Item
 		return $vars;
 	}
 
-	public static function create_items_table()
+	public static function create_items_table($module_id = '')
 	{
+		if ($module_id)
+		{
+			self::$module_id = $module_id;
+			self::$module    = ModulesManager::get_module(self::$module_id);
+		}
+		
 		$kernel_additional_fields = $kernel_additional_indexes = array();
 		
 		if (self::$module->get_configuration()->has_categories())

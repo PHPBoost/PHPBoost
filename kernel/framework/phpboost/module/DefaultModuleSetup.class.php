@@ -103,7 +103,7 @@ class DefaultModuleSetup implements ModuleSetup
 			if ($this->module_configuration->has_items())
 			{
 				$item_class_name = $this->module_configuration->get_item_name();
-				$item_class_name::create_items_table();
+				$item_class_name::create_items_table($this->module_id);
 			}
 			
 			if ($this->module_configuration->has_categories())
