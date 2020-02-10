@@ -90,7 +90,10 @@ class DefaultModuleSetup implements ModuleSetup
 
 	private function drop_tables()
 	{
-		self::$dbms_utils->drop($this->get_sql_tables_list());
+		$tables_list = $this->get_sql_tables_list();
+		
+		if ($tables_list)
+			self::$dbms_utils->drop($tables_list);
 	}
 
 	private function create_tables()
