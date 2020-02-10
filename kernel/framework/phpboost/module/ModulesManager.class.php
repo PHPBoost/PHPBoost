@@ -201,10 +201,10 @@ class ModulesManager
 			return self::PHPBOOST_VERSION_CONFLICT;
 		}
 
-		self::execute_module_installation($module_identifier);
-
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
+
+		self::execute_module_installation($module_identifier);
 
 		// TODO Force initialization ExtensionProviderService for PHPBoost installation
 		AppContext::init_extension_provider_service();
