@@ -20,7 +20,7 @@ $lang['categories'][] = array(
 	'category.description' => 'Article demonstration'
 );
 
-$lang['items'] = array(
+$lang['items'][] = array(
 	'item.title'   => 'How to begin with the articles module',
 	'item.content' => 'This brief article will give you some simple tips to take control of this module.<br />
 <br />

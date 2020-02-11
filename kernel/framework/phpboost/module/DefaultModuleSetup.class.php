@@ -132,7 +132,7 @@ class DefaultModuleSetup implements ModuleSetup
 	
 	protected function insert_default_categories($lang)
 	{
-		if (isset($lang['categories']))
+		if (isset($lang['categories']) && is_array($lang['categories']))
 		{
 			foreach($lang['categories'] as $category)
 			{
@@ -143,7 +143,7 @@ class DefaultModuleSetup implements ModuleSetup
 	
 	protected function insert_default_items($lang)
 	{
-		if (isset($lang['items']))
+		if (isset($lang['items']) && is_array($lang['items']))
 		{
 			foreach($lang['items'] as $item)
 			{
