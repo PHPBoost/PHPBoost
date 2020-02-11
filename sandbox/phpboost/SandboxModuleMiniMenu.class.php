@@ -217,7 +217,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$enable_css_cache = new HTMLForm('enable_css_cache', '', false);
 		$enable_css_cache->set_css_class('sandbox-mini-form enable-css-cache');
-		$enable_css_cache->set_html_id('enable_css_cache');
 
 		$this->enable_css_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -241,7 +240,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$disable_css_cache = new HTMLForm('disable_css_cache', '', false);
 		$disable_css_cache->set_css_class('sandbox-mini-form disable-css-cache');
-		$disable_css_cache->set_html_id('disable_css_cache');
 
 		$this->disable_css_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -265,7 +263,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$clean_css_cache = new HTMLForm('clean_css_cache', '', false);
 		$clean_css_cache->set_css_class('sandbox-mini-form clean-css-cache');
-		$clean_css_cache->set_html_id('clean_css_cache');
 
 		$this->clean_css_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -288,7 +285,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		$this->css_cache_config = CSSCacheConfig::load();
 		$clean_cache = new HTMLForm('clean_cache', '', false);
 		$clean_cache->set_css_class('sandbox-mini-form clean-cache');
-		$clean_cache->set_html_id('clean_cache');
 
 		$this->clean_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -312,7 +308,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$clean_syndication_cache = new HTMLForm('clean_syndication_cache', '', false);
 		$clean_syndication_cache->set_css_class('sandbox-mini-form clean-syndication-cache');
-		$clean_syndication_cache->set_html_id('clean_syndication_cache');
 
 		$this->clean_syndication_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -334,7 +329,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$disable_left_menu = new HTMLForm('disable_left_menu', '', false);
 		$disable_left_menu->set_css_class('sandbox-mini-form disable-left-menu');
-		$disable_left_menu->set_html_id('disable_left_menu');
 
 		$this->disable_left_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -351,7 +345,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$enable_left_menu = new HTMLForm('enable_left_menu', '', false);
 		$enable_left_menu->set_css_class('sandbox-mini-form enable-left-menu');
-		$enable_left_menu->set_html_id('enable_left_menu');
 
 		$this->enable_left_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -368,7 +361,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$disable_right_menu = new HTMLForm('disable_right_menu', '', false);
 		$disable_right_menu->set_css_class('sandbox-mini-form disable-right-menu');
-		$disable_right_menu->set_html_id('disable_right_menu');
 
 		$this->disable_right_button = new FormButtonSubmit('
 			<span class="stacked">
@@ -385,7 +377,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		$enable_right_menu = new HTMLForm('enable_right_menu', '', false);
 		$enable_right_menu->set_css_class('sandbox-mini-form enable-right-menu');
-		$enable_right_menu->set_html_id('enable_right_menu');
 
 		$this->enable_right_button = new FormButtonSubmit('
 			<span class="stacked">
