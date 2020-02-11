@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 02 11
  * @since       PHPBoost 5.3 - 2020 02 07
 */
 
@@ -41,8 +41,9 @@ class ModuleDispatchManager extends DispatchManager
 			if ($module_configuration->feature_is_enabled('keywords'))
 				$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/([a-z0-9-_]+)/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('tag', 'page', 'field', 'sort', 'page'));
 			
-			//Home page and categories display
-			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page', 'field', 'sort', 'page', 'subcategories_page'));
+			//Categories and home page display
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/([0-9]+)-([a-z0-9-_]+)/?([0-9]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page', 'field', 'sort', 'page', 'subcategories_page'));
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/?$`');
 		}
 		
 		try
