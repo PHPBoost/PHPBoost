@@ -150,7 +150,7 @@
 							<div class="cell-infos">
 								<div class="more">
 									<span class="pinned" aria-label="{downloadfiles.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {downloadfiles.DOWNLOADS_NUMBER}</span>
-									# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" aria-label="{downloadfiles.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.VIEWS_NUMBER}</span># ENDIF #
+									# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{downloadfiles.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.VIEWS_NUMBER}</span># ENDIF #
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
 											<i class="fa fa-comments" aria-hidden="true"></i>

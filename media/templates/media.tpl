@@ -90,7 +90,7 @@
 							<div class="cell-infos">
 								<div class="more">
 									<span class="pinned"><i class="fa fa-user" aria-hidden="true"></i> {file.AUTHOR}</span>
-									<span class="pinned" aria-label="{file.COUNT} ${LangLoader::get_message('sort_by.views.number', 'common')}"><i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}</span>
+									<span class="pinned" role="contentinfo" aria-label="{file.COUNT} ${LangLoader::get_message('sort_by.views.number', 'common')}"><i class="fa fa-eye" aria-hidden="true"></i> {file.COUNT}</span>
 									# IF C_DISPLAY_COMMENTS #
 											<span class="pinned"><i class="fa fa-comments" aria-hidden="true"></i> {file.U_COM_LINK}</span>
 									# ENDIF #

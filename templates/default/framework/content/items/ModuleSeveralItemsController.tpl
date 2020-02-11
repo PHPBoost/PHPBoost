@@ -186,7 +186,7 @@
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_VIEWS #
-										<span class="pinned" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden></i> {items.VIEWS_NUMBER}</span>
+										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden></i> {items.VIEWS_NUMBER}</span>
 									# ENDIF #
 									# IF C_ENABLED_VISITS #
 										<span class="pinned">

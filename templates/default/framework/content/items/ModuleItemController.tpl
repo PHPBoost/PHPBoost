@@ -43,7 +43,7 @@
 						</span>
 					# ENDIF #
 					# IF C_ENABLED_VIEWS #
-						<span class="pinned" aria-label="{VIEWS_NUMBER} {@views}">
+						<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@views}">
 							<i class="fa fa-eye" aria-hidden></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 						</span>
 					# ENDIF #
