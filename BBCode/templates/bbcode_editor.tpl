@@ -50,31 +50,31 @@
 	<nav class="bbcode-containers">
 		<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
 			<li id="format-bold" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.bold}">
+				<span class="bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.bold}">
 					<i class="fa fa-fw fa-bold" aria-hidden="true"></i>
 				</span>
 			</li>
 			<li id="format-italic" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_I}" # IF NOT C_DISABLED_I #onclick="insertbbcode('[i]', '[/i]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.italic}">
+				<span class="bbcode-button{AUTH_I}" # IF NOT C_DISABLED_I #onclick="insertbbcode('[i]', '[/i]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.italic}">
 					<i class="fa fa-fw fa-italic" aria-hidden="true"></i>
 				</span>
 			</li>
 			<li id="format-underline" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_U}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.underline}">
+				<span class="bbcode-button{AUTH_U}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.underline}">
 					<i class="fa fa-fw fa-underline{AUTH_U}" aria-hidden="true"></i>
 				</span>
 			</li>
 			<li id="format-strike" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_S}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.strike}">
+				<span class="bbcode-button{AUTH_S}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.strike}">
 					<i class="fa fa-fw fa-strikethrough{AUTH_S}" aria-hidden="true"></i>
 				</span>
 			</li>
 			<li id="format-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-modal data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
+				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-modal data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # role="button" aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
 					<i class="fa fa-fw fa-tint" aria-hidden="true"></i>
 				</span>
 				<div id="block-color{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.color}</div>
@@ -84,11 +84,11 @@
 				</div>
 			</li>
 			<li id="format-bg-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-modal data-target="block-bgcolor{FIELD}" onclick="bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # aria-label="{@bbcode.bgcolor}">
+				<span class="bbcode-button{AUTH_BGCOLOR}" # IF NOT C_DISABLED_BGCOLOR #data-modal data-target="block-bgcolor{FIELD}" onclick="bbcode_color('15', '{FIELD}', 'bgcolor');return false;"# ENDIF # role="button" aria-label="{@bbcode.bgcolor}">
 					<i class="fa fa-fw fa-paint-brush" aria-hidden="true"></i>
 				</span>
 				<div id="block-bgcolor{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.bgcolor}</div>
@@ -98,11 +98,11 @@
 				</div>
 			</li>
 			<li id="format-font-size" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SIZE}" # IF NOT C_DISABLED_SIZE #data-modal# ENDIF # data-target="block-size{FIELD}" aria-label="{@bbcode.size}">
+				<span class="bbcode-button{AUTH_SIZE}" # IF NOT C_DISABLED_SIZE #data-modal# ENDIF # data-target="block-size{FIELD}" role="button" aria-label="{@bbcode.size}">
 					<i class="fa fa-fw fa-text-height" aria-hidden="true"></i>
 				</span>
 				<div id="block-size{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.size}</div>
@@ -125,11 +125,11 @@
 				</div>
 			</li>
 			<li id="format-font-family" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_FONT}" # IF NOT C_DISABLED_FONT #data-modal# ENDIF # data-target="block-font{FIELD}" aria-label="{@bbcode.font}">
+				<span class="bbcode-button{AUTH_FONT}" # IF NOT C_DISABLED_FONT #data-modal# ENDIF # data-target="block-font{FIELD}" role="button" aria-label="{@bbcode.font}">
 					<i class="fa fa-fw fa-font" aria-hidden="true"></i>
 				</span>
 				<div id="block-font{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.font}</div>
@@ -159,11 +159,11 @@
 				</div>
 			</li>
 			<li id="format-align" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_ALIGN}" # IF NOT C_DISABLED_ALIGN #data-modal# ENDIF # data-target="block-align{FIELD}" aria-label="{@bbcode.align}">
+				<span class="bbcode-button{AUTH_ALIGN}" # IF NOT C_DISABLED_ALIGN #data-modal# ENDIF # data-target="block-align{FIELD}" role="button" aria-label="{@bbcode.align}">
 					<i class="fa fa-fw fa-align-left" aria-hidden="true"></i>
 				</span>
 				<div id="block-align{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.align}</div>
@@ -192,11 +192,11 @@
 				</div>
 			</li>
 			<li id="format-position" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_POSITIONS}" # IF NOT C_DISABLED_POSITIONS #data-modal# ENDIF # data-target="block-positions{FIELD}" aria-label="{@bbcode.positions}">
+				<span class="bbcode-button{AUTH_POSITIONS}" # IF NOT C_DISABLED_POSITIONS #data-modal# ENDIF # data-target="block-positions{FIELD}" role="button" aria-label="{@bbcode.positions}">
 					<i class="fa fa-fw fa-indent" aria-hidden="true"></i>
 				</span>
 				<div id="block-positions{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.positions}</div>
@@ -230,11 +230,11 @@
 			</li>
 
 			<li id="html-title" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-modal# ENDIF # data-target="block-title{FIELD}" aria-label="{@bbcode.title}">
+				<span class="bbcode-button{AUTH_TITLE}" # IF NOT C_DISABLED_TITLE #data-modal# ENDIF # data-target="block-title{FIELD}" role="button" aria-label="{@bbcode.title}">
 					<i class="fa fa-fw fa-heading" aria-hidden="true"></i>
 				</span>
 				<div id="block-title{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.title}</div>
@@ -273,11 +273,11 @@
 				</div>
 			</li>
 			<li id="html-list" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_LIST}" # IF NOT C_DISABLED_LIST #data-modal# ENDIF # data-target="block-list{FIELD}" aria-label="{@bbcode.list}">
+				<span class="bbcode-button{AUTH_LIST}" # IF NOT C_DISABLED_LIST #data-modal# ENDIF # data-target="block-list{FIELD}" role="button" aria-label="{@bbcode.list}">
 					<i class="fa fa-fw fa-list{AUTH_LIST}" aria-hidden="true"></i>
 				</span>
 				<div id="block-list{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.list}</div>
@@ -293,7 +293,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="bb_ordered_list{FIELD}">
 									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" />
-									<span></span>
+									<span>&nbsp;</span>
 								</label>
 							</div>
 						</div>
@@ -304,11 +304,11 @@
 				</div>
 			</li>
 			<li id="html-table" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_TABLE}" # IF NOT C_DISABLED_TABLE #data-modal# ENDIF #  data-target="block-table{FIELD}" aria-label="{@bbcode.table}">
+				<span class="bbcode-button{AUTH_TABLE}" # IF NOT C_DISABLED_TABLE #data-modal# ENDIF #  data-target="block-table{FIELD}" role="button" aria-label="{@bbcode.table}">
 					<i class="fa fa-fw fa-table" aria-hidden="true"></i>
 				</span>
 				<div id="block-table{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.table}</div>
@@ -330,7 +330,7 @@
 							<div class="cell-input">
 								<label class="checkbox" for="bb-head{FIELD}">
 									<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
-									<span></span>
+									<span>&nbsp;</span>
 								</label>
 							</div>
 						</div>
@@ -341,11 +341,11 @@
 				</div>
 			</li>
 			<li id="html-containers" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_CONTAINERS}" # IF NOT C_DISABLED_CONTAINERS #data-modal# ENDIF # data-target="block-container{FIELD}" aria-label="{@bbcode.container}">
+				<span class="bbcode-button{AUTH_CONTAINERS}" # IF NOT C_DISABLED_CONTAINERS #data-modal# ENDIF # data-target="block-container{FIELD}" role="button" aria-label="{@bbcode.container}">
 					<i class="far fa-fw fa-square" aria-hidden="true"></i>
 				</span>
 				<div id="block-container{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.container}</div>
@@ -362,7 +362,7 @@
 								</li>
 								<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER}">
 									<span class="bbcode-label"> {@bbcode.custom.div} </span>
-									<span class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
+									<span class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 								</li>
 								<li id="html-fieldset{AUTH_FIELDSET}" class="li-stretch">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
@@ -377,7 +377,7 @@
 					</div>
 				</div>
 				<div id="block-custom-div{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.custom.div}</div>
@@ -405,7 +405,7 @@
 					</div>
 				</div>
 				<div id="block-fieldset{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fieldset}</div>
@@ -424,17 +424,17 @@
 					</div>
 				</div>
 				<div id="block-abbr{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.abbr}</div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_abbr_name{FIELD" class="cell-label">{@bbcode.abbr}</label>
+							<label for="bb_abbr_name{FIELD}" class="cell-label">{@bbcode.abbr}</label>
 							<div class="cell-input"><input type="text" id="bb_abbr_name{FIELD}"></div>
 						</div>
 						<div class="cell-form">
-							<label for="bb_abbr_desc{FIELD" class="cell-label">{@bbcode.abbr.label}</label>
+							<label for="bb_abbr_desc{FIELD}" class="cell-label">{@bbcode.abbr.label}</label>
 							<div class="cell-input"><input type="text" id="bb_abbr_desc{FIELD}"></div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -444,11 +444,11 @@
 				</div>
 			</li>
 			<li id="html-quote" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_QUOTE}" # IF NOT C_DISABLED_QUOTE #data-modal# ENDIF # data-target="block-quote{FIELD}" aria-label="{@bbcode.quote}">
+				<span class="bbcode-button{AUTH_QUOTE}" # IF NOT C_DISABLED_QUOTE #data-modal# ENDIF # data-target="block-quote{FIELD}" role="button" aria-label="{@bbcode.quote}">
 					<i class="fa fa-fw fa-quote-left{AUTH_QUOTE}" aria-hidden="true"></i>
 				</span>
 				<div id="block-quote{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.quote}</div>
@@ -472,26 +472,26 @@
 				</div>
 			</li>
 			<li id="html-hidden" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_HIDDEN}" # IF NOT C_DISABLED_HIDDEN #data-modal# ENDIF # data-target="block-hide{FIELD}" aria-label="{@bbcode.hide}">
+				<span class="bbcode-button{AUTH_HIDDEN}" # IF NOT C_DISABLED_HIDDEN #data-modal# ENDIF # data-target="block-hide{FIELD}" role="button" aria-label="{@bbcode.hide}">
 					<i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i>
 				</span>
 				<div id="block-hide{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.hide}</div>
 						</div>
 						<div class="cell-list">
 							<ul>
-								<li class="li-stretch{AUTH_HIDE}" aria-label="{@bbcode.hide.all}">
+								<li class="li-stretch{AUTH_HIDE}" role="button" aria-label="{@bbcode.hide.all}">
 									<span><i class="far fa-fw fa-eye-slash"></i> {@bbcode.hide}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch{AUTH_MEMBER}" aria-label="{@bbcode.hide.member}">
+								<li class="li-stretch{AUTH_MEMBER}" role="button" aria-label="{@bbcode.hide.member}">
 									<span><i class="fa fa-fw fa-user-friends"></i> {@bbcode.member}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch{AUTH_MODERATOR}" aria-label="{@bbcode.hide.moderator}">
+								<li class="li-stretch{AUTH_MODERATOR}" role="button" aria-label="{@bbcode.hide.moderator}">
 									<span><i class="fa fa-fw fa-user-shield"></i> {@bbcode.moderator}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
@@ -501,11 +501,11 @@
 				</div>
 			</li>
 			<li id="html-style" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_STYLE}" # IF NOT C_DISABLED_STYLE #data-modal# ENDIF # data-target="block-style{FIELD}" aria-label="{@bbcode.style}">
+				<span class="bbcode-button{AUTH_STYLE}" # IF NOT C_DISABLED_STYLE #data-modal# ENDIF # data-target="block-style{FIELD}" role="button" aria-label="{@bbcode.style}">
 					<i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
 				</span>
 				<div id="block-style{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.style}</div>
@@ -555,11 +555,11 @@
 			</li>
 
 			<li id="links-url" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_URL}" # IF NOT C_DISABLED_URL #data-modal# ENDIF # data-target="block-url{FIELD}" aria-label="{@bbcode.link}">
+				<span class="bbcode-button{AUTH_URL}" # IF NOT C_DISABLED_URL #data-modal# ENDIF # data-target="block-url{FIELD}" role="button" aria-label="{@bbcode.link}">
 					<i class="fa fa-fw fa-globe" aria-hidden="true"></i>
 				</span>
 				<div id="block-url{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.link}</div>
@@ -577,17 +577,17 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button hide-modal" class="bbcode-hover{AUTH_URL}" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
 			<li id="links-mail" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-modal# ENDIF # data-target="block-mail{FIELD}" aria-label="{@bbcode.mail}">
+				<span class="bbcode-button{AUTH_MAIL}" # IF NOT C_DISABLED_MAIL #data-modal# ENDIF # data-target="block-mail{FIELD}" role="button" aria-label="{@bbcode.mail}">
 					<i class="fa fa-fw fa-envelope" aria-hidden="true"></i>
 				</span>
 				<div id="block-mail{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.mail}</div>
@@ -605,17 +605,17 @@
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
-							<span class="button hide-modal" class="bbcode-hover{AUTH_MAIL}" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
+							<span class="button hide-modal" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
 						</div>
 					</div>
 				</div>
 			</li>
 			<li id="links-wikipedia" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_WIKIPEDIA}" # IF NOT C_DISABLED_WIKIPEDIA #data-modal# ENDIF # data-target="block-wikipedia{FIELD}" aria-label="{@bbcode.wikipedia}">
+				<span class="bbcode-button{AUTH_WIKIPEDIA}" # IF NOT C_DISABLED_WIKIPEDIA #data-modal# ENDIF # data-target="block-wikipedia{FIELD}" role="button" aria-label="{@bbcode.wikipedia}">
 					<i class="fab fa-fw fa-wikipedia-w{AUTH_WIKIPEDIA}" aria-hidden="true"></i>
 				</span>
 				<div id="block-wikipedia{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.wikipedia}</div>
@@ -643,11 +643,11 @@
 				</div>
 			</li>
 			<li id="links-feed" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-modal# ENDIF # data-target="block-feed{FIELD}" aria-label="{@bbcode.feed}">
+				<span class="bbcode-button{AUTH_FEED}" # IF NOT C_DISABLED_FEED #data-modal# ENDIF # data-target="block-feed{FIELD}" role="button" aria-label="{@bbcode.feed}">
 					<i class="fa fa-fw fa-rss" aria-hidden="true"></i>
 				</span>
 				<div id="block-feed{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.feed}</div>
@@ -682,11 +682,11 @@
 				</div>
 			</li>
 			<li id="links-anchor" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_ANCHOR}" # IF NOT C_DISABLED_ANCHOR #data-modal# ENDIF # data-target="block-anchor{FIELD}" aria-label="{@bbcode.anchor}">
+				<span class="bbcode-button{AUTH_ANCHOR}" # IF NOT C_DISABLED_ANCHOR #data-modal# ENDIF # data-target="block-anchor{FIELD}" role="button" aria-label="{@bbcode.anchor}">
 					<i class="fa fa-fw fa-anchor{AUTH_ANCHOR}" aria-hidden="true"></i>
 				</span>
 				<div id="block-anchor{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.anchor}</div>
@@ -700,15 +700,15 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb_anchor_url{FIELD}">{@bbcode.anchor.url}</label>
 							<div class="cell-input">
-								<label for="bb_anchor_url" class="checkbox">
+								<label for="bb_anchor_url{FIELD}" class="checkbox">
 									<input class="checkbox-revealer" id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
-									<span></span>
+									<span>&nbsp;</span>
 								</label>
 							</div>
 						</div>
 						<div class="cell-body cell-hidden hidden">
 							<div class="cell-content">
-								<span class="message-helper bgc notice">{@bbcode.anchor.url.desc}</span>
+								<span class="message-helper bgc notice">{@H|bbcode.anchor.url.desc}</span>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -718,11 +718,11 @@
 				</div>
 			</li>
 			<li id="links-sound" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-modal# ENDIF # data-target="block-sound{FIELD}" aria-label="{@bbcode.sound}">
+				<span class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-modal# ENDIF # data-target="block-sound{FIELD}" role="button" aria-label="{@bbcode.sound}">
 					<i class="fa fa-fw fa-music" aria-hidden="true"></i>
 				</span>
 				<div id="block-sound{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.sound}</div>
@@ -741,11 +741,11 @@
 				</div>
 			</li>
 			<li id="links-movie" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-modal# ENDIF # data-target="block-movie{FIELD}" aria-label="{@bbcode.movie}">
+				<span class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-modal# ENDIF # data-target="block-movie{FIELD}" role="button" aria-label="{@bbcode.movie}">
 					<i class="fa fa-fw fa-film" aria-hidden="true"></i>
 				</span>
 				<div id="block-movie{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.movie}</div>
@@ -790,11 +790,11 @@
 				</div>
 			</li>
 			<li id="link-lightbox" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-modal# ENDIF # data-target="block-lightbox{FIELD}" aria-label="{@bbcode.lightbox}">
+				<span class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-modal# ENDIF # data-target="block-lightbox{FIELD}" role="button" aria-label="{@bbcode.lightbox}">
 					<i class="fa fa-fw fa-camera" aria-hidden="true"></i>
 				</span>
 				<div id="block-lightbox{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.lightbox}</div>
@@ -823,11 +823,11 @@
 				</div>
 			</li>
 			<li id="link-figure" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-modal# ENDIF # data-target="block-figure{FIELD}" aria-label="{@bbcode.figure}">
+				<span class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-modal# ENDIF # data-target="block-figure{FIELD}" role="button" aria-label="{@bbcode.figure}">
 					<i class="far fa-fw fa-image" aria-hidden="true"></i>
 				</span>
 				<div id="block-figure{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.figure}</div>
@@ -840,13 +840,13 @@
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_alt_text{FIELD}">{@bbcode.picture.alt}</label>
+							<label class="cell-label" for="bb_picture_alt{FIELD}">{@bbcode.picture.alt}</label>
 							<div class="cell-input">
 								<input id="bb_picture_alt{FIELD}" type="text" name="bb_picture_alt{FIELD}" />
 							</div>
 						</div>
 						<div class="cell-form">
-							<label class="cell-label" for="bb_alt_text{FIELD}">{@bbcode.figure.caption}</label>
+							<label class="cell-label" for="bb_figure_desc{FIELD}">{@bbcode.figure.caption}</label>
 							<div class="cell-input">
 								<textarea id="bb_figure_desc{FIELD}" rows="3" cols="32"></textarea>
 							</div>
@@ -872,11 +872,11 @@
 			# ENDIF #
 
 			<li id="code-smileys" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_SMILEYS}" # IF NOT C_DISABLED_SMILEYS #data-modal# ENDIF # data-target="block-smileys{FIELD}" aria-label="{@bbcode.smileys}">
+				<span class="bbcode-button{AUTH_SMILEYS}" # IF NOT C_DISABLED_SMILEYS #data-modal# ENDIF # data-target="block-smileys{FIELD}" role="button" aria-label="{@bbcode.smileys}">
 					<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 				</span>
 				<div id="block-smileys{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.smileys}</div>
@@ -885,7 +885,7 @@
 							<ul>
 								# START smileys #
 									<li>
-										<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" aria-label="{smileys.CODE}">
+										<span class="hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');bb_hide_block('1', '{FIELD}', 0);return false;" role="button" aria-label="{smileys.CODE}">
 											<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="smiley" />
 										</span>
 									</li>
@@ -896,11 +896,11 @@
 				</div>
 			</li>
 			<li id="code-fa" class="bbcode-elements">
-				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-fa{FIELD}" aria-label="{@bbcode.fa}">
+				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-fa{FIELD}" role="button" aria-label="{@bbcode.fa}">
 					<i class="far fa-fw fa-flag" aria-hidden="true"></i>
 				</span>
 				<div id="block-fa{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fa}</div>
@@ -914,8 +914,8 @@
 							<ul>
 								# START code_fa #
 								<li>
-									<span class="hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" aria-label="{code_fa.CODE}">
-										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true" aria-label="{code_fa.CODE}"></i>
+									<span class="hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
+										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
 									</span>
 								</li>
 								# END code_fa #
@@ -925,11 +925,11 @@
 				</div>
 			</li>
 			<li id="code-language" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_CODE}" # IF NOT C_DISABLED_CODE #data-modal# ENDIF # data-target="block-code{FIELD}" aria-label="{@bbcode.code}">
+				<span class="bbcode-button{AUTH_CODE}" # IF NOT C_DISABLED_CODE #data-modal# ENDIF # data-target="block-code{FIELD}" role="button" aria-label="{@bbcode.code}">
 					<i class="fa fa-fw fa-code" aria-hidden="true"></i>
 				</span>
 				<div id="block-code{FIELD}" class="modal modal-animation">
-					<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
+					<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 					<div class="content-panel cell">
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.code}</div>
@@ -985,9 +985,9 @@
 						<div class="cell-form">
 							<label for="bb_code_line{FIELD}" class="cell-label">{@bbcode.code.line}</label>
 							<div class="cell-input">
-								<label class="checkbox" for="">
+								<label class="checkbox" for="bb_code_line{FIELD}">
 									<input id="bb_code_line{FIELD}" name="bb_code_line{FIELD}" type="checkbox">
-									<span></span>
+									<span>&nbsp;</span>
 								</label>
 							</div>
 						</div>
@@ -998,12 +998,12 @@
 				</div>
 			</li>
 			<li id="code-math" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_MATH}" # IF NOT C_DISABLED_MATH #onclick="insertbbcode('[math]', '[/math]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.math}">
+				<span class="bbcode-button{AUTH_MATH}" # IF NOT C_DISABLED_MATH #onclick="insertbbcode('[math]', '[/math]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.math}">
 					<i class="fa fa-fw fa-calculator" aria-hidden="true"></i>
 				</span>
 			</li>
 			<li id="code-html" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_HTML}" # IF NOT C_DISABLED_HTML #onclick="insertbbcode('[html]', '[/html]', '{FIELD}');"# ENDIF # aria-label="{@bbcode.html}">
+				<span class="bbcode-button{AUTH_HTML}" # IF NOT C_DISABLED_HTML #onclick="insertbbcode('[html]', '[/html]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.html}">
 					<i class="fab fa-fw fa-html5" aria-hidden="true"></i>
 				</span>
 			</li>

@@ -58,38 +58,38 @@
 					<tr>
 						<th>${LangLoader::get_message('form.name', 'common')}</th>
 						<th class="col-small" aria-label="${LangLoader::get_message('form.date.creation', 'common')}">
-							<i class="far fa-fw fa-calendar-plus hidden-small-screens" aria-hidden></i>
+							<i class="far fa-fw fa-calendar-plus hidden-small-screens" aria-hidden="true"></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('form.date.creation', 'common')}</span>
 						</th>
 						<th class="col-small" aria-label="${LangLoader::get_message('form.date.update', 'common')}">
-							<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden></i>
+							<i class="far fa-fw fa-calendar-check hidden-small-screens" aria-hidden="true"></i>
 							<span class="hidden-large-screens">${LangLoader::get_message('form.date.update', 'common')}</span>
 						</th>
 						<th class="col-small" aria-label="{@downloads.number}">
-							<i class="fa fa-fw fa-download hidden-small-screens" aria-hidden></i>
+							<i class="fa fa-fw fa-download hidden-small-screens" aria-hidden="true"></i>
 							<span class="hidden-large-screens">{@downloads.number}</span>
 						</th>
 						# IF C_ENABLED_VIEWS_NUMBER #
 							<th class="col-small" aria-label="{@download.views.number}">
-								<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden></i>
+								<i class="fa fa-fw fa-eye hidden-small-screens" aria-hidden="true"></i>
 								<span class="hidden-large-screens">{@download.views.number}</span>
 							</th>
 						# ENDIF #
 						# IF C_ENABLED_NOTATION #
 							<th aria-label="${LangLoader::get_message('note', 'common')}">
-								<i class="far fa-fw fa-star hidden-small-screens" aria-hidden></i>
+								<i class="far fa-fw fa-star hidden-small-screens" aria-hidden="true"></i>
 								<span class="hidden-large-screens">${LangLoader::get_message('note', 'common')}</span>
 							</th>
 						# ENDIF #
 						# IF C_ENABLED_COMMENTS #
 							<th aria-label="${LangLoader::get_message('comments', 'comments-common')}">
-								<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden></i>
+								<i class="far fa-fw fa-comments hidden-small-screens" aria-hidden="true"></i>
 								<span class="hidden-large-screens">${LangLoader::get_message('comments', 'comments-common')}</span>
 							</th>
 						# ENDIF #
 						# IF C_MODERATION #
 							<th class="col-smaller" aria-label="${LangLoader::get_message('moderation', 'common')}">
-								<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden></i>
+								<i class="fa fa-fw fa-gavel hidden-small-screens" aria-hidden="true"></i>
 								<span class="hidden-large-screens">${LangLoader::get_message('moderation', 'common')}</span>
 							</th>
 						# ENDIF #
@@ -149,7 +149,7 @@
 						<div class="cell-body">
 							<div class="cell-infos">
 								<div class="more">
-									<span class="pinned" aria-label="{downloadfiles.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {downloadfiles.DOWNLOADS_NUMBER}</span>
+									<span class="pinned" role="contentinfo" aria-label="{downloadfiles.L_DOWNLOADED_TIMES}"><i class="fa fa-download" aria-hidden="true"></i> {downloadfiles.DOWNLOADS_NUMBER}</span>
 									# IF C_ENABLED_VIEWS_NUMBER #<span class="pinned" role="contentinfo" aria-label="{downloadfiles.VIEWS_NUMBER} {@download.view}"><i class="fa fa-eye" aria-hidden="true"></i> {downloadfiles.VIEWS_NUMBER}</span># ENDIF #
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
@@ -211,8 +211,8 @@
 						</footer>
 					</article>
 				# END downloadfiles #
-			# ENDIF #
-		</div>
+			</div>
+		# ENDIF #
 	# ELSE #
 		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 		<div class="align-center">

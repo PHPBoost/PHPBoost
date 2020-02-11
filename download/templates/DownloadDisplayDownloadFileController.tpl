@@ -1,9 +1,9 @@
 <section id="module-download">
 	<header>
 		<div class="controls align-right">
-			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a>
+			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			{@module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1><span id="name" itemprop="name">{TITLE}</span></h1>
 	</header>
@@ -13,8 +13,8 @@
 	<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id="download-item-{ID}" class="download-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 		# IF C_CONTROLS #
 			<div class="controls align-right">
-				# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a># ENDIF #
-				# IF C_DELETE #<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a># ENDIF #
+				# IF C_EDIT #<a href="{U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+				# IF C_DELETE #<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 			</div>
 		# ENDIF #
 
@@ -36,11 +36,11 @@
 							# IF C_DISPLAY_DOWNLOAD_LINK #
 								<li class="li-stretch">
 									<a href="{U_DOWNLOAD}" class="button submit">
-										<i class="fa fa-download" aria-hidden></i> {@download}
+										<i class="fa fa-download" aria-hidden="true"></i> {@download}
 									</a>
 									# IF IS_USER_CONNECTED #
 										<a href="{U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-											<i class="fa fa-unlink" aria-hidden></i>
+											<i class="fa fa-unlink" aria-hidden="true"></i>
 										</a>
 									# ENDIF #
 								</li>
