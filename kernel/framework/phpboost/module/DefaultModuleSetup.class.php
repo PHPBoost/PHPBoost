@@ -50,7 +50,7 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
-		$this->insert_data();
+		$this->insert_default_data();
 	}
 
 	/* (non-PHPdoc)
@@ -116,7 +116,41 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 	}
 	
-	private function insert_data() {}
+	protected function insert_default_data()
+	{
+		if ($this->module_id)
+		{
+			$file = new Folder(PATH_TO_ROOT . '/' . $this->module_id . '/lang/' . LangLoader::get_locale() . '/install.php');
+			if ($file->exists())
+			{
+				$lang = LangLoader::get('install', $this->module_id);
+				$this->insert_default_categories($lang);
+				$this->insert_default_items($lang);
+			}
+		}
+	}
+	
+	protected function insert_default_categories($lang)
+	{
+		if (isset($lang['categories']))
+		{
+			foreach($lang['categories'] as $category)
+			{
+				$this->add_category($category['category.name'], isset($category['category.description']) ? $category['category.description'] : '');
+			}
+		}
+	}
+	
+	protected function insert_default_items($lang)
+	{
+		if (isset($lang['items']))
+		{
+			foreach($lang['items'] as $item)
+			{
+				$this->add_item($item['item.title'], $item['item.content'], isset($lang['item.summary']) ? $item['item.summary'] : '');
+			}
+		}
+	}
 	
 	protected function add_category($name, $description = '', $thumbnail = '/templates/default/images/default_category_thumbnail.png', $id_parent = 0, $auth = '', $additional_fields = array())
 	{
