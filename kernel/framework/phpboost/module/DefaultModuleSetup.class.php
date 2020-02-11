@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 02 11
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -30,7 +30,8 @@ class DefaultModuleSetup implements ModuleSetup
 		if ($module_id)
 		{
 			$this->module_id = $module_id;
-			$this->module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+			$module = new Module($module_id, true);
+			$this->module_configuration = $module->get_configuration();
 		}
 	}
 	
@@ -108,7 +109,8 @@ class DefaultModuleSetup implements ModuleSetup
 			
 			if ($this->module_configuration->has_categories())
 			{
-				$category_class_name = CategoriesService::get_categories_manager($this->module_id)->get_categories_cache()->get_category_class();
+				$module_category_class = TextHelper::ucfirst($this->module_id) . 'Category';
+				$category_class_name = (class_exists($module_category_class) && is_subclass_of($module_category_class, 'Category')) ? $module_category_class : ($this->module_configuration->feature_is_enabled('rich_categories') ? CategoriesManager::RICH_CATEGORY_CLASS : CategoriesManager::STANDARD_CATEGORY_CLASS);
 				$category_class_name::create_categories_table($this->module_configuration->get_categories_table_name());
 			}
 		}

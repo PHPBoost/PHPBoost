@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 02 11
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -201,10 +201,10 @@ class ModulesManager
 			return self::PHPBOOST_VERSION_CONFLICT;
 		}
 
+		self::execute_module_installation($module_identifier);
+
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
-
-		self::execute_module_installation($module_identifier);
 
 		// TODO Force initialization ExtensionProviderService for PHPBoost installation
 		AppContext::init_extension_provider_service();
