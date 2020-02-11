@@ -32,7 +32,7 @@
 					<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 				</span>
 				# IF C_COMMENTS_ENABLED #<span class="pinned"><a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> # IF C_COMMENTS #{COMMENTS_NUMBER}# ENDIF # {L_COMMENTS}</a></span># ENDIF #
-				# IF C_NB_VIEW_ENABLED #<span class="pinned" role="Contentinfo" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
+				# IF C_NB_VIEW_ENABLED #<span class="pinned" role="contentinfo" aria-label="{NUMBER_VIEW} {@news.view}"><i class="fa fa-eye" aria-hidden="true"></i> {NUMBER_VIEW}</span># ENDIF #
 			</div>
 			# IF C_CONTROLS #
 				<div class="controls align-right">

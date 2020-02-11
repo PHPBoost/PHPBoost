@@ -55,7 +55,7 @@
 									</span>
 								# ENDIF #
 								# IF news.C_NB_VIEW_ENABLED #
-									<span class="pinned" role="Contentinfo" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
+									<span class="pinned" role="contentinfo" aria-label="{news.NUMBER_VIEW} {@news.view}"><i class="far fa-eye" aria-hidden="true"></i> {news.NUMBER_VIEW}</span>
 								# ENDIF #
 							</div>
 							# IF news.C_CONTROLS #
