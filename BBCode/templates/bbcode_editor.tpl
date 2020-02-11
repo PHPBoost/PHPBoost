@@ -70,7 +70,7 @@
 				</span>
 			</li>
 			<li id="format-color" class="bbcode-elements">
-				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-modal data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # role="button" aria-label="{@bbcode.color}" class="{AUTH_COLOR}">
+				<span class="bbcode-button{AUTH_COLOR}" # IF NOT C_DISABLED_COLOR #data-modal data-target="block-color{FIELD}" onclick="bbcode_color('5', '{FIELD}', 'color');"# ENDIF # role="button" aria-label="{@bbcode.color}">
 					<i class="fa fa-fw fa-tint" aria-hidden="true"></i>
 				</span>
 				<div id="block-color{FIELD}" class="modal modal-animation">
@@ -364,11 +364,11 @@
 									<span class="bbcode-label"> {@bbcode.custom.div} </span>
 									<span class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 								</li>
-								<li id="html-fieldset{AUTH_FIELDSET}" class="li-stretch">
+								<li id="html-fieldset" class="li-stretch{AUTH_FIELDSET}">
 									<span class="bbcode-label">{@bbcode.fieldset}</span>
 									<span class="button" # IF NOT C_DISABLED_FIELDSET #data-modal# ENDIF # data-target="block-fieldset{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
-								<li id="html-abbr{AUTH_ABBR}" class="li-stretch">
+								<li id="html-abbr" class="li-stretch{AUTH_ABBR}">
 									<span class="bbcode-label"> {@bbcode.abbr} </span>
 									<span class="button" # IF NOT C_DISABLED_ABBR #data-modal# ENDIF # data-target="block-abbr{FIELD}"> {@bbcode.tags.choice} </span>
 								</li>
@@ -483,15 +483,15 @@
 						</div>
 						<div class="cell-list">
 							<ul>
-								<li class="li-stretch{AUTH_HIDE}" role="button" aria-label="{@bbcode.hide.all}">
+								<li class="li-stretch{AUTH_HIDE}" aria-label="{@bbcode.hide.all}">
 									<span><i class="far fa-fw fa-eye-slash"></i> {@bbcode.hide}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch{AUTH_MEMBER}" role="button" aria-label="{@bbcode.hide.member}">
+								<li class="li-stretch{AUTH_MEMBER}" aria-label="{@bbcode.hide.member}">
 									<span><i class="fa fa-fw fa-user-friends"></i> {@bbcode.member}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
-								<li class="li-stretch{AUTH_MODERATOR}" role="button" aria-label="{@bbcode.hide.moderator}">
+								<li class="li-stretch{AUTH_MODERATOR}" aria-label="{@bbcode.hide.moderator}">
 									<span><i class="fa fa-fw fa-user-shield"></i> {@bbcode.moderator}</span>
 									<span class="button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 								</li>
