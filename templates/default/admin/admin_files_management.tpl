@@ -110,21 +110,21 @@
 								<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
 									<a href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a>\
 								</div>\
-								<i class="far fa-folder" aria-hidden></i>\
+								<i class="far fa-folder" aria-hidden="true"></i>\
 							</div>\
 							<div class="cell-list">\
 								<ul>\
 									<li class="li-stretch">\
 										<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
 											<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
-												<i class="far fa-edit" aria-hidden></i>\
+												<i class="far fa-edit" aria-hidden="true"></i>\
 											</a>\
 										</span>\
 										<a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
-											<i class="far fa-trash-alt" aria-hidden></i>\
+											<i class="far fa-trash-alt" aria-hidden="true"></i>\
 										</a>\
 										<a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" aria-label="{L_MOVETO}">\
-											<i class="fa fa-share" aria-hidden></i>\
+											<i class="fa fa-share" aria-hidden="true"></i>\
 										</a>\
 									</li>\
 									<span id="img' + xhr_object.responseText + '"></span>\
@@ -369,20 +369,20 @@
 						<div id="members-folder-{folder.ID}" class="cell">
 							<div class="cell-header">
 								<div id="f{folder.ID}" class="cell-name ellipsis"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></div>
-								<i class="# IF folder.C_MEMBER_FOLDER #fa fa-users# ELSE #far fa-folder# ENDIF #" aria-hidden></i>
+								<i class="# IF folder.C_MEMBER_FOLDER #fa fa-users# ELSE #far fa-folder# ENDIF #" aria-hidden="true"></i>
 							</div>
 							# IF NOT folder.C_MEMBERS_FOLDER #
 								<div class="cell-list">
 									<ul>
 										<li class="li-stretch">
 											# IF folder.C_TYPEFOLDER #
-												<a id="fhref{folder.ID}" href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a>
+												<a id="fhref{folder.ID}" href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 											# ENDIF #
 											# IF NOT folder.C_MEMBERS_FOLDER #
-												<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden></i></a>
+												<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
 											# IF folder.C_TYPEFOLDER #
-												<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden></i></a>
+												<a href="admin_files{folder.U_MOVE}" aria-label="{L_MOVETO}"><i class="fa fa-share" aria-hidden="true"></i></a>
 											# ENDIF #
 										</li>
 										<span id="img{folder.ID}"></span>
@@ -402,7 +402,7 @@
 								<span id="fi{personal_files.ID}"></span>
 								# IF NOT personal_files.C_ENABLED_THUMBNAILS #
 									<a href="{personal_files.URL}" {personal_files.LIGHTBOX} aria-label="${Langloader::get_message('see.details', 'common')}">
-										<i class="{personal_files.IMG} fa-lg" aria-hidden></i>
+										<i class="{personal_files.IMG} fa-lg" aria-hidden="true"></i>
 									</a>
 								# ENDIF #
 							</div>
@@ -412,7 +412,7 @@
 										# IF personal_files.C_IMG #
 											<img src="{personal_files.URL}" alt="{personal_files.NAME}">
 											<a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-												<i class="fa fa-eye" aria-hidden></i>
+												<i class="fa fa-eye" aria-hidden="true"></i>
 											</a>
 										# ELSE #
 											<i class="{personal_files.IMG} fa-fw fa-4x"></i>
@@ -434,21 +434,21 @@
 								<ul>
 									<li class="li-stretch">
 										<a id="fihref{personal_files.ID}" href="javascript:display_rename_file('{personal_files.ID}', '{personal_files.NAME_WITH_SLASHES}', '{personal_files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}">
-											<i class="far fa-edit" aria-hidden></i>
+											<i class="far fa-edit" aria-hidden="true"></i>
 										</a>
 										<a href="admin_files.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element">
-											<i class="far fa-trash-alt" aria-hidden></i>
+											<i class="far fa-trash-alt" aria-hidden="true"></i>
 										</a>
 										<a href="admin_files{personal_files.U_MOVE}" aria-label="{L_MOVETO}">
-											<i class="fa fa-share" aria-hidden></i>
+											<i class="fa fa-share" aria-hidden="true"></i>
 										</a>
 										# IF personal_files.C_IS_PUBLIC_FILE #
 											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 0);return false;" aria-label="{L_CHANGE_PERSONAL}">
-												<i id="status_{personal_files.ID}" class="fas fa-users" aria-hidden></i>
+												<i id="status_{personal_files.ID}" class="fas fa-users" aria-hidden="true"></i>
 											</a>
 										# ELSE #
 											<a href="#" id="status_function_{personal_files.ID}" onclick="change_status({personal_files.ID}, 1);return false;" aria-label="{L_CHANGE_PUBLIC}">
-												<i id="status_{personal_files.ID}" class="fas fa-user-shield" aria-hidden></i>
+												<i id="status_{personal_files.ID}" class="fas fa-user-shield" aria-hidden="true"></i>
 											</a>
 										# ENDIF #
 									</li>

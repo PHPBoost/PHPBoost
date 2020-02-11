@@ -89,7 +89,7 @@
 					<fieldset class="fieldset-submit">
 						<input type="hidden" id="search-in" name="search_in" value="all">
 						<input type="hidden" name="query_mode" value="0">
-						<button type="submit" name="search_submit" value="{L_SEARCH}" class="button submit"><i class="fa fa-search" aria-hidden></i> {L_SEARCH}</button>
+						<button type="submit" name="search_submit" value="{L_SEARCH}" class="button submit"><i class="fa fa-search" aria-hidden="true"></i> {L_SEARCH}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>

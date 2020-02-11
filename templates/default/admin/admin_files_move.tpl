@@ -2,7 +2,7 @@
 
 		<nav id="admin-quick-menu">
 			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
-				<i class="fa fa-bars" aria-hidden></i> {L_FILES_MANAGEMENT}
+				<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 			</a>
 			<ul>
 				<li>
@@ -19,7 +19,7 @@
 				<legend>{L_FILES_MANAGEMENT}</legend>
 				<div class="fieldset-inset">
 					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="fa fa-home" aria-hidden></i> {L_ROOT}</a>{URL}
+						<a href="admin_files.php"><i class="fa fa-home" aria-hidden="true"></i> {L_ROOT}</a>{URL}
 					</div>
 
 					# INCLUDE message_helper #
@@ -29,7 +29,7 @@
 								<div class="cell">
 									<div class="cell-body no-style">
 										<div class="cell-content">
-											<i class="fa fa-folder" aria-hidden></i> {folder.NAME}
+											<i class="fa fa-folder" aria-hidden="true"></i> {folder.NAME}
 										</div>
 									</div>
 								</div>
@@ -40,7 +40,7 @@
 									<div class="cell-header">
 										<div class="cell-name">{file.NAME}</div>
 										# IF NOT file.C_ENABLED_THUMBNAILS #
-											<i class="{file.FILE_ICON}" aria-hidden></i>
+											<i class="{file.FILE_ICON}" aria-hidden="true"></i>
 										# ENDIF #
 									</div>
 									# IF file.C_ENABLED_THUMBNAILS #
@@ -49,7 +49,7 @@
 												# IF file.C_REAL_IMG #
 													<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
 												# ELSE #
-													<i class="{file.FILE_ICON} fa-4x" aria-hidden></i>
+													<i class="{file.FILE_ICON} fa-4x" aria-hidden="true"></i>
 												# ENDIF #
 											</div>
 										</div>
@@ -68,7 +68,7 @@
 							<div class="cell">
 								<div class="cell-infos no-style">
 									<span class="text-strong">{L_MOVE_TO}</span>
-									<i class="fa fa-arrow-right" aria-hidden></i>
+									<i class="fa fa-arrow-right" aria-hidden="true"></i>
 								</div>
 							</div>
 							<div class="cell">
@@ -79,7 +79,7 @@
 											var path = '{PATH_TO_ROOT}/templates/{THEME}';
 											var selected_cat = {SELECTED_CAT};
 										</script>
-										<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
+										<span><a href="javascript:select_cat(0);"><i class="fa fa-home" aria-hidden="true"></i> <span id="class-0" class="{CAT_0}">{L_ROOT}</span></a></span>
 										{FOLDERS}
 									</div>
 								</div>

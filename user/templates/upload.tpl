@@ -165,21 +165,21 @@
 							<div id="f' + xhr_object.responseText + '" class="cell-name ellipsis">\
 								<a href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a>\
 							</div>\
-							<i class="fa fa-folder" aria-hidden></i>\
+							<i class="fa fa-folder" aria-hidden="true"></i>\
 						</div>\
 						<div class="cell-list">\
 							<ul>\
 								<li class="li-stretch">\
 									<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
 										<a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
-											<i class="far fa-edit" aria-hidden></i>\
+											<i class="far fa-edit" aria-hidden="true"></i>\
 										</a>\
 									</span>\
 									<a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" data-confirmation="delete-element" aria-label="' + ${escapejs(LangLoader::get_message('delete', 'common'))} + '">\
-										<i class="far fa-trash-alt" aria-hidden></i>\
+										<i class="far fa-trash-alt" aria-hidden="true"></i>\
 									</a>\
 									<a href="upload.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" aria-label="{L_MOVETO}">\
-										<i class="fa fa-share" aria-hidden></i>\
+										<i class="fa fa-share" aria-hidden="true"></i>\
 									</a>\
 								</li>\
 								<span id="img' + xhr_object.responseText + '"></span>\
@@ -472,7 +472,7 @@
 		                            	<span class="change-name" id="fi{personal_files.ID}"></span>
 										# IF NOT personal_files.C_ENABLED_THUMBNAILS #
 				                            <a href="{personal_files.URL}" {personal_files.LIGHTBOX} aria-label="${Langloader::get_message('see.details', 'common')}">
-				                                <i class="far {personal_files.IMG}" aria-hidden> </i>
+				                                <i class="far {personal_files.IMG}" aria-hidden="true"> </i>
 				                            </a>
 										# ENDIF #
 									</div>
@@ -482,7 +482,7 @@
 											 	# IF personal_files.C_IMG #
 											 		<img src="{personal_files.URL}" alt="{personal_files.NAME}">
 						                            <a class="cell-thumbnail-caption" href="{personal_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">
-														<i class="fa fa-eye" aria-hidden></i>
+														<i class="fa fa-eye" aria-hidden="true"></i>
 						                            </a>
 					                            # ELSE #
 					                                <i class="far {personal_files.IMG} fa-4x"></i>

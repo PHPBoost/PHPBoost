@@ -28,7 +28,7 @@
 						<div class="cell-header">
 							<div class="cell-name">{file.NAME}</div>
 							# IF NOT file.C_ENABLED_THUMBNAILS #
-								<i class="{file.FILE_ICON}" aria-hidden></i>
+								<i class="{file.FILE_ICON}" aria-hidden="true"></i>
 							# ENDIF #
 						</div>
 						# IF file.C_ENABLED_THUMBNAILS #
@@ -37,7 +37,7 @@
 									# IF file.C_REAL_IMG #
 										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="{file.NAME}" />
 									# ELSE #
-										<i class="{file.FILE_ICON} fa-4x" aria-hidden></i>
+										<i class="{file.FILE_ICON} fa-4x" aria-hidden="true"></i>
 									# ENDIF #
 								</div>
 							</div>

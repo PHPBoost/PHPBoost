@@ -1,4 +1,4 @@
-			<section id="module-calendar-events">
+<section id="module-calendar-events">
 				<header>
 					<h2 class="align-center"># IF C_PENDING_PAGE #{@calendar.pending.events}# ELSE #{@calendar.events.of} {DATE}# ENDIF #</h2>
 				</header>
@@ -43,7 +43,7 @@
 									# IF event.C_HAS_PICTURE #
 										<div class="cell-thumbnail">
 											<img src="{event.U_PICTURE}" alt="{event.TITLE}" />
-											<a class="cell-thumbnail-caption" href="{event.U_ITEM}" itemprop="thumbnailUrl" aria-label="{event.TITLE}"><i class="far fa-eye" aria-hidden></i></a>
+											<a class="cell-thumbnail-caption" href="{event.U_ITEM}" itemprop="thumbnailUrl" aria-label="{event.TITLE}"><i class="far fa-eye" aria-hidden="true"></i></a>
 										</div>
 									# ENDIF #
 									<div class="cell-content" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">

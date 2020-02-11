@@ -1,9 +1,9 @@
 <section id="module-{MODULE_ID}">
 	<header>
 		<div class="align-right controls">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a># ENDIF #
+			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
 			{MODULE_NAME}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #
-			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a># ENDIF #
+			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
 	</header>
@@ -19,11 +19,11 @@
 					# IF C_ENABLED_AUTHOR #
 						# IF C_AUTHOR_DISPLAYED #
 							# IF C_AUTHOR_CUSTOM_NAME #
-								<span class="pinned"><i class="far fa-user" aria-hidden></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+								<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 							# ELSE #
 								# IF NOT C_ID_CARD #
 									<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-										<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+										<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 									</span>
 								# ENDIF #
 							# ENDIF #
@@ -31,7 +31,7 @@
 					# ENDIF #
 					# IF C_ENABLED_DATE #
 						<span class="pinned">
-							<i class="far fa-calendar-alt" aria-hidden></i>
+							<i class="far fa-calendar-alt" aria-hidden="true"></i>
 							<time datetime="# IF C_DIFFERED #{DIFFERED_START_DATE_ISO8601}# ELSE #{DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 								# IF C_DIFFERED #{DIFFERED_START_DATE}# ELSE #{DATE}# ENDIF #
 							</time>
@@ -39,12 +39,12 @@
 					# ENDIF #
 					# IF C_ENABLED_CATEGORY #
 						<span class="pinned">
-							<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {CATEGORY_NAME}</a>
+							<a itemprop="about" href="{U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {CATEGORY_NAME}</a>
 						</span>
 					# ENDIF #
 					# IF C_ENABLED_VIEWS #
 						<span class="pinned" role="contentinfo" aria-label="{VIEWS_NUMBER} {@views}">
-							<i class="fa fa-eye" aria-hidden></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+							<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
 						</span>
 					# ENDIF #
 					# IF C_ENABLED_NOTATION #
@@ -54,7 +54,7 @@
 					# ENDIF #
 					# IF C_ENABLED_COMMENTS #
 						<span class="pinned">
-							<a href="#comments-list"><i class="fa fa-comments" aria-hidden></i> {COMMENTS_LABEL}</a>
+							<a href="#comments-list"><i class="fa fa-comments" aria-hidden="true"></i> {COMMENTS_LABEL}</a>
 						</span>
 					# ENDIF #
 				</div>
@@ -120,11 +120,11 @@
 									<li class="li-stretch">
 										<span class="text-strong">${TextHelper::ucfirst(@author)} : </span>
 										# IF C_AUTHOR_CUSTOM_NAME #
-											<span class="pinned"><i class="far fa-user" aria-hidden></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
+											<span class="pinned"><i class="far fa-user" aria-hidden="true"></i> <span class="custom-author">{AUTHOR_CUSTOM_NAME}</span></span>
 										# ELSE #
 											# IF NOT C_ID_CARD #
 												<span class="pinned {AUTHOR_LEVEL_CLASS}"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}; border-color:{AUTHOR_GROUP_COLOR}" # ENDIF #>
-													<i class="far fa-user" aria-hidden></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
+													<i class="far fa-user" aria-hidden="true"></i> # IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="{AUTHOR_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #<span class="visitor">{PSEUDO}</span># ENDIF #
 												</span>
 											# ENDIF #
 										# ENDIF #
@@ -183,7 +183,7 @@
 
 		# IF C_SOURCES #
 			<aside class="sources-container">
-				<span class="text-strong"><i class="fa fa-map-signs" aria-hidden></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
+				<span class="text-strong"><i class="fa fa-map-signs" aria-hidden="true"></i> ${LangLoader::get_message('form.sources', 'common')}</span> :
 				# START sources #
 					<a class="pinned question" href="{sources.URL}" itemprop="isBasedOnUrl" rel="nofollow">{sources.NAME}</a>
 					# IF sources.C_SEPARATOR ## ENDIF #
@@ -193,7 +193,7 @@
 
 		# IF C_KEYWORDS #
 			<aside class="tags-container">
-				<span class="text-strong"><i class="fa fa-tags" aria-hidden></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
+				<span class="text-strong"><i class="fa fa-tags" aria-hidden="true"></i> ${LangLoader::get_message('form.keywords', 'common')}</span> :
 				# START keywords #
 					<a class="pinned question" href="{keywords.URL}" itemprop="keywords" rel="tag">{keywords.NAME}</a>
 				# END keywords #

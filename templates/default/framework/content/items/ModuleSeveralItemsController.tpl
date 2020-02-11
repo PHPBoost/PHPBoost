@@ -1,8 +1,8 @@
 <section id="module-{MODULE_ID}">
 	<header>
 		<div class="align-right controls">
-			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden></i></a># ENDIF #
-			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden></i></a># ENDIF ## ENDIF #
+			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
+			# IF C_CATEGORY ## IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF ## ENDIF #
 		</div>
 		<h1>
 			# IF C_PENDING #
@@ -104,7 +104,7 @@
 							# ENDIF #
 							# IF C_ENABLED_CATEGORY #
 								<td>
-									<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {items.CATEGORY_NAME}</a>
+									<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 								</td>
 							# ENDIF #
 							# IF C_ENABLED_VIEWS #
@@ -134,8 +134,8 @@
 							# ENDIF #
 							# IF items.C_CONTROLS #
 								<td>
-									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a>
-									<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a>
+									<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+									<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 								</td>
 							# ENDIF #
 						</tr>
@@ -182,11 +182,11 @@
 									# ENDIF #
 									# IF C_ENABLED_CATEGORY #
 										<span class="pinned">
-											<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden></i> {items.CATEGORY_NAME}</a>
+											<a itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_VIEWS #
-										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden></i> {items.VIEWS_NUMBER}</span>
+										<span class="pinned" role="contentinfo" aria-label="{items.VIEWS_NUMBER} {@views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 									# ENDIF #
 									# IF C_ENABLED_VISITS #
 										<span class="pinned">
@@ -203,15 +203,15 @@
 									# ENDIF #
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
-											<i class="fa fa-comments" aria-hidden></i>
+											<i class="fa fa-comments" aria-hidden="true"></i>
 											{items.COMMENTS_NUMBER} # IF items.C_SEVERAL_COMMENTS #${TextHelper::lcfirst(LangLoader::get_message('comments', 'comments-common'))}# ELSE #${TextHelper::lcfirst(LangLoader::get_message('comment', 'comments-common'))}# ENDIF #
 										</span>
 									# ENDIF #
 								</div>
 								# IF items.C_CONTROLS #
 									<div class="controls align-right">
-										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden></i></a>
-										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden></i></a>
+										<a href="{items.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+										<a href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 									</div>
 								# ENDIF #
 							</div>
@@ -229,11 +229,11 @@
 										<span></span>
 										<span>
 											<a href="{items.U_VISIT}" class="button submit small">
-												<i class="fa fa-globe" aria-hidden></i> {@go.website}
+												<i class="fa fa-globe" aria-hidden="true"></i> {@go.website}
 											</a>
 											# IF IS_USER_CONNECTED #
 												<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-													<i class="fa fa-unlink" aria-hidden></i>
+													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
 										</span>
@@ -244,11 +244,11 @@
 										<span></span>
 										<span>
 											<a href="{items.U_DOWNLOAD}" class="button submit small">
-												<i class="fa fa-dowload" aria-hidden></i> {@go.download}
+												<i class="fa fa-dowload" aria-hidden="true"></i> {@go.download}
 											</a>
 											# IF IS_USER_CONNECTED #
 												<a href="{items.U_DEADLINK}" data-confirmation="${LangLoader::get_message('deadlink.confirmation', 'common')}" class="button bgc-full warning small" aria-label="${LangLoader::get_message('deadlink', 'common')}">
-													<i class="fa fa-unlink" aria-hidden></i>
+													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
 										</span>
