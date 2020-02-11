@@ -29,38 +29,48 @@
 					<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
 			# ENDIF #
 					<ul class="connect-container">
+						<li>
 						<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-							<li>
-								<label for="login">
-									<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
-								</label>
-							</li>
-							<li>
-								<label for="password">
-									<input type="password" id="password" name="password" placeholder="{@password}">
-								</label>
-							</li>
-							<li class="align-center">
-								<label class="checkbox" for="autoconnect">
-									<span>{@autoconnect}</span>
-									<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
-								</label>
-							</li>
-							<li class="align-center">
-								<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
-								<input type="hidden" name="token" value="{TOKEN}">
-								<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
-							</li>
+							<ul>
+								<li>
+									<label for="login">
+										<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
+									</label>
+								</li>
+								<li>
+									<label for="password">
+										<input type="password" id="password" name="password" placeholder="{@password}">
+									</label>
+								</li>
+								<li class="align-center">
+									<label class="checkbox" for="autoconnect">
+										<span>{@autoconnect}</span>
+										<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
+									</label>
+								</li>
+								<li class="align-center">
+									<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+									<input type="hidden" name="token" value="{TOKEN}">
+									<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
+								</li>
+							</ul>
 						</form>
+
+						</li>
 
 						# IF C_DISPLAY_REGISTER_CONTAINER #
 							# IF C_USER_REGISTER #
+							<li>
 								<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+									<ul>
 									<li class="align-center">
 										<button type="submit" name="register" value="true" class="button submit">{@register}</button>
 									</li>
 									<input type="hidden" name="token" value="{TOKEN}">
+
+									</ul>
 								</form>
+							</li>
 							# ENDIF #
 							<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
 								# START external_auth #
