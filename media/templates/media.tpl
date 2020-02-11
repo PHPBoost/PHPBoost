@@ -23,7 +23,7 @@
 							<h5 class="cell-name" itemprop="about">
 								<a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
 							</h5>
-							<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} {sub_categories_list.ITEMS_TEXT}">{sub_categories_list.ITEMS_NUMBER}</span>
+							<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.ITEMS_NUMBER} {sub_categories_list.ITEMS_TEXT}">{sub_categories_list.ITEMS_NUMBER}</span>
 						</div>
 							# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
 						<div class="cell-body">
@@ -54,7 +54,7 @@
 					<div class="horizontal-fieldset-element">
 						<div class="form-element">
 							<div class="form-field form-field-select">
-								<select class="select-to-list " name="sort" id="sort" class="nav" onchange="change_order()">
+								<select class="select-to-list " name="sort" id="sort" onchange="change_order()">
 									<option data-option-icon="fa fa-sort-alpha-up" value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
 									<option data-option-icon="far fa-calendar-alt" value="date"{SELECTED_DATE}>{L_DATE}</option>
 									<option data-option-icon="fa fa-eye" value="nbr"{SELECTED_NBR}>{L_NBR}</option>
@@ -67,7 +67,7 @@
 					<div class="horizontal-fieldset-element">
 						<div class="form-element">
 							<div class="form-field form-field-select">
-								<select class="select-to-list " name="mode" id="mode" class="nav" onchange="change_order()">
+								<select class="select-to-list " name="mode" id="mode" onchange="change_order()">
 									<option data-option-icon="fa fa-arrow-up" value="asc"{SELECTED_ASC}>{L_ASC}</option>
 									<option data-option-icon="fa fa-arrow-down" value="desc"{SELECTED_DESC}>{L_DESC}</option>
 								</select>
@@ -154,7 +154,7 @@
 					# ENDIF #
 					<div class="spacer"></div>
 					# IF C_DISPLAY_NOTATION #
-						<span class="pinned">{KERNEL_NOTATION}</span>
+						<div class="pinned">{KERNEL_NOTATION}</div>
 					# ENDIF #
 				</div>
 				# IF C_CONTROLS #

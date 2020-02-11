@@ -202,7 +202,7 @@ function _typeof(n) {
                                         _.each(e.items, function(n, e) {
                                             var t = e.$content,
                                                 a = t.find("a").addBack("a"),
-                                                o = a.length ? a.clone(!0, !0).addClass("nav-item") : _('<span class="nav-item">').append(t.clone(!0, !0)).on("click", G);
+                                                o = a.length ? a.clone(!0, !0).addClass("nav-item") : _('<div class="nav-item">').append(t.clone(!0, !0)).on("click", G);
                                             a.length && o.on("click", function(n) {
                                                 n.stopPropagation(), a[0].click()
                                             }), "#" === o.attr("href") && o.on("click", function(n) {

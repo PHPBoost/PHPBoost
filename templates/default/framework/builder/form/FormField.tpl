@@ -10,7 +10,7 @@
 
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required# ENDIF #">
 		# START fieldelements #
-		{fieldelements.ELEMENT}
+			{fieldelements.ELEMENT}
 		# END fieldelements #
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>

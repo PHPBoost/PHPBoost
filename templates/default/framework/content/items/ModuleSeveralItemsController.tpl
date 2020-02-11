@@ -170,7 +170,7 @@
 									# ENDIF #
 									# IF C_ENABLED_DATE #
 										<span class="pinned">
-											<i class="far fa-calendar-alt"></i>
+											<i class="far fa-calendar-alt" aria-hidden="true"></i>
 											<time datetime="# IF items.C_DIFFERED #{items.PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
 												# IF items.C_DIFFERED #
 													{items.PUBLISHING_START_DATE}
