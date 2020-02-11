@@ -15,7 +15,7 @@
 				# ENDIF #
 	            <span>{TITLE}</span>
           	</a>
-			<nav role="navigation" id="pushmenu-{ID}" class="pushnav# IF C_MENU_HORIZONTAL # # ENDIF ## IF C_MENU_VERTICAL # # ENDIF ## IF C_MENU_STATIC # # ENDIF ## IF C_MENU_LEFT # # ENDIF ## IF C_MENU_RIGHT # # ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
+			<nav id="pushmenu-{ID}" class="pushnav# IF C_MENU_HORIZONTAL # # ENDIF ## IF C_MENU_VERTICAL # # ENDIF ## IF C_MENU_STATIC # # ENDIF ## IF C_MENU_LEFT # # ENDIF ## IF C_MENU_RIGHT # # ENDIF ## IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
 				<ul class=""># START elements #{elements.DISPLAY}# END elements #</ul>
 			</nav>
 		# IF C_MENU_CONTAINER # <!-- Close mini-module-container -->

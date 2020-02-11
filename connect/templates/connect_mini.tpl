@@ -28,53 +28,53 @@
 				<div class="cell-list cell-list-inline connect-contents">
 					<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
 			# ENDIF #
-				<ul class="connect-container">
-					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-						<li>
-							<label for="login">
-								<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
-							</label>
-						</li>
-						<li>
-							<label for="password">
-								<input type="password" id="password" name="password" placeholder="{@password}">
-							</label>
-						</li>
-						<li class="align-center">
-							<label class="checkbox" for="autoconnect">
-								<span>{@autoconnect}</span>
-								<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
-							</label>
-						</li>
-						<li class="align-center">
-							<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
-							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
-						</li>
-					</form>
-
-					# IF C_DISPLAY_REGISTER_CONTAINER #
-						# IF C_USER_REGISTER #
-							<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-								<li class="align-center">
-									<button type="submit" name="register" value="true" class="button submit">{@register}</button>
-								</li>
+					<ul class="connect-container">
+						<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+							<li>
+								<label for="login">
+									<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
+								</label>
+							</li>
+							<li>
+								<label for="password">
+									<input type="password" id="password" name="password" placeholder="{@password}">
+								</label>
+							</li>
+							<li class="align-center">
+								<label class="checkbox" for="autoconnect">
+									<span>{@autoconnect}</span>
+									<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
+								</label>
+							</li>
+							<li class="align-center">
+								<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
 								<input type="hidden" name="token" value="{TOKEN}">
-							</form>
+								<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
+							</li>
+						</form>
+
+						# IF C_DISPLAY_REGISTER_CONTAINER #
+							# IF C_USER_REGISTER #
+								<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
+									<li class="align-center">
+										<button type="submit" name="register" value="true" class="button submit">{@register}</button>
+									</li>
+									<input type="hidden" name="token" value="{TOKEN}">
+								</form>
+							# ENDIF #
+							<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
+								# START external_auth #
+									<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
+								# END external_auth #
+							</li>
 						# ENDIF #
-						<li# IF C_VERTICAL # class="li-stretch"# ENDIF #>
-							# START external_auth #
-								<a class="{external_auth.CSS_CLASS}" href="{external_auth.U_CONNECT}" aria-label="{external_auth.NAME}">{external_auth.IMAGE_HTML}</a>
-							# END external_auth #
+						<li class="align-center">
+							<a class="button small" href="${relative_url(UserUrlBuilder::forget_password())}">
+								<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
+							</a>
 						</li>
-					# ENDIF #
-					<li class="align-center">
-						<a class="button small" href="${relative_url(UserUrlBuilder::forget_password())}">
-							<i class="fa fa-question-circle" aria-hidden="true"></i> <span>${LangLoader::get_message('forget-password', 'user-common')}</span>
-						</a>
-					</li>
+					</ul>
 				</div>
-			</ul>
 
 		# ELSE # <!-- User Connected -->
 
