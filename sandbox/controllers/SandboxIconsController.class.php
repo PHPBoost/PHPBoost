@@ -12,7 +12,9 @@
 class SandboxIconsController extends ModuleController
 {
 	private $view;
+	private $icons_lang;
 	private $lang;
+	private $css_lang;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -28,8 +30,12 @@ class SandboxIconsController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->icons_lang = LangLoader::get('icons', 'sandbox');
+		$this->css_lang = LangLoader::get('css', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->view->add_lang($this->icons_lang);
+		$this->view->add_lang($this->css_lang);
 	}
 
 	private function build_view()

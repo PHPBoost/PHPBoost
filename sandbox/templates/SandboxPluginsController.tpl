@@ -118,4 +118,3 @@
 	<footer></footer>
 </section>
 <script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
-<script src="{PATH_TO_ROOT}/sandbox/templates/js/prism.js"></script>

@@ -67,10 +67,8 @@
 
 			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
 				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
-				<div class="formatter-content formatter-code">
-					<div class="formatter-content">
-						{PRE_ACCORDION_BASIC}
-					</div>
+				<div class="formatter-content">
+					{PRE_ACCORDION_BASIC}
 				</div>
 			</div>
 		</div>
@@ -206,4 +204,4 @@
 	<footer></footer>
 </section>
 <script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
-<script src="{PATH_TO_ROOT}/sandbox/templates/js/prism.js"></script>
+<script src=""></script>

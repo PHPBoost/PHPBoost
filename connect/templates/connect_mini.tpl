@@ -63,11 +63,10 @@
 							<li>
 								<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
 									<ul>
-									<li class="align-center">
-										<button type="submit" name="register" value="true" class="button submit">{@register}</button>
-									</li>
-									<input type="hidden" name="token" value="{TOKEN}">
-
+										<li class="align-center">
+											<button type="submit" name="register" value="true" class="button submit">{@register}</button>
+											<input type="hidden" name="token" value="{TOKEN}">
+										</li>
 									</ul>
 								</form>
 							</li>

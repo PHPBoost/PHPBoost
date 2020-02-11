@@ -75,36 +75,36 @@ $lang['wiki.contents'] = 'Wiki content';
 
 // --- Icônes Font-Awesome
 
-$lang['iconfa.sample'] = 'Some examples';
-$lang['iconfa.social'] = 'Social networks';
-$lang['iconfa.screen'] = 'Screen';
-$lang['iconfa.icon'] = 'Icon';
-$lang['iconfa.name'] = 'Name';
-$lang['iconfa.code'] = 'Code';
-$lang['iconfa.list'] = 'The complete list of icons and their own code : ';
+$lang['font.icons.sample'] = 'Some examples';
+$lang['font.icons.social'] = 'Social networks';
+$lang['font.icons.screen'] = 'Screen';
+$lang['font.icons.icon'] = 'Icon';
+$lang['font.icons.name'] = 'Name';
+$lang['font.icons.code'] = 'Code';
+$lang['font.icons.list'] = 'The complete list of icons and their own code : ';
 
-$lang['iconfa.howto'] = 'How to ?';
-$lang['iconfa.howto.explain'] = 'Font-Awesome is an icon-font, a font to simply display icons';
-$lang['iconfa.howto.update'] = 'It\'s integrated since the 4.1 PHPBoost version. Each update of Font-Awesome is integrated in the next PHPBoost update..';
-$lang['iconfa.howto.html'] = 'Html way';
-$lang['iconfa.howto.html.class'] = 'Set the icon name as a class : ';
-$lang['iconfa.howto.html.class.result.i'] = 'That gives the "edit" icon following by : ';
-$lang['iconfa.howto.html.class.result.a'] = 'That gives the link with ths "globe" icon first : ';
-$lang['iconfa.howto.html.class.result.all'] = 'You can play with all html tags.';
-$lang['iconfa.howto.css'] = 'CSS way';
-$lang['iconfa.howto.css.class'] = 'Set your class, then the icon code as content of ::before or ::after of the class :';
-$lang['iconfa.howto.css.css.code'] = 'CSS :';
-$lang['iconfa.howto.css.html.code'] = 'HTML :';
-$lang['iconfa.howto.bbcode'] = 'BBCode way';
-$lang['iconfa.howto.bbcode.some.icons'] = 'The icons mainly used in PHPBoost are already setted un the bbcode menu bar. You can select them by clicking on the flag icon menu:';
-$lang['iconfa.howto.bbcode.tag'] = 'If the icon you want is not in the list, you can use the [fa] tag like this:';
-$lang['iconfa.howto.bbcode.icon.name'] = '[fa]Icon name[/fa]';
-$lang['iconfa.howto.bbcode.icon.test'] = 'E.g., [fa]cubes[/fa] gives:';
-$lang['iconfa.howto.bbcode.icon.variants'] = 'Variants (see next paragraph) are usable with the BBCode and are explained in the PHPBoost documentation.';
-$lang['iconfa.howto.variants'] = 'Variants';
-$lang['iconfa.howto.variants.explain'] = 'Font-Awesome is setted with some variants like sizing the icon, animation, rotation, stacking and somelse.';
-$lang['iconfa.howto.variants.list'] = 'All variants are explained here : ';
-$lang['iconfa.howto.variants.spinner'] = 'That gives the "spinner" icon, setted in rotation and twice bigger than its initial size : ';
+$lang['font.icons.howto'] = 'How to ?';
+$lang['font.icons.howto.explain'] = 'Font-Awesome is an icon-font, a font to simply display icons';
+$lang['font.icons.howto.update'] = 'It\'s integrated since the 4.1 PHPBoost version. Each update of Font-Awesome is integrated in the next PHPBoost update..';
+$lang['font.icons.howto.html'] = 'Html way';
+$lang['font.icons.howto.html.class'] = 'Set the icon name as a class : ';
+$lang['font.icons.howto.html.class.result.i'] = 'That gives the "edit" icon following by : ';
+$lang['font.icons.howto.html.class.result.a'] = 'That gives the link with ths "globe" icon first : ';
+$lang['font.icons.howto.html.class.result.all'] = 'You can play with all html tags.';
+$lang['font.icons.howto.css'] = 'CSS way';
+$lang['font.icons.howto.css.class'] = 'Set your class, then the icon code as content of ::before or ::after of the class :';
+$lang['font.icons.howto.css.css.code'] = 'CSS :';
+$lang['font.icons.howto.css.html.code'] = 'HTML :';
+$lang['font.icons.howto.bbcode'] = 'BBCode way';
+$lang['font.icons.howto.bbcode.some.icons'] = 'The icons mainly used in PHPBoost are already setted un the bbcode menu bar. You can select them by clicking on the flag icon menu:';
+$lang['font.icons.howto.bbcode.tag'] = 'If the icon you want is not in the list, you can use the [fa] tag like this:';
+$lang['font.icons.howto.bbcode.icon.name'] = '[fa]Icon name[/fa]';
+$lang['font.icons.howto.bbcode.icon.test'] = 'E.g., [fa]cubes[/fa] gives:';
+$lang['font.icons.howto.bbcode.icon.variants'] = 'Variants (see next paragraph) are usable with the BBCode and are explained in the PHPBoost documentation.';
+$lang['font.icons.howto.variants'] = 'Variants';
+$lang['font.icons.howto.variants.explain'] = 'Font-Awesome is setted with some variants like sizing the icon, animation, rotation, stacking and somelse.';
+$lang['font.icons.howto.variants.list'] = 'All variants are explained here : ';
+$lang['font.icons.howto.variants.spinner'] = 'That gives the "spinner" icon, setted in rotation and twice bigger than its initial size : ';
 
 // --- Cssmenu
 

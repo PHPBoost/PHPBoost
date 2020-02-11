@@ -22,6 +22,9 @@
 					<a class="summary-link" href="#sandboxForm_checkbox_field">{@form.title.radio}</a>
 				</li>
 				<li>
+					<a class="summary-link" href="#sandboxForm_all_buttons_field">{@form.buttons}</a>
+				</li>
+				<li>
 					<a class="summary-link" href="#sandboxForm_select_field">{@form.title.select}</a>
 				</li>
 				<li>

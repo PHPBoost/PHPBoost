@@ -242,8 +242,8 @@ class SandboxFormController extends ModuleController
 		$fieldset->add_field(new FormFieldSpacer('03_separator', 'FormFieldSpacer', array('class' => 'form-field-css-class')));
 
 		// BUTTONS
-		$fieldset->add_field(new FormFieldSubTitle('all_buttons', 'All Buttons', ''));
-		$fieldset->add_field(new FormFieldSpacer('all_buttons_explain', 'All buttons must have the <span class="pinned notice">.button</span> class.'));
+		$fieldset->add_field(new FormFieldSubTitle('all_buttons', $this->lang['form.buttons'], ''));
+		$fieldset->add_field(new FormFieldSpacer('all_buttons_explain', $this->lang['form.all.buttons']));
 		// Buttons
 		$fieldset->add_element(new FormButtonButton('.reset', '', '', 'reset-button'));
 		$fieldset->add_element(new FormButtonButton('.button', '', '', ''));
