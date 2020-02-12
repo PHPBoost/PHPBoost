@@ -63,3 +63,7 @@ td[class*="calendar-"]:last-child {
 td.calendar-week {
 	padding: 0.456em;
 }
+
+#calendar .calendar-event[style] a {
+	mix-blend-mode: difference;
+}
