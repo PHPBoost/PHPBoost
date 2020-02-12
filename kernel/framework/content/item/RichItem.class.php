@@ -66,7 +66,7 @@ class RichItem extends Item
 
 	public function set_thumbnail(Url $url)
 	{
-		$this->set_additional_property('thumbnail', $url->relative());
+		$this->set_additional_property('thumbnail', $url);
 	}
 
 	public function get_author_custom_name()
