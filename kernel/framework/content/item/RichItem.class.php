@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 12
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
@@ -97,6 +97,7 @@ class RichItem extends Item
 
 	protected function kernel_default_properties()
 	{
+		$this->set_summary('');
 		$this->set_thumbnail($this->get_default_thumbnail());
 		$this->set_author_custom_name('');
 		$this->set_views_number(0);
