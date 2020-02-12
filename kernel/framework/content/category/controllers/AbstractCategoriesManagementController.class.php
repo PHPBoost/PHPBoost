@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 12
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -45,9 +45,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$number_categories = count($categories);
 
 		$this->tpl->put_all(array(
-			'C_NO_CATEGORIES' => $number_categories <= 1,
+			'C_NO_CATEGORIES'          => $number_categories <= 1,
 			'C_MORE_THAN_ONE_CATEGORY' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
-			'FIELDSET_TITLE' => $this->get_title()
+			'FIELDSET_TITLE'           => $this->get_title()
 		));
 
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
@@ -65,19 +65,27 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 					$description = FormatingHelper::second_parse($category->get_description());
 					$description = TextHelper::strlen($description) > 250 ? TextHelper::cut_string(@strip_tags($description, '<br><br/>'), 250) . '...' : $description;
 				}
+				
+				$color = '';
+				if (method_exists($category, 'get_color'))
+				{
+					$color = $category->get_color();
+				}
 
 				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
-					'C_DESCRIPTION' => !empty($description),
-					'C_ALLOWED_TO_HAVE_CHILDS' => $category->is_allowed_to_have_childs(),
-					'U_DISPLAY' => $this->get_display_category_url($category)->rel(),
-					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
-					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
-					'ID' => $id,
-					'NAME' => $category->get_name(),
-					'DESCRIPTION' => $description,
+					'C_DESCRIPTION'               => !empty($description),
+					'C_COLOR'                     => !empty($color),
+					'C_ALLOWED_TO_HAVE_CHILDS'    => $category->is_allowed_to_have_childs(),
+					'U_DISPLAY'                   => $this->get_display_category_url($category)->rel(),
+					'U_EDIT'                      => $this->get_edit_category_url($category)->rel(),
+					'U_DELETE'                    => $this->get_delete_category_url($category)->rel(),
+					'ID'                          => $id,
+					'NAME'                        => $category->get_name(),
+					'DESCRIPTION'                 => $description,
+					'COLOR'                       => $color,
 					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), array('name' => $category->get_name()))
 				));
 
@@ -98,12 +106,11 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 			foreach ($categories as $position => $tree)
 			{
 				$id = $tree->id;
-				$children = $tree->children[0];
 				$category = $categories_cache->get_category($id);
 
-				self::get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
+				self::get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position + 1));
 
-				$this->update_children_positions($children, $category->get_id());
+				$this->update_children_positions($tree->children[0], $category->get_id());
 			}
 
 			$categories_cache::invalidate();
@@ -121,12 +128,11 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 				if (is_int($position))
 				{
 					$id = $tree->id;
-					$children = $tree->children[0];
 					$category = self::get_categories_manager()->get_categories_cache()->get_category($id);
 
-					self::get_categories_manager()->update_position($category, $id_parent, ($position +1));
+					self::get_categories_manager()->update_position($category, $id_parent, ($position + 1));
 
-					$this->update_children_positions($children, $category->get_id());
+					$this->update_children_positions($tree->children[0], $category->get_id());
 				}
 			}
 		}
