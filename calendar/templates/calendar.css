@@ -27,3 +27,7 @@ td[class*="calendar-"]:last-child {
     padding: 0.456em;
     display: block;
 }
+
+#calendar .calendar-event[style] a {
+	mix-blend-mode: difference;
+}
