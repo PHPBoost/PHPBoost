@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 12
  * @since       PHPBoost 4.0 - 2013 03 03
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -133,7 +133,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$article_pages = $this->list_article_pages($array_page);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
+			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 
 		$this->view->put('FORM', $form->display());
@@ -147,7 +147,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 
 			if ($current_page > 1 && $current_page <= $pages_number)
 			{
-				$previous_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . ($current_page - 1);
+				$previous_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . ($current_page - 1);
 
 				$this->view->put_all(array(
 					'U_PREVIOUS_PAGE' => $previous_page,
@@ -157,7 +157,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 
 			if ($current_page > 0 && $current_page < $pages_number)
 			{
-				$next_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles')->rel() . ($current_page + 1);
+				$next_page = ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . ($current_page + 1);
 
 				$this->view->put_all(array(
 					'U_NEXT_PAGE' => $next_page,
@@ -251,7 +251,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 	private function get_pagination($pages_number, $current_page)
 	{
 		$pagination = new ModulePagination($current_page, $pages_number, 1, Pagination::LIGHT_PAGINATION);
-		$pagination->set_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '%d'));
+		$pagination->set_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '', '%d'));
 
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 		{
@@ -269,7 +269,7 @@ class ArticlesDisplayArticlesController extends AbstractItemController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->item->get_title(), ($this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() . ' - ' : '') . self::get_module()->get_configuration()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description($this->item->get_real_summary());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::display($this->category->get_id(), $this->category->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '', AppContext::get_request()->get_getint('page', 1)));
 
 		if ($this->item->has_thumbnail())
 			$graphical_environment->get_seo_meta_data()->set_picture_url($this->item->get_thumbnail());

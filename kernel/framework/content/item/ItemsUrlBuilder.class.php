@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 13
+ * @version     PHPBoost 5.3 - last update: 2020 02 12
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -64,16 +64,18 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name, $module_id = '', $anchor = '')
+	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name, $module_id = '', $anchor = '', $additional_parameter = null)
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/' . $anchor);
+		$additional_parameter = (!empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : $additional_parameter . '/') : '');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/' . $additional_parameter . $anchor);
 	}
 	/**
 	 * @return Url
 	 */
-	public static function display_item($id, $rewrited_title, $module_id = '', $anchor = '')
+	public static function display_item($id, $rewrited_title, $module_id = '', $anchor = '', $additional_parameter = null)
 	{
-		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '-' . $rewrited_title . '/' . $anchor);
+		$additional_parameter = (!empty($additional_parameter) ? (is_int($additional_parameter) && $additional_parameter > 1 ? $additional_parameter . '/' : $additional_parameter . '/') : '');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $id . '-' . $rewrited_title . '/' . $additional_parameter . $anchor);
 	}
 
 	/**
