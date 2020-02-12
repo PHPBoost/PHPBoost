@@ -6,6 +6,8 @@
 */
 
 /* --- Dashboard homepage --- */
+#admin-index .cell h3 { font-size: 1.482em; }
+
 .cell-body form { margin: -0.618em; }
 
 .cell-body fieldset,

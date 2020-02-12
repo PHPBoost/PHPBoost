@@ -4,7 +4,8 @@
 			<i class="fa fa-wrench" aria-hidden="true"></i> <span>{@sandbox.module.title}</span>
 		</a>
 		<nav id="pushmenu-fwkboost">
-			<ul><li id="mini-sandbox-tools">
+			<ul>
+				<li id="mini-sandbox-tools">
 					<span class="mini-toolbox flex-between">
 						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@mini.tools}</span></span>
 						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
@@ -244,20 +245,20 @@
 						</li>
 						<li>
 							<div class="flex-between">
-								<span class="align-center" aria-label="{@mini.viewport.h}">
+								<div class="align-center" role="contentinfo" aria-label="{@mini.viewport.h}">
 									<span class="stacked">
 										<i class="fa fa-tv" aria-hidden="true"></i>
 										<i class="fa fa-arrows-alt-h stack-event stack-sup stack-right" aria-hidden="true"></i>
 									</span>
 									<p id="window-width"></p>
-								</span>
-								<span class="align-center">
-									<span class="stacked" aria-label="{@mini.viewport.v}">
+								</div>
+								<div class="align-center">
+									<span class="stacked" role="contentinfo" aria-label="{@mini.viewport.v}">
 										<i class="fa fa-tv" aria-hidden="true"></i>
 										<i class="fa fa-arrows-alt-v stack-event stack-sup stack-right" aria-hidden="true"></i>
 									</span>
 									<p id="window-height"></p>
-								</span>
+								</div>
 							</div>
 						</li>
 					</ul>

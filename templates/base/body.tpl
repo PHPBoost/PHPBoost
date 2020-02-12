@@ -139,4 +139,4 @@
 	</div>
 </footer>
 
-<span id="scroll-to-top" class="scroll-to"><i class="fa fa-chevron-up" aria-hidden="true"></i><span class="sr-only">${LangLoader::get_message('scroll-to.top', 'user-common')}</span></span>
+<span id="scroll-to-top" class="scroll-to" role="button" aria-label="${LangLoader::get_message('scroll-to.top', 'user-common')}"><i class="fa fa-chevron-up" aria-hidden="true"></i></span>

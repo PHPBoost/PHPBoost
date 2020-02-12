@@ -54,6 +54,11 @@
 			overflow: hidden;
 		}
 
+		.menu-title h5 {
+		    display: inline-block;
+		    vertical-align: middle;
+		}
+
 		.pbt-logo,
 		.site-logo {
 			display: inline-block;

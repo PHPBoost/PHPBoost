@@ -83,6 +83,9 @@ aside:not(#menu-left):not(#menu-right) {
 	padding: 0.809em;
 }
 
+.content img,
+.cell-content img { vertical-align: bottom; }
+
 /* --- Id Card --- */
 .id-card {
 	margin: 1.618em 0 0;
@@ -137,7 +140,7 @@ aside:not(#menu-left):not(#menu-right) {
 	.related-item { max-width: 35%; }
 }
 
-/* --- Media --- */
+/* --- Main thumbnail in item --- */
 .item-thumbnail {
 	padding: 0.309em 0;
 	display: block;
@@ -146,11 +149,12 @@ aside:not(#menu-left):not(#menu-right) {
 @media (min-width: 769px) {
 	.item-thumbnail {
 		max-width: 38%;
-		float: left;
-		padding: 0.309em 0.618em 0.309em 0;
+		float: right;
+		padding: 0.309em 0 0.309em 0.618em;
 	}
 }
 
+/* --- Media --- */
 @media (max-width: 768px) {
 	.media-content {
 		clear: both;

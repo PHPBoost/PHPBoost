@@ -21,7 +21,7 @@
 
 	<div class="panel-container">
 		<div id="openmodal-{L_ADMINISTRATION}" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-{L_MODULES}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_MODULES}</a>
@@ -74,7 +74,7 @@
 		</div>
 
 		<div id="openmodal-{L_TOOLS}" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-{L_ADMINISTRATION}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_ADMINISTRATION}</a>
@@ -114,7 +114,7 @@
 		</div>
 
 		<div id="openmodal-{L_USER}" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-{L_TOOLS}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_TOOLS}</a>
@@ -154,7 +154,7 @@
 		</div>
 
 		<div id="openmodal-{L_CONTENT}" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-{L_USER}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_USER}</a>
@@ -204,7 +204,7 @@
 		</div>
 
 		<div id="openmodal-{L_MODULES}" class="modal modal-animation">
-			<div class="close-modal" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
+			<div class="close-modal" role="button" aria-label="${LangLoader::get_message('close_menu', 'admin')}"></div>
 			<div class="content-panel">
 				<div class="next-menu">
 					<a data-modal data-target="openmodal-{L_CONTENT}"><i aria-hidden="true" class="fa fa-arrow-left"></i> {L_CONTENT}</a>
