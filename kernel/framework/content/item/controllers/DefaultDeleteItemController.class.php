@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 12
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
@@ -47,7 +47,7 @@ class DefaultDeleteItemController extends AbstractItemController
 
 	protected function display_response(HTTPRequestCustom $request)
 	{
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->get_display_item_url()) ? $request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->items_lang['items.message.success.delete'], array('title' => $article->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), $this->get_display_item_url()) ? $request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->items_lang['items.message.success.delete'], array('title' => $this->item->get_title())));
 	}
 
 	/**
@@ -55,7 +55,7 @@ class DefaultDeleteItemController extends AbstractItemController
 	 */
 	protected function get_display_item_url()
 	{
-		return self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item($this->item->get_id(), $this->item->get_rewrited_title())->rel();;
+		return self::get_module()->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item($this->item->get_id(), $this->item->get_rewrited_title())->rel();
 	}
 }
 ?>
