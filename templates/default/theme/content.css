@@ -205,7 +205,7 @@ aside:not(#menu-left):not(#menu-right) {
 	transition: width .6s ease;
 }
 
-/* --- Le systeme de notation --- */
+/* --- Notation --- */
 .notation,
 .static-notation {
 	display: inline-block;
@@ -273,7 +273,7 @@ aside:not(#menu-left):not(#menu-right) {
 	margin: 0;
 }
 
-/* --- Le selecteur de couleur --- */
+/* --- Coulor picker --- */
 .color-picker {
 	position: absolute;
 	z-index: 100;
@@ -339,7 +339,13 @@ a.wikipedia-link:after {
 	font-size: 0.618em;
 }
 
-/* Publication status */
+/* --- Publication status --- */
 .publication-status {
 	font-weight: bold;
+}
+
+/* --- Categories color on sortable --- */
+.category-color {
+	border-left-width: 5px !important;
+	border-left-style: solid;
 }

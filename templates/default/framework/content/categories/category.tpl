@@ -1,4 +1,4 @@
-<li id="cat-{ID}" class="sortable-element" data-id="{ID}">
+<li id="cat-{ID}" class="sortable-element# IF C_COLOR # category-color# ENDIF #" data-id="{ID}"# IF C_COLOR # style="border-left-color: {COLOR};"# ENDIF #>
 	<div class="sortable-selector" aria-label="${LangLoader::get_message('position.move', 'common')}"></div>
 	<div class="sortable-title">
 		<a href="{U_DISPLAY}">{NAME}</a>
@@ -11,21 +11,19 @@
 		<a href="{U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="{DELETE_CONFIRMATION_MESSAGE}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 	</div>
 	<script>
-	<!--
-	jQuery(document).ready(function() {
-		jQuery("#move-up-{ID}").on('click',function(){
-			var li = jQuery(this).closest('li');
-			li.insertBefore( li.prev() );
-			change_reposition_pictures();
-		});
+		jQuery(document).ready(function() {
+			jQuery("#move-up-{ID}").on('click',function(){
+				var li = jQuery(this).closest('li');
+				li.insertBefore( li.prev() );
+				change_reposition_pictures();
+			});
 
-		jQuery("#move-down-{ID}").on('click',function(){
-			var li = jQuery(this).closest('li');
-			li.insertAfter( li.next() );
-			change_reposition_pictures();
+			jQuery("#move-down-{ID}").on('click',function(){
+				var li = jQuery(this).closest('li');
+				li.insertAfter( li.next() );
+				change_reposition_pictures();
+			});
 		});
-	});
-	-->
 	</script>
 
 	# IF C_ALLOWED_TO_HAVE_CHILDS #
