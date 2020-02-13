@@ -43,7 +43,7 @@ $lang['config.message.before.topic.title.displayed'] = 'Afficher le message deva
 $lang['config.message.before.topic.title'] = 'Message devant le titre du topic';
 $lang['config.message.when.topic.is.unsolved'] = 'Message devant le titre du topic si statut non changé';
 $lang['config.message.when.topic.is.solved'] = 'Message devant le titre du topic si statut changé';
-$lang['config.message.before.topic.title.icon.displayed'] = 'Afficher l\'icône associé';
+$lang['config.message.before.topic.title.icon.displayed'] = 'Afficher l\'icône associée';
 
 // Categories
 $lang['category.status.locked'] = 'Verrouillé';

@@ -97,7 +97,7 @@ $lang['font.icons.howto.explain'] = 'Font-Awesome est une icon-font, une police 
 $lang['font.icons.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
 $lang['font.icons.howto.html'] = 'En html';
 $lang['font.icons.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
-$lang['font.icons.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivi du texte : ';
+$lang['font.icons.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivie du texte : ';
 $lang['font.icons.howto.html.class.result.a'] = 'Nous donnera le lien précédé de l\'icône "globe" : ';
 $lang['font.icons.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
 $lang['font.icons.howto.css'] = 'En CSS';
@@ -105,7 +105,7 @@ $lang['font.icons.howto.css.class'] = 'Il faut définir votre classe, puis le co
 $lang['font.icons.howto.css.css.code'] = 'Code CSS :';
 $lang['font.icons.howto.css.html.code'] = 'Code HTML :';
 $lang['font.icons.howto.bbcode'] = 'En BBCode';
-$lang['font.icons.howto.bbcode.some.icons'] = 'Les icônes les plus utilisés dans PHPBoost sont déjà implémentés dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
+$lang['font.icons.howto.bbcode.some.icons'] = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
 $lang['font.icons.howto.bbcode.tag'] = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
 $lang['font.icons.howto.bbcode.icon.name'] = '[fa]nom de l\'icône[/fa]';
 $lang['font.icons.howto.bbcode.icon.test'] = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> nous donnera l\'icône:';
@@ -113,7 +113,7 @@ $lang['font.icons.howto.bbcode.icon.variants'] = 'Les variantes (cf paragraphe s
 $lang['font.icons.howto.variants'] = 'Les variantes';
 $lang['font.icons.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
 $lang['font.icons.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
-$lang['font.icons.howto.variants.spinner'] = 'Nous donnera l\'icone "spinner", défini en rotation et faisant 2 fois sa taille initiale : ';
+$lang['font.icons.howto.variants.spinner'] = 'Nous donnera l\'icône "spinner", définie en rotation et faisant 2 fois sa taille initiale : ';
 
 // Icomoon
 $lang['font.icons.icomoon'] = 'IcoMoon App';
