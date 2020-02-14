@@ -345,9 +345,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			{
 				$maintenance_config->disable_maintenance();
 				MaintenanceConfig::save();
+				AppContext::get_response()->redirect(AppContext::get_request()->get_current_url());
 			}
 			else
-				$template->put('DISABLE_MAINTENANCE', $form->display()->render());
+				$template->put('DISABLE_MAINTENANCE', $form->display());
 		}
 		
 		return $template;
