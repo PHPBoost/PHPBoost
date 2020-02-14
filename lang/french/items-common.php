@@ -28,8 +28,8 @@ $lang['item.edit'] = 'Modifier :the_item';
 $lang['items.pending'] = ':Items en attente';
 
 //Configuration
-$lang['config.items.per.page'] = ':Items.number par page';
-$lang['config.items.per.row'] = ':Items.number par ligne';
+$lang['config.items.per.page'] = ':Items_number par page';
+$lang['config.items.per.row'] = ':Items_number par ligne';
 $lang['config.items.default.sort.field'] = 'Ordre d\'affichage des :items par défaut';
 $lang['config.items.default.sort.mode'] = 'Sens d\'affichage des :items par défaut';
 $lang['config.auto.cut.characters.number'] = 'Longueur par défaut du résumé des :items';
