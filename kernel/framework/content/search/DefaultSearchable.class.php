@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 10
+ * @version     PHPBoost 5.3 - last update: 2020 02 14
  * @since       PHPBoost 5.3 - 2019 08 20
 */
 
@@ -58,7 +58,7 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 		$this->cats_table_name = $module_configuration->has_categories() ? $module_configuration->get_categories_table_name() : '';
 		
 		$this->read_authorization = $module_configuration->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id)->read() : ItemsAuthorizationsService::check_authorizations($this->module_id)->read();
-		$this->authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id);
+		$this->authorized_categories = $module_configuration->has_categories() ? CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id) : array();
 		
 		$this->field_title = $module_configuration->has_items() ? $item_class_name::get_title_label() : 'title';
 		$this->field_rewrited_title = 'rewrited_' . $this->field_title;
