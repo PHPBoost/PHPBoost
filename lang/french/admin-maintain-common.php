@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 09 08
+ * @version     PHPBoost 5.3 - last update: 2020 02 14
  * @since       PHPBoost 4.1 - 2014 09 15
 */
 
@@ -12,6 +12,7 @@
 ####################################################
 
 $lang['maintain_type'] = 'Mettre le site en maintenance';
+$lang['disable.maintenance'] = 'Désactiver la maintenance';
 $lang['maintain_type.during'] = 'Moins d\'une journée';
 $lang['maintain_type.until'] = 'Plusieurs jours';
 $lang['maintain_type.unlimited'] = 'Pour une durée non spécifiée';

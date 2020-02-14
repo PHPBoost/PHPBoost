@@ -6,6 +6,7 @@
 				<a id="message-helper-button-maintain" class="bgc-full warning {MESSAGE_CSS_CLASS}" aria-label="${LangLoader::get_message('message.close_ephemeral_message', 'status-messages-common')}"><i class="fa fa-close-message" aria-hidden="true"></i></a>
 				{L_MAINTAIN_DELAY}
 				<div id="release">{L_LOADING}...</div>
+				# INCLUDE DISABLE_MAINTENANCE #
 			</div>
 		</div>
 	</div>
