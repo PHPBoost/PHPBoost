@@ -28,7 +28,7 @@
 					<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>
 				</span>
 				<span class="pinned">
-					<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} {@articles.sort.field.views}">{VIEWS_NUMBER}</span>
+					<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} ${LangLoader::get_message('views', 'main')}">{VIEWS_NUMBER}</span>
 				</span>
 				# IF C_ENABLED_COMMENTS #
 					<span class="pinned">

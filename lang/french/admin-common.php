@@ -46,6 +46,7 @@ $lang['config.items_default_sort'] = 'Ordre d\'affichage des éléments par déf
 $lang['config.items.default.sort.field'] = 'Ordre d\'affichage des éléments par défaut';
 $lang['config.items.default.sort.mode'] = 'Sens d\'affichage des éléments par défaut';
 $lang['config.author_displayed'] = 'Afficher le nom de l\'auteur';
+$lang['config.views.number.enabled'] = 'Afficher le nombre de vues';
 $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';
 $lang['config.notation_scale'] = 'Echelle de notation';

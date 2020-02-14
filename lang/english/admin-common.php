@@ -44,6 +44,7 @@ $lang['config.items_default_sort'] = 'Items display order per default'; // To be
 $lang['config.items.default.sort.field'] = 'Default items display order';
 $lang['config.items.default.sort.mode'] = 'Default items display direction';
 $lang['config.author_displayed'] = 'Display author\'s name';
+$lang['config.views.number.enabled'] = 'Display views number';
 $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';
 $lang['config.notation_scale'] = 'Notation scale';
