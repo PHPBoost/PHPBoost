@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 14
  * @since       PHPBoost 4.0 - 2014 02 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -16,6 +16,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 
 		$this->content_tables = array(PREFIX . 'articles');
 		$this->delete_old_files_list = array(
+			'/controllers/AdminArticlesConfigController.class.php',
 			'/controllers/ArticlesDeleteController.class.php',
 			'/controllers/ArticlesDisplayArticlesTagController.class.php',
 			'/controllers/ArticlesDisplayCategoryController.class.php',

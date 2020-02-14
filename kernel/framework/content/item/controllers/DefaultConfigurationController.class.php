@@ -67,7 +67,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			));
 
 			$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->items_lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
-				array('min' => 20, 'max' => 1000, 'description' => $this->items_lang['config.auto.cut.characters.number'], 'required' => true),
+				array('min' => 20, 'max' => 1000, 'description' => $this->items_lang['config.auto.cut.characters.number.explain'], 'required' => true),
 				array(new FormFieldConstraintIntegerRange(20, 1000))
 			));
 
