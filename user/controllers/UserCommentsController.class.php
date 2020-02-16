@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 13
+ * @version     PHPBoost 5.3 - last update: 2020 02 16
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -130,35 +130,34 @@ class UserCommentsController extends AbstractController
 
 			$template->assign_block_vars('comments', array(
 				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
-				'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $row['user_id'] == $this->current_user->get_id()),
-				'C_VISITOR' => empty($row['display_name']),
-				'C_VIEW_TOPIC' => true,
-				'C_GROUP_COLOR' => !empty($group_color),
-				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
+				'C_VISITOR'              => empty($row['display_name']),
+				'C_VIEW_TOPIC'           => true,
+				'C_GROUP_COLOR'          => !empty($group_color),
+				'C_AVATAR'               => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
+				'C_MODERATOR'            => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
 
-				'U_TOPIC' => Url::to_rel($path),
-				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
-				'U_DELETE' => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
+				'U_TOPIC'   => Url::to_rel($path),
+				'U_EDIT'    => CommentsUrlBuilder::edit($path, $id)->rel(),
+				'U_DELETE'  => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_AVATAR' => $user_avatar,
+				'U_AVATAR'  => $user_avatar,
 
 				'COMMENT_NUMBER' => $this->comments_number,
-				'ID_COMMENT' => $id,
-				'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
-				'MESSAGE' => FormatingHelper::second_parse($row['message']),
+				'ID_COMMENT'     => $id,
+				'DATE'           => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+				'DATE_ISO8601'   => $timestamp->format(Date::FORMAT_ISO8601),
+				'MESSAGE'        => FormatingHelper::second_parse($row['message']),
 
 				// User
-				'USER_ID' => $row['user_id'],
-				'PSEUDO' => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
+				'USER_ID'     => $row['user_id'],
+				'PSEUDO'      => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-
-				'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
+				'L_LEVEL'     => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
 			));
 
 			$template->put_all(array(
-				'MODULE_ID' => $row['module_id'],
+				'MODULE_ID'    => $row['module_id'],
 				'ID_IN_MODULE' => $row['id_in_module'],
 				'L_VIEW_TOPIC' => $this->lang['view-topic']
 			));
@@ -166,16 +165,16 @@ class UserCommentsController extends AbstractController
 		$result->dispose();
 
 		$this->tpl->put_all(array(
-			'C_COMMENTS'      => $this->comments_number > 0,
-			'C_MODERATOR'     => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
-			'COMMENTS_NUMBER' => $this->comments_number
+			'C_COMMENTS'              => $this->comments_number > 0,
+			'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $display_delete_button),
+			'COMMENTS_NUMBER'         => $this->comments_number
 		));
 
 		$comments_tpl = new FileTemplate('framework/content/comments/comments.tpl');
 		$comments_tpl->put_all(array(
-			'COMMENTS_LIST' => $template,
-			'MODULE_ID' => $row['module_id'],
-			'ID_IN_MODULE' => $row['id_in_module'],
+			'COMMENTS_LIST'   => $template,
+			'MODULE_ID'       => $row['module_id'],
+			'ID_IN_MODULE'    => $row['id_in_module'],
 			'COMMENTS_NUMBER' => $this->comments_number
 		));
 		
