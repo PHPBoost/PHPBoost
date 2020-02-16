@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 10 23
+ * @version     PHPBoost 5.3 - last update: 2020 02 16
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
@@ -137,7 +137,7 @@
 			{
 				$form = new HTMLForm('kerner_message_form', '', false);
 
-				$submit_button = new FormButtonSubmit(LangLoader::get_message('delete', 'common'), 'delete_install');
+				$submit_button = new FormButtonSubmit(LangLoader::get_message('delete', 'common'), 'delete_install', '', 'bgc warning delete-install-button');
 				$form->add_button($submit_button);
 
 				if ($submit_button->has_been_submited() && $form->validate())
