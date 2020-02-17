@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 02 17
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -135,7 +135,8 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$fieldset_authorizations->add_field($auth_setter);
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-
+		$fieldset->add_field(new FormFieldHidden('last_topic_id', $this->get_category()->get_last_topic_id()));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
