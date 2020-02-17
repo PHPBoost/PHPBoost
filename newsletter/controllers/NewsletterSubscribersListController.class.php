@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 17
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -12,10 +12,10 @@ class NewsletterSubscribersListController extends ModuleController
 {
 	private $lang;
 	private $view;
-	private $user;
 	private $stream;
 
-	private $nbr_subscribers_per_page = 25;
+	private $elements_number = 0;
+	private $ids = array();
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -26,119 +26,136 @@ class NewsletterSubscribersListController extends ModuleController
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::home());
 		}
 
-		$this->init();
-		$this->build_form($request);
+		$this->check_authorizations();
 
-		return $this->generate_response($request);
+		$this->init();
+
+		$current_page = $this->build_table();
+
+		$this->execute_multiple_delete_if_needed($request);
+
+		return $this->generate_response($current_page);
 	}
 
-	private function build_form(HTTPRequestCustom $request)
+	private function check_authorizations()
 	{
-		$field = $request->get_value('field', 'name');
-		$sort = $request->get_value('sort', 'top');
-		$current_page = $request->get_int('page', 1);
-
 		if (!NewsletterAuthorizationsService::id_stream($this->stream->get_id())->read_subscribers())
 		{
 			NewsletterAuthorizationsService::get_errors()->read_subscribers();
-		}
-
-		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
-		switch ($field)
-		{
-			case 'mail' :
-				$field_bdd = 'user_mail';
-			break;
-			default :
-				$field_bdd = 'name';
-		}
-
-		$subscribers_list = NewsletterService::list_subscribers_by_stream($this->stream->get_id());
-
-		$nbr_subscribers = count($subscribers_list);
-
-		$pagination = new ModulePagination($current_page, $nbr_subscribers, $this->nbr_subscribers_per_page);
-		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $field, $sort, '%d'));
-
-		if ($pagination->current_page_is_empty() && $current_page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-
-		$this->view->put_all(array(
-			'C_SUBSCRIBERS' => (int)$nbr_subscribers,
-			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->rel(),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_NAME_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'name', 'top', $current_page)->rel(),
-			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'nae', 'bottom', $current_page)->rel(),
-			'SORT_MAIL_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'top', $current_page)->rel(),
-			'SORT_MAIL_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), 'mail', 'bottom', $current_page)->rel(),
-			'PAGINATION' => $pagination->display()
-		));
-
-		if (!empty($nbr_subscribers))
-		{
-			$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, COALESCE(NULLIF(subscribers.mail, ''), member.email) AS user_mail, COALESCE(NULLIF(member.display_name, ''), '" . LangLoader::get_message('visitor', 'user-common') . "') AS name
-			FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
-			LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
-			WHERE subscribers.id IN :ids_list
-			ORDER BY ". $field_bdd ." ". $mode ."
-			LIMIT :number_items_per_page OFFSET :display_from",
-				array(
-					'ids_list' => array_keys($subscribers_list),
-					'number_items_per_page' => $pagination->get_number_items_per_page(),
-					'display_from' => $pagination->get_display_from()
-				)
-			);
-
-			while ($row = $result->fetch())
-			{
-				if ($row['user_mail'])
-				{
-					$this->view->assign_block_vars('subscribers_list', array(
-						'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
-						'C_MEMBER' => $row['user_id'] > 0,
-						'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
-						'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
-						'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
-						'NAME' => $row['name'],
-						'MAIL' => $row['user_mail'],
-						'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
-					));
-				}
-			}
-			$result->dispose();
 		}
 	}
 
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
-		$this->view = new FileTemplate('newsletter/NewsletterSubscribersListController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->user = AppContext::get_current_user();
+		$this->view = new StringTemplate('# INCLUDE table #');
 	}
 
-	private function generate_response(HTTPRequestCustom $request)
+	private function build_table()
 	{
-		$sort_field = $request->get_getvalue('field', 'name');
-		$sort_mode = $request->get_getvalue('sort', 'top');
-		$page = $request->get_getint('page', 1);
+		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers();
 
+		$columns = array(
+			new HTMLTableColumn($this->lang['subscribers.pseudo'], 'name'),
+			new HTMLTableColumn($this->lang['subscribers.mail'], 'user_mail')
+		);
+
+		if ($moderation_authorization)
+			$columns[] = new HTMLTableColumn('');
+
+		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_subscribers, 'table', $columns, new HTMLTableSortingRule('name', HTMLTableSortingRule::ASC));
+
+		$table_model->add_permanent_filter('id IN (' . implode(',', array_keys(NewsletterService::list_subscribers_by_stream($this->stream->get_id()))) . ')');
+
+		$table = new HTMLTable($table_model);
+
+		$results = array();
+		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . LangLoader::get_message('visitor', 'user-common') . '") AS name'));
+		foreach ($result as $row)
+		{
+			if ($row['user_mail'])
+			{
+				$user = new User();
+				if (!empty($row['user_id']))
+					$user->set_properties($row);
+				else
+					$user->init_visitor_user();
+			
+				$this->elements_number++;
+				$this->ids[$this->elements_number] = $row['id'];
+				
+				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+				$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $row['name'];
+
+				$table_row = array(
+					new HTMLTableRowCell($author),
+					new HTMLTableRowCell($row['user_mail'])
+				);
+
+				if ($moderation_authorization)
+				{
+					$edit_link = ($row['user_id'] == User::VISITOR_LEVEL) ? new EditLinkHTMLElement(NewsletterUrlBuilder::edit_subscriber($row['id'])) : false;
+					$delete_link = new DeleteLinkHTMLElement(NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id()));
+					$table_row[] = new HTMLTableRowCell(($edit_link ? $edit_link->display() : '') . $delete_link->display());
+				}
+
+				$results[] = new HTMLTableRow($table_row);
+			}
+		}
+		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
+
+		$this->view->put('table', $table->display());
+
+		return $table->get_page_number();
+	}
+
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	{
+		if ($request->get_string('delete-selected-elements', false))
+		{
+			for ($i = 1 ; $i <= $this->elements_number ; $i++)
+			{
+				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
+				{
+					if (isset($this->ids[$i]) && NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers())
+					{
+						$parameters = array(
+							'id' => $this->ids[$i],
+							'id_stream' => $this->stream->get_id()
+						);
+						PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscriptions, 'WHERE subscriber_id = :id AND stream_id = :id_stream', $parameters);
+
+						if (PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, 'WHERE subscriber_id = :id', $parameters) == 0)
+						{
+							PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscribers, 'WHERE id = :id', $parameters);
+						}
+					}
+				}
+			}
+
+			NewsletterStreamsCache::invalidate();
+
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()), LangLoader::get_message('process.success', 'status-messages-common'));
+		}
+	}
+
+	private function generate_response($page = 1)
+	{
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
 		$body_view->put('TEMPLATE', $this->view);
 		$response = new SiteDisplayResponse($body_view);
-		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
-		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page)->rel());
-
+		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($name_page, $this->lang['newsletter'], $page);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home());
+		$page_name = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
+		$breadcrumb->add($page_name, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
+
+		$graphical_environment->set_page_title($page_name, $this->lang['newsletter'], $page);
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.suscribers.list'], array('name' => $this->stream->get_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name(), $sort_field, $sort_mode, $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
 
 		return $response;
 	}
