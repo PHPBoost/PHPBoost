@@ -135,7 +135,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$fieldset_authorizations->add_field($auth_setter);
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
-		$fieldset->add_field(new FormFieldHidden('last_topic_id', $this->get_category()->get_last_topic_id()));
+		$fieldset->add_field(new FormFieldHidden('last_topic_id', $this->is_new_category ? 0 : $this->get_category()->get_last_topic_id()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
