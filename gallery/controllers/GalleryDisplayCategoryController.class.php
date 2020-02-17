@@ -441,8 +441,7 @@ class GalleryDisplayCategoryController extends ModuleController
 
 				//On crée une pagination si le nombre de photos est trop important.
 				$page = AppContext::get_request()->get_getint('pp', 1);
-				$elements_number = $category->get_elements_number();
-				$pagination = new ModulePagination($page, $elements_number['pics_aprob'], $config->get_pics_number_per_page());
+				$pagination = new ModulePagination($page, GalleryService::count('WHERE id_category = :id_category AND aprob = 1', array('id_category' => $category->get_id())), $config->get_pics_number_per_page());
 				$pagination->set_url(new Url('/gallery/gallery.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $category->get_id()));
 
 				if ($pagination->current_page_is_empty() && $page > 1)
