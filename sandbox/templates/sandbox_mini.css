@@ -51,5 +51,6 @@
 @media (min-width: 769px) {
 	.fwkboost-toggle {
     	padding: 0.5em 1.618em;
+        position: fixed;
 	}
 }

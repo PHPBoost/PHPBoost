@@ -3,7 +3,7 @@
 		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator">
 			<i class="fa fa-wrench" aria-hidden="true"></i> <span>{@sandbox.module.title}</span>
 		</a>
-		<nav id="pushmenu-fwkboost">
+		<nav id="pushmenu-fwkboost" class="pushnav">
 			<ul>
 				<li id="mini-sandbox-tools">
 					<span class="mini-toolbox flex-between">
