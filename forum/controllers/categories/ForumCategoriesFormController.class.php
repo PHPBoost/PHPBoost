@@ -161,6 +161,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			$status = ForumCategory::STATUS_UNLOCKED;
 
 		$this->get_category()->set_additional_property('status', $status);
+		$this->get_category()->set_additional_property('last_topic_id', $this->form->get_value('last_topic_id'));
 
 		if ($this->form->get_value('special_authorizations'))
 		{

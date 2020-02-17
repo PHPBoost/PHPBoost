@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 17
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,6 +15,7 @@ class RichCategory extends Category
 {
 	public static function __static()
 	{
+		parent::__static();
 		self::add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
 			'field_class' => 'FormFieldRichTextEditor',
 			'label' => LangLoader::get_message('form.description', 'common')

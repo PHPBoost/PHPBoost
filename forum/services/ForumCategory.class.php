@@ -20,6 +20,7 @@ class ForumCategory extends Category
 
 	public static function __static()
 	{
+		parent::__static();
 		self::add_additional_attribute('status', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		self::add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
 		self::add_additional_attribute('last_topic_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true));

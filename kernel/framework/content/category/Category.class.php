@@ -36,7 +36,12 @@ class Category
 
 	const ROOT_CATEGORY = '0';
 
-	public static function __static() {}
+	public static function __static()
+	{
+		self::$additional_attributes_list = array();
+		self::$additional_attributes_categories_table_fields = array();
+		self::$additional_attributes_categories_table_options = array();
+	}
 
 	public function __construct()
 	{
