@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 26
+ * @version     PHPBoost 5.3 - last update: 2020 02 17
  * @since       PHPBoost 4.1 - 2015 02 25
 */
 
@@ -64,6 +64,18 @@ class ForumCategory extends Category
 	public function get_url()
 	{
 		return $this->get_additional_property('url');
+	}
+	
+	protected function set_additional_properties(array $properties)
+	{
+		if (!empty($properties['url']))
+			$this->set_type(self::TYPE_URL);
+		else if ($properties['id_parent'] != Category::ROOT_CATEGORY)
+			$this->set_type(self::TYPE_FORUM);
+		else
+			$this->set_type(self::TYPE_CATEGORY);
+		
+		parent::set_additional_properties($properties);
 	}
 }
 ?>
