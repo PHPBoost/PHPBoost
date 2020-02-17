@@ -12,6 +12,7 @@
 @import url('../../templates/default/theme/cssmenu.css') screen;
 @import url('../../templates/default/theme/message_helper.css') screen;
 @import url('../../templates/default/theme/global.css') screen;
+@import url('../../templates/default/theme/plugins.css') screen;
 
 @import url('../../templates/default/theme/dashboard/dashboard_shape.css') screen;
 @import url('../../templates/default/theme/dashboard/dashboard_menus.css') screen;
