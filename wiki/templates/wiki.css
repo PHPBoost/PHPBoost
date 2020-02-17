@@ -45,10 +45,10 @@ ul.no-list a i.fa {
 	display: inline-block;
 	padding: 0.382em 0.809em;
 	width: 100%;
-	background-color: rgba(54, 100, 147, 0.1);
+	background-color: var(--bgc-alt);
 	border-width: 1px;
 	border-style: solid;
-	border-color: rgba(54, 100, 147, 0.4);
+	border-color: var(--bdr-alt);
 	margin-bottom: 2.618em;
 }
 
@@ -112,7 +112,7 @@ ul.no-list a i.fa {
 
 .wiki-list-top {
 	padding: 0.382em;
-	background-color: rgba(54, 100, 147, 0.1);
+	background-color: rgba(var(--main-rgb-d), 0.1);
 	font-weight: bold;
 }
 
@@ -142,8 +142,8 @@ body {
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 0.1em 0.809em;
-	background-color: #366493;
-	color: #FFFFFF;
+	background-color: var(--bgc-main);
+	color: var(--txt-dark);
 	display: block;
 }
 
@@ -173,7 +173,7 @@ body {
   	top: 1.618em;
   	position: fixed;
   	overflow-y: auto;
-	background-color: #fcfcfc;
+	background-color: var(--bgc-main);
 	margin-bottom: 2.618em;
 	height: 100%;
 }
