@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 02 17
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -441,7 +441,8 @@ class GalleryDisplayCategoryController extends ModuleController
 
 				//On crée une pagination si le nombre de photos est trop important.
 				$page = AppContext::get_request()->get_getint('pp', 1);
-				$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
+				$elements_number = $category->get_elements_number();
+				$pagination = new ModulePagination($page, $elements_number['pics_aprob'], $config->get_pics_number_per_page());
 				$pagination->set_url(new Url('/gallery/gallery.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $category->get_id()));
 
 				if ($pagination->current_page_is_empty() && $page > 1)
