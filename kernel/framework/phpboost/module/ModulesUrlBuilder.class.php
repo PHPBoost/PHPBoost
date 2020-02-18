@@ -5,19 +5,15 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 18
  * @since       PHPBoost 5.3 - 2019 12 20
 */
 
 class ModulesUrlBuilder
 {
-	protected static $module_id;
-
 	protected static function get_module_id($module_id = '')
 	{
-		if (self::$module_id === null || (!empty($module_id) && $module_id != self::$module_id))
-			self::$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
-		return self::$module_id;
+		return !empty($module_id) ? $module_id : Environment::get_running_module_name();
 	}
 
 	protected static function get_dispatcher($module_id = '')
