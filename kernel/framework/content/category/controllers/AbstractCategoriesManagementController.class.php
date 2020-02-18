@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 12
+ * @version     PHPBoost 5.3 - last update: 2020 02 18
  * @since       PHPBoost 4.0 - 2013 02 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,8 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 {
 	protected $lang;
 	protected $tpl;
+	
+	protected static $categories_manager;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -32,6 +34,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 	private function init()
 	{
+		$class_name = get_called_class();
+		self::$categories_manager = $class_name::get_categories_manager();
+		
 		$this->lang = LangLoader::get('categories-common');
 		$this->tpl = new FileTemplate('default/framework/content/categories/manage.tpl');
 		$this->tpl->add_lang($this->lang);
@@ -39,7 +44,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 	private function build_view()
 	{
-		$categories_cache = self::get_categories_manager()->get_categories_cache()->get_class();
+		$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
 		$categories = $categories_cache::load()->get_categories();
 
 		$number_categories = count($categories);
@@ -101,14 +106,14 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		if ($request->get_postvalue('submit', false))
 		{
 			$categories = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
-			$categories_cache = self::get_categories_manager()->get_categories_cache();
+			$categories_cache = self::$categories_manager->get_categories_cache();
 
 			foreach ($categories as $position => $tree)
 			{
 				$id = $tree->id;
 				$category = $categories_cache->get_category($id);
 
-				self::get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position + 1));
+				self::$categories_manager->update_position($category, Category::ROOT_CATEGORY, ($position + 1));
 
 				$this->update_children_positions($tree->children[0], $category->get_id());
 			}
@@ -128,9 +133,9 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 				if (is_int($position))
 				{
 					$id = $tree->id;
-					$category = self::get_categories_manager()->get_categories_cache()->get_category($id);
+					$category = self::$categories_manager->get_categories_cache()->get_category($id);
 
-					self::get_categories_manager()->update_position($category, $id_parent, ($position + 1));
+					self::$categories_manager->update_position($category, $id_parent, ($position + 1));
 
 					$this->update_children_positions($tree->children[0], $category->get_id());
 				}
