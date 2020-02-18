@@ -73,7 +73,7 @@ tfoot td * {
 }
 
 tfoot td select {
-	padding: 0.1618 0.309em;
+	padding: 0.1618em 0.309em;
 }
 
 @media (min-width: 769px) {
