@@ -106,20 +106,20 @@
 						<div class="fieldset-inset">
 							<div class="form-element top-field">
 								<label for="name">* {L_RANK_NAME}</label>
-								<div class="form-field"><label><input type="text" maxlength="30" id="name" name="name"></label></div>
+								<div class="form-field"><input type="text" id="name" name="name"></div>
 							</div>
 							<div class="form-element top-field">
 								<label for="msg">* {L_NBR_MSG}</label>
-								<div class="form-field"><label><input type="number" min="0" id="msg" name="msg"></label></div>
+								<div class="form-field"><input type="number" min="0" id="msg" name="msg"></div>
 							</div>
 							<div class="form-element">
 								<label for="icon">{L_IMG_ASSOC}</label>
-								<div class="form-field"><label>
+								<div class="form-field">
 									<select name="icon" id="icon" onchange="img_change('img_icon', '{PATH_TO_ROOT}/forum/templates/images/ranks/' + this.options[selectedIndex].value)">
 										{RANK_OPTIONS}
 									</select>
 									<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_0.png" id="img_icon" alt="rank_0.png" style="display: none;" />
-								</label></div>
+								</div>
 							</div>
 						</div>
 				</fieldset>

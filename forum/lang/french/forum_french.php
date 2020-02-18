@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 19
+ * @version     PHPBoost 5.3 - last update: 2020 02 18
  * @since       PHPBoost 1.6 - 2006 11 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -62,7 +63,7 @@ $LANG['forum_new_subject'] = 'Nouveau sujet';
 $LANG['post_new_subject'] = 'Poster un nouveau sujet';
 $LANG['forum_edit_subject'] = 'Editer Sujet';
 $LANG['forum_announce'] = 'Annonce';
-$LANG['forum_postit'] = 'Epinglé';
+$LANG['forum_postit'] = 'Épinglé';
 $LANG['forum_lock'] = 'Verrouiller';
 $LANG['forum_unlock'] = 'Déverrouiller';
 $LANG['forum_move'] = 'Déplacer';

@@ -50,7 +50,7 @@
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>
-					<div class="form-field"><label><input type="text" id="title" name="title" maxlength="250" class="field-large" value="{PAGE_TITLE}"></label></div>
+					<div class="form-field"><input type="text" id="title" name="title" value="{PAGE_TITLE}"></div>
 				</div>
 				# END create #
 				<div class="form-element form-element-textarea">
@@ -69,7 +69,7 @@
 					<div class="form-field">
 						<label class="checkbox">
 							<input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}>
-							<span></span>
+							<span>&nbsp;</span>
 						</label>
 					</div>
 				</div>
@@ -107,7 +107,7 @@
 					<div class="form-field">
 						<label class="checkbox">
 							<input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}>
-							<span></span>
+							<span>&nbsp;</span>
 						</label>
 					</div>
 				</div>
@@ -116,7 +116,7 @@
 					<div class="form-field">
 						<label class="checkbox">
 							<input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}>
-							<span></span>
+							<span>&nbsp;</span>
 						</label>
 					</div>
 				</div>

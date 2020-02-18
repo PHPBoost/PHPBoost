@@ -14,12 +14,12 @@
 </div>
 <div class="form-element">
     <label for="ForumIdcat">{L_CATEGORY}</label>
-    <div class="form-field form-field-select"><label>
+    <div class="form-field form-field-select">
         <select name="ForumIdcat" id="ForumIdcat" class="search-field">
             <option value="-1" {IS_ALL_CATS_SELECTED}>{L_ALL_CATS}</option>
             {CATS}
         </select>
-    </label></div>
+    </div>
 </div>
 <div class="form-element">
     <label for="ForumWhere">{L_OPTIONS}</label>

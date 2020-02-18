@@ -19,9 +19,9 @@
                     <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
                     <div class="form-field"# IF PHP_VERSION_OK # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
                     # IF PHP_VERSION_OK #
-                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
-                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only"></span>
+                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i>
                     # ENDIF #
                     </div>
                 </div>
@@ -36,9 +36,9 @@
                     <label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
                     <div class="form-field"# IF HAS_GD_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
                     # IF HAS_GD_LIBRARY #
-                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
-                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
+                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i>
                     # ENDIF #
                     </div>
                 </div>
@@ -46,9 +46,9 @@
                     <label>{@php.extensions.check.curlLibrary} <span class="field-description">{@php.extensions.check.curlLibrary.explanation}</span></label>
                     <div class="form-field"# IF HAS_CURL_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
                     # IF HAS_CURL_LIBRARY #
-                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
-                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
+                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i>
                     # ENDIF #
                     </div>
                 </div>
@@ -56,9 +56,9 @@
                     <label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.explanation}</span></label>
                     <div class="form-field"# IF HAS_MBSTRING_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
                     # IF HAS_MBSTRING_LIBRARY #
-                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                     # ELSE #
-                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
+                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i>
                     # ENDIF #
                     </div>
                 </div>
@@ -67,12 +67,12 @@
                     <div class="form-field"# IF URL_REWRITING_KNOWN ## IF URL_REWRITING_AVAILABLE # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF ## ELSE # aria-label="{@unknown}"# ENDIF #>
                     # IF URL_REWRITING_KNOWN #
                         # IF URL_REWRITING_AVAILABLE #
-                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
+                        <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
                         # ELSE #
-                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
+                        <i class="fa fa-times fa-2x error" aria-hidden="true"></i>
                         # ENDIF #
                     # ELSE #
-                    <i class="fa fa-question fa-2x" aria-hidden="true"></i><span class="sr-only">{@unknown}</span>
+                    <i class="fa fa-question fa-2x" aria-hidden="true"></i>
                     # ENDIF #
                     </div>
                 </div>

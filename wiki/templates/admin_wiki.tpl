@@ -76,7 +76,7 @@
 				</div>
 				<div class="form-element">
 					<label for="number_articles_on_index">{L_NUMBER_ARTICLES_ON_INDEX} <span class="field-description">{L_NUMBER_ARTICLES_ON_INDEX_EXPLAIN}</span></label>
-					<div class="form-field"><label><input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{NUMBER_ARTICLES_ON_INDEX}"></label></div>
+					<div class="form-field"><input type="text" name="number_articles_on_index" id="number_articles_on_index" value="{NUMBER_ARTICLES_ON_INDEX}"></div>
 				</div>
 				<div class="form-element form-element-textarea">
 					<label for="contents">{L_DESCRIPTION}</label>

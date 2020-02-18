@@ -7,8 +7,8 @@
 		</div>
 		<div class="cell-list">
 			<ul>
-				<li><label><input type="radio" name="subscribe" value="subscribe" checked="checked"> {@newsletter.subscribe_newsletters}</label></li>
-				<li><label><input type="radio" name="subscribe" value="unsubscribe"> {@newsletter.unsubscribe_newsletters}</label></li>
+				<li><label class="radio"><input type="radio" name="subscribe" value="subscribe" checked="checked"> <span>{@newsletter.subscribe_newsletters}</span></label></li>
+				<li><label class="radio"><input type="radio" name="subscribe" value="unsubscribe"> <span>{@newsletter.unsubscribe_newsletters}</span></label></li>
 			</ul>
 		</div>
 		<div class="cell-body">

@@ -23,11 +23,11 @@
 						<legend>{L_MOVE_SUBJECT} : {TITLE}</legend>
 						<div class="form-element">
 							<label for="to">{L_CAT}</label>
-							<div class="form-field"><label>
+							<div class="form-field">
 							   <select id="to" name="to">
 									{CATEGORIES}
 								</select>
-							</label></div>
+							</div>
 						</div>
 					</fieldset>
 

@@ -3,7 +3,7 @@
 	<input type="hidden" id="longitude-${escape(HTML_ID)}" name="longitude-${escape(HTML_ID)}" value="${escape(LONGITUDE)}" />
 	<input type="hidden" id="zoom-${escape(HTML_ID)}" name="zoom-${escape(HTML_ID)}" value="${escape(ZOOM)}" />
 	<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(ADDRESS)}" placeholder="{@form.marker.address}" class="marker-address-input grouped-element# IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
-	<input type="text" name="name-${escape(NAME)}" id="name-${escape(HTML_ID)}" value="${escape(MARKER_NAME)}" placeholder="{@form.marker.name}" class="marker-desc-input grouped-element# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ELSE # field-large# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
+	<input type="text" name="name-${escape(NAME)}" id="name-${escape(HTML_ID)}" value="${escape(MARKER_NAME)}" placeholder="{@form.marker.name}" class="marker-desc-input grouped-element# IF C_READONLY # low-opacity# ENDIF ## IF C_CLASS # ${escape(CLASS)}# ENDIF #" # IF C_DISABLED # disabled="disabled" # ENDIF # />
 </div>
 <div class="map-canvas" id="map-${escape(HTML_ID)}"></div>
 

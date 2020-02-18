@@ -28,7 +28,7 @@
 						<div class="form-element">
 							<label for="title">* {L_ALERT_TITLE}</label>
 							<div class="form-field">
-								<input type="text" name="title" id="title" class="field-large">
+								<input type="text" name="title" id="title">
 							</div>
 						</div>
 						<div class="form-element form-element-textarea">

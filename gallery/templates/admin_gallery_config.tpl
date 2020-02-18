@@ -220,25 +220,22 @@
 					<div class="fieldset-inset">
 						<div class="form-element">
 							<label for="scroll_type">{L_SCROLL_TYPE}</label>
-							<div class="form-field"><label>
-									<select name="scroll_type" id="scroll_type">
-										{SCROLL_TYPES}
-									</select>
-								</label>
+							<div class="form-field">
+								<select name="scroll_type" id="scroll_type">
+									{SCROLL_TYPES}
+								</select>
 							</div>
 						</div>
 						<div class="form-element">
 							<label for="pics_number_in_mini">{L_PICS_NUMBER_IN_MINI}</label>
-							<div class="form-field"><label><input type="number" min="1" name="pics_number_in_mini" id="pics_number_in_mini" value="{PICS_NUMBER_IN_MINI}"> </label></div>
+							<div class="form-field"><input type="number" min="1" name="pics_number_in_mini" id="pics_number_in_mini" value="{PICS_NUMBER_IN_MINI}"></div>
 						</div>
 						<div class="form-element">
 							<label for="mini_pics_speed">{L_MINI_PICS_SPEED} <span class="field-description">{L_MINI_PICS_SPEED_EXPLAIN}</span></label>
 							<div class="form-field">
-								<label>
-									<select name="mini_pics_speed" id="mini_pics_speed">
+								<select name="mini_pics_speed" id="mini_pics_speed">
 									{MINI_PICS_SPEED}
-									</select>
-								</label>
+								</select>
 							</div>
 						</div>
 					</div>
