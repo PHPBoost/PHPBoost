@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 18
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -164,10 +164,7 @@ class FaqDisplayCategoryController extends ModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 
-		if ($this->get_category()->get_id() != Category::ROOT_CATEGORY)
-			$graphical_environment->set_page_title($this->get_category()->get_name(), $this->lang['faq.module.title'], $page);
-		else
-			$graphical_environment->set_page_title($this->lang['faq.module.title'], $page);
+		$graphical_environment->set_page_title($this->lang['faq.module.title'], ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? $this->get_category()->get_name() : ''), $page);
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))

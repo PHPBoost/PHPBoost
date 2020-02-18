@@ -13,7 +13,8 @@
 					data: {'id' : id_question, 'token' : '{TOKEN}'},
 					success: function(returnData) {
 						if(returnData.code > 0) {
-							jQuery("#question-" + returnData.code).remove();
+							jQuery("#question-title-" + returnData.code).remove();
+							jQuery("#question" + returnData.code).remove();
 
 							if (returnData.questions_number == 0) {
 								jQuery("#no-item-message").show();
@@ -97,7 +98,7 @@
 			<nav>
 				<ul class="accordion-bordered">
 					# START questions #
-						<li>
+						<li id="question-title-{questions.ID}">
 							<a href="" data-accordion data-target="question{questions.ID}">{questions.QUESTION}</a>
 						</li>
 					# END questions #
@@ -122,12 +123,11 @@
 				</article>
 			# END questions #
 		</div>
-	# ELSE #
-		# IF NOT C_HIDE_NO_ITEM_MESSAGE #
-			<div class="message-helper bgc notice align-center">
-				${LangLoader::get_message('no_item_now', 'common')}
-			</div>
-		# ENDIF #
+	# ENDIF #
+	# IF NOT C_HIDE_NO_ITEM_MESSAGE #
+		<div id="no-item-message" class="message-helper bgc notice align-center"# IF C_QUESTIONS # style="display: none;"# ENDIF #>
+			${LangLoader::get_message('no_item_now', 'common')}
+		</div>
 	# ENDIF #
 
 	<footer></footer>

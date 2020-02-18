@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 18
  * @since       PHPBoost 4.0 - 2014 11 27
 */
 
@@ -30,8 +30,7 @@ class FaqAjaxDeleteQuestionController extends AbstractController
 	{
 		AppContext::get_session()->csrf_post_protect();
 
-		FaqService::delete('WHERE id=:id', array('id' => $this->faq_question->get_id()));
-		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $this->faq_question->get_id()));
+		FaqService::delete($this->faq_question->get_id());
 
 		Feed::clear_cache('faq');
 		FaqCache::invalidate();
