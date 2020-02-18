@@ -150,6 +150,14 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	}
 
 	/**
+	 * @return string Categories management page title
+	 */
+	protected function get_categories_management_title()
+	{
+		return $this->lang['categories.management'];
+	}
+
+	/**
 	 * @return string Page title
 	 */
 	protected function get_title()
@@ -196,6 +204,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->get_module_home_page_title(), $this->get_module_home_page_url());
 
+		$breadcrumb->add($this->get_categories_management_title(), $this->get_categories_management_url());
 		$breadcrumb->add($this->get_title(), $this->get_delete_category_url($this->get_category()));
 
 		return $response;

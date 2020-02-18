@@ -44,6 +44,11 @@ class NewsletterStreamsFormController extends AbstractCategoriesFormController
 		return LangLoader::get_message('newsletter', 'common', 'newsletter');
 	}
 
+	protected function get_categories_management_title()
+	{
+		return LangLoader::get_message('newsletter.streams', 'common', 'newsletter');
+	}
+
 	protected function get_title()
 	{
 		return $this->get_id_category() == 0 ? LangLoader::get_message('stream.add', 'common', 'newsletter') : LangLoader::get_message('stream.edit', 'common', 'newsletter');
