@@ -14,7 +14,7 @@
 
 class FormFieldConstraintUrl extends FormFieldConstraintRegex
 {
-	private static $regex = '/^((ftps?|https?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\w#!:.?+=&%@!\-\/]*)*\/?$/u';
+	private static $regex = '/(^\/[0-9A-Za-z-\/]+$)|(^((ftps?|https?):\/\/)?([0-9a-z\.-]+)\.([a-z\.]{2,6})([0-9a-z#!:.?+=&%@!\-\/]*)*\/?$)/u';
 
 	public function __construct($error_message = '')
 	{
