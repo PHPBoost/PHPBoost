@@ -43,6 +43,7 @@ select {
 	border-style: solid;
 	border-color: transparent;
 	margin-bottom: 0.1618em;
+	width: 100%;
 	max-width: 100%;
 }
 
@@ -52,7 +53,6 @@ select {
 
 textarea {
 	display: block;
-	width: 100%;
 	overflow: auto;
 	resize: vertical;
 }
@@ -75,6 +75,17 @@ optgroup {
 
 option {
 	padding: 0 0.228em;
+}
+@media (min-width: 769px) {
+	[type="text"],
+	[type="email"],
+	[type="url"],
+	[type="number"],
+	[type="color"],
+	[type="tel"],
+	[type="search"],
+	[type="password"],
+	[type="file"] { width: auto; }
 }
 
 /* --- Grouped input -------------------------------------------------------- */
