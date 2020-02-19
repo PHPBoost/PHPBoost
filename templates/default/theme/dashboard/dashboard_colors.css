@@ -38,6 +38,8 @@
 	background-color: var(--bgc-main);
 }
 
+.addon-auth-content { background-color: var(--bgc-main);}
+
 /* --- cell.css ------------------------------------------------------------- */
 
 .cell-tile .cell-header,

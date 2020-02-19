@@ -150,6 +150,8 @@
 	max-height: 185px;
 }
 
+.advanced-auth-text { text-align: left; }
+
 .addon-auth-close {
 	display: block;
 	position: absolute;
