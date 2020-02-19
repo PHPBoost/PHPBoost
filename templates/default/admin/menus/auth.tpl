@@ -13,12 +13,12 @@
 				</div>
 				<div class="form-element">
 					<label for="activ">{L_STATUS}</label>
-					<div class="form-field"><label>
+					<div class="form-field">
 						<select name="activ" id="activ">
 							<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
 							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 						</select>
-					</label></div>
+					</div>
 				</div>
 				<div class="form-element custom-checkbox">
 					<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>

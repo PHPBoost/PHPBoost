@@ -33,14 +33,14 @@
 						# START filters #
 							<div id="filter{filters.ID}" class="menu-filter grouped-inputs inputs-with-sup large-inputs-group">
 								<span class="grouped-element">{PATH_TO_ROOT}</span>
-								<label class="label-sup grouped-element"><span>${LangLoader::get_message('module', 'admin-modules-common')}</span>
+								<label for="filter_module{filters.ID}" class="label-sup grouped-element"><span>${LangLoader::get_message('module', 'admin-modules-common')}</span>
 									<select name="filter_module{filters.ID}" id="filter_module{filters.ID}">
 										# START filters.modules #
 											<option value="{filters.modules.ID}"{filters.modules.SELECTED}>{filters.modules.ID}</option>
 										# END filters.modules #
 									</select>
 								</label>
-								<label class="label-sup grouped-element"><span>${LangLoader::get_message('page', 'main')}</span>
+								<label for="f{filters.ID}" class="label-sup grouped-element"><span>${LangLoader::get_message('page', 'main')}</span>
 									<input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}">
 								</label>
 								<a class="grouped-element" href="javascript:delete_filter({filters.ID});" aria-label="${LangLoader::get_message('delete', 'common')}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>

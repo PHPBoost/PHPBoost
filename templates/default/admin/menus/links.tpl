@@ -237,12 +237,12 @@
 				</div>
 				<div class="form-element third-field">
 					<label for="menu_element_{ID}_enabled">{L_STATUS}</label>
-					<div class="form-field"><label>
+					<div class="form-field">
 						<select name="menu_element_{ID}_enabled" id="menu_element_{ID}_enabled">
 							<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
 							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 						</select>
-					</label></div>
+					</div>
 				</div>
 				<div class="form-element third-field menu-type">
 					<label for="menu_element_{ID}_type">{L_TYPE}</label>

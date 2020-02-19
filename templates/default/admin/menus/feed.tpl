@@ -28,19 +28,16 @@ function CheckForm() {
 			<div class="fieldset-inset">
 				<div class="form-element">
 					<label for="name">* {L_NAME}</label>
-					<div class="form-field"><label><input type="text" name="name" id="name" value="{NAME}"></label></div>
+					<div class="form-field"><input type="text" name="name" id="name" value="{NAME}"></div>
 				</div>
 				<div class="form-element">
 					<label for="location">{L_LOCATION}</label>
-					<div class="form-field"><label><select name="location" id="location">{LOCATIONS}</select></label></div>
+					<div class="form-field"><select name="location" id="location">{LOCATIONS}</select></div>
 				</div>
 				<div class="form-element">
 					<label for="feed_url">* {L_FEED}</label>
 					<div class="form-field"><select name="feed_url" id="feed_url">
-						<option
-							value="null"
-							# IF C_NEW # selected="selected"# ENDIF #
-							class="feed-option-title">
+						<option value="null" class="feed-option-title"# IF C_NEW # selected="selected"# ENDIF #>
 							{L_AVAILABLES_FEEDS}
 						</option>
 						<option value="null" class="align-center"></option>
@@ -59,16 +56,16 @@ function CheckForm() {
 				</div>
 				<div class="form-element">
 					<label for="activ">{L_STATUS}</label>
-					<div class="form-field"><label>
+					<div class="form-field">
 						<select name="activ" id="activ">
 							<option value="1"# IF C_ENABLED # selected="selected"# ENDIF #>{L_ENABLED}</option>
 							<option value="0"# IF NOT C_ENABLED # selected="selected"# ENDIF #>{L_DISABLED}</option>
 						</select>
-					</label></div>
+					</div>
 				</div>
 				<div class="form-element">
 					<label for="items_number">* ${LangLoader::get_message('items_number', 'common')}</label>
-					<div class="form-field"><label><input type="number" min="1" max="500" name="items_number" id="items_number" value="{ITEMS_NUMBER}"></label></div>
+					<div class="form-field"><input type="number" min="1" max="500" name="items_number" id="items_number" value="{ITEMS_NUMBER}"></div>
 				</div>
 				<div class="form-element custom-checkbox">
 					<label for="hidden_with_small_screens">{L_HIDDEN_WITH_SMALL_SCREENS}</label>

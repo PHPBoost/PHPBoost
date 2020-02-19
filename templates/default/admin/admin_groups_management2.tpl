@@ -75,7 +75,7 @@
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field">
-							<label><input type="text" id="name" name="name" value="{NAME}"></label>
+							<input type="text" id="name" name="name" value="{NAME}">
 						</div>
 					</div>
 					<div class="form-element inline-radio custom-radio">
@@ -98,19 +98,19 @@
 					<div class="form-element">
 						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}"></label>
+							<input type="text" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}">
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"></label>
+							<input type="text" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}">
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="color_group">{L_COLOR_GROUP}</label>
 						<div class="form-field">
-							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
+							<input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#366493">
 						</div>
 					</div>
 					<div class="form-element custom-checkbox">
@@ -127,12 +127,10 @@
 					<div class="form-element">
 						<label for="img_group">{L_IMG_ASSOC_GROUP} <span class="field-description">{L_IMG_ASSOC_GROUP_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label>
-								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
-									{IMG_GROUPS}
-								</select>
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" aria-label="{IMG}" class="valign-middle" style="display: none;" />
-							</label>
+							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
+								{IMG_GROUPS}
+							</select>
+							<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" aria-label="{IMG}" class="valign-middle" style="display: none;" />
 						</div>
 					</div>
 				</div>
@@ -262,7 +260,7 @@
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field">
-							<label><input type="text" maxlength="25" id="name" name="name" value=""></label>
+							<input type="text" maxlength="25" id="name" name="name" value="">
 						</div>
 					</div>
 					<div class="form-element inline-radio custom-radio">
@@ -285,29 +283,29 @@
 					<div class="form-element">
 						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span class="field-description">{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" name="pm_group_limit" id="pm_group_limit" value="75"></label>
+							<input type="text" name="pm_group_limit" id="pm_group_limit" value="75">
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" name="data_group_limit" id="data_group_limit" value="5"></label>
+							<input type="text" name="data_group_limit" id="data_group_limit" value="5">
 						</div>
 					</div>
 					<div class="form-element top-field">
 						<label for="color_group">{L_COLOR_GROUP}</label>
 						<div class="form-field">
-							<label><input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#000000"></label>
+							<input type="color" name="color_group" id="color_group" value="{COLOR_GROUP}" pattern="#[A-Fa-f0-9]{6}" placeholder="#366493">
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="img_group">{L_IMG_ASSOC_GROUP} <span class="field-description">{L_IMG_ASSOC_GROUP_EXPLAIN}</span></label>
-						<div class="form-field"><label>
+						<div class="form-field">
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
 							</select>
 							<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="{IMG}" aria-label="{IMG}" class="valign-middle" style="display: none;" />
-						</label></div>
+						</div>
 					</div>
 				</div>
 			</fieldset>
