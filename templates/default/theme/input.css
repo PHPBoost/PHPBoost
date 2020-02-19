@@ -85,7 +85,8 @@ option {
 	[type="tel"],
 	[type="search"],
 	[type="password"],
-	[type="file"] { width: auto; }
+	[type="file"],
+	select { width: auto; }
 }
 
 /* --- Grouped input -------------------------------------------------------- */

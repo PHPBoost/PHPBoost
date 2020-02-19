@@ -143,6 +143,8 @@
 	padding: 0;
 }
 
+.cell-mini fieldset { margin: 0; }
+
 .cell-mini-vertical .cell-form:not(.grouped-inputs) input:not([type="checkbox"]):not([type="radio"]) {
 	width: 100%;
 }
