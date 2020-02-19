@@ -4,9 +4,11 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jerry Low
  * @link        https://github.com/jerrylow/basictable
- * @version     PHPBoost 5.3 - last update: 2019 11 19
+ * @version     PHPBoost 5.3 - last update: 2020 02 19
  * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ *
+ * @patch       replace <span class="bt-content" /> by <div class="bt-content" />
 */
 
 (function($) {
@@ -86,7 +88,7 @@
           $cell.attr('data-th', headingText);
 
           if (data.contentWrap && !$cell.children().hasClass('bt-content')) {
-            $cell.wrapInner('<span class="bt-content" />');
+            $cell.wrapInner('<div class="bt-content" />');
           }
         }
       });
