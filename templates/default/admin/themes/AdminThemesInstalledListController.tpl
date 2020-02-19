@@ -115,7 +115,7 @@
 								# IF themes_installed.C_IS_DEFAULT_THEME #
 									<span class="addon-auth default-addon notice" aria-label="{@themes.default_theme_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 								# ELSE #
-									<a href="" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
+									<a href="#" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
 									<div class="addon-auth-content">
 										{themes_installed.AUTHORIZATIONS}
 										<a href="#" class="addon-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>

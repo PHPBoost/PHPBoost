@@ -246,7 +246,7 @@
 </script>
 
 <nav id="admin-quick-menu">
-	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
+	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 		<i class="fa fa-bars" aria-hidden="true"></i> {L_FILES_MANAGEMENT}
 	</a>
 	<ul>
@@ -425,7 +425,7 @@
 							# ENDIF #
 							<div class="cell-form grouped-inputs">
 								{personal_files.BBCODE}
-								<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}">
+								<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{personal_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}">
 									<i class="fa fa-copy" aria-hidden="true"></i>
 								</a>
 							</div>
@@ -505,7 +505,7 @@
 							# ENDIF #
 							<div class="cell-form grouped-inputs">
 								{public_files.BBCODE}
-								<a class="grouped-element submit" href="" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
+								<a class="grouped-element submit" href="#" onclick="copy_to_clipboard('{public_files.DISPLAYED_CODE}'); return false;" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 							</div>
 							<div class="cell-list">
 								<ul>

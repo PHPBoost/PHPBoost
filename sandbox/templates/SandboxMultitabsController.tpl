@@ -38,9 +38,9 @@
 			    </div>
 				<nav>
 					<ul>
-						<li><a href="" data-accordion data-target="target-01">{@multitabs.menu.title} 01</a></li>
-						<li><a href="" data-accordion data-target="target-02">{@multitabs.menu.title} 02</a></li>
-						<li><a href="" data-accordion data-target="target-03">{@multitabs.menu.title} 03</a></li>
+						<li><a href="#" data-accordion data-target="target-01">{@multitabs.menu.title} 01</a></li>
+						<li><a href="#" data-accordion data-target="target-02">{@multitabs.menu.title} 02</a></li>
+						<li><a href="#" data-accordion data-target="target-03">{@multitabs.menu.title} 03</a></li>
 					</ul>
 				</nav>
 				<div class="panel-container">
@@ -81,9 +81,9 @@
 			    </div>
 				<nav>
 					<ul>
-						<li><a href="" data-accordion data-target="target-04">{@multitabs.menu.title} 04</a></li>
-						<li><a href="" data-accordion data-target="target-05">{@multitabs.menu.title} 05</a></li>
-						<li><a href="" data-accordion data-target="target-06">{@multitabs.menu.title} 06</a></li>
+						<li><a href="#" data-accordion data-target="target-04">{@multitabs.menu.title} 04</a></li>
+						<li><a href="#" data-accordion data-target="target-05">{@multitabs.menu.title} 05</a></li>
+						<li><a href="#" data-accordion data-target="target-06">{@multitabs.menu.title} 06</a></li>
 					</ul>
 				</nav>
 				<div class="panel-container">

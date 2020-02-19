@@ -94,7 +94,7 @@
  *
  * <p>
  * For more information about this service, see the
- * <a href="" target="_blank">API Documentation</a>
+ * <a href="#" target="_blank">API Documentation</a>
  * </p>
  *
  * @author Google, Inc.

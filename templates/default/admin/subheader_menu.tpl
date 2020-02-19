@@ -100,7 +100,7 @@
 					<li>
 						<a href="${relative_url(AdminServerUrlBuilder::system_report())}"><i aria-hidden="true" class="fa fa-fw fa-building"></i>{L_SERVER}</a>
 						<ul class="level-2">
-							<li><a href="${relative_url(AdminServerUrlBuilder::phpinfo())}"><i aria-hidden="true" class="fa fa-fw fa-info"></i>{L_PHPINFO}</a></a></li>
+							<li><a href="${relative_url(AdminServerUrlBuilder::phpinfo())}"><i aria-hidden="true" class="fa fa-fw fa-info"></i>{L_PHPINFO}</a></li>
 							<li><a href="${relative_url(AdminServerUrlBuilder::system_report())}"><i aria-hidden="true" class="fa fa-fw fa-info-circle"></i>{L_SYSTEM_REPORT}</a></li>
 						</ul>
 					</li>

@@ -131,7 +131,7 @@
 
 						<fieldset>
 							<legend>{L_POLL}</legend>
-							<p id="hidepoll_link" class="align-center"><a href="" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
+							<p id="hidepoll_link" class="align-center"><a href="#" onclick="hide_poll('hidepoll');return false;">{L_OPEN_MENU_POLL}</a></p>
 							<div id="hidepoll">
 								<div class="form-element">
 									<label for="question">* {L_QUESTION}</label>
@@ -171,7 +171,7 @@
 
 										<p class="align-center" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a aria-label="${LangLoader::get_message('add', 'common')}" href="" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>
+											<a aria-label="${LangLoader::get_message('add', 'common')}" href="#" onclick="add_poll_field({NBR_POLL_FIELD});return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>
 											# ENDIF #
 										</p>
 									</div>
@@ -196,7 +196,7 @@
 							# IF C_DISPLAY_MSG #
 								<p>
 									<span id="forum_change_statut">
-										<a href="" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+										<a href="#" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 									</span>
 								</p>
 							# ENDIF #

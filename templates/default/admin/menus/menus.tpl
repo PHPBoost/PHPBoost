@@ -107,7 +107,7 @@
 			# END themes #
 		</select>
 	</div>
-	<div id="admin-contents admin-contents-no-column">
+	<div id="admin-contents">
 		<div class="menusmanagement">
 			<div id="container-top-header">
 				<div class="container-block">

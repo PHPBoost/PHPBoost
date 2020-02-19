@@ -26,7 +26,7 @@
 				<div class="cell-list connect-contents">
 			# ELSE #
 				<div class="cell-list cell-list-inline connect-contents">
-					<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
+					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@connection}</span></a>
 			# ENDIF #
 					<ul class="connect-container">
 						<li>
@@ -94,7 +94,7 @@
 				<div class="cell-list connected-contents">
 			# ELSE #
 				<div class="cell-list cell-list-inline connected-content">
-					<a href="" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
+					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;">
 						<i class="fa fa-fw fa-bars # IF NUMBER_TOTAL_ALERT # blink alert# ENDIF #" aria-hidden="true"></i>
 						<span>{L_PRIVATE_PROFIL}</span>
 						# IF C_HAS_PM #

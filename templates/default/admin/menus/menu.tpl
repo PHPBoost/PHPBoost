@@ -5,7 +5,7 @@
 		<span id="m{IDMENU}"></span>
 		<h6 class="menus-block-title">{NAME}</h6>
 
-		<a href="" class="menus-block-move-cursor" onclick="return false;" aria-label="${LangLoader::get_message('move', 'admin')}"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
+		<a href="#" class="menus-block-move-cursor" onclick="return false;" aria-label="${LangLoader::get_message('move', 'admin')}"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a>
 		# IF C_EDIT #
 			<a href="{U_EDIT}" aria-label="{L_EDIT}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 		# ENDIF #

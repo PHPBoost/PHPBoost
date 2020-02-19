@@ -160,11 +160,11 @@
 					<div class="align-center">
 						<div class="notation" id="notation-1">
 							<span class="stars">
-								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-1"></a>
-								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-2"></a>
-								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-3"></a>
-								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-4"></a>
-								<a href="" onclick="return false;" class="far star star-hover fa-star" id="star-1-5"></a>
+								<a href="#" onclick="return false;" class="far star star-hover fa-star" id="star-1-1"></a>
+								<a href="#" onclick="return false;" class="far star star-hover fa-star" id="star-1-2"></a>
+								<a href="#" onclick="return false;" class="far star star-hover fa-star" id="star-1-3"></a>
+								<a href="#" onclick="return false;" class="far star star-hover fa-star" id="star-1-4"></a>
+								<a href="#" onclick="return false;" class="far star star-hover fa-star" id="star-1-5"></a>
 							</span>
 							<span class="notes">
 								<span class="number-notes">0</span>
@@ -412,20 +412,20 @@
 			</header>
 			<div class="content">{@css.notation.possible.values}
 				<div class="notation">
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a> <!-- 1 -->
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a> <!-- 1 -->
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-75"></span></a>  <!-- 0.75 à 1 -->
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-50"></span></a>  <!-- 0.5 à 0.75-->
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>  <!-- 0.05 à 0.5 -->
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>   <!-- 0 à 0.10 -->
 				</div>
 			</div>
 			<div class="content">{@css.notation.example}
 				<div class="notation">
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
-					<a href="" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-100"></span></a>
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-25"></span></a>
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
+					<a href="#" onclick="return false;" class="far star fa-star"><span class="star-width star-width-0"></span></a>
 				</div>
 			</div>
 		</article>

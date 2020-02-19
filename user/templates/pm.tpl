@@ -248,7 +248,7 @@
 					# START edit_pm.title #
 					<div class="form-element">
 						<label for="title">* {L_TITLE}</label>
-						<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}"></label></div>
+						<div class="form-field"><input type="text" id="title" name="title" value="{edit_pm.title.TITLE}"></div>
 					</div>
 					# END edit_pm.title #
 					<div class="form-element form-element-textarea">
@@ -305,7 +305,7 @@
 					# END post_convers.user_id_dest #
 					<div class="form-element">
 						<label for="title">* {L_TITLE}</label>
-						<div class="form-field"><label><input type="text" maxlength="100" id="title" name="title" value="{post_convers.TITLE}"></label></div>
+						<div class="form-field"><input type="text" id="title" name="title" value="{post_convers.TITLE}"></div>
 					</div>
 					<div class="form-element form-element-textarea">
 						<label for="contents">* {L_MESSAGE}</label>

@@ -30,7 +30,7 @@
 						<div class="forum-refresh">
 							<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 						</div>
-						<a href="" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
+						<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">${LangLoader::get_message('forum.links', 'common', 'forum')}</span></a>
 					</span>
 				</li>
 				<li>
@@ -136,7 +136,7 @@
 					# IF C_DISPLAY_MSG #
 					<li>
 						<span class="cssmenu-title" id="forum_change_statut">
-							<a href="" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="fa fa-fw fa-{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
+							<a href="#" onclick="XMLHttpRequest_change_statut(); return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="fa fa-fw fa-{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut(); return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 						</span>
 					</li>
 					# ENDIF #
@@ -147,17 +147,17 @@
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track">
-							<a href="" onclick="XMLHttpRequest_track(); return false;" id="forum_track_img"><i class="fa fa-fw fa-{ICON_TRACK}" aria-hidden="true"></i></a> <a href="" onclick="XMLHttpRequest_track(); return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
+							<a href="#" onclick="XMLHttpRequest_track(); return false;" id="forum_track_img"><i class="fa fa-fw fa-{ICON_TRACK}" aria-hidden="true"></i></a> <a href="#" onclick="XMLHttpRequest_track(); return false;"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_pm">
-							<a href="" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img"><i class="fa fa-fw fa-{ICON_SUBSCRIBE_PM}" aria-hidden="true"></i></a> <a href="" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUBSCRIBE_PM_DEFAULT}</span></a>
+							<a href="#" onclick="XMLHttpRequest_track_pm(); return false;" id="forum_track_pm_img"><i class="fa fa-fw fa-{ICON_SUBSCRIBE_PM}" aria-hidden="true"></i></a> <a href="#" onclick="XMLHttpRequest_track_pm(); return false;"><span id="forum_track_pm_msg">{L_SUBSCRIBE_PM_DEFAULT}</span></a>
 						</span>
 					</li>
 					<li>
 						<span class="cssmenu-title" id="forum_track_mail">
-							<a href="" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img"><i class="fa fa-fw fa-{ICON_SUBSCRIBE}" aria-hidden="true"></i></a> <a href="" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUBSCRIBE_DEFAULT}</span></a>
+							<a href="#" onclick="XMLHttpRequest_track_mail(); return false;" id="forum_track_mail_img"><i class="fa fa-fw fa-{ICON_SUBSCRIBE}" aria-hidden="true"></i></a> <a href="#" onclick="XMLHttpRequest_track_mail(); return false;"><span id="forum_track_mail_msg">{L_SUBSCRIBE_DEFAULT}</span></a>
 						</span>
 					</li>
 				</ul>

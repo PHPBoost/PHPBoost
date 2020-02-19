@@ -39,7 +39,7 @@
 
 </div>
 <div class="advanced-auth-text">
-	<a class="small" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a> / <a class="small" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
+	<a class="small" href="javascript:check_select_multiple('{IDSELECT}',true);">{L_SELECT_ALL}</a> / <a class="small" href="javascript:check_select_multiple('{IDSELECT}',false);">{L_SELECT_NONE}</a>
 	<span class="field-description">{L_EXPLAIN_SELECT_MULTIPLE}</span>
 	<a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
 		# IF C_ADVANCED_AUTH_OPEN #

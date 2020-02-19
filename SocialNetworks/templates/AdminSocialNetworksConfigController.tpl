@@ -89,12 +89,12 @@ jQuery(document).ready(function() {
 						{social_networks_list.NAME}
 					</div>
 					<div class="sortable-actions">
-						# IF social_networks_list.C_MOBILE_ONLY #<a href="" aria-label="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt" aria-hidden="true"></i></a># ENDIF #
-						# IF social_networks_list.C_DESKTOP_ONLY #<a href="" aria-label="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop" aria-hidden="true"></i></a># ENDIF #
-						<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-						<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+						# IF social_networks_list.C_MOBILE_ONLY #<a href="#" aria-label="{@admin.visible_on_mobile_only}" onclick="return false;"><i class="fa fa-mobile-alt" aria-hidden="true"></i></a># ENDIF #
+						# IF social_networks_list.C_DESKTOP_ONLY #<a href="#" aria-label="{@admin.visible_on_desktop_only}" onclick="return false;"><i class="fa fa-laptop" aria-hidden="true"></i></a># ENDIF #
+						<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+						<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{social_networks_list.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 						# IF social_networks_list.C_SHARING_CONTENT #
-							<a href="" onclick="return false;" id="change-display-{social_networks_list.ID}" aria-label="# IF social_networks_list.C_DISPLAY #{@admin.display_share_link}# ELSE #{@admin.hide_share_link}# ENDIF #">
+							<a href="#" onclick="return false;" id="change-display-{social_networks_list.ID}" aria-label="# IF social_networks_list.C_DISPLAY #{@admin.display_share_link}# ELSE #{@admin.hide_share_link}# ENDIF #">
 								<i aria-hidden="true" # IF social_networks_list.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i>
 							</a>
 						# ELSE #

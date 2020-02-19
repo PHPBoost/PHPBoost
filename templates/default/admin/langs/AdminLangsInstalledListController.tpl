@@ -88,7 +88,7 @@
 								# IF langs_installed.C_IS_DEFAULT_LANG #
 									<span class="addon-auth default-addon notice" aria-label="{@langs.default_lang_visibility}"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
 								# ELSE #
-									<a href="" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"  aria-hidden="true"></i></a>
+									<a href="#" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield"  aria-hidden="true"></i></a>
 									<div class="addon-auth-content">
 										{langs_installed.AUTHORIZATIONS}
 										<a href="#" class="addon-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>

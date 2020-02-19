@@ -99,7 +99,7 @@
 				<ul class="accordion-bordered">
 					# START questions #
 						<li id="question-title-{questions.ID}">
-							<a href="" data-accordion data-target="question{questions.ID}">{questions.QUESTION}</a>
+							<a href="#" data-accordion data-target="question{questions.ID}">{questions.QUESTION}</a>
 						</li>
 					# END questions #
 				</ul>
@@ -113,7 +113,7 @@
 								<a href="{questions.U_EDIT}"aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 							# ENDIF #
 							# IF questions.C_DELETE #
-								<a href=""aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_question({questions.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
+								<a href="#"aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_question({questions.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 							# ENDIF #
 						</div>
 						<div class="content">{questions.ANSWER}</div>

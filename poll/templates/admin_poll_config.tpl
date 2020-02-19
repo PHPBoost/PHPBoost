@@ -26,7 +26,7 @@
 			</script>
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
+			<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_POLL_MANAGEMENT}
 			</a>
 			<ul>
@@ -59,13 +59,11 @@
 						<div class="form-element">
 							<label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST} <span class="field-description">{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span></label>
 							<div class="form-field">
-								<label>
 								<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" multiple="multiple">
 									{POLL_LIST}
 								</select>
 								<span class="spacer"></span>
 								<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
-								</label>
 							</div>
 						</div>
 					</div>
@@ -76,11 +74,11 @@
 					<div class="fieldset-inset">
 						<div class="form-element">
 							<label for="cookie_name">* {L_COOKIE_NAME}</label>
-							<div class="form-field"><input type="text" maxlength="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
+							<div class="form-field"><input type="text" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
 						</div>
 						<div class="form-element">
 							<label for="cookie_lenght">* {L_COOKIE_LENGHT} ({L_DAYS})</label>
-							<div class="form-field"><input type="text" maxlength="11" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> </div>
+							<div class="form-field"><input type="text" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> </div>
 						</div>
 						<div class="form-element custom-checkbox">
 							<label for="display_results_before_polls_end">{L_DISPLAY_RESULTS_BEFORE_POLLS_END}</label>

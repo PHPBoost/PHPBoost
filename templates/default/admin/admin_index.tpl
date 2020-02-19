@@ -1,5 +1,5 @@
 <nav id="admin-quick-menu">
-	<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_QUICK_LINKS}">
+	<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;" aria-label="{L_QUICK_LINKS}">
 		<i class="fa fa-bars" aria-hidden="true"></i> {L_QUICK_LINKS}
 	</a>
 	<ul>

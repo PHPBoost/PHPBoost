@@ -23,7 +23,7 @@
 		# ENDIF #
 
 		<nav id="admin-quick-menu">
-			<a href="" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
+			<a href="#" class="js-menu-button" onclick="open_submenu('admin-quick-menu');return false;">
 				<i class="fa fa-bars" aria-hidden="true"></i> {L_GALLERY_MANAGEMENT}
 			</a>
 			<ul>
@@ -123,7 +123,7 @@
 				# IF C_IMG #
 					<article>
 						<header>
-							<div class="align-right"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+							<div class="align-right"><a href="#" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_top" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
 							<h2>{L_IMG_DISPO_GALLERY}</h2>
 						</header>
 						<div class="cell-flex cell-columns-4 cell-tile">
@@ -167,7 +167,7 @@
 								</div>
 							# END list #
 						</div>
-						<div class="align-right"><a href="" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
+						<div class="align-right"><a href="#" onclick="unselect_all_pictures();return false;" id="change_all_pictures_selection_bottom" class="smaller">{L_UNSELECT_ALL_PICTURES} <i class="far fa-check-square"></i></a></div>
 					</article>
 
 

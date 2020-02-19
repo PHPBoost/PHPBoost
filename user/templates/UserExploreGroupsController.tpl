@@ -68,8 +68,8 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('admin', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-						<a href="" onclick="open_group('admin', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group('admin', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group('admin', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
 					{@admins.list} <span class="small">({NUMBER_ADMINS})</span>
 				</h2>
@@ -109,8 +109,8 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group('modo', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-						<a href="" onclick="open_group('modo', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group('modo', 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group('modo', 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
 					{@modos.list} <span class="small">({NUMBER_MODOS})</span>
 				</h2>
@@ -151,8 +151,8 @@
 			<header>
 				<h2>
 					<span class="list-members-container-action">
-						<a href="" onclick="open_group({group.GROUP_ID}, 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
-						<a href="" onclick="open_group({group.GROUP_ID}, 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group({group.GROUP_ID}, 0);return false;" aria-label="{@group.hide_list_members}" class="action-less"><i class="fa fa-minus" aria-hidden="true"></i></a>
+						<a href="#" onclick="open_group({group.GROUP_ID}, 1);return false;" aria-label="{@group.view_list_members}" class="action-more"><i class="fa fa-plus" aria-hidden="true"></i></a>
 					</span>
 					<a href="{group.U_GROUP}" class="group-name">{group.GROUP_NAME} <span class="small">({group.NUMBER_MEMBERS})</span></a>
 					# IF C_ADMIN #

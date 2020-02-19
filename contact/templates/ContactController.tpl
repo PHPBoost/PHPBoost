@@ -62,7 +62,7 @@
 			
 		# ELSE #
 			<div class="spacer"></div>
-			<div class="align-center"><a href="">{@contact.send_another_mail}</a></div>
+			<div class="align-center"><a href="#">{@contact.send_another_mail}</a></div>
 		# ENDIF #
 	</div>
 	<footer></footer>

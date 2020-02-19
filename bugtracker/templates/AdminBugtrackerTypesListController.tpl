@@ -97,7 +97,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		<tr>
 			<td colspan="3">
 				<div class="cw25 float-left">
-					<a href="" onclick="BugtrackerFormFieldTypes.add_type();return false;" aria-label="{@titles.add_type}" id="add-type"><i class="fa fa-plus" aria-hidden="true"></i></a>
+					<a href="#" onclick="BugtrackerFormFieldTypes.add_type();return false;" aria-label="{@titles.add_type}" id="add-type"><i class="fa fa-plus" aria-hidden="true"></i></a>
 				</div>
 				<div class="float-right">
 					# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" data-confirmation="{@actions.confirm.del_default_value}"><i class="far fa-trash-alt" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #

@@ -120,16 +120,16 @@ jQuery(document).ready(function() {
 						<div class="sortable-actions">
 							{@field.required} : # IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 							# IF C_MORE_THAN_ONE_FIELD #
-							<a href="" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-							<a href="" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+							<a href="#" aria-label="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+							<a href="#" aria-label="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{list_extended_fields.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 							# ENDIF #
 							<a href="{list_extended_fields.U_EDIT}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							# IF NOT list_extended_fields.C_FREEZE #
-							<a href="" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+							<a href="#" onclick="return false;" aria-label="${LangLoader::get_message('delete', 'common')}" id="delete-{list_extended_fields.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 							# ELSE #
 							&nbsp;
 							# ENDIF #
-							<a href="" onclick="return false;" id="change-display-{list_extended_fields.ID}" aria-label="# IF list_extended_fields.C_DISPLAY #{@field.display}# ELSE #{@field.not_display}# ENDIF #"><i aria-hidden="true" # IF list_extended_fields.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i></a>
+							<a href="#" onclick="return false;" id="change-display-{list_extended_fields.ID}" aria-label="# IF list_extended_fields.C_DISPLAY #{@field.display}# ELSE #{@field.not_display}# ENDIF #"><i aria-hidden="true" # IF list_extended_fields.C_DISPLAY #class="fa fa-eye"# ELSE #class="fa fa-eye-slash"# ENDIF #></i></a>
 						</div>
 						<div class="spacer"></div>
 						<script>

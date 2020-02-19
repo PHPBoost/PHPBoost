@@ -19,7 +19,7 @@
 	}
 </script>
 <div class="bugtracker-filter">
-	<a href="" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
+	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> {L_FILTERS}</a>
 </div>
 <table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>
 	<thead>
@@ -89,7 +89,7 @@
 			# START filters #
 				<tr id="filter{filters.ID}">
 					<td colspan="{FILTERS_NUMBER}">
-						<a href="" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+						<a href="#" aria-label="${LangLoader::get_message('delete', 'common')}" onclick="delete_filter('{filters.ID}'); return false;"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 						<a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 					</td>
 				</tr>

@@ -162,7 +162,7 @@ function bbcode_color(divID, field, type)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td class="square-cell hide-modal" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');" aria-label="' + color[i] + '"><a href=""></a></td>' + br;
+		contents += '<td class="square-cell hide-modal" style="background-color:' + color[i] + ';" onclick="insertbbcode(\'[' + type + '=' + color[i] + ']\', \'[/' + type + ']\', \'' + field + '\');" aria-label="' + color[i] + '"><a href="#"></a></td>' + br;
 	}
 	document.getElementById("bb-"+ type + field).innerHTML = contents + '</tr></table>';
 }
@@ -290,7 +290,7 @@ function bbcode_wikipedia(field)
 		insert_lang = (lang != '' && lang != null) ? ' lang="' + lang + '"' : '',
 		insert_word = (word != '' && word != null) ? word : '',
 		insert_page = '';
-	
+
 	if (word != '' && word != null) {
 		encoded_word = url_encode_rewrite(word);
 		if (encoded_word != word) {

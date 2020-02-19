@@ -167,7 +167,7 @@ function display_default_version_radio(version_id)
 			<td>
 				<input type="text" size="11" maxlength="10" id="release_date{versions.ID}" class="input-date" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)});return false;" placeholder="${LangLoader::get_message('date_format', 'date-common')}">
 				<div class="calendar-container">
-					<a id="release_date{versions.ID}_link" href="" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar-alt" aria-hidden="true"></i></a>
+					<a id="release_date{versions.ID}_link" href="#" onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', 'release_date{versions.ID}', ${escapejs(versions.YEAR)}, ${escapejs(versions.MONTH)}, ${escapejs(versions.DAY)}, ${escapejs(versions.ID)}, 1);return false;" aria-label="{@titles.calendar}"><i class="fa fa-calendar-alt" aria-hidden="true"></i></a>
 					<div id="calendar{versions.ID}" class="calendar-block-container" style="display: none;">
 						<div id="release_date{versions.ID}_date" class="calendar-block"></div>
 					</div>
@@ -191,7 +191,7 @@ function display_default_version_radio(version_id)
 		<tr>
 			<td colspan="5">
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" class="float-right" data-confirmation="{@actions.confirm.del_default_value}"><i class="far fa-trash-alt" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #
-				<a href="" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a href="#" onclick="BugtrackerFormFieldVersions.add_version();return false;" aria-label="{@titles.add_version}" id="add-version"><i class="fa fa-plus" aria-hidden="true"></i></a>
 			</td>
 		</tr>
 	</tfoot>

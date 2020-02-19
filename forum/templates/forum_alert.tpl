@@ -2,7 +2,7 @@
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-moderation" class="forum-contents">
 			<header>
-				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="">{L_ALERT}</a></h2>
+				<h2><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{L_ALERT}</a></h2>
 			</header>
 
 			# START alert_form #
@@ -59,7 +59,7 @@
 					</div>
 				</fieldset>
 				# END alert_confirm #
-			<footer><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="">{L_ALERT}</a></footer>
+			<footer><a href="{U_FORUM_CAT}">{FORUM_CAT}</a> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESC}</em></span> <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a href="#">{L_ALERT}</a></footer>
 		</article>
 
 		# INCLUDE forum_bottom #

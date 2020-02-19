@@ -96,7 +96,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 	<tfoot>
 		<tr>
 			<td>
-				<a href="" onclick="BugtrackerFormFieldCategories.add_category();return false;" aria-label="{@titles.add_category}" id="add-category"><i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a href="#" onclick="BugtrackerFormFieldCategories.add_category();return false;" aria-label="{@titles.add_category}" id="add-category"><i class="fa fa-plus" aria-hidden="true"></i></a>
 			</td>
 			<td colspan="2" class="align-right">
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" data-confirmation="{@actions.confirm.del_default_value}"><i class="far fa-trash-alt" aria-hidden="true"></i> {@labels.del_default_value}</a># ENDIF #

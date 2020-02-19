@@ -94,7 +94,7 @@
 				<footer class="cell-footer">
 					# IF themes_not_installed.C_COMPATIBLE #
 						<div class="addon-auth-container">
-							<a href="" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
+							<a href="#" class="addon-auth" aria-label="${LangLoader::get_message('members.config.authorization', 'admin-user-common')}"><i class="fa fa-user-shield" aria-hidden="true"></i></a>
 							<div class="addon-auth-content">
 								{themes_not_installed.AUTHORIZATIONS}
 								<a href="#" class="addon-auth-close" aria-label="${LangLoader::get_message('close', 'main')}"><i class="fa fa-times" aria-hidden="true"></i></a>
