@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 03 28
+ * @version     PHPBoost 5.3 - last update: 2020 02 19
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -42,17 +42,17 @@ if ($app instanceof Application)
 		$temporary_dir_path = PATH_TO_ROOT . '/cache/phpboost-diff';
 		$temporary_folder = new Folder($temporary_dir_path);
 		$temporary_folder->create();
-		
+
 		$major_version = GeneralConfig::load()->get_phpboost_major_version();
 		$actual_minor_version = Environment::get_phpboost_minor_version();
 		$new_major_version = basename($app->get_version());
 		$new_minor_version = str_replace($major_version . '.', '', $app->get_version());
-		
+
 		if ($app->get_type() == 'kernel' && $major_version == $new_major_version && $actual_minor_version < ($new_minor_version - 1))
 		{
 			$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $actual_minor_version, $major_version . '.' . ($actual_minor_version + 1)), $app->get_autoupdate_url());
 			$unread_alerts = AdministratorAlertService::get_unread_alerts();
-			
+
 			for ($i = $actual_minor_version ; $i < $new_minor_version ; $i++)
 			{
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
@@ -62,9 +62,9 @@ if ($app instanceof Application)
 					$installation_error = true;
 					break;
 				}
-				
+
 				$url = str_replace(array($major_version . '.' . ($i + 1), $major_version . '.' . $i), array($major_version . '.' . ($i + 2), $major_version . '.' . ($i + 1)), $url);
-				
+
 				foreach ($unread_alerts as $key => $alert)
 				{
 					$details = TextHelper::unserialize($alert->get_properties());
@@ -73,7 +73,7 @@ if ($app instanceof Application)
 						// Set admin alert status to processed
 						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 						AdministratorAlertService::save_alert($alert);
-						
+
 						unset($unread_alerts[$key]);
 					}
 				}
@@ -88,7 +88,7 @@ if ($app instanceof Application)
 				$installation_error = true;
 			}
 		}
-		
+
 		if ($temporary_folder->exists())
 		{
 			if (!$installation_error)
@@ -99,7 +99,7 @@ if ($app instanceof Application)
 					if ($existing_folder->exists())
 					{
 						FileSystemHelper::copy_folder($temporary_dir_path . '/' . $f->get_name() . '/', PATH_TO_ROOT . '/' . $f->get_name() . '/');
-						
+
 						switch (ModulesManager::upgrade_module($f->get_name()))
 						{
 							case ModulesManager::UPGRADE_FAILED:
@@ -167,17 +167,17 @@ if ($app instanceof Application)
 					}
 					$installation_success = true;
 				}
-				
+
 				if ($installation_success)
 				{
 					// Set admin alert status to processed
 					$update->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 					AdministratorAlertService::save_alert($update);
-					
+
 					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 				}
 			}
-			
+
 			FileSystemHelper::remove_folder($temporary_dir_path);
 		}
 		else
@@ -186,7 +186,7 @@ if ($app instanceof Application)
 			$installation_error = true;
 		}
 	}
-	
+
 	$authors = $app->get_authors();
 	$new_features = $app->get_new_features();
 	$warning = $app->get_warning();
@@ -200,26 +200,26 @@ if ($app instanceof Application)
 	$has_improvements = count($improvements) > 0;
 	$has_bug_corrections = count($bug_corrections) > 0;
 	$has_security_improvements = count($security_improvements) > 0;
-	
+
 	switch ($update->get_priority())
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$priority_css_class = 'alert-very-high-priority';
+			$priority_css_class = 'error';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$priority_css_class = 'alert-high-priority';
+			$priority_css_class = 'warning';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-			$priority_css_class = 'alert-medium-priority';
+			$priority_css_class = 'success';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
-			$priority_css_class = 'alert-low-priority';
+			$priority_css_class = 'question';
 			break;
 		default:
-			$priority_css_class = 'alert-very-low-priority';
+			$priority_css_class = 'notice';
 			break;
 	}
-	
+
 	switch ($app->get_warning_level())
 	{
 		case 'high':

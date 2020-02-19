@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 03 26
+ * @version     PHPBoost 5.3 - last update: 2020 02 19
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -61,23 +62,23 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 		{
 			case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 				$priority = 'priority_very_high';
-				$priority_css_class = 'alert-very-high-priority';
+				$priority_css_class = 'error';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
 				$priority = 'priority_high';
-				$priority_css_class = 'alert-high-priority';
+				$priority_css_class = 'warning';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
 				$priority = 'priority_medium';
-				$priority_css_class = 'alert-medium-priority';
+				$priority_css_class = 'success';
 				break;
 			case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
 				$priority = 'priority_low';
-				$priority_css_class = 'alert-low-priority';
+				$priority_css_class = 'question';
 				break;
 			default:
 				$priority = 'priority_very_low';
-				$priority_css_class = 'alert-very-low-priority';
+				$priority_css_class = 'notice';
 				break;
 		}
 
@@ -95,7 +96,7 @@ if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
 			'PRIORITY' => $LANG[$priority],
 			'PRIORITY_CSS_CLASS' => $priority_css_class
 		));
-		
+
 		$updates_availables++;
 	}
 }

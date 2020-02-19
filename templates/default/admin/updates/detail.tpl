@@ -41,17 +41,17 @@
 					</div>
 					<div class="content">
 						# IF C_DISPLAY_LINKS_AND_PRIORITY #
-							<div class="infos options align-center">
-								<p class="infos-options alert-priority {PRIORITY_CSS_CLASS}">{PRIORITY}</p>
+							<div class="infos options align-center alert-priority bgc {PRIORITY_CSS_CLASS}">
+								<p>{PRIORITY}</p>
 								# IF C_DISPLAY_UPDATE_BUTTON #
 									<form action="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={IDENTIFIER}" method="post">
-										<button type="submit" name="execute_update" class="infos-options button submit" onclick="" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
+										<button type="submit" name="execute_update" class="button bgc-full {PRIORITY_CSS_CLASS}" onclick="" value="true">${LangLoader::get_message('install', 'admin-common')}</button>
 										<input type="hidden" name="token" value="{TOKEN}">
 									</form>
 								# ELSE #
-									<a class="infos-options" href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a>
+									<a href="{U_APP_DOWNLOAD}"><i class="fa fa-cloud-download-alt" aria-hidden="true"></i> {L_DOWNLOAD_PACK}</a>
 									# IF U_APP_UPDATE #
-										<a class="infos-options" href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
+										<a href="{U_APP_UPDATE}"><i class="fa fa-sync-alt" aria-hidden="true"></i> {L_UPDATE_PACK}</a>
 									# ENDIF #
 								# ENDIF #
 							</div>

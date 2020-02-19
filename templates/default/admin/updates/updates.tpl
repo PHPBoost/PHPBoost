@@ -32,9 +32,9 @@
 							<h2>{apps.NAME} {apps.VERSION}</h2>
 						</header>
 						<div class="content">
-							<div class="infos options align-center">
-								<p class="infos-options alert-priority {apps.PRIORITY_CSS_CLASS}">{apps.PRIORITY}</p>
-								<p class="infos-options"><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.IDENTIFIER}">[ {L_MORE_DETAILS} ]</a></p>
+							<div class="infos options align-center alert-priority bgc {apps.PRIORITY_CSS_CLASS}">
+								<p>{apps.PRIORITY}</p>
+								<p><a href="{PATH_TO_ROOT}/admin/updates/detail.php?identifier={apps.IDENTIFIER}">[ {L_MORE_DETAILS} ]</a></p>
 							</div>
 							<p>{apps.SHORT_DESCRIPTION}</p>
 						</div>
