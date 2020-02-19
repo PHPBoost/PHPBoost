@@ -4,11 +4,12 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 5.3 - last update: 2020 02 07
+ * @version     PHPBoost 5.3 - last update: 2020 02 19
  * @since       PHPBoost 5.3 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * Patch - replace occurences
+ *      hc-offcanvas-{style} => pushmenu-id-{style}
  *      hc-offcanvas-nav => pushmenu (main css class)
  *      hc-nav-trigger => push-nav-trigger (trigger css class)
  *      hcOffcanvasNav => pushmenu (plugin name)
@@ -110,7 +111,7 @@ function _typeof(n) {
                 var e = _(this);
                 if (e.find("ul").addBack("ul").length) {
                     var n, o, c, i, a, s, b = "push-nav-".concat(++X),
-                        l = (n = "hc-offcanvas-".concat(X, "-style"), o = _('<style id="'.concat(n, '">')).appendTo(_("head")), c = {}, i = {}, a = function(n) {
+                        l = (n = "pushmenu-id-".concat(X, "-style"), o = _('<style id="'.concat(n, '">')).appendTo(_("head")), c = {}, i = {}, a = function(n) {
                             return ";" !== n.substr(-1) && (n += ";" !== n.substr(-1) ? ";" : ""), n
                         }, {
                             reset: function() {
