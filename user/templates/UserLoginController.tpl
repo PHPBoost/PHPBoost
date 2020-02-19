@@ -6,7 +6,7 @@
 		# INCLUDE LOGIN_FORM #
 		<div class="align-center">
 			# IF C_REGISTRATION_ENABLED #
-				<a class="infos-options" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@registration}</a>
+				<a href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@registration}</a>
 			# ENDIF #
 			# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
 				# START external_auth #

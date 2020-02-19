@@ -8,7 +8,7 @@
 				<div class="cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a class="infos-options" href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
+							<a href="{U_WARNING}" aria-label="{L_USERS_WARNING}">
 								<i class="fa fa-exclamation-triangle fa-2x warning" aria-hidden="true"></i>
 								<span class="d-block">{L_USERS_WARNING}</span>
 							</a>
@@ -18,7 +18,7 @@
 				<div class="cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a class="infos-options" href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
+							<a href="{U_PUNISH}" aria-label="{L_USERS_PUNISHMENT}">
 								<i class="fa fa-times fa-2x error" aria-hidden="true"></i>
 								<span class="d-block">{L_USERS_PUNISHMENT}</span>
 							</a>
@@ -28,7 +28,7 @@
 				<div class="cell">
 					<div class="cell-body">
 						<div class="cell-content align-center">
-							<a class="infos-options" href="{U_BAN}" aria-label="{L_USERS_BAN}">
+							<a href="{U_BAN}" aria-label="{L_USERS_BAN}">
 								<i class="fa fa-minus-circle fa-2x error" aria-hidden="true"></i>
 								<span class="d-block">{L_USERS_BAN}</span>
 							</a>

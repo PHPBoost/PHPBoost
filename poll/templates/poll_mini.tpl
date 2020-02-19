@@ -9,7 +9,7 @@
 			<ul>
 				# START question.radio #
 					<li>
-						<label class="infos-options radio" for="poll-radio-{question.radio.NAME}">
+						<label class="radio" for="poll-radio-{question.radio.NAME}">
 							<input type="radio" id="poll-radio-{question.radio.NAME}" name="radio" value="{question.radio.NAME}">
 							<span class="smaller">{question.radio.ANSWERS}</span>
 						</label>
@@ -20,7 +20,7 @@
 			<ul>
 				# START question.checkbox #
 					<li>
-						<label class="infos-options checkbox" for="poll-checkbox-{question.checkbox.NAME}">
+						<label class="checkbox" for="poll-checkbox-{question.checkbox.NAME}">
 							<input type="checkbox" id="poll-checkbox-{question.checkbox.NAME}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}">
 							<span class="smaller">{question.checkbox.ANSWERS}</span>
 						</label>
@@ -48,7 +48,7 @@
 		<ul>
 			<li>
 				# START result.answers #
-					<span class="infos-options smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
+					<span class="smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
 					<div class="progressbar-container" aria-label="{result.answers.WIDTH}%">
 						<div class="progressbar-infos">{result.answers.WIDTH}%</div>
 						<div class="progressbar" style="width:{result.answers.WIDTH}%;"></div>

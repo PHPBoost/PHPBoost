@@ -50,7 +50,7 @@
 				<div class="form-element user-profile-nbr-msg">
 					<label>{@number_messages}</label>
 					<div class="form-field form-field-free">
-						<span class="infos-options">{MESSAGES_NUMBER}</span>
+						<span>{MESSAGES_NUMBER}</span>
 						<a href="{U_DISPLAY_USER_MESSAGES}">{@messages}</a>
 					</div>
 				</div>

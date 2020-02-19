@@ -12,7 +12,7 @@
 				# START list #
 				<div class="poll-question-container">
 					<a id="poll-question-{list.U_POLL_ID}" class="poll-question" href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">
-						<span class="infos-options">{list.QUESTION}</span>
+						<span>{list.QUESTION}</span>
 						<img src="{PATH_TO_ROOT}/poll/poll.png" alt="{list.QUESTION}" />
 					</a>
 				</div>

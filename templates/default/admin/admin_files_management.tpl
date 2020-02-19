@@ -80,7 +80,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 	}
-	
+
 	function add_folder(id_parent, user_id, divid)
 	{
 		var name = document.getElementById("folder-name").value;
@@ -475,7 +475,7 @@
 				<div class="cell-flex cell-tile cell-inline">
 					# START public_files #
 						<div class="cell# IF public_files.C_RECENT_FILE # new-content# ENDIF #">
-							<span class="infos-options"><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							<span><span>{L_POSTOR}</span># IF public_files.C_POSTOR_EXIST #<a class="{public_files.POSTOR_LEVEL_CLASS}"# IF public_files.C_POSTOR_GROUP_COLOR # style="color:{public_files.POSTOR_GROUP_COLOR}"# ENDIF # href="{public_files.U_POSTOR_PROFILE}">{public_files.POSTOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
 							<span id="imgf{public_files.ID}"></span>
 							<div class="cell-header">
 								<div id="fifl{public_files.ID}" class="cell-name ellipsis">{public_files.NAME}</div>

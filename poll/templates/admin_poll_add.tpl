@@ -18,9 +18,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<label class="infos-options"><input type="text" name="a'+i+'" value="" /></label><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<label><input type="text" name="a'+i+'" value="" /></label><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label class="infos-options"><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><span id="v'+i2+'"></span>';
+				document.getElementById('v'+i).innerHTML = '<label><input class="poll-vote" type="text" name="v'+i+'" value="" /></label><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')" aria-label="${LangLoader::get_message('add', 'common')}"><i class="fa fa-plus" aria-hidden="true"></i></a></span>' : '';
 		}
@@ -112,15 +112,15 @@
 										</tr>
 										<tr>
 											<td class="align-left">
-												<label class="infos-options"><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
-												<label class="infos-options"><input type="text" name="a1" value="{ANSWER1}" /></label>
-												<label class="infos-options"><input type="text" name="a2" value="{ANSWER2}" /></label>
+												<label><input type="text" name="a0" id="a0" value="{ANSWER0}" /></label>
+												<label><input type="text" name="a1" value="{ANSWER1}" /></label>
+												<label><input type="text" name="a2" value="{ANSWER2}" /></label>
 												<span id="a3"></span>
 											</td>
 											<td class="align-left">
-												<label class="infos-options"><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
-												<label class="infos-options"><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
-												<label class="infos-options"><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
+												<label><input class="poll-vote" type="text" name="v0" value="{VOTES0}" /> {PERCENT0}</label>
+												<label><input class="poll-vote" type="text" name="v1" value="{VOTES1}" /> {PERCENT1}</label>
+												<label><input class="poll-vote" type="text" name="v2" value="{VOTES2}" /> {PERCENT2}</label>
 												<span id="v3"></span>
 											</td>
 										</tr>

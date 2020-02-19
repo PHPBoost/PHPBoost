@@ -334,19 +334,19 @@
 					<div class="options">
 						<h6>{L_INFORMATIONS}</h6>
 						# IF C_TITLE_ENABLED #
-							<span class="infos-options"><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
+							<span><span class="text-strong">{L_NAME} : </span><span id="fi_{ID}">{NAME}</span> <span id="fi{ID}"></span></span>
 						# ENDIF #
 						# IF C_AUTHOR_DISPLAYED #
-							<span class="infos-options"><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #<span class="visitor">${LangLoader::get_message('guest', 'main')}</span># ENDIF #</span>
+							<span><span class="text-strong">{L_POSTOR} : </span># IF C_POSTOR_EXIST #<a class="{POSTOR_LEVEL_CLASS}"# IF C_POSTOR_GROUP_COLOR # style="color:{POSTOR_GROUP_COLOR}"# ENDIF # href="{U_POSTOR_PROFILE}">{POSTOR}</a># ELSE #<span class="visitor">${LangLoader::get_message('guest', 'main')}</span># ENDIF #</span>
 						# ENDIF #
 						# IF C_VIEWS_COUNTER_ENABLED #
-							<span class="infos-options"><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
+							<span><span class="text-strong">{L_VIEWS} : </span>{VIEWS}</span>
 						# ENDIF #
-						<span class="infos-options"><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
-						<span class="infos-options"><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
-						<span class="infos-options"><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
+						<span><span class="text-strong">{L_ADD_ON} : </span>{DATE}</span>
+						<span><span class="text-strong">{L_DIMENSION} : </span>{DIMENSION}</span>
+						<span><span class="text-strong">{L_SIZE} : </span>{SIZE} {L_KB}</span>
 						# IF C_COMMENTS_ENABLED #
-							<a class="infos-options" href="{U_COMMENTS}">{L_COMMENTS}</a>
+							<a href="{U_COMMENTS}">{L_COMMENTS}</a>
 						# ENDIF #
 						<div>
 							# IF C_NOTATION_ENABLED #
@@ -419,7 +419,7 @@
 										</a>
 									</div>
 								# ELSE #
-									<span class="infos-options" id="fi_{pics_list.ID}"></span>
+									<span id="fi_{pics_list.ID}"></span>
 								# ENDIF # <span id="fi{pics_list.ID}"></span>
 								<span id="img{pics_list.ID}"></span>
 								<!-- <a href="{PATH_TO_ROOT}/gallery/pics/{pics_list.PATH}" class="float-right" download=""><i class="fa fa-fw fa-download"></i></a> -->
