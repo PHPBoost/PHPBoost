@@ -25,7 +25,7 @@
 				<a href="{SORT_SUBSCRIBERS_BOTTOM}" aria-label="${LangLoader::get_message('sort.desc', 'common')}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 			</th>
 			# IF C_MODERATE #
-			<th></th>
+			<th><span class="sr-only">${LangLoader::get_message('actions', 'admin-common')}</span></th>
 			# ENDIF #
 		</tr>
 	</thead>
