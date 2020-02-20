@@ -88,7 +88,8 @@
 }
 
 .cssmenu-title img + span,
-.cssmenu-title i + span {
+.cssmenu-title i + span,
+.cssmenu-title span + span {
 	margin-left: 0.456em;
 }
 
