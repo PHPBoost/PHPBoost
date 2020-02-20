@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 5.3 - 2020 01 20
 */
 
@@ -47,7 +47,7 @@
                     if(selectHasSelected && selectedOption == 'selected') // if one of the option is already selected
                     {
                         // Send its values to the fake selector
-                        selectedItem.addClass('cssmenu-title current').attr('name', valueOption);
+                        selectedItem.addClass('cssmenu-title current').attr('data-name', valueOption);
                         selectedText.text(textOption);
                         if(imgOption)
                             selectedImg.attr('src', imgOption).attr('alt', textOption);
@@ -58,7 +58,7 @@
                     var optionLi = jQuery('<li/>', {value : valueOption}).appendTo(uList),
                         optionItem = jQuery('<a/>')
                             .addClass('cssmenu-title')
-                            .attr('name', valueOption)
+                            .attr('data-name', valueOption)
                             .appendTo(optionLi),
                         optionText = jQuery('<span/>')
                            	.text(textOption)
@@ -73,7 +73,6 @@
                         var iconItem = jQuery('<i/>')
                             .addClass(iconOption)
                             .prependTo(optionItem);
-
                 });
 
                 // Open/close submenu
@@ -87,16 +86,17 @@
                 jQuery('.options-list a').on('click', function(e) { // When an option is clicked
                     e.preventDefault();
                     // Get values of the chosen option
-                    var newOption = jQuery(this).attr('name'),
+                    var newOption = jQuery(this).attr('data-name'),
                         newText = jQuery(this).text(),
                         newImg = jQuery(this).find('img').attr('src'),
                         newIcon = jQuery(this).find('i').attr('class') ;
 
                     // Send values to the fake selector
                     jQuery(this).closest('nav').find(selectedText).text(newText);
-                    if(newImg)
+                    if(newImg != null)
                         jQuery(this).closest('nav').find(selectedImg).removeAttr('src').attr('src', newImg);
-                    if(newIcon)
+
+                    if(newIcon != null)
                         jQuery(this).closest('nav').find(selectedIcon).removeClass().addClass(newIcon);
 
                     // Change val() of the real select
