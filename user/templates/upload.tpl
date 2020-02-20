@@ -255,7 +255,7 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fifl' + id_file).style.display = 'inline';
 						document.getElementById('fifl' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g,"\\\'") + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + xhr_object.responseText.replace(/\'/g,"\\\'") + '\');" class="far fa-edit"></a>';
 					}
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
@@ -263,7 +263,7 @@
 				{
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fifl' + id_file).style.display = 'inline';
-					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" class="far fa-edit"></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + previous_cut_name.replace(/\'/g,"\\\'") + '\');" class="far fa-edit"></a>';
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
 			}

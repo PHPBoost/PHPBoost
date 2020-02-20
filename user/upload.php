@@ -503,7 +503,7 @@ elseif (!empty($del_folder))
                 'URL' => PATH_TO_ROOT . $link,
                 'TITLE' => str_replace('"', '\"', $row['name']),
                 'NAME' => $name_cut,
-                'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="far fa-edit" aria-hidden="true"></i></a></span>',
+                'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\',\'' . addslashes($row['name']) . '\',\'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('edit', 'common') . '"><i class="far fa-edit" aria-hidden="true"></i></a></span>',
                 'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
                 'DISPLAYED_CODE' => $displayed_code,
                 'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
