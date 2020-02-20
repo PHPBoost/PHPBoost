@@ -167,13 +167,15 @@
 									# IF downloadfiles.C_DELETE #<a href="{downloadfiles.U_DELETE}" aria-label="${LangLoader::get_message('delete', 'common')}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 								</div>
 							</div>
-							# IF downloadfiles.C_HAS_THUMBNAIL #
-								<div class="cell-thumbnail">
-									<img src="{downloadfiles.U_THUMBNAIL}" alt="{downloadfiles.TITLE}" itemprop="image" />
-									<a href="{downloadfiles.U_ITEM}" class="cell-thumbnail-caption">
-										${LangLoader::get_message('see.details', 'common')}
-									</a>
-								</div>
+							# IF NOT C_FULL_ITEM_DISPLAY #
+								# IF downloadfiles.C_HAS_THUMBNAIL #
+									<div class="cell-thumbnail">
+										<img src="{downloadfiles.U_THUMBNAIL}" alt="{downloadfiles.TITLE}" itemprop="image" />
+										<a href="{downloadfiles.U_ITEM}" class="cell-thumbnail-caption">
+											${LangLoader::get_message('see.details', 'common')}
+										</a>
+									</div>
+								# ENDIF #
 							# ENDIF #
 							<div class="cell-content">
 								# IF downloadfiles.C_VISIBLE #
@@ -193,6 +195,11 @@
 								# ENDIF #
 								<div itemprop="text">
 									# IF C_FULL_ITEM_DISPLAY #
+										# IF downloadfiles.C_HAS_THUMBNAIL #
+											<a href="{downloadfiles.U_ITEM}" class="item-thumbnail">
+												<img src="{downloadfiles.U_THUMBNAIL}" alt="{downloadfiles.TITLE}" itemprop="image" />
+											</a>
+										# ENDIF #
 										{downloadfiles.CONTENTS}
 									# ELSE #
 										{downloadfiles.SUMMARY}# IF downloadfiles.C_READ_MORE #... <a href="{downloadfiles.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #

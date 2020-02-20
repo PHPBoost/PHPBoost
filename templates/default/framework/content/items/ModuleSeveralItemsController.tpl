@@ -215,13 +215,15 @@
 									</div>
 								# ENDIF #
 							</div>
-							# IF items.C_HAS_THUMBNAIL #
-								<div class="cell-thumbnail">
-									<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-									<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
-										${LangLoader::get_message('see.details', 'common')}
-									</a>
-								</div>
+							# IF NOT C_FULL_ITEM_DISPLAY #
+								# IF items.C_HAS_THUMBNAIL #
+									<div class="cell-thumbnail">
+										<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+										<a class="cell-thumbnail-caption" href="{items.U_ITEM}">
+											${LangLoader::get_message('see.details', 'common')}
+										</a>
+									</div>
+								# ENDIF #
 							# ENDIF #
 							<div class="cell-content">
 								# IF C_ENABLED_VISIT #
@@ -256,6 +258,11 @@
 								# ENDIF #
 								<div itemprop="text">
 									# IF C_FULL_ITEM_DISPLAY #
+										# IF items.C_HAS_THUMBNAIL #
+											<a class="item-thumbnail" href="{items.U_ITEM}">
+												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+											</a>
+										# ENDIF #
 										{items.CONTENT}
 									# ELSE #
 										{items.SUMMARY}

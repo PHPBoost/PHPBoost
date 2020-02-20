@@ -118,23 +118,25 @@
 								# ENDIF #
 							</div>
 
-							# IF weblinks.C_IS_ADORNED #
-								<div class="cell-thumbnail">
-									# IF weblinks.C_IS_PARTNER #
-										# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
-											<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+							# IF NOT C_FULL_ITEM_DISPLAY #
+								# IF weblinks.C_IS_ADORNED #
+									<div class="cell-thumbnail">
+										# IF weblinks.C_IS_PARTNER #
+											# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
+												<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+											# ELSE #
+												<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+											# ENDIF #
 										# ELSE #
-											<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+											# IF weblinks.C_HAS_THUMBNAIL #
+												<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+											# ENDIF #
 										# ENDIF #
-									# ELSE #
-										# IF weblinks.C_HAS_THUMBNAIL #
-											<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
-										# ENDIF #
-									# ENDIF #
-									<a class="cell-thumbnail-caption" href="{weblinks.U_ITEM}">
-										${LangLoader::get_message('see.details', 'common')}
-									</a>
-								</div>
+										<a class="cell-thumbnail-caption" href="{weblinks.U_ITEM}">
+											${LangLoader::get_message('see.details', 'common')}
+										</a>
+									</div>
+								# ENDIF #
 							# ENDIF #
 							<div class="cell-content">
 								<div class="cell-infos">
@@ -159,6 +161,21 @@
 									# ENDIF #
 								</div>
 								# IF C_FULL_ITEM_DISPLAY #
+									# IF weblinks.C_IS_ADORNED #
+										<a class="item-thumbnail" href="{weblinks.U_ITEM}">
+											# IF weblinks.C_IS_PARTNER #
+												# IF weblinks.C_HAS_PARTNER_THUMBNAIL #
+													<img src="{weblinks.U_PARTNER_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+												# ELSE #
+													<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+												# ENDIF #
+											# ELSE #
+												# IF weblinks.C_HAS_THUMBNAIL #
+													<img src="{weblinks.U_THUMBNAIL}" alt="{weblinks.TITLE}" itemprop="image" />
+												# ENDIF #
+											# ENDIF #
+										</a>
+									# ENDIF #
 									<div itemprop="text">{weblinks.CONTENTS}</div>
 								# ELSE #
 									{weblinks.SHORT_CONTENTS}# IF weblinks.C_READ_MORE #... <a href="{weblinks.U_ITEM}" class="read-more">[${LangLoader::get_message('read-more', 'common')}]</a># ENDIF #
