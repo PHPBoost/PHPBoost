@@ -201,7 +201,7 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fi1' + id_file).style.display = 'inline';
 						document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\',\'' + name.replace(/\'/g,"\\\'") + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + xhr_object.responseText.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 					}
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
@@ -209,7 +209,7 @@
 				{
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fi1' + id_file).style.display = 'inline';
-					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + previous_cut_name.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
 			}
@@ -433,7 +433,7 @@
 							<div class="cell-list">
 								<ul>
 									<li class="li-stretch">
-										<a id="fihref{personal_files.ID}" href="javascript:display_rename_file('{personal_files.ID}', '{personal_files.NAME_WITH_SLASHES}', '{personal_files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}">
+										<a id="fihref{personal_files.ID}" href="javascript:display_rename_file('{personal_files.ID}','{personal_files.NAME_WITH_SLASHES}','{personal_files.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}">
 											<i class="far fa-edit" aria-hidden="true"></i>
 										</a>
 										<a href="admin_files.php?del={personal_files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" aria-label="{L_DELETE}" data-confirmation="delete-element">

@@ -107,7 +107,7 @@
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_NOTATION #
-										<span class="pinned">{weblinks.STATIC_NOTATION}</span>
+										<div class="pinned">{weblinks.STATIC_NOTATION}</div>
 									# ENDIF #
 								</div>
 								# IF weblinks.C_CONTROLS #

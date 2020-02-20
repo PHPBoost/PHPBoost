@@ -27,7 +27,7 @@
 		jQuery(document).ready(function() { new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', '{AVERAGE_NOTES}', '{ALREADY_NOTE}'); });
 	</script>
 
-	<span class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
+	<div class="notation" id="notation-{ID_IN_MODULE}" # IF C_NOTES #itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating"# ENDIF #>
 		<span class="stars">
 			# START star #
 				<a aria-label="${LangLoader::get_message('add_note', 'common')} {star.I}/{NOTATION_SCALE}" href="#" onclick="return false;" class="far star fa-star" id="star-{ID_IN_MODULE}-{star.I}"><span class="star-width {star.STAR_WIDTH}"></span></a>
@@ -45,5 +45,5 @@
 		<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 		<meta itemprop="bestRating" content="{NOTATION_SCALE}">
 		# ENDIF #
-	</span>
+	</div>
 # ENDIF #

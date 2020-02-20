@@ -159,7 +159,7 @@
 									# ENDIF #
 									<div class="spacer"></div>
 									# IF C_ENABLED_NOTATION #
-										<span class="pinned">{downloadfiles.STATIC_NOTATION}</span>
+										<div class="pinned">{downloadfiles.STATIC_NOTATION}</div>
 									# ENDIF #
 								</div>
 								<div class="controls align-right">

@@ -199,7 +199,7 @@
 										</span>
 									# ENDIF #
 									# IF C_ENABLED_NOTATION #
-										<span class="pinned">{items.STATIC_NOTATION}</span>
+										<div class="pinned">{items.STATIC_NOTATION}</div>
 									# ENDIF #
 									# IF C_ENABLED_COMMENTS #
 										<span class="pinned">
