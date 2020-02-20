@@ -1,4 +1,4 @@
-<section id="module-articles">
+<section id="module-articles" class="category-{CATEGORY_ID}">
 
 	<header>
 		<div class="align-right controls">

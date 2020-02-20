@@ -119,7 +119,7 @@
 	# ENDIF #
 </script>
 
-<article id="article-forum-{ID}" class="forum-contents" itemscope="itemscope" itemtype="http://schema.org/Creativework">
+<article id="article-forum-{ID}" class="forum-contents category-{IDCAT}" itemscope="itemscope" itemtype="http://schema.org/Creativework">
 	<header>
 		# IF C_PAGINATION #<span class="float-left"># INCLUDE PAGINATION #</span># ENDIF #
 		# IF C_FORUM_MODERATOR #

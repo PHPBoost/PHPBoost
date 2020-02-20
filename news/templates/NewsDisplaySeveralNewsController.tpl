@@ -17,7 +17,7 @@
 			# START news #
 				<article
 					id="news-item-{news.ID}"
-					class="news-items several-items cell# IF news.C_TOP_LIST # top-list# ENDIF ## IF news.C_NEW_CONTENT # new-content# ENDIF #"
+					class="news-items several-items category-{news.CATEGORY_ID} cell# IF news.C_TOP_LIST # top-list# ENDIF ## IF news.C_NEW_CONTENT # new-content# ENDIF #"
 					itemscope="itemscope"
 					itemtype="http://schema.org/CreativeWork">
 

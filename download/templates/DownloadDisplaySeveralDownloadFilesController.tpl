@@ -23,24 +23,24 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
 			# START sub_categories_list #
-			<div class="cell">
-				<div class="cell-header">
-					<div class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
-					<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@items)}# ELSE #${TextHelper::lcfirst(@item)}# ENDIF #">
-						{sub_categories_list.DOWNLOADFILES_NUMBER}
-					</span>
-				</div>
-				# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-					<div class="cell-body" itemprop="about">
-						<div class="cell-thumbnail">
-							<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-							<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
-								${LangLoader::get_message('see.category', 'categories-common')}
-							</a>
-						</div>
+				<div class="cell {sub_categories_list.CATEGORY_ID}">
+					<div class="cell-header">
+						<div class="cell-name"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
+						<span class="small pinned notice" role="contentinfo" aria-label="{sub_categories_list.DOWNLOADFILES_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #${TextHelper::lcfirst(@items)}# ELSE #${TextHelper::lcfirst(@item)}# ENDIF #">
+							{sub_categories_list.DOWNLOADFILES_NUMBER}
+						</span>
 					</div>
-				# ENDIF #
-			</div>
+					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+						<div class="cell-body" itemprop="about">
+							<div class="cell-thumbnail">
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<a class="cell-thumbnail-caption" href="{sub_categories_list.U_CATEGORY}">
+									${LangLoader::get_message('see.category', 'categories-common')}
+								</a>
+							</div>
+						</div>
+					# ENDIF #
+				</div>
 			# END sub_categories_list #
 		</div>
 		# IF C_SUBCATEGORIES_PAGINATION #<div class="align-center"># INCLUDE SUBCATEGORIES_PAGINATION #</div># ENDIF #
@@ -97,7 +97,7 @@
 				</thead>
 				<tbody>
 					# START downloadfiles #
-						<tr>
+						<tr class="category-{items.CATEGORY_ID}">
 							<td>
 								<a href="{downloadfiles.U_ITEM}" itemprop="name"# IF downloadfiles.C_NEW_CONTENT # class="new-content"# ENDIF #>{downloadfiles.TITLE}</a>
 							</td>
@@ -142,7 +142,7 @@
 		# ELSE #
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START downloadfiles #
-					<article id="download-item-{downloadfiles.ID}" class="download-item several-items cell# IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="download-item-{downloadfiles.ID}" class="download-item several-items category-{items.CATEGORY_ID} cell# IF downloadfiles.C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header class="cell-header">
 							<h2 class="cell-name"><a href="{downloadfiles.U_ITEM}" itemprop="name">{downloadfiles.TITLE}</a></h2>
 						</header>

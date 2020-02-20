@@ -72,7 +72,7 @@
 					# ENDIF #
 
 					# START topics #
-					<tr>
+					<tr class="category-{topics.CATEGORY_ID}">
 						<td class="forum-announce-topic">
 							# IF NOT topics.C_HOT_TOPIC #
 							<i class="fa {topics.IMG_ANNOUNCE}"></i>

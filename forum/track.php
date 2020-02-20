@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,7 +93,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	$result = PersistenceContext::get_querier()->select("SELECT
 		m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups,
 		m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups,
-		t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg,
+		t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, t.id_category,
 		v.last_view_id,
 		p.question,
 		me.last_view_forum,
@@ -181,6 +181,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'C_ANCRE'                     => !empty($new_ancre),
 			'C_DISPLAY_MSG'               => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
 			'TYPE'                        => $type[$row['type']],
+			'CATEGORY_ID'                 => $row['id_category'],
 			'TITLE'                       => stripslashes($row['title']),
 			'C_AUTHOR'                    => !empty($row['login']),
 			'U_AUTHOR'                    => UserUrlBuilder::profile($row['user_id'])->rel(),

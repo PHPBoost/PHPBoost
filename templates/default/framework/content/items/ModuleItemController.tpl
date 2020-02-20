@@ -1,4 +1,4 @@
-<section id="module-{MODULE_ID}">
+<section id="module-{MODULE_ID}" class="category-{CATEGORY_ID}">
 	<header>
 		<div class="align-right controls">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #

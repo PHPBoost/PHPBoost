@@ -1,4 +1,4 @@
-<section id="module-download">
+<section id="module-download" class="category-{CATEGORY_ID}">
 	<header>
 		<div class="controls align-right">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>

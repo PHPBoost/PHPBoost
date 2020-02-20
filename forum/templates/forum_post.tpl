@@ -195,9 +195,7 @@
 
 							# IF C_DISPLAY_MSG #
 								<p>
-									<span id="forum_change_statut">
-										<a href="#" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
-									</span>
+									<a href="#" onclick="XMLHttpRequest_change_statut();return false;" id="forum_change_img"># IF C_ICON_DISPLAY_MSG #<i class="{ICON_DISPLAY_MSG}" aria-hidden="true"></i># ENDIF #</a> <a href="#" onclick="XMLHttpRequest_change_statut();return false;"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>
 								</p>
 							# ENDIF #
 						</fieldset>

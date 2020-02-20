@@ -57,7 +57,7 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="cell-flex cell-tile cell-columns-{NUMBER_CATS_COLUMNS}">
 			# START sub_categories_list #
-				<div class="cell">
+				<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 					<div class="cell-header">
 						<div class="cell-name align-center"><a class="subcat-title" itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></div>
 					</div>
@@ -98,7 +98,7 @@
 			<nav>
 				<ul class="accordion-bordered">
 					# START questions #
-						<li id="question-title-{questions.ID}">
+						<li id="question-title-{questions.ID}" class="category-{questions.CATEGORY_ID}">
 							<a href="#" data-accordion data-target="question{questions.ID}">{questions.QUESTION}</a>
 						</li>
 					# END questions #

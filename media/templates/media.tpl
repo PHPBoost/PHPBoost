@@ -18,7 +18,7 @@
 		# IF C_SUB_CATEGORIES #
 			<div class="cell-flex cell-tile cell-columns-{CATEGORIES_NUMBER_PER_ROW}">
 				# START sub_categories_list #
-					<div class="cell">
+					<div class="cell category-{sub_categories_list.CATEGORY_ID}">
 						<div class="cell-header">
 							<h5 class="cell-name" itemprop="about">
 								<a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
@@ -80,7 +80,7 @@
 
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_NUMBER_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START file #
-					<article id="article-media-{file.ID}" class="media-item several-items cell# IF file.C_NEW_CONTENT # new-content# ENDIF #">
+					<article id="article-media-{file.ID}" class="media-item several-items category-{file.CATEGORY_ID} cell# IF file.C_NEW_CONTENT # new-content# ENDIF #">
 						<header class="cell-header">
 							<h2 class="cell-name">
 								<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
@@ -134,7 +134,7 @@
 # ENDIF #
 
 # IF C_DISPLAY_MEDIA #
-	<section id="module-media">
+	<section id="module-media" class="category-{CATEGORY_ID}">
 		<header>
 			<div class="controls align-right">
 				${LangLoader::get_message('module_title', 'common', 'media')}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #

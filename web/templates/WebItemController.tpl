@@ -1,4 +1,4 @@
-<section id="module-web">
+<section id="module-web" class="category-{CATEGORY_ID}">
 	<header>
 		<div class="align-right controls">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>

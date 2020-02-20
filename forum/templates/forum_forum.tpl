@@ -28,7 +28,7 @@
 						</thead>
 						<tbody>
 							# START subcats #
-								<tr>
+								<tr class="category-{subcats.IDCAT}">
 									# IF subcats.U_FORUM_URL #
 									<td class="forum-announce-topic">
 										<i class="fa fa-globe fa-2x" aria-hidden="true"></i>
@@ -129,70 +129,70 @@
 					# ENDIF #
 
 					# START topics #
-					<tr>
-						# IF C_MASS_MODO_CHECK #
-						<td class="forum-mass-modo">
-							<label class="checkbox" for="modo{topics.ID}">
-								<input id="modo{topics.ID}" type="checkbox" name="ck{topics.ID}">
-								<span>&nbsp;</span>
-							</label>
-						</td>
-						# ENDIF #
-						<td class="forum-announce-topic">
-							# IF NOT topics.C_HOT_TOPIC #
-								<i class="far {topics.IMG_ANNOUNCE}" aria-hidden="true"></i>
-							# ELSE #
-								<i class="far # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot" aria-hidden="true"></i>
+						<tr class="category-{topics.CATEGORY_ID}">
+							# IF C_MASS_MODO_CHECK #
+							<td class="forum-mass-modo">
+								<label class="checkbox" for="modo{topics.ID}">
+									<input id="modo{topics.ID}" type="checkbox" name="ck{topics.ID}">
+									<span>&nbsp;</span>
+								</label>
+							</td>
 							# ENDIF #
-						</td>
-						<td class="forum-fixed-topic">
-							# IF topics.C_DISPLAY_MSG #<i class="fa fa-check success" aria-hidden="true"></i># ENDIF #
-							# IF topics.C_IMG_POLL #<i class="fa fa-poll-h" aria-hidden="true"></i># ENDIF #
-							# IF topics.C_IMG_TRACK #<i class="fa fa-heart error" aria-hidden="true"></i># ENDIF #
-						</td>
-						<td class="forum-topic">
-							# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
-							# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
-							# IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF #
-							<a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
-							<span class="small d-block">{topics.DESC}</span>
-						</td>
-						<td class="forum-author">
-							# IF topics.C_AUTHOR #
-								<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
-							# ELSE #
-								<em>{topics.L_GUEST}</em>
-							# ENDIF #
-						</td>
-						<td class="forum-message-nb">
-							{topics.MSG}
-						</td>
-						<td class="forum-view">
-							{topics.VUS}
-						</td>
-						<td class="forum-last-topic">
-							<span class="d-block">
-								<i class="far fa-hand-point-right fa-fw" aria-hidden="true"></i>
-								<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}">{topics.LAST_MSG_DATE_FULL}</a>
-							</span>
-							<span class="d-block">
-								<i class="far fa-user fa-fw" aria-hidden="true"></i>
-								# IF topics.C_LAST_MSG_GUEST #
-									<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
+							<td class="forum-announce-topic">
+								# IF NOT topics.C_HOT_TOPIC #
+									<i class="far {topics.IMG_ANNOUNCE}" aria-hidden="true"></i>
 								# ELSE #
-									<em>${LangLoader::get_message('guest', 'main')}</em>
+									<i class="far # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot" aria-hidden="true"></i>
 								# ENDIF #
-							</span>
-						</td>
-					</tr>
+							</td>
+							<td class="forum-fixed-topic">
+								# IF topics.C_DISPLAY_MSG #<i class="fa fa-check success" aria-hidden="true"></i># ENDIF #
+								# IF topics.C_IMG_POLL #<i class="fa fa-poll-h" aria-hidden="true"></i># ENDIF #
+								# IF topics.C_IMG_TRACK #<i class="fa fa-heart error" aria-hidden="true"></i># ENDIF #
+							</td>
+							<td class="forum-topic">
+								# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
+								# IF topics.C_ANCRE #<a href="{topics.U_ANCRE}"><i class="fa fa-hand-point-right" aria-hidden="true"></i></a># ENDIF #
+								# IF topics.TYPE # <strong>{topics.TYPE}</strong> # ENDIF #
+								<a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
+								<span class="small d-block">{topics.DESC}</span>
+							</td>
+							<td class="forum-author">
+								# IF topics.C_AUTHOR #
+									<a href="{topics.U_AUTHOR}" class="small {topics.AUTHOR_LEVEL}"# IF topics.C_GROUP_COLOR # style="color:{topics.GROUP_COLOR}"# ENDIF #>{topics.AUTHOR}</a>
+								# ELSE #
+									<em>{topics.L_GUEST}</em>
+								# ENDIF #
+							</td>
+							<td class="forum-message-nb">
+								{topics.MSG}
+							</td>
+							<td class="forum-view">
+								{topics.VUS}
+							</td>
+							<td class="forum-last-topic">
+								<span class="d-block">
+									<i class="far fa-hand-point-right fa-fw" aria-hidden="true"></i>
+									<a href={topics.LAST_MSG_URL} aria-label="{topics.TITLE} <br /> {topics.LAST_MSG_DATE_FULL}">{topics.LAST_MSG_DATE_FULL}</a>
+								</span>
+								<span class="d-block">
+									<i class="far fa-user fa-fw" aria-hidden="true"></i>
+									# IF topics.C_LAST_MSG_GUEST #
+										<a href="{topics.LAST_MSG_USER_PROFIL}" class="small {topics.LAST_MSG_USER_LEVEL}"# IF topics.C_LAST_MSG_USER_GROUP_COLOR # style="color:{topics.LAST_MSG_USER_GROUP_COLOR}"# ENDIF #>{topics.LAST_MSG_USER_LOGIN}</a>
+									# ELSE #
+										<em>${LangLoader::get_message('guest', 'main')}</em>
+									# ENDIF #
+								</span>
+							</td>
+						</tr>
 					# END topics #
 
 					# IF C_NO_TOPICS #
-					<tr>
-						<td colspan="7">
-							<strong>{L_NO_TOPICS}</strong>
-						</td>
-					</tr>
+						<tr>
+							<td colspan="7">
+								<strong>{L_NO_TOPICS}</strong>
+							</td>
+						</tr>
 					# ENDIF #
 					</tbody>
 					<tfoot>

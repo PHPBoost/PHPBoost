@@ -21,7 +21,7 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
 			# START sub_categories_list #
-				<div class="cell" itemscope>
+				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="about"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 						<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
@@ -69,7 +69,7 @@
 				</thead>
 				<tbody>
 					# START items #
-						<tr>
+						<tr class="category-{items.CATEGORY_ID}">
 							<td>
 								<a href="{items.U_ITEM}" itemprop="name"# IF items.C_NEW_CONTENT # class="new-content"# ENDIF#>{items.TITLE}</a>
 							</td>
@@ -145,7 +145,7 @@
 		# ELSE #
 			<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 				# START items #
-					<article id="{MODULE_ID}-item-{items.ID}" class="{MODULE_ID}-item several-items cell# IF items.C_PRIME_ITEM # prime-item# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+					<article id="{MODULE_ID}-item-{items.ID}" class="{MODULE_ID}-item several-items category-{items.CATEGORY_ID} cell# IF items.C_PRIME_ITEM # prime-item# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						<header class="cell-header">
 							<h2 class="cell-name"><a href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 						</header>

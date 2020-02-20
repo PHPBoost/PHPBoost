@@ -300,7 +300,7 @@
 	# IF C_SUB_CATEGORIES #
 		<div class="cell-flex cell-columns-{COLUMNS_NUMBER} cell-tile">
 			# START sub_categories_list #
-				<div class="cell" itemscope>
+				<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
 					<div class="cell-header">
 						<h5 class="cell-name" itemprop="name"><a href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 						<span class="small pinned" role="contentinfo" itemprop="items" aria-label="{sub_categories_list.PICTURES_NUMBER} # IF sub_categories_list.C_SEVERAL_PICTURES #{@gallery.items}# ELSE #{@gallery.item}# ENDIF #">{sub_categories_list.PICTURES_NUMBER}</span>
@@ -322,7 +322,7 @@
 	# ENDIF #
 
 	# IF C_GALLERY_PICS #
-		<article id="article-gallery-{ID}" class="article-gallery several-items">
+		<article id="article-gallery-{ID}" class="article-gallery several-items category-{CAT_ID}">
 			<header>
 				<h2>${LangLoader::get_message('image', 'main')}</h2>
 			</header>

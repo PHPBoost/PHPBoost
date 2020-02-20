@@ -18,9 +18,7 @@
 
 		# START forums_list.cats #
 		<script>
-			<!--
 			jQuery('#table-{forums_list.cats.IDCAT}').basictable();
-			-->
 		</script>
 
 		<article itemscope="itemscope" itemtype="http://schema.org/Creativework" id="article-forum-{forums_list.cats.IDCAT}" class="forum-contents">
@@ -49,7 +47,7 @@
 					<tbody>
 		# END forums_list.cats #
 		# START forums_list.subcats #
-						<tr>
+						<tr class="category-{forums_list.subcats.IDCAT}">
 							# IF forums_list.subcats.U_FORUM_URL #
 								<td class="forum-announce-topic">
 									<i class="fa fa-globe" aria-hidden="true"></i>

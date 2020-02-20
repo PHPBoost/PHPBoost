@@ -12,7 +12,7 @@
 			<div class="content">
 
 				# START list #
-					<article id="d{list.ID}" class="message-container message-small" itemscope="itemscope" itemtype="http://schema.org/Comment">
+					<article id="d{list.ID}" class="message-container message-small category-{list.CATEGORY_ID}" itemscope="itemscope" itemtype="http://schema.org/Comment">
 						<span id="m{list.ID}"></span>
 				        <header class="message-header-container">
 							<img class="message-user-avatar" src="# IF list.C_USER_AVATAR #{list.U_USER_AVATAR}# ELSE #{list.U_DEFAULT_AVATAR}# ENDIF #" alt="${LangLoader::get_message('avatar', 'user-common')}">

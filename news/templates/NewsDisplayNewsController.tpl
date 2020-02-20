@@ -1,4 +1,4 @@
-<section id="module-news">
+<section id="module-news" class="category-{CATEGORY_ID}">
 	<header>
 		<div class="align-right controls">
 			<a href="{U_SYNDICATION}" aria-label="${LangLoader::get_message('syndication', 'common')}"><i class="fa fa-rss warning" aria-hidden="true"></i></a> {@news}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF #

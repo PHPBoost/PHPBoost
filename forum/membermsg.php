@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -184,6 +184,7 @@ if (!empty($view_msg)) // Display all user's messages
 				'LEVEL_CLASS'      => UserService::get_level_class($row['level']),
 				'C_GROUP_COLOR'    => !empty($group_color),
 				'GROUP_COLOR'      => $group_color,
+				'CATEGORY_ID'	   => $row['id_category'],
 				'U_USER_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_VARS_ANCRE'     => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 				'U_FORUM_CAT'      => PATH_TO_ROOT . '/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),

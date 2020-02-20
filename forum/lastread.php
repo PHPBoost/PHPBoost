@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 29
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 1.6 - 2007 04 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -66,7 +66,13 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		DispatchManager::redirect($error_controller);
 	}
 
-	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = PersistenceContext::get_querier()->select("SELECT
+		m1.display_name AS login, m1.level AS user_level, m1.groups AS groups,
+		m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups,
+		t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, t.id_category,
+		v.last_view_id,
+		p.question,
+		tr.id AS idtrack
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
@@ -142,6 +148,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 			'IMG_ANNOUNCE'                => $img_announce,
 			'U_ANCRE'                     => $new_ancre,
 			'TYPE'                        => $type[$row['type']],
+			'CATEGORY_ID'                 => $row['id_category'],
 			'TITLE'                       => stripslashes($row['title']),
 			'C_AUTHOR'                    => !empty($row['login']),
 			'U_AUTHOR'                    => UserUrlBuilder::profile($row['user_id'])->rel(),
@@ -197,12 +204,12 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 				$cat_list .= $option->display()->render();
 		}
 	}
-	
+
 	$tpl->assign_block_vars('syndication_cats', array(
 		'LINK'  => PATH_TO_ROOT . '/forum/lastread.php',
 		'LABEL' => $LANG['show_last_read']
 	));
-	
+
 	$vars_tpl = array(
 		'C_USER_CONNECTED'   => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'TOTAL_ONLINE'       => $total_online,
