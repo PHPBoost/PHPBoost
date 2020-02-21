@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 21
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -42,7 +42,7 @@ class FormFieldFilePicker extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$file_field_tpl = $this->get_file_field_template();
-		$file_field_tpl->add_lang(LangLoader::get('main'));
+		$file_field_tpl->add_lang(LangLoader::get('upload-common'));
 		$file_field_tpl->put_all(array(
 			'NAME'                => $this->get_html_id(),
 			'ID'                  => $this->get_id(),

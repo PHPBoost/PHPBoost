@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 08
+ * @version     PHPBoost 5.3 - last update: 2020 02 21
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -276,19 +276,6 @@ $LANG['moveto'] = 'Déplacer vers';
 $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
-// D&d upload
-$LANG['drag.and.drop.file'] = 'Cliquer ici ou déposer un fichier';
-$LANG['drag.and.drop.files'] = 'Cliquer ici ou déposer des fichiers';
-$LANG['clear.list'] = 'Vider la liste';
-$LANG['upload.helper'] = 'Options de téléversement';
-$LANG['max.file.size'] = 'Taille maximum par fichier';
-$LANG['max.files.size'] = 'Espace alloué';
-$LANG['allowed.extensions'] = 'Extensions de fichier autorisées';
-$LANG['warning.upload.disabled'] = '<strong>Le téléversement a été désactivé pour une des raisons suivantes : <br /></strong>';
-$LANG['warning.upload.extension'] = ' : l\'extension de ce fichier n\'est pas autorisée.<br />';
-$LANG['warning.upload.file.size'] = ' : le poids de ce fichiers est trop important.<br />';
-$LANG['warning.upload.file.dim'] = 'La hauteur ou la largeur d\'une image excède les dimensions autorisées.<br />';
-$LANG['warning.upload.files.nbr'] = '<br />- l\'ensemble des fichiers dépasse l\'espace alloué.<br />';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Panneau de modération';

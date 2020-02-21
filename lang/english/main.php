@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 08
+ * @version     PHPBoost 5.3 - last update: 2020 02 21
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -276,19 +276,6 @@ $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $LANG['popup_insert'] = 'Insert code into the form';
-// D&d upload
-$LANG['drag.and.drop.file'] = 'Click here or drag and drop one file';
-$LANG['drag.and.drop.files'] = 'Click here or drag and drop files';
-$LANG['clear.list'] = 'Clear list';
-$LANG['upload.helper'] = 'Upload options';
-$LANG['max.file.size'] = 'Maximum size per file';
-$LANG['max.files.size'] = 'Bytes allocated';
-$LANG['allowed.extensions'] = 'Allowed files extensions';
-$LANG['warning.upload.disabled'] = '<strong>Upload has been disabled for one of those reasons : <br /></strong>';
-$LANG['warning.upload.extension'] = ' : the extension of this file isn\'t allowed.<br />';
-$LANG['warning.upload.file.size'] = ' : the weight of this files is too large.<br />';
-$LANG['warning.upload.file.dim'] = ' : the height or width of the picture exceeds the maximum allowed.<br />';
-$LANG['warning.upload.files.nbr'] = '<br />- the number of files exeeds the allocated space.<br />';
 
 // Moderation panel
 $LANG['moderation_panel'] = 'Moderation panel';

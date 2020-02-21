@@ -62,25 +62,25 @@
 						<div class="cell-body">
 							<div class="dnd-area">
 								<div class="dnd-dropzone">
-									<label for="select-file-to-restore" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
+									<label for="select-file-to-restore" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'upload-common')} <span class="d-block"></span></label>
 									<input type="file" name="upload_file" id="select-file-to-restore" class="ufiles" />
 								</div>
 								<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
 								<div class="ready-to-load">
-									<button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+									<button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'upload-common')}</button>
 									<span class="fa-stack fa-lg">
 										<i class="far fa-file fa-stack-2x"></i>
 										<strong class="fa-stack-1x files-nbr"></strong>
 									</span>
 								</div>
 								<div class="modal-container">
-									<button class="button upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
+									<button class="button upload-help" data-modal data-target="upload-helper" aria-label="${LangLoader::get_message('upload.helper', 'upload-common')}"><i class="fa fa-question" aria-hidden="true"></i></button>
 									<div id="upload-helper" class="modal modal-animation">
 										<div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
 										<div class="content-panel">
-											<h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
-											<p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE}</p>
-											<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+											<h3>${LangLoader::get_message('upload.helper', 'upload-common')}</h3>
+											<p><strong>${LangLoader::get_message('max.file.size', 'upload-common')} :</strong> {MAX_FILE_SIZE}</p>
+											<p><strong>${LangLoader::get_message('allowed.extensions', 'upload-common')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@
 						</div>
 						<div class="cell-body">
 							<div class="cell-content align-center">
-								<button type="submit" id="submit-file-to-restore" name="" value="true" class="button submit">{L_RESTORE_NOW}</button>
+								<button type="submit" id="submit-file-to-restore" name="submit-file-to-restore" value="true" class="button submit">{L_RESTORE_NOW}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</div>
 						</div>
@@ -502,9 +502,9 @@
 		multiple: true,
 		maxFileSize: '{MAX_FILE_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
-		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
+		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
 	});
 </script>

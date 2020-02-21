@@ -38,9 +38,9 @@
 		maxFileSize: '{MAX_FILE_SIZE}',
 		maxFilesSize: '{MAX_FILES_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
-		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
+		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
 	});
 </script>

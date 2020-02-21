@@ -375,29 +375,29 @@
                                 <legend>{L_ADD_FILES}</legend>
                                 <div class="dnd-area">
                                     <div class="dnd-dropzone">
-                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
+                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'upload-common')} <span class="d-block"></span></label>
                                         <input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
                                     </div>
                                     <input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
                                     <div class="ready-to-load">
-                                        <button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'main')}</button>
+                                        <button type="button" class="button clear-list">${LangLoader::get_message('clear.list', 'upload-common')}</button>
                                         <span class="fa-stack fa-lg">
                                             <i class="far fa-file fa-stack-2x"></i>
                                             <strong class="fa-stack-1x files-nbr"></strong>
                                         </span>
                                     </div>
                                     <div class="modal-container">
-                                        <button class="button upload-help" data-modal data-target="upload-helper"><i class="fa fa-question"></i></button>
+                                        <button class="button upload-help" data-modal data-target="upload-helper" aria-label="${LangLoader::get_message('upload.helper', 'upload-common')}"><i class="fa fa-question" aria-hidden="true"></i></button>
                                         <div id="upload-helper" class="modal modal-animation">
                                             <div class="close-modal" aria-label="${LangLoader::get_message('close', 'main')}"></div>
                                             <div class="content-panel">
-                                                <h3>${LangLoader::get_message('upload.helper', 'main')}</h3>
+                                                <h3>${LangLoader::get_message('upload.helper', 'upload-common')}</h3>
                                                 # IF IS_ADMIN #
-                                                	<p><strong>${LangLoader::get_message('max.file.size', 'main')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
+                                                	<p><strong>${LangLoader::get_message('max.file.size', 'upload-common')} :</strong> {MAX_FILE_SIZE_TEXT}</p>
                                                 # ELSE #
                                                 	<p><strong>${LangLoader::get_message('max.files.size', 'main')} :</strong> {SIZE_LIMIT}</p>
                                                 # ENDIF #
-                                            	<p><strong>${LangLoader::get_message('allowed.extensions', 'main')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
+                                            	<p><strong>${LangLoader::get_message('allowed.extensions', 'upload-common')} :</strong> "{ALLOWED_EXTENSIONS}"</p>
                                             </div>
                                         </div>
                                     </div>
@@ -635,9 +635,9 @@
 		maxFileSize: '{MAX_FILE_SIZE}',
 		maxFilesSize: '{MAX_FILES_SIZE}',
 		allowedExtensions: ["{ALLOWED_EXTENSIONS}"],
-		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'main'))},
-		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'main'))},
-		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'main'))},
-		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.nbr', 'main'))},
+		warningText: ${escapejs(LangLoader::get_message('warning.upload.disabled', 'upload-common'))},
+		warningExtension: ${escapejs(LangLoader::get_message('warning.upload.extension', 'upload-common'))},
+		warningFileSize: ${escapejs(LangLoader::get_message('warning.upload.file.size', 'upload-common'))},
+		warningFilesNbr: ${escapejs(LangLoader::get_message('warning.upload.files.number', 'upload-common'))},
 	});
 </script>
