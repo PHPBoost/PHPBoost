@@ -49,6 +49,7 @@ select {
 
 [type="color"] {
 	padding: 0;
+	height: 32px;
 }
 
 textarea {
@@ -87,6 +88,8 @@ option {
 	[type="password"],
 	[type="file"],
 	select { width: auto; }
+
+	[type="color"] { width: 32px; }
 }
 
 /* --- Grouped input -------------------------------------------------------- */
