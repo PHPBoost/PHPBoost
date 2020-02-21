@@ -62,7 +62,7 @@
 						<div class="cell-body">
 							<div class="dnd-area">
 								<div class="dnd-dropzone">
-									<label for="select-file-to-restore" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+									<label for="select-file-to-restore" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
 									<input type="file" name="upload_file" id="select-file-to-restore" class="ufiles" />
 								</div>
 								<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">

@@ -79,7 +79,7 @@
 							<div class="form-field">
 								<div class="dnd-area">
 									<div class="dnd-dropzone">
-										<label for="gallery" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+										<label for="gallery" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
 										<input type="file" name="gallery[]" id="gallery" class="ufiles" />
 									</div>
 									<div class="ready-to-load">

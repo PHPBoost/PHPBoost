@@ -67,7 +67,7 @@
 					if (xhr_object.responseText != "")
 					{
 						document.getElementById('f' + id_folder).innerHTML = '<a class="com" href="admin_files.php?f=' + id_folder + '">' + name + '</a>';
-						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="fa fa-edit"></a>';
+						document.getElementById('fhref' + id_folder).innerHTML = '<a href="javascript:display_rename_folder(\'' + id_folder + '\',\'' + xhr_object.responseText.replace(/\'/g,"\\\'") + '\', \'' + name.replace(/\'/g,"\\\'") + '\');" class="fa fa-edit"></a>';
 					}
 					else
 					{
@@ -116,7 +116,7 @@
 								<ul>\
 									<li class="li-stretch">\
 										<span id="fhref' + xhr_object.responseText + '" aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '">\
-											<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');">\
+											<a id="fihref' + xhr_object.responseText + '" href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\',\'' + name.replace(/\'/g,"\\\'") + '\',\'' + name.replace(/\'/g,"\\\'") + '\');">\
 												<i class="far fa-edit" aria-hidden="true"></i>\
 											</a>\
 										</span>\
@@ -201,7 +201,7 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fi1' + id_file).style.display = 'inline';
 						document.getElementById('fi1' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\',\'' + name.replace(/\'/g,"\\\'") + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + xhr_object.responseText.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '" href="javascript:display_rename_file(\'' + id_file + '\',\'' + name.replace(/\'/g,"\\\'") + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + xhr_object.responseText.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 					}
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
@@ -209,7 +209,7 @@
 				{
 					document.getElementById('fi' + id_file).style.display = 'none';
 					document.getElementById('fi1' + id_file).style.display = 'inline';
-					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="${LangLoader::get_message('edit', 'common')}" href="javascript:display_rename_file(\'' + id_file + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + previous_cut_name.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+					document.getElementById('fihref' + id_file).innerHTML = '<a aria-label="' + ${escapejs(LangLoader::get_message('edit', 'common'))} + '" href="javascript:display_rename_file(\'' + id_file + '\',\'' + previous_name.replace(/\'/g,"\\\'") + '\',\'' + previous_cut_name.replace(/\'/g,"\\\'") + '\');"><i class="fa fa-edit" aria-hidden="true"></i></a>';
 					document.getElementById('imgf' + id_file).innerHTML = '';
 				}
 			}
@@ -267,7 +267,7 @@
 				<legend>{L_ADD_FILES}</legend>
 				<div class="dnd-area">
 					<div class="dnd-dropzone">
-						<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+						<label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
 						<input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
 					</div>
 					<input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
@@ -376,7 +376,7 @@
 									<ul>
 										<li class="li-stretch">
 											# IF folder.C_TYPEFOLDER #
-												<a id="fhref{folder.ID}" href="javascript:display_rename_folder('{folder.ID}', '{folder.NAME_WITH_SLASHES}', '{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
+												<a id="fhref{folder.ID}" href="javascript:display_rename_folder('{folder.ID}','{folder.NAME_WITH_SLASHES}','{folder.NAME_CUT_WITH_SLASHES}');" aria-label="${LangLoader::get_message('edit', 'common')}"><i class="far fa-edit" aria-hidden="true"></i></a>
 											# ENDIF #
 											# IF NOT folder.C_MEMBERS_FOLDER #
 												<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #" aria-label="{folder.L_TYPE_DEL_FOLDER}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>

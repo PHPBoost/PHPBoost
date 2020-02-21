@@ -375,7 +375,7 @@
                                 <legend>{L_ADD_FILES}</legend>
                                 <div class="dnd-area">
                                     <div class="dnd-dropzone">
-                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <p></p></label>
+                                        <label for="inputfiles" class="dnd-label">${LangLoader::get_message('drag.and.drop.files', 'main')} <span class="d-block"></span></label>
                                         <input type="file" name="upload_file[]" id="inputfiles" class="ufiles" />
                                     </div>
                                     <input type="hidden" name="max_file_size" value="{MAX_FILE_SIZE}">
