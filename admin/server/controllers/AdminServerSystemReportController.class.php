@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 4.1 - 2015 05 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -36,9 +36,9 @@ class AdminServerSystemReportController extends AdminController
 
 	private function build_form()
 	{
-		$picture_yes = '<i class="fa fa-check fa-2x" aria-hidden="true" title="' . LangLoader::get_message('yes', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('yes', 'common') . '</span>';
-		$picture_no = '<i class="fa fa-times fa-2x" aria-hidden="true" title="' . LangLoader::get_message('no', 'common') . '"></i><span class="sr-only">' . LangLoader::get_message('no', 'common') . '</span>';
-		$picture_unknown = '<i class="fa fa-question fa-2x" aria-hidden="true" title="' . LangLoader::get_message('unknown', 'main') . '"></i><span class="sr-only">' . LangLoader::get_message('unknown', 'main') . '</span>';
+		$picture_yes = '<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('yes', 'common') . '</span>';
+		$picture_no = '<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('no', 'common') . '</span>';
+		$picture_unknown = '<i class="fa fa-question fa-2x question" aria-hidden="true"></i><span class="sr-only">' . LangLoader::get_message('unknown', 'main') . '</span>';
 
 		$default_lang_config = LangsManager::get_lang(LangsManager::get_default_lang())->get_configuration();
 		$default_theme_config = ThemesManager::get_theme(ThemesManager::get_default_theme())->get_configuration();
