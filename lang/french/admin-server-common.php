@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 08 02
+ * @version     PHPBoost 5.3 - last update: 2020 02 20
  * @since       PHPBoost 4.1 - 2015 07 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -26,5 +26,5 @@ $lang['advises.upgrade_php_version'] = 'La version PHP ' . ServerConfiguration::
 <br />Mettez à jour votre version PHP pour passer en ' . ServerConfiguration::RECOMMENDED_PHP_VERSION . ' minimum si votre hébergeur le permet, les nouvelles versions sont plus rapides et sécurisées.';
 $lang['advises.save_database'] = 'Pensez à sauvegarder votre base de données régulièrement.';
 $lang['advises.optimize_database_tables'] = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Activez l\'optimisation automatique des tables</a> ou optimisez de temps en temps vos tables dans le module <strong>Base de données</strong> (s\'il est installé) ou dans votre outil de gestion de base de données pour récupérer de la place perdue en base.';
-$lang['advises.password_security'] = 'Augmentez la complexité et la longueur des mots de passe dans la <as href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';
+$lang['advises.password_security'] = 'Augmentez la complexité et la longueur des mots de passe dans la <a href="' . AdminMembersUrlBuilder::configuration()->rel() . '">configuration des membres</a> pour renforcer la sécurité.';
 ?>
