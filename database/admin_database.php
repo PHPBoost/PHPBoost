@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 22
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -32,6 +32,22 @@ if (!empty($read_file) && (TextHelper::substr($read_file, -4) == '.sql' || TextH
 		readfile(PATH_TO_ROOT .'/cache/backup/' . $read_file) or die("File not found.");
 	}
 	exit;
+}
+
+function check_backup_file(File $file)
+{
+	$reader = new BufferedFileReader($file);
+	$general_config = GeneralConfig::load();
+	$file_content = $reader->read_all();
+	
+	if (preg_match("`'kernel-general-config',`u", $file_content))
+	{
+		if (!preg_match('`s:8:"site_url";s:' . strlen($general_config->get_site_url()) . ':"' . $general_config->get_site_url() . '";s:9:"site_path";s:' . strlen($general_config->get_site_path()) . ':"' . $general_config->get_site_path() . '";`u', $file_content))
+			return 'wrong_site';
+		else if (!preg_match('`s:16:"phpboost_version";s:' . strlen($general_config->get_phpboost_major_version()) . ':"' . $general_config->get_phpboost_major_version() . '";`u', $file_content))
+			return 'wrong_version';
+	}
+	return true;
 }
 
 $LANG = LangLoader::get('common', 'database');
@@ -205,7 +221,7 @@ elseif ($action == 'restore')
 				}
 			}
 
-			if ($extract_filename && $archive->extract())
+			if ($extract_filename && $archive->extract(PATH_TO_ROOT .'/cache/backup/'))
 			{
 				$filename = basename($extract_filename);
 				$file_path = PATH_TO_ROOT .'/cache/backup/' . $filename;
@@ -217,16 +233,23 @@ elseif ($action == 'restore')
 		if (preg_match('`[^/]+\.sql$`u', $filename) && is_file($file_path))
 		{
 			Environment::try_to_increase_max_execution_time();
-			$db_utils = PersistenceContext::get_dbms_utils();
-			if ($db_utils->parse_file(new File($file_path)))
-			{
-				$tables_list = $db_utils->list_tables();
-				$db_utils->optimize($tables_list);
-				$db_utils->repair($tables_list);
-				AppContext::get_cache_service()->clear_cache();
-			}
-			else
+			$file = new File($file_path);
+			$status = check_backup_file($file);
+			if ($status == 'wrong_site')
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
+			else if ($status == 'wrong_version')
+				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=wrong_version_in_backup', '', '&'));
+			else
+			{
+				$db_utils = PersistenceContext::get_dbms_utils();
+				if ($db_utils->parse_file($file))
+				{
+					$tables_list = $db_utils->list_tables();
+					$db_utils->optimize($tables_list);
+					$db_utils->repair($tables_list);
+					AppContext::get_cache_service()->clear_cache();
+				}
+			}
 
 			if ($original_file_compressed)
 			{
@@ -281,17 +304,24 @@ elseif ($action == 'restore')
 				}
 
 				Environment::try_to_increase_max_execution_time();
-				$db_utils = PersistenceContext::get_dbms_utils();
-				if ($db_utils->parse_file(new File($file_path)))
-				{
-					$tables_list = $db_utils->list_tables();
-					$db_utils->optimize($tables_list);
-					$db_utils->repair($tables_list);
-					AppContext::get_cache_service()->clear_cache();
-				}
-				else
+				$file = new File($file_path);
+				$status = check_backup_file($file);
+				if ($status == 'wrong_site')
 					AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
-
+				else if ($status == 'wrong_version')
+					AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=wrong_version_in_backup', '', '&'));
+				else
+				{
+					$db_utils = PersistenceContext::get_dbms_utils();
+					if ($db_utils->parse_file($file))
+					{
+						$tables_list = $db_utils->list_tables();
+						$db_utils->optimize($tables_list);
+						$db_utils->repair($tables_list);
+						AppContext::get_cache_service()->clear_cache();
+					}
+				}
+				
 				if ($original_file_compressed)
 				{
 					$file = new File(PATH_TO_ROOT . '/cache/backup/' . $filename);
@@ -347,6 +377,9 @@ elseif ($action == 'restore')
 				break;
 			case 'backup_not_from_this_site' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_backup_not_from_this_site'], MessageHelper::WARNING));
+				break;
+			case 'wrong_version_in_backup' :
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_wrong_version_in_backup'], MessageHelper::WARNING));
 				break;
 			case 'unlink_success' :
 				$tpl->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));

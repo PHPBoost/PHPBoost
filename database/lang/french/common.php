@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 04 03
+ * @version     PHPBoost 5.3 - last update: 2020 02 22
  * @since       PHPBoost 4.1 - 2015 09 30
 */
 
@@ -92,6 +92,7 @@ $lang['db_upload_failure'] = 'Une erreur est survenue lors du transfert du fichi
 $lang['db_file_already_exists'] = 'Un fichier du répertoire cache/backup porte le même nom que celui que vous souhaitez importer. Merci de renommer un des deux fichiers pour pouvoir l\'importer.';
 $lang['db_no_sql_file'] = 'Le fichier à importer n\'est pas la sauvegarde d\'une base de données, merci de fournir un fichier correct à restaurer.';
 $lang['db_backup_not_from_this_site'] = 'Le fichier à importer n\'est pas la sauvegarde de ce site, restauration impossible.';
+$lang['db_wrong_version_in_backup'] = 'Le fichier à importer ne contient la version actuelle de phpboost, restauration impossible.';
 $lang['db_unlink_success'] = 'Le fichier a été supprimé avec succès !';
 $lang['db_unlink_failure'] = 'Le fichier n\'a pas pu être supprimé';
 $lang['db_confirm_delete_file'] = 'Etes-vous sûr de vouloir supprimer ce fichier ?';
