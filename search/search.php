@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2016 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 02 22
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,7 +91,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 		{
 			// Ajout du paramètre search à tous les modules
 			$modules_args[$module->get_id()]['search'] = $search;
-			if ($search_extensions_point[$module->get_id()]->has_search_options())
+			if ($search_extensions_point[$module->get_id()] && $search_extensions_point[$module->get_id()]->has_search_options())
 			{
 				// Récupération de la liste des paramètres
 				$form_module_args = $search_extensions_point[$module->get_id()]->get_search_args();
