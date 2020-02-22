@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2014 12 22
+ * @version     PHPBoost 5.3 - last update: 2020 02 22
  * @since       PHPBoost 2.0 - 2009 02 17
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -197,33 +198,36 @@ foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as
 	if (array_key_exists($module->get_id(), $feeds_modules))
 	{
 		$list = $feeds_modules[$module->get_id()]->get_extension_point(FeedProvider::EXTENSION_POINT);
-		$list = $list->get_feeds_list();
-
-		foreach ($list->get_feeds_list() as $feed_type => $object)
+		if ($list !== null && $list !== false)
 		{
-			$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
+			$list = $list->get_feeds_list();
 
-			$root[0] = array(
-				'name' => $object->get_category_name(),
-				'url' => $object->get_url($feed_type),
-				'level' => 0,
-				'feed_name' => null,
-				'selected' => $feed_url == $object->get_url($feed_type)
-			);
-		}
+			foreach ($list->get_feeds_list() as $feed_type => $object)
+			{
+				$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
 
-		$urls = array_merge($root, $urls);
-		$tpl->assign_block_vars('modules', array('NAME' => TextHelper::ucfirst($module->get_configuration()->get_name())));
+				$root[0] = array(
+					'name' => $object->get_category_name(),
+					'url' => $object->get_url($feed_type),
+					'level' => 0,
+					'feed_name' => null,
+					'selected' => $feed_url == $object->get_url($feed_type)
+				);
+			}
 
-		foreach ($urls as $url)
-		{
-			$tpl->assign_block_vars('modules.feeds_urls', array(
-				'URL' => $url['url'],
-				'NAME' => $url['name'],
-				'SPACE' => str_repeat('--', $url['level']),
-				'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-				'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-			));
+			$urls = array_merge($root, $urls);
+			$tpl->assign_block_vars('modules', array('NAME' => TextHelper::ucfirst($module->get_configuration()->get_name())));
+
+			foreach ($urls as $url)
+			{
+				$tpl->assign_block_vars('modules.feeds_urls', array(
+					'URL' => $url['url'],
+					'NAME' => $url['name'],
+					'SPACE' => str_repeat('--', $url['level']),
+					'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+					'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+				));
+			}
 		}
 	}
 }
