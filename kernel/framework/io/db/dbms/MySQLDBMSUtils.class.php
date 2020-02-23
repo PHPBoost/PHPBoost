@@ -290,10 +290,10 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result;
 	}
 
-	public function parse_file(File $file)
+	public function parse_file(File $file, $prefix = '')
 	{
 		$reader = new BufferedFileReader($file);
-		
+
 		$query = '';
 		while (($line = $reader->read_line()) !== null)
 		{
