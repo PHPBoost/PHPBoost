@@ -1,4 +1,5 @@
 <section>
+	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>{@sandbox.module.title} - {@title.mail.sender}</h1>
 	</header>

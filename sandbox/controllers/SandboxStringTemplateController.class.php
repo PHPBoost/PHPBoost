@@ -103,7 +103,7 @@ class SandboxStringTemplateController extends ModuleController
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::mail()->rel());
+		$breadcrumb->add($this->lang['title.string.template'], SandboxUrlBuilder::email()->rel());
 
 		return $response;
 	}

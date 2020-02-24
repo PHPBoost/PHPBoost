@@ -1,4 +1,5 @@
 <section id="sandbox-css">
+	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>
 			{@sandbox.module.title} - {@title.css}
@@ -724,4 +725,4 @@
 	<footer></footer>
 </section>
 <script src="{PATH_TO_ROOT}/sandbox/templates/js/sandbox.js"></script>
-<script src=""></script>
+<script>jQuery('#sandbox-css article a').on('click', function(){return false;});</script>

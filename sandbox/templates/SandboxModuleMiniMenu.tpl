@@ -172,7 +172,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::menu())}">
+							<a href="${relative_url(SandboxUrlBuilder::menus())}">
 								<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
 								<span>{@title.menu}</span>
 							</a>

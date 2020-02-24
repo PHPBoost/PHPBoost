@@ -4,6 +4,7 @@
 </style>
 
 <section>
+	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>{@sandbox.module.title} - {@title.icons}</h1>
 	</header>

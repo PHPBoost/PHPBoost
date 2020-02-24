@@ -5,7 +5,7 @@
 	<article class="content">
 		<div class="pbt-box-largest">
 			{RESULT}
-		</div>		
+		</div>
 	</article>
 	<footer></footer>
 </section>

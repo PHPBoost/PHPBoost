@@ -25,10 +25,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('SandboxMultitabsController', '`^/multitabs/?`'),
 	new UrlControllerMapper('SandboxPluginsController', '`^/plugins/?`'),
 	new UrlControllerMapper('SandboxBBCodeController', '`^/bbcode/?`'),
-	new UrlControllerMapper('SandboxMenuController', '`^/menu/?`'),
+	new UrlControllerMapper('SandboxMenuController', '`^/menus/?`'),
 	new UrlControllerMapper('SandboxIconsController', '`^/icons/?`'),
 	new UrlControllerMapper('SandboxIcoboostsController', '`^/icoboost/?`'),
-	new UrlControllerMapper('SandboxMailController', '`^/mail/?`'),
+	new UrlControllerMapper('SandboxMailController', '`^/email/?`'),
 	new UrlControllerMapper('SandboxHomeController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);

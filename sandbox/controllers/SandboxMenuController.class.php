@@ -10,7 +10,7 @@
 
 class SandboxMenuController extends ModuleController
 {
-	private $tpl;
+	private $view;
 	private $common_lang;
 	private $lang;
 
@@ -29,16 +29,25 @@ class SandboxMenuController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('menu', 'sandbox');
-		$this->tpl = new FileTemplate('sandbox/SandboxMenuController.tpl');
-		$this->tpl->add_lang($this->common_lang);
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('sandbox/SandboxMenuController.tpl');
+		$this->view->add_lang($this->common_lang);
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
 	{
-		$this->tpl->put_all(array(
-			'L_ELEM' => $this->lang['cssmenu.element']
+		$this->view->put_all(array(
+			'L_ELEM' => $this->lang['cssmenu.element'],
+			'SANDBOX_SUB_MENU' => self::get_sub_tpl()
 		));
+	}
+
+	private static function get_sub_tpl()
+	{
+		$sub_lang = LangLoader::get('submenu', 'sandbox');
+		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$sub_tpl->add_lang($sub_lang);
+		return $sub_tpl;
 	}
 
 	private function check_authorizations()
@@ -52,13 +61,13 @@ class SandboxMenuController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->common_lang['title.menu'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.menu'], SandboxUrlBuilder::menu()->rel());
+		$breadcrumb->add($this->common_lang['title.menu'], SandboxUrlBuilder::menus()->rel());
 
 		return $response;
 	}

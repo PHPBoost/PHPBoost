@@ -42,6 +42,7 @@ class SandboxMailController extends ModuleController
 		}
 
 		$this->view->put('SMTP_FORM', $this->form->display());
+		$this->view->put('SANDBOX_SUB_MENU', self::get_sub_tpl());
 
 		return $this->generate_response();
 	}
@@ -51,6 +52,14 @@ class SandboxMailController extends ModuleController
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxMailController.tpl');
 		$this->view->add_lang($this->lang);
+	}
+
+	private static function get_sub_tpl()
+	{
+		$sub_lang = LangLoader::get('submenu', 'sandbox');
+		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$sub_tpl->add_lang($sub_lang);
+		return $sub_tpl;
 	}
 
 	private function build_form()
@@ -137,7 +146,7 @@ class SandboxMailController extends ModuleController
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.mail.sender'], SandboxUrlBuilder::mail()->rel());
+		$breadcrumb->add($this->lang['title.mail.sender'], SandboxUrlBuilder::email()->rel());
 
 		return $response;
 	}

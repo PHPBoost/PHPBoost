@@ -97,9 +97,9 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function menu()
+	public static function menus()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/menu');
+		return DispatchManager::get_url(self::$dispatcher, '/menus');
 	}
 
 	/**
@@ -113,9 +113,9 @@ class SandboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function mail()
+	public static function email()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/mail');
+		return DispatchManager::get_url(self::$dispatcher, '/email');
 	}
 
 	/**

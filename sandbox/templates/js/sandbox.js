@@ -17,29 +17,7 @@ jQuery('.close-summary, .summary-link').on('click', function() {
     jQuery('body').animate({left: '0'}, 200);
 });
 
-// smooth scroll
-jQuery('.summary-link').on('click',function(){
-	var targetId = jQuery(this).attr("href");
-
-    history.pushState('', '', targetId);
-	jQuery('html, body').animate({scrollTop:jQuery(targetId).offset().top}, 'slow');
-	return false;
-});
-
 // mini module
-
-jQuery('.sbx-toggle-btn').on('click',function(e){
-	jQuery('#module-mini-sandbox').addClass('toggle');
-	e.stopPropagation();
-});
-jQuery(document).on('click', function(e) {
-    if (jQuery(e.target).is('.sbx-menu, .sbx-item-title, .item-2x, .item-2x a, .item-3x a, .submit, i, .item-form select') === false) {
-      jQuery('#module-mini-sandbox').removeClass('toggle');
-    }
-});
-
-jQuery('#sandbox-css a').on('click', function(){return false;});
-
 jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
 setInterval(function() {
     jQuery('#window-width').empty();

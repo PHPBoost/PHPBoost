@@ -352,7 +352,7 @@ class AdminSandboxFormController extends AdminModuleController
 			$buttons->add_element(new FormButtonButton('.alt-submit', '', '', 'alt-submit'));
 
 
-		$miscellaneous = new FormFieldsetHTML('fieldset2', $this->lang['form.title.miscellaneaous']);
+		$miscellaneous = new FormFieldsetHTML('fieldset2', $this->lang['form.title.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
 			$miscellaneous->set_description($this->lang['form.desc']);

@@ -12,7 +12,7 @@
 
 class SandboxGraphicsCSSController extends ModuleController
 {
-	private $view;
+	private $tpl;
 	private $common_lang;
 	private $lang;
 
@@ -36,13 +36,38 @@ class SandboxGraphicsCSSController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('css', 'sandbox');
-		$this->view = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
-		$this->view->add_lang($this->common_lang);
-		$this->view->add_lang($this->lang);
+		$this->tpl = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
+		$this->tpl->add_lang($this->common_lang);
+		$this->tpl->add_lang($this->lang);
+	}
+
+	private static function get_sub_tpl()
+	{
+		$sub_lang = LangLoader::get('submenu', 'sandbox');
+		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$sub_tpl->add_lang($sub_lang);
+		$sub_tpl->put('C_SANDBOX_CSS', true);
+		return $sub_tpl;
 	}
 
 	private function build_view()
 	{
+		// code source
+		$this->tpl->put_all(array(
+			'PAGE'         => file_get_contents('html/css/page.tpl'),
+			'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
+			'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),
+			'PROGRESS_BAR' => file_get_contents('html/css/progress-bar.tpl'),
+			'EXPLORER'     => file_get_contents('html/css/explorer.tpl'),
+			'BUTTON'       => file_get_contents('html/css/button.tpl'),
+			'SORTABLE'     => file_get_contents('html/css/sortable.tpl'),
+			'TABLE'        => file_get_contents('html/css/table.tpl'),
+			'MESSAGE'      => file_get_contents('html/css/message.tpl'),
+			'ALERT'        => file_get_contents('html/css/alert.tpl'),
+			'BLOCK'        => file_get_contents('html/css/block.tpl'),
+			'SANDBOX_SUB_MENU' => self::get_sub_tpl()
+		));
+
 		$messages = array(
 			MessageHelper::display($this->lang['css.message.notice'], MessageHelper::NOTICE),
 			MessageHelper::display($this->lang['css.message.question'], MessageHelper::QUESTION),
@@ -56,38 +81,23 @@ class SandboxGraphicsCSSController extends ModuleController
 
 		foreach ($messages as $message)
 		{
-			$this->view->assign_block_vars('messages', array('VIEW' => $message));
+			$this->tpl->assign_block_vars('messages', array('VIEW' => $message));
 		}
 
 		$pagination = new ModulePagination(2, 15, 5);
 		$pagination->set_url(new Url('#%d'));
-		$this->view->put('PAGINATION', $pagination->display());
-
-		// code source
-		$this->view->put_all(array(
-			'PAGE'         => file_get_contents('html/css/page.tpl'),
-			'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
-			'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),
-			'PROGRESS_BAR' => file_get_contents('html/css/progress-bar.tpl'),
-			'EXPLORER'     => file_get_contents('html/css/explorer.tpl'),
-			'BUTTON'       => file_get_contents('html/css/button.tpl'),
-			'SORTABLE'     => file_get_contents('html/css/sortable.tpl'),
-			'TABLE'        => file_get_contents('html/css/table.tpl'),
-			'MESSAGE'      => file_get_contents('html/css/message.tpl'),
-			'ALERT'        => file_get_contents('html/css/alert.tpl'),
-			'BLOCK'        => file_get_contents('html/css/block.tpl')
-		));
+		$this->tpl->put('PAGINATION', $pagination->display());
 
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
-			$this->view->put_all(array(
+			$this->tpl->put_all(array(
 				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::SUCCESS, -1),
 				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::NOTICE, 3),
 				'FLOATING_WARNING'  => MessageHelper::display($this->lang['css.message.float-unlimited'], MessageHelper::WARNING, -1),
 				'FLOATING_ERROR'    => MessageHelper::display($this->lang['css.message.float-limited'], MessageHelper::ERROR, 6)
 			));
 		}
-		$this->view->put('FLOATING_MESSAGES', $this->floating_messages->display());
+		$this->tpl->put('FLOATING_MESSAGES', $this->floating_messages->display());
 	}
 
 	private function build_floating_messages()
@@ -109,7 +119,7 @@ class SandboxGraphicsCSSController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->view);
+		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->common_lang['title.css'], $this->common_lang['sandbox.module.title']);
 

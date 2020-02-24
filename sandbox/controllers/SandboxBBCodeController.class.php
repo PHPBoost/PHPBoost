@@ -87,8 +87,20 @@ class SandboxBBCodeController extends ModuleController
 			'BLOCK_CODE' => file_get_contents('html/bbcode/block-code.tpl'),
 			'MEDIA' => file_get_contents('html/bbcode/media.tpl'),
 			'TABLE' => file_get_contents('html/bbcode/table.tpl'),
-			'C_WIKI' => $c_wiki
+			'C_WIKI' => $c_wiki,
+			'SANDBOX_SUB_MENU' => self::get_sub_tpl()
 		));
+	}
+
+	private static function get_sub_tpl()
+	{
+		$sub_lang = LangLoader::get('submenu', 'sandbox');
+		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$sub_tpl->add_lang($sub_lang);
+		$sub_tpl->put_all(array(
+			'C_SANDBOX_BBCODE' => true
+		));
+		return $sub_tpl;
 	}
 
 	private function check_authorizations()

@@ -22,10 +22,10 @@ class SandboxTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree->add_link(new ModuleLink($lang['title.multitabs'], SandboxUrlBuilder::multitabs()));
 		$tree->add_link(new ModuleLink($lang['title.plugins'], SandboxUrlBuilder::plugins()));
 		$tree->add_link(new ModuleLink($lang['title.bbcode'], SandboxUrlBuilder::bbcode()));
-		$tree->add_link(new ModuleLink($lang['title.menu'], SandboxUrlBuilder::menu()));
+		$tree->add_link(new ModuleLink($lang['title.menu'], SandboxUrlBuilder::menus()));
 		$tree->add_link(new ModuleLink($lang['title.icons'], SandboxUrlBuilder::icons()));
 		$tree->add_link(new ModuleLink($lang['title.table.builder'], SandboxUrlBuilder::table()));
-		$tree->add_link(new ModuleLink($lang['title.mail.sender'], SandboxUrlBuilder::mail()));
+		$tree->add_link(new ModuleLink($lang['title.mail.sender'], SandboxUrlBuilder::email()));
 		$tree->add_link(new ModuleLink($lang['title.string.template'], SandboxUrlBuilder::template()));
 
 		return $tree;

@@ -40,6 +40,8 @@ class SandboxIconsController extends ModuleController
 
 	private function build_view()
 	{
+		$this->view->put('SANDBOX_SUB_MENU', self::get_sub_tpl());
+
 		//Social
 		$icons = array(
 			array('fab', 'facebook-f', '\f39e'),
@@ -74,6 +76,14 @@ class SandboxIconsController extends ModuleController
 				'CODE'   => $icon[2]
 			));
 		}
+	}
+
+	private static function get_sub_tpl()
+	{
+		$sub_lang = LangLoader::get('submenu', 'sandbox');
+		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$sub_tpl->add_lang($sub_lang);
+		return $sub_tpl;
 	}
 
 	private function check_authorizations()

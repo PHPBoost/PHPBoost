@@ -1,4 +1,5 @@
 <section>
+	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>{@sandbox.module.title}</h1>
 	</header>
@@ -21,16 +22,10 @@
 				</div>
 				<div class="cell-list">
 					<ul>
-						# IF IS_ADMIN #
-							<li class="li-stretch">
-								<a href="${relative_url(SandboxUrlBuilder::form())}">{@welcome.form.front}</a>
-								<a href="${relative_url(SandboxUrlBuilder::admin_form())}">{@welcome.form.admin}</a>
-							</li>
-						# ELSE #
-							<li>
-								<a href="${relative_url(SandboxUrlBuilder::form())}">{@see.render}</a>
-							</li>
-						# ENDIF #
+						<li# IF IS_ADMIN # class="li-stretch"# ENDIF #>
+							<a href="${relative_url(SandboxUrlBuilder::form())}">{@welcome.form.front}</a>
+							# IF IS_ADMIN #<a href="${relative_url(SandboxUrlBuilder::admin_form())}">{@welcome.form.admin}</a># ENDIF #
+						</li>
 					</ul>
 				</div>
 			</div>

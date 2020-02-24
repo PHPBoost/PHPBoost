@@ -2,7 +2,7 @@
     <ul class="level-0">
         <li>
             <a class="cssmenu-title" href="#">
-                <img src="sandbox_mini.png" alt="Element" />Element
+                <img src="sandbox_mini.png" alt="Element" /><span>Element</span>
             </a>
         </li>
         <li class="has-sub">
@@ -10,15 +10,15 @@
             <ul class="level-1">
                 <li>
                     <a class="cssmenu-title" href="#">
-                        <img src="../templates/base/theme/images/logo.png" alt="Element" /> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, repudiandae.
+                        <img src="../sandbox/templates/images/square.png" alt="Element" /> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, repudiandae.</span>
                     </a>
                 </li>
                 <li class="has-sub">
-                    <span class="cssmenu-title" href="#"><img src="sandbox.png" alt="Element" />SubMenu Element</span>
+                    <span class="cssmenu-title" href="#"><img src="../sandbox/sandbox.png" alt="Element" /><span>SubMenu Element</span></span>
                     <ul class="level-2">
                         <li>
                             <a class="cssmenu-title" href="#">
-                                <img src="sandbox_mini.png" alt="Element" />Element
+                                <img src="../sandbox/sandbox_mini.png" alt="Element" /><span>Element</span>
                             </a>
                         </li>
                         <li class="has-sub">
@@ -26,17 +26,17 @@
                             <ul class="level-3">
                                 <li>
                                     <a class="cssmenu-title" href="#">
-                                        <img src="sandbox_mini.png" alt="Element" />Element
+                                        <img src="../sandbox/sandbox_mini.png" alt="Element" /><span>Element</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="cssmenu-title" href="#">
-                                        <img src="sandbox_mini.png" alt="Element" />Element
+                                        <img src="../sandbox/sandbox_mini.png" alt="Element" /><span>Element</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="cssmenu-title" href="#">
-                                        <img src="sandbox_mini.png" alt="Element" />Element
+                                        <img src="../sandbox/sandbox_mini.png" alt="Element" /><span>Element</span>
                                     </a>
                                 </li>
                             </ul>
