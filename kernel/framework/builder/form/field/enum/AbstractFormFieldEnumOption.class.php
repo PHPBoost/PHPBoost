@@ -161,6 +161,10 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 					$this->set_disable($value);
 					unset($field_choice_options['disable']);
 					break;
+				case 'selected':
+					$this->set_active($value);
+					unset($field_choice_options['selected']);
+					break;
 				case 'data_option_img':
 					$this->set_data_option_img($value);
 					unset($field_choice_options['data_option_img']);
