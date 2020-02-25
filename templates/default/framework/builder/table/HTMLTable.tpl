@@ -16,7 +16,7 @@
 			# ENDIF #
 			<thead>
 				<tr>
-					# IF C_MULTIPLE_DELETE_DISPLAYED #<th></th># ENDIF #
+					# IF C_MULTIPLE_DELETE_DISPLAYED #<th><span class="sr-only">${LangLoader::get_message('select', 'common')}</span></th># ENDIF #
 					# START header_column #
 						<th
 							# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
@@ -28,7 +28,7 @@
 									</a>
 								</span>
 							# ENDIF #
-							<span class="html-table-header-name">{header_column.NAME}</span>
+							<span class="html-table-header-name# IF header_column.C_SR_ONLY # sr-only# ENDIF #">{header_column.NAME}</span>
 							# IF header_column.C_SORTABLE #
 								<span class="html-table-header-sortable# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
 									<a href="{header_column.U_SORT_ASC}" aria-label="${LangLoader::get_message('sort.asc', 'common')}">

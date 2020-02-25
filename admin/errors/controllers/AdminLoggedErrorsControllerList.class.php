@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 02 25
  * @since       PHPBoost 4.0 - 2014 01 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -42,7 +42,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 		);
 
 		$table_model = new HTMLTableModel('error-list', array(
-			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', 'col-large'),
+			new HTMLTableColumn(LangLoader::get_message('date', 'date-common'), '', array('css_class' => 'col-large')),
 			new HTMLTableColumn(LangLoader::get_message('description', 'main'))
 		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 

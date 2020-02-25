@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 28
+ * @version     PHPBoost 5.3 - last update: 2020 02 25
  * @since       PHPBoost 3.0 - 2009 12 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -192,6 +192,7 @@ class HTMLTable extends AbstractHTMLElement
 			$sortable_parameter = $column->get_sortable_parameter();
 			$values = array(
 				'NAME' => $column->get_value(),
+				'C_SR_ONLY' => $column->is_name_sr_only(),
 				'C_SORTABLE' => $column->is_sortable(),
 				'C_SORT_ASC_SELECTED' => $sorted == HTMLTableSortingRule::ASC . $sortable_parameter,
 				'C_SORT_DESC_SELECTED' => $sorted == HTMLTableSortingRule::DESC . $sortable_parameter,
