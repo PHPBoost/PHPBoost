@@ -108,12 +108,15 @@ class UserUsersListController extends AbstractController
 	{
 		if ($request->get_string('delete-selected-elements', false))
 		{
+			$last_admin_delete = false;
+			$selected_users_number = 0;
 			for ($i = 1 ; $i <= $this->elements_number ; $i++)
 			{
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
 					if (isset($this->ids[$i]))
 					{
+						$selected_users_number++;
 						$user = UserService::get_user($this->ids[$i]);
 						if (!$user->is_admin() || ($user->is_admin() && UserService::count_admin_members() > 1))
 						{
@@ -123,10 +126,15 @@ class UserUsersListController extends AbstractController
 							}
 							catch (RowNotFoundException $ex) {}
 						}
+						if ($user->is_admin() && UserService::count_admin_members() == 1)
+							$last_admin_delete == true;
 					}
 				}
 			}
-			AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
+			if ($last_admin_delete && $selected_users_number == 1)
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'));
+			else
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
 	}
 
