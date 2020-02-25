@@ -80,7 +80,7 @@ class AdminViewAllMembersController extends AdminController
 			if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
 				$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
 			else
-				$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
+				$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;', 'disabled' => true));
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 

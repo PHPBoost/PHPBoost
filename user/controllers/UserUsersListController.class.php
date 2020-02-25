@@ -90,7 +90,7 @@ class UserUsersListController extends AbstractController
 				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
 					$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
 				else
-					$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
+					$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;', 'disabled' => true));
 
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}
