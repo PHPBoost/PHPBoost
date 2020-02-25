@@ -52,7 +52,7 @@
 							# IF row.C_DISPLAY_DELETE_INPUT #
 								<label for="multiple-checkbox-{row.ELEMENT_NUMBER}" class="checkbox">
 									<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENT_NUMBER}" name="delete-checkbox-{row.ELEMENT_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
-									<span>&nbsp;</span>
+									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
 							# ENDIF #
 						</td>
