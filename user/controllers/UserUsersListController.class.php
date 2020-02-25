@@ -127,7 +127,7 @@ class UserUsersListController extends AbstractController
 							catch (RowNotFoundException $ex) {}
 						}
 						if ($user->is_admin() && UserService::count_admin_members() == 1)
-							$last_admin_delete == true;
+							$last_admin_delete = true;
 					}
 				}
 			}
