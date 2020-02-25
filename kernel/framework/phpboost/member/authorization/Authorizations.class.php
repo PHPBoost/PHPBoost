@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2018 11 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 25
  * @since       PHPBoost 2.0 - 2008 07 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Authorizations
@@ -118,6 +119,7 @@ class Authorizations
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
 			'L_USERS' => $lang['member_s'],
 			'L_ADD_USER' => $lang['add_member'],
+			'L_SEARCH_MEMBER' => LangLoader::get_message('search_member', 'admin'),
 			'L_REQUIRE_PSEUDO' => $lang['require_pseudo'],
 			'L_RANKS' => $lang['ranks'],
 			'L_GROUPS' => $lang['groups'],

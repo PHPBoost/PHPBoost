@@ -291,9 +291,9 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb_ordered_list{FIELD}">{@bbcode.list.ordered}</label>
 							<div class="cell-input">
-								<label class="checkbox" for="bb_ordered_list{FIELD}">
+								<label class="checkbox" for="">
 									<input id="bb_ordered_list{FIELD}" type="checkbox" name="bb_ordered_list{FIELD}" />
-									<span>&nbsp;</span>
+									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
 							</div>
 						</div>
@@ -328,9 +328,9 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb-head{FIELD}">{@bbcode.head.table}</label>
 							<div class="cell-input">
-								<label class="checkbox" for="bb-head{FIELD}">
+								<label class="checkbox" for="">
 									<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
-									<span>&nbsp;</span>
+									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
 							</div>
 						</div>
@@ -700,9 +700,9 @@
 						<div class="cell-form">
 							<label class="cell-label" for="bb_anchor_url{FIELD}">{@bbcode.anchor.url}</label>
 							<div class="cell-input">
-								<label for="bb_anchor_url{FIELD}" class="checkbox">
+								<label class="checkbox" for="">
 									<input class="checkbox-revealer" id="bb_anchor_url{FIELD}" type="checkbox" name="bb_anchor_url{FIELD}" />
-									<span>&nbsp;</span>
+									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
 							</div>
 						</div>
@@ -731,7 +731,9 @@
 							<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
 							<div class="cell-input grouped-inputs">
 								<input class="grouped-element" id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
-								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+								<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+								</a>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -756,7 +758,9 @@
 							</label>
 							<div class="cell-input grouped-inputs">
 								<input class="grouped-element" id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
-								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+								<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+								</a>
 							</div>
 						</div>
 						<div class="cell-body">
@@ -780,7 +784,9 @@
 							<label class="cell-label" for="bb_movie_poster{FIELD}">{@bbcode.movie.poster}</label>
 							<div class="cell-input grouped-inputs">
 								<input class="grouped-element" id="bb_movie_poster{FIELD}" type="text" name="bb_movie_poster{FIELD}" />
-								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+								<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_poster{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+								</a>
 							</div>
 						</div>
 						<div class="cell-footer cell-input">
@@ -805,7 +811,9 @@
 							</label>
 							<div class="cell-input grouped-inputs">
 								<input class="grouped-element" id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
-								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+								<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+								</a>
 							</div>
 						</div>
 						<div class="cell-form">
@@ -836,7 +844,9 @@
 							<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
 							<div class="cell-input grouped-inputs">
 								<input class="grouped-element" id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
-								<a class="grouped-element" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload-alt"></i></a>
+								<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+									<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+								</a>
 							</div>
 						</div>
 						<div class="cell-form">
@@ -985,9 +995,9 @@
 						<div class="cell-form">
 							<label for="bb_code_line{FIELD}" class="cell-label">{@bbcode.code.line}</label>
 							<div class="cell-input">
-								<label class="checkbox" for="bb_code_line{FIELD}">
+								<label class="checkbox" for="">
 									<input id="bb_code_line{FIELD}" name="bb_code_line{FIELD}" type="checkbox">
-									<span>&nbsp;</span>
+									<span>&nbsp;<span class="sr-only">${LangLoader::get_message('select', 'common')}</span></span>
 								</label>
 							</div>
 						</div>

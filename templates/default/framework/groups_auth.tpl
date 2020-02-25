@@ -1,16 +1,17 @@
 <div class="advanced-auth-container">
+	<label for="groups_auth{IDSELECT}"><span class="sr-only">{L_EXPLAIN_SELECT_MULTIPLE}</span></label>
 	<div class="advanced-auth advanced-auth-group">
 		<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 			<optgroup label="{L_RANKS}">
-			# START ranks_list #
-				<option # IF ranks_list.C_DISABLED #disabled="disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
-			# END ranks_list #
+				# START ranks_list #
+					<option # IF ranks_list.C_DISABLED #disabled="disabled" # ENDIF #value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
+				# END ranks_list #
 			</optgroup>
 
 			<optgroup label="{L_GROUPS}">
-			# START groups_list #
-				<option # IF groups_list.C_DISABLED #disabled="disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
-			# END groups_list #
+				# START groups_list #
+					<option # IF groups_list.C_DISABLED #disabled="disabled" # ENDIF #value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
+				# END groups_list #
 			</optgroup>
 		</select>
 	</div>
@@ -19,18 +20,20 @@
 		<div id="advanced_authb{IDSELECT}" class="advanced-auth advanced-auth-select"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 			<div id="advanced_auth{IDSELECT}" class="advanced-auth advanced-auth-input"# IF NOT C_ADVANCED_AUTH_OPEN # style="display: none;"# ENDIF #>
 				<div class="grouped-inputs">
+					<label for="login{IDSELECT}"><span class="sr-only">{L_ADD_USER}</span></label>
 					<input class="grouped-element" type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}" placeholder="{L_ADD_USER}">
-					<button class="grouped-element button" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid">
-						<i class="fa fa-search-plus"></i>
+					<button class="grouped-element button" onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" aria-label="{L_SEARCH_MEMBER}">
+						<i class="fa fa-search-plus" aria-hidden="true"></i>
 					</button>
 				</div>
 				<span id="search_img{IDSELECT}"></span>
 				<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display: none;"></div>
 			</div>
+			<label for="members_auth{IDSELECT}"><span class="sr-only">{L_USERS}</span></label>
 			<select id="members_auth{IDSELECT}" class="advanced-auth-select advanced-auth-input" name="members_auth{IDSELECT}[]" size="5" multiple="multiple">
 				<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 					# START members_list #
-					<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
+						<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 					# END members_list #
 				</optgroup>
 			</select>
