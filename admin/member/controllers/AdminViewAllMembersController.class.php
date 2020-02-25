@@ -127,12 +127,12 @@ class AdminViewAllMembersController extends AdminController
 							catch (RowNotFoundException $ex) {}
 						}
 						if ($user->is_admin() && UserService::count_admin_members() == 1)
-							$last_admin_delete = true;
+							$last_admin_delete == true;
 					}
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'));
+				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'), MessageHelper::ERROR);
 			else
 				AppContext::get_response()->redirect(AdminMembersUrlBuilder::management(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}

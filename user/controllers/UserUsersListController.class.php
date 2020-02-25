@@ -132,7 +132,7 @@ class UserUsersListController extends AbstractController
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
-				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'));
+				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('error.action.unauthorized', 'status-messages-common'), MessageHelper::ERROR);
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::home(), LangLoader::get_message('process.success', 'status-messages-common'));
 		}
