@@ -68,7 +68,7 @@ class NewsletterArchivesController extends ModuleController
 			unset($columns[0]);
 
 		if ($moderation_authorization)
-			$columns[] = new HTMLTableColumn('');
+			$columns[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_archives, 'table', $columns, new HTMLTableSortingRule('timestamp', HTMLTableSortingRule::DESC));
 

@@ -61,7 +61,7 @@ class NewsletterSubscribersListController extends ModuleController
 		);
 
 		if ($moderation_authorization)
-			$columns[] = new HTMLTableColumn('');
+			$columns[] = new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true));
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_subscribers, 'table', $columns, new HTMLTableSortingRule('name', HTMLTableSortingRule::ASC));
 

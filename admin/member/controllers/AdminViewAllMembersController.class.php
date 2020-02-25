@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 05
+ * @version     PHPBoost 5.3 - last update: 2020 02 25
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -58,7 +58,7 @@ class AdminViewAllMembersController extends AdminController
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['approbation'], 'approved'),
-			new HTMLTableColumn('')
+			new HTMLTableColumn(LangLoader::get_message('actions', 'admin-common'), '', array('sr-only' => true))
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
