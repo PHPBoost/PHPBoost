@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 26
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -90,7 +90,7 @@ class UserUsersListController extends AbstractController
 				if ($user->get_level() != User::ADMIN_LEVEL || ($user->get_level() == User::ADMIN_LEVEL && $number_admins > 1))
 					$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
 				else
-					$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;', 'disabled' => true));
+					$delete_link = new DeleteLinkHTMLElement('', '', array('disabled' => true));
 
 				$html_table_row[] = new HTMLTableRowCell($edit_link->display() . $delete_link->display());
 			}
