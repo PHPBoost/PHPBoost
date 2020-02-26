@@ -1,42 +1,43 @@
 # START question #
 	<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="form-poll">
-		<div class="cell-body">
-			<div class="cell-content align-center"><span class="poll-container-title">{question.QUESTION}</span></div>
-		</div>
-
-
-		<div class="cell-list">
-			<ul>
-				# START question.radio #
-					<li>
-						<label class="radio" for="poll-radio-{question.radio.NAME}">
-							<input type="radio" id="poll-radio-{question.radio.NAME}" name="radio" value="{question.radio.NAME}">
-							<span class="smaller">{question.radio.ANSWERS}</span>
-						</label>
-					</li>
-				# END question.radio #
-			</ul>
-
-			<ul>
-				# START question.checkbox #
-					<li>
-						<label class="checkbox" for="poll-checkbox-{question.checkbox.NAME}">
-							<input type="checkbox" id="poll-checkbox-{question.checkbox.NAME}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}">
-							<span class="smaller">{question.checkbox.ANSWERS}</span>
-						</label>
-					</li>
-				# END question.checkbox #
-			</ul>
-		</div>
-		<div class="cell-body">
-			<div class="cell-content grouped-inputs">
-				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="valid_poll" value="true" class="button submit">{L_VOTE}</button>
-				<a class="grouped-element small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
+		<fieldset>
+			<legend><span class="sr-only">{question.QUESTION}</span></legend>
+			<div class="cell-body">
+				<div class="cell-content align-center"><span class="poll-container-title">{question.QUESTION}</span></div>
 			</div>
-		</div>
 
 
+			<div class="cell-list">
+				<ul>
+					# START question.radio #
+						<li>
+							<label class="radio" for="poll-radio-{question.radio.NAME}">
+								<input type="radio" id="poll-radio-{question.radio.NAME}" name="radio" value="{question.radio.NAME}">
+								<span class="smaller">{question.radio.ANSWERS}</span>
+							</label>
+						</li>
+					# END question.radio #
+				</ul>
+
+				<ul>
+					# START question.checkbox #
+						<li>
+							<label class="checkbox" for="poll-checkbox-{question.checkbox.NAME}">
+								<input type="checkbox" id="poll-checkbox-{question.checkbox.NAME}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}">
+								<span class="smaller">{question.checkbox.ANSWERS}</span>
+							</label>
+						</li>
+					# END question.checkbox #
+				</ul>
+			</div>
+			<div class="cell-body">
+				<div class="cell-content grouped-inputs">
+					<input type="hidden" name="token" value="{TOKEN}">
+					<button type="submit" name="valid_poll" value="true" class="button submit">{L_VOTE}</button>
+					<a class="grouped-element small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
+				</div>
+			</div>
+		</fieldset>
 	</form>
 # END question #
 

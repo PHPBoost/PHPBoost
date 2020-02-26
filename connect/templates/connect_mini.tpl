@@ -30,32 +30,33 @@
 			# ENDIF #
 					<ul class="connect-container">
 						<li>
-						<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-							<ul>
-								<li>
-									<label for="login">
-										<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
-									</label>
-								</li>
-								<li>
-									<label for="password">
-										<input type="password" id="password" name="password" placeholder="{@password}">
-									</label>
-								</li>
-								<li class="align-center">
-									<label class="checkbox" for="autoconnect">
-										<span>{@autoconnect}</span>
-										<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
-									</label>
-								</li>
-								<li class="align-center">
-									<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
-									<input type="hidden" name="token" value="{TOKEN}">
-									<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
-								</li>
-							</ul>
-						</form>
-
+							<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+								<ul>
+									<li>
+										<label for="login">
+											<input type="text" id="login" name="login" aria-label="{@login} - {@login.tooltip}" placeholder="{@login}">
+											<span class="sr-only">{@login}</span>
+										</label>
+									</li>
+									<li>
+										<label for="password">
+											<input type="password" id="password" name="password" placeholder="{@password}">
+											<span class="sr-only">{@password}</span>
+										</label>
+									</li>
+									<li class="align-center">
+										<label class="checkbox" for="autoconnect">
+											<span>{@autoconnect}</span>
+											<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@autoconnect}">
+										</label>
+									</li>
+									<li class="align-center">
+										<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+										<input type="hidden" name="token" value="{TOKEN}">
+										<button type="submit" name="authenticate" value="internal" class="button submit">{@connection}</button>
+									</li>
+								</ul>
+							</form>
 						</li>
 
 						# IF C_DISPLAY_REGISTER_CONTAINER #

@@ -108,15 +108,15 @@
 # IF C_DISPLAY_FORM #
 	<form action="#" method="post">
 		# IF NOT C_MEMBER #
-			<div class="cell-form grouped-inputs">
+			<label for="shout-pseudo" class="cell-form grouped-inputs">
 				<span class="grouped-element">${LangLoader::get_message('form.name', 'common')}</span>
 				<input type="text" name="shout-pseudo" id="shout-pseudo" class="grouped-element shout-pseudo not-connected" value="${LangLoader::get_message('visitor', 'user-common')}">
-			</div>
+			</label>
 		# ELSE #
 			<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">
 		# ENDIF #
 		<div class="cell-textarea">
-			<label for="switchlang"><span class="sr-only">${LangLoader::get_message('message', 'main')}</span></label>
+			<label for="shout-contents"><span class="sr-only">${LangLoader::get_message('message', 'main')}</span></label>
 			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="3" cols="16" placeholder="${LangLoader::get_message('message', 'main')}..."></textarea>
 		</div>
 		<nav class="cell-body" id="shoutbox-bbcode-container">
