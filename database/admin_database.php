@@ -234,7 +234,7 @@ elseif ($action == 'restore')
 		{
 			Environment::try_to_increase_max_execution_time();
 			$file = new File($file_path);
-			$status = check_backup_file($file);
+			$status = (string)check_backup_file($file);
 			if ($status == 'wrong_site')
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
 			else if ($status == 'wrong_version')
@@ -305,7 +305,7 @@ elseif ($action == 'restore')
 
 				Environment::try_to_increase_max_execution_time();
 				$file = new File($file_path);
-				$status = check_backup_file($file);
+				$status = (string)check_backup_file($file);
 				if ($status == 'wrong_site')
 					AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=backup_not_from_this_site', '', '&'));
 				else if ($status == 'wrong_version')
