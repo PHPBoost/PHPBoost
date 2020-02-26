@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 22
+ * @version     PHPBoost 5.3 - last update: 2020 02 26
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -194,7 +194,7 @@ elseif ($action == 'restore')
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
 	}
 
-	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
+	$post_file = isset($_FILES['upload_file']) ? $_FILES['upload_file'] : '';
 
 	if (!empty($file)) //Restauration d'un fichier sur le ftp
 	{
