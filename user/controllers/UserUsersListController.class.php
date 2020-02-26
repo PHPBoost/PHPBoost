@@ -22,6 +22,7 @@ class UserUsersListController extends AbstractController
 	{
 		$this->init();
 		$this->build_select_group_form();
+		$this->build_form();
 		$current_page = $this->build_table();
 
 		if (AppContext::get_current_user()->is_admin())
@@ -36,6 +37,18 @@ class UserUsersListController extends AbstractController
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
+	}
+
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__);
+
+		$fieldset = new FormFieldsetHTML('search_member', LangLoader::get_message('search_member', 'main'));
+		$form->add_fieldset($fieldset);
+
+		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['display_name'], ''));
+
+		$this->view->put('FORM', $form->display());
 	}
 
 	private function build_table()

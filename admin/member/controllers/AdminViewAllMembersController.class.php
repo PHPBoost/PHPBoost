@@ -22,6 +22,7 @@ class AdminViewAllMembersController extends AdminController
 	{
 		$this->init();
 
+		$this->build_form();
 		$current_page = $this->build_table();
 
 		$this->execute_multiple_delete_if_needed($request);
@@ -44,7 +45,7 @@ class AdminViewAllMembersController extends AdminController
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['display_name'], ''));
 
-		return $form;
+		$this->view->put('FORM', $form->display());
 	}
 
 	private function build_table()
@@ -96,10 +97,7 @@ class AdminViewAllMembersController extends AdminController
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
-		$this->view->put_all(array(
-			'FORM' => $this->build_form()->display(),
-			'table' => $table->display()
-		));
+		$this->view->put('table', $table->display());
 
 		return $table->get_page_number();
 	}
