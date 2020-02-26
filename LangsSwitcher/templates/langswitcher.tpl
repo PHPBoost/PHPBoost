@@ -7,6 +7,7 @@
 				<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ELSE #cell-input# ENDIF #">
 					# IF C_HORIZONTAL #<span class="grouped-element">{@switch.lang}</span># ENDIF #
 					<div class="grouped-element">
+						<label for="switchlang"><span class="sr-only">${LangLoader::get_message('select', 'common')}</span></label>
 						<select
 							id="switchlang"
 							class="flag-selector select-to-list"

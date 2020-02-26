@@ -116,6 +116,7 @@
 			<input type="hidden" name="shout-pseudo" id="shout-pseudo" class="shout-pseudo connected" value="{SHOUTBOX_PSEUDO}">
 		# ENDIF #
 		<div class="cell-textarea">
+			<label for="switchlang"><span class="sr-only">${LangLoader::get_message('message', 'main')}</span></label>
 			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="3" cols="16" placeholder="${LangLoader::get_message('message', 'main')}..."></textarea>
 		</div>
 		<nav class="cell-body" id="shoutbox-bbcode-container">
