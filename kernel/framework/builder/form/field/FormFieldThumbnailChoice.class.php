@@ -42,7 +42,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
-			'C_NONE_CHECKED' => empty($this->get_value()),
+			'C_NONE_CHECKED' => $this->get_value() == '',
 			'C_DEFAULT_CHECKED' => $this->get_value() == self::DEFAULT_VALUE,
 		 	'C_CUSTOM_CHECKED' => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE,
 			'DEFAULT_URL' => $this->default_url,
