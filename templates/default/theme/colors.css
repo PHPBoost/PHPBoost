@@ -6,6 +6,12 @@
 */
 
 /* --- shape ---------------------------------------------------------------- */
+
+::selection {
+	background-color: var(--main-dark);
+	color: var(--txt-light);
+}
+
 body {
 	background-color: var(--bgc-main);
     color: var(--txt-dark);
@@ -211,8 +217,8 @@ body {
 
 optgroup { border-color: var(--bdr-main); }
 
-select[multiple] option[selected] {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0S5n8HwAEMwIuxlyf1QAAAABJRU5ErkJggg==);
+select[multiple] option:checked {
+	background-image: linear-gradient(0deg, var(--main-dark) 0%, var(--main-dark) 100%);
 	color: var(--txt-light);
 }
 
