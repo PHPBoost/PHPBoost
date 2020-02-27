@@ -24,15 +24,17 @@
 # ELSE #
 	<div id="newsletter" class="cell-mini# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 		<div class="cell">
-			<form class="cell-form grouped-inputs grouped-auto grouped-right" action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
+			<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 				<fieldset>
 					<legend class="sr-only">${LangLoader::get_message('email', 'user-common')}</legend>
-					<span class="newsletter-title grouped-element">{@newsletter}</span>
-					<label for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
-					<input id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
-					<input type="hidden" name="subscribe" value="subscribe">
-					<input type="hidden" name="token" value="{TOKEN}">
-					<button id="NewsletterButton" name="mail_newsletter_button" type="submit" class="grouped-element button submit" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+					<div class="cell-form grouped-inputs grouped-auto grouped-right">
+						<span class="newsletter-title grouped-element">{@newsletter}</span>
+						<label for="newsletter-email" class="sr-only">${LangLoader::get_message('email', 'user-common')}</label>
+						<input id="newsletter-email" type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}" placeholder="${LangLoader::get_message('email', 'user-common')}" aria-labelledby="NewsletterButton">
+						<input type="hidden" name="subscribe" value="subscribe">
+						<input type="hidden" name="token" value="{TOKEN}">
+						<button id="NewsletterButton" name="mail_newsletter_button" type="submit" class="grouped-element button submit" aria-label="{@subscribe.newsletter}"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+					</div>
 				</fieldset>
 			</form>
 		</div>
