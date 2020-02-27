@@ -18,7 +18,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 
 	public function __construct($id, $label = '', $value = self::NONE, $default_url = '', array $field_options = array(), array $constraints = array())
 	{
-		$this->default_value = $default_value;
+		$this->default_value = $default_url;
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
@@ -32,7 +32,13 @@ class FormFieldThumbnailChoice extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$tpl->put_all(array(
+		$file_type = new FileType(new File($this->get_value()));
+
+		$template->put_all(array(
+			'C_PREVIEW_HIDDEN' => !$file_type->is_picture(),
+			'C_AUTH_UPLOAD' => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
+			'FILE_PATH' => Url::to_rel($this->get_value()),
+
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),

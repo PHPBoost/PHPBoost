@@ -31,41 +31,38 @@
 # INCLUDE ADD_FIELD_JS #
 
 <script>
-<!--
+	jQuery("#" + ${escapejs(NAME)}).blur(function(){
+		var fileName = HTMLForms.getField(${escapejs(ID)}).getValue();
+		var extension = fileName.substring(fileName.lastIndexOf('.')+1);
 
-jQuery("#" + ${escapejs(NAME)}).blur(function(){
-	var fileName = HTMLForms.getField(${escapejs(ID)}).getValue();
-	var extension = fileName.substring(fileName.lastIndexOf('.')+1);
+		if ((/^(png|gif|jpg|jpeg|tiff|ico|svg)$/i).test(extension)) {
+			jQuery('#${escape(HTML_ID)}_preview').show();
+			jQuery.ajax({
+				url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
+				type: "post",
+				dataType: "json",
+				data: {token: ${escapejs(TOKEN)}, image: HTMLForms.getField(${escapejs(ID)}).getValue()},
+				beforeSend: function(){
+					jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+					jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
+				},
+				success: function(returnData){
+					jQuery('#${escape(HTML_ID)}_preview_loading').remove();
 
-	if ((/^(png|gif|jpg|jpeg|tiff|ico|svg)$/i).test(extension)) {
-		jQuery('#${escape(HTML_ID)}_preview').show();
-		jQuery.ajax({
-			url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
-			type: "post",
-			dataType: "json",
-			data: {token: ${escapejs(TOKEN)}, image: HTMLForms.getField(${escapejs(ID)}).getValue()},
-			beforeSend: function(){
-				jQuery('#${escape(HTML_ID)}_preview_picture').hide();
-				jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
-			},
-			success: function(returnData){
-				jQuery('#${escape(HTML_ID)}_preview_loading').remove();
-
-				if (returnData.url) {
-					jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
-					jQuery('#${escape(HTML_ID)}_preview_picture').show();
-				} else {
+					if (returnData.url) {
+						jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
+						jQuery('#${escape(HTML_ID)}_preview_picture').show();
+					} else {
+						jQuery('#${escape(HTML_ID)}_preview').hide();
+					}
+				},
+				error: function(e){
+					jQuery('#${escape(HTML_ID)}_preview_loading').remove();
 					jQuery('#${escape(HTML_ID)}_preview').hide();
 				}
-			},
-			error: function(e){
-				jQuery('#${escape(HTML_ID)}_preview_loading').remove();
-				jQuery('#${escape(HTML_ID)}_preview').hide();
-			}
-		});
-	} else {
-		jQuery('#${escape(HTML_ID)}_preview').hide();
-	}
-});
--->
+			});
+		} else {
+			jQuery('#${escape(HTML_ID)}_preview').hide();
+		}
+	});
 </script>
