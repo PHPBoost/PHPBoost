@@ -14,8 +14,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 	protected $default_url = '';
 
 	const NONE  = 'none';
-	const DEFAULT = 'default';
-	const CUSTOM = 'custom';
+	const DEFAULT_VALUE = 'default';
 
 	public function __construct($id, $label = '', $value = self::NONE, $default_url = '', array $field_options = array(), array $constraints = array())
 	{
@@ -37,9 +36,9 @@ class FormFieldThumbnailChoice extends AbstractFormField
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
-			'C_NONE_CHECKED' => $this->get_value() == self::NONE,
-			'C_DEFAULT_CHECKED' => $this->get_value() == self::DEFAULT,
-		 	'C_CUSTOM_CHECKED' => $this->get_value() == self::CUSTOM,
+			'C_NONE_CHECKED' => empty($this->get_value()),
+			'C_DEFAULT_CHECKED' => $this->get_value() == self::DEFAULT_VALUE,
+		 	'C_CUSTOM_CHECKED' => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE,
 			'DEFAULT_URL' => $this->default_url,
 		));
 
