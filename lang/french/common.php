@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -161,6 +161,11 @@ $lang['form.source.url'] = 'Adresse de la source';
 $lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
+
+//Thumbnails
+$lang['thumbnail.none'] = 'Aucune image';
+$lang['thumbnail.default'] = 'Image par défaut';
+$lang['thumbnail.custom'] = 'Image personnalisée';
 
 //Dead links
 $lang['deadlink'] = 'Signaler un lien mort';

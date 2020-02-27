@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -149,8 +149,8 @@ $lang['form.other'] = 'Other';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
 $lang['form.keywords.description'] = 'Only one keyword per row';
-$lang['form.thumbnail'] = 'Picture';
-$lang['form.thumbnail.preview'] = 'Picture preview';
+$lang['form.thumbnail'] = 'Thumbnail';
+$lang['form.thumbnail.preview'] = 'Thumbnail preview';
 $lang['form.picture'] = 'Picture';
 $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
@@ -161,6 +161,11 @@ $lang['form.source.url'] = 'Source address';
 $lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
+
+//Thumbnails
+$lang['thumbnail.none'] = 'No thumbnail';
+$lang['thumbnail.default'] = 'Default thumbnail';
+$lang['thumbnail.custom'] = 'Custom thumbnail';
 
 //Dead links
 $lang['deadlink'] = 'Report a dead link';
