@@ -112,6 +112,7 @@ class SandboxFormController extends ModuleController
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm('Sandbox_Form');
+		$form->set_css_class('tabs-container fieldset-content');
 
 		// TEXT FIELDS
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['form.title.inputs']);
@@ -178,6 +179,7 @@ class SandboxFormController extends ModuleController
 				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
 			));
 
+		// TEXTAREA
 		$textarea = new FormFieldsetHTML('textarea', $this->lang['form.title.textarea']);
 			$form->add_fieldset($textarea);
 
@@ -231,6 +233,7 @@ class SandboxFormController extends ModuleController
 				array('required' => true, 'class' => 'css-class')
 			));
 
+		// SELECTORS
 		$select = new FormFieldsetHTML('selects', $this->lang['form.title.select']);
 			$form->add_fieldset($select);
 
@@ -358,6 +361,7 @@ class SandboxFormController extends ModuleController
 			$buttons->add_element(new FormButtonButton('.administrator.bgc', '', 'bgc-administrator-button', 'bgc administrator'));
 			$buttons->add_element(new FormButtonButton('.administrator.bgc-full', '', 'bgc-full-administrator-button', 'bgc-full administrator'));
 
+		// MISCELLANEOUS
 		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['form.title.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
 
@@ -371,63 +375,117 @@ class SandboxFormController extends ModuleController
 			$miscellaneous->set_description($this->lang['form.desc']);
 
 			// Separator
-			$miscellaneous->add_field(new FormFieldSpacer('03_separator', 'FormFieldSpacer', array('class' => 'css-class')));
+			$miscellaneous->add_field(new FormFieldSpacer('spacer', '<span class="smaller">' . $this->lang['form.spacer'] . '</span>', array('class' => 'css-class')));
 
-			// FREE FIELD
+			// Free field
 			$miscellaneous->add_field(new FormFieldFree('free', $this->lang['form.free.html'], $this->lang['form.input.text.lorem'],
 				array('class' => 'css-class')
 			));
 
-			// RANGE
+			// Range
 			$miscellaneous->add_field($password = new FormFieldRangeEditor('range', $this->lang['form.input.length'], $this->lang['form.input.length.placeholder'],
 				array('min' => 1, 'max' => 10, 'description' => $this->lang['form.input.length.desc'], 'class' => 'css-class')
 			));
 
-			// DATE
+			// Date
 			$miscellaneous->add_field(new FormFieldDate('date', $this->lang['form.date'], null,
 				array('required' => true, 'class' => 'css-class')
 			));
 
-			// DATE TIME
+			// Date time
 			$miscellaneous->add_field(new FormFieldDateTime('date_time', $this->lang['form.date.hm'], null,
 				array('required' => true, 'class' => 'css-class')
 			));
 
-			// COLOR PICKER
+			// Color picker
 			$miscellaneous->add_field(new FormFieldColorPicker('color', $this->lang['form.color'], '#366393',
 				array('class' => 'css-class')
 			));
 
-			// SEARCH
+			// Search
 			$miscellaneous->add_field(new FormFieldSearch('search', $this->lang['form.search'], '',
 				array('class' => 'css-class')
 			));
 
-			// FILE PICKER
+			// File picker
 			$miscellaneous->add_field(new FormFieldFilePicker('file', $this->lang['form.file.picker'],
 				array('class' => 'css-class')
 			));
 
-			// MULTIPLE FILE PICKER
+			// Multiple file picker
 			$miscellaneous->add_field(new FormFieldFilePicker('multiple_files', $this->lang['form.multiple.file.picker'],
 				array('class' => 'css-class', 'multiple' => true)
 			));
 
-			// UPLOAD FILE
+			// Item/category Thumbnail
+			// $miscellaneous->add_field(new FormFieldThumbnailChoice('thumbnail', 'Item/category Thumbnail', '', '/sandbox/templates/images/paysage.png',
+			// 	array('class' => 'inline-radio css-class')
+			// ));
+
+			// Upload file
 			$miscellaneous->add_field(new FormFieldUploadFile('upload_file', $this->lang['form.file.upload'], '',
 				array('required' => true, 'class' => 'css-class')
 			));
 
+		// LINK LIST
+		$link_list = new FormFieldsetHTML('links_list', $this->lang['form.links.menu']);
+			$form->add_fieldset($link_list);
+
 			// List actionLinks
-			$miscellaneous->add_field(new FormFieldActionLinkList('actionlink_list',
+			$link_list->add_field(new FormFieldSubTitle('simple_list', $this->lang['form.links.list'], ''));
+
+			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
 				array(
-					new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', ''),
-					new FormFieldActionLinkElement($this->lang['form.action.link.2'], '#', ''),
-					new FormFieldActionLinkElement($this->lang['form.action.link.3'], '#', ''),
-					new FormFieldActionLinkElement($this->lang['form.action.link.4'], '#', '')
+					new FormFieldActionLinkElement($this->lang['form.link.icon'], '#', 'far fa-edit'),
+					new FormFieldActionLinkElement($this->lang['form.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldActionLinkElement($this->lang['form.link'].' 3', '#', ''),
+					new FormFieldActionLinkElement($this->lang['form.link'].' 4', '#', '')
 				),
-				array('description'=> $this->lang['form.action.link.list'], 'class' => 'css-class')
+				array('class' => 'css-class')
 			));
+
+			// Tabs menu
+			$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
+			$form->add_fieldset($tabs_menu);
+
+			$tabs_menu->add_field(new FormFieldSubTitle('tabs', $this->lang['form.tabs.menu'], ''));
+
+			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
+				array(
+					new FormFieldMultitabsLinkElement($this->lang['form.link.icon'], 'tabs', 'Sandbox_Form_tabs_01', 'fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['form.link.img'], 'tabs', 'Sandbox_Form_tabs_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 3', 'tabs', 'Sandbox_Form_tabs_03',),
+					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 4', 'tabs', 'Sandbox_Form_tabs_04',)
+				)
+			));
+
+			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['form.panel'].' 1',
+				array('css_class' => 'tabs tabs-animation first-tab')
+			);
+			$form->add_fieldset($tabs_01);
+
+			$tabs_01->set_description($this->common_lang['lorem.short.content']);
+
+			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['form.panel'].' 2',
+				array('css_class' => 'tabs tabs-animation')
+			);
+			$form->add_fieldset($tabs_02);
+
+			$tabs_02->set_description($this->common_lang['lorem.medium.content']);
+
+			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['form.panel'].' 3',
+				array('css_class' => 'tabs tabs-animation')
+			);
+			$form->add_fieldset($tabs_03);
+
+			$tabs_03->set_description($this->common_lang['lorem.large.content']);
+
+			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['form.panel'].' 4',
+				array('css_class' => 'tabs tabs-animation')
+			);
+			$form->add_fieldset($tabs_04);
+
+			$tabs_04->set_description($this->common_lang['lorem.short.content']);
 
 		// GOOGLE MAPS
 		if (ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key())
@@ -435,16 +493,16 @@ class SandboxFormController extends ModuleController
 			$fieldset_maps = new FormFieldsetHTML('fieldset_maps', $this->lang['form.googlemap']);
 			$form->add_fieldset($fieldset_maps);
 
-			// SIMPLE ADDRESS
+			// Simple address
 			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['form.googlemap.simple_address'], '', array('class' => 'css-class')));
 
-			// MAP ADDRESS
+			// Map address
 			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['form.googlemap.map_address'], '', array('class' => 'css-class', 'include_api' => false)));
 
-			// SIMPLE MARKER
+			// Simple marker
 			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['form.googlemap.simple_marker'], '', array('class' => 'css-class', 'include_api' => false)));
 
-			// MULTIPLE MARKERS
+			// Multiple markers
 			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['form.googlemap.multiple_markers'], '', array('class' => 'css-class', 'include_api' => false)));
 		}
 
@@ -499,11 +557,11 @@ class SandboxFormController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.form.builder'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.form'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.form.builder'], SandboxUrlBuilder::form()->rel());
+		$breadcrumb->add($this->common_lang['title.form'], SandboxUrlBuilder::form()->rel());
 
 		return $response;
 	}

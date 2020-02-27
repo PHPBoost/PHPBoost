@@ -1,7 +1,7 @@
 <section>
 	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
-		<h1>{@sandbox.module.title} - {@title.mail.sender}</h1>
+		<h1>{@sandbox.module.title} - {@title.email}</h1>
 	</header>
 	<div class="content">
 		# IF C_MAIL_SENT #

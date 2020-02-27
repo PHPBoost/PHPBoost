@@ -49,7 +49,7 @@ $lang['mini.theme'] = 'Thèmes';
 $lang['mini.mod'] = 'Modules';
 
 $lang['mini.fwkboost'] = 'FWKBoost';
-$lang['mini.hashtag'] = '#EffDoublevéKaBouste';
+$lang['mini.home'] = 'Accueil';
 
 $lang['mini.themes.switcher'] = 'Changer de thème';
 $lang['mini.default.theme'] = 'Thème par défaut';

@@ -19,14 +19,14 @@ $lang['sandbox.module.title'] = 'Sandbox';
 
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.form'] = 'Form in administration';
-$lang['title.form.builder'] = 'Form builder';
-$lang['title.css'] = 'CSS';
+$lang['title.form'] = 'Form builder';
+$lang['title.framework'] = 'CSS';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
 $lang['title.menu'] = 'Cssmenu menus ';
 $lang['title.icons'] = 'Font-Awesome icons ';
-$lang['title.table.builder'] = 'Table builder';
-$lang['title.mail.sender'] = 'Email sending';
+$lang['title.table'] = 'Table builder';
+$lang['title.email'] = 'Email sending';
 $lang['title.string.template'] = 'Template generator';
 
 // Home page

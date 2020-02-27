@@ -99,8 +99,8 @@ $lang['form.button.basic.alt'] = 'Bouton .basic.alt';
 $lang['form.title.miscellaneous'] = 'Divers';
 
 $lang['form.desc'] = 'Ceci est une description';
+$lang['form.spacer'] = 'Ceci est un saut de ligne, il peut être affiché sans texte';
 $lang['form.subtitle'] = 'Sous titre de formulaire';
-$lang['form.separator'] = '[] saut de ligne []';
 $lang['form.input.hidden'] = 'Champ caché';
 $lang['form.free.html'] = 'Champ libre';
 $lang['form.date'] = 'Date';
@@ -110,23 +110,30 @@ $lang['form.search'] = 'Recherche';
 $lang['form.file.picker'] = 'Fichier';
 $lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
 $lang['form.file.upload'] = 'Lien vers un fichier';
-$lang['form.action.link.list'] = 'Liste de liens';
-$lang['form.action.link.1'] = 'Item avec icône';
-$lang['form.action.link.2'] = 'Item avec image';
-$lang['form.action.link.3'] = 'Item de Liste 3';
-$lang['form.action.link.4'] = 'Item de Liste 4';
 
+// Links
+$lang['form.links.menu'] = 'Menus de liens';
+$lang['form.links.list'] = 'Liste de liens';
+$lang['form.link.icon'] = 'Item avec icône';
+$lang['form.link.img'] = 'Item avec image';
+$lang['form.link'] = 'Item de Liste';
+$lang['form.tabs.menu'] = 'Menus tabulaire';
+$lang['form.panel'] = 'Panneau';
+
+// Googlemap
 $lang['form.googlemap'] = 'Champs du module GoogleMaps';
 $lang['form.googlemap.simple_address'] = 'Adresse simple';
 $lang['form.googlemap.map_address'] = 'Adresse avec carte';
 $lang['form.googlemap.simple_marker'] = 'Marqueur';
 $lang['form.googlemap.multiple_markers'] = 'Marqueurs multiples';
 
+// Authorizations
 $lang['form.authorization'] = 'Autorisation';
 $lang['form.authorization.1'] = 'Action 1';
 $lang['form.authorization.1.desc'] = 'Autorisations pour l\'action 1';
 $lang['form.authorization.2'] = 'Action 2';
 
+// Orientations
 $lang['form.vertical.desc'] = 'Formulaire vertical';
 $lang['form.horizontal.desc'] = 'Formulaire horizontal';
 

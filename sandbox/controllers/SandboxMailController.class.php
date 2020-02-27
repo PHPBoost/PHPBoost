@@ -142,11 +142,11 @@ class SandboxMailController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['title.mail.sender'], $this->lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->lang['title.email'], $this->lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['title.mail.sender'], SandboxUrlBuilder::email()->rel());
+		$breadcrumb->add($this->lang['title.email'], SandboxUrlBuilder::email()->rel());
 
 		return $response;
 	}

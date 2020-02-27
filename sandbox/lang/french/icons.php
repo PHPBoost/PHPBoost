@@ -43,7 +43,7 @@ $lang['font.icons.howto.bbcode.some.icons'] = 'Les icônes les plus utilisées d
 $lang['font.icons.howto.bbcode.tag'] = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
 $lang['font.icons.howto.bbcode.icon.name'] = '[fa]nom de l\'icône[/fa]';
 $lang['font.icons.howto.bbcode.icon.test'] = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> nous donnera l\'icône:';
-$lang['font.icons.howto.bbcode.icon.variants'] = 'Les variantes (cf paragraphe suivant) sont possibles en BBCode et sont expliquées dans la documentation de PHPBoost.';
+$lang['font.icons.howto.bbcode.icon.variants'] = 'Les variantes sont possibles en BBCode et sont expliquées dans ';
 $lang['font.icons.howto.variants'] = 'Les variantes';
 $lang['font.icons.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
 $lang['font.icons.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';

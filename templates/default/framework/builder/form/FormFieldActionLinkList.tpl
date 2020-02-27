@@ -1,4 +1,5 @@
 <nav id="${escape(HTML_ID)}" class="form-field-action-link"# IF C_HIDDEN # style="display: none;"# ENDIF #>
+	{LABEL}
 	<ul>
 		# START action #
 			<li# IF NOT action.C_IS_ACTIVE_MODULE # class="hidden"# ENDIF #>

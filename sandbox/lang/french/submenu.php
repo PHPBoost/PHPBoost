@@ -3,8 +3,8 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 30
- * @since       PHPBoost 4.0 - 2019 07 30
+ * @version     PHPBoost 5.3 - last update: 2020 02 24
+ * @since       PHPBoost 5.3 - 2020 02 24
 */
 
 ####################################################
@@ -28,6 +28,7 @@ $lang['hashtag.buttons']  = '# Boutons';
 $lang['hashtag.miscellaneous']  = '# Divers';
 $lang['hashtag.dates']  = '# Dates';
 $lang['hashtag.upload']  = '# Téléversement';
+$lang['hashtag.links']  = '# Liens/Tabs';
 $lang['hashtag.gmap']  = '# Google Maps';
 $lang['hashtag.authorizations']  = '# Autorisations';
 $lang['hashtag.vertical.form']  = '# Formulaire vertical';

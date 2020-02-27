@@ -12,7 +12,7 @@
 				<div class="cell-header">
 					<i class="fa fa-fw fa-asterisk"></i>
 					<h6 class="cell-name">
-						{@title.form.builder}
+						{@title.form}
 					</h6>
 				</div>
 				<div class="cell-body">
@@ -23,8 +23,8 @@
 				<div class="cell-list">
 					<ul>
 						<li# IF IS_ADMIN # class="li-stretch"# ENDIF #>
-							<a href="${relative_url(SandboxUrlBuilder::form())}">{@welcome.form.front}</a>
-							# IF IS_ADMIN #<a href="${relative_url(SandboxUrlBuilder::admin_form())}">{@welcome.form.admin}</a># ENDIF #
+							<a href="${relative_url(SandboxUrlBuilder::form())}">{@welcome.front}</a>
+							# IF IS_ADMIN #<a href="${relative_url(SandboxUrlBuilder::admin_form())}">{@welcome.admin}</a># ENDIF #
 						</li>
 					</ul>
 				</div>

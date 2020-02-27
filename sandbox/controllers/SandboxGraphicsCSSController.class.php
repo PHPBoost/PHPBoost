@@ -121,11 +121,11 @@ class SandboxGraphicsCSSController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->common_lang['title.css'], $this->common_lang['sandbox.module.title']);
+		$graphical_environment->set_page_title($this->common_lang['title.framework'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.css'], SandboxUrlBuilder::css()->rel());
+		$breadcrumb->add($this->common_lang['title.framework'], SandboxUrlBuilder::css()->rel());
 
 		return $response;
 	}

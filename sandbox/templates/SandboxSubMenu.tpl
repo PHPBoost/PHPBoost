@@ -1,6 +1,7 @@
 <div class="cssmenu-sticky">
     <nav id="fwkboost-submenu" class="cssmenu cssmenu-horizontal summary-menu">
         <ul>
+            <li><a class="cssmenu-title" href="${relative_url(SandboxUrlBuilder::home())}"><i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i></a></li>
             <li class="has-sub">
                 <a href="${relative_url(SandboxUrlBuilder::form())}" class="cssmenu-title">{@form.title}</a>
                 <ul>
@@ -16,6 +17,7 @@
                             <li><a href="${relative_url(SandboxUrlBuilder::form())}#Sandbox_Form_file" class="cssmenu-title">{@hashtag.upload}</a></li>
                         </ul>
                     </li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::form())}#Sandbox_Form_links_list" class="cssmenu-title">{@hashtag.links}</a></li>
                     # IF C_GMAP #<li><a href="${relative_url(SandboxUrlBuilder::form())}#Sandbox_Form_fieldset_maps" class="cssmenu-title">{@hashtag.gmap}</a></li># ENDIF #
                     <li><a href="${relative_url(SandboxUrlBuilder::form())}#Sandbox_Form_authorizations" class="cssmenu-title">{@hashtag.authorizations}</a></li>
                     <li><a href="${relative_url(SandboxUrlBuilder::form())}#Sandbox_Form_vertical_fieldset" class="cssmenu-title">{@hashtag.vertical.form}</a></li>

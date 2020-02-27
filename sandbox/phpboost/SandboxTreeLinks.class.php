@@ -16,17 +16,23 @@ class SandboxTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 
 		$tree->add_link(new AdminModuleLink($lang['title.config'], SandboxUrlBuilder::config()));
-		$tree->add_link(new AdminModuleLink($lang['title.admin.form'], SandboxUrlBuilder::admin_form()));
-		$tree->add_link(new ModuleLink($lang['title.form.builder'], SandboxUrlBuilder::form()));
-		$tree->add_link(new ModuleLink($lang['title.css'], SandboxUrlBuilder::css()));
-		$tree->add_link(new ModuleLink($lang['title.multitabs'], SandboxUrlBuilder::multitabs()));
-		$tree->add_link(new ModuleLink($lang['title.plugins'], SandboxUrlBuilder::plugins()));
-		$tree->add_link(new ModuleLink($lang['title.bbcode'], SandboxUrlBuilder::bbcode()));
-		$tree->add_link(new ModuleLink($lang['title.menu'], SandboxUrlBuilder::menus()));
-		$tree->add_link(new ModuleLink($lang['title.icons'], SandboxUrlBuilder::icons()));
-		$tree->add_link(new ModuleLink($lang['title.table.builder'], SandboxUrlBuilder::table()));
-		$tree->add_link(new ModuleLink($lang['title.mail.sender'], SandboxUrlBuilder::email()));
-		$tree->add_link(new ModuleLink($lang['title.string.template'], SandboxUrlBuilder::template()));
+		$fwkboost_back = new AdminModuleLink($lang['title.admin.fwkboost'], SandboxUrlBuilder::admin_form());
+		$fwkboost_back->add_sub_link(new AdminModuleLink($lang['title.form'], SandboxUrlBuilder::admin_form()));
+		$fwkboost_back->add_sub_link(new AdminModuleLink($lang['title.framework'], SandboxUrlBuilder::admin_form()));
+		$tree->add_link($fwkboost_back);
+
+		$fwkboost_front = new AdminModuleLink($lang['title.theme.fwkboost'], SandboxUrlBuilder::css());
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.form'], SandboxUrlBuilder::form()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.framework'], SandboxUrlBuilder::css()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.multitabs'], SandboxUrlBuilder::multitabs()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.plugins'], SandboxUrlBuilder::plugins()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.bbcode'], SandboxUrlBuilder::bbcode()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.menu'], SandboxUrlBuilder::menus()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.icons'], SandboxUrlBuilder::icons()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.table'], SandboxUrlBuilder::table()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.email'], SandboxUrlBuilder::email()));
+		$fwkboost_front->add_sub_link(new ModuleLink($lang['title.string.template'], SandboxUrlBuilder::template()));
+		$tree->add_link($fwkboost_front);
 
 		return $tree;
 	}

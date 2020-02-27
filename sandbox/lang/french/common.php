@@ -18,23 +18,24 @@
 $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
-$lang['title.admin.form'] = 'Formulaires dans l\'admin';
-$lang['title.form.builder'] = 'Les formulaires';
-$lang['title.css'] = 'CSS';
+$lang['title.admin.fwkboost'] = 'Dans l\'admin';
+$lang['title.theme.fwkboost'] = 'Dans le thème';
+$lang['title.form'] = 'Les formulaires';
+$lang['title.framework'] = 'Composants HTML/CSS';
 $lang['title.multitabs'] = 'Multitabs';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
-$lang['title.menu'] = 'Menus Cssmenu';
+$lang['title.menu'] = 'Menus de liens';
 $lang['title.icons'] = 'Icônes';
-$lang['title.table.builder'] = 'Tableaux';
-$lang['title.mail.sender'] = 'Envoi de mail';
+$lang['title.table'] = 'Tableaux';
+$lang['title.email'] = 'Email';
 $lang['title.string.template'] = 'Génération de template';
 
 $lang['see.render'] = 'Voir le rendu';
 
 // --- Page d'accueil
 $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
-<p>Vous pouvez tester dans ce module plusieurs parties du framework PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
+<p>Vous pouvez tester dans ce module les différents composants du framework de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
 <ul class="sandbox-home-list">
 <li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '">constructeur de formulaires</a></li>
 <li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
@@ -50,12 +51,12 @@ $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
 <br />
 ';
 
+$lang['welcome.front'] = 'En front';
+$lang['welcome.admin'] = 'En admin';
+
 $lang['welcome.form'] = 'Le rendu des différents champs utilisables avec le constructeur de formulaires';
-$lang['welcome.form.front'] = 'En front';
-$lang['welcome.form.admin'] = 'En admin';
 
-// --- Framework lorem
-
+// Lorem
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';
 $lang['lorem.medium.content'] = 'Fusce vitae consequat nisl. Fusce vestibulum porta ipsum ac consectetur. Duis finibus mauris eu feugiat congue.
 Aenean aliquam accumsan ipsum, ac dapibus dui ultricies non. In hac habitasse platea dictumst. Aenean mi nibh, varius vel lacus at, tincidunt luctus eros.
@@ -69,60 +70,19 @@ sed viverra tortor diam pretium metus. In hac habitasse platea dictumst. Ut veli
 Integer elementum faucibus finibus. Nullam et felis sit amet felis blandit iaculis. Vestibulum massa arcu, finibus id enim ac, commodo aliquam metus.
 Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis tempus nunc, sit amet dignissim ipsum sollicitudin eget.';
 
-//
+// Common
 $lang['sandbox.summary'] = 'Sommaire';
 $lang['sandbox.source.code'] = 'Voir le code source';
+$lang['sandbox.pbt.doc'] = 'la documentation de PHPBoost';
 
-// --- Wiki
+// Wiki
 $lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé';
 $lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que vos modifications soient actives.';
 $lang['wiki.module'] = 'Module Wiki';
 $lang['wiki.table.of.contents'] = 'Table des matières';
 $lang['wiki.contents'] = 'Contenu du wiki';
 
-// --- Icônes
-
-// fa
-$lang['font.icons.fa'] = ' Font-Awesome';
-$lang['font.icons.sample'] = 'Quelques exemples';
-$lang['font.icons.social'] = 'Réseaux sociaux';
-$lang['font.icons.screen'] = 'Ecrans';
-$lang['font.icons.icon'] = 'Icône';
-$lang['font.icons.name'] = 'Nom';
-$lang['font.icons.code'] = 'Code';
-$lang['font.icons.list'] = 'La liste complète des icônes et de leur code associé : ';
-
-$lang['font.icons.howto'] = 'Comment ça marche ?';
-$lang['font.icons.howto.explain'] = 'Font-Awesome est une icon-font, une police de caractère qui permet d\'afficher des icônes simplement';
-$lang['font.icons.howto.update'] = 'Elle est implémentée depuis la version 4.1 de PHPBoost. Chaque mise à jour de Font-Awesome est implémentée dans la mise à jour suivante de PHPBoost.';
-$lang['font.icons.howto.html'] = 'En html';
-$lang['font.icons.howto.html.class'] = 'On utilise le nom de l\'icône en tant que classe : ';
-$lang['font.icons.howto.html.class.result.i'] = 'Nous donnera l\'icône "edit" suivie du texte : ';
-$lang['font.icons.howto.html.class.result.a'] = 'Nous donnera le lien précédé de l\'icône "globe" : ';
-$lang['font.icons.howto.html.class.result.all'] = 'Il en est de même pour tout type de balise html.';
-$lang['font.icons.howto.css'] = 'En CSS';
-$lang['font.icons.howto.css.class'] = 'Il faut définir votre classe, puis le code de votre icône en tant que contenu du ::before ou du ::after de la classe :';
-$lang['font.icons.howto.css.css.code'] = 'Code CSS :';
-$lang['font.icons.howto.css.html.code'] = 'Code HTML :';
-$lang['font.icons.howto.bbcode'] = 'En BBCode';
-$lang['font.icons.howto.bbcode.some.icons'] = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
-$lang['font.icons.howto.bbcode.tag'] = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
-$lang['font.icons.howto.bbcode.icon.name'] = '[fa]nom de l\'icône[/fa]';
-$lang['font.icons.howto.bbcode.icon.test'] = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> nous donnera l\'icône:';
-$lang['font.icons.howto.bbcode.icon.variants'] = 'Les variantes (cf paragraphe suivant) sont possibles en BBCode et sont expliquées dans la documentation de PHPBoost.';
-$lang['font.icons.howto.variants'] = 'Les variantes';
-$lang['font.icons.howto.variants.explain'] = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
-$lang['font.icons.howto.variants.list'] = 'Leur fonctionnement est expliqué ici (anglais) : ';
-$lang['font.icons.howto.variants.spinner'] = 'Nous donnera l\'icône "spinner", définie en rotation et faisant 2 fois sa taille initiale : ';
-
-// Icomoon
-$lang['font.icons.icomoon'] = 'IcoMoon App';
-
-// --- Cssmenu
-
-
-// --- Mail
-
+// Mail
 $lang['mail.title'] = 'Email';
 $lang['mail.sender_mail'] = 'Email de l\'expéditeur';
 $lang['mail.sender_name'] = 'Nom de l\'expéditeur';
@@ -144,7 +104,7 @@ $lang['mail.smtp.secure_protocol.tls'] = 'TLS';
 $lang['mail.smtp.secure_protocol.ssl'] = 'SSL';
 $lang['mail.success'] = 'L\'email a été envoyé';
 
-//Template
+// Template
 $lang['string_template.result'] = 'Temps de génération du template sans cache : :non_cached_time secondes<br />Temps de génération du template avec cache : :cached_time secondes<br />Longueur de la chaîne : :string_length caractères.';
 
 ?>

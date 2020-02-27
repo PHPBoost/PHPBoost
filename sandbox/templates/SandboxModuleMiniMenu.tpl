@@ -5,7 +5,7 @@
 		</a>
 		<nav id="pushmenu-fwkboost" class="pushnav">
 			<ul>
-				<li id="mini-sandbox-tools">
+				<li class="mini-sandbox-tools">
 					<span class="mini-toolbox flex-between">
 						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@mini.tools}</span></span>
 						# IF C_LOGGED_ERRORS #<span class="warning blink"><i class="fa fa-exclamation-triangle fa-fw"></i></span># ELSE #
@@ -47,7 +47,7 @@
 						</li>
 					</ul>
 				</li>
-				<li id="mini-sandbox-custom">
+				<li class="mini-sandbox-custom">
 					<span><i class="fa fa-fw fa-cogs moderator"></i> <span>{@mini.personalization}</span></span>
 					<ul>
 						<li>
@@ -138,19 +138,25 @@
 						</li>
 					</ul>
 				</li>
-				<li id="mini-sandbox-framework">
+				<li class="mini-sandbox-framework">
 					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></span>
 					<ul>
 						<li>
+							<a href="${relative_url(SandboxUrlBuilder::home())}">
+								<i class="fa fa-hotel fa-fw" aria-hidden="true"></i>
+								<span>{@mini.home}</span>
+							</a>
+						</li>
+						<li>
 							<a href="${relative_url(SandboxUrlBuilder::form())}">
 								<i class="far fa-square fa-fw" aria-hidden="true"></i>
-								<span>{@title.form.builder}</span>
+								<span>{@title.form}</span>
 							</a>
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::css())}">
 								<i class="fab fa-css3 fa-fw" aria-hidden="true"></i>
-								<span>{@title.css}</span>
+								<span>{@title.framework}</span>
 							</a>
 						</li>
 						<li>
@@ -180,7 +186,7 @@
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::table())}">
 								<i class="fa fa-table fa-fw" aria-hidden="true"></i>
-								<span>{@title.table.builder}</span>
+								<span>{@title.table}</span>
 							</a>
 						</li>
 						<li>
@@ -197,7 +203,7 @@
 						</li>
 					</ul>
 				</li>
-				<li id="mini-sandbox-switcher">
+				<li class="mini-sandbox-switcher">
 					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@mini.themes.switcher}</span></span>
 					<ul>
 						<li>
@@ -217,7 +223,7 @@
 						</li>
 					</ul>
 				</li>
-				<li id="mini-sandbox-infos">
+				<li class="mini-sandbox-infos">
 					<span><i class="fa fa-info fa-fw notice"></i> <span>{@mini.infos}</span></span>
 					<ul>
 						<li>

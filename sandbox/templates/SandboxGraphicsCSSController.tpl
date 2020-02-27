@@ -2,7 +2,7 @@
 	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.css}
+			{@sandbox.module.title} - {@title.framework}
 		</h1>
 	</header>
 	<div class="sandbox-summary">

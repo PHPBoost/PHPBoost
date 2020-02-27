@@ -55,7 +55,7 @@
 				</tbody>
 			</table>
 		</div>
-		<footer>{@font.icons.list}<a class="button alt-button" href="https://fontawesome.com/icons?d=listing&m=free">Cheatsheet Font-Awesome</a></footer>
+		<footer>{@font.icons.list}<a class="pinned bgc-full moderator" href="https://fontawesome.com/icons?d=listing&m=free"><i class="fa fa-share"></i> Cheatsheet Font-Awesome</a></footer>
 	</article>
 
 	<article>
@@ -78,15 +78,24 @@
 			<br />
 			<h4>{@font.icons.howto.css}</h4>
 			<p>{@font.icons.howto.css.class}</p>
-			<span class="formatter-code">{@font.icons.howto.css.css.code}</span>
-				<pre class="language-css line-numbers" data-line="3-4"><code class="language-css">.success { ... }
-					.success::before {
-					    content: "\f00c";
-					    font-family: 'Font Awesome 5 Free';
-					}</code></pre>
-			<span class="formatter-code">{@font.icons.howto.css.html.code}</span>
-			<div class="code">
-				<pre class="language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@css.message.success}&lt;/div></code></pre>
+			<div class="formatter-container formatter-code">
+				<span id="copy-code-1" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(1)"><i class="far fa-copy"></i></span>
+				<span class="formatter-title">{@font.icons.howto.css.css.code}</span>
+				<div id="copy-code-1-content" class="formatter-content copy-code-content">
+					<pre class="language-css line-numbers" data-line="3-4"><code class="language-css">.success { ... }
+						.success::before {
+						    content: "\f00c";
+						    font-family: 'Font Awesome 5 Free';
+						}</code></pre>
+				</div>
+			</div>
+
+			<div class="formatter-container formatter-code">
+				<span id="copy-code-2" class="copy-code" aria-label="${LangLoader::get_message('tag_copytoclipboard', 'editor-common')}" onclick="copy_code_clipboard(2)"><i class="far fa-copy"></i></span>
+				<span class="formatter-title">{@font.icons.howto.css.html.code}</span>
+				<div id="copy-code-2-content" class="formatter-content copy-code-content">
+					<pre class="language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@css.message.success}&lt;/div></code></pre>
+				</div>
 			</div>
 			<div class="message-helper bgc success">{@css.message.success}</div>
 
@@ -96,12 +105,12 @@
 			<p>{@font.icons.howto.bbcode.tag}</p>
 			<p>{@font.icons.howto.bbcode.icon.name}</p>
 			<p>{@H|font.icons.howto.bbcode.icon.test} <i class="fa fa-cubes"></i></p>
-			<p>{@font.icons.howto.bbcode.icon.variants}</p>
+			<p>{@H|font.icons.howto.bbcode.icon.variants}<a class="pinned bgc-full link-color" href="https://www.phpboost.com/wiki/la-bibliotheque-font-awesome"><i class="fa fa-share"></i> {@sandbox.pbt.doc}</a>.</p>
 
 			<br />
 			<h4>{@font.icons.howto.variants}</h4>
 			<p>{@font.icons.howto.variants.explain}</p>
-			<p>{@font.icons.howto.variants.list}<a class="button alt-button" href="https://fortawesome.github.io/Font-Awesome/examples/">Font-Awesome/examples</a></p>
+			<p>{@font.icons.howto.variants.list}<a class="pinned bgc-full moderator" href="https://fortawesome.github.io/Font-Awesome/examples/"><i class="fa fa-share"></i> Font-Awesome/examples</a></p>
 
 			<pre class="language-html"><code class="language-html">&lt;i class="fa fa-spinner fa-spin fa-2x">&lt;/i></code></pre>
 
