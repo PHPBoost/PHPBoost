@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 18
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 4.0 - 2013 03 01
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -96,7 +96,7 @@ class AdminContactConfigController extends AdminModuleController
 			)
 		));
 
-		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['admin.config.informations_enabled'], $this->config->are_informations_enabled(),
 			array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -109,7 +109,7 @@ class AdminMemberConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('allow_users_to_change_display_name', $this->lang['members.config.allow_users_to_change_display_name'], $this->user_accounts_config->are_users_allowed_to_change_display_name(),
 			array('class' => 'custom-checkbox')
@@ -141,10 +141,7 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('forbidden_mail_domains', $this->lang['security.config.forbidden-mail-domains'], implode(',', $this->security_config->get_forbidden_mail_domains()),
-			array(
-				'class' => 'half-field',
-				'description' => $this->lang['security.config.forbidden-mail-domains.explain']
-			)
+			array('description' => $this->lang['security.config.forbidden-mail-domains.explain'])
 		));
 
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);

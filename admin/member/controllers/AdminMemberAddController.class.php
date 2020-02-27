@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 25
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 3.0 - 2010 12 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -72,7 +72,7 @@ class AdminMemberAddController extends AdminController
 
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 
-		$fieldset->add_field(new FormFieldFree('1_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('define_identifier', ''));
 
 		$fieldset->add_field($custom_login_checked = new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false,
 			array(
@@ -92,7 +92,7 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));
 
-		$fieldset->add_field(new FormFieldFree('2_separator', '', ''));
+		$fieldset->add_field(new FormFieldSpacer('define_password', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_password', $this->lang['password.custom'], false,
 			array(

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2020 02 27
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -139,7 +139,7 @@ class AdminSocialNetworksConfigController extends AdminModuleController
 							));
 						}
 
-						$fieldset->add_field(new FormFieldFree($id . '_separator', '', ''));
+						$fieldset->add_field(new FormFieldSpacer($id . '_separator', ''));
 					}
 					else
 					{
