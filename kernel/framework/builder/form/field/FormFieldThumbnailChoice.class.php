@@ -18,7 +18,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 
 	public function __construct($id, $label = '', $value = self::NONE, $default_url = '', array $field_options = array(), array $constraints = array())
 	{
-		$this->default_value = $default_url;
+		$this->default_url = $default_url;
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
