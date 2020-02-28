@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 19
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -186,7 +186,10 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				else
 					$value = ($attribute['is_url'] && $this->get_category()->get_additional_property($id) instanceof Url) ? $this->get_category()->get_additional_property($id)->relative() : $this->get_category()->get_additional_property($id);
 				
-				$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options));
+				if ($field_class == 'FormFieldThumbnail')
+					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
+				else
+					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options));
 			}
 		}
 	}
