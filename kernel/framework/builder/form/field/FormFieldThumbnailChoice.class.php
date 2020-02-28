@@ -45,7 +45,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_url->relative() : $this->get_value();
 		$file_type = new FileType(new File($real_file_url));
 
-		$template->put_all(array(
+		$tpl->put_all(array(
 			'C_PREVIEW_HIDDEN'  => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'     => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH'         => Url::to_rel($real_file_url),
