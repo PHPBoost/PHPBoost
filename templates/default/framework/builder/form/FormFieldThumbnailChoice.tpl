@@ -53,7 +53,6 @@
 <script>
 	jQuery('input[name="' + ${escapejs(NAME)} + '"]:radio').change(function(){
 		var option = jQuery('input[name="' + ${escapejs(NAME)} + '"]:checked').val();
-		console.log(option);
 		if (option == 'custom') {
 			jQuery("#onblurContainerResponse" + ${escapejs(HTML_ID)} + "_custom_file").show();
 			jQuery('#${escape(HTML_ID)}_preview_picture').hide();
@@ -85,7 +84,7 @@
 				url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
 				type: "post",
 				dataType: "json",
-				data: {token: ${escapejs(TOKEN)}, image: filename},
+				data: {token: ${escapejs(TOKEN)}, image: fileName},
 				beforeSend: function(){
 					jQuery('#${escape(HTML_ID)}_preview_picture').hide();
 					jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
