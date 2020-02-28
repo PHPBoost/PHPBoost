@@ -9,19 +9,19 @@
 	# ENDIF #
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required# ENDIF #">
 		<div class="form-field-radio">
-			<label class="radio" for="${escape(ID)}-none">
+			<label class="radio" for="${escape(ID)}_none">
 				<input id="${escape(ID)}_none" type="radio" name="${escape(NAME)}" value="none" # IF C_NONE_CHECKED # checked="checked" # ENDIF #>
 				<span> {@thumbnail.none}</span>
 			</label>
 		</div>
 		<div class="form-field-radio">
-			<label class="radio" for="${escape(ID)}-default">
+			<label class="radio" for="${escape(ID)}_default">
 				<input id="${escape(ID)}_default" type="radio" name="${escape(NAME)}" value="default" # IF C_DEFAULT_CHECKED # checked="checked" # ENDIF #>
 				<span> {@thumbnail.default}</span>
 			</label>
 		</div>
 		<div class="form-field-radio">
-			<label class="radio" for="${escape(ID)}-custom">
+			<label class="radio" for="${escape(ID)}_custom">
 				<input id="${escape(ID)}_custom" type="radio" name="${escape(NAME)}" value="custom" # IF C_CUSTOM_CHECKED # checked="checked" # ENDIF #>
 				<span> {@thumbnail.custom}</span>
 			</label>
@@ -38,12 +38,12 @@
 	</div>
 </div>
 
-<div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display: none;"# ENDIF # class="# IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
+<div id="${escape(HTML_ID)}_preview"# IF C_PREVIEW_HIDDEN # style="display: none;"# ENDIF # class="form-field-thumbnail-preview# IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF #">
 	<label for="${escape(HTML_ID)}_preview">
 		${LangLoader::get_message('form.picture.preview', 'common')}
 	</label>
 
-	<div class="form-field">
+	<div class="form-field-preview">
 		<img id="${escape(HTML_ID)}_preview_picture" src="# IF NOT C_PREVIEW_HIDDEN #{FILE_PATH}# ENDIF #" alt="${LangLoader::get_message('form.picture.preview', 'common')}" style="vertical-align:top" />
 	</div>
 </div>
