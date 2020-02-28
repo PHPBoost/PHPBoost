@@ -92,6 +92,7 @@ $lang['form.search'] = 'Search';
 $lang['form.file.picker'] = 'File picker';
 $lang['form.multiple.file.picker'] = 'Multiple file picker';
 $lang['form.file.upload'] = 'Link to file';
+
 $lang['form.action.link.list'] = 'List of links';
 $lang['form.action.link.1'] = 'Link item 1';
 $lang['form.action.link.2'] = 'Link item 2';

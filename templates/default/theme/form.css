@@ -173,3 +173,8 @@ label[for="delete-all-checkbox"] span {
 @media (max-width: 768px) {
 	.fieldset-content { margin-top: 0.618em; }
 }
+
+/* --- Thumbnail field --- */
+.form-field-thumbnail-choice .grouped-inputs {
+	margin: 0.309em 0;
+}

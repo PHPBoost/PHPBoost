@@ -109,6 +109,7 @@ $lang['form.color'] = 'Couleur';
 $lang['form.search'] = 'Recherche';
 $lang['form.file.picker'] = 'Fichier';
 $lang['form.multiple.file.picker'] = 'Plusieurs fichiers';
+$lang['form.thumbnail.picker'] = 'Vignette';
 $lang['form.file.upload'] = 'Lien vers un fichier';
 
 // Links

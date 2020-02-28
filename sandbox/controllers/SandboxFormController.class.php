@@ -417,9 +417,9 @@ class SandboxFormController extends ModuleController
 				array('class' => 'css-class', 'multiple' => true)
 			));
 
-			// Item/category Thumbnail
-			$miscellaneous->add_field(new FormFieldThumbnailChoice('thumbnail', 'Item/category Thumbnail', '', '/sandbox/templates/images/paysage.png',
-				array('class' => 'inline-radio css-class')
+			// Thumbnail
+			$miscellaneous->add_field(new FormFieldThumbnailChoice('thumbnail', $this->lang['form.thumbnail.picker'], '', '/sandbox/templates/images/paysage.png',
+				array('class' => 'css-class')
 			));
 
 			// Upload file
