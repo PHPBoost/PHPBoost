@@ -26,7 +26,7 @@
 					</li>
 					<li>
 						<div class="cssmenu-title">
-							<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> <span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span></a>
+							<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_topics_bottom">{NBR_MSG_NOT_READ}</span><span class="hidden-large-screens">{L_SHOW_NOT_READS}</span></a>
 							<div class="forum-refresh">
 								<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
 							</div>

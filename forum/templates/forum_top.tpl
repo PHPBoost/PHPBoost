@@ -42,7 +42,7 @@
 	var displayed_forum = false;
 	var previous_forumblock;
 
-	// Display bloc.k
+	// Display block
 	function forum_display_block(divID)
 	{
 		if (timeout_forum)
@@ -104,7 +104,7 @@
 						</li>
 						<li>
 							<div class="cssmenu-title">
-								<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span class="hidden-large-screens">{L_SHOW_NOT_READS}</span> <span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span></a>
+								<a href="{U_MSG_NOT_READ}" aria-label="{L_SHOW_NOT_READS}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_topics_top">{NBR_MSG_NOT_READ}</span><span class="hidden-large-screens">{L_SHOW_NOT_READS}</span></a>
 								<div class="forum-refresh">
 									<div id="forum_block_forum_unread_top" style="display: none;"></div>
 								</div>

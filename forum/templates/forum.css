@@ -29,8 +29,14 @@
 
 .forum-links .cssmenu-group > ul > li .cssmenu-title,
 .forum-links .cssmenu-group > ul > li:hover .cssmenu-title {
-	border: none;
-	background: none;
+	border-width: 0;
+	background-color: transparent;
+}
+
+.forum-links .cssmenu-title img + span,
+.forum-links .cssmenu-title i + span,
+.forum-links .cssmenu-title span + span {
+    margin-left: 0;
 }
 
 .forum-links .cssmenu.cssmenu-group > ul > li > .cssmenu-title {
