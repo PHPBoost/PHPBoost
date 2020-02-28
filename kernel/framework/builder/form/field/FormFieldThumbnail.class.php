@@ -46,7 +46,7 @@ class FormFieldThumbnail extends AbstractFormField
 			'C_NONE_CHECKED'    => $this->get_value() == '',
 			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_url),
 			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_url,
-			'DEFAULT_URL'       => $this->default_url,
+			'DEFAULT_URL'       => PATH_TO_ROOT . $this->default_url,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
