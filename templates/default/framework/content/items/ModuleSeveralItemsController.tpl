@@ -28,17 +28,15 @@
 							{sub_categories_list.ITEMS_NUMBER}
 						</span>
 					</div>
-					# IF C_ENABLED_CATEGORY_THUMBNAIL #
-						# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
-							<div class="cell-body">
-								<div class="cell-thumbnail">
-									<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
-									<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
-										${LangLoader::get_message('see.category', 'categories-common')}
-									</a>
-								</div>
+					# IF sub_categories_list.C_CATEGORY_THUMBNAIL #
+						<div class="cell-body">
+							<div class="cell-thumbnail">
+								<img itemprop="thumbnailUrl" src="{sub_categories_list.U_CATEGORY_THUMBNAIL}" alt="{sub_categories_list.CATEGORY_NAME}" />
+								<a class="cell-thumbnail-caption" itemprop="about" href="{sub_categories_list.U_CATEGORY}">
+									${LangLoader::get_message('see.category', 'categories-common')}
+								</a>
 							</div>
-						# ENDIF #
+						</div>
 					# ENDIF #
 				</div>
 			# END sub_categories_list #

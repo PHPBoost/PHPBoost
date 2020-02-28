@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 5.3 - 2020 01 22
 */
 
@@ -90,7 +90,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->sql_parameters['id_category'] = $this->get_category()->get_id();
 			
 			$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module()->get_configuration()->get_name();
-			$this->page_description = $this->category->get_description();
+			$this->page_description = method_exists($category, 'get_description') ? $this->category->get_description() : '';
 			if (!$this->page_description)
 				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 			$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
@@ -199,35 +199,55 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 			if ($displayed_categories_number > $subcategories_pagination->get_display_from() && $displayed_categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$category_thumbnail = $category->get_thumbnail()->rel();
+				$thumbnail_properties = array();
+				if (method_exists($category, 'get_thumbnail'))
+				{
+					$category_thumbnail = $category->get_thumbnail()->rel();
+					$thumbnail_properties = array(
+						'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+						'U_CATEGORY_THUMBNAIL' => $category_thumbnail
+					);
+				}
 
-				$this->view->assign_block_vars('sub_categories_list', array(
-					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
-					'CATEGORY_ID'          => $category->get_id(),
-					'CATEGORY_NAME'        => $category->get_name(),
-					'ITEMS_NUMBER'         => $category->get_elements_number(),
-					'U_CATEGORY'           => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
-					'U_CATEGORY_THUMBNAIL' => $category_thumbnail
-				));
+				$this->view->assign_block_vars('sub_categories_list', array_merge($thumbnail_properties, array(
+					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
+					'CATEGORY_ID'     => $category->get_id(),
+					'CATEGORY_NAME'   => $category->get_name(),
+					'ITEMS_NUMBER'    => $category->get_elements_number(),
+					'U_CATEGORY'      => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
+				)));
 			}
 		}
 
-		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
+		$category_description = '';
+		if (method_exists($this->get_category(), 'get_description'))
+		{
+			$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
+			$this->view->put_all(array(
+				'C_CATEGORY_DESCRIPTION' => !empty($category_description),
+				'CATEGORY_DESCRIPTION'   => $category_description
+			));
+		}
+		
+		if (method_exists($this->get_category(), 'get_thumbnail'))
+		{
+			$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
+			$this->view->put_all(array(
+				'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+				'U_CATEGORY_THUMBNAIL' => $category_thumbnail
+			));
+		}
 
 		$this->view->put_all(array(
 			'C_CATEGORY'                 => true,
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($displayed_categories_number != 0 || !empty($category_description)),
-			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
 			'C_SUB_CATEGORIES'           => $displayed_categories_number > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 			'CATEGORY_ID'                => $this->get_category()->get_id(),
 			'CATEGORY_NAME'              => $this->get_category()->get_name(),
-			'CATEGORY_DESCRIPTION'       => $category_description,
 			'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display(),
 			'U_EDIT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit_category($this->get_category()->get_id())->rel(),
-			'U_CATEGORY_THUMBNAIL'       => $this->get_category()->get_thumbnail()->rel()
 		));
 	}
 
