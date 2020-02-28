@@ -32,17 +32,16 @@ class FormFieldThumbnail extends AbstractFormField
 		$tpl->add_lang($lang);
 
 		$this->assign_common_template_variables($template);
+		$this->assign_common_template_variables($tpl);
 
 		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_url : $this->get_value();
 		$file_type = new FileType(new File($real_file_url));
 
 		$tpl->put_all(array(
+			'C_DEFAULT_URL'     => $this->default_url,
 			'C_PREVIEW_HIDDEN'  => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'     => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH'         => Url::to_rel($real_file_url),
-			'NAME'              => $this->get_html_id(),
-			'ID'                => $this->get_id(),
-			'HTML_ID'           => $this->get_html_id(),
 			'C_NONE_CHECKED'    => $this->get_value() == '',
 			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_url),
 			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_url,

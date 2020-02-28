@@ -1,12 +1,4 @@
 <div id="${escape(HTML_ID)}_field"# IF C_HIDDEN # style="display: none;" # ENDIF # class="form-field-thumbnail-choice# IF C_REQUIRED_AND_HAS_VALUE # constraint-status-right# ENDIF ## IF C_HAS_FIELD_CLASS # {FIELD_CLASS}# ENDIF ## IF C_HAS_CSS_CLASS # {CLASS}# ENDIF #">
-	# IF C_HAS_LABEL #
-		<label# IF NOT C_HIDE_FOR_ATTRIBUTE # for="${escape(HTML_ID)}"# ELSE # for="onblurContainerResponse${escape(HTML_ID)}"# ENDIF #>
-			{LABEL}
-			# IF C_DESCRIPTION #
-			<span class="field-description">{DESCRIPTION}</span>
-			# ENDIF #
-		</label>
-	# ENDIF #
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="# IF C_HAS_FORM_FIELD_CLASS # {FORM_FIELD_CLASS}# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required# ENDIF #">
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_none">
@@ -14,12 +6,14 @@
 				<span> {@thumbnail.none}</span>
 			</label>
 		</div>
+		# IF C_DEFAULT_URL #
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_default">
 				<input id="${escape(ID)}_default" type="radio" name="${escape(NAME)}" value="default" # IF C_DEFAULT_CHECKED # checked="checked" # ENDIF #>
 				<span> {@thumbnail.default}</span>
 			</label>
 		</div>
+		# ENDIF #
 		<div class="form-field-radio">
 			<label class="radio" for="${escape(ID)}_custom">
 				<input id="${escape(ID)}_custom" type="radio" name="${escape(NAME)}" value="custom" # IF C_CUSTOM_CHECKED # checked="checked" # ENDIF #>
