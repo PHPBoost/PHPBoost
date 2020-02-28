@@ -418,7 +418,7 @@ class SandboxFormController extends ModuleController
 			));
 
 			// Thumbnail
-			$miscellaneous->add_field(new FormFieldThumbnailChoice('thumbnail', $this->lang['form.thumbnail.picker'], '', '/sandbox/templates/images/paysage.png',
+			$miscellaneous->add_field(new FormFieldThumbnail('thumbnail', $this->lang['form.thumbnail.picker'], '', '/sandbox/templates/images/paysage.png',
 				array('class' => 'css-class')
 			));
 

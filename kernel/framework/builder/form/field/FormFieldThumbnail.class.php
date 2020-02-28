@@ -9,7 +9,7 @@
  * @since       PHPBoost 5.3 - 2020 02 27
 */
 
-class FormFieldThumbnailChoice extends AbstractFormField
+class FormFieldThumbnail extends AbstractFormField
 {
 	protected $default_url = '';
 
@@ -37,7 +37,7 @@ class FormFieldThumbnailChoice extends AbstractFormField
 		$template = $this->get_template_to_use();
 		$lang = LangLoader::get('common');
 
-		$tpl = new FileTemplate('framework/builder/form/FormFieldThumbnailChoice.tpl');
+		$tpl = new FileTemplate('framework/builder/form/FormFieldThumbnail.tpl');
 		$tpl->add_lang($lang);
 
 		$this->assign_common_template_variables($template);
