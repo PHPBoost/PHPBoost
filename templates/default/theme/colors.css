@@ -709,6 +709,10 @@ a[class*='lightcase-icon-']:hover {
 
 .wizard-container .wizard-header .progress { background-color: rgba(var(--main-rgb-d), 0.1); }
 
+.wizard-container .wizard-header a:hover {
+    color: var(--main-dark);
+}
+
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
 .cell-tile .cell-header,

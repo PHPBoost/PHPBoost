@@ -276,6 +276,15 @@ li:last-child .accordion .content-panel {
 .wizard-container .wizard-header a {
 	display: block;
 	padding: 0.618em 0;
+    cursor: default;
+}
+
+.wizard-container .wizard-header a.completed-step {
+    cursor: pointer;
+}
+
+.wizard-container .wizard-header a:hover {
+    text-decoration: none;
 }
 
 .wizard-container .wizard-header li span {
