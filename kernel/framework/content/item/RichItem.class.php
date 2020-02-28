@@ -5,17 +5,19 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 12
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 5.3 - 2020 01 23
 */
 
 class RichItem extends Item
 {
+	const THUMBNAIL_URL = '/templates/default/images/default_item_thumbnail.png';
+	
 	public static function __static()
 	{
 		parent::__static();
 		self::add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
-		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'is_url' => true));
+		self::add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
 		self::add_additional_attribute('author_custom_name', array('type' =>  'string', 'length' => 255, 'default' => "''"));
 		self::add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
 	}
@@ -44,7 +46,7 @@ class RichItem extends Item
 	public function get_thumbnail()
 	{
 		if (!$this->get_additional_property('thumbnail') instanceof Url)
-			return $this->get_default_thumbnail();
+			return new Url($this->get_additional_property('thumbnail') == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(self::THUMBNAIL_URL) : $this->get_additional_property('thumbnail'));
 
 		return $this->get_additional_property('thumbnail');
 	}
@@ -55,16 +57,7 @@ class RichItem extends Item
 		return !empty($thumbnail);
 	}
 
-	public function get_default_thumbnail()
-	{
-		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		if ($file->exists())
-			return new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/default_item_thumbnail.png');
-		else
-			return new Url('/templates/default/images/default_item_thumbnail.png');
-	}
-
-	public function set_thumbnail(Url $url)
+	public function set_thumbnail($url)
 	{
 		$this->set_additional_property('thumbnail', $url);
 	}
@@ -98,7 +91,7 @@ class RichItem extends Item
 	protected function kernel_default_properties()
 	{
 		$this->set_summary('');
-		$this->set_thumbnail($this->get_default_thumbnail());
+		$this->set_thumbnail(FormFieldThumbnail::DEFAULT_VALUE);
 		$this->set_author_custom_name('');
 		$this->set_views_number(0);
 	}

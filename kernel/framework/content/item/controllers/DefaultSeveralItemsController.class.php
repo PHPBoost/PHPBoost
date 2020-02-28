@@ -90,7 +90,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->sql_parameters['id_category'] = $this->get_category()->get_id();
 			
 			$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module()->get_configuration()->get_name();
-			$this->page_description = method_exists($category, 'get_description') ? $this->category->get_description() : '';
+			$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
 			if (!$this->page_description)
 				$this->page_description = StringVars::replace_vars($this->items_lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category', 'categories-common') . ' ' . $this->category->get_name() : '');
 			$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);

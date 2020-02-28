@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 11
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -152,7 +152,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 	}
 	
-	protected function add_category($name, $description = '', $thumbnail = '/templates/default/images/default_category_thumbnail.png', $id_parent = 0, $auth = '', $additional_fields = array())
+	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = 0, $auth = '', $additional_fields = array())
 	{
 		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge(array(
 			'id' => $this->id_category,
@@ -167,7 +167,7 @@ class DefaultModuleSetup implements ModuleSetup
 		$this->id_category++;
 	}
 
-	protected function add_item($title, $content, $summary = '', $thumbnail = '/templates/default/images/default_item_thumbnail.png', $id_category = Category::ROOT_CATEGORY, $additional_fields = array())
+	protected function add_item($title, $content, $summary = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_category = Category::ROOT_CATEGORY, $additional_fields = array())
 	{
 		$fields = array(
 			'id' => $this->id_item,

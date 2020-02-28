@@ -50,7 +50,7 @@ class RichCategory extends Category
 		return $this->get_additional_property('thumbnail');
 	}
 
-	public function set_thumbnail(Url $thumbnail)
+	public function set_thumbnail($thumbnail)
 	{
 		$this->set_additional_property('thumbnail', $thumbnail);
 	}

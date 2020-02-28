@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 12
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 4.0 - 2013 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -139,7 +139,7 @@ class ArticlesFormController extends AbstractItemController
 
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', LangLoader::get_message('config.author_displayed', 'admin-common'), $this->get_article()->get_author_name_displayed()));
 
-		$other_fieldset->add_field(new FormFieldUploadPictureFile('thumbnail', $this->common_lang['form.thumbnail'], $this->get_article()->get_thumbnail()->relative()));
+		$other_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->common_lang['form.thumbnail'], $this->get_article()->get_thumbnail()->relative(), RichItem::THUMBNAIL_URL));
 
 		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $this->common_lang['form.keywords'],
 			array('description' => $this->common_lang['form.keywords.description'])
@@ -337,7 +337,7 @@ class ArticlesFormController extends AbstractItemController
 
 		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Article::AUTHOR_NAME_NOTDISPLAYED;
 		$article->set_author_name_displayed($author_name_displayed);
-		$article->set_thumbnail(new Url($this->form->get_value('thumbnail')));
+		$article->set_thumbnail($this->form->get_value('thumbnail'));
 
 		if ($this->get_article()->get_author_name_displayed() == true)
 			$article->set_author_custom_name(($this->form->get_value('author_custom_name') && $this->form->get_value('author_custom_name') !== $article->get_author_user()->get_display_name() ? $this->form->get_value('author_custom_name') : ''));
