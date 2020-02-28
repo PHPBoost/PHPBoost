@@ -184,7 +184,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				if ($this->is_new_category)
 					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
 				else
-					$value = ($attribute['is_url'] && $this->get_category()->get_additional_property($id) instanceof Url) ? $this->get_category()->get_additional_property($id)->relative() : $this->get_category()->get_additional_property($id);
+					$value = ($this->get_category()->get_additional_property($id) instanceof Url) ? $this->get_category()->get_additional_property($id)->relative() : $this->get_category()->get_additional_property($id);
 				
 				if ($field_class == 'FormFieldThumbnail')
 					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
