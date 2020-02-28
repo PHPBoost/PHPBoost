@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 10 01
+ * @version     PHPBoost 5.3 - last update: 2020 02 28
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -454,8 +454,8 @@ class SandboxFormController extends ModuleController
 				array(
 					new FormFieldMultitabsLinkElement($this->lang['form.link.icon'], 'tabs', 'Sandbox_Form_tabs_01', 'fa-cog'),
 					new FormFieldMultitabsLinkElement($this->lang['form.link.img'], 'tabs', 'Sandbox_Form_tabs_02', '', '/sandbox/sandbox_mini.png'),
-					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 3', 'tabs', 'Sandbox_Form_tabs_03',),
-					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 4', 'tabs', 'Sandbox_Form_tabs_04',)
+					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 3', 'tabs', 'Sandbox_Form_tabs_03'),
+					new FormFieldMultitabsLinkElement($this->lang['form.link'].' 4', 'tabs', 'Sandbox_Form_tabs_04')
 				)
 			));
 
