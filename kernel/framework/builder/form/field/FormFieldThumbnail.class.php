@@ -19,16 +19,7 @@ class FormFieldThumbnail extends AbstractFormField
 
 	public function __construct($id, $label = '', $value = self::NONE, $default_url = '', array $field_options = array(), array $constraints = array())
 	{
-		if ($default_url)
-		{
-			$file_name = basename($default_url);
-			$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name);
-			if ($file->exists())
-				$this->default_url = new Url('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name);
-			else
-				$this->default_url = new Url($default_url);
-		}
-		
+		$this->default_url = self::get_default_thumbnail_url($default_url);
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
@@ -42,21 +33,20 @@ class FormFieldThumbnail extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_url->relative() : $this->get_value();
+		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_url : $this->get_value();
 		$file_type = new FileType(new File($real_file_url));
 
 		$tpl->put_all(array(
 			'C_PREVIEW_HIDDEN'  => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'     => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
 			'FILE_PATH'         => Url::to_rel($real_file_url),
-
 			'NAME'              => $this->get_html_id(),
 			'ID'                => $this->get_id(),
 			'HTML_ID'           => $this->get_html_id(),
 			'C_NONE_CHECKED'    => $this->get_value() == '',
-			'C_DEFAULT_CHECKED' => $this->get_value() == self::DEFAULT_VALUE,
-		 	'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE,
-			'DEFAULT_URL'       => $this->default_url->relative(),
+			'C_DEFAULT_CHECKED' => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_url),
+			'C_CUSTOM_CHECKED'  => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_url,
+			'DEFAULT_URL'       => $this->default_url,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -64,6 +54,16 @@ class FormFieldThumbnail extends AbstractFormField
 		));
 
 		return $template;
+	}
+
+	public static function get_default_thumbnail_url($thumbnail_url)
+	{
+		$file_name = basename($thumbnail_url);
+		$file = new File(PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name);
+		if ($file_name && $file->exists())
+			return '/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $file_name;
+		else
+			return $thumbnail_url;
 	}
 
 	/**
