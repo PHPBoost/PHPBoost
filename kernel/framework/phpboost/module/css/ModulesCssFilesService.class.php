@@ -60,15 +60,15 @@ class ModulesCssFilesService
 		{
 			return $css_file;
 		}
+		if (strpos($css_file, '/') !== false)
+		{
+			return $css_file;
+		}
 		
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file))
 		{
 			return '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file;
-		}
-		else if (file_exists(PATH_TO_ROOT . '/templates/default/theme/' . $css_file))
-		{
-			return '/templates/default/theme/' . $css_file;
 		}
 		return '/' . $module_id . '/templates/' . $css_file;
 	}
