@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 5.3 - last update: 2020 02 19
+ * @version     PHPBoost 5.3 - last update: 2020 03 03
  * @since       PHPBoost 5.3 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *
@@ -15,6 +15,7 @@
  *      hcOffcanvasNav => pushmenu (plugin name)
  *       - replace properties
  *      push-nav-trigger => concat display block->inline-flex
+ *      nav-levels-false/expand => concat out of padding
 */
 
 
@@ -215,7 +216,7 @@ function _typeof(n) {
                                             var c = _("<li>").addClass(e.classes).append(o);
                                             if (u.append(c), H.levelSpacing && ("expand" === H.levelOpen || !1 === H.levelOpen || "none" === H.levelOpen)) {
                                                 var i = H.levelSpacing * m;
-                                                i && u.css("padding-left", "".concat(i/2, "px"))
+                                                i && u.css("padding-left", "1.618em")
                                             }
                                             if (e.subnav.length) {
                                                 var s = m + 1,
