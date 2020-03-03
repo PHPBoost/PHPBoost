@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 11 01
+ * @version     PHPBoost 5.3 - last update: 2020 03 03
  * @since       PHPBoost 5.2 - 2019 11 01
 */
 
 class AdminSandboxFormController extends AdminModuleController
 {
-	private $tpl;
+	private $view;
 	private $lang;
 	private $common_lang;
 
@@ -35,13 +35,13 @@ class AdminSandboxFormController extends AdminModuleController
 		else
 			$c_gmap = false;
 
-		$this->tpl->put_all(array('C_GMAP' => $c_gmap));
+		$this->view->put_all(array('C_GMAP' => $c_gmap));
 
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
 			if ($form->validate())
 			{
-				$this->tpl->put_all(array(
+				$this->view->put_all(array(
 					'C_RESULT' => true,
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -62,25 +62,23 @@ class AdminSandboxFormController extends AdminModuleController
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
-					$this->tpl->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+					$this->view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
 				}
 			}
 		}
 
-		$this->tpl->put('form', $form->display());
-		$this->tpl->add_lang($this->lang);
+		$this->view->put('form', $form->display());
 
-
-		return new AdminSandboxDisplayResponse($this->tpl, $this->lang['form.title']);
+		return new AdminSandboxDisplayResponse($this->view, $this->lang['form.title']);
 	}
 
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('form', 'sandbox');
-		$this->tpl = new FileTemplate('sandbox/AdminSandboxFormController.tpl');
-		$this->tpl->add_lang($this->common_lang);
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('sandbox/AdminSandboxFormController.tpl');
+		$this->view->add_lang($this->common_lang);
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_form()
@@ -240,8 +238,8 @@ class AdminSandboxFormController extends AdminModuleController
 			$choices->add_field(new FormFieldMultipleCheckbox('multiple_checkbox', $this->lang['form.input.multiple.checkbox'],
 				array('1'),
 				array(
-					new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice.1']),
-					new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice.2'])
+					new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice'].' 1'),
+					new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice'].' 2')
 				),
 				array(
 					'required' => true, 'class' => 'mini-checkbox css-class',
@@ -253,8 +251,8 @@ class AdminSandboxFormController extends AdminModuleController
 			$choices->add_field(new FormFieldMultipleCheckbox('inline_multiple_checkbox', $this->lang['form.input.multiple.checkbox'],
 				array('1'),
 				array(
-					new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice.1']),
-					new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice.2'])
+					new FormFieldMultipleCheckboxOption('1', $this->lang['form.input.choice'].' 1'),
+					new FormFieldMultipleCheckboxOption('2', $this->lang['form.input.choice'].' 2')
 				),
 				array('description' => 'inline - mini', 'required' => true, 'class' => 'inline-checkbox mini-checkbox css-class')
 			));
@@ -263,31 +261,31 @@ class AdminSandboxFormController extends AdminModuleController
 			$choices->add_field(new FormFieldSpacer('radio_separator', ''));
 
 			// Inline radio inputs
-			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
+			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 1', '1');
 			$choices->add_field(new FormFieldRadioChoice('inline_radio', $this->lang['form.input.radio'], '',
 				array(
 					$default_option,
-					new FormFieldRadioChoiceOption($this->lang['form.input.choice.2'], '2')
+					new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 2', '2')
 				),
 				array('description' => 'inline', 'required' => true, 'class' => 'top-field css-class inline-radio')
 			));
 
 			// Inline custom radio inputs
-			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
+			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 1', '1');
 			$choices->add_field(new FormFieldRadioChoice('inline_custom_radio', $this->lang['form.input.radio'], '',
 				array(
 					$default_option,
-					new FormFieldRadioChoiceOption($this->lang['form.input.choice.2'], '2')
+					new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 2', '2')
 				),
 				array('description' => 'inline - custom', 'required' => true, 'class' => 'top-field css-class inline-radio custom-radio')
 			));
 
 			// Custom radio inputs
-			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice.1'], '1');
+			$default_option = new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 1', '1');
 			$choices->add_field(new FormFieldRadioChoice('radio', $this->lang['form.input.radio'], '',
 				array(
 					$default_option,
-					new FormFieldRadioChoiceOption($this->lang['form.input.choice.2'], '2')
+					new FormFieldRadioChoiceOption($this->lang['form.input.choice'].' 2', '2')
 				),
 				array('description' => 'custom', 'required' => true, 'class' => 'css-class custom-radio')
 			));
@@ -299,19 +297,19 @@ class AdminSandboxFormController extends AdminModuleController
 			$choices->add_field(new FormFieldSimpleSelectChoice('select', $this->lang['form.input.select'], '',
 				array(
 					new FormFieldSelectChoiceOption('', ''),
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.1'], '1'),
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.2'], '2'),
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.3'], '3'),
-					new FormFieldSelectChoiceGroupOption($this->lang['form.input.choice.group.1'],
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 1', '1'),
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 2', '2'),
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 3', '3'),
+					new FormFieldSelectChoiceGroupOption($this->lang['form.input.choice.group'].' 1',
 						array(
-							new FormFieldSelectChoiceOption($this->lang['form.input.choice.4'], '4'),
-							new FormFieldSelectChoiceOption($this->lang['form.input.choice.5'], '5'),
+							new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 4', '4'),
+							new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 5', '5'),
 						)
 					),
-					new FormFieldSelectChoiceGroupOption($this->lang['form.input.choice.group.2'],
+					new FormFieldSelectChoiceGroupOption($this->lang['form.input.choice.group'].' 2',
 						array(
-							new FormFieldSelectChoiceOption($this->lang['form.input.choice.6'], '6'),
-							new FormFieldSelectChoiceOption($this->lang['form.input.choice.7'], '7'),
+							new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 6', '6'),
+							new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 7', '7'),
 						)
 					)
 				),
@@ -322,9 +320,9 @@ class AdminSandboxFormController extends AdminModuleController
 			$choices->add_field(new FormFieldMultipleSelectChoice('multiple_select', $this->lang['form.input.multiple.select'],
 				array('1', '2'),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.1'], '1'),
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.2'], '2'),
-					new FormFieldSelectChoiceOption($this->lang['form.input.choice.3'], '3')
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 1', '1'),
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 2', '2'),
+					new FormFieldSelectChoiceOption($this->lang['form.input.choice'].' 3', '3')
 				),
 				array('required' => true, 'class' => 'css-class')
 			));
@@ -358,7 +356,7 @@ class AdminSandboxFormController extends AdminModuleController
 			$miscellaneous->set_description($this->lang['form.desc']);
 
 			// Separator
-			$miscellaneous->add_field(new FormFieldSpacer('form_separator', $this->lang['form.separator']));
+			$miscellaneous->add_field(new FormFieldSpacer('form_separator', '<span class="smaller">' . $this->lang['form.spacer'] . '</span>'));
 
 			// Subtitle
 			$miscellaneous->add_field(new FormFieldSubTitle('checkbox_subtitle', $this->lang['form.subtitle'], ''));
@@ -417,14 +415,14 @@ class AdminSandboxFormController extends AdminModuleController
 
 			// List actionLinks
 			// Subtitle
-			$miscellaneous->add_field(new FormFieldSubTitle('links_subtitle', $this->lang['form.action.link.list'], ''));
+			$miscellaneous->add_field(new FormFieldSubTitle('links_subtitle', $this->lang['form.links.menu'], ''));
 
 			$miscellaneous->add_field(new FormFieldActionLinkList('actionlink_list',
 				array(
-					new FormFieldActionLinkElement($this->lang['form.action.link.1'], '#', 'fa-share'),
-					new FormFieldActionLinkElement($this->lang['form.action.link.2'], '#', '', PATH_TO_ROOT.'/sandbox/sandbox_mini.png'),
-					new FormFieldActionLinkElement($this->lang['form.action.link.3'], '#', ''),
-					new FormFieldActionLinkElement($this->lang['form.action.link.4'], '#', '')
+					new FormFieldActionLinkElement($this->lang['form.link.icon'], '#', 'fa-share'),
+					new FormFieldActionLinkElement($this->lang['form.link.img'], '#', '', PATH_TO_ROOT.'/sandbox/sandbox_mini.png'),
+					new FormFieldActionLinkElement($this->lang['form.link'].' 3', '#', ''),
+					new FormFieldActionLinkElement($this->lang['form.link'].' 4', '#', '')
 				),
 				array('class' => 'css-class')
 			));

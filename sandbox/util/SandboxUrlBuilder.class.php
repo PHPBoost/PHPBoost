@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 24
+ * @version     PHPBoost 5.3 - last update: 2020 03 03
  * @since       PHPBoost 4.1 - 2013 12 17
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -36,6 +36,15 @@ class SandboxUrlBuilder
 	public static function admin_form()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/form/');
+	}
+
+	/**
+	 * @return Url
+	 */
+
+	public static function admin_css()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/css/');
 	}
 
 	/**
@@ -84,14 +93,6 @@ class SandboxUrlBuilder
 	public static function icons()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/icons');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function icoboost()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/icoboost');
 	}
 
 	/**

@@ -143,7 +143,7 @@
 					<ul>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::home())}">
-								<i class="fa fa-hotel fa-fw" aria-hidden="true"></i>
+								<i class="fa fa-hard-hat fa-fw" aria-hidden="true"></i>
 								<span>{@mini.home}</span>
 							</a>
 						</li>
@@ -191,14 +191,8 @@
 						</li>
 						<li>
 							<a href="${relative_url(SandboxUrlBuilder::icons())}">
-								<i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-								<span>{@title.icons}</span>
-							</a>
-						</li>
-						<li>
-							<a href="${relative_url(SandboxUrlBuilder::icoboost())}">
 								<i class="fa iboost fa-iboost-phpboost fa-fw" aria-hidden="true"></i>
-								<span>icoboost</span>
+								<span>{@title.icons}</span>
 							</a>
 						</li>
 					</ul>

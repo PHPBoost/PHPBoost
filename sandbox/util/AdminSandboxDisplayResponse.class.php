@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 18
+ * @version     PHPBoost 5.3 - last update: 2020 03 03
  * @since       PHPBoost 5.1 - 2017 06 16
 */
 
@@ -14,7 +14,8 @@ class AdminSandboxDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), $this->module->get_configuration()->get_admin_main_page());
-		$this->add_link(LangLoader::get_message('title.admin.form', 'common', 'sandbox'), SandboxUrlBuilder::admin_form());
+		$this->add_link(LangLoader::get_message('title.form', 'common', 'sandbox'), SandboxUrlBuilder::admin_form());
+		$this->add_link(LangLoader::get_message('title.framework', 'common', 'sandbox'), SandboxUrlBuilder::admin_css());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($page_title);

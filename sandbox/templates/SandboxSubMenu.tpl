@@ -1,7 +1,7 @@
 <div class="cssmenu-sticky">
     <nav id="fwkboost-submenu" class="cssmenu cssmenu-horizontal summary-menu">
         <ul>
-            <li><a class="cssmenu-title" href="${relative_url(SandboxUrlBuilder::home())}"><i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i></a></li>
+            <li><a class="cssmenu-title" href="${relative_url(SandboxUrlBuilder::home())}" aria-label="{@sandbox.title}">&nbsp;<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>&nbsp;</a></li>
             <li class="has-sub">
                 <a href="${relative_url(SandboxUrlBuilder::form())}" class="cssmenu-title">{@form.title}</a>
                 <ul>

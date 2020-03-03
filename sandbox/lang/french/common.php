@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 01 14
+ * @version     PHPBoost 5.3 - last update: 2020 03 03
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,7 +18,7 @@
 $lang['sandbox.module.title'] = 'Bac à sable';
 
 $lang['title.config'] = 'Configuration';
-$lang['title.admin.fwkboost'] = 'Dans l\'admin';
+$lang['title.admin.fwkboost'] = 'Rendus dans l\'admin';
 $lang['title.theme.fwkboost'] = 'Dans le thème';
 $lang['title.form'] = 'Les formulaires';
 $lang['title.framework'] = 'Composants HTML/CSS';
@@ -54,7 +54,7 @@ $lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
 $lang['welcome.front'] = 'En front';
 $lang['welcome.admin'] = 'En admin';
 
-$lang['welcome.form'] = 'Le rendu des différents champs utilisables avec le constructeur de formulaires';
+$lang['welcome.form'] = 'Le rendu des différents champs et fonctionnailtés utilisables avec le constructeur php. Champs de formulaire, maps, menus de liens, etc.';
 
 // Lorem
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';
