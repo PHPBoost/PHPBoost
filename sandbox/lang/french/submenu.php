@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 03
+ * @version     PHPBoost 5.3 - last update: 2020 03 04
  * @since       PHPBoost 5.3 - 2020 02 24
 */
 
@@ -12,13 +12,17 @@
 ####################################################
 
 $lang['sandbox.title'] = 'Bac à sable';
-$lang['form.title']  = 'Formulaires';
+$lang['builder.title']  = 'Constructeur';
+$lang['fwkboost.title']  = 'FWKBoost';
 $lang['component.title']  = 'Composants';
+$lang['layout.title']  = 'Mise en page';
 $lang['bbcode.title']  = 'BBCode';
 $lang['menus.title']  = 'Menus';
 $lang['icons.title']  = 'Icônes';
 $lang['table.title']  = 'Tableaux';
 $lang['emails.title']  = 'Emails';
+
+$lang['hashtag.table']  = '# Tableaux';
 
 // Form
 $lang['hashtag.text.fields']  = '# Champs texte';
@@ -35,7 +39,15 @@ $lang['hashtag.authorizations']  = '# Autorisations';
 $lang['hashtag.vertical.form']  = '# Formulaire vertical';
 $lang['hashtag.horizontal.form']  = '# Formulaire horizontal';
 
-// css
+// CSS
+$lang['hashtag.message']  = '# Messages';
+$lang['hashtag.message.helper']  = '# Messages d\'alerte';
+
+// BBCode
+$lang['hashtag.bbcode.typography']  = '# Typographie';
+$lang['hashtag.bbcode.blocks']  = '# Blocs';
+$lang['hashtag.bbcode.code']  = '# Code';
+$lang['hashtag.bbcode.wiki']  = '# Wiki';
 
 // Icons
 $lang['hashtag.font.awesome']  = '# Font-awesome &copy;';

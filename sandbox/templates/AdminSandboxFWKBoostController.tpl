@@ -2,7 +2,7 @@
 	# INCLUDE SANDBOX_SUB_MENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.framework}
+			{@sandbox.module.title} - {@title.fwkboost}
 		</h1>
 	</header>
 	<div class="sandbox-summary">
@@ -11,7 +11,7 @@
       </div>
       <ul>
         <li>
-			<a class="summary-link" href="#framework">{@css.title.framework}</a>
+			<a class="summary-link" href="#fwkboost">{@css.title.fwkboost}</a>
 			<ul>
 				<li><a href="#single-item" class="summary-link">{@css.page.title}</a></li>
 				<li><a href="#options" class="summary-link">{@css.options}</a></li>
@@ -53,8 +53,8 @@
     </div>
 	<script>jQuery("#cssmenu-sandbox").menumaker({ title: "Sandbox", format: "multitoggle", breakpoint: 768 }); </script>
 
-	<div id="framework" class="sandbox-title">
-		<h2>{@css.title.framework}</h2>
+	<div id="fwkboost" class="sandbox-block">
+		<h2>{@css.title.fwkboost}</h2>
 	</div>
 
 	<div class="no-style">
@@ -187,7 +187,7 @@
 		</div>
 	</div>
 
-	<div id="typography" class="sandbox-title">
+	<div id="typography" class="sandbox-block">
 		<h2>{@css.title.typography}</h2>
 	</div>
 
@@ -244,7 +244,7 @@
 		</article>
 	</div>
 
-	<div id="miscellaneous" class="sandbox-title">
+	<div id="miscellaneous" class="sandbox-block">
 		<h2>{@css.miscellaneous}</h2>
 	</div>
 
@@ -646,7 +646,7 @@
 		</div>
 	</div>
 
-	<div id="blocks" class="sandbox-title">
+	<div id="blocks" class="sandbox-block">
 		<h2>{@css.blocks}</h2>
 	</div>
 

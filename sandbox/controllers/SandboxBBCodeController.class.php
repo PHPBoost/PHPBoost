@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 07 31
+ * @version     PHPBoost 5.3 - last update: 2020 03 04
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SandboxBBCodeController extends ModuleController
 {
-	private $tpl;
+	private $view;
 	private $common_lang;
 	private $lang;
 
@@ -29,9 +29,9 @@ class SandboxBBCodeController extends ModuleController
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('bbcode', 'sandbox');
-		$this->tpl = new FileTemplate('sandbox/SandboxBBCodeController.tpl');
-		$this->tpl->add_lang($this->common_lang);
-		$this->tpl->add_lang($this->lang);
+		$this->view = new FileTemplate('sandbox/SandboxBBCodeController.tpl');
+		$this->view->add_lang($this->common_lang);
+		$this->view->add_lang($this->lang);
 	}
 
 	private function build_view()
@@ -45,62 +45,102 @@ class SandboxBBCodeController extends ModuleController
 
 			//On crée le menu des paragraphes et on enregistre le menu
 			$contents = wiki_parse("
-				-- Paragraphe 1 --
+				-- " . $this->lang['bbcode.paragraph'] . " 1 --
 				" . $this->common_lang['lorem.short.content'] . "
-				--- paragraphe 1.1 ---
+				--- " . $this->lang['bbcode.paragraph'] . " 1.1 ---
 				" . $this->common_lang['lorem.short.content'] . "
-				---- paragraphe 1.1.1 ----
+				---- " . $this->lang['bbcode.paragraph'] . " 1.1.1 ----
 				" . $this->common_lang['lorem.short.content'] . "
-				----- paragraphe 1.1.1.1 -----
+				----- " . $this->lang['bbcode.paragraph'] . " 1.1.1.1 -----
 				" . $this->common_lang['lorem.short.content'] . "
-				------ paragraphe 1.1.1.1.1 ------
+				------ " . $this->lang['bbcode.paragraph'] . " 1.1.1.1.1 ------
 				" . $this->common_lang['lorem.short.content'] . "
-				------ paragraphe 1.1.1.1.2 ------
+				------ " . $this->lang['bbcode.paragraph'] . " 1.1.1.1.2 ------
 				" . $this->common_lang['lorem.short.content'] . "
-				-----  paragraphe 1.1.1.2 -----
+				-----  " . $this->lang['bbcode.paragraph'] . " 1.1.1.2 -----
 				" . $this->common_lang['lorem.short.content'] . "
-				---- paragraphe 1.1.2 ----
-				" . $this->common_lang['lorem.short.content'] . "
-
-				--- paragraphe 1.2 ---
+				---- " . $this->lang['bbcode.paragraph'] . " 1.1.2 ----
 				" . $this->common_lang['lorem.short.content'] . "
 
-				-- Pararaphe 2 --
+				--- " . $this->lang['bbcode.paragraph'] . " 1.2 ---
 				" . $this->common_lang['lorem.short.content'] . "
-				-- Pararaphe 3 --
+
+				-- " . $this->lang['bbcode.paragraph'] . " 2 --
+				" . $this->common_lang['lorem.short.content'] . "
+				-- " . $this->lang['bbcode.paragraph'] . " 3 --
 				" . $this->common_lang['lorem.short.content'] . "
 			");
 
-			$this->tpl->assign_block_vars('wikimenu', array(
+			$this->view->assign_block_vars('wikimenu', array(
 				'MENU' => wiki_display_menu(wiki_explode_menu($contents))
 			));
 
-			$this->tpl->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
+			$this->view->put('WIKI_CONTENTS', FormatingHelper::second_parse(wiki_no_rewrite($contents)));
 		} else {
 			// la condition de présence du module retourne false
 			$c_wiki = false;
 		}
 
-		$this->tpl->put_all(array(
-			'TYPOGRAPHY' => file_get_contents('html/bbcode/typography.tpl'),
-			'BLOCK' => file_get_contents('html/bbcode/block.tpl'),
-			'BLOCK_CODE' => file_get_contents('html/bbcode/block-code.tpl'),
-			'MEDIA' => file_get_contents('html/bbcode/media.tpl'),
-			'TABLE' => file_get_contents('html/bbcode/table.tpl'),
-			'C_WIKI' => $c_wiki,
-			'SANDBOX_SUB_MENU' => self::get_sub_tpl()
+		$this->view->put_all(array(
+			'C_WIKI'          => $c_wiki,
+			'SANDBOX_SUBMENU' => self::get_submenu(),
+			'TYPOGRAPHY'      => self::build_typography_view(),
+			'BLOCKS'          => self::build_blocks_view(),
+			'CODE'            => self::build_code_view(),
+			'TABLE'           => self::build_table_view(),
 		));
 	}
 
-	private static function get_sub_tpl()
+	private function get_submenu()
 	{
-		$sub_lang = LangLoader::get('submenu', 'sandbox');
-		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$sub_tpl->add_lang($sub_lang);
-		$sub_tpl->put_all(array(
-			'C_SANDBOX_BBCODE' => true
-		));
-		return $sub_tpl;
+		$submenu_lang = LangLoader::get('submenu', 'sandbox');
+		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$submenu_tpl->add_lang($submenu_lang);
+		return $submenu_tpl;
+	}
+
+	private function build_typography_view()
+	{
+		$this->lang = LangLoader::get('bbcode', 'sandbox');
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$typo_tpl = new FileTemplate('sandbox/pagecontent/bbcode/typography.tpl');
+		$typo_tpl->add_lang($this->lang);
+		$typo_tpl->add_lang($this->common_lang);
+
+		return $typo_tpl;
+	}
+
+	private function build_blocks_view()
+	{
+		$this->lang = LangLoader::get('bbcode', 'sandbox');
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$blocks_tpl = new FileTemplate('sandbox/pagecontent/bbcode/blocks.tpl');
+		$blocks_tpl->add_lang($this->lang);
+		$blocks_tpl->add_lang($this->common_lang);
+
+		return $blocks_tpl;
+	}
+
+	private function build_code_view()
+	{
+		$this->lang = LangLoader::get('bbcode', 'sandbox');
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$code_tpl = new FileTemplate('sandbox/pagecontent/bbcode/code.tpl');
+		$code_tpl->add_lang($this->lang);
+		$code_tpl->add_lang($this->common_lang);
+
+		return $code_tpl;
+	}
+
+	private function build_table_view()
+	{
+		$this->lang = LangLoader::get('bbcode', 'sandbox');
+		$this->common_lang = LangLoader::get('common', 'sandbox');
+		$table_tpl = new FileTemplate('sandbox/pagecontent/bbcode/table.tpl');
+		$table_tpl->add_lang($this->lang);
+		$table_tpl->add_lang($this->common_lang);
+
+		return $table_tpl;
 	}
 
 	private function check_authorizations()
@@ -114,13 +154,13 @@ class SandboxBBCodeController extends ModuleController
 
 	private function generate_response()
 	{
-		$response = new SiteDisplayResponse($this->tpl);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->common_lang['title.bbcode'], $this->common_lang['sandbox.module.title']);
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->common_lang['sandbox.module.title'], SandboxUrlBuilder::home()->rel());
-		$breadcrumb->add($this->common_lang['title.bbcode'], SandboxUrlBuilder::css()->rel());
+		$breadcrumb->add($this->common_lang['title.bbcode']);
 
 		return $response;
 	}

@@ -138,7 +138,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="mini-sandbox-framework">
+				<li class="mini-sandbox-fwkboost">
 					<span><i class="fa iboost fa-iboost-phpboost fa-fw visitor"></i> <span>{@mini.fwkboost}</span></span>
 					<ul>
 						<li>
@@ -148,15 +148,21 @@
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::form())}">
+							<a href="${relative_url(SandboxUrlBuilder::builder())}">
 								<i class="far fa-square fa-fw" aria-hidden="true"></i>
-								<span>{@title.form}</span>
+								<span>{@title.builder}</span>
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(SandboxUrlBuilder::css())}">
+							<a href="${relative_url(SandboxUrlBuilder::component())}">
 								<i class="fab fa-css3 fa-fw" aria-hidden="true"></i>
-								<span>{@title.framework}</span>
+								<span>{@title.component}</span>
+							</a>
+						</li>
+						<li>
+							<a href="${relative_url(SandboxUrlBuilder::layout())}">
+								<i class="fab fa-css3 fa-fw" aria-hidden="true"></i>
+								<span>{@title.layout}</span>
 							</a>
 						</li>
 						<li>

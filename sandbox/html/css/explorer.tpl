@@ -1,5 +1,4 @@
-<pre>
-&lt;div class="explorer">
+<pre class="language-html line-numbers"><code class="language-html">&lt;div class="explorer">
     &lt;div class="cats">
             &lt;h2>Explorer&lt;/h2>
         &lt;div class="content">
@@ -35,5 +34,4 @@
             &lt;/ul>
         &lt;/div>
     &lt;/div>
-&lt;/div>
-</pre>
+&lt;/div></code></pre>

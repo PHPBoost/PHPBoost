@@ -36,7 +36,7 @@ $lang['css.modules_menus.direction.up'] = 'Up';
 $lang['css.modules_menus.direction.down'] = 'Down';
 
 // Typogrphie
-$lang['css.title.framework'] = 'Layout';
+$lang['css.title.fwkboost'] = 'Layout';
 $lang['css.title.typography'] = 'Typography';
 $lang['css.titles'] = 'Titles';
 $lang['css.title'] = 'Title';

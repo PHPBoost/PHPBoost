@@ -20,41 +20,38 @@ $lang['sandbox.module.title'] = 'Bac à sable';
 $lang['title.config'] = 'Configuration';
 $lang['title.admin.fwkboost'] = 'Rendus dans l\'admin';
 $lang['title.theme.fwkboost'] = 'Dans le thème';
-$lang['title.form'] = 'Les formulaires';
-$lang['title.framework'] = 'Composants HTML/CSS';
+$lang['title.builder'] = 'Constructeur PHP';
+$lang['title.fwkboost'] = 'FWKBoost';
+$lang['title.component'] = 'Composants';
+$lang['title.layout'] = 'Mise en page';
 $lang['title.multitabs'] = 'Multitabs';
 $lang['title.plugins'] = 'Plugins';
 $lang['title.bbcode'] = 'BBCode';
-$lang['title.menu'] = 'Menus de liens';
+$lang['title.menu'] = 'Menus de navigation';
 $lang['title.icons'] = 'Icônes';
+$lang['title.miscellaneous'] = 'Divers';
 $lang['title.table'] = 'Tableaux';
 $lang['title.email'] = 'Email';
-$lang['title.string.template'] = 'Génération de template';
+$lang['title.template'] = 'Template';
 
 $lang['see.render'] = 'Voir le rendu';
 
 // --- Page d'accueil
-$lang['welcome.message'] = '<p>Bienvenue dans le module Bac à sable.</p>
-<p>Vous pouvez tester dans ce module les différents composants du framework de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
-<ul class="sandbox-home-list">
-<li><i class="fa fa-fw fa-asterisk"></i> Le rendu des différents champs utilisables avec le <a href="' . SandboxUrlBuilder::form()->absolute() . '">constructeur de formulaires</a></li>
-<li><i class="fab fa-fw fa-css3"></i> Le rendu des principales <a href="' . SandboxUrlBuilder::css()->absolute() . '">classes CSS</a></li>
-<li><i class="fa fa-fw fa-list"></i> Le rendu du <a href="' . SandboxUrlBuilder::multitabs()->absolute() . '">plugin  Multitabs</a></li>
-<li><i class="fa fa-fw fa-cube"></i> Le rendu des <a href="' . SandboxUrlBuilder::plugins()->absolute() . '">plugins jQuery</a> intégrés dans PHPBoost</li>
-<li><i class="far fa-fw fa-file-code"></i> Le rendu des styles spécifiques du <a href="' . SandboxUrlBuilder::bbcode()->absolute() . '">BBCode</a></li>
-<li><i class="fab fa-fw fa-font-awesome-flag"></i> Un tutoriel sur l\'utilisation des icônes de la librairie <a href="' . SandboxUrlBuilder::icons()->absolute() . '">Font Awesome</a></li>
-<li><i class="fa fa-fw fa-list"></i> Le rendu des <a href="' . SandboxUrlBuilder::menus()->absolute() . '">menus de navigation cssmenu</a></li>
-<li><i class="fa fa-fw fa-table"></i> La génération de <a href="' . SandboxUrlBuilder::table()->absolute() . '">tableaux dynamiques</a></li>
-<li><i class="fa fa-fw fa-at"></i> L\'<a href="' . SandboxUrlBuilder::email()->absolute() . '">envoi d\'emails</a></li>
-<li><i class="fa fa-fw fa-code"></i> La <a href="' . SandboxUrlBuilder::template()->absolute() . '">génération de template</a> avec ou sans cache</li>
-</ul>
-<br />
+$lang['welcome.message'] = '
+    <p>Bienvenue dans le module Bac à sable.</p>
+    <p class="align-center">Vous pouvez tester dans ce module les différents composants du fwkboost de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
+    <p>Le menu <i class="fa fa-hard-hat"></i> ci-dessus vous permet de naviguer rapidement entre/dans les différentes pages.</p>
 ';
 
-$lang['welcome.front'] = 'En front';
+$lang['welcome.see'] = 'Voir';
 $lang['welcome.admin'] = 'En admin';
 
-$lang['welcome.form'] = 'Le rendu des différents champs et fonctionnailtés utilisables avec le constructeur php. Champs de formulaire, maps, menus de liens, etc.';
+$lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur php: champs de formulaire, maps, menus de liens, etc.';
+$lang['welcome.fwkboost'] = 'Le rendu des différentes éléments du fwkboost HTML/CSS/JS de phpboost.';
+$lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du fwkboost.';
+$lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
+$lang['welcome.icons'] = 'Un aperçu de ce qu\'il est possible de faire dans phpboost au niveau des icônes-font.';
+$lang['welcome.misc'] = 'Diverses pages de test en php.';
 
 // Lorem
 $lang['lorem.short.content'] = 'Etiam hendrerit, tortor et faucibus dapibus, eros orci porta eros, in facilisis ipsum ipsum at nisl';

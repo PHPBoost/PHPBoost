@@ -33,34 +33,42 @@ class SandboxUrlBuilder
 	 * @return Url
 	 */
 
-	public static function admin_form()
+	public static function admin_builder()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/form/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/builder/');
 	}
 
 	/**
 	 * @return Url
 	 */
 
-	public static function admin_css()
+	public static function admin_fwkboost()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/css/');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/fwkboost/');
 	}
 
 	/**
 	 * @return Url
 	 */
-	public static function form()
+	public static function builder()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/form');
+		return DispatchManager::get_url(self::$dispatcher, '/builder');
 	}
 
 	/**
 	 * @return Url
 	 */
-	public static function css()
+	public static function component()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/css');
+		return DispatchManager::get_url(self::$dispatcher, '/component');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function layout()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/layout');
 	}
 
 	/**

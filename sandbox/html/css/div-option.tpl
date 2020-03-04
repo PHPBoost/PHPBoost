@@ -1,5 +1,4 @@
-<pre>
-&lt;div class="options infos">
+<pre class="language-html line-numbers"><code class="language-html">&lt;div class="options infos">
     &lt;div class="align-center">
         &lt;span>
             &lt;img src="link-to-picture.ext" alt="Lorem" itemprop="image">
@@ -32,5 +31,4 @@
             &lt;/span>
         &lt;/div>
     &lt;/div>
-&lt;/div>
-</pre>
+&lt;/div></code></pre>

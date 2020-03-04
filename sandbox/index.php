@@ -15,12 +15,13 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
     new UrlControllerMapper('AdminSandboxConfigController', '`^/admin(?:/config)?/?$`'),
-    new UrlControllerMapper('AdminSandboxFormController', '`^/admin(?:/form)?/?$`'),
-    new UrlControllerMapper('AdminSandboxGraphicsCSSController', '`^/admin(?:/css)?/?$`'),
+    new UrlControllerMapper('AdminSandboxBuilderController', '`^/admin(?:/builder)?/?$`'),
+    new UrlControllerMapper('AdminSandboxFWKBoostController', '`^/admin(?:/fwkboost)?/?$`'),
 	new UrlControllerMapper('SandboxTableController', '`^/table/?$`'),
 	new UrlControllerMapper('SandboxStringTemplateController', '`^/template/?`'),
-	new UrlControllerMapper('SandboxFormController', '`^/form/?`'),
-	new UrlControllerMapper('SandboxGraphicsCSSController', '`^/css/?`'),
+	new UrlControllerMapper('SandboxBuilderController', '`^/builder/?`'),
+	new UrlControllerMapper('SandboxComponentController', '`^/component/?`'),
+	new UrlControllerMapper('SandboxLayoutController', '`^/layout/?`'),
 	new UrlControllerMapper('SandboxMultitabsController', '`^/multitabs/?`'),
 	new UrlControllerMapper('SandboxPluginsController', '`^/plugins/?`'),
 	new UrlControllerMapper('SandboxBBCodeController', '`^/bbcode/?`'),

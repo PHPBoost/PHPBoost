@@ -1,5 +1,4 @@
-<pre>
-&lt;form class="options">
+<pre class="language-html line-numbers"><code class="language-html">&lt;form class="options">
     &lt;div class="horizontal-fieldset">
         &lt;span class="horizontal-fieldset-desc">Order by&lt;/span>
         &lt;div class="horizontal-fieldset-element">
@@ -28,5 +27,4 @@
             &lt;/div>
         &lt;/div>
     &lt;/div>
-&lt;/form>
-</pre>
+&lt;/form></code></pre>

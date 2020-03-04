@@ -25,7 +25,7 @@
 		${LangLoader::get_message('multitabs.definition', 'multitabs', 'sandbox')}
 	</article>
 
-	<article id="accordion-example" class="sandbox-title">
+	<article id="accordion-example" class="sandbox-block">
 		<header>
 			<h2>{@multitabs.accordion.title}</h2>
 		</header>
@@ -119,7 +119,7 @@
 		</div>
 	</article>
 
-	<article id="modal-example" class="sandbox-title">
+	<article id="modal-example" class="sandbox-block">
 		<header>
 			<h2>{@multitabs.modal.title}</h2>
 		</header>
@@ -147,7 +147,7 @@
 		</div>
 	</article>
 
-	<article id="tabs-example" class="sandbox-title">
+	<article id="tabs-example" class="sandbox-block">
 		<header>
 			<h2>{@multitabs.tabs.title}</h2>
 		</header>

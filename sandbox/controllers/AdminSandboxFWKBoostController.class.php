@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 03
+ * @version     PHPBoost 5.3 - last update: 2020 03 04
  * @since       PHPBoost 5.3 - 2020 03 03
 */
 
-class AdminSandboxGraphicsCSSController extends AdminModuleController
+class AdminSandboxFWKBoostController extends AdminModuleController
 {
 	private $view;
 	private $common_lang;
@@ -26,14 +26,14 @@ class AdminSandboxGraphicsCSSController extends AdminModuleController
 
 		$this->build_view();
 
-		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['title.framework']);
+		return new AdminSandboxDisplayResponse($this->view, $this->common_lang['sandbox.module.title'] . ' - ' . $this->common_lang['title.fwkboost']);
 	}
 
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$this->lang = LangLoader::get('css', 'sandbox');
-		$this->view = new FileTemplate('sandbox/AdminSandboxGraphicsCSSController.tpl');
+		$this->view = new FileTemplate('sandbox/AdminSandboxFWKBoostController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
 	}
@@ -42,17 +42,17 @@ class AdminSandboxGraphicsCSSController extends AdminModuleController
 	{
 		// code source
 		$this->view->put_all(array(
-			'PAGE'         => file_get_contents('html/css/page.tpl'),
-			'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
-			'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),
-			'PROGRESS_BAR' => file_get_contents('html/css/progress-bar.tpl'),
-			'EXPLORER'     => file_get_contents('html/css/explorer.tpl'),
-			'BUTTON'       => file_get_contents('html/css/button.tpl'),
-			'SORTABLE'     => file_get_contents('html/css/sortable.tpl'),
-			'TABLE'        => file_get_contents('html/css/table.tpl'),
-			'MESSAGE'      => file_get_contents('html/css/message.tpl'),
-			'ALERT'        => file_get_contents('html/css/alert.tpl'),
-			'BLOCK'        => file_get_contents('html/css/block.tpl')
+			// 'PAGE'         => file_get_contents('html/css/page.tpl'),
+			// 'FORM_OPTION'  => file_get_contents('html/css/form-option.tpl'),
+			// 'DIV_OPTION'   => file_get_contents('html/css/div-option.tpl'),
+			// 'PROGRESS_BAR' => file_get_contents('html/css/progress-bar.tpl'),
+			// 'EXPLORER'     => file_get_contents('html/css/explorer.tpl'),
+			// 'BUTTON'       => file_get_contents('html/css/button.tpl'),
+			// 'SORTABLE'     => file_get_contents('html/css/sortable.tpl'),
+			// 'TABLE'        => file_get_contents('html/css/table.tpl'),
+			// 'MESSAGE'      => file_get_contents('html/css/message.tpl'),
+			// 'ALERT'        => file_get_contents('html/css/alert.tpl'),
+			// 'BLOCK'        => file_get_contents('html/css/block.tpl')
 		));
 
 		$messages = array(

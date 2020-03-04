@@ -36,30 +36,59 @@ $lang['css.modules_menus.direction.up'] = 'Croissant';
 $lang['css.modules_menus.direction.down'] = 'Décroissant';
 
 // Typogrphie
-$lang['css.title.framework'] = 'Mise en page';
+$lang['css.title.fwkboost'] = 'Mise en page';
 $lang['css.title.typography'] = 'Typographie';
 $lang['css.titles'] = 'Titres';
 $lang['css.title'] = 'Titre';
 
+$lang['css.title.sizes'] = 'Tailles';
+$lang['css.item'] = 'Élément';
+$lang['css.item.smallest'] = 'Élément en très petit';
+$lang['css.item.smaller'] = 'Élément en plus petit';
+$lang['css.item.small'] = 'Élément en petit';
+$lang['css.item.big'] = 'Élément en grand';
+$lang['css.item.bigger'] = 'Élément en plus grand';
+$lang['css.item.biggest'] = 'Élément très grand';
+
 $lang['css.styles'] = 'Styles';
-$lang['css.text_bold'] = 'Texte en gras';
-$lang['css.text_italic'] = 'Texte en italique';
-$lang['css.text_underline'] = 'Texte souligné';
-$lang['css.text_strike'] = 'Texte barré';
-
-$lang['css.title.sizes'] = 'Tailles de texte';
-$lang['css.text'] = 'Texte';
-$lang['css.text.smaller'] = 'Texte en très petit';
-$lang['css.text.small'] = 'Texte en petit';
-$lang['css.text.big'] = 'Texte en grand';
-$lang['css.text.bigger'] = 'Texte en plus grand';
-$lang['css.text.biggest'] = 'Texte très grand';
+$lang['css.item.bold'] = 'Élément en gras';
+$lang['css.item.italic'] = 'Élément en italique';
+$lang['css.item.underline'] = 'Élément souligné';
+$lang['css.item.strike'] = 'Élément barré';
 $lang['css.link'] = 'Lien hypertext';
+$lang['css.item.ellipsis'] = 'Élément tronqué';
+$lang['css.item.left'] = 'Élément aligné à gauche';
+$lang['css.item.center'] = 'Élément aligné au centre';
+$lang['css.item.right'] = 'Élément aligné à droite';
+$lang['css.item.float.left'] = 'Élément flottant à gauche';
+$lang['css.item.float.right'] = 'Élément flottant à droite';
+$lang['css.item.stretch.left'] = 'Éléments';
+$lang['css.item.stretch.center'] = 'répartis';
+$lang['css.item.stretch.right'] = 'sur la largeur';
+$lang['css.item.pinned'] = 'Élément épinglé';
+$lang['css.item.stack.main'] = 'Élément';
+$lang['css.item.stack.index'] = 'indexé';
 
-$lang['css.rank_color'] = 'Couleur selon rang de l\'utilisateur';
-$lang['css.admin'] = 'Administrateur';
-$lang['css.modo'] = 'Modérateur';
-$lang['css.member'] = 'Membre';
+
+$lang['css.rank_color'] = 'Couleurs';
+$lang['css.notice'] = '.notice';
+$lang['css.question'] = '.question';
+$lang['css.success'] = '.success';
+$lang['css.warning'] = '.warning';
+$lang['css.error'] = '.error';
+$lang['css.administrator'] = '.administrator';
+$lang['css.moderator'] = '.moderator';
+$lang['css.member'] = '.member';
+$lang['css.visitor'] = '.visitor';
+$lang['css.custom.author'] = '.custom-author';
+$lang['css.link.color'] = '.link-color';
+
+$lang['css.title.media'] = 'Media';
+$lang['css.image'] = 'Image';
+$lang['css.lightbox'] = 'Lightbox';
+$lang['css.youtube'] = 'Youtube';
+$lang['css.movie'] = 'Vidéo';
+$lang['css.audio'] = 'Audio';
 
 // Divers
 $lang['css.miscellaneous'] = 'Divers';
@@ -101,7 +130,7 @@ $lang['css.sortable.move'] = 'Déplacer';
 $lang['css.quote'] = 'Citation';
 $lang['css.code'] = 'Code';
 $lang['css.code.php'] = 'Code PHP';
-$lang['css.hidden'] = 'Texte caché';
+$lang['css.hidden'] = 'Élément caché';
 
 //Pagination
 $lang['css.pagination'] = 'Pagination';
@@ -116,8 +145,10 @@ $lang['css.table.caption.no.header'] = 'Ceci est un tableau sans entête';
 $lang['css.table.author'] = 'Auteur';
 $lang['css.table.test'] = 'Test';
 $lang['css.table.header'] = 'Entête';
-$lang['css.table.sort.up'] = 'Trier par ordre croissant';
-$lang['css.table.sort.down'] = 'Trier par ordre décroissant';
+$lang['css.table.sort.up'] = 'Croissant';
+$lang['css.table.sort.down'] = 'Décroissant';
+$lang['css.table.responsive.header'] = 'Tableau responsive avec entête';
+$lang['css.table.responsive.no.header'] = 'Tableau responsive sans entête';
 
 //Messages
 $lang['css.messages.and.coms'] = 'Messages et commentaires';

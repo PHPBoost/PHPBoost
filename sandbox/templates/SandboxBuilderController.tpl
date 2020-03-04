@@ -1,8 +1,8 @@
 <section>
-	# INCLUDE SANDBOX_SUB_MENU #
+	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>
-			{@sandbox.module.title} - {@title.form}
+			{@sandbox.module.title} - {@title.builder}
 		</h1>
 	</header>
 

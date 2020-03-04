@@ -14,7 +14,6 @@ class SandboxIconsController extends ModuleController
 	private $view;
 	private $icons_lang;
 	private $lang;
-	private $css_lang;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -31,16 +30,34 @@ class SandboxIconsController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'sandbox');
 		$this->icons_lang = LangLoader::get('icons', 'sandbox');
-		$this->css_lang = LangLoader::get('css', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->view->add_lang($this->icons_lang);
-		$this->view->add_lang($this->css_lang);
 	}
 
 	private function build_view()
 	{
-		$this->view->put('SANDBOX_SUB_MENU', self::get_sub_tpl());
+		$this->view->put_all(array(
+			'SANDBOX_SUBMENU' => self::get_submenu(),
+			'FA' => self::get_fa(),
+		));
+	}
+
+	private function get_submenu()
+	{
+		$submenu_lang = LangLoader::get('submenu', 'sandbox');
+		$submenu_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
+		$submenu_tpl->add_lang($submenu_lang);
+		return $submenu_tpl;
+	}
+
+	private function get_fa()
+	{
+		$css_lang = LangLoader::get('css', 'sandbox');
+		$fa_lang = LangLoader::get('icons', 'sandbox');
+		$fa_tpl = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
+		$fa_tpl->add_lang($fa_lang);
+		$fa_tpl->add_lang($css_lang);
 
 		//Social
 		$icons = array(
@@ -52,10 +69,10 @@ class SandboxIconsController extends ModuleController
 
 		foreach ($icons as $icon)
 		{
-			$this->view->assign_block_vars('social', array(
-					'PREFIX' => $icon[0],
-					'FA'     => $icon[1],
-					'CODE'   => $icon[2]
+			$fa_tpl->assign_block_vars('social', array(
+				'PREFIX' => $icon[0],
+				'FA'     => $icon[1],
+				'CODE'   => $icon[2]
 			));
 		}
 
@@ -70,20 +87,14 @@ class SandboxIconsController extends ModuleController
 
 		foreach ($icons as $icon)
 		{
-			$this->view->assign_block_vars('responsive', array(
+			$fa_tpl->assign_block_vars('responsive', array(
 				'PREFIX' => $icon[0],
 				'FA'     => $icon[1],
 				'CODE'   => $icon[2]
 			));
 		}
-	}
-
-	private static function get_sub_tpl()
-	{
-		$sub_lang = LangLoader::get('submenu', 'sandbox');
-		$sub_tpl = new FileTemplate('sandbox/SandboxSubMenu.tpl');
-		$sub_tpl->add_lang($sub_lang);
-		return $sub_tpl;
+		
+		return $fa_tpl;
 	}
 
 	private function check_authorizations()

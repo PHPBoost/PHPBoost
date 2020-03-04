@@ -8,6 +8,7 @@
 	top: 0;
 	left: 0;
 	z-index: 9;
+	margin-bottom: 2.618em;
 	background-color: var(--bgc-alt);
 }
 
@@ -90,15 +91,14 @@ body {
 }
 
 /* --- Content --- */
-.sandbox-title {
-	padding: 0 0.809em;
+.sandbox-block {
+	padding: 0 0 2.618em;
 	border-bottom: 1px solid #366493;
 	margin-bottom: 1.618em;
 }
 
 /* --- Source code
 ----------------------------------------------------------------------------- */
-.tpl { margin-bottom: 2.618em; }
 .formatter-hide .copy-code { float: none; }
 .formatter-content .formatter-content { padding: 0; max-height: none; border-width: 0; }
 .formatter-content.formatter-code { text-align: right;}

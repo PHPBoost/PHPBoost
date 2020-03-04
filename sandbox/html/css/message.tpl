@@ -1,5 +1,4 @@
-<pre>
-&lt;article id="Id" class="several-items message-container (message-small/message-offset)" itemscope="itemscope" itemtype="http://schema.org/Comment">
+<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="several-items message-container (message-small/message-offset)" itemscope="itemscope" itemtype="http://schema.org/Comment">
     &lt;header class="message-header-container (#IF CURRENT#current-user-message)">
         &lt;img class="message-user-avatar" src="Url" alt="Text">
         &lt;div class="message-header-infos">
@@ -39,5 +38,4 @@
         &lt;/div>
     &lt;/footer>
 
-&lt;/article>
-</pre>
+&lt;/article></code></pre>

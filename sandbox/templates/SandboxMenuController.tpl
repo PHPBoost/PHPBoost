@@ -1,6 +1,6 @@
 
 <section>
-	# INCLUDE SANDBOX_SUB_MENU #
+	# INCLUDE SANDBOX_SUBMENU #
 	<header>
 		<h1>{@cssmenu.h1}</h1>
 	</header>
@@ -23,12 +23,12 @@
 </section>
 
 <script>
-	jQuery('#top-header-content > div:not(#module-mini-sandbox)').load('{PATH_TO_ROOT}/sandbox/html/menu/header.tpl');
-	jQuery('#sub-header-content').load('{PATH_TO_ROOT}/sandbox/html/menu/sub-header.tpl');
-	jQuery('#top-content').load('{PATH_TO_ROOT}/sandbox/html/menu/top-content.tpl');
-	jQuery('aside#menu-left').load('{PATH_TO_ROOT}/sandbox/html/menu/vertical-left.tpl');
-	jQuery('aside#menu-right').load('{PATH_TO_ROOT}/sandbox/html/menu/vertical-right.tpl');
-	jQuery('#bottom-content').load('{PATH_TO_ROOT}/sandbox/html/menu/bottom-content.tpl');
-	jQuery('#top-footer').load('{PATH_TO_ROOT}/sandbox/html/menu/top-footer.tpl');
-	jQuery('.footer-content').load('{PATH_TO_ROOT}/sandbox/html/menu/footer.tpl');
+	jQuery('#top-header-content > div:not(#module-mini-sandbox)').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/header.tpl');
+	jQuery('#sub-header-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/sub-header.tpl');
+	jQuery('#top-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/top-content.tpl');
+	jQuery('aside#menu-left').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/vertical-left.tpl');
+	jQuery('aside#menu-right').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/vertical-right.tpl');
+	jQuery('#bottom-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/bottom-content.tpl');
+	jQuery('#top-footer').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/top-footer.tpl');
+	jQuery('.footer-content').load('{PATH_TO_ROOT}/sandbox/templates/pagecontent/menus/footer.tpl');
 </script>

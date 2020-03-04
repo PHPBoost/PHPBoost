@@ -17,11 +17,7 @@
 $lang['bbcode.title.typography'] = 'Typographie';
 
 $lang['bbcode.titles'] = 'Titres';
-$lang['bbcode.title_1'] = 'Titre 1';
-$lang['bbcode.title_2'] = 'Titre 2';
-$lang['bbcode.title_3'] = 'Titre 3';
-$lang['bbcode.title_4'] = 'Titre 4';
-$lang['bbcode.title_5'] = 'Titre 5';
+$lang['bbcode.title'] = 'Titre';
 
 $lang['bbcode.title.lists'] = 'Listes';
 $lang['bbcode.element'] = 'Elément';

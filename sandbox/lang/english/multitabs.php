@@ -38,7 +38,7 @@ $lang['multitabs.js'] = '
             <li>jQuery(\'.tabs-container [data-tabs]\').multiTabs({ pluginType: \'tabs\' });</li>
         </ul>
         For the "basic" accordion, panels are independent (e.g html case); for the "siblings" one, panels are dependent, only one can be open at a time (e.g php).<br />
-        You can define animations using the plugin options and with adding the <a href="https://daneden.github.io/animate.css/">Animate.css</a>framework to your theme.
+        You can define animations using the plugin options and with adding the <a href="https://daneden.github.io/animate.css/">Animate.css</a>fwkboost to your theme.
 ';
 
 $lang['multitabs.html']  = 'HTML case';
