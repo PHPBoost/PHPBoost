@@ -2,7 +2,7 @@
 
     <article>
         <header>
-            <h5>{@css.messages.and.coms}</h5>
+            <h5>{@fwkboost.messages.and.coms}</h5>
         </header>
         <div class="content">
             <article id="comID" class="message-container" itemscope="itemscope" itemtype="http://schema.org/Comment">
@@ -20,7 +20,7 @@
                         </div>
                         <div class="message-user">
                             <h3 class="message-user-pseudo">
-                                <a class="Level" href="UrlProfil" itemprop="author">{@css.messages.login}</a>
+                                <a class="Level" href="UrlProfil" itemprop="author">{@fwkboost.messages.login}</a>
                             </h3>
                             <div class="message-actions">
                                 <a href="UrlAction" aria-label="ActionName"><i class="far fa-fw fa-edit"></i></a>
@@ -28,20 +28,20 @@
                             </div>
                         </div>
                         <div class="message-infos">
-                            <time datetime="{@css.messages.date}" itemprop="datePublished">{@css.messages.date}</time>
+                            <time datetime="{@fwkboost.messages.date}" itemprop="datePublished">{@fwkboost.messages.date}</time>
                             <a href="#ID" aria-label="${LangLoader::get_message('link.to.anchor', 'comments-common')}">\#ID</a>
                         </div>
                     </div>
                 </header>
                 <div class="message-content">
-                    {@css.messages.content}
+                    {@fwkboost.messages.content}
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi autem sequi quam ab amet culpa nobis vitae rerum laborum nulla!</p>
                 </div>
                 <footer class="message-footer-container">
                     <div class="message-user-assoc">
                         <div></div>
                         <div class="message-user-rank">
-                            <span>{@css.messages.level}</span>
+                            <span>{@fwkboost.messages.level}</span>
                             <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_admin.png" />
                         </div>
                     </div>

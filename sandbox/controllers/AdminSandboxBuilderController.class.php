@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 04
+ * @version     PHPBoost 5.3 - last update: 2020 03 05
  * @since       PHPBoost 5.2 - 2019 11 01
 */
 
@@ -75,7 +75,7 @@ class AdminSandboxBuilderController extends AdminModuleController
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('form', 'sandbox');
+		$this->lang = LangLoader::get('builder', 'sandbox');
 		$this->view = new FileTemplate('sandbox/AdminSandboxBuilderController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);

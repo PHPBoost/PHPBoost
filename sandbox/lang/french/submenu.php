@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 04
+ * @version     PHPBoost 5.3 - last update: 2020 03 05
  * @since       PHPBoost 5.3 - 2020 02 24
 */
 
@@ -23,8 +23,9 @@ $lang['table.title']  = 'Tableaux';
 $lang['emails.title']  = 'Emails';
 
 $lang['hashtag.table']  = '# Tableaux';
+$lang['hashtag.typography']  = '# Typographie';
 
-// Form
+// Builder
 $lang['hashtag.text.fields']  = '# Champs texte';
 $lang['hashtag.textareas']  = '# Textareas';
 $lang['hashtag.choices']  = '# Puces / Coches';
@@ -39,15 +40,29 @@ $lang['hashtag.authorizations']  = '# Autorisations';
 $lang['hashtag.vertical.form']  = '# Formulaire vertical';
 $lang['hashtag.horizontal.form']  = '# Formulaire horizontal';
 
-// CSS
-$lang['hashtag.message']  = '# Messages';
+// Components
+$lang['hashtag.titles']  = '# Titres';
+$lang['hashtag.sizes']  = '# Tailles';
+$lang['hashtag.styles']  = '# Styles';
+$lang['hashtag.colors']  = '# Couleurs';
+$lang['hashtag.media']  = '# Media';
+$lang['hashtag.progressbar']  = '# Barre de progression';
+$lang['hashtag.lists']  = '# Listes';
+$lang['hashtag.classic']  = '# Classiques';
+$lang['hashtag.explorer']  = '# Explorateur';
+$lang['hashtag.accordion']  = '# Accordéon';
+$lang['hashtag.modal']  = '# Modal';
+$lang['hashtag.tabs']  = '# Tabulaire';
+$lang['hashtag.wizard']  = '# Contrainte';
 $lang['hashtag.message.helper']  = '# Messages d\'alerte';
 
+// Layout
+$lang['hashtag.message']  = '# Messages';
+
 // BBCode
-$lang['hashtag.bbcode.typography']  = '# Typographie';
-$lang['hashtag.bbcode.blocks']  = '# Blocs';
-$lang['hashtag.bbcode.code']  = '# Code';
-$lang['hashtag.bbcode.wiki']  = '# Wiki';
+$lang['hashtag.blocks']  = '# Blocs';
+$lang['hashtag.code']  = '# Code';
+$lang['hashtag.wiki']  = '# Wiki';
 
 // Icons
 $lang['hashtag.font.awesome']  = '# Font-awesome &copy;';

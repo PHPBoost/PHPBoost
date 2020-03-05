@@ -67,21 +67,6 @@ a.pinned { cursor: pointer; }
 	padding: 0.309em 0.618em;
 }
 
-/* --- Authorized reader --- */
-.authorized-reader {
-    border-width: 0 0 0 3px;
-    border-style: solid;
-    border-color: transparent;
-    position: relative;
-}
-
-.authorized-reader::before {
-    position: absolute;
-    content: attr(data-reader);
-    font-style: italic;
-    font-size: 0.618em;
-}
-
 /* --- add ellispsis --- */
 .ellipsis {
 	display: block;
@@ -113,12 +98,14 @@ a.pinned { cursor: pointer; }
 /* --- Stacked element --- */
 .stacked {
     position: relative;
+	display: inline-block;
 }
 
 .stacked .stack-event {
     position: absolute;
     padding: 0 0.309em;
     font-size: 0.809em;
+	white-space: nowrap;
 }
 
 .stacked .stack-event.stack-left  { right: calc(100% - 0.809em); }
@@ -167,11 +154,6 @@ a.pinned { cursor: pointer; }
 	font-size: 130.9%
 }
 
-.align-center  { text-align: center; }
-.align-left    { text-align: left; }
-.align-right   { text-align: right; }
-.align-justify { text-align: justify; }
-
 .float-left,
 .float-right { padding: 0.809em 0; }
 
@@ -191,6 +173,20 @@ a.pinned { cursor: pointer; }
 	}
 }
 
+.valign-top		{ vertical-align: top; }
+.valign-middle 	{ vertical-align: middle; }
+.valign-bottom 	{ vertical-align: bottom; }
+
+/* --- Text --- */
+.text-strong    { font-weight: bold; }
+.text-italic    { font-style: italic; }
+.text-underline { text-decoration: underline; }
+.text-strike 	{ text-decoration: line-through; }
+.align-center   { text-align: center; }
+.align-left     { text-align: left; }
+.align-right    { text-align: right; }
+.align-justify  { text-align: justify; }
+
 /* --- Hidden --- */
 .hidden { display: none; }
 
@@ -201,15 +197,6 @@ a.pinned { cursor: pointer; }
 @media (min-width: 769px) {
 	.hidden-large-screens { display: none; }
 }
-
-/* --- Text --- */
-.text-strong  { font-weight: bold; }
-.text-justify { text-align: justify; }
-.text-italic  { font-style: italic; }
-
-.valign-top		{ vertical-align: top; }
-.valign-middle 	{ vertical-align: middle; }
-.valign-bottom 	{ vertical-align: bottom; }
 
 .spacer { clear: both; }
 

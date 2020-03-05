@@ -27,7 +27,7 @@ class SandboxLayoutController extends ModuleController
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('css', 'sandbox');
+		$this->lang = LangLoader::get('fwkboost', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxLayoutController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
@@ -51,7 +51,7 @@ class SandboxLayoutController extends ModuleController
 
 	private function build_message_view()
 	{
-		$this->lang = LangLoader::get('css', 'sandbox');
+		$this->lang = LangLoader::get('fwkboost', 'sandbox');
 		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$message_tpl = new FileTemplate('sandbox/pagecontent/layout/message.tpl');
 		$message_tpl->add_lang($this->lang);

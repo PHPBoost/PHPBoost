@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 03
+ * @version     PHPBoost 5.3 - last update: 2020 03 05
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ $lang['see.render'] = 'Voir le rendu';
 $lang['welcome.message'] = '
     <p>Bienvenue dans le module Bac à sable.</p>
     <p class="align-center">Vous pouvez tester dans ce module les différents composants du fwkboost de PHPBoost : <span class="pinned visitor big"><i class="fa iboost fa-iboost-phpboost"></i> FWKBoost</span></p>
-    <p>Le menu <i class="fa fa-hard-hat"></i> ci-dessus vous permet de naviguer rapidement entre/dans les différentes pages.</p>
+    <p>Le menu <i class="fa fa-hard-hat"></i> ci-dessus vous permet de naviguer rapidement entre et dans les différentes pages.</p>
 ';
 
 $lang['welcome.see'] = 'Voir';
@@ -48,7 +48,7 @@ $lang['welcome.admin'] = 'En admin';
 
 $lang['welcome.builder'] = 'Le rendu des différentes fonctionnailtés utilisables avec le constructeur php: champs de formulaire, maps, menus de liens, etc.';
 $lang['welcome.fwkboost'] = 'Le rendu des différentes éléments du fwkboost HTML/CSS/JS de phpboost.';
-$lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du fwkboost.';
+$lang['welcome.bbcode'] = 'Le rendu des éléments spécifiques déclarés en bbcode qui apportent un design différent du FWKBoost.';
 $lang['welcome.menu'] = 'Le rendu des menus de navigations selon les emplacements potentiels.';
 $lang['welcome.icons'] = 'Un aperçu de ce qu\'il est possible de faire dans phpboost au niveau des icônes-font.';
 $lang['welcome.misc'] = 'Diverses pages de test en php.';
@@ -71,13 +71,6 @@ Vestibulum feugiat urna nunc, et eleifend velit posuere ac. Vestibulum sagittis 
 $lang['sandbox.summary'] = 'Sommaire';
 $lang['sandbox.source.code'] = 'Voir le code source';
 $lang['sandbox.pbt.doc'] = 'la documentation de PHPBoost';
-
-// Wiki
-$lang['wiki.not'] = 'Le module Wiki n\'est pas installé et/ou activé';
-$lang['wiki.conditions'] = 'Vous devez porter le module wiki dans votre thème pour que vos modifications soient actives.';
-$lang['wiki.module'] = 'Module Wiki';
-$lang['wiki.table.of.contents'] = 'Table des matières';
-$lang['wiki.contents'] = 'Contenu du wiki';
 
 // Mail
 $lang['mail.title'] = 'Email';

@@ -1,4 +1,4 @@
-<div id="typography" class="sandbox-block">
+<div id="bbcode-typography" class="sandbox-block">
     <article>
         <h2>{@bbcode.title.typography}</h2>
         <div class="content">

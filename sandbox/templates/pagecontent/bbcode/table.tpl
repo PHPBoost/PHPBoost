@@ -1,26 +1,24 @@
-<div id="bbcode-table" class="sandbox-block">
-    <h2>{@bbcode.title.table} (.formatter-table)</h2>
-    <article>
-        <table class="table formatter-table">
-            <tbody>
-                <tr class="formatter-table-row">
-                    <td class="formatter-table-head" colspan="2">{@bbcode.table.header}</td>
-                </tr>
-                <tr class="formatter-table-row">
-                    <td class="formatter-table-col">{@bbcode.table.name}</td>
-                    <td class="formatter-table-col">{@bbcode.table.description}</td>
-                </tr>
-                <tr class="formatter-table-row">
-                    <td class="formatter-table-col">{@bbcode.table.name}</td>
-                    <td class="formatter-table-col">{@bbcode.table.description}</td>
-                </tr>
-                <tr class="formatter-table-row">
-                    <td class="formatter-table-col">{@bbcode.table.name}</td>
-                    <td class="formatter-table-col">{@bbcode.table.description}</td>
-                </tr>
-            </tbody>
-        </table>
-    </article>
+<article id="bbcode-table" class="sandbox-block">
+    <h2>{@bbcode.title.table}</h2>
+    <table class="table formatter-table">
+        <tbody>
+            <tr class="formatter-table-row">
+                <td class="formatter-table-head" colspan="2">{@bbcode.table.header}</td>
+            </tr>
+            <tr class="formatter-table-row">
+                <td class="formatter-table-col">{@bbcode.table.name}</td>
+                <td class="formatter-table-col">{@bbcode.table.description}</td>
+            </tr>
+            <tr class="formatter-table-row">
+                <td class="formatter-table-col">{@bbcode.table.name}</td>
+                <td class="formatter-table-col">{@bbcode.table.description}</td>
+            </tr>
+            <tr class="formatter-table-row">
+                <td class="formatter-table-col">{@bbcode.table.name}</td>
+                <td class="formatter-table-col">{@bbcode.table.description}</td>
+            </tr>
+        </tbody>
+    </table>
     <!-- Source code -->
     <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
@@ -48,4 +46,4 @@
         </div>
     </div>
 
-</div>
+</article>

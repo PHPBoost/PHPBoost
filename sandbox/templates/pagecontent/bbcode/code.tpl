@@ -1,6 +1,6 @@
-<div id="code" class="sandbox-block">
+<div id="bbcode-code" class="sandbox-block">
     <h2>{@bbcode.title.code}</h2>
-    <article id="quote-code">
+    <article id="quote-code" class="sandbox-block">
         <header>
             <h5>{@bbcode.quote}</h5>
         </header>
@@ -11,7 +11,7 @@
             </div>
         </blockquote>
     </article>
-    <article id="hidden-code" class="block">
+    <article id="hidden-code" class="sandbox-block">
         <header>
             <h5>{@bbcode.hidden}</h5>
         </header>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </article>
-    <article id="php-code">
+    <article id="php-code" class="sandbox-block">
         <header>
             <h5>{@bbcode.code.php}</h5>
         </header>

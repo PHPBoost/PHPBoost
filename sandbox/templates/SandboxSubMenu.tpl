@@ -30,15 +30,32 @@
                     <li class="has-sub">
                         <a href="${relative_url(SandboxUrlBuilder::component())}" class="cssmenu-title"><span>{@component.title}</span></a>
                         <ul>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span>test</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#css-table" class="cssmenu-title"><span>{@hashtag.table}</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#alerts" class="cssmenu-title"><span>{@hashtag.message.helper}</span></a></li>
-                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#explorer" class="cssmenu-title"><span></span></a></li>
+                            <li class="has-sub">
+                                <a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-typography" class="cssmenu-title"><span>{@hashtag.typography}</span></a>
+                                <ul>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-titles" class="cssmenu-title"><span>{@hashtag.titles}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-sizes" class="cssmenu-title"><span>{@hashtag.sizes}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-styles" class="cssmenu-title"><span>{@hashtag.styles}</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-colors" class="cssmenu-title"><span>{@hashtag.colors}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-media" class="cssmenu-title"><span>{@hashtag.media}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-progressbar" class="cssmenu-title"><span>{@hashtag.progressbar}</span></a></li>
+                            <li class="has-sub">
+                                <a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-lists" class="cssmenu-title"><span>{@hashtag.lists}</span></a>
+                                <ul>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-lists" class="cssmenu-title"><span>{@hashtag.classic}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-explorer" class="cssmenu-title"><span>{@hashtag.explorer}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-accordion" class="cssmenu-title"><span>{@hashtag.accordion}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-modal" class="cssmenu-title"><span>{@hashtag.modal}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-tabs" class="cssmenu-title"><span>{@hashtag.tabs}</span></a></li>
+                                    <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-wizard" class="cssmenu-title"><span>{@hashtag.wizard}</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-explorer" class="cssmenu-title"><span>{@hashtag.sizes}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-table" class="cssmenu-title"><span>{@hashtag.table}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-alerts" class="cssmenu-title"><span>{@hashtag.message.helper}</span></a></li>
+                            <li><a href="${relative_url(SandboxUrlBuilder::component())}#fwkboost-explorer" class="cssmenu-title"><span>{@hashtag.sizes}</span></a></li>
                         </ul>
                     </li>
                     <li class="has-sub">
@@ -52,11 +69,12 @@
             <li class="has-sub">
                 <a href="${relative_url(SandboxUrlBuilder::bbcode())}" class="cssmenu-title"><span>{@bbcode.title}</span></a>
                 <ul>
-                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#typography" class="cssmenu-title"><span>{@hashtag.bbcode.typography}</span></a></li>
-                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#blocks" class="cssmenu-title"><span>{@hashtag.bbcode.blocks}</span></a></li>
-                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#code" class="cssmenu-title"><span>{@hashtag.bbcode.code}</span></a></li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-typography" class="cssmenu-title"><span>{@hashtag.typography}</span></a></li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-blocks" class="cssmenu-title"><span>{@hashtag.blocks}</span></a></li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-code" class="cssmenu-title"><span>{@hashtag.code}</span></a></li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-lists" class="cssmenu-title"><span>{@hashtag.lists}</span></a></li>
                     <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-table" class="cssmenu-title"><span>{@hashtag.table}</span></a></li>
-                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#wiki" class="cssmenu-title"><span>{@hashtag.bbcode.wiki}</span></a></li>
+                    <li><a href="${relative_url(SandboxUrlBuilder::bbcode())}#bbcode-wiki" class="cssmenu-title"><span>{@hashtag.wiki}</span></a></li>
                 </ul>
             </li>
             <li><a href="${relative_url(SandboxUrlBuilder::menus())}" class="cssmenu-title"><span>{@menus.title}</span></a></li>

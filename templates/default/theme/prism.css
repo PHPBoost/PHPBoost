@@ -10,10 +10,8 @@
 code[class*="language-"],
 pre[class*="language-"] {
 	color: black;
-	background: none;
 	text-shadow: 0 1px white;
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -51,12 +49,6 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 }
 
 /* Code blocks */
-pre[class*="language-"] {
-	/* padding: 1em;
-	margin: .5em 0; */
-	overflow: auto;
-}
-
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
 	background: #ECF2F8;
@@ -74,6 +66,10 @@ pre[class*="language-"] {
 .token.doctype,
 .token.cdata {
 	color: slategray;
+}
+
+.token.comment {
+	font-style: italic;
 }
 
 .token.punctuation {
@@ -143,7 +139,6 @@ pre[class*="language-"] {
 
 pre[data-line] {
 	position: relative;
-	padding: 1em 0 1em 3em;
 }
 
 .line-highlight {

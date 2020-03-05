@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 04
+ * @version     PHPBoost 5.3 - last update: 2020 03 05
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -87,6 +87,7 @@ class SandboxBBCodeController extends ModuleController
 			'TYPOGRAPHY'      => self::build_typography_view(),
 			'BLOCKS'          => self::build_blocks_view(),
 			'CODE'            => self::build_code_view(),
+			'LIST'            => self::build_list_view(),
 			'TABLE'           => self::build_table_view(),
 		));
 	}
@@ -101,45 +102,41 @@ class SandboxBBCodeController extends ModuleController
 
 	private function build_typography_view()
 	{
-		$this->lang = LangLoader::get('bbcode', 'sandbox');
-		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$typo_tpl = new FileTemplate('sandbox/pagecontent/bbcode/typography.tpl');
 		$typo_tpl->add_lang($this->lang);
 		$typo_tpl->add_lang($this->common_lang);
-
 		return $typo_tpl;
 	}
 
 	private function build_blocks_view()
 	{
-		$this->lang = LangLoader::get('bbcode', 'sandbox');
-		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$blocks_tpl = new FileTemplate('sandbox/pagecontent/bbcode/blocks.tpl');
 		$blocks_tpl->add_lang($this->lang);
 		$blocks_tpl->add_lang($this->common_lang);
-
 		return $blocks_tpl;
 	}
 
 	private function build_code_view()
 	{
-		$this->lang = LangLoader::get('bbcode', 'sandbox');
-		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$code_tpl = new FileTemplate('sandbox/pagecontent/bbcode/code.tpl');
 		$code_tpl->add_lang($this->lang);
 		$code_tpl->add_lang($this->common_lang);
-
 		return $code_tpl;
+	}
+
+	private function build_list_view()
+	{
+		$list_tpl = new FileTemplate('sandbox/pagecontent/bbcode/list.tpl');
+		$list_tpl->add_lang($this->lang);
+		$list_tpl->add_lang($this->common_lang);
+		return $list_tpl;
 	}
 
 	private function build_table_view()
 	{
-		$this->lang = LangLoader::get('bbcode', 'sandbox');
-		$this->common_lang = LangLoader::get('common', 'sandbox');
 		$table_tpl = new FileTemplate('sandbox/pagecontent/bbcode/table.tpl');
 		$table_tpl->add_lang($this->lang);
 		$table_tpl->add_lang($this->common_lang);
-
 		return $table_tpl;
 	}
 

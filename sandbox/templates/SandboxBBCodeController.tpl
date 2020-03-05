@@ -6,15 +6,19 @@
 		</h1>
 	</header>
 
+	{@H|bbcode.explain}
+
 	# INCLUDE TYPOGRAPHY #
 
 	# INCLUDE BLOCKS #
 
 	# INCLUDE CODE #
 
+	# INCLUDE LIST #
+
 	# INCLUDE TABLE #
 
-	<div id="wiki" class="sandbox-block">
+	<div id="bbcode-wiki" class="sandbox-block">
 		<h2>{@wiki.module}</h2>
 		# IF C_WIKI #
 			<article>

@@ -1,13 +1,9 @@
-<div id="alerts" class="sandbox-block">
-    <article>
-        <header>
-            <h5>{@css.alert.messages}</h5>
-        </header>
-        <div class="content">
-            # START messages # # INCLUDE messages.VIEW # # END messages #
-            # INCLUDE FLOATING_MESSAGES # # INCLUDE FLOATING_SUCCESS # # INCLUDE FLOATING_NOTICE # # INCLUDE FLOATING_WARNING # # INCLUDE FLOATING_ERROR #
-        </div>
-    </article>
+<article id="fwkboost-alerts" class="sandbox-block">
+    <header>
+        <h2>{@fwkboost.alert.messages}</h2>
+    </header>
+    # START messages # # INCLUDE messages.VIEW # # END messages #
+    # INCLUDE FLOATING_MESSAGES # # INCLUDE FLOATING_SUCCESS # # INCLUDE FLOATING_NOTICE # # INCLUDE FLOATING_WARNING # # INCLUDE FLOATING_ERROR #
 <!-- Source code -->
     <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
@@ -23,4 +19,4 @@
 </code></pre>
         </div>
     </div>
-</div>
+</article>

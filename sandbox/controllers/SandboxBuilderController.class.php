@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 02 28
+ * @version     PHPBoost 5.3 - last update: 2020 03 05
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ class SandboxBuilderController extends ModuleController
 	private function init()
 	{
 		$this->common_lang = LangLoader::get('common', 'sandbox');
-		$this->lang = LangLoader::get('form', 'sandbox');
+		$this->lang = LangLoader::get('builder', 'sandbox');
 		$this->view = new FileTemplate('sandbox/SandboxBuilderController.tpl');
 		$this->view->add_lang($this->common_lang);
 		$this->view->add_lang($this->lang);
@@ -307,7 +307,7 @@ class SandboxBuilderController extends ModuleController
 			$buttons->add_element(new FormButtonButton('.small', '', 'small-button', 'small'));
 			$buttons->add_element(new FormButtonButton('.button', '', 'medium-button', ''));
 			$buttons->add_element(new FormButtonButton('.big', '', 'big-button', 'big'));
-			$buttons->add_element(new FormButtonButton('.bigger', '', 'bigger-button', ''));
+			$buttons->add_element(new FormButtonButton('.bigger', '', 'bigger-button', 'bigger'));
 			$buttons->add_element(new FormButtonButton('.biggest', '', 'biggest-button', 'biggest'));
 
 			$buttons->add_field(new FormFieldSpacer('button_notice', ''));

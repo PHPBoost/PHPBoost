@@ -7,6 +7,7 @@
 	</header>
 
 	<article class="content">
+		{@H|builder.explain}
 		# IF C_PREVIEW #
 			<div class="message-helper bgc notice">Prévisualisation</div>
 		# ENDIF #
