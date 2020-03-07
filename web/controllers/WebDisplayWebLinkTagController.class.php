@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 18
+ * @version     PHPBoost 5.3 - last update: 2020 03 07
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -88,9 +88,9 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_GRID_VIEW' => $this->config->is_display_in_grid_view(),
-			'C_LIST_VIEW' => $this->config->is_display_in_list_view(),
-			'C_TABLE_VIEW' => $this->config->is_display_in_table_view(),
+			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
+			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
+			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
 			'C_MODERATE' => CategoriesAuthorizationsService::check_authorizations()->moderation(),
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
 			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),

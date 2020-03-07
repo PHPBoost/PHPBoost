@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 01 12
+ * @version     PHPBoost 5.3 - last update: 2020 03 07
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,7 +20,7 @@ class WebLink
 	private $rewrited_title;
 	private $url;
 	private $contents;
-	private $short_contents;
+	private $summary;
 
 	private $approbation_type;
 	private $start_date;
@@ -128,26 +128,26 @@ class WebLink
 		$this->contents = $contents;
 	}
 
-	public function get_short_contents()
+	public function get_summary()
 	{
-		return $this->short_contents;
+		return $this->summary;
 	}
 
-	public function set_short_contents($short_contents)
+	public function set_summary($summary)
 	{
-		$this->short_contents = $short_contents;
+		$this->summary = $summary;
 	}
 
-	public function is_short_contents_enabled()
+	public function is_summary_enabled()
 	{
-		return !empty($this->short_contents);
+		return !empty($this->summary);
 	}
 
-	public function get_real_short_contents()
+	public function get_real_summary()
 	{
-		if ($this->is_short_contents_enabled())
+		if ($this->is_summary_enabled())
 		{
-			return FormatingHelper::second_parse($this->short_contents);
+			return FormatingHelper::second_parse($this->summary);
 		}
 		return TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($this->contents), '<br><br/>'), (int)WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
 	}
@@ -354,7 +354,7 @@ class WebLink
 			'rewrited_name' => $this->get_rewrited_title(),
 			'url' => $this->get_url()->absolute(),
 			'contents' => $this->get_contents(),
-			'short_contents' => $this->get_short_contents(),
+			'short_contents' => $this->get_summary(),
 			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : 0,
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : 0,
@@ -376,7 +376,7 @@ class WebLink
 		$this->rewrited_title = $properties['rewrited_name'];
 		$this->url = new Url($properties['url']);
 		$this->contents = $properties['contents'];
-		$this->short_contents = $properties['short_contents'];
+		$this->summary = $properties['short_contents'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -438,7 +438,7 @@ class WebLink
 	{
 		$category = $this->get_category();
 		$contents = FormatingHelper::second_parse($this->contents);
-		$real_short_contents = $this->get_real_short_contents();
+		$real_summary = $this->get_real_summary();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$comments_number = CommentsService::get_comments_number('web', $this->id);
@@ -452,7 +452,7 @@ class WebLink
 				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
-				'C_READ_MORE'             => !$this->is_short_contents_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $real_short_contents != @strip_tags($contents, '<br><br/>'),
+				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($contents) > WebConfig::NUMBER_CARACTERS_BEFORE_CUT && $real_summary != @strip_tags($contents, '<br><br/>'),
 				'C_USER_GROUP_COLOR'      => !empty($user_group_color),
 				'C_IS_ADORNED'            => $this->has_thumbnail() || $this->has_partner_thumbnail(),
 				'C_HAS_THUMBNAIL'         => $this->has_thumbnail(),
@@ -467,7 +467,7 @@ class WebLink
 				'TITLE'            => $this->title,
 				'URL'              => $this->url->absolute(),
 				'CONTENTS'         => $contents,
-				'SHORT_CONTENTS'   => $real_short_contents,
+				'SHORT_CONTENTS'   => $real_summary,
 				'STATUS'           => $this->get_status(),
 				'C_AUTHOR_EXIST'   => $user->get_id() !== User::VISITOR_LEVEL,
 				'PSEUDO'           => $user->get_display_name(),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2019 12 31
+ * @version     PHPBoost 5.3 - last update: 2020 03 07
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -62,7 +62,9 @@ class WebFormController extends ModuleController
 		$fieldset = new FormFieldsetHTMLHeading('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_weblink()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.name'], $this->get_weblink()->get_title(),
+			array('required' => true)
+		));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -72,21 +74,29 @@ class WebFormController extends ModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUrlEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(), array('required' => true)));
-
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(), array('rows' => 15, 'required' => true)));
-
-		$fieldset->add_field(new FormFieldCheckbox('description_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_description_enabled(),
-			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
-			if (HTMLForms.getField("description_enabled").getValue()) {
-				HTMLForms.getField("description").enable();
-			} else {
-				HTMLForms.getField("description").disable();
-			}'))
+		$fieldset->add_field(new FormFieldUrlEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(),
+			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->common_lang['form.description'], $this->get_weblink()->get_description(), array(
-			'hidden' => !$this->get_weblink()->is_description_enabled(),
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(),
+			array('rows' => 15, 'required' => true)
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_summary_enabled(),
+			array(
+				'description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::NUMBER_CARACTERS_BEFORE_CUT)),
+				'events' => array('click' => '
+					if (HTMLForms.getField("summary_enabled").getValue()) {
+						HTMLForms.getField("summary").enable();
+					} else {
+						HTMLForms.getField("summary").disable();
+					}'
+				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->common_lang['form.description'], $this->get_weblink()->get_summary(), array(
+			'hidden' => !$this->get_weblink()->is_summary_enabled(),
 		)));
 
 		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
@@ -113,11 +123,15 @@ class WebFormController extends ModuleController
 			'hidden' => !$this->get_weblink()->is_partner()
 		)));
 
-		$other_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(), array(
-			'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => !$this->get_weblink()->is_partner()
-		)));
+		$other_fieldset->add_field(new FormFieldCheckbox('privileged_partner', $this->lang['web.form.privileged_partner'], $this->get_weblink()->is_privileged_partner(),
+			array(
+				'description' => $this->lang['web.form.privileged_partner.explain'], 'hidden' => !$this->get_weblink()->is_partner()
+			))
+		);
 
-		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'],
+			array('description' => $this->common_lang['form.keywords.description']))
+		);
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->moderation())
 		{
@@ -130,7 +144,8 @@ class WebFormController extends ModuleController
 
 			if (!$this->get_weblink()->is_visible())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false, array('hidden' => $this->get_weblink()->get_status() != WebLink::NOT_APPROVAL)
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->common_lang['form.update.date.creation'], false,
+					array('hidden' => $this->get_weblink()->get_status() != WebLink::NOT_APPROVAL)
 				));
 			}
 
@@ -140,29 +155,39 @@ class WebFormController extends ModuleController
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebLink::APPROVAL_NOW),
 					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], WebLink::APPROVAL_DATE),
 				),
-				array('events' => array('change' => '
-				if (HTMLForms.getField("approbation_type").getValue() == 2) {
-					jQuery("#' . __CLASS__ . '_start_date_field").show();
-					HTMLForms.getField("end_date_enabled").enable();
-				} else {
-					jQuery("#' . __CLASS__ . '_start_date_field").hide();
-					HTMLForms.getField("end_date_enabled").disable();
-				}'))
+				array(
+					'events' => array('change' => '
+						if (HTMLForms.getField("approbation_type").getValue() == 2) {
+							jQuery("#' . __CLASS__ . '_start_date_field").show();
+							HTMLForms.getField("end_date_enabled").enable();
+						} else {
+							jQuery("#' . __CLASS__ . '_start_date_field").hide();
+							HTMLForms.getField("end_date_enabled").disable();
+						}'
+					)
+				)
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()), array('hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE))));
+			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()),
+				array('hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE))
+			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_weblink()->is_end_date_enabled(), array(
-			'hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE),
-			'events' => array('click' => '
-			if (HTMLForms.getField("end_date_enabled").getValue()) {
-				HTMLForms.getField("end_date").enable();
-			} else {
-				HTMLForms.getField("end_date").disable();
-			}'
-			))));
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_weblink()->is_end_date_enabled(),
+				array(
+					'hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE),
+					'events' => array('click' => '
+						if (HTMLForms.getField("end_date_enabled").getValue()) {
+							HTMLForms.getField("end_date").enable();
+						} else {
+							HTMLForms.getField("end_date").disable();
+						}'
+					)
+				)
+			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()), array('hidden' => !$this->get_weblink()->is_end_date_enabled())));
+			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()),
+				array('hidden' => !$this->get_weblink()->is_end_date_enabled())
+			));
 		}
 
 		$this->build_contribution_fieldset($form);
@@ -256,7 +281,7 @@ class WebFormController extends ModuleController
 
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
-		$weblink->set_description(($this->form->get_value('description_enabled') ? $this->form->get_value('description') : ''));
+		$weblink->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$weblink->set_picture(new Url($this->form->get_value('picture')));
 
 		$weblink->set_partner($this->form->get_value('partner'));
