@@ -101,7 +101,7 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 4rem; }
 	display: none;
 }
 
-.formatter-hide-close-button {
+.formatter-hide-close-button.pinned {
 	padding: 0.228em 1em;
 	position: absolute;
 	display: none;

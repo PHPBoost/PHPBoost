@@ -65,7 +65,7 @@
 				</div>
 			</div>
 
-			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+			<div class="formatter-container formatter-hide no-js tpl">
 				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 				<div class="formatter-content">
 					{PRE_ACCORDION_BASIC}
@@ -108,7 +108,7 @@
 				</div>
 			</div>
 
-			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+			<div class="formatter-container formatter-hide no-js tpl">
 				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 				<div class="formatter-content formatter-code">
 					<div class="formatter-content">
@@ -136,7 +136,7 @@
 				</div>
 			</div>
 
-			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+			<div class="formatter-container formatter-hide no-js tpl">
 				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 				<div class="formatter-content formatter-code">
 					<div class="formatter-content">
@@ -181,7 +181,7 @@
 				</div>
 			</div>
 
-			<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+			<div class="formatter-container formatter-hide no-js tpl">
 				<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 				<div class="formatter-content formatter-code">
 					<div class="formatter-content">

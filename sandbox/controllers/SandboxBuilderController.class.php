@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 03 09
  * @since       PHPBoost 3.0 - 2009 12 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -111,7 +111,7 @@ class SandboxBuilderController extends ModuleController
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm('Sandbox_Builder');
-		$form->set_css_class('tabs-container fieldset-content');
+		$form->set_css_class('accordion-container modal-container tabs-container wizard-container fieldset-content');
 
 		// TEXT FIELDS
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['builder.title.inputs']);
@@ -289,77 +289,6 @@ class SandboxBuilderController extends ModuleController
 				array('class' => 'css-class')
 			));
 
-		// BUTTONS
-		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
-			$form->add_fieldset($buttons);
-			$buttons->add_field(new FormFieldSpacer('all_buttons_explain', $this->lang['builder.all.buttons']));
-
-			$buttons->add_element(new FormButtonButton('.reset', '', 'reset-button', 'reset-button'));
-			$buttons->add_element(new FormButtonButton('.button', '', 'simple-button', ''));
-			$buttons->add_element(new FormButtonButton('.alt-button', '', 'alt-button', 'alt-button'));
-			$buttons->add_element(new FormButtonButton('.submit', '', 'submit-button', 'submit'));
-			$buttons->add_element(new FormButtonButton('.alt-submit', '', 'alt-submit-button', 'alt-submit'));
-
-			$buttons->add_field(new FormFieldSpacer('button_sizes', ''));
-
-			$buttons->add_element(new FormButtonButton('.smallest', '', 'smallest-button', 'smallest'));
-			$buttons->add_element(new FormButtonButton('.smaller', '', 'smaller-button', 'smaller'));
-			$buttons->add_element(new FormButtonButton('.small', '', 'small-button', 'small'));
-			$buttons->add_element(new FormButtonButton('.button', '', 'medium-button', ''));
-			$buttons->add_element(new FormButtonButton('.big', '', 'big-button', 'big'));
-			$buttons->add_element(new FormButtonButton('.bigger', '', 'bigger-button', 'bigger'));
-			$buttons->add_element(new FormButtonButton('.biggest', '', 'biggest-button', 'biggest'));
-
-			$buttons->add_field(new FormFieldSpacer('button_notice', ''));
-			$buttons->add_element(new FormButtonButton('.notice', '', 'notice-button', 'notice'));
-			$buttons->add_element(new FormButtonButton('.notice.bgc', '', 'bgc-notice-button', 'bgc notice'));
-			$buttons->add_element(new FormButtonButton('.notice.bgc-full', '', 'bgc-full-notice-button', 'bgc-full notice'));
-
-			$buttons->add_field(new FormFieldSpacer('button_question', ''));
-			$buttons->add_element(new FormButtonButton('.question', '', 'question-button', 'question'));
-			$buttons->add_element(new FormButtonButton('.question.bgc', '', 'bgc-question-button', 'bgc question'));
-			$buttons->add_element(new FormButtonButton('.question.bgc-full', '', 'bgc-question-button', 'bgc-full question'));
-
-			$buttons->add_field(new FormFieldSpacer('button_success', ''));
-			$buttons->add_element(new FormButtonButton('.success', '', 'success-button', 'success'));
-			$buttons->add_element(new FormButtonButton('.success.bgc', '', 'bgc-success-button', 'bgc success'));
-			$buttons->add_element(new FormButtonButton('.success.bgc-full', '', 'bgc-full-success-button', 'bgc-full success'));
-
-			$buttons->add_field(new FormFieldSpacer('button_warning', ''));
-			$buttons->add_element(new FormButtonButton('.warning', '', 'warning-button', 'warning'));
-			$buttons->add_element(new FormButtonButton('.warning.bgc', '', 'bgc-warning-button', 'bgc warning'));
-			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
-
-			$buttons->add_field(new FormFieldSpacer('button_errors', ''));
-			$buttons->add_element(new FormButtonButton('.error', '', 'error-button', 'error'));
-			$buttons->add_element(new FormButtonButton('.error.bgc', '', 'bgc-error-button', 'bgc error'));
-			$buttons->add_element(new FormButtonButton('.error.bgc-full', '', 'bgc-full-error-button', 'bgc-full error'));
-
-			$buttons->add_field(new FormFieldSpacer('button_visitor', ''));
-			$buttons->add_element(new FormButtonButton('.visitor', '', 'visitor-button', 'visitor'));
-			$buttons->add_element(new FormButtonButton('.visitor.bgc', '', 'bgc-visitor-button', 'bgc visitor'));
-			$buttons->add_element(new FormButtonButton('.visitor.bgc-full', '', 'bgc-full-visitor-button', 'bgc-full visitor'));
-
-			$buttons->add_field(new FormFieldSpacer('button_custom_author', ''));
-			$buttons->add_element(new FormButtonButton('.custom-author', '', 'custom-author-button', 'custom-author'));
-			$buttons->add_element(new FormButtonButton('.custom-author.bgc', '', 'bgc-custom-author-button', 'bgc custom-author'));
-			$buttons->add_element(new FormButtonButton('.custom-author.bgc-full', '', 'bgc-full-custom-author-button', 'bgc-full custom-author'));
-
-			$buttons->add_field(new FormFieldSpacer('button_member', ''));
-			$buttons->add_element(new FormButtonButton('.member', '', 'member-button', 'member'));
-			$buttons->add_element(new FormButtonButton('.member.bgc', '', 'bgc-member-button', 'bgc member'));
-			$buttons->add_element(new FormButtonButton('.member.bgc-full', '', 'bgc-full-member-button', 'bgc-full member'));
-
-			$buttons->add_field(new FormFieldSpacer('button_moderator', ''));
-			$buttons->add_element(new FormButtonButton('.moderator', '', 'moderator-button', 'moderator'));
-			$buttons->add_element(new FormButtonButton('.moderator.bgc', '', 'bgc-moderator-button', 'bgc moderator'));
-			$buttons->add_element(new FormButtonButton('.moderator.bgc-full', '', 'bgc-full-moderator-button', 'bgc-full moderator'));
-
-			$buttons->add_field(new FormFieldSpacer('button_administrator', ''));
-			$buttons->add_element(new FormButtonButton('.administrator', '', 'administrator-button', 'administrator'));
-			$buttons->add_element(new FormButtonButton('.administrator.bgc', '', 'bgc-administrator-button', 'bgc administrator'));
-			$buttons->add_element(new FormButtonButton('.administrator.bgc-full', '', 'bgc-full-administrator-button', 'bgc-full administrator'));
-
 		// MISCELLANEOUS
 		$miscellaneous = new FormFieldsetHTML('miscellaneous', $this->lang['builder.title.miscellaneous']);
 			$form->add_fieldset($miscellaneous);
@@ -526,6 +455,20 @@ class SandboxBuilderController extends ModuleController
 			$form->add_fieldset($horizontal_fieldset);
 			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['builder.input.text'], $this->lang['builder.input.text.lorem'], array('required' => true, 'class' => 'css-class')));
 			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['builder.input.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+
+		// BUTTONS
+		$buttons = new FormFieldsetHTML('buttons', $this->lang['builder.title.buttons']);
+			$form->add_fieldset($buttons);
+			$buttons->add_field(new FormFieldSpacer('all_buttons_explain', $this->lang['builder.all.buttons']));
+
+			$buttons->add_field(new FormFieldSpacer('button_sizes', $this->lang['builder.button.sizes']));
+			$buttons->add_element(new FormButtonButton('.smallest', '', 'smallest-button', 'smallest'));
+			$buttons->add_element(new FormButtonButton('.biggest', '', 'biggest-button', 'biggest'));
+
+			$buttons->add_field(new FormFieldSpacer('button_warning', $this->lang['builder.button.colors']));
+			$buttons->add_element(new FormButtonButton('.warning', '', 'warning-button', 'warning'));
+			$buttons->add_element(new FormButtonButton('.warning.bgc', '', 'bgc-warning-button', 'bgc warning'));
+			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');

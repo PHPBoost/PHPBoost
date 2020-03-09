@@ -39,7 +39,7 @@
     <span class="pinned bgc-full custom-author">.custom.author</span>
     <span class="pinned bgc-full link-color">.link.color</span>
     <!-- Source code -->
-    <div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;span class="... notice">lorem ipsum&lt;/span>

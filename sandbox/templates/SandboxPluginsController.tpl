@@ -57,7 +57,7 @@
 	</article>
 
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{PRE_WIZARD_HTML}
@@ -72,7 +72,7 @@
 	</article>
 
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{PRE_WIZARD_FORM}
@@ -106,7 +106,7 @@
 	</article>
 
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{PRE_TOOTLTIP}

@@ -84,8 +84,8 @@ $lang['fwkboost.tree'] = 'Tree';
 $lang['fwkboost.cat'] = 'Category';
 $lang['fwkboost.file'] = 'File';
 
-$lang['fwkboost.button'] = 'Buttons';
-$lang['fwkboost.button.other'] = 'Other buttons';
+$lang['fwkboost.buttons'] = 'Buttons';
+$lang['fwkboost.buttons.other'] = 'Other buttons';
 
 $lang['fwkboost.notation'] = 'Notation';
 $lang['fwkboost.notation.possible.values'] = 'Possible values';

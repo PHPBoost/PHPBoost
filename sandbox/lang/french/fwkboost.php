@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2020 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.3 - last update: 2020 03 05
+ * @version     PHPBoost 5.3 - last update: 2020 03 09
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,12 +76,22 @@ $lang['fwkboost.tree'] = 'Arborescence';
 $lang['fwkboost.cat'] = 'Catégorie';
 $lang['fwkboost.file'] = 'Fichier';
 
-$lang['fwkboost.button'] = 'Boutons';
-$lang['fwkboost.button.other'] = 'Autres boutons';
+$lang['fwkboost.buttons'] = 'Boutons';
+$lang['fwkboost.button'] = 'Bouton';
+$lang['fwkboost.button.reset'] = 'Défaut';
+$lang['fwkboost.button.color'] = 'En couleur';
+$lang['fwkboost.buttons.other'] = 'Autres boutons';
 
 $lang['fwkboost.notation'] = 'Notation';
 $lang['fwkboost.notation.possible.values'] = 'Valeurs possibles';
 $lang['fwkboost.notation.example'] = 'Exemple pour une note de 2.4 sur 5';
+
+//Pagination
+$lang['fwkboost.pagination'] = 'Pagination';
+$lang['fwkboost.pagination.prev'] = 'Vers la première page';
+$lang['fwkboost.pagination.page'] = 'Vers la page';
+$lang['fwkboost.pagination.this'] = 'Page courrante';
+$lang['fwkboost.pagination.next'] = 'Vers la dernière page';
 
 $lang['fwkboost.sortable'] = 'Sortable Drag & Drop';
 $lang['fwkboost.static.sortable'] = 'Sortable positionné';
@@ -94,9 +104,6 @@ $lang['fwkboost.quote'] = 'Citation';
 $lang['fwkboost.code'] = 'Code';
 $lang['fwkboost.code.php'] = 'Code PHP';
 $lang['fwkboost.hidden'] = 'Élément caché';
-
-//Pagination
-$lang['fwkboost.pagination'] = 'Pagination';
 
 //Tables
 $lang['fwkboost.table'] = 'Tableaux';
@@ -132,6 +139,43 @@ $lang['fwkboost.message.admin'] = 'Ceci est un message dont l\'affichage est lim
 $lang['fwkboost.message.float-unlimited'] = 'Ceci est un message flottant sans limite de temps';
 $lang['fwkboost.message.float-limited'] = 'Ceci est un message flottant avec une limite de temps';
 $lang['fwkboost.message.float-display'] = 'Afficher les messages éphémères';
+
+// Tooltips
+$lang['fwkboost.tooltip'] = 'Tooltip';
+$lang['fwkboost.tooltip.custom'] = 'Tooltip personnalisé';
+$lang['fwkboost.tooltip.desc'] = '
+    Un "tooltip" est une description indexée à un élément qui est cachée par défaut et qui apparait au survol de l\'élément (les exemples sont montrés avec la classe <code class="language-css">.pinned</code>). <br />
+    Par défaut, dans PHPBoost le tooltip s\'applique à toute balise possédant un attribut <code class="language-html">aria-label</code>.';
+$lang['fwkboost.tooltip.eg.basic'] = 'Au survol, la description déclarée dans l\'attribut aria-label apparait.';
+$lang['fwkboost.tooltip.label.basic'] = 'ce plugin supporte les balises html sans attribut dans la description.
+    <br /><br />saut de ligne<br /><br />
+    paragraphe<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, enim.</p>
+    <i>Texte en italique</i>
+    <br />etc
+';
+$lang['fwkboost.tooltip.options'] = '
+    Au survol, la description déclarée dans l\'attribut aria-label est remplacée par un texte alternatif
+    et des options ont été ajoutées.
+';
+$lang['fwkboost.tooltip.eg.options'] = 'Au survol un texte alternatif avec des options apparait à la place du contenu de l\'aria-label';
+$lang['fwkboost.tooltip.alt.options'] = 'Texte alternatif avec des options';
+$lang['fwkboost.tooltip.options'] = '
+    Options: <br />
+    <code class="language-markup">data-tooltip</code> pour ajouter un texte alternatif <br />
+    <code class="language-markup">data-tooltip-class</code> pour ajouter des class de personnalisation ("display-none" pour ne pas afficher le tooltip mais laisser le aria-label)<br />
+';
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Blocs
 $lang['fwkboost.blocks'] = 'Blocs';

@@ -415,68 +415,6 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-d), 0.1); }
 .fa-announce-new:before,
 .fa-announce-new-hot:before { color: var(--success-dark); }
 
-/* --- Alerts --------------------------------------------------------------- */
-.floating-element,
-.message-helper { background-color: var(--bgc-main) }
-
-.notice        { color: var(--notice-dark); border-color: var(--notice-dark); }
-.question      { color: var(--question-dark); border-color: var(--question-dark); }
-.success       { color: var(--success-dark); border-color: var(--success-dark); }
-.warning       { color: var(--warning-dark); border-color: var(--warning-dark); }
-.error         { color: var(--error-dark); border-color: var(--error-dark); }
-.visitor       { color: var(--visitor-dark); border-color: var(--visitor-dark); }
-.custom-author { color: var(--custom-author-dark); border-color: var(--custom-author-dark); }
-.member        { color: var(--member-dark); border-color: var(--member-dark); }
-.moderator     { color: var(--moderator-dark); border-color: var(--moderator-dark); }
-.administrator { color: var(--administrator-dark); border-color: var(--administrator-dark); }
-
-.button.notice:hover        { color: var(--notice-light); border-color: var(--notice-light);}
-.button.question:hover      { color: var(--question-light); border-color: var(--question-light);}
-.button.success:hover       { color: var(--success-light); border-color: var(--success-light);}
-.button.warning:hover       { color: var(--warning-light); border-color: var(--warning-light);}
-.button.error:hover         { color: var(--error-light); border-color: var(--error-light);}
-.button.visitor:hover       { color: var(--visitor-light); border-color: var(--visitor-light);}
-.button.custom-author:hover { color: var(--custom-author-light); border-color: var(--custom-author-light);}
-.button.member:hover        { color: var(--member-light); border-color: var(--member-light);}
-.button.moderator:hover     { color: var(--moderator-light); border-color: var(--moderator-light);}
-.button.administrator:hover { color: var(--administrator-light); border-color: var(--administrator-light);}
-
-.bgc.notice        { background-color: rgba(var(--notice-rgb-d), 0.2); }
-.bgc.question      { background-color: rgba(var(--question-rgb-d), 0.2); }
-.bgc.success       { background-color: rgba(var(--success-rgb-d), 0.2); }
-.bgc.warning       { background-color: rgba(var(--warning-rgb-d), 0.2); }
-.bgc.error         { background-color: rgba(var(--error-rgb-d), 0.2); }
-.bgc.visitor       { background-color: rgba(var(--visitor-rgb-d), 0.2); }
-.bgc.custom-author { background-color: rgba(var(--custom-author-rgb-d), 0.2); }
-.bgc.member        { background-color: rgba(var(--member-rgb-d), 0.2); }
-.bgc.moderator     { background-color: rgba(var(--moderator-rgb-d), 0.2); }
-.bgc.administrator { background-color: rgba(var(--administrator-rgb-d), 0.2); }
-
-.bgc-full,
-.bgc-full:hover	{ color: var(--txt-light) !important; }
-
-.bgc-full.notice        { background-color: var(--notice-dark); border-color: var(--notice-dark);}
-.bgc-full.question      { background-color: var(--question-dark); border-color: var(--question-dark);}
-.bgc-full.success       { background-color: var(--success-dark); border-color: var(--success-dark);}
-.bgc-full.warning       { background-color: var(--warning-dark); border-color: var(--warning-dark);}
-.bgc-full.error         { background-color: var(--error-dark); border-color: var(--error-dark);}
-.bgc-full.visitor       { background-color: var(--visitor-dark); border-color: var(--visitor-dark);}
-.bgc-full.custom-author { background-color: var(--custom-author-dark); border-color: var(--custom-author-dark);}
-.bgc-full.member        { background-color: var(--member-dark); border-color: var(--member-dark);}
-.bgc-full.moderator     { background-color: var(--moderator-dark); border-color: var(--moderator-dark);}
-.bgc-full.administrator { background-color: var(--administrator-dark); border-color: var(--administrator-dark);}
-
-.bgc-full:hover.notice        { background-color: var(--notice-light); }
-.bgc-full:hover.question      { background-color: var(--question-light); }
-.bgc-full:hover.success       { background-color: var(--success-light); }
-.bgc-full:hover.warning       { background-color: var(--warning-light); }
-.bgc-full:hover.error         { background-color: var(--error-light); }
-.bgc-full:hover.visitor       { background-color: var(--visitor-light); }
-.bgc-full:hover.custom-author { background-color: var(--custom-author-light); }
-.bgc-full:hover.member        { background-color: var(--member-light); }
-.bgc-full:hover.moderator     { background-color: var(--moderator-light); }
-.bgc-full:hover.administrator { background-color: var(--administrator-light); }
-
 /* --- formatter & bbcode --------------------------------------------------- */
 .bbcode-bar {
 	background-color: var(--bgc-alt);
@@ -702,7 +640,7 @@ a[class*='lightcase-icon-']:hover {
 
 .tabs-container > nav > ul > li a.active-tab { background-color: rgba(var(--main-rgb-d), 0.2); }
 
-#tooltip {
+.tooltip {
 	border-color: var(--bdr-main);
 	background-color: var(--bgc-main);
 }
@@ -819,3 +757,65 @@ a.wikipedia-link { border-bottom-color: var(--main-dark); }
 	background-color: var(--main-dark);
 	color: var(--txt-light);
 }
+
+/* --- Colors classes --------------------------------------------------------------- */
+.floating-element,
+.message-helper { background-color: var(--bgc-main) }
+
+.notice        { color: var(--notice-dark); border-color: var(--notice-dark); }
+.question      { color: var(--question-dark); border-color: var(--question-dark); }
+.success       { color: var(--success-dark); border-color: var(--success-dark); }
+.warning       { color: var(--warning-dark); border-color: var(--warning-dark); }
+.error         { color: var(--error-dark); border-color: var(--error-dark); }
+.visitor       { color: var(--visitor-dark); border-color: var(--visitor-dark); }
+.custom-author { color: var(--custom-author-dark); border-color: var(--custom-author-dark); }
+.member        { color: var(--member-dark); border-color: var(--member-dark); }
+.moderator     { color: var(--moderator-dark); border-color: var(--moderator-dark); }
+.administrator { color: var(--administrator-dark); border-color: var(--administrator-dark); }
+
+.button.notice:hover        { color: var(--notice-light); border-color: var(--notice-light);}
+.button.question:hover      { color: var(--question-light); border-color: var(--question-light);}
+.button.success:hover       { color: var(--success-light); border-color: var(--success-light);}
+.button.warning:hover       { color: var(--warning-light); border-color: var(--warning-light);}
+.button.error:hover         { color: var(--error-light); border-color: var(--error-light);}
+.button.visitor:hover       { color: var(--visitor-light); border-color: var(--visitor-light);}
+.button.custom-author:hover { color: var(--custom-author-light); border-color: var(--custom-author-light);}
+.button.member:hover        { color: var(--member-light); border-color: var(--member-light);}
+.button.moderator:hover     { color: var(--moderator-light); border-color: var(--moderator-light);}
+.button.administrator:hover { color: var(--administrator-light); border-color: var(--administrator-light);}
+
+.bgc.notice        { background-color: rgba(var(--notice-rgb-d), 0.2); }
+.bgc.question      { background-color: rgba(var(--question-rgb-d), 0.2); }
+.bgc.success       { background-color: rgba(var(--success-rgb-d), 0.2); }
+.bgc.warning       { background-color: rgba(var(--warning-rgb-d), 0.2); }
+.bgc.error         { background-color: rgba(var(--error-rgb-d), 0.2); }
+.bgc.visitor       { background-color: rgba(var(--visitor-rgb-d), 0.2); }
+.bgc.custom-author { background-color: rgba(var(--custom-author-rgb-d), 0.2); }
+.bgc.member        { background-color: rgba(var(--member-rgb-d), 0.2); }
+.bgc.moderator     { background-color: rgba(var(--moderator-rgb-d), 0.2); }
+.bgc.administrator { background-color: rgba(var(--administrator-rgb-d), 0.2); }
+
+.bgc-full,
+.bgc-full:hover	{ color: var(--txt-light) !important; }
+
+.bgc-full.notice        { background-color: var(--notice-dark); border-color: var(--notice-dark);}
+.bgc-full.question      { background-color: var(--question-dark); border-color: var(--question-dark);}
+.bgc-full.success       { background-color: var(--success-dark); border-color: var(--success-dark);}
+.bgc-full.warning       { background-color: var(--warning-dark); border-color: var(--warning-dark);}
+.bgc-full.error         { background-color: var(--error-dark); border-color: var(--error-dark);}
+.bgc-full.visitor       { background-color: var(--visitor-dark); border-color: var(--visitor-dark);}
+.bgc-full.custom-author { background-color: var(--custom-author-dark); border-color: var(--custom-author-dark);}
+.bgc-full.member        { background-color: var(--member-dark); border-color: var(--member-dark);}
+.bgc-full.moderator     { background-color: var(--moderator-dark); border-color: var(--moderator-dark);}
+.bgc-full.administrator { background-color: var(--administrator-dark); border-color: var(--administrator-dark);}
+
+.bgc-full:hover.notice        { background-color: var(--notice-light); }
+.bgc-full:hover.question      { background-color: var(--question-light); }
+.bgc-full:hover.success       { background-color: var(--success-light); }
+.bgc-full:hover.warning       { background-color: var(--warning-light); }
+.bgc-full:hover.error         { background-color: var(--error-light); }
+.bgc-full:hover.visitor       { background-color: var(--visitor-light); }
+.bgc-full:hover.custom-author { background-color: var(--custom-author-light); }
+.bgc-full:hover.member        { background-color: var(--member-light); }
+.bgc-full:hover.moderator     { background-color: var(--moderator-light); }
+.bgc-full:hover.administrator { background-color: var(--administrator-light); }

@@ -25,7 +25,7 @@
         <p class="bigger">{@fwkboost.item.bigger}</p>
         <p class="biggest">{@fwkboost.item.biggest}</p>
         <!-- Source code -->
-        <div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+        <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
             <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;span class="smallest">{@fwkboost.item.smallest}&lt;/span>
@@ -59,7 +59,7 @@
         <div class="spacer"></div>
         <p class="pinned bgc moderator">{@fwkboost.item.pinned}</p>
         <!-- Source code -->
-        <div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+        <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
             <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;p class="text-strong">{@fwkboost.item.bold}&lt;/p>

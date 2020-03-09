@@ -8,7 +8,6 @@
 @import url('../../default/theme/shape.css') screen;
 
 @import url('../../default/theme/@variables.css') screen;
-@import url('../../default/theme/global.css') screen;
 @import url('../../default/theme/form.css') screen;
 @import url('../../default/theme/fieldset.css') screen;
 @import url('../../default/theme/input.css') screen;
@@ -33,6 +32,7 @@
 
 @import url('../../default/theme/cell.css') screen;
 @import url('../../default/theme/cell_layout.css') screen;
+@import url('../../default/theme/global.css') screen;
 @import url('../../default/theme/content.css') screen;
 
 @import url('../../default/theme/colors.css') screen;

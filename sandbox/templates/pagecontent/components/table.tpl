@@ -77,7 +77,7 @@
         </tfoot>
     </table>
 
-    <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">// {@fwkboost.table.responsive.header}

@@ -34,7 +34,7 @@
 				<li><a href="#icons" class="summary-link">{@fwkboost.main_actions_icons}</a></li>
 				<li><a href="#explorer" class="summary-link">{@fwkboost.explorer}</a></li>
 				<li><a href="#lists" class="summary-link">{@fwkboost.lists}</a></li>
-				<li><a href="#buttons" class="summary-link">{@fwkboost.button}</a></li>
+				<li><a href="#buttons" class="summary-link">{@fwkboost.buttons}</a></li>
 				<li><a href="#notation" class="summary-link">{@fwkboost.notation}</a></li>
 				<li><a href="#pagination" class="summary-link">{@fwkboost.pagination}</a></li>
 				<li><a href="#sortable" class="summary-link">{@fwkboost.sortable}</a></li>
@@ -76,7 +76,7 @@
 		</div>
 	</article>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{PAGE}
@@ -123,7 +123,7 @@
 		</div>
 	</article>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{FORM_OPTION}
@@ -174,7 +174,7 @@
 		<div class="spacer"></div>
 	</article>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{DIV_OPTION}
@@ -298,7 +298,7 @@
 		</div>
 	</article>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{MEDIA}
@@ -341,7 +341,7 @@
 		</div>
 	</article>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{PROGRESS_BAR}
@@ -394,7 +394,7 @@
 		</article>
 	</div>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{EXPLORER}
@@ -432,10 +432,10 @@
 		</article>
 		<article id="buttons" class="block">
 			<header>
-				<h5>{@fwkboost.button}</h5>
+				<h5>{@fwkboost.buttons}</h5>
 			</header>
 			<div class="content">
-				<button type="submit" class="button">{@fwkboost.button}</button>
+				<button type="submit" class="button">{@fwkboost.buttons}</button>
 				<button type="submit" class="button submit">.submit</button><br />
 				<button type="submit" class="button small">.small</button><br />
 				<button type="submit" class="button alt-button">.alt-button</button><br />
@@ -444,7 +444,7 @@
 		</article>
 	</div>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{BUTTON}
@@ -512,7 +512,7 @@
 		</article>
 	</div>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{SORTABLE}
@@ -596,7 +596,7 @@
 		</article>
 	</div>
 	<!-- Source code -->
-	<div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+	<div class="formatter-container formatter-hide no-js tpl">
 		<span class="formatter-title title-perso">{@sandbox.source.code} :</span>
 		<div class="formatter-content">
 			{BLOCK}

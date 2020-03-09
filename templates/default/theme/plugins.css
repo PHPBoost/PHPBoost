@@ -1,4 +1,4 @@
-/*
+./*
  * Copy this file into your theme to customize it.
  * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
@@ -219,11 +219,11 @@ li:last-child .accordion .content-panel {
 }
 
 /* --- tooltip -------------------------------------------------------------- */
-#tooltip {
+.tooltip {
     display: none;
 }
 @media (min-width: 769px) {
-    #tooltip {
+    .tooltip {
         display: block;
         border-width: 1px;
         border-style: solid;
@@ -239,9 +239,9 @@ li:last-child .accordion .content-panel {
         transition: opacity 0.3s ease;
     }
 
-    #tooltip.position-b { margin-top: 0.809em; }
+    .tooltip.position-b { margin-top: 0.809em; }
 
-    #tooltip.display-none { display: none; }
+    .tooltip.display-none { display: none; }
 }
 
 /* --- Wizard --------------------------------------------------------------- */

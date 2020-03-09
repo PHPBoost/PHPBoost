@@ -54,7 +54,7 @@
         </div>
     </article>
     <!-- Source code -->
-    <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset)" itemscope="itemscope" itemtype="http://schema.org/Comment">

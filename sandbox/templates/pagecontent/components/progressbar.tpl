@@ -25,7 +25,7 @@
         <div class="progressbar-infos">100%</div>
         <div class="progressbar" style="width:100%"></div>
     </div>
-    <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">&lt;div class="progressbar-container" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">

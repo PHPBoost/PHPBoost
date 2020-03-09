@@ -15,7 +15,7 @@
         <header>
             <h5>{@bbcode.hidden}</h5>
         </header>
-        <div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+        <div class="formatter-container formatter-hide no-js">
             <span class="formatter-title title-perso">{@bbcode.hidden} :</span>
             <div class="formatter-content">
                 {@lorem.medium.content}
@@ -57,7 +57,7 @@ abstract class CategoriesCache implements CacheData
         </div>
     </article>
     <!-- Source code -->
-    <div class="formatter-container formatter-hide no-js tpl" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html line-numbers"><code class="language-html">// {@bbcode.quote}
@@ -69,7 +69,7 @@ abstract class CategoriesCache implements CacheData
 &lt;/blockquote>
 <br />
 // {@bbcode.hidden}
-&lt;div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+&lt;div class="formatter-container formatter-hide no-js">
     &lt;span class="formatter-title title-perso">Lorem ipsum&lt;/span>
     &lt;div class="formatter-content">
         Lorem ipsum

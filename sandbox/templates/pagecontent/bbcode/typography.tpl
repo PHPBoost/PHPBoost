@@ -14,7 +14,7 @@
         </div>
     </article>
     <!-- Source code -->
-    <div class="formatter-container formatter-hide no-js" onclick="bb_hide(this)">
+    <div class="formatter-container formatter-hide no-js">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content">
 <pre class="language-html"><code class="language-html">&lt;h2 class="formatter-title">{@bbcode.title} 1&lt;/h2>
