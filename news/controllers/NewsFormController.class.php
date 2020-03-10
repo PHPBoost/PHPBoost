@@ -67,7 +67,7 @@ class NewsFormController extends ModuleController
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->moderation())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_title.personalize'], $this->get_news()->rewrited_title_is_personalized(), array(
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_news()->rewrited_title_is_personalized(), array(
 			'events' => array('click' => '
 			if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
 				HTMLForms.getField("rewrited_title").enable();

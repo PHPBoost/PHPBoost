@@ -46,11 +46,11 @@ class NewsService
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
 		}
-		
+
 		self::$db_querier->delete(NewsSetup::$news_table, 'WHERE id=:id', array('id' => $id));
-		
+
 		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'news', 'id' => $id));
-		
+
 		CommentsService::delete_comments_topic_module('news', $id);
 		KeywordsService::get_keywords_manager()->delete_relations($id);
 	}
@@ -65,7 +65,7 @@ class NewsService
 		$news->set_properties($row);
 		return $news;
 	}
-	
+
 	public static function clear_cache()
 	{
 		Feed::clear_cache('news');
@@ -73,9 +73,9 @@ class NewsService
 		KeywordsCache::invalidate();
 	}
 
-	public static function update_number_view(News $news)
+	public static function update_views_number(News $news)
 	{
-		self::$db_querier->update(NewsSetup::$news_table, array('number_view' => $news->get_number_view()), 'WHERE id=:id', array('id' => $news->get_id()));
+		self::$db_querier->update(NewsSetup::$news_table, array('number_view' => $news->get_views_number()), 'WHERE id=:id', array('id' => $news->get_id()));
 	}
 }
 ?>

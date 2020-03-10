@@ -70,7 +70,7 @@
 							# ENDIF #
 						</div>
 						# IF NOT C_FULL_ITEM_DISPLAY #
-							# IF news.C_PICTURE #
+							# IF news.C_HAS_THUMBNAIL #
 								<div class="cell-thumbnail cell-landscape">
 									<img itemprop="thumbnailUrl" src="{news.U_THUMBNAIL}" alt="{news.TITLE}" />
 									<a class="cell-thumbnail-caption" href="{news.U_ITEM}">
@@ -81,7 +81,7 @@
 						# ENDIF #
 						<div class="cell-content" itemprop="text">
 							# IF C_FULL_ITEM_DISPLAY #
-								# IF news.C_PICTURE #
+								# IF news.C_HAS_THUMBNAIL #
 									<img class="item-thumbnail" itemprop="thumbnailUrl" src="{news.U_THUMBNAIL}" alt="{news.TITLE}" />
 								# ENDIF #
 								{news.CONTENTS}

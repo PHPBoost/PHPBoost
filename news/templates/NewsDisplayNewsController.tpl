@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="content">
-			# IF C_PICTURE #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
+			# IF C_HAS_THUMBNAIL #<img src="{U_THUMBNAIL}" alt="{TITLE}" class="item-thumbnail" itemprop="thumbnailUrl" /># ENDIF #
 
 			<div itemprop="text">{CONTENTS}</div>
 		</div>
@@ -139,7 +139,7 @@
 	<footer>
 		<meta itemprop="url" content="{U_ITEM}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
-		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_THUMBNAIL}"># ENDIF #
+		# IF C_HAS_THUMBNAIL #<meta itemprop="thumbnailUrl" content="{U_THUMBNAIL}"># ENDIF #
 		# IF C_COMMENTS_ENABLED #
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{COMMENTS_NUMBER} UserComments">
